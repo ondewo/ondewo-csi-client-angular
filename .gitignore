@@ -1,0 +1,6 @@
+.idea
+npm
+ondewo-csi-api/*
+.idea/
+.vscode/
+node_modules
