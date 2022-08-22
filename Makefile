@@ -80,15 +80,15 @@ makefile_chapters: ## Shows all sections of Makefile
 release: ## Create Github and NPM Release
 	@echo "Start Release"
 	make build_and_publish_npm_via_docker
-	make create_release_branch
-	make create_release_tag
-	make release_to_github_via_docker_image
+#	make create_release_branch
+#	make create_release_tag
+#	make release_to_github_via_docker_image
 
 gh_release: build_utils_docker_image release_to_github_via_docker_image ## Builds Utils Image and Releases to Github
 
 npm_release: ## Releases to NPM
 	@echo "Start NPM Release"
-	npm publish ./npm --access public
+	npm publish ./npm --access public --dry-run
 	@echo "Finished NPM Release"
 
 create_release_branch: ## Create Release Branch and push it to origin
