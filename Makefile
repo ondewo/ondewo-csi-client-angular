@@ -17,7 +17,7 @@ export
 
 ONDEWO_CSI_VERSION = 2.3.1
 
-CSI_API_GIT_BRANCH=tags/2.3.1
+CSI_API_GIT_BRANCH=master
 ONDEWO_PROTO_COMPILER_GIT_BRANCH=tags/3.0.0
 ONDEWO_PROTO_COMPILER_DIR=ondewo-proto-compiler
 CSI_APIS_DIR=src/ondewo-csi-api
