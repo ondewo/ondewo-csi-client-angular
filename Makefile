@@ -223,7 +223,7 @@ build: check_out_correct_submodule_versions build_compiler update_package npm_ru
 
 check_out_correct_submodule_versions: ## Fetches all Submodules and checksout specified branch
 	@echo "START checking out correct submodule versions ..."
-	git submodule update --init --recursive
+	git submodule update --init --recursive --remote
 	git -C ${CSI_APIS_DIR} fetch --all
 	git -C ${CSI_APIS_DIR} checkout ${CSI_API_GIT_BRANCH}
 	git -C ${ONDEWO_PROTO_COMPILER_DIR} fetch --all
