@@ -124,12 +124,12 @@ release: ## Create Github and NPM Release
 	git add Makefile
 	git add ondewo-proto-compiler
 	git status
-# git commit -m "Preparing for Release ${ONDEWO_CSI_VERSION}"
-# git push
-# make publish_npm_via_docker
-# make create_release_branch
-# make create_release_tag
-# make release_to_github_via_docker_image
+	git commit -m "Preparing for Release ${ONDEWO_CSI_VERSION}"
+	git push
+	make publish_npm_via_docker
+	make create_release_branch
+	make create_release_tag
+	make release_to_github_via_docker_image
 	@echo "Finished Release"
 
 gh_release: build_utils_docker_image release_to_github_via_docker_image ## Builds Utils Image and Releases to Github
@@ -199,8 +199,8 @@ run_release_with_devops: ## Runs the make release target with credentials from d
 spc: ## Checks if the Release Branch, Tag and Pypi version already exist
 	$(eval filtered_branches:= $(shell git branch --all | grep "release/${ONDEWO_CSI_VERSION}"))
 	$(eval filtered_tags:= $(shell git tag --list | grep "${ONDEWO_CSI_VERSION}"))
-# @if test "$(filtered_branches)" != ""; then echo "-- Test 1: Branch exists!!" & exit 1; else echo "-- Test 1: Branch is fine";fi
-# @if test "$(filtered_tags)" != ""; then echo "-- Test 2: Tag exists!!" & exit 1; else echo "-- Test 2: Tag is fine";fi
+	@if test "$(filtered_branches)" != ""; then echo "-- Test 1: Branch exists!!" & exit 1; else echo "-- Test 1: Branch is fine";fi
+	@if test "$(filtered_tags)" != ""; then echo "-- Test 2: Tag exists!!" & exit 1; else echo "-- Test 2: Tag is fine";fi
 
 
 ########################################################
@@ -223,7 +223,7 @@ build: check_out_correct_submodule_versions build_compiler update_package npm_ru
 
 check_out_correct_submodule_versions: ## Fetches all Submodules and checksout specified branch
 	@echo "START checking out correct submodule versions ..."
-	git submodule update --init --recursive --remote
+	git submodule update --init --recursive
 	git -C ${CSI_APIS_DIR} fetch --all
 	git -C ${CSI_APIS_DIR} checkout ${CSI_API_GIT_BRANCH}
 	git -C ${ONDEWO_PROTO_COMPILER_DIR} fetch --all
