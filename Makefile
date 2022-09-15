@@ -122,7 +122,8 @@ release: ## Create Github and NPM Release
 	git add package-lock.json
 	git add package.json
 	git add Makefile
-	git add ondewo-proto-compiler
+	git add ${ONDEWO_PROTO_COMPILER_DIR}
+	git add ${CSI_APIS_DIR}
 	git status
 	git commit -m "Preparing for Release ${ONDEWO_CSI_VERSION}"
 	git push
