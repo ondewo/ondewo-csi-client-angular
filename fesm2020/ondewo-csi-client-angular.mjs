@@ -44826,7 +44826,7 @@ class Operation {
 		this._result = Operation.ResultCase.none;
 		_value = _value || {};
 		this.name = _value.name;
-		this.metadata = _value.metadata ? new googleProtobuf003.Any(_value.metadata) : undefined;
+		this.metadata = _value.metadata ? new OperationMetadata(_value.metadata) : undefined;
 		this.done = _value.done;
 		this.error = _value.error ? new Status(_value.error) : undefined;
 		this.response = _value.response ? new googleProtobuf003.Any(_value.response) : undefined;
@@ -44863,8 +44863,8 @@ class Operation {
 					_instance.name = _reader.readString();
 					break;
 				case 2:
-					_instance.metadata = new googleProtobuf003.Any();
-					_reader.readMessage(_instance.metadata, googleProtobuf003.Any.deserializeBinaryFromReader);
+					_instance.metadata = new OperationMetadata();
+					_reader.readMessage(_instance.metadata, OperationMetadata.deserializeBinaryFromReader);
 					break;
 				case 3:
 					_instance.done = _reader.readBool();
@@ -44893,7 +44893,7 @@ class Operation {
 			_writer.writeString(1, _instance.name);
 		}
 		if (_instance.metadata) {
-			_writer.writeMessage(2, _instance.metadata, googleProtobuf003.Any.serializeBinaryToWriter);
+			_writer.writeMessage(2, _instance.metadata, OperationMetadata.serializeBinaryToWriter);
 		}
 		if (_instance.done) {
 			_writer.writeBool(3, _instance.done);
@@ -58453,6 +58453,3936 @@ class PlatformMapping {
 	}
 }
 PlatformMapping.id = 'ondewo.nlu.PlatformMapping';
+/**
+ * Message implementation for ondewo.nlu.FullTextSearchRequest
+ */
+class FullTextSearchRequest {
+	/**
+	 * Message constructor. Initializes the properties and applies default Protobuf values if necessary
+	 * @param _value initial values object or instance of FullTextSearchRequest to deeply clone from
+	 */
+	constructor(_value) {
+		_value = _value || {};
+		this.parent = _value.parent;
+		this.languageCode = _value.languageCode;
+		this.term = _value.term;
+		this.pageToken = _value.pageToken;
+		FullTextSearchRequest.refineValues(this);
+	}
+	/**
+	 * Deserialize binary data to message
+	 * @param instance message instance
+	 */
+	static deserializeBinary(bytes) {
+		const instance = new FullTextSearchRequest();
+		FullTextSearchRequest.deserializeBinaryFromReader(instance, new BinaryReader(bytes));
+		return instance;
+	}
+	/**
+	 * Check all the properties and set default protobuf values if necessary
+	 * @param _instance message instance
+	 */
+	static refineValues(_instance) {
+		_instance.parent = _instance.parent || '';
+		_instance.languageCode = _instance.languageCode || '';
+		_instance.term = _instance.term || '';
+		_instance.pageToken = _instance.pageToken || '';
+	}
+	/**
+	 * Deserializes / reads binary message into message instance using provided binary reader
+	 * @param _instance message instance
+	 * @param _reader binary reader instance
+	 */
+	static deserializeBinaryFromReader(_instance, _reader) {
+		while (_reader.nextField()) {
+			if (_reader.isEndGroup()) break;
+			switch (_reader.getFieldNumber()) {
+				case 1:
+					_instance.parent = _reader.readString();
+					break;
+				case 2:
+					_instance.languageCode = _reader.readString();
+					break;
+				case 3:
+					_instance.term = _reader.readString();
+					break;
+				case 4:
+					_instance.pageToken = _reader.readString();
+					break;
+				default:
+					_reader.skipField();
+			}
+		}
+		FullTextSearchRequest.refineValues(_instance);
+	}
+	/**
+	 * Serializes a message to binary format using provided binary reader
+	 * @param _instance message instance
+	 * @param _writer binary writer instance
+	 */
+	static serializeBinaryToWriter(_instance, _writer) {
+		if (_instance.parent) {
+			_writer.writeString(1, _instance.parent);
+		}
+		if (_instance.languageCode) {
+			_writer.writeString(2, _instance.languageCode);
+		}
+		if (_instance.term) {
+			_writer.writeString(3, _instance.term);
+		}
+		if (_instance.pageToken) {
+			_writer.writeString(4, _instance.pageToken);
+		}
+	}
+	get parent() {
+		return this._parent;
+	}
+	set parent(value) {
+		this._parent = value;
+	}
+	get languageCode() {
+		return this._languageCode;
+	}
+	set languageCode(value) {
+		this._languageCode = value;
+	}
+	get term() {
+		return this._term;
+	}
+	set term(value) {
+		this._term = value;
+	}
+	get pageToken() {
+		return this._pageToken;
+	}
+	set pageToken(value) {
+		this._pageToken = value;
+	}
+	/**
+	 * Serialize message to binary data
+	 * @param instance message instance
+	 */
+	serializeBinary() {
+		const writer = new BinaryWriter();
+		FullTextSearchRequest.serializeBinaryToWriter(this, writer);
+		return writer.getResultBuffer();
+	}
+	/**
+	 * Cast message to standard JavaScript object (all non-primitive values are deeply cloned)
+	 */
+	toObject() {
+		return {
+			parent: this.parent,
+			languageCode: this.languageCode,
+			term: this.term,
+			pageToken: this.pageToken
+		};
+	}
+	/**
+	 * Convenience method to support JSON.stringify(message), replicates the structure of toObject()
+	 */
+	toJSON() {
+		return this.toObject();
+	}
+	/**
+	 * Cast message to JSON using protobuf JSON notation: https://developers.google.com/protocol-buffers/docs/proto3#json
+	 * Attention: output differs from toObject() e.g. enums are represented as names and not as numbers, Timestamp is an ISO Date string format etc.
+	 * If the message itself or some of descendant messages is google.protobuf.Any, you MUST provide a message pool as options. If not, the messagePool is not required
+	 */
+	toProtobufJSON(
+		// @ts-ignore
+		options
+	) {
+		return {
+			parent: this.parent,
+			languageCode: this.languageCode,
+			term: this.term,
+			pageToken: this.pageToken
+		};
+	}
+}
+FullTextSearchRequest.id = 'ondewo.nlu.FullTextSearchRequest';
+(function (FullTextSearchRequest) {
+	let QueryType;
+	(function (QueryType) {
+		QueryType[(QueryType['ALL'] = 0)] = 'ALL';
+		QueryType[(QueryType['OndewoEntityQuery'] = 1)] = 'OndewoEntityQuery';
+		QueryType[(QueryType['OndewoEntityTypeQuery'] = 2)] = 'OndewoEntityTypeQuery';
+		QueryType[(QueryType['OndewoEntitySynonymQuery'] = 3)] = 'OndewoEntitySynonymQuery';
+		QueryType[(QueryType['OndewoIntentQuery'] = 4)] = 'OndewoIntentQuery';
+		QueryType[(QueryType['OndewoIntentContextInQuery'] = 5)] = 'OndewoIntentContextInQuery';
+		QueryType[(QueryType['OndewoIntentContextOutQuery'] = 6)] = 'OndewoIntentContextOutQuery';
+		QueryType[(QueryType['OndewoIntentUsersaysQuery'] = 7)] = 'OndewoIntentUsersaysQuery';
+		QueryType[(QueryType['OndewoIntentTagsQuery'] = 8)] = 'OndewoIntentTagsQuery';
+		QueryType[(QueryType['OndewoIntentParametersQuery'] = 9)] = 'OndewoIntentParametersQuery';
+		QueryType[(QueryType['OndewoIntentResponseQuery'] = 10)] = 'OndewoIntentResponseQuery';
+	})((QueryType = FullTextSearchRequest.QueryType || (FullTextSearchRequest.QueryType = {})));
+})(FullTextSearchRequest || (FullTextSearchRequest = {}));
+/**
+ * Message implementation for ondewo.nlu.FullTextSearchResponseEntityType
+ */
+class FullTextSearchResponseEntityType {
+	/**
+	 * Message constructor. Initializes the properties and applies default Protobuf values if necessary
+	 * @param _value initial values object or instance of FullTextSearchResponseEntityType to deeply clone from
+	 */
+	constructor(_value) {
+		_value = _value || {};
+		this.parent = _value.parent;
+		this.languageCode = _value.languageCode;
+		this.entityTypeResults = (_value.entityTypeResults || []).map(
+			(m) => new FullTextSearchResponseEntityType.EntityTypeSearchResult(m)
+		);
+		this.term = _value.term;
+		this.elasticQuery = _value.elasticQuery;
+		this.time = _value.time;
+		this.nextPageToken = _value.nextPageToken;
+		FullTextSearchResponseEntityType.refineValues(this);
+	}
+	/**
+	 * Deserialize binary data to message
+	 * @param instance message instance
+	 */
+	static deserializeBinary(bytes) {
+		const instance = new FullTextSearchResponseEntityType();
+		FullTextSearchResponseEntityType.deserializeBinaryFromReader(instance, new BinaryReader(bytes));
+		return instance;
+	}
+	/**
+	 * Check all the properties and set default protobuf values if necessary
+	 * @param _instance message instance
+	 */
+	static refineValues(_instance) {
+		_instance.parent = _instance.parent || '';
+		_instance.languageCode = _instance.languageCode || '';
+		_instance.entityTypeResults = _instance.entityTypeResults || [];
+		_instance.term = _instance.term || '';
+		_instance.elasticQuery = _instance.elasticQuery || '';
+		_instance.time = _instance.time || 0;
+		_instance.nextPageToken = _instance.nextPageToken || '';
+	}
+	/**
+	 * Deserializes / reads binary message into message instance using provided binary reader
+	 * @param _instance message instance
+	 * @param _reader binary reader instance
+	 */
+	static deserializeBinaryFromReader(_instance, _reader) {
+		while (_reader.nextField()) {
+			if (_reader.isEndGroup()) break;
+			switch (_reader.getFieldNumber()) {
+				case 1:
+					_instance.parent = _reader.readString();
+					break;
+				case 2:
+					_instance.languageCode = _reader.readString();
+					break;
+				case 3:
+					const messageInitializer3 = new FullTextSearchResponseEntityType.EntityTypeSearchResult();
+					_reader.readMessage(
+						messageInitializer3,
+						FullTextSearchResponseEntityType.EntityTypeSearchResult.deserializeBinaryFromReader
+					);
+					(_instance.entityTypeResults = _instance.entityTypeResults || []).push(messageInitializer3);
+					break;
+				case 4:
+					_instance.term = _reader.readString();
+					break;
+				case 5:
+					_instance.elasticQuery = _reader.readString();
+					break;
+				case 6:
+					_instance.time = _reader.readFloat();
+					break;
+				case 7:
+					_instance.nextPageToken = _reader.readString();
+					break;
+				default:
+					_reader.skipField();
+			}
+		}
+		FullTextSearchResponseEntityType.refineValues(_instance);
+	}
+	/**
+	 * Serializes a message to binary format using provided binary reader
+	 * @param _instance message instance
+	 * @param _writer binary writer instance
+	 */
+	static serializeBinaryToWriter(_instance, _writer) {
+		if (_instance.parent) {
+			_writer.writeString(1, _instance.parent);
+		}
+		if (_instance.languageCode) {
+			_writer.writeString(2, _instance.languageCode);
+		}
+		if (_instance.entityTypeResults && _instance.entityTypeResults.length) {
+			_writer.writeRepeatedMessage(
+				3,
+				_instance.entityTypeResults,
+				FullTextSearchResponseEntityType.EntityTypeSearchResult.serializeBinaryToWriter
+			);
+		}
+		if (_instance.term) {
+			_writer.writeString(4, _instance.term);
+		}
+		if (_instance.elasticQuery) {
+			_writer.writeString(5, _instance.elasticQuery);
+		}
+		if (_instance.time) {
+			_writer.writeFloat(6, _instance.time);
+		}
+		if (_instance.nextPageToken) {
+			_writer.writeString(7, _instance.nextPageToken);
+		}
+	}
+	get parent() {
+		return this._parent;
+	}
+	set parent(value) {
+		this._parent = value;
+	}
+	get languageCode() {
+		return this._languageCode;
+	}
+	set languageCode(value) {
+		this._languageCode = value;
+	}
+	get entityTypeResults() {
+		return this._entityTypeResults;
+	}
+	set entityTypeResults(value) {
+		this._entityTypeResults = value;
+	}
+	get term() {
+		return this._term;
+	}
+	set term(value) {
+		this._term = value;
+	}
+	get elasticQuery() {
+		return this._elasticQuery;
+	}
+	set elasticQuery(value) {
+		this._elasticQuery = value;
+	}
+	get time() {
+		return this._time;
+	}
+	set time(value) {
+		this._time = value;
+	}
+	get nextPageToken() {
+		return this._nextPageToken;
+	}
+	set nextPageToken(value) {
+		this._nextPageToken = value;
+	}
+	/**
+	 * Serialize message to binary data
+	 * @param instance message instance
+	 */
+	serializeBinary() {
+		const writer = new BinaryWriter();
+		FullTextSearchResponseEntityType.serializeBinaryToWriter(this, writer);
+		return writer.getResultBuffer();
+	}
+	/**
+	 * Cast message to standard JavaScript object (all non-primitive values are deeply cloned)
+	 */
+	toObject() {
+		return {
+			parent: this.parent,
+			languageCode: this.languageCode,
+			entityTypeResults: (this.entityTypeResults || []).map((m) => m.toObject()),
+			term: this.term,
+			elasticQuery: this.elasticQuery,
+			time: this.time,
+			nextPageToken: this.nextPageToken
+		};
+	}
+	/**
+	 * Convenience method to support JSON.stringify(message), replicates the structure of toObject()
+	 */
+	toJSON() {
+		return this.toObject();
+	}
+	/**
+	 * Cast message to JSON using protobuf JSON notation: https://developers.google.com/protocol-buffers/docs/proto3#json
+	 * Attention: output differs from toObject() e.g. enums are represented as names and not as numbers, Timestamp is an ISO Date string format etc.
+	 * If the message itself or some of descendant messages is google.protobuf.Any, you MUST provide a message pool as options. If not, the messagePool is not required
+	 */
+	toProtobufJSON(
+		// @ts-ignore
+		options
+	) {
+		return {
+			parent: this.parent,
+			languageCode: this.languageCode,
+			entityTypeResults: (this.entityTypeResults || []).map((m) => m.toProtobufJSON(options)),
+			term: this.term,
+			elasticQuery: this.elasticQuery,
+			time: this.time,
+			nextPageToken: this.nextPageToken
+		};
+	}
+}
+FullTextSearchResponseEntityType.id = 'ondewo.nlu.FullTextSearchResponseEntityType';
+(function (FullTextSearchResponseEntityType) {
+	/**
+	 * Message implementation for ondewo.nlu.EntityTypeSearchResult
+	 */
+	class EntityTypeSearchResult {
+		/**
+		 * Message constructor. Initializes the properties and applies default Protobuf values if necessary
+		 * @param _value initial values object or instance of EntityTypeSearchResult to deeply clone from
+		 */
+		constructor(_value) {
+			_value = _value || {};
+			this.name = _value.name;
+			this.displayName = _value.displayName;
+			this.language = _value.language;
+			EntityTypeSearchResult.refineValues(this);
+		}
+		/**
+		 * Deserialize binary data to message
+		 * @param instance message instance
+		 */
+		static deserializeBinary(bytes) {
+			const instance = new EntityTypeSearchResult();
+			EntityTypeSearchResult.deserializeBinaryFromReader(instance, new BinaryReader(bytes));
+			return instance;
+		}
+		/**
+		 * Check all the properties and set default protobuf values if necessary
+		 * @param _instance message instance
+		 */
+		static refineValues(_instance) {
+			_instance.name = _instance.name || '';
+			_instance.displayName = _instance.displayName || '';
+			_instance.language = _instance.language || '';
+		}
+		/**
+		 * Deserializes / reads binary message into message instance using provided binary reader
+		 * @param _instance message instance
+		 * @param _reader binary reader instance
+		 */
+		static deserializeBinaryFromReader(_instance, _reader) {
+			while (_reader.nextField()) {
+				if (_reader.isEndGroup()) break;
+				switch (_reader.getFieldNumber()) {
+					case 1:
+						_instance.name = _reader.readString();
+						break;
+					case 2:
+						_instance.displayName = _reader.readString();
+						break;
+					case 3:
+						_instance.language = _reader.readString();
+						break;
+					default:
+						_reader.skipField();
+				}
+			}
+			EntityTypeSearchResult.refineValues(_instance);
+		}
+		/**
+		 * Serializes a message to binary format using provided binary reader
+		 * @param _instance message instance
+		 * @param _writer binary writer instance
+		 */
+		static serializeBinaryToWriter(_instance, _writer) {
+			if (_instance.name) {
+				_writer.writeString(1, _instance.name);
+			}
+			if (_instance.displayName) {
+				_writer.writeString(2, _instance.displayName);
+			}
+			if (_instance.language) {
+				_writer.writeString(3, _instance.language);
+			}
+		}
+		get name() {
+			return this._name;
+		}
+		set name(value) {
+			this._name = value;
+		}
+		get displayName() {
+			return this._displayName;
+		}
+		set displayName(value) {
+			this._displayName = value;
+		}
+		get language() {
+			return this._language;
+		}
+		set language(value) {
+			this._language = value;
+		}
+		/**
+		 * Serialize message to binary data
+		 * @param instance message instance
+		 */
+		serializeBinary() {
+			const writer = new BinaryWriter();
+			EntityTypeSearchResult.serializeBinaryToWriter(this, writer);
+			return writer.getResultBuffer();
+		}
+		/**
+		 * Cast message to standard JavaScript object (all non-primitive values are deeply cloned)
+		 */
+		toObject() {
+			return {
+				name: this.name,
+				displayName: this.displayName,
+				language: this.language
+			};
+		}
+		/**
+		 * Convenience method to support JSON.stringify(message), replicates the structure of toObject()
+		 */
+		toJSON() {
+			return this.toObject();
+		}
+		/**
+		 * Cast message to JSON using protobuf JSON notation: https://developers.google.com/protocol-buffers/docs/proto3#json
+		 * Attention: output differs from toObject() e.g. enums are represented as names and not as numbers, Timestamp is an ISO Date string format etc.
+		 * If the message itself or some of descendant messages is google.protobuf.Any, you MUST provide a message pool as options. If not, the messagePool is not required
+		 */
+		toProtobufJSON(
+			// @ts-ignore
+			options
+		) {
+			return {
+				name: this.name,
+				displayName: this.displayName,
+				language: this.language
+			};
+		}
+	}
+	EntityTypeSearchResult.id = 'ondewo.nlu.EntityTypeSearchResult';
+	FullTextSearchResponseEntityType.EntityTypeSearchResult = EntityTypeSearchResult;
+})(FullTextSearchResponseEntityType || (FullTextSearchResponseEntityType = {}));
+/**
+ * Message implementation for ondewo.nlu.FullTextSearchResponseEntity
+ */
+class FullTextSearchResponseEntity {
+	/**
+	 * Message constructor. Initializes the properties and applies default Protobuf values if necessary
+	 * @param _value initial values object or instance of FullTextSearchResponseEntity to deeply clone from
+	 */
+	constructor(_value) {
+		_value = _value || {};
+		this.parent = _value.parent;
+		this.languageCode = _value.languageCode;
+		this.entityResults = (_value.entityResults || []).map(
+			(m) => new FullTextSearchResponseEntity.EntitySearchResult(m)
+		);
+		this.term = _value.term;
+		this.elasticQuery = _value.elasticQuery;
+		this.time = _value.time;
+		this.nextPageToken = _value.nextPageToken;
+		FullTextSearchResponseEntity.refineValues(this);
+	}
+	/**
+	 * Deserialize binary data to message
+	 * @param instance message instance
+	 */
+	static deserializeBinary(bytes) {
+		const instance = new FullTextSearchResponseEntity();
+		FullTextSearchResponseEntity.deserializeBinaryFromReader(instance, new BinaryReader(bytes));
+		return instance;
+	}
+	/**
+	 * Check all the properties and set default protobuf values if necessary
+	 * @param _instance message instance
+	 */
+	static refineValues(_instance) {
+		_instance.parent = _instance.parent || '';
+		_instance.languageCode = _instance.languageCode || '';
+		_instance.entityResults = _instance.entityResults || [];
+		_instance.term = _instance.term || '';
+		_instance.elasticQuery = _instance.elasticQuery || '';
+		_instance.time = _instance.time || 0;
+		_instance.nextPageToken = _instance.nextPageToken || '';
+	}
+	/**
+	 * Deserializes / reads binary message into message instance using provided binary reader
+	 * @param _instance message instance
+	 * @param _reader binary reader instance
+	 */
+	static deserializeBinaryFromReader(_instance, _reader) {
+		while (_reader.nextField()) {
+			if (_reader.isEndGroup()) break;
+			switch (_reader.getFieldNumber()) {
+				case 1:
+					_instance.parent = _reader.readString();
+					break;
+				case 2:
+					_instance.languageCode = _reader.readString();
+					break;
+				case 3:
+					const messageInitializer3 = new FullTextSearchResponseEntity.EntitySearchResult();
+					_reader.readMessage(
+						messageInitializer3,
+						FullTextSearchResponseEntity.EntitySearchResult.deserializeBinaryFromReader
+					);
+					(_instance.entityResults = _instance.entityResults || []).push(messageInitializer3);
+					break;
+				case 4:
+					_instance.term = _reader.readString();
+					break;
+				case 5:
+					_instance.elasticQuery = _reader.readString();
+					break;
+				case 6:
+					_instance.time = _reader.readFloat();
+					break;
+				case 7:
+					_instance.nextPageToken = _reader.readString();
+					break;
+				default:
+					_reader.skipField();
+			}
+		}
+		FullTextSearchResponseEntity.refineValues(_instance);
+	}
+	/**
+	 * Serializes a message to binary format using provided binary reader
+	 * @param _instance message instance
+	 * @param _writer binary writer instance
+	 */
+	static serializeBinaryToWriter(_instance, _writer) {
+		if (_instance.parent) {
+			_writer.writeString(1, _instance.parent);
+		}
+		if (_instance.languageCode) {
+			_writer.writeString(2, _instance.languageCode);
+		}
+		if (_instance.entityResults && _instance.entityResults.length) {
+			_writer.writeRepeatedMessage(
+				3,
+				_instance.entityResults,
+				FullTextSearchResponseEntity.EntitySearchResult.serializeBinaryToWriter
+			);
+		}
+		if (_instance.term) {
+			_writer.writeString(4, _instance.term);
+		}
+		if (_instance.elasticQuery) {
+			_writer.writeString(5, _instance.elasticQuery);
+		}
+		if (_instance.time) {
+			_writer.writeFloat(6, _instance.time);
+		}
+		if (_instance.nextPageToken) {
+			_writer.writeString(7, _instance.nextPageToken);
+		}
+	}
+	get parent() {
+		return this._parent;
+	}
+	set parent(value) {
+		this._parent = value;
+	}
+	get languageCode() {
+		return this._languageCode;
+	}
+	set languageCode(value) {
+		this._languageCode = value;
+	}
+	get entityResults() {
+		return this._entityResults;
+	}
+	set entityResults(value) {
+		this._entityResults = value;
+	}
+	get term() {
+		return this._term;
+	}
+	set term(value) {
+		this._term = value;
+	}
+	get elasticQuery() {
+		return this._elasticQuery;
+	}
+	set elasticQuery(value) {
+		this._elasticQuery = value;
+	}
+	get time() {
+		return this._time;
+	}
+	set time(value) {
+		this._time = value;
+	}
+	get nextPageToken() {
+		return this._nextPageToken;
+	}
+	set nextPageToken(value) {
+		this._nextPageToken = value;
+	}
+	/**
+	 * Serialize message to binary data
+	 * @param instance message instance
+	 */
+	serializeBinary() {
+		const writer = new BinaryWriter();
+		FullTextSearchResponseEntity.serializeBinaryToWriter(this, writer);
+		return writer.getResultBuffer();
+	}
+	/**
+	 * Cast message to standard JavaScript object (all non-primitive values are deeply cloned)
+	 */
+	toObject() {
+		return {
+			parent: this.parent,
+			languageCode: this.languageCode,
+			entityResults: (this.entityResults || []).map((m) => m.toObject()),
+			term: this.term,
+			elasticQuery: this.elasticQuery,
+			time: this.time,
+			nextPageToken: this.nextPageToken
+		};
+	}
+	/**
+	 * Convenience method to support JSON.stringify(message), replicates the structure of toObject()
+	 */
+	toJSON() {
+		return this.toObject();
+	}
+	/**
+	 * Cast message to JSON using protobuf JSON notation: https://developers.google.com/protocol-buffers/docs/proto3#json
+	 * Attention: output differs from toObject() e.g. enums are represented as names and not as numbers, Timestamp is an ISO Date string format etc.
+	 * If the message itself or some of descendant messages is google.protobuf.Any, you MUST provide a message pool as options. If not, the messagePool is not required
+	 */
+	toProtobufJSON(
+		// @ts-ignore
+		options
+	) {
+		return {
+			parent: this.parent,
+			languageCode: this.languageCode,
+			entityResults: (this.entityResults || []).map((m) => m.toProtobufJSON(options)),
+			term: this.term,
+			elasticQuery: this.elasticQuery,
+			time: this.time,
+			nextPageToken: this.nextPageToken
+		};
+	}
+}
+FullTextSearchResponseEntity.id = 'ondewo.nlu.FullTextSearchResponseEntity';
+(function (FullTextSearchResponseEntity) {
+	/**
+	 * Message implementation for ondewo.nlu.EntitySearchResult
+	 */
+	class EntitySearchResult {
+		/**
+		 * Message constructor. Initializes the properties and applies default Protobuf values if necessary
+		 * @param _value initial values object or instance of EntitySearchResult to deeply clone from
+		 */
+		constructor(_value) {
+			_value = _value || {};
+			this.name = _value.name;
+			this.displayName = _value.displayName;
+			this.entityTypeName = _value.entityTypeName;
+			this.language = _value.language;
+			EntitySearchResult.refineValues(this);
+		}
+		/**
+		 * Deserialize binary data to message
+		 * @param instance message instance
+		 */
+		static deserializeBinary(bytes) {
+			const instance = new EntitySearchResult();
+			EntitySearchResult.deserializeBinaryFromReader(instance, new BinaryReader(bytes));
+			return instance;
+		}
+		/**
+		 * Check all the properties and set default protobuf values if necessary
+		 * @param _instance message instance
+		 */
+		static refineValues(_instance) {
+			_instance.name = _instance.name || '';
+			_instance.displayName = _instance.displayName || '';
+			_instance.entityTypeName = _instance.entityTypeName || '';
+			_instance.language = _instance.language || '';
+		}
+		/**
+		 * Deserializes / reads binary message into message instance using provided binary reader
+		 * @param _instance message instance
+		 * @param _reader binary reader instance
+		 */
+		static deserializeBinaryFromReader(_instance, _reader) {
+			while (_reader.nextField()) {
+				if (_reader.isEndGroup()) break;
+				switch (_reader.getFieldNumber()) {
+					case 1:
+						_instance.name = _reader.readString();
+						break;
+					case 2:
+						_instance.displayName = _reader.readString();
+						break;
+					case 3:
+						_instance.entityTypeName = _reader.readString();
+						break;
+					case 4:
+						_instance.language = _reader.readString();
+						break;
+					default:
+						_reader.skipField();
+				}
+			}
+			EntitySearchResult.refineValues(_instance);
+		}
+		/**
+		 * Serializes a message to binary format using provided binary reader
+		 * @param _instance message instance
+		 * @param _writer binary writer instance
+		 */
+		static serializeBinaryToWriter(_instance, _writer) {
+			if (_instance.name) {
+				_writer.writeString(1, _instance.name);
+			}
+			if (_instance.displayName) {
+				_writer.writeString(2, _instance.displayName);
+			}
+			if (_instance.entityTypeName) {
+				_writer.writeString(3, _instance.entityTypeName);
+			}
+			if (_instance.language) {
+				_writer.writeString(4, _instance.language);
+			}
+		}
+		get name() {
+			return this._name;
+		}
+		set name(value) {
+			this._name = value;
+		}
+		get displayName() {
+			return this._displayName;
+		}
+		set displayName(value) {
+			this._displayName = value;
+		}
+		get entityTypeName() {
+			return this._entityTypeName;
+		}
+		set entityTypeName(value) {
+			this._entityTypeName = value;
+		}
+		get language() {
+			return this._language;
+		}
+		set language(value) {
+			this._language = value;
+		}
+		/**
+		 * Serialize message to binary data
+		 * @param instance message instance
+		 */
+		serializeBinary() {
+			const writer = new BinaryWriter();
+			EntitySearchResult.serializeBinaryToWriter(this, writer);
+			return writer.getResultBuffer();
+		}
+		/**
+		 * Cast message to standard JavaScript object (all non-primitive values are deeply cloned)
+		 */
+		toObject() {
+			return {
+				name: this.name,
+				displayName: this.displayName,
+				entityTypeName: this.entityTypeName,
+				language: this.language
+			};
+		}
+		/**
+		 * Convenience method to support JSON.stringify(message), replicates the structure of toObject()
+		 */
+		toJSON() {
+			return this.toObject();
+		}
+		/**
+		 * Cast message to JSON using protobuf JSON notation: https://developers.google.com/protocol-buffers/docs/proto3#json
+		 * Attention: output differs from toObject() e.g. enums are represented as names and not as numbers, Timestamp is an ISO Date string format etc.
+		 * If the message itself or some of descendant messages is google.protobuf.Any, you MUST provide a message pool as options. If not, the messagePool is not required
+		 */
+		toProtobufJSON(
+			// @ts-ignore
+			options
+		) {
+			return {
+				name: this.name,
+				displayName: this.displayName,
+				entityTypeName: this.entityTypeName,
+				language: this.language
+			};
+		}
+	}
+	EntitySearchResult.id = 'ondewo.nlu.EntitySearchResult';
+	FullTextSearchResponseEntity.EntitySearchResult = EntitySearchResult;
+})(FullTextSearchResponseEntity || (FullTextSearchResponseEntity = {}));
+/**
+ * Message implementation for ondewo.nlu.FullTextSearchResponseEntitySynonym
+ */
+class FullTextSearchResponseEntitySynonym {
+	/**
+	 * Message constructor. Initializes the properties and applies default Protobuf values if necessary
+	 * @param _value initial values object or instance of FullTextSearchResponseEntitySynonym to deeply clone from
+	 */
+	constructor(_value) {
+		_value = _value || {};
+		this.parent = _value.parent;
+		this.languageCode = _value.languageCode;
+		this.entitySynonymResults = (_value.entitySynonymResults || []).map(
+			(m) => new FullTextSearchResponseEntitySynonym.EntitySynonymSearchResult(m)
+		);
+		this.term = _value.term;
+		this.elasticQuery = _value.elasticQuery;
+		this.time = _value.time;
+		this.nextPageToken = _value.nextPageToken;
+		FullTextSearchResponseEntitySynonym.refineValues(this);
+	}
+	/**
+	 * Deserialize binary data to message
+	 * @param instance message instance
+	 */
+	static deserializeBinary(bytes) {
+		const instance = new FullTextSearchResponseEntitySynonym();
+		FullTextSearchResponseEntitySynonym.deserializeBinaryFromReader(instance, new BinaryReader(bytes));
+		return instance;
+	}
+	/**
+	 * Check all the properties and set default protobuf values if necessary
+	 * @param _instance message instance
+	 */
+	static refineValues(_instance) {
+		_instance.parent = _instance.parent || '';
+		_instance.languageCode = _instance.languageCode || '';
+		_instance.entitySynonymResults = _instance.entitySynonymResults || [];
+		_instance.term = _instance.term || '';
+		_instance.elasticQuery = _instance.elasticQuery || '';
+		_instance.time = _instance.time || 0;
+		_instance.nextPageToken = _instance.nextPageToken || '';
+	}
+	/**
+	 * Deserializes / reads binary message into message instance using provided binary reader
+	 * @param _instance message instance
+	 * @param _reader binary reader instance
+	 */
+	static deserializeBinaryFromReader(_instance, _reader) {
+		while (_reader.nextField()) {
+			if (_reader.isEndGroup()) break;
+			switch (_reader.getFieldNumber()) {
+				case 1:
+					_instance.parent = _reader.readString();
+					break;
+				case 2:
+					_instance.languageCode = _reader.readString();
+					break;
+				case 3:
+					const messageInitializer3 = new FullTextSearchResponseEntitySynonym.EntitySynonymSearchResult();
+					_reader.readMessage(
+						messageInitializer3,
+						FullTextSearchResponseEntitySynonym.EntitySynonymSearchResult.deserializeBinaryFromReader
+					);
+					(_instance.entitySynonymResults = _instance.entitySynonymResults || []).push(messageInitializer3);
+					break;
+				case 4:
+					_instance.term = _reader.readString();
+					break;
+				case 5:
+					_instance.elasticQuery = _reader.readString();
+					break;
+				case 6:
+					_instance.time = _reader.readFloat();
+					break;
+				case 7:
+					_instance.nextPageToken = _reader.readString();
+					break;
+				default:
+					_reader.skipField();
+			}
+		}
+		FullTextSearchResponseEntitySynonym.refineValues(_instance);
+	}
+	/**
+	 * Serializes a message to binary format using provided binary reader
+	 * @param _instance message instance
+	 * @param _writer binary writer instance
+	 */
+	static serializeBinaryToWriter(_instance, _writer) {
+		if (_instance.parent) {
+			_writer.writeString(1, _instance.parent);
+		}
+		if (_instance.languageCode) {
+			_writer.writeString(2, _instance.languageCode);
+		}
+		if (_instance.entitySynonymResults && _instance.entitySynonymResults.length) {
+			_writer.writeRepeatedMessage(
+				3,
+				_instance.entitySynonymResults,
+				FullTextSearchResponseEntitySynonym.EntitySynonymSearchResult.serializeBinaryToWriter
+			);
+		}
+		if (_instance.term) {
+			_writer.writeString(4, _instance.term);
+		}
+		if (_instance.elasticQuery) {
+			_writer.writeString(5, _instance.elasticQuery);
+		}
+		if (_instance.time) {
+			_writer.writeFloat(6, _instance.time);
+		}
+		if (_instance.nextPageToken) {
+			_writer.writeString(7, _instance.nextPageToken);
+		}
+	}
+	get parent() {
+		return this._parent;
+	}
+	set parent(value) {
+		this._parent = value;
+	}
+	get languageCode() {
+		return this._languageCode;
+	}
+	set languageCode(value) {
+		this._languageCode = value;
+	}
+	get entitySynonymResults() {
+		return this._entitySynonymResults;
+	}
+	set entitySynonymResults(value) {
+		this._entitySynonymResults = value;
+	}
+	get term() {
+		return this._term;
+	}
+	set term(value) {
+		this._term = value;
+	}
+	get elasticQuery() {
+		return this._elasticQuery;
+	}
+	set elasticQuery(value) {
+		this._elasticQuery = value;
+	}
+	get time() {
+		return this._time;
+	}
+	set time(value) {
+		this._time = value;
+	}
+	get nextPageToken() {
+		return this._nextPageToken;
+	}
+	set nextPageToken(value) {
+		this._nextPageToken = value;
+	}
+	/**
+	 * Serialize message to binary data
+	 * @param instance message instance
+	 */
+	serializeBinary() {
+		const writer = new BinaryWriter();
+		FullTextSearchResponseEntitySynonym.serializeBinaryToWriter(this, writer);
+		return writer.getResultBuffer();
+	}
+	/**
+	 * Cast message to standard JavaScript object (all non-primitive values are deeply cloned)
+	 */
+	toObject() {
+		return {
+			parent: this.parent,
+			languageCode: this.languageCode,
+			entitySynonymResults: (this.entitySynonymResults || []).map((m) => m.toObject()),
+			term: this.term,
+			elasticQuery: this.elasticQuery,
+			time: this.time,
+			nextPageToken: this.nextPageToken
+		};
+	}
+	/**
+	 * Convenience method to support JSON.stringify(message), replicates the structure of toObject()
+	 */
+	toJSON() {
+		return this.toObject();
+	}
+	/**
+	 * Cast message to JSON using protobuf JSON notation: https://developers.google.com/protocol-buffers/docs/proto3#json
+	 * Attention: output differs from toObject() e.g. enums are represented as names and not as numbers, Timestamp is an ISO Date string format etc.
+	 * If the message itself or some of descendant messages is google.protobuf.Any, you MUST provide a message pool as options. If not, the messagePool is not required
+	 */
+	toProtobufJSON(
+		// @ts-ignore
+		options
+	) {
+		return {
+			parent: this.parent,
+			languageCode: this.languageCode,
+			entitySynonymResults: (this.entitySynonymResults || []).map((m) => m.toProtobufJSON(options)),
+			term: this.term,
+			elasticQuery: this.elasticQuery,
+			time: this.time,
+			nextPageToken: this.nextPageToken
+		};
+	}
+}
+FullTextSearchResponseEntitySynonym.id = 'ondewo.nlu.FullTextSearchResponseEntitySynonym';
+(function (FullTextSearchResponseEntitySynonym) {
+	/**
+	 * Message implementation for ondewo.nlu.EntitySynonymSearchResult
+	 */
+	class EntitySynonymSearchResult {
+		/**
+		 * Message constructor. Initializes the properties and applies default Protobuf values if necessary
+		 * @param _value initial values object or instance of EntitySynonymSearchResult to deeply clone from
+		 */
+		constructor(_value) {
+			_value = _value || {};
+			this.name = _value.name;
+			this.displayName = _value.displayName;
+			this.entityTypeName = _value.entityTypeName;
+			this.entityName = _value.entityName;
+			this.language = _value.language;
+			EntitySynonymSearchResult.refineValues(this);
+		}
+		/**
+		 * Deserialize binary data to message
+		 * @param instance message instance
+		 */
+		static deserializeBinary(bytes) {
+			const instance = new EntitySynonymSearchResult();
+			EntitySynonymSearchResult.deserializeBinaryFromReader(instance, new BinaryReader(bytes));
+			return instance;
+		}
+		/**
+		 * Check all the properties and set default protobuf values if necessary
+		 * @param _instance message instance
+		 */
+		static refineValues(_instance) {
+			_instance.name = _instance.name || '';
+			_instance.displayName = _instance.displayName || '';
+			_instance.entityTypeName = _instance.entityTypeName || '';
+			_instance.entityName = _instance.entityName || '';
+			_instance.language = _instance.language || '';
+		}
+		/**
+		 * Deserializes / reads binary message into message instance using provided binary reader
+		 * @param _instance message instance
+		 * @param _reader binary reader instance
+		 */
+		static deserializeBinaryFromReader(_instance, _reader) {
+			while (_reader.nextField()) {
+				if (_reader.isEndGroup()) break;
+				switch (_reader.getFieldNumber()) {
+					case 1:
+						_instance.name = _reader.readString();
+						break;
+					case 2:
+						_instance.displayName = _reader.readString();
+						break;
+					case 3:
+						_instance.entityTypeName = _reader.readString();
+						break;
+					case 4:
+						_instance.entityName = _reader.readString();
+						break;
+					case 5:
+						_instance.language = _reader.readString();
+						break;
+					default:
+						_reader.skipField();
+				}
+			}
+			EntitySynonymSearchResult.refineValues(_instance);
+		}
+		/**
+		 * Serializes a message to binary format using provided binary reader
+		 * @param _instance message instance
+		 * @param _writer binary writer instance
+		 */
+		static serializeBinaryToWriter(_instance, _writer) {
+			if (_instance.name) {
+				_writer.writeString(1, _instance.name);
+			}
+			if (_instance.displayName) {
+				_writer.writeString(2, _instance.displayName);
+			}
+			if (_instance.entityTypeName) {
+				_writer.writeString(3, _instance.entityTypeName);
+			}
+			if (_instance.entityName) {
+				_writer.writeString(4, _instance.entityName);
+			}
+			if (_instance.language) {
+				_writer.writeString(5, _instance.language);
+			}
+		}
+		get name() {
+			return this._name;
+		}
+		set name(value) {
+			this._name = value;
+		}
+		get displayName() {
+			return this._displayName;
+		}
+		set displayName(value) {
+			this._displayName = value;
+		}
+		get entityTypeName() {
+			return this._entityTypeName;
+		}
+		set entityTypeName(value) {
+			this._entityTypeName = value;
+		}
+		get entityName() {
+			return this._entityName;
+		}
+		set entityName(value) {
+			this._entityName = value;
+		}
+		get language() {
+			return this._language;
+		}
+		set language(value) {
+			this._language = value;
+		}
+		/**
+		 * Serialize message to binary data
+		 * @param instance message instance
+		 */
+		serializeBinary() {
+			const writer = new BinaryWriter();
+			EntitySynonymSearchResult.serializeBinaryToWriter(this, writer);
+			return writer.getResultBuffer();
+		}
+		/**
+		 * Cast message to standard JavaScript object (all non-primitive values are deeply cloned)
+		 */
+		toObject() {
+			return {
+				name: this.name,
+				displayName: this.displayName,
+				entityTypeName: this.entityTypeName,
+				entityName: this.entityName,
+				language: this.language
+			};
+		}
+		/**
+		 * Convenience method to support JSON.stringify(message), replicates the structure of toObject()
+		 */
+		toJSON() {
+			return this.toObject();
+		}
+		/**
+		 * Cast message to JSON using protobuf JSON notation: https://developers.google.com/protocol-buffers/docs/proto3#json
+		 * Attention: output differs from toObject() e.g. enums are represented as names and not as numbers, Timestamp is an ISO Date string format etc.
+		 * If the message itself or some of descendant messages is google.protobuf.Any, you MUST provide a message pool as options. If not, the messagePool is not required
+		 */
+		toProtobufJSON(
+			// @ts-ignore
+			options
+		) {
+			return {
+				name: this.name,
+				displayName: this.displayName,
+				entityTypeName: this.entityTypeName,
+				entityName: this.entityName,
+				language: this.language
+			};
+		}
+	}
+	EntitySynonymSearchResult.id = 'ondewo.nlu.EntitySynonymSearchResult';
+	FullTextSearchResponseEntitySynonym.EntitySynonymSearchResult = EntitySynonymSearchResult;
+})(FullTextSearchResponseEntitySynonym || (FullTextSearchResponseEntitySynonym = {}));
+/**
+ * Message implementation for ondewo.nlu.FullTextSearchResponseIntent
+ */
+class FullTextSearchResponseIntent {
+	/**
+	 * Message constructor. Initializes the properties and applies default Protobuf values if necessary
+	 * @param _value initial values object or instance of FullTextSearchResponseIntent to deeply clone from
+	 */
+	constructor(_value) {
+		_value = _value || {};
+		this.parent = _value.parent;
+		this.languageCode = _value.languageCode;
+		this.intentResults = (_value.intentResults || []).map(
+			(m) => new FullTextSearchResponseIntent.IntentSearchResult(m)
+		);
+		this.term = _value.term;
+		this.elasticQuery = _value.elasticQuery;
+		this.time = _value.time;
+		this.nextPageToken = _value.nextPageToken;
+		FullTextSearchResponseIntent.refineValues(this);
+	}
+	/**
+	 * Deserialize binary data to message
+	 * @param instance message instance
+	 */
+	static deserializeBinary(bytes) {
+		const instance = new FullTextSearchResponseIntent();
+		FullTextSearchResponseIntent.deserializeBinaryFromReader(instance, new BinaryReader(bytes));
+		return instance;
+	}
+	/**
+	 * Check all the properties and set default protobuf values if necessary
+	 * @param _instance message instance
+	 */
+	static refineValues(_instance) {
+		_instance.parent = _instance.parent || '';
+		_instance.languageCode = _instance.languageCode || '';
+		_instance.intentResults = _instance.intentResults || [];
+		_instance.term = _instance.term || '';
+		_instance.elasticQuery = _instance.elasticQuery || '';
+		_instance.time = _instance.time || 0;
+		_instance.nextPageToken = _instance.nextPageToken || '';
+	}
+	/**
+	 * Deserializes / reads binary message into message instance using provided binary reader
+	 * @param _instance message instance
+	 * @param _reader binary reader instance
+	 */
+	static deserializeBinaryFromReader(_instance, _reader) {
+		while (_reader.nextField()) {
+			if (_reader.isEndGroup()) break;
+			switch (_reader.getFieldNumber()) {
+				case 1:
+					_instance.parent = _reader.readString();
+					break;
+				case 2:
+					_instance.languageCode = _reader.readString();
+					break;
+				case 3:
+					const messageInitializer3 = new FullTextSearchResponseIntent.IntentSearchResult();
+					_reader.readMessage(
+						messageInitializer3,
+						FullTextSearchResponseIntent.IntentSearchResult.deserializeBinaryFromReader
+					);
+					(_instance.intentResults = _instance.intentResults || []).push(messageInitializer3);
+					break;
+				case 4:
+					_instance.term = _reader.readString();
+					break;
+				case 5:
+					_instance.elasticQuery = _reader.readString();
+					break;
+				case 6:
+					_instance.time = _reader.readFloat();
+					break;
+				case 7:
+					_instance.nextPageToken = _reader.readString();
+					break;
+				default:
+					_reader.skipField();
+			}
+		}
+		FullTextSearchResponseIntent.refineValues(_instance);
+	}
+	/**
+	 * Serializes a message to binary format using provided binary reader
+	 * @param _instance message instance
+	 * @param _writer binary writer instance
+	 */
+	static serializeBinaryToWriter(_instance, _writer) {
+		if (_instance.parent) {
+			_writer.writeString(1, _instance.parent);
+		}
+		if (_instance.languageCode) {
+			_writer.writeString(2, _instance.languageCode);
+		}
+		if (_instance.intentResults && _instance.intentResults.length) {
+			_writer.writeRepeatedMessage(
+				3,
+				_instance.intentResults,
+				FullTextSearchResponseIntent.IntentSearchResult.serializeBinaryToWriter
+			);
+		}
+		if (_instance.term) {
+			_writer.writeString(4, _instance.term);
+		}
+		if (_instance.elasticQuery) {
+			_writer.writeString(5, _instance.elasticQuery);
+		}
+		if (_instance.time) {
+			_writer.writeFloat(6, _instance.time);
+		}
+		if (_instance.nextPageToken) {
+			_writer.writeString(7, _instance.nextPageToken);
+		}
+	}
+	get parent() {
+		return this._parent;
+	}
+	set parent(value) {
+		this._parent = value;
+	}
+	get languageCode() {
+		return this._languageCode;
+	}
+	set languageCode(value) {
+		this._languageCode = value;
+	}
+	get intentResults() {
+		return this._intentResults;
+	}
+	set intentResults(value) {
+		this._intentResults = value;
+	}
+	get term() {
+		return this._term;
+	}
+	set term(value) {
+		this._term = value;
+	}
+	get elasticQuery() {
+		return this._elasticQuery;
+	}
+	set elasticQuery(value) {
+		this._elasticQuery = value;
+	}
+	get time() {
+		return this._time;
+	}
+	set time(value) {
+		this._time = value;
+	}
+	get nextPageToken() {
+		return this._nextPageToken;
+	}
+	set nextPageToken(value) {
+		this._nextPageToken = value;
+	}
+	/**
+	 * Serialize message to binary data
+	 * @param instance message instance
+	 */
+	serializeBinary() {
+		const writer = new BinaryWriter();
+		FullTextSearchResponseIntent.serializeBinaryToWriter(this, writer);
+		return writer.getResultBuffer();
+	}
+	/**
+	 * Cast message to standard JavaScript object (all non-primitive values are deeply cloned)
+	 */
+	toObject() {
+		return {
+			parent: this.parent,
+			languageCode: this.languageCode,
+			intentResults: (this.intentResults || []).map((m) => m.toObject()),
+			term: this.term,
+			elasticQuery: this.elasticQuery,
+			time: this.time,
+			nextPageToken: this.nextPageToken
+		};
+	}
+	/**
+	 * Convenience method to support JSON.stringify(message), replicates the structure of toObject()
+	 */
+	toJSON() {
+		return this.toObject();
+	}
+	/**
+	 * Cast message to JSON using protobuf JSON notation: https://developers.google.com/protocol-buffers/docs/proto3#json
+	 * Attention: output differs from toObject() e.g. enums are represented as names and not as numbers, Timestamp is an ISO Date string format etc.
+	 * If the message itself or some of descendant messages is google.protobuf.Any, you MUST provide a message pool as options. If not, the messagePool is not required
+	 */
+	toProtobufJSON(
+		// @ts-ignore
+		options
+	) {
+		return {
+			parent: this.parent,
+			languageCode: this.languageCode,
+			intentResults: (this.intentResults || []).map((m) => m.toProtobufJSON(options)),
+			term: this.term,
+			elasticQuery: this.elasticQuery,
+			time: this.time,
+			nextPageToken: this.nextPageToken
+		};
+	}
+}
+FullTextSearchResponseIntent.id = 'ondewo.nlu.FullTextSearchResponseIntent';
+(function (FullTextSearchResponseIntent) {
+	/**
+	 * Message implementation for ondewo.nlu.IntentSearchResult
+	 */
+	class IntentSearchResult {
+		/**
+		 * Message constructor. Initializes the properties and applies default Protobuf values if necessary
+		 * @param _value initial values object or instance of IntentSearchResult to deeply clone from
+		 */
+		constructor(_value) {
+			_value = _value || {};
+			this.name = _value.name;
+			this.displayName = _value.displayName;
+			this.domainName = _value.domainName;
+			this.language = _value.language;
+			IntentSearchResult.refineValues(this);
+		}
+		/**
+		 * Deserialize binary data to message
+		 * @param instance message instance
+		 */
+		static deserializeBinary(bytes) {
+			const instance = new IntentSearchResult();
+			IntentSearchResult.deserializeBinaryFromReader(instance, new BinaryReader(bytes));
+			return instance;
+		}
+		/**
+		 * Check all the properties and set default protobuf values if necessary
+		 * @param _instance message instance
+		 */
+		static refineValues(_instance) {
+			_instance.name = _instance.name || '';
+			_instance.displayName = _instance.displayName || '';
+			_instance.domainName = _instance.domainName || '';
+			_instance.language = _instance.language || '';
+		}
+		/**
+		 * Deserializes / reads binary message into message instance using provided binary reader
+		 * @param _instance message instance
+		 * @param _reader binary reader instance
+		 */
+		static deserializeBinaryFromReader(_instance, _reader) {
+			while (_reader.nextField()) {
+				if (_reader.isEndGroup()) break;
+				switch (_reader.getFieldNumber()) {
+					case 1:
+						_instance.name = _reader.readString();
+						break;
+					case 2:
+						_instance.displayName = _reader.readString();
+						break;
+					case 3:
+						_instance.domainName = _reader.readString();
+						break;
+					case 4:
+						_instance.language = _reader.readString();
+						break;
+					default:
+						_reader.skipField();
+				}
+			}
+			IntentSearchResult.refineValues(_instance);
+		}
+		/**
+		 * Serializes a message to binary format using provided binary reader
+		 * @param _instance message instance
+		 * @param _writer binary writer instance
+		 */
+		static serializeBinaryToWriter(_instance, _writer) {
+			if (_instance.name) {
+				_writer.writeString(1, _instance.name);
+			}
+			if (_instance.displayName) {
+				_writer.writeString(2, _instance.displayName);
+			}
+			if (_instance.domainName) {
+				_writer.writeString(3, _instance.domainName);
+			}
+			if (_instance.language) {
+				_writer.writeString(4, _instance.language);
+			}
+		}
+		get name() {
+			return this._name;
+		}
+		set name(value) {
+			this._name = value;
+		}
+		get displayName() {
+			return this._displayName;
+		}
+		set displayName(value) {
+			this._displayName = value;
+		}
+		get domainName() {
+			return this._domainName;
+		}
+		set domainName(value) {
+			this._domainName = value;
+		}
+		get language() {
+			return this._language;
+		}
+		set language(value) {
+			this._language = value;
+		}
+		/**
+		 * Serialize message to binary data
+		 * @param instance message instance
+		 */
+		serializeBinary() {
+			const writer = new BinaryWriter();
+			IntentSearchResult.serializeBinaryToWriter(this, writer);
+			return writer.getResultBuffer();
+		}
+		/**
+		 * Cast message to standard JavaScript object (all non-primitive values are deeply cloned)
+		 */
+		toObject() {
+			return {
+				name: this.name,
+				displayName: this.displayName,
+				domainName: this.domainName,
+				language: this.language
+			};
+		}
+		/**
+		 * Convenience method to support JSON.stringify(message), replicates the structure of toObject()
+		 */
+		toJSON() {
+			return this.toObject();
+		}
+		/**
+		 * Cast message to JSON using protobuf JSON notation: https://developers.google.com/protocol-buffers/docs/proto3#json
+		 * Attention: output differs from toObject() e.g. enums are represented as names and not as numbers, Timestamp is an ISO Date string format etc.
+		 * If the message itself or some of descendant messages is google.protobuf.Any, you MUST provide a message pool as options. If not, the messagePool is not required
+		 */
+		toProtobufJSON(
+			// @ts-ignore
+			options
+		) {
+			return {
+				name: this.name,
+				displayName: this.displayName,
+				domainName: this.domainName,
+				language: this.language
+			};
+		}
+	}
+	IntentSearchResult.id = 'ondewo.nlu.IntentSearchResult';
+	FullTextSearchResponseIntent.IntentSearchResult = IntentSearchResult;
+})(FullTextSearchResponseIntent || (FullTextSearchResponseIntent = {}));
+/**
+ * Message implementation for ondewo.nlu.FullTextSearchResponseIntentContextIn
+ */
+class FullTextSearchResponseIntentContextIn {
+	/**
+	 * Message constructor. Initializes the properties and applies default Protobuf values if necessary
+	 * @param _value initial values object or instance of FullTextSearchResponseIntentContextIn to deeply clone from
+	 */
+	constructor(_value) {
+		_value = _value || {};
+		this.parent = _value.parent;
+		this.languageCode = _value.languageCode;
+		this.intentContextInResults = (_value.intentContextInResults || []).map(
+			(m) => new FullTextSearchResponseIntentContextIn.IntentContextInSearchResult(m)
+		);
+		this.term = _value.term;
+		this.elasticQuery = _value.elasticQuery;
+		this.time = _value.time;
+		this.nextPageToken = _value.nextPageToken;
+		FullTextSearchResponseIntentContextIn.refineValues(this);
+	}
+	/**
+	 * Deserialize binary data to message
+	 * @param instance message instance
+	 */
+	static deserializeBinary(bytes) {
+		const instance = new FullTextSearchResponseIntentContextIn();
+		FullTextSearchResponseIntentContextIn.deserializeBinaryFromReader(instance, new BinaryReader(bytes));
+		return instance;
+	}
+	/**
+	 * Check all the properties and set default protobuf values if necessary
+	 * @param _instance message instance
+	 */
+	static refineValues(_instance) {
+		_instance.parent = _instance.parent || '';
+		_instance.languageCode = _instance.languageCode || '';
+		_instance.intentContextInResults = _instance.intentContextInResults || [];
+		_instance.term = _instance.term || '';
+		_instance.elasticQuery = _instance.elasticQuery || '';
+		_instance.time = _instance.time || 0;
+		_instance.nextPageToken = _instance.nextPageToken || '';
+	}
+	/**
+	 * Deserializes / reads binary message into message instance using provided binary reader
+	 * @param _instance message instance
+	 * @param _reader binary reader instance
+	 */
+	static deserializeBinaryFromReader(_instance, _reader) {
+		while (_reader.nextField()) {
+			if (_reader.isEndGroup()) break;
+			switch (_reader.getFieldNumber()) {
+				case 1:
+					_instance.parent = _reader.readString();
+					break;
+				case 2:
+					_instance.languageCode = _reader.readString();
+					break;
+				case 3:
+					const messageInitializer3 = new FullTextSearchResponseIntentContextIn.IntentContextInSearchResult();
+					_reader.readMessage(
+						messageInitializer3,
+						FullTextSearchResponseIntentContextIn.IntentContextInSearchResult.deserializeBinaryFromReader
+					);
+					(_instance.intentContextInResults = _instance.intentContextInResults || []).push(messageInitializer3);
+					break;
+				case 4:
+					_instance.term = _reader.readString();
+					break;
+				case 5:
+					_instance.elasticQuery = _reader.readString();
+					break;
+				case 6:
+					_instance.time = _reader.readFloat();
+					break;
+				case 7:
+					_instance.nextPageToken = _reader.readString();
+					break;
+				default:
+					_reader.skipField();
+			}
+		}
+		FullTextSearchResponseIntentContextIn.refineValues(_instance);
+	}
+	/**
+	 * Serializes a message to binary format using provided binary reader
+	 * @param _instance message instance
+	 * @param _writer binary writer instance
+	 */
+	static serializeBinaryToWriter(_instance, _writer) {
+		if (_instance.parent) {
+			_writer.writeString(1, _instance.parent);
+		}
+		if (_instance.languageCode) {
+			_writer.writeString(2, _instance.languageCode);
+		}
+		if (_instance.intentContextInResults && _instance.intentContextInResults.length) {
+			_writer.writeRepeatedMessage(
+				3,
+				_instance.intentContextInResults,
+				FullTextSearchResponseIntentContextIn.IntentContextInSearchResult.serializeBinaryToWriter
+			);
+		}
+		if (_instance.term) {
+			_writer.writeString(4, _instance.term);
+		}
+		if (_instance.elasticQuery) {
+			_writer.writeString(5, _instance.elasticQuery);
+		}
+		if (_instance.time) {
+			_writer.writeFloat(6, _instance.time);
+		}
+		if (_instance.nextPageToken) {
+			_writer.writeString(7, _instance.nextPageToken);
+		}
+	}
+	get parent() {
+		return this._parent;
+	}
+	set parent(value) {
+		this._parent = value;
+	}
+	get languageCode() {
+		return this._languageCode;
+	}
+	set languageCode(value) {
+		this._languageCode = value;
+	}
+	get intentContextInResults() {
+		return this._intentContextInResults;
+	}
+	set intentContextInResults(value) {
+		this._intentContextInResults = value;
+	}
+	get term() {
+		return this._term;
+	}
+	set term(value) {
+		this._term = value;
+	}
+	get elasticQuery() {
+		return this._elasticQuery;
+	}
+	set elasticQuery(value) {
+		this._elasticQuery = value;
+	}
+	get time() {
+		return this._time;
+	}
+	set time(value) {
+		this._time = value;
+	}
+	get nextPageToken() {
+		return this._nextPageToken;
+	}
+	set nextPageToken(value) {
+		this._nextPageToken = value;
+	}
+	/**
+	 * Serialize message to binary data
+	 * @param instance message instance
+	 */
+	serializeBinary() {
+		const writer = new BinaryWriter();
+		FullTextSearchResponseIntentContextIn.serializeBinaryToWriter(this, writer);
+		return writer.getResultBuffer();
+	}
+	/**
+	 * Cast message to standard JavaScript object (all non-primitive values are deeply cloned)
+	 */
+	toObject() {
+		return {
+			parent: this.parent,
+			languageCode: this.languageCode,
+			intentContextInResults: (this.intentContextInResults || []).map((m) => m.toObject()),
+			term: this.term,
+			elasticQuery: this.elasticQuery,
+			time: this.time,
+			nextPageToken: this.nextPageToken
+		};
+	}
+	/**
+	 * Convenience method to support JSON.stringify(message), replicates the structure of toObject()
+	 */
+	toJSON() {
+		return this.toObject();
+	}
+	/**
+	 * Cast message to JSON using protobuf JSON notation: https://developers.google.com/protocol-buffers/docs/proto3#json
+	 * Attention: output differs from toObject() e.g. enums are represented as names and not as numbers, Timestamp is an ISO Date string format etc.
+	 * If the message itself or some of descendant messages is google.protobuf.Any, you MUST provide a message pool as options. If not, the messagePool is not required
+	 */
+	toProtobufJSON(
+		// @ts-ignore
+		options
+	) {
+		return {
+			parent: this.parent,
+			languageCode: this.languageCode,
+			intentContextInResults: (this.intentContextInResults || []).map((m) => m.toProtobufJSON(options)),
+			term: this.term,
+			elasticQuery: this.elasticQuery,
+			time: this.time,
+			nextPageToken: this.nextPageToken
+		};
+	}
+}
+FullTextSearchResponseIntentContextIn.id = 'ondewo.nlu.FullTextSearchResponseIntentContextIn';
+(function (FullTextSearchResponseIntentContextIn) {
+	/**
+	 * Message implementation for ondewo.nlu.IntentContextInSearchResult
+	 */
+	class IntentContextInSearchResult {
+		/**
+		 * Message constructor. Initializes the properties and applies default Protobuf values if necessary
+		 * @param _value initial values object or instance of IntentContextInSearchResult to deeply clone from
+		 */
+		constructor(_value) {
+			_value = _value || {};
+			this.name = _value.name;
+			this.intentName = _value.intentName;
+			this.language = _value.language;
+			IntentContextInSearchResult.refineValues(this);
+		}
+		/**
+		 * Deserialize binary data to message
+		 * @param instance message instance
+		 */
+		static deserializeBinary(bytes) {
+			const instance = new IntentContextInSearchResult();
+			IntentContextInSearchResult.deserializeBinaryFromReader(instance, new BinaryReader(bytes));
+			return instance;
+		}
+		/**
+		 * Check all the properties and set default protobuf values if necessary
+		 * @param _instance message instance
+		 */
+		static refineValues(_instance) {
+			_instance.name = _instance.name || '';
+			_instance.intentName = _instance.intentName || '';
+			_instance.language = _instance.language || '';
+		}
+		/**
+		 * Deserializes / reads binary message into message instance using provided binary reader
+		 * @param _instance message instance
+		 * @param _reader binary reader instance
+		 */
+		static deserializeBinaryFromReader(_instance, _reader) {
+			while (_reader.nextField()) {
+				if (_reader.isEndGroup()) break;
+				switch (_reader.getFieldNumber()) {
+					case 1:
+						_instance.name = _reader.readString();
+						break;
+					case 2:
+						_instance.intentName = _reader.readString();
+						break;
+					case 3:
+						_instance.language = _reader.readString();
+						break;
+					default:
+						_reader.skipField();
+				}
+			}
+			IntentContextInSearchResult.refineValues(_instance);
+		}
+		/**
+		 * Serializes a message to binary format using provided binary reader
+		 * @param _instance message instance
+		 * @param _writer binary writer instance
+		 */
+		static serializeBinaryToWriter(_instance, _writer) {
+			if (_instance.name) {
+				_writer.writeString(1, _instance.name);
+			}
+			if (_instance.intentName) {
+				_writer.writeString(2, _instance.intentName);
+			}
+			if (_instance.language) {
+				_writer.writeString(3, _instance.language);
+			}
+		}
+		get name() {
+			return this._name;
+		}
+		set name(value) {
+			this._name = value;
+		}
+		get intentName() {
+			return this._intentName;
+		}
+		set intentName(value) {
+			this._intentName = value;
+		}
+		get language() {
+			return this._language;
+		}
+		set language(value) {
+			this._language = value;
+		}
+		/**
+		 * Serialize message to binary data
+		 * @param instance message instance
+		 */
+		serializeBinary() {
+			const writer = new BinaryWriter();
+			IntentContextInSearchResult.serializeBinaryToWriter(this, writer);
+			return writer.getResultBuffer();
+		}
+		/**
+		 * Cast message to standard JavaScript object (all non-primitive values are deeply cloned)
+		 */
+		toObject() {
+			return {
+				name: this.name,
+				intentName: this.intentName,
+				language: this.language
+			};
+		}
+		/**
+		 * Convenience method to support JSON.stringify(message), replicates the structure of toObject()
+		 */
+		toJSON() {
+			return this.toObject();
+		}
+		/**
+		 * Cast message to JSON using protobuf JSON notation: https://developers.google.com/protocol-buffers/docs/proto3#json
+		 * Attention: output differs from toObject() e.g. enums are represented as names and not as numbers, Timestamp is an ISO Date string format etc.
+		 * If the message itself or some of descendant messages is google.protobuf.Any, you MUST provide a message pool as options. If not, the messagePool is not required
+		 */
+		toProtobufJSON(
+			// @ts-ignore
+			options
+		) {
+			return {
+				name: this.name,
+				intentName: this.intentName,
+				language: this.language
+			};
+		}
+	}
+	IntentContextInSearchResult.id = 'ondewo.nlu.IntentContextInSearchResult';
+	FullTextSearchResponseIntentContextIn.IntentContextInSearchResult = IntentContextInSearchResult;
+})(FullTextSearchResponseIntentContextIn || (FullTextSearchResponseIntentContextIn = {}));
+/**
+ * Message implementation for ondewo.nlu.FullTextSearchResponseIntentContextOut
+ */
+class FullTextSearchResponseIntentContextOut {
+	/**
+	 * Message constructor. Initializes the properties and applies default Protobuf values if necessary
+	 * @param _value initial values object or instance of FullTextSearchResponseIntentContextOut to deeply clone from
+	 */
+	constructor(_value) {
+		_value = _value || {};
+		this.parent = _value.parent;
+		this.languageCode = _value.languageCode;
+		this.intentContextOutResults = (_value.intentContextOutResults || []).map(
+			(m) => new FullTextSearchResponseIntentContextOut.IntentContextOutSearchResult(m)
+		);
+		this.term = _value.term;
+		this.elasticQuery = _value.elasticQuery;
+		this.time = _value.time;
+		this.nextPageToken = _value.nextPageToken;
+		FullTextSearchResponseIntentContextOut.refineValues(this);
+	}
+	/**
+	 * Deserialize binary data to message
+	 * @param instance message instance
+	 */
+	static deserializeBinary(bytes) {
+		const instance = new FullTextSearchResponseIntentContextOut();
+		FullTextSearchResponseIntentContextOut.deserializeBinaryFromReader(instance, new BinaryReader(bytes));
+		return instance;
+	}
+	/**
+	 * Check all the properties and set default protobuf values if necessary
+	 * @param _instance message instance
+	 */
+	static refineValues(_instance) {
+		_instance.parent = _instance.parent || '';
+		_instance.languageCode = _instance.languageCode || '';
+		_instance.intentContextOutResults = _instance.intentContextOutResults || [];
+		_instance.term = _instance.term || '';
+		_instance.elasticQuery = _instance.elasticQuery || '';
+		_instance.time = _instance.time || 0;
+		_instance.nextPageToken = _instance.nextPageToken || '';
+	}
+	/**
+	 * Deserializes / reads binary message into message instance using provided binary reader
+	 * @param _instance message instance
+	 * @param _reader binary reader instance
+	 */
+	static deserializeBinaryFromReader(_instance, _reader) {
+		while (_reader.nextField()) {
+			if (_reader.isEndGroup()) break;
+			switch (_reader.getFieldNumber()) {
+				case 1:
+					_instance.parent = _reader.readString();
+					break;
+				case 2:
+					_instance.languageCode = _reader.readString();
+					break;
+				case 3:
+					const messageInitializer3 = new FullTextSearchResponseIntentContextOut.IntentContextOutSearchResult();
+					_reader.readMessage(
+						messageInitializer3,
+						FullTextSearchResponseIntentContextOut.IntentContextOutSearchResult.deserializeBinaryFromReader
+					);
+					(_instance.intentContextOutResults = _instance.intentContextOutResults || []).push(messageInitializer3);
+					break;
+				case 4:
+					_instance.term = _reader.readString();
+					break;
+				case 5:
+					_instance.elasticQuery = _reader.readString();
+					break;
+				case 6:
+					_instance.time = _reader.readFloat();
+					break;
+				case 7:
+					_instance.nextPageToken = _reader.readString();
+					break;
+				default:
+					_reader.skipField();
+			}
+		}
+		FullTextSearchResponseIntentContextOut.refineValues(_instance);
+	}
+	/**
+	 * Serializes a message to binary format using provided binary reader
+	 * @param _instance message instance
+	 * @param _writer binary writer instance
+	 */
+	static serializeBinaryToWriter(_instance, _writer) {
+		if (_instance.parent) {
+			_writer.writeString(1, _instance.parent);
+		}
+		if (_instance.languageCode) {
+			_writer.writeString(2, _instance.languageCode);
+		}
+		if (_instance.intentContextOutResults && _instance.intentContextOutResults.length) {
+			_writer.writeRepeatedMessage(
+				3,
+				_instance.intentContextOutResults,
+				FullTextSearchResponseIntentContextOut.IntentContextOutSearchResult.serializeBinaryToWriter
+			);
+		}
+		if (_instance.term) {
+			_writer.writeString(4, _instance.term);
+		}
+		if (_instance.elasticQuery) {
+			_writer.writeString(5, _instance.elasticQuery);
+		}
+		if (_instance.time) {
+			_writer.writeFloat(6, _instance.time);
+		}
+		if (_instance.nextPageToken) {
+			_writer.writeString(7, _instance.nextPageToken);
+		}
+	}
+	get parent() {
+		return this._parent;
+	}
+	set parent(value) {
+		this._parent = value;
+	}
+	get languageCode() {
+		return this._languageCode;
+	}
+	set languageCode(value) {
+		this._languageCode = value;
+	}
+	get intentContextOutResults() {
+		return this._intentContextOutResults;
+	}
+	set intentContextOutResults(value) {
+		this._intentContextOutResults = value;
+	}
+	get term() {
+		return this._term;
+	}
+	set term(value) {
+		this._term = value;
+	}
+	get elasticQuery() {
+		return this._elasticQuery;
+	}
+	set elasticQuery(value) {
+		this._elasticQuery = value;
+	}
+	get time() {
+		return this._time;
+	}
+	set time(value) {
+		this._time = value;
+	}
+	get nextPageToken() {
+		return this._nextPageToken;
+	}
+	set nextPageToken(value) {
+		this._nextPageToken = value;
+	}
+	/**
+	 * Serialize message to binary data
+	 * @param instance message instance
+	 */
+	serializeBinary() {
+		const writer = new BinaryWriter();
+		FullTextSearchResponseIntentContextOut.serializeBinaryToWriter(this, writer);
+		return writer.getResultBuffer();
+	}
+	/**
+	 * Cast message to standard JavaScript object (all non-primitive values are deeply cloned)
+	 */
+	toObject() {
+		return {
+			parent: this.parent,
+			languageCode: this.languageCode,
+			intentContextOutResults: (this.intentContextOutResults || []).map((m) => m.toObject()),
+			term: this.term,
+			elasticQuery: this.elasticQuery,
+			time: this.time,
+			nextPageToken: this.nextPageToken
+		};
+	}
+	/**
+	 * Convenience method to support JSON.stringify(message), replicates the structure of toObject()
+	 */
+	toJSON() {
+		return this.toObject();
+	}
+	/**
+	 * Cast message to JSON using protobuf JSON notation: https://developers.google.com/protocol-buffers/docs/proto3#json
+	 * Attention: output differs from toObject() e.g. enums are represented as names and not as numbers, Timestamp is an ISO Date string format etc.
+	 * If the message itself or some of descendant messages is google.protobuf.Any, you MUST provide a message pool as options. If not, the messagePool is not required
+	 */
+	toProtobufJSON(
+		// @ts-ignore
+		options
+	) {
+		return {
+			parent: this.parent,
+			languageCode: this.languageCode,
+			intentContextOutResults: (this.intentContextOutResults || []).map((m) => m.toProtobufJSON(options)),
+			term: this.term,
+			elasticQuery: this.elasticQuery,
+			time: this.time,
+			nextPageToken: this.nextPageToken
+		};
+	}
+}
+FullTextSearchResponseIntentContextOut.id = 'ondewo.nlu.FullTextSearchResponseIntentContextOut';
+(function (FullTextSearchResponseIntentContextOut) {
+	/**
+	 * Message implementation for ondewo.nlu.IntentContextOutSearchResult
+	 */
+	class IntentContextOutSearchResult {
+		/**
+		 * Message constructor. Initializes the properties and applies default Protobuf values if necessary
+		 * @param _value initial values object or instance of IntentContextOutSearchResult to deeply clone from
+		 */
+		constructor(_value) {
+			_value = _value || {};
+			this.name = _value.name;
+			this.intentName = _value.intentName;
+			this.language = _value.language;
+			IntentContextOutSearchResult.refineValues(this);
+		}
+		/**
+		 * Deserialize binary data to message
+		 * @param instance message instance
+		 */
+		static deserializeBinary(bytes) {
+			const instance = new IntentContextOutSearchResult();
+			IntentContextOutSearchResult.deserializeBinaryFromReader(instance, new BinaryReader(bytes));
+			return instance;
+		}
+		/**
+		 * Check all the properties and set default protobuf values if necessary
+		 * @param _instance message instance
+		 */
+		static refineValues(_instance) {
+			_instance.name = _instance.name || '';
+			_instance.intentName = _instance.intentName || '';
+			_instance.language = _instance.language || '';
+		}
+		/**
+		 * Deserializes / reads binary message into message instance using provided binary reader
+		 * @param _instance message instance
+		 * @param _reader binary reader instance
+		 */
+		static deserializeBinaryFromReader(_instance, _reader) {
+			while (_reader.nextField()) {
+				if (_reader.isEndGroup()) break;
+				switch (_reader.getFieldNumber()) {
+					case 1:
+						_instance.name = _reader.readString();
+						break;
+					case 2:
+						_instance.intentName = _reader.readString();
+						break;
+					case 3:
+						_instance.language = _reader.readString();
+						break;
+					default:
+						_reader.skipField();
+				}
+			}
+			IntentContextOutSearchResult.refineValues(_instance);
+		}
+		/**
+		 * Serializes a message to binary format using provided binary reader
+		 * @param _instance message instance
+		 * @param _writer binary writer instance
+		 */
+		static serializeBinaryToWriter(_instance, _writer) {
+			if (_instance.name) {
+				_writer.writeString(1, _instance.name);
+			}
+			if (_instance.intentName) {
+				_writer.writeString(2, _instance.intentName);
+			}
+			if (_instance.language) {
+				_writer.writeString(3, _instance.language);
+			}
+		}
+		get name() {
+			return this._name;
+		}
+		set name(value) {
+			this._name = value;
+		}
+		get intentName() {
+			return this._intentName;
+		}
+		set intentName(value) {
+			this._intentName = value;
+		}
+		get language() {
+			return this._language;
+		}
+		set language(value) {
+			this._language = value;
+		}
+		/**
+		 * Serialize message to binary data
+		 * @param instance message instance
+		 */
+		serializeBinary() {
+			const writer = new BinaryWriter();
+			IntentContextOutSearchResult.serializeBinaryToWriter(this, writer);
+			return writer.getResultBuffer();
+		}
+		/**
+		 * Cast message to standard JavaScript object (all non-primitive values are deeply cloned)
+		 */
+		toObject() {
+			return {
+				name: this.name,
+				intentName: this.intentName,
+				language: this.language
+			};
+		}
+		/**
+		 * Convenience method to support JSON.stringify(message), replicates the structure of toObject()
+		 */
+		toJSON() {
+			return this.toObject();
+		}
+		/**
+		 * Cast message to JSON using protobuf JSON notation: https://developers.google.com/protocol-buffers/docs/proto3#json
+		 * Attention: output differs from toObject() e.g. enums are represented as names and not as numbers, Timestamp is an ISO Date string format etc.
+		 * If the message itself or some of descendant messages is google.protobuf.Any, you MUST provide a message pool as options. If not, the messagePool is not required
+		 */
+		toProtobufJSON(
+			// @ts-ignore
+			options
+		) {
+			return {
+				name: this.name,
+				intentName: this.intentName,
+				language: this.language
+			};
+		}
+	}
+	IntentContextOutSearchResult.id = 'ondewo.nlu.IntentContextOutSearchResult';
+	FullTextSearchResponseIntentContextOut.IntentContextOutSearchResult = IntentContextOutSearchResult;
+})(FullTextSearchResponseIntentContextOut || (FullTextSearchResponseIntentContextOut = {}));
+/**
+ * Message implementation for ondewo.nlu.FullTextSearchResponseIntentUsersays
+ */
+class FullTextSearchResponseIntentUsersays {
+	/**
+	 * Message constructor. Initializes the properties and applies default Protobuf values if necessary
+	 * @param _value initial values object or instance of FullTextSearchResponseIntentUsersays to deeply clone from
+	 */
+	constructor(_value) {
+		_value = _value || {};
+		this.parent = _value.parent;
+		this.languageCode = _value.languageCode;
+		this.intentUsersaysResults = (_value.intentUsersaysResults || []).map(
+			(m) => new FullTextSearchResponseIntentUsersays.IntentUsersaysSearchResult(m)
+		);
+		this.term = _value.term;
+		this.elasticQuery = _value.elasticQuery;
+		this.time = _value.time;
+		this.nextPageToken = _value.nextPageToken;
+		FullTextSearchResponseIntentUsersays.refineValues(this);
+	}
+	/**
+	 * Deserialize binary data to message
+	 * @param instance message instance
+	 */
+	static deserializeBinary(bytes) {
+		const instance = new FullTextSearchResponseIntentUsersays();
+		FullTextSearchResponseIntentUsersays.deserializeBinaryFromReader(instance, new BinaryReader(bytes));
+		return instance;
+	}
+	/**
+	 * Check all the properties and set default protobuf values if necessary
+	 * @param _instance message instance
+	 */
+	static refineValues(_instance) {
+		_instance.parent = _instance.parent || '';
+		_instance.languageCode = _instance.languageCode || '';
+		_instance.intentUsersaysResults = _instance.intentUsersaysResults || [];
+		_instance.term = _instance.term || '';
+		_instance.elasticQuery = _instance.elasticQuery || '';
+		_instance.time = _instance.time || 0;
+		_instance.nextPageToken = _instance.nextPageToken || '';
+	}
+	/**
+	 * Deserializes / reads binary message into message instance using provided binary reader
+	 * @param _instance message instance
+	 * @param _reader binary reader instance
+	 */
+	static deserializeBinaryFromReader(_instance, _reader) {
+		while (_reader.nextField()) {
+			if (_reader.isEndGroup()) break;
+			switch (_reader.getFieldNumber()) {
+				case 1:
+					_instance.parent = _reader.readString();
+					break;
+				case 2:
+					_instance.languageCode = _reader.readString();
+					break;
+				case 3:
+					const messageInitializer3 = new FullTextSearchResponseIntentUsersays.IntentUsersaysSearchResult();
+					_reader.readMessage(
+						messageInitializer3,
+						FullTextSearchResponseIntentUsersays.IntentUsersaysSearchResult.deserializeBinaryFromReader
+					);
+					(_instance.intentUsersaysResults = _instance.intentUsersaysResults || []).push(messageInitializer3);
+					break;
+				case 4:
+					_instance.term = _reader.readString();
+					break;
+				case 5:
+					_instance.elasticQuery = _reader.readString();
+					break;
+				case 6:
+					_instance.time = _reader.readFloat();
+					break;
+				case 7:
+					_instance.nextPageToken = _reader.readString();
+					break;
+				default:
+					_reader.skipField();
+			}
+		}
+		FullTextSearchResponseIntentUsersays.refineValues(_instance);
+	}
+	/**
+	 * Serializes a message to binary format using provided binary reader
+	 * @param _instance message instance
+	 * @param _writer binary writer instance
+	 */
+	static serializeBinaryToWriter(_instance, _writer) {
+		if (_instance.parent) {
+			_writer.writeString(1, _instance.parent);
+		}
+		if (_instance.languageCode) {
+			_writer.writeString(2, _instance.languageCode);
+		}
+		if (_instance.intentUsersaysResults && _instance.intentUsersaysResults.length) {
+			_writer.writeRepeatedMessage(
+				3,
+				_instance.intentUsersaysResults,
+				FullTextSearchResponseIntentUsersays.IntentUsersaysSearchResult.serializeBinaryToWriter
+			);
+		}
+		if (_instance.term) {
+			_writer.writeString(4, _instance.term);
+		}
+		if (_instance.elasticQuery) {
+			_writer.writeString(5, _instance.elasticQuery);
+		}
+		if (_instance.time) {
+			_writer.writeFloat(6, _instance.time);
+		}
+		if (_instance.nextPageToken) {
+			_writer.writeString(7, _instance.nextPageToken);
+		}
+	}
+	get parent() {
+		return this._parent;
+	}
+	set parent(value) {
+		this._parent = value;
+	}
+	get languageCode() {
+		return this._languageCode;
+	}
+	set languageCode(value) {
+		this._languageCode = value;
+	}
+	get intentUsersaysResults() {
+		return this._intentUsersaysResults;
+	}
+	set intentUsersaysResults(value) {
+		this._intentUsersaysResults = value;
+	}
+	get term() {
+		return this._term;
+	}
+	set term(value) {
+		this._term = value;
+	}
+	get elasticQuery() {
+		return this._elasticQuery;
+	}
+	set elasticQuery(value) {
+		this._elasticQuery = value;
+	}
+	get time() {
+		return this._time;
+	}
+	set time(value) {
+		this._time = value;
+	}
+	get nextPageToken() {
+		return this._nextPageToken;
+	}
+	set nextPageToken(value) {
+		this._nextPageToken = value;
+	}
+	/**
+	 * Serialize message to binary data
+	 * @param instance message instance
+	 */
+	serializeBinary() {
+		const writer = new BinaryWriter();
+		FullTextSearchResponseIntentUsersays.serializeBinaryToWriter(this, writer);
+		return writer.getResultBuffer();
+	}
+	/**
+	 * Cast message to standard JavaScript object (all non-primitive values are deeply cloned)
+	 */
+	toObject() {
+		return {
+			parent: this.parent,
+			languageCode: this.languageCode,
+			intentUsersaysResults: (this.intentUsersaysResults || []).map((m) => m.toObject()),
+			term: this.term,
+			elasticQuery: this.elasticQuery,
+			time: this.time,
+			nextPageToken: this.nextPageToken
+		};
+	}
+	/**
+	 * Convenience method to support JSON.stringify(message), replicates the structure of toObject()
+	 */
+	toJSON() {
+		return this.toObject();
+	}
+	/**
+	 * Cast message to JSON using protobuf JSON notation: https://developers.google.com/protocol-buffers/docs/proto3#json
+	 * Attention: output differs from toObject() e.g. enums are represented as names and not as numbers, Timestamp is an ISO Date string format etc.
+	 * If the message itself or some of descendant messages is google.protobuf.Any, you MUST provide a message pool as options. If not, the messagePool is not required
+	 */
+	toProtobufJSON(
+		// @ts-ignore
+		options
+	) {
+		return {
+			parent: this.parent,
+			languageCode: this.languageCode,
+			intentUsersaysResults: (this.intentUsersaysResults || []).map((m) => m.toProtobufJSON(options)),
+			term: this.term,
+			elasticQuery: this.elasticQuery,
+			time: this.time,
+			nextPageToken: this.nextPageToken
+		};
+	}
+}
+FullTextSearchResponseIntentUsersays.id = 'ondewo.nlu.FullTextSearchResponseIntentUsersays';
+(function (FullTextSearchResponseIntentUsersays) {
+	/**
+	 * Message implementation for ondewo.nlu.IntentUsersaysSearchResult
+	 */
+	class IntentUsersaysSearchResult {
+		/**
+		 * Message constructor. Initializes the properties and applies default Protobuf values if necessary
+		 * @param _value initial values object or instance of IntentUsersaysSearchResult to deeply clone from
+		 */
+		constructor(_value) {
+			_value = _value || {};
+			this.name = _value.name;
+			this.text = _value.text;
+			this.textAsEntityTypes = _value.textAsEntityTypes;
+			this.textAsEntityValues = _value.textAsEntityValues;
+			this.type = _value.type;
+			this.intentName = _value.intentName;
+			this.language = _value.language;
+			IntentUsersaysSearchResult.refineValues(this);
+		}
+		/**
+		 * Deserialize binary data to message
+		 * @param instance message instance
+		 */
+		static deserializeBinary(bytes) {
+			const instance = new IntentUsersaysSearchResult();
+			IntentUsersaysSearchResult.deserializeBinaryFromReader(instance, new BinaryReader(bytes));
+			return instance;
+		}
+		/**
+		 * Check all the properties and set default protobuf values if necessary
+		 * @param _instance message instance
+		 */
+		static refineValues(_instance) {
+			_instance.name = _instance.name || '';
+			_instance.text = _instance.text || '';
+			_instance.textAsEntityTypes = _instance.textAsEntityTypes || '';
+			_instance.textAsEntityValues = _instance.textAsEntityValues || '';
+			_instance.type = _instance.type || '';
+			_instance.intentName = _instance.intentName || '';
+			_instance.language = _instance.language || '';
+		}
+		/**
+		 * Deserializes / reads binary message into message instance using provided binary reader
+		 * @param _instance message instance
+		 * @param _reader binary reader instance
+		 */
+		static deserializeBinaryFromReader(_instance, _reader) {
+			while (_reader.nextField()) {
+				if (_reader.isEndGroup()) break;
+				switch (_reader.getFieldNumber()) {
+					case 1:
+						_instance.name = _reader.readString();
+						break;
+					case 2:
+						_instance.text = _reader.readString();
+						break;
+					case 3:
+						_instance.textAsEntityTypes = _reader.readString();
+						break;
+					case 4:
+						_instance.textAsEntityValues = _reader.readString();
+						break;
+					case 5:
+						_instance.type = _reader.readString();
+						break;
+					case 6:
+						_instance.intentName = _reader.readString();
+						break;
+					case 7:
+						_instance.language = _reader.readString();
+						break;
+					default:
+						_reader.skipField();
+				}
+			}
+			IntentUsersaysSearchResult.refineValues(_instance);
+		}
+		/**
+		 * Serializes a message to binary format using provided binary reader
+		 * @param _instance message instance
+		 * @param _writer binary writer instance
+		 */
+		static serializeBinaryToWriter(_instance, _writer) {
+			if (_instance.name) {
+				_writer.writeString(1, _instance.name);
+			}
+			if (_instance.text) {
+				_writer.writeString(2, _instance.text);
+			}
+			if (_instance.textAsEntityTypes) {
+				_writer.writeString(3, _instance.textAsEntityTypes);
+			}
+			if (_instance.textAsEntityValues) {
+				_writer.writeString(4, _instance.textAsEntityValues);
+			}
+			if (_instance.type) {
+				_writer.writeString(5, _instance.type);
+			}
+			if (_instance.intentName) {
+				_writer.writeString(6, _instance.intentName);
+			}
+			if (_instance.language) {
+				_writer.writeString(7, _instance.language);
+			}
+		}
+		get name() {
+			return this._name;
+		}
+		set name(value) {
+			this._name = value;
+		}
+		get text() {
+			return this._text;
+		}
+		set text(value) {
+			this._text = value;
+		}
+		get textAsEntityTypes() {
+			return this._textAsEntityTypes;
+		}
+		set textAsEntityTypes(value) {
+			this._textAsEntityTypes = value;
+		}
+		get textAsEntityValues() {
+			return this._textAsEntityValues;
+		}
+		set textAsEntityValues(value) {
+			this._textAsEntityValues = value;
+		}
+		get type() {
+			return this._type;
+		}
+		set type(value) {
+			this._type = value;
+		}
+		get intentName() {
+			return this._intentName;
+		}
+		set intentName(value) {
+			this._intentName = value;
+		}
+		get language() {
+			return this._language;
+		}
+		set language(value) {
+			this._language = value;
+		}
+		/**
+		 * Serialize message to binary data
+		 * @param instance message instance
+		 */
+		serializeBinary() {
+			const writer = new BinaryWriter();
+			IntentUsersaysSearchResult.serializeBinaryToWriter(this, writer);
+			return writer.getResultBuffer();
+		}
+		/**
+		 * Cast message to standard JavaScript object (all non-primitive values are deeply cloned)
+		 */
+		toObject() {
+			return {
+				name: this.name,
+				text: this.text,
+				textAsEntityTypes: this.textAsEntityTypes,
+				textAsEntityValues: this.textAsEntityValues,
+				type: this.type,
+				intentName: this.intentName,
+				language: this.language
+			};
+		}
+		/**
+		 * Convenience method to support JSON.stringify(message), replicates the structure of toObject()
+		 */
+		toJSON() {
+			return this.toObject();
+		}
+		/**
+		 * Cast message to JSON using protobuf JSON notation: https://developers.google.com/protocol-buffers/docs/proto3#json
+		 * Attention: output differs from toObject() e.g. enums are represented as names and not as numbers, Timestamp is an ISO Date string format etc.
+		 * If the message itself or some of descendant messages is google.protobuf.Any, you MUST provide a message pool as options. If not, the messagePool is not required
+		 */
+		toProtobufJSON(
+			// @ts-ignore
+			options
+		) {
+			return {
+				name: this.name,
+				text: this.text,
+				textAsEntityTypes: this.textAsEntityTypes,
+				textAsEntityValues: this.textAsEntityValues,
+				type: this.type,
+				intentName: this.intentName,
+				language: this.language
+			};
+		}
+	}
+	IntentUsersaysSearchResult.id = 'ondewo.nlu.IntentUsersaysSearchResult';
+	FullTextSearchResponseIntentUsersays.IntentUsersaysSearchResult = IntentUsersaysSearchResult;
+})(FullTextSearchResponseIntentUsersays || (FullTextSearchResponseIntentUsersays = {}));
+/**
+ * Message implementation for ondewo.nlu.FullTextSearchResponseIntentTags
+ */
+class FullTextSearchResponseIntentTags {
+	/**
+	 * Message constructor. Initializes the properties and applies default Protobuf values if necessary
+	 * @param _value initial values object or instance of FullTextSearchResponseIntentTags to deeply clone from
+	 */
+	constructor(_value) {
+		_value = _value || {};
+		this.parent = _value.parent;
+		this.languageCode = _value.languageCode;
+		this.intentTagsResults = (_value.intentTagsResults || []).map(
+			(m) => new FullTextSearchResponseIntentTags.IntentTagsSearchResult(m)
+		);
+		this.term = _value.term;
+		this.elasticQuery = _value.elasticQuery;
+		this.time = _value.time;
+		this.nextPageToken = _value.nextPageToken;
+		FullTextSearchResponseIntentTags.refineValues(this);
+	}
+	/**
+	 * Deserialize binary data to message
+	 * @param instance message instance
+	 */
+	static deserializeBinary(bytes) {
+		const instance = new FullTextSearchResponseIntentTags();
+		FullTextSearchResponseIntentTags.deserializeBinaryFromReader(instance, new BinaryReader(bytes));
+		return instance;
+	}
+	/**
+	 * Check all the properties and set default protobuf values if necessary
+	 * @param _instance message instance
+	 */
+	static refineValues(_instance) {
+		_instance.parent = _instance.parent || '';
+		_instance.languageCode = _instance.languageCode || '';
+		_instance.intentTagsResults = _instance.intentTagsResults || [];
+		_instance.term = _instance.term || '';
+		_instance.elasticQuery = _instance.elasticQuery || '';
+		_instance.time = _instance.time || 0;
+		_instance.nextPageToken = _instance.nextPageToken || '';
+	}
+	/**
+	 * Deserializes / reads binary message into message instance using provided binary reader
+	 * @param _instance message instance
+	 * @param _reader binary reader instance
+	 */
+	static deserializeBinaryFromReader(_instance, _reader) {
+		while (_reader.nextField()) {
+			if (_reader.isEndGroup()) break;
+			switch (_reader.getFieldNumber()) {
+				case 1:
+					_instance.parent = _reader.readString();
+					break;
+				case 2:
+					_instance.languageCode = _reader.readString();
+					break;
+				case 3:
+					const messageInitializer3 = new FullTextSearchResponseIntentTags.IntentTagsSearchResult();
+					_reader.readMessage(
+						messageInitializer3,
+						FullTextSearchResponseIntentTags.IntentTagsSearchResult.deserializeBinaryFromReader
+					);
+					(_instance.intentTagsResults = _instance.intentTagsResults || []).push(messageInitializer3);
+					break;
+				case 4:
+					_instance.term = _reader.readString();
+					break;
+				case 5:
+					_instance.elasticQuery = _reader.readString();
+					break;
+				case 6:
+					_instance.time = _reader.readFloat();
+					break;
+				case 7:
+					_instance.nextPageToken = _reader.readString();
+					break;
+				default:
+					_reader.skipField();
+			}
+		}
+		FullTextSearchResponseIntentTags.refineValues(_instance);
+	}
+	/**
+	 * Serializes a message to binary format using provided binary reader
+	 * @param _instance message instance
+	 * @param _writer binary writer instance
+	 */
+	static serializeBinaryToWriter(_instance, _writer) {
+		if (_instance.parent) {
+			_writer.writeString(1, _instance.parent);
+		}
+		if (_instance.languageCode) {
+			_writer.writeString(2, _instance.languageCode);
+		}
+		if (_instance.intentTagsResults && _instance.intentTagsResults.length) {
+			_writer.writeRepeatedMessage(
+				3,
+				_instance.intentTagsResults,
+				FullTextSearchResponseIntentTags.IntentTagsSearchResult.serializeBinaryToWriter
+			);
+		}
+		if (_instance.term) {
+			_writer.writeString(4, _instance.term);
+		}
+		if (_instance.elasticQuery) {
+			_writer.writeString(5, _instance.elasticQuery);
+		}
+		if (_instance.time) {
+			_writer.writeFloat(6, _instance.time);
+		}
+		if (_instance.nextPageToken) {
+			_writer.writeString(7, _instance.nextPageToken);
+		}
+	}
+	get parent() {
+		return this._parent;
+	}
+	set parent(value) {
+		this._parent = value;
+	}
+	get languageCode() {
+		return this._languageCode;
+	}
+	set languageCode(value) {
+		this._languageCode = value;
+	}
+	get intentTagsResults() {
+		return this._intentTagsResults;
+	}
+	set intentTagsResults(value) {
+		this._intentTagsResults = value;
+	}
+	get term() {
+		return this._term;
+	}
+	set term(value) {
+		this._term = value;
+	}
+	get elasticQuery() {
+		return this._elasticQuery;
+	}
+	set elasticQuery(value) {
+		this._elasticQuery = value;
+	}
+	get time() {
+		return this._time;
+	}
+	set time(value) {
+		this._time = value;
+	}
+	get nextPageToken() {
+		return this._nextPageToken;
+	}
+	set nextPageToken(value) {
+		this._nextPageToken = value;
+	}
+	/**
+	 * Serialize message to binary data
+	 * @param instance message instance
+	 */
+	serializeBinary() {
+		const writer = new BinaryWriter();
+		FullTextSearchResponseIntentTags.serializeBinaryToWriter(this, writer);
+		return writer.getResultBuffer();
+	}
+	/**
+	 * Cast message to standard JavaScript object (all non-primitive values are deeply cloned)
+	 */
+	toObject() {
+		return {
+			parent: this.parent,
+			languageCode: this.languageCode,
+			intentTagsResults: (this.intentTagsResults || []).map((m) => m.toObject()),
+			term: this.term,
+			elasticQuery: this.elasticQuery,
+			time: this.time,
+			nextPageToken: this.nextPageToken
+		};
+	}
+	/**
+	 * Convenience method to support JSON.stringify(message), replicates the structure of toObject()
+	 */
+	toJSON() {
+		return this.toObject();
+	}
+	/**
+	 * Cast message to JSON using protobuf JSON notation: https://developers.google.com/protocol-buffers/docs/proto3#json
+	 * Attention: output differs from toObject() e.g. enums are represented as names and not as numbers, Timestamp is an ISO Date string format etc.
+	 * If the message itself or some of descendant messages is google.protobuf.Any, you MUST provide a message pool as options. If not, the messagePool is not required
+	 */
+	toProtobufJSON(
+		// @ts-ignore
+		options
+	) {
+		return {
+			parent: this.parent,
+			languageCode: this.languageCode,
+			intentTagsResults: (this.intentTagsResults || []).map((m) => m.toProtobufJSON(options)),
+			term: this.term,
+			elasticQuery: this.elasticQuery,
+			time: this.time,
+			nextPageToken: this.nextPageToken
+		};
+	}
+}
+FullTextSearchResponseIntentTags.id = 'ondewo.nlu.FullTextSearchResponseIntentTags';
+(function (FullTextSearchResponseIntentTags) {
+	/**
+	 * Message implementation for ondewo.nlu.IntentTagsSearchResult
+	 */
+	class IntentTagsSearchResult {
+		/**
+		 * Message constructor. Initializes the properties and applies default Protobuf values if necessary
+		 * @param _value initial values object or instance of IntentTagsSearchResult to deeply clone from
+		 */
+		constructor(_value) {
+			_value = _value || {};
+			this.name = _value.name;
+			this.text = _value.text;
+			this.intentName = _value.intentName;
+			this.language = _value.language;
+			IntentTagsSearchResult.refineValues(this);
+		}
+		/**
+		 * Deserialize binary data to message
+		 * @param instance message instance
+		 */
+		static deserializeBinary(bytes) {
+			const instance = new IntentTagsSearchResult();
+			IntentTagsSearchResult.deserializeBinaryFromReader(instance, new BinaryReader(bytes));
+			return instance;
+		}
+		/**
+		 * Check all the properties and set default protobuf values if necessary
+		 * @param _instance message instance
+		 */
+		static refineValues(_instance) {
+			_instance.name = _instance.name || '';
+			_instance.text = _instance.text || '';
+			_instance.intentName = _instance.intentName || '';
+			_instance.language = _instance.language || '';
+		}
+		/**
+		 * Deserializes / reads binary message into message instance using provided binary reader
+		 * @param _instance message instance
+		 * @param _reader binary reader instance
+		 */
+		static deserializeBinaryFromReader(_instance, _reader) {
+			while (_reader.nextField()) {
+				if (_reader.isEndGroup()) break;
+				switch (_reader.getFieldNumber()) {
+					case 1:
+						_instance.name = _reader.readString();
+						break;
+					case 2:
+						_instance.text = _reader.readString();
+						break;
+					case 3:
+						_instance.intentName = _reader.readString();
+						break;
+					case 4:
+						_instance.language = _reader.readString();
+						break;
+					default:
+						_reader.skipField();
+				}
+			}
+			IntentTagsSearchResult.refineValues(_instance);
+		}
+		/**
+		 * Serializes a message to binary format using provided binary reader
+		 * @param _instance message instance
+		 * @param _writer binary writer instance
+		 */
+		static serializeBinaryToWriter(_instance, _writer) {
+			if (_instance.name) {
+				_writer.writeString(1, _instance.name);
+			}
+			if (_instance.text) {
+				_writer.writeString(2, _instance.text);
+			}
+			if (_instance.intentName) {
+				_writer.writeString(3, _instance.intentName);
+			}
+			if (_instance.language) {
+				_writer.writeString(4, _instance.language);
+			}
+		}
+		get name() {
+			return this._name;
+		}
+		set name(value) {
+			this._name = value;
+		}
+		get text() {
+			return this._text;
+		}
+		set text(value) {
+			this._text = value;
+		}
+		get intentName() {
+			return this._intentName;
+		}
+		set intentName(value) {
+			this._intentName = value;
+		}
+		get language() {
+			return this._language;
+		}
+		set language(value) {
+			this._language = value;
+		}
+		/**
+		 * Serialize message to binary data
+		 * @param instance message instance
+		 */
+		serializeBinary() {
+			const writer = new BinaryWriter();
+			IntentTagsSearchResult.serializeBinaryToWriter(this, writer);
+			return writer.getResultBuffer();
+		}
+		/**
+		 * Cast message to standard JavaScript object (all non-primitive values are deeply cloned)
+		 */
+		toObject() {
+			return {
+				name: this.name,
+				text: this.text,
+				intentName: this.intentName,
+				language: this.language
+			};
+		}
+		/**
+		 * Convenience method to support JSON.stringify(message), replicates the structure of toObject()
+		 */
+		toJSON() {
+			return this.toObject();
+		}
+		/**
+		 * Cast message to JSON using protobuf JSON notation: https://developers.google.com/protocol-buffers/docs/proto3#json
+		 * Attention: output differs from toObject() e.g. enums are represented as names and not as numbers, Timestamp is an ISO Date string format etc.
+		 * If the message itself or some of descendant messages is google.protobuf.Any, you MUST provide a message pool as options. If not, the messagePool is not required
+		 */
+		toProtobufJSON(
+			// @ts-ignore
+			options
+		) {
+			return {
+				name: this.name,
+				text: this.text,
+				intentName: this.intentName,
+				language: this.language
+			};
+		}
+	}
+	IntentTagsSearchResult.id = 'ondewo.nlu.IntentTagsSearchResult';
+	FullTextSearchResponseIntentTags.IntentTagsSearchResult = IntentTagsSearchResult;
+})(FullTextSearchResponseIntentTags || (FullTextSearchResponseIntentTags = {}));
+/**
+ * Message implementation for ondewo.nlu.FullTextSearchResponseIntentResponse
+ */
+class FullTextSearchResponseIntentResponse {
+	/**
+	 * Message constructor. Initializes the properties and applies default Protobuf values if necessary
+	 * @param _value initial values object or instance of FullTextSearchResponseIntentResponse to deeply clone from
+	 */
+	constructor(_value) {
+		_value = _value || {};
+		this.parent = _value.parent;
+		this.languageCode = _value.languageCode;
+		this.intentResponseResults = (_value.intentResponseResults || []).map(
+			(m) => new FullTextSearchResponseIntentResponse.IntentResponseSearchResult(m)
+		);
+		this.term = _value.term;
+		this.elasticQuery = _value.elasticQuery;
+		this.time = _value.time;
+		this.nextPageToken = _value.nextPageToken;
+		FullTextSearchResponseIntentResponse.refineValues(this);
+	}
+	/**
+	 * Deserialize binary data to message
+	 * @param instance message instance
+	 */
+	static deserializeBinary(bytes) {
+		const instance = new FullTextSearchResponseIntentResponse();
+		FullTextSearchResponseIntentResponse.deserializeBinaryFromReader(instance, new BinaryReader(bytes));
+		return instance;
+	}
+	/**
+	 * Check all the properties and set default protobuf values if necessary
+	 * @param _instance message instance
+	 */
+	static refineValues(_instance) {
+		_instance.parent = _instance.parent || '';
+		_instance.languageCode = _instance.languageCode || '';
+		_instance.intentResponseResults = _instance.intentResponseResults || [];
+		_instance.term = _instance.term || '';
+		_instance.elasticQuery = _instance.elasticQuery || '';
+		_instance.time = _instance.time || 0;
+		_instance.nextPageToken = _instance.nextPageToken || '';
+	}
+	/**
+	 * Deserializes / reads binary message into message instance using provided binary reader
+	 * @param _instance message instance
+	 * @param _reader binary reader instance
+	 */
+	static deserializeBinaryFromReader(_instance, _reader) {
+		while (_reader.nextField()) {
+			if (_reader.isEndGroup()) break;
+			switch (_reader.getFieldNumber()) {
+				case 1:
+					_instance.parent = _reader.readString();
+					break;
+				case 2:
+					_instance.languageCode = _reader.readString();
+					break;
+				case 3:
+					const messageInitializer3 = new FullTextSearchResponseIntentResponse.IntentResponseSearchResult();
+					_reader.readMessage(
+						messageInitializer3,
+						FullTextSearchResponseIntentResponse.IntentResponseSearchResult.deserializeBinaryFromReader
+					);
+					(_instance.intentResponseResults = _instance.intentResponseResults || []).push(messageInitializer3);
+					break;
+				case 4:
+					_instance.term = _reader.readString();
+					break;
+				case 5:
+					_instance.elasticQuery = _reader.readString();
+					break;
+				case 6:
+					_instance.time = _reader.readFloat();
+					break;
+				case 7:
+					_instance.nextPageToken = _reader.readString();
+					break;
+				default:
+					_reader.skipField();
+			}
+		}
+		FullTextSearchResponseIntentResponse.refineValues(_instance);
+	}
+	/**
+	 * Serializes a message to binary format using provided binary reader
+	 * @param _instance message instance
+	 * @param _writer binary writer instance
+	 */
+	static serializeBinaryToWriter(_instance, _writer) {
+		if (_instance.parent) {
+			_writer.writeString(1, _instance.parent);
+		}
+		if (_instance.languageCode) {
+			_writer.writeString(2, _instance.languageCode);
+		}
+		if (_instance.intentResponseResults && _instance.intentResponseResults.length) {
+			_writer.writeRepeatedMessage(
+				3,
+				_instance.intentResponseResults,
+				FullTextSearchResponseIntentResponse.IntentResponseSearchResult.serializeBinaryToWriter
+			);
+		}
+		if (_instance.term) {
+			_writer.writeString(4, _instance.term);
+		}
+		if (_instance.elasticQuery) {
+			_writer.writeString(5, _instance.elasticQuery);
+		}
+		if (_instance.time) {
+			_writer.writeFloat(6, _instance.time);
+		}
+		if (_instance.nextPageToken) {
+			_writer.writeString(7, _instance.nextPageToken);
+		}
+	}
+	get parent() {
+		return this._parent;
+	}
+	set parent(value) {
+		this._parent = value;
+	}
+	get languageCode() {
+		return this._languageCode;
+	}
+	set languageCode(value) {
+		this._languageCode = value;
+	}
+	get intentResponseResults() {
+		return this._intentResponseResults;
+	}
+	set intentResponseResults(value) {
+		this._intentResponseResults = value;
+	}
+	get term() {
+		return this._term;
+	}
+	set term(value) {
+		this._term = value;
+	}
+	get elasticQuery() {
+		return this._elasticQuery;
+	}
+	set elasticQuery(value) {
+		this._elasticQuery = value;
+	}
+	get time() {
+		return this._time;
+	}
+	set time(value) {
+		this._time = value;
+	}
+	get nextPageToken() {
+		return this._nextPageToken;
+	}
+	set nextPageToken(value) {
+		this._nextPageToken = value;
+	}
+	/**
+	 * Serialize message to binary data
+	 * @param instance message instance
+	 */
+	serializeBinary() {
+		const writer = new BinaryWriter();
+		FullTextSearchResponseIntentResponse.serializeBinaryToWriter(this, writer);
+		return writer.getResultBuffer();
+	}
+	/**
+	 * Cast message to standard JavaScript object (all non-primitive values are deeply cloned)
+	 */
+	toObject() {
+		return {
+			parent: this.parent,
+			languageCode: this.languageCode,
+			intentResponseResults: (this.intentResponseResults || []).map((m) => m.toObject()),
+			term: this.term,
+			elasticQuery: this.elasticQuery,
+			time: this.time,
+			nextPageToken: this.nextPageToken
+		};
+	}
+	/**
+	 * Convenience method to support JSON.stringify(message), replicates the structure of toObject()
+	 */
+	toJSON() {
+		return this.toObject();
+	}
+	/**
+	 * Cast message to JSON using protobuf JSON notation: https://developers.google.com/protocol-buffers/docs/proto3#json
+	 * Attention: output differs from toObject() e.g. enums are represented as names and not as numbers, Timestamp is an ISO Date string format etc.
+	 * If the message itself or some of descendant messages is google.protobuf.Any, you MUST provide a message pool as options. If not, the messagePool is not required
+	 */
+	toProtobufJSON(
+		// @ts-ignore
+		options
+	) {
+		return {
+			parent: this.parent,
+			languageCode: this.languageCode,
+			intentResponseResults: (this.intentResponseResults || []).map((m) => m.toProtobufJSON(options)),
+			term: this.term,
+			elasticQuery: this.elasticQuery,
+			time: this.time,
+			nextPageToken: this.nextPageToken
+		};
+	}
+}
+FullTextSearchResponseIntentResponse.id = 'ondewo.nlu.FullTextSearchResponseIntentResponse';
+(function (FullTextSearchResponseIntentResponse) {
+	/**
+	 * Message implementation for ondewo.nlu.IntentResponseSearchResult
+	 */
+	class IntentResponseSearchResult {
+		/**
+		 * Message constructor. Initializes the properties and applies default Protobuf values if necessary
+		 * @param _value initial values object or instance of IntentResponseSearchResult to deeply clone from
+		 */
+		constructor(_value) {
+			_value = _value || {};
+			this.text = _value.text;
+			this.platform = _value.platform;
+			this.responseType = _value.responseType;
+			this.intentName = _value.intentName;
+			this.language = _value.language;
+			IntentResponseSearchResult.refineValues(this);
+		}
+		/**
+		 * Deserialize binary data to message
+		 * @param instance message instance
+		 */
+		static deserializeBinary(bytes) {
+			const instance = new IntentResponseSearchResult();
+			IntentResponseSearchResult.deserializeBinaryFromReader(instance, new BinaryReader(bytes));
+			return instance;
+		}
+		/**
+		 * Check all the properties and set default protobuf values if necessary
+		 * @param _instance message instance
+		 */
+		static refineValues(_instance) {
+			_instance.text = _instance.text || '';
+			_instance.platform = _instance.platform || '';
+			_instance.responseType = _instance.responseType || '';
+			_instance.intentName = _instance.intentName || '';
+			_instance.language = _instance.language || '';
+		}
+		/**
+		 * Deserializes / reads binary message into message instance using provided binary reader
+		 * @param _instance message instance
+		 * @param _reader binary reader instance
+		 */
+		static deserializeBinaryFromReader(_instance, _reader) {
+			while (_reader.nextField()) {
+				if (_reader.isEndGroup()) break;
+				switch (_reader.getFieldNumber()) {
+					case 1:
+						_instance.text = _reader.readString();
+						break;
+					case 2:
+						_instance.platform = _reader.readString();
+						break;
+					case 3:
+						_instance.responseType = _reader.readString();
+						break;
+					case 4:
+						_instance.intentName = _reader.readString();
+						break;
+					case 5:
+						_instance.language = _reader.readString();
+						break;
+					default:
+						_reader.skipField();
+				}
+			}
+			IntentResponseSearchResult.refineValues(_instance);
+		}
+		/**
+		 * Serializes a message to binary format using provided binary reader
+		 * @param _instance message instance
+		 * @param _writer binary writer instance
+		 */
+		static serializeBinaryToWriter(_instance, _writer) {
+			if (_instance.text) {
+				_writer.writeString(1, _instance.text);
+			}
+			if (_instance.platform) {
+				_writer.writeString(2, _instance.platform);
+			}
+			if (_instance.responseType) {
+				_writer.writeString(3, _instance.responseType);
+			}
+			if (_instance.intentName) {
+				_writer.writeString(4, _instance.intentName);
+			}
+			if (_instance.language) {
+				_writer.writeString(5, _instance.language);
+			}
+		}
+		get text() {
+			return this._text;
+		}
+		set text(value) {
+			this._text = value;
+		}
+		get platform() {
+			return this._platform;
+		}
+		set platform(value) {
+			this._platform = value;
+		}
+		get responseType() {
+			return this._responseType;
+		}
+		set responseType(value) {
+			this._responseType = value;
+		}
+		get intentName() {
+			return this._intentName;
+		}
+		set intentName(value) {
+			this._intentName = value;
+		}
+		get language() {
+			return this._language;
+		}
+		set language(value) {
+			this._language = value;
+		}
+		/**
+		 * Serialize message to binary data
+		 * @param instance message instance
+		 */
+		serializeBinary() {
+			const writer = new BinaryWriter();
+			IntentResponseSearchResult.serializeBinaryToWriter(this, writer);
+			return writer.getResultBuffer();
+		}
+		/**
+		 * Cast message to standard JavaScript object (all non-primitive values are deeply cloned)
+		 */
+		toObject() {
+			return {
+				text: this.text,
+				platform: this.platform,
+				responseType: this.responseType,
+				intentName: this.intentName,
+				language: this.language
+			};
+		}
+		/**
+		 * Convenience method to support JSON.stringify(message), replicates the structure of toObject()
+		 */
+		toJSON() {
+			return this.toObject();
+		}
+		/**
+		 * Cast message to JSON using protobuf JSON notation: https://developers.google.com/protocol-buffers/docs/proto3#json
+		 * Attention: output differs from toObject() e.g. enums are represented as names and not as numbers, Timestamp is an ISO Date string format etc.
+		 * If the message itself or some of descendant messages is google.protobuf.Any, you MUST provide a message pool as options. If not, the messagePool is not required
+		 */
+		toProtobufJSON(
+			// @ts-ignore
+			options
+		) {
+			return {
+				text: this.text,
+				platform: this.platform,
+				responseType: this.responseType,
+				intentName: this.intentName,
+				language: this.language
+			};
+		}
+	}
+	IntentResponseSearchResult.id = 'ondewo.nlu.IntentResponseSearchResult';
+	FullTextSearchResponseIntentResponse.IntentResponseSearchResult = IntentResponseSearchResult;
+})(FullTextSearchResponseIntentResponse || (FullTextSearchResponseIntentResponse = {}));
+/**
+ * Message implementation for ondewo.nlu.FullTextSearchResponseIntentParameters
+ */
+class FullTextSearchResponseIntentParameters {
+	/**
+	 * Message constructor. Initializes the properties and applies default Protobuf values if necessary
+	 * @param _value initial values object or instance of FullTextSearchResponseIntentParameters to deeply clone from
+	 */
+	constructor(_value) {
+		_value = _value || {};
+		this.parent = _value.parent;
+		this.languageCode = _value.languageCode;
+		this.intentParametersResults = (_value.intentParametersResults || []).map(
+			(m) => new FullTextSearchResponseIntentParameters.IntentParametersSearchResult(m)
+		);
+		this.term = _value.term;
+		this.elasticQuery = _value.elasticQuery;
+		this.time = _value.time;
+		this.nextPageToken = _value.nextPageToken;
+		FullTextSearchResponseIntentParameters.refineValues(this);
+	}
+	/**
+	 * Deserialize binary data to message
+	 * @param instance message instance
+	 */
+	static deserializeBinary(bytes) {
+		const instance = new FullTextSearchResponseIntentParameters();
+		FullTextSearchResponseIntentParameters.deserializeBinaryFromReader(instance, new BinaryReader(bytes));
+		return instance;
+	}
+	/**
+	 * Check all the properties and set default protobuf values if necessary
+	 * @param _instance message instance
+	 */
+	static refineValues(_instance) {
+		_instance.parent = _instance.parent || '';
+		_instance.languageCode = _instance.languageCode || '';
+		_instance.intentParametersResults = _instance.intentParametersResults || [];
+		_instance.term = _instance.term || '';
+		_instance.elasticQuery = _instance.elasticQuery || '';
+		_instance.time = _instance.time || 0;
+		_instance.nextPageToken = _instance.nextPageToken || '';
+	}
+	/**
+	 * Deserializes / reads binary message into message instance using provided binary reader
+	 * @param _instance message instance
+	 * @param _reader binary reader instance
+	 */
+	static deserializeBinaryFromReader(_instance, _reader) {
+		while (_reader.nextField()) {
+			if (_reader.isEndGroup()) break;
+			switch (_reader.getFieldNumber()) {
+				case 1:
+					_instance.parent = _reader.readString();
+					break;
+				case 2:
+					_instance.languageCode = _reader.readString();
+					break;
+				case 3:
+					const messageInitializer3 = new FullTextSearchResponseIntentParameters.IntentParametersSearchResult();
+					_reader.readMessage(
+						messageInitializer3,
+						FullTextSearchResponseIntentParameters.IntentParametersSearchResult.deserializeBinaryFromReader
+					);
+					(_instance.intentParametersResults = _instance.intentParametersResults || []).push(messageInitializer3);
+					break;
+				case 4:
+					_instance.term = _reader.readString();
+					break;
+				case 5:
+					_instance.elasticQuery = _reader.readString();
+					break;
+				case 6:
+					_instance.time = _reader.readFloat();
+					break;
+				case 7:
+					_instance.nextPageToken = _reader.readString();
+					break;
+				default:
+					_reader.skipField();
+			}
+		}
+		FullTextSearchResponseIntentParameters.refineValues(_instance);
+	}
+	/**
+	 * Serializes a message to binary format using provided binary reader
+	 * @param _instance message instance
+	 * @param _writer binary writer instance
+	 */
+	static serializeBinaryToWriter(_instance, _writer) {
+		if (_instance.parent) {
+			_writer.writeString(1, _instance.parent);
+		}
+		if (_instance.languageCode) {
+			_writer.writeString(2, _instance.languageCode);
+		}
+		if (_instance.intentParametersResults && _instance.intentParametersResults.length) {
+			_writer.writeRepeatedMessage(
+				3,
+				_instance.intentParametersResults,
+				FullTextSearchResponseIntentParameters.IntentParametersSearchResult.serializeBinaryToWriter
+			);
+		}
+		if (_instance.term) {
+			_writer.writeString(4, _instance.term);
+		}
+		if (_instance.elasticQuery) {
+			_writer.writeString(5, _instance.elasticQuery);
+		}
+		if (_instance.time) {
+			_writer.writeFloat(6, _instance.time);
+		}
+		if (_instance.nextPageToken) {
+			_writer.writeString(7, _instance.nextPageToken);
+		}
+	}
+	get parent() {
+		return this._parent;
+	}
+	set parent(value) {
+		this._parent = value;
+	}
+	get languageCode() {
+		return this._languageCode;
+	}
+	set languageCode(value) {
+		this._languageCode = value;
+	}
+	get intentParametersResults() {
+		return this._intentParametersResults;
+	}
+	set intentParametersResults(value) {
+		this._intentParametersResults = value;
+	}
+	get term() {
+		return this._term;
+	}
+	set term(value) {
+		this._term = value;
+	}
+	get elasticQuery() {
+		return this._elasticQuery;
+	}
+	set elasticQuery(value) {
+		this._elasticQuery = value;
+	}
+	get time() {
+		return this._time;
+	}
+	set time(value) {
+		this._time = value;
+	}
+	get nextPageToken() {
+		return this._nextPageToken;
+	}
+	set nextPageToken(value) {
+		this._nextPageToken = value;
+	}
+	/**
+	 * Serialize message to binary data
+	 * @param instance message instance
+	 */
+	serializeBinary() {
+		const writer = new BinaryWriter();
+		FullTextSearchResponseIntentParameters.serializeBinaryToWriter(this, writer);
+		return writer.getResultBuffer();
+	}
+	/**
+	 * Cast message to standard JavaScript object (all non-primitive values are deeply cloned)
+	 */
+	toObject() {
+		return {
+			parent: this.parent,
+			languageCode: this.languageCode,
+			intentParametersResults: (this.intentParametersResults || []).map((m) => m.toObject()),
+			term: this.term,
+			elasticQuery: this.elasticQuery,
+			time: this.time,
+			nextPageToken: this.nextPageToken
+		};
+	}
+	/**
+	 * Convenience method to support JSON.stringify(message), replicates the structure of toObject()
+	 */
+	toJSON() {
+		return this.toObject();
+	}
+	/**
+	 * Cast message to JSON using protobuf JSON notation: https://developers.google.com/protocol-buffers/docs/proto3#json
+	 * Attention: output differs from toObject() e.g. enums are represented as names and not as numbers, Timestamp is an ISO Date string format etc.
+	 * If the message itself or some of descendant messages is google.protobuf.Any, you MUST provide a message pool as options. If not, the messagePool is not required
+	 */
+	toProtobufJSON(
+		// @ts-ignore
+		options
+	) {
+		return {
+			parent: this.parent,
+			languageCode: this.languageCode,
+			intentParametersResults: (this.intentParametersResults || []).map((m) => m.toProtobufJSON(options)),
+			term: this.term,
+			elasticQuery: this.elasticQuery,
+			time: this.time,
+			nextPageToken: this.nextPageToken
+		};
+	}
+}
+FullTextSearchResponseIntentParameters.id = 'ondewo.nlu.FullTextSearchResponseIntentParameters';
+(function (FullTextSearchResponseIntentParameters) {
+	/**
+	 * Message implementation for ondewo.nlu.IntentParametersSearchResult
+	 */
+	class IntentParametersSearchResult {
+		/**
+		 * Message constructor. Initializes the properties and applies default Protobuf values if necessary
+		 * @param _value initial values object or instance of IntentParametersSearchResult to deeply clone from
+		 */
+		constructor(_value) {
+			_value = _value || {};
+			this.parameterName = _value.parameterName;
+			this.parameterDisplayName = _value.parameterDisplayName;
+			this.intentName = _value.intentName;
+			this.language = _value.language;
+			IntentParametersSearchResult.refineValues(this);
+		}
+		/**
+		 * Deserialize binary data to message
+		 * @param instance message instance
+		 */
+		static deserializeBinary(bytes) {
+			const instance = new IntentParametersSearchResult();
+			IntentParametersSearchResult.deserializeBinaryFromReader(instance, new BinaryReader(bytes));
+			return instance;
+		}
+		/**
+		 * Check all the properties and set default protobuf values if necessary
+		 * @param _instance message instance
+		 */
+		static refineValues(_instance) {
+			_instance.parameterName = _instance.parameterName || '';
+			_instance.parameterDisplayName = _instance.parameterDisplayName || '';
+			_instance.intentName = _instance.intentName || '';
+			_instance.language = _instance.language || '';
+		}
+		/**
+		 * Deserializes / reads binary message into message instance using provided binary reader
+		 * @param _instance message instance
+		 * @param _reader binary reader instance
+		 */
+		static deserializeBinaryFromReader(_instance, _reader) {
+			while (_reader.nextField()) {
+				if (_reader.isEndGroup()) break;
+				switch (_reader.getFieldNumber()) {
+					case 1:
+						_instance.parameterName = _reader.readString();
+						break;
+					case 2:
+						_instance.parameterDisplayName = _reader.readString();
+						break;
+					case 3:
+						_instance.intentName = _reader.readString();
+						break;
+					case 4:
+						_instance.language = _reader.readString();
+						break;
+					default:
+						_reader.skipField();
+				}
+			}
+			IntentParametersSearchResult.refineValues(_instance);
+		}
+		/**
+		 * Serializes a message to binary format using provided binary reader
+		 * @param _instance message instance
+		 * @param _writer binary writer instance
+		 */
+		static serializeBinaryToWriter(_instance, _writer) {
+			if (_instance.parameterName) {
+				_writer.writeString(1, _instance.parameterName);
+			}
+			if (_instance.parameterDisplayName) {
+				_writer.writeString(2, _instance.parameterDisplayName);
+			}
+			if (_instance.intentName) {
+				_writer.writeString(3, _instance.intentName);
+			}
+			if (_instance.language) {
+				_writer.writeString(4, _instance.language);
+			}
+		}
+		get parameterName() {
+			return this._parameterName;
+		}
+		set parameterName(value) {
+			this._parameterName = value;
+		}
+		get parameterDisplayName() {
+			return this._parameterDisplayName;
+		}
+		set parameterDisplayName(value) {
+			this._parameterDisplayName = value;
+		}
+		get intentName() {
+			return this._intentName;
+		}
+		set intentName(value) {
+			this._intentName = value;
+		}
+		get language() {
+			return this._language;
+		}
+		set language(value) {
+			this._language = value;
+		}
+		/**
+		 * Serialize message to binary data
+		 * @param instance message instance
+		 */
+		serializeBinary() {
+			const writer = new BinaryWriter();
+			IntentParametersSearchResult.serializeBinaryToWriter(this, writer);
+			return writer.getResultBuffer();
+		}
+		/**
+		 * Cast message to standard JavaScript object (all non-primitive values are deeply cloned)
+		 */
+		toObject() {
+			return {
+				parameterName: this.parameterName,
+				parameterDisplayName: this.parameterDisplayName,
+				intentName: this.intentName,
+				language: this.language
+			};
+		}
+		/**
+		 * Convenience method to support JSON.stringify(message), replicates the structure of toObject()
+		 */
+		toJSON() {
+			return this.toObject();
+		}
+		/**
+		 * Cast message to JSON using protobuf JSON notation: https://developers.google.com/protocol-buffers/docs/proto3#json
+		 * Attention: output differs from toObject() e.g. enums are represented as names and not as numbers, Timestamp is an ISO Date string format etc.
+		 * If the message itself or some of descendant messages is google.protobuf.Any, you MUST provide a message pool as options. If not, the messagePool is not required
+		 */
+		toProtobufJSON(
+			// @ts-ignore
+			options
+		) {
+			return {
+				parameterName: this.parameterName,
+				parameterDisplayName: this.parameterDisplayName,
+				intentName: this.intentName,
+				language: this.language
+			};
+		}
+	}
+	IntentParametersSearchResult.id = 'ondewo.nlu.IntentParametersSearchResult';
+	FullTextSearchResponseIntentParameters.IntentParametersSearchResult = IntentParametersSearchResult;
+})(FullTextSearchResponseIntentParameters || (FullTextSearchResponseIntentParameters = {}));
+/**
+ * Message implementation for ondewo.nlu.ReindexAgentRequest
+ */
+class ReindexAgentRequest {
+	/**
+	 * Message constructor. Initializes the properties and applies default Protobuf values if necessary
+	 * @param _value initial values object or instance of ReindexAgentRequest to deeply clone from
+	 */
+	constructor(_value) {
+		_value = _value || {};
+		this.parent = _value.parent;
+		this.branchName = _value.branchName;
+		this.indexTypes = (_value.indexTypes || []).slice();
+		ReindexAgentRequest.refineValues(this);
+	}
+	/**
+	 * Deserialize binary data to message
+	 * @param instance message instance
+	 */
+	static deserializeBinary(bytes) {
+		const instance = new ReindexAgentRequest();
+		ReindexAgentRequest.deserializeBinaryFromReader(instance, new BinaryReader(bytes));
+		return instance;
+	}
+	/**
+	 * Check all the properties and set default protobuf values if necessary
+	 * @param _instance message instance
+	 */
+	static refineValues(_instance) {
+		_instance.parent = _instance.parent || '';
+		_instance.branchName = _instance.branchName || '';
+		_instance.indexTypes = _instance.indexTypes || [];
+	}
+	/**
+	 * Deserializes / reads binary message into message instance using provided binary reader
+	 * @param _instance message instance
+	 * @param _reader binary reader instance
+	 */
+	static deserializeBinaryFromReader(_instance, _reader) {
+		while (_reader.nextField()) {
+			if (_reader.isEndGroup()) break;
+			switch (_reader.getFieldNumber()) {
+				case 1:
+					_instance.parent = _reader.readString();
+					break;
+				case 2:
+					_instance.branchName = _reader.readString();
+					break;
+				case 3:
+					(_instance.indexTypes = _instance.indexTypes || []).push(...(_reader.readPackedEnum() || []));
+					break;
+				default:
+					_reader.skipField();
+			}
+		}
+		ReindexAgentRequest.refineValues(_instance);
+	}
+	/**
+	 * Serializes a message to binary format using provided binary reader
+	 * @param _instance message instance
+	 * @param _writer binary writer instance
+	 */
+	static serializeBinaryToWriter(_instance, _writer) {
+		if (_instance.parent) {
+			_writer.writeString(1, _instance.parent);
+		}
+		if (_instance.branchName) {
+			_writer.writeString(2, _instance.branchName);
+		}
+		if (_instance.indexTypes && _instance.indexTypes.length) {
+			_writer.writePackedEnum(3, _instance.indexTypes);
+		}
+	}
+	get parent() {
+		return this._parent;
+	}
+	set parent(value) {
+		this._parent = value;
+	}
+	get branchName() {
+		return this._branchName;
+	}
+	set branchName(value) {
+		this._branchName = value;
+	}
+	get indexTypes() {
+		return this._indexTypes;
+	}
+	set indexTypes(value) {
+		this._indexTypes = value;
+	}
+	/**
+	 * Serialize message to binary data
+	 * @param instance message instance
+	 */
+	serializeBinary() {
+		const writer = new BinaryWriter();
+		ReindexAgentRequest.serializeBinaryToWriter(this, writer);
+		return writer.getResultBuffer();
+	}
+	/**
+	 * Cast message to standard JavaScript object (all non-primitive values are deeply cloned)
+	 */
+	toObject() {
+		return {
+			parent: this.parent,
+			branchName: this.branchName,
+			indexTypes: (this.indexTypes || []).slice()
+		};
+	}
+	/**
+	 * Convenience method to support JSON.stringify(message), replicates the structure of toObject()
+	 */
+	toJSON() {
+		return this.toObject();
+	}
+	/**
+	 * Cast message to JSON using protobuf JSON notation: https://developers.google.com/protocol-buffers/docs/proto3#json
+	 * Attention: output differs from toObject() e.g. enums are represented as names and not as numbers, Timestamp is an ISO Date string format etc.
+	 * If the message itself or some of descendant messages is google.protobuf.Any, you MUST provide a message pool as options. If not, the messagePool is not required
+	 */
+	toProtobufJSON(
+		// @ts-ignore
+		options
+	) {
+		return {
+			parent: this.parent,
+			branchName: this.branchName,
+			indexTypes: (this.indexTypes || []).map((v) => FullTextSearchRequest.QueryType[v])
+		};
+	}
+}
+ReindexAgentRequest.id = 'ondewo.nlu.ReindexAgentRequest';
 
 /* tslint:disable */
 /**
@@ -58970,6 +62900,204 @@ class AgentsClient {
 					requestClass: PlatformMapping,
 					responseClass: PlatformMapping
 				});
+			},
+			/**
+			 * Unary call: /ondewo.nlu.Agents/GetFullTextSearchEntityType
+			 *
+			 * @param requestMessage Request message
+			 * @param requestMetadata Request metadata
+			 * @returns Observable<GrpcEvent<thisProto.FullTextSearchResponseEntityType>>
+			 */
+			getFullTextSearchEntityType: (requestData, requestMetadata = new GrpcMetadata()) => {
+				return this.handler.handle({
+					type: GrpcCallType.unary,
+					client: this.client,
+					path: '/ondewo.nlu.Agents/GetFullTextSearchEntityType',
+					requestData,
+					requestMetadata,
+					requestClass: FullTextSearchRequest,
+					responseClass: FullTextSearchResponseEntityType
+				});
+			},
+			/**
+			 * Unary call: /ondewo.nlu.Agents/GetFullTextSearchEntity
+			 *
+			 * @param requestMessage Request message
+			 * @param requestMetadata Request metadata
+			 * @returns Observable<GrpcEvent<thisProto.FullTextSearchResponseEntity>>
+			 */
+			getFullTextSearchEntity: (requestData, requestMetadata = new GrpcMetadata()) => {
+				return this.handler.handle({
+					type: GrpcCallType.unary,
+					client: this.client,
+					path: '/ondewo.nlu.Agents/GetFullTextSearchEntity',
+					requestData,
+					requestMetadata,
+					requestClass: FullTextSearchRequest,
+					responseClass: FullTextSearchResponseEntity
+				});
+			},
+			/**
+			 * Unary call: /ondewo.nlu.Agents/GetFullTextSearchEntitySynonym
+			 *
+			 * @param requestMessage Request message
+			 * @param requestMetadata Request metadata
+			 * @returns Observable<GrpcEvent<thisProto.FullTextSearchResponseEntitySynonym>>
+			 */
+			getFullTextSearchEntitySynonym: (requestData, requestMetadata = new GrpcMetadata()) => {
+				return this.handler.handle({
+					type: GrpcCallType.unary,
+					client: this.client,
+					path: '/ondewo.nlu.Agents/GetFullTextSearchEntitySynonym',
+					requestData,
+					requestMetadata,
+					requestClass: FullTextSearchRequest,
+					responseClass: FullTextSearchResponseEntitySynonym
+				});
+			},
+			/**
+			 * Unary call: /ondewo.nlu.Agents/GetFullTextSearchIntent
+			 *
+			 * @param requestMessage Request message
+			 * @param requestMetadata Request metadata
+			 * @returns Observable<GrpcEvent<thisProto.FullTextSearchResponseIntent>>
+			 */
+			getFullTextSearchIntent: (requestData, requestMetadata = new GrpcMetadata()) => {
+				return this.handler.handle({
+					type: GrpcCallType.unary,
+					client: this.client,
+					path: '/ondewo.nlu.Agents/GetFullTextSearchIntent',
+					requestData,
+					requestMetadata,
+					requestClass: FullTextSearchRequest,
+					responseClass: FullTextSearchResponseIntent
+				});
+			},
+			/**
+			 * Unary call: /ondewo.nlu.Agents/GetFullTextSearchIntentContextIn
+			 *
+			 * @param requestMessage Request message
+			 * @param requestMetadata Request metadata
+			 * @returns Observable<GrpcEvent<thisProto.FullTextSearchResponseIntentContextIn>>
+			 */
+			getFullTextSearchIntentContextIn: (requestData, requestMetadata = new GrpcMetadata()) => {
+				return this.handler.handle({
+					type: GrpcCallType.unary,
+					client: this.client,
+					path: '/ondewo.nlu.Agents/GetFullTextSearchIntentContextIn',
+					requestData,
+					requestMetadata,
+					requestClass: FullTextSearchRequest,
+					responseClass: FullTextSearchResponseIntentContextIn
+				});
+			},
+			/**
+			 * Unary call: /ondewo.nlu.Agents/GetFullTextSearchIntentContextOut
+			 *
+			 * @param requestMessage Request message
+			 * @param requestMetadata Request metadata
+			 * @returns Observable<GrpcEvent<thisProto.FullTextSearchResponseIntentContextOut>>
+			 */
+			getFullTextSearchIntentContextOut: (requestData, requestMetadata = new GrpcMetadata()) => {
+				return this.handler.handle({
+					type: GrpcCallType.unary,
+					client: this.client,
+					path: '/ondewo.nlu.Agents/GetFullTextSearchIntentContextOut',
+					requestData,
+					requestMetadata,
+					requestClass: FullTextSearchRequest,
+					responseClass: FullTextSearchResponseIntentContextOut
+				});
+			},
+			/**
+			 * Unary call: /ondewo.nlu.Agents/GetFullTextSearchIntentUsersays
+			 *
+			 * @param requestMessage Request message
+			 * @param requestMetadata Request metadata
+			 * @returns Observable<GrpcEvent<thisProto.FullTextSearchResponseIntentUsersays>>
+			 */
+			getFullTextSearchIntentUsersays: (requestData, requestMetadata = new GrpcMetadata()) => {
+				return this.handler.handle({
+					type: GrpcCallType.unary,
+					client: this.client,
+					path: '/ondewo.nlu.Agents/GetFullTextSearchIntentUsersays',
+					requestData,
+					requestMetadata,
+					requestClass: FullTextSearchRequest,
+					responseClass: FullTextSearchResponseIntentUsersays
+				});
+			},
+			/**
+			 * Unary call: /ondewo.nlu.Agents/GetFullTextSearchIntentTags
+			 *
+			 * @param requestMessage Request message
+			 * @param requestMetadata Request metadata
+			 * @returns Observable<GrpcEvent<thisProto.FullTextSearchResponseIntentTags>>
+			 */
+			getFullTextSearchIntentTags: (requestData, requestMetadata = new GrpcMetadata()) => {
+				return this.handler.handle({
+					type: GrpcCallType.unary,
+					client: this.client,
+					path: '/ondewo.nlu.Agents/GetFullTextSearchIntentTags',
+					requestData,
+					requestMetadata,
+					requestClass: FullTextSearchRequest,
+					responseClass: FullTextSearchResponseIntentTags
+				});
+			},
+			/**
+			 * Unary call: /ondewo.nlu.Agents/GetFullTextSearchIntentResponse
+			 *
+			 * @param requestMessage Request message
+			 * @param requestMetadata Request metadata
+			 * @returns Observable<GrpcEvent<thisProto.FullTextSearchResponseIntentResponse>>
+			 */
+			getFullTextSearchIntentResponse: (requestData, requestMetadata = new GrpcMetadata()) => {
+				return this.handler.handle({
+					type: GrpcCallType.unary,
+					client: this.client,
+					path: '/ondewo.nlu.Agents/GetFullTextSearchIntentResponse',
+					requestData,
+					requestMetadata,
+					requestClass: FullTextSearchRequest,
+					responseClass: FullTextSearchResponseIntentResponse
+				});
+			},
+			/**
+			 * Unary call: /ondewo.nlu.Agents/GetFullTextSearchIntentParameters
+			 *
+			 * @param requestMessage Request message
+			 * @param requestMetadata Request metadata
+			 * @returns Observable<GrpcEvent<thisProto.FullTextSearchResponseIntentParameters>>
+			 */
+			getFullTextSearchIntentParameters: (requestData, requestMetadata = new GrpcMetadata()) => {
+				return this.handler.handle({
+					type: GrpcCallType.unary,
+					client: this.client,
+					path: '/ondewo.nlu.Agents/GetFullTextSearchIntentParameters',
+					requestData,
+					requestMetadata,
+					requestClass: FullTextSearchRequest,
+					responseClass: FullTextSearchResponseIntentParameters
+				});
+			},
+			/**
+			 * Unary call: /ondewo.nlu.Agents/ReindexAgent
+			 *
+			 * @param requestMessage Request message
+			 * @param requestMetadata Request metadata
+			 * @returns Observable<GrpcEvent<ondewoNlu005.Operation>>
+			 */
+			reindexAgent: (requestData, requestMetadata = new GrpcMetadata()) => {
+				return this.handler.handle({
+					type: GrpcCallType.unary,
+					client: this.client,
+					path: '/ondewo.nlu.Agents/ReindexAgent',
+					requestData,
+					requestMetadata,
+					requestClass: ReindexAgentRequest,
+					responseClass: Operation
+				});
 			}
 		};
 		this.client = clientFactory.createClient('ondewo.nlu.Agents', settings);
@@ -59253,6 +63381,132 @@ class AgentsClient {
 	 */
 	setPlatformMapping(requestData, requestMetadata = new GrpcMetadata()) {
 		return this.$raw.setPlatformMapping(requestData, requestMetadata).pipe(throwStatusErrors(), takeMessages());
+	}
+	/**
+	 * Unary call @/ondewo.nlu.Agents/GetFullTextSearchEntityType
+	 *
+	 * @param requestMessage Request message
+	 * @param requestMetadata Request metadata
+	 * @returns Observable<thisProto.FullTextSearchResponseEntityType>
+	 */
+	getFullTextSearchEntityType(requestData, requestMetadata = new GrpcMetadata()) {
+		return this.$raw
+			.getFullTextSearchEntityType(requestData, requestMetadata)
+			.pipe(throwStatusErrors(), takeMessages());
+	}
+	/**
+	 * Unary call @/ondewo.nlu.Agents/GetFullTextSearchEntity
+	 *
+	 * @param requestMessage Request message
+	 * @param requestMetadata Request metadata
+	 * @returns Observable<thisProto.FullTextSearchResponseEntity>
+	 */
+	getFullTextSearchEntity(requestData, requestMetadata = new GrpcMetadata()) {
+		return this.$raw.getFullTextSearchEntity(requestData, requestMetadata).pipe(throwStatusErrors(), takeMessages());
+	}
+	/**
+	 * Unary call @/ondewo.nlu.Agents/GetFullTextSearchEntitySynonym
+	 *
+	 * @param requestMessage Request message
+	 * @param requestMetadata Request metadata
+	 * @returns Observable<thisProto.FullTextSearchResponseEntitySynonym>
+	 */
+	getFullTextSearchEntitySynonym(requestData, requestMetadata = new GrpcMetadata()) {
+		return this.$raw
+			.getFullTextSearchEntitySynonym(requestData, requestMetadata)
+			.pipe(throwStatusErrors(), takeMessages());
+	}
+	/**
+	 * Unary call @/ondewo.nlu.Agents/GetFullTextSearchIntent
+	 *
+	 * @param requestMessage Request message
+	 * @param requestMetadata Request metadata
+	 * @returns Observable<thisProto.FullTextSearchResponseIntent>
+	 */
+	getFullTextSearchIntent(requestData, requestMetadata = new GrpcMetadata()) {
+		return this.$raw.getFullTextSearchIntent(requestData, requestMetadata).pipe(throwStatusErrors(), takeMessages());
+	}
+	/**
+	 * Unary call @/ondewo.nlu.Agents/GetFullTextSearchIntentContextIn
+	 *
+	 * @param requestMessage Request message
+	 * @param requestMetadata Request metadata
+	 * @returns Observable<thisProto.FullTextSearchResponseIntentContextIn>
+	 */
+	getFullTextSearchIntentContextIn(requestData, requestMetadata = new GrpcMetadata()) {
+		return this.$raw
+			.getFullTextSearchIntentContextIn(requestData, requestMetadata)
+			.pipe(throwStatusErrors(), takeMessages());
+	}
+	/**
+	 * Unary call @/ondewo.nlu.Agents/GetFullTextSearchIntentContextOut
+	 *
+	 * @param requestMessage Request message
+	 * @param requestMetadata Request metadata
+	 * @returns Observable<thisProto.FullTextSearchResponseIntentContextOut>
+	 */
+	getFullTextSearchIntentContextOut(requestData, requestMetadata = new GrpcMetadata()) {
+		return this.$raw
+			.getFullTextSearchIntentContextOut(requestData, requestMetadata)
+			.pipe(throwStatusErrors(), takeMessages());
+	}
+	/**
+	 * Unary call @/ondewo.nlu.Agents/GetFullTextSearchIntentUsersays
+	 *
+	 * @param requestMessage Request message
+	 * @param requestMetadata Request metadata
+	 * @returns Observable<thisProto.FullTextSearchResponseIntentUsersays>
+	 */
+	getFullTextSearchIntentUsersays(requestData, requestMetadata = new GrpcMetadata()) {
+		return this.$raw
+			.getFullTextSearchIntentUsersays(requestData, requestMetadata)
+			.pipe(throwStatusErrors(), takeMessages());
+	}
+	/**
+	 * Unary call @/ondewo.nlu.Agents/GetFullTextSearchIntentTags
+	 *
+	 * @param requestMessage Request message
+	 * @param requestMetadata Request metadata
+	 * @returns Observable<thisProto.FullTextSearchResponseIntentTags>
+	 */
+	getFullTextSearchIntentTags(requestData, requestMetadata = new GrpcMetadata()) {
+		return this.$raw
+			.getFullTextSearchIntentTags(requestData, requestMetadata)
+			.pipe(throwStatusErrors(), takeMessages());
+	}
+	/**
+	 * Unary call @/ondewo.nlu.Agents/GetFullTextSearchIntentResponse
+	 *
+	 * @param requestMessage Request message
+	 * @param requestMetadata Request metadata
+	 * @returns Observable<thisProto.FullTextSearchResponseIntentResponse>
+	 */
+	getFullTextSearchIntentResponse(requestData, requestMetadata = new GrpcMetadata()) {
+		return this.$raw
+			.getFullTextSearchIntentResponse(requestData, requestMetadata)
+			.pipe(throwStatusErrors(), takeMessages());
+	}
+	/**
+	 * Unary call @/ondewo.nlu.Agents/GetFullTextSearchIntentParameters
+	 *
+	 * @param requestMessage Request message
+	 * @param requestMetadata Request metadata
+	 * @returns Observable<thisProto.FullTextSearchResponseIntentParameters>
+	 */
+	getFullTextSearchIntentParameters(requestData, requestMetadata = new GrpcMetadata()) {
+		return this.$raw
+			.getFullTextSearchIntentParameters(requestData, requestMetadata)
+			.pipe(throwStatusErrors(), takeMessages());
+	}
+	/**
+	 * Unary call @/ondewo.nlu.Agents/ReindexAgent
+	 *
+	 * @param requestMessage Request message
+	 * @param requestMetadata Request metadata
+	 * @returns Observable<ondewoNlu005.Operation>
+	 */
+	reindexAgent(requestData, requestMetadata = new GrpcMetadata()) {
+		return this.$raw.reindexAgent(requestData, requestMetadata).pipe(throwStatusErrors(), takeMessages());
 	}
 }
 AgentsClient.ɵfac = i0.ɵɵngDeclareFactory({
@@ -62170,6 +66424,17 @@ export {
 	ExtractEntitiesFuzzyRequest,
 	ExtractEntitiesRequest,
 	ExtractEntitiesResponse,
+	FullTextSearchRequest,
+	FullTextSearchResponseEntity,
+	FullTextSearchResponseEntitySynonym,
+	FullTextSearchResponseEntityType,
+	FullTextSearchResponseIntent,
+	FullTextSearchResponseIntentContextIn,
+	FullTextSearchResponseIntentContextOut,
+	FullTextSearchResponseIntentParameters,
+	FullTextSearchResponseIntentResponse,
+	FullTextSearchResponseIntentTags,
+	FullTextSearchResponseIntentUsersays,
 	GPT2EnrichmentConfig,
 	GRPC_AGENTS_CLIENT_SETTINGS,
 	GRPC_AI_SERVICES_CLIENT_SETTINGS,
@@ -62345,6 +66610,7 @@ export {
 	QueryResult,
 	RankingMatchOptimizationConfig,
 	ReannotateEntitiesOptions,
+	ReindexAgentRequest,
 	RemoveSessionLabelsRequest,
 	RemoveUserFromProjectRequest,
 	ReportFormat,

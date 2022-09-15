@@ -44,8 +44,8 @@ export declare class Operation implements GrpcMessage {
 	constructor(_value?: RecursivePartial<Operation.AsObject>);
 	get name(): string | undefined;
 	set name(value: string | undefined);
-	get metadata(): googleProtobuf002.Any | undefined;
-	set metadata(value: googleProtobuf002.Any | undefined);
+	get metadata(): ondewoNlu007.OperationMetadata | undefined;
+	set metadata(value: ondewoNlu007.OperationMetadata | undefined);
 	get done(): boolean | undefined;
 	set done(value: boolean | undefined);
 	get error(): googleRpc006.Status | undefined;
@@ -79,7 +79,7 @@ export declare module Operation {
 	 */
 	interface AsObject {
 		name?: string;
-		metadata?: googleProtobuf002.Any.AsObject;
+		metadata?: ondewoNlu007.OperationMetadata.AsObject;
 		done?: boolean;
 		error?: googleRpc006.Status.AsObject;
 		response?: googleProtobuf002.Any.AsObject;
@@ -89,7 +89,7 @@ export declare module Operation {
 	 */
 	interface AsProtobufJSON {
 		name?: string;
-		metadata?: googleProtobuf002.Any.AsProtobufJSON | null;
+		metadata?: ondewoNlu007.OperationMetadata.AsProtobufJSON | null;
 		done?: boolean;
 		error?: googleRpc006.Status.AsProtobufJSON | null;
 		response?: googleProtobuf002.Any.AsProtobufJSON | null;

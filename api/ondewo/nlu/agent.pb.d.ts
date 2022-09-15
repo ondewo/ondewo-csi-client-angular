@@ -3540,3 +3540,2023 @@ export declare module PlatformMapping {
 		platformInfo?: CustomPlatformInfo.AsProtobufJSON[] | null;
 	}
 }
+/**
+ * Message implementation for ondewo.nlu.FullTextSearchRequest
+ */
+export declare class FullTextSearchRequest implements GrpcMessage {
+	static id: string;
+	/**
+	 * Deserialize binary data to message
+	 * @param instance message instance
+	 */
+	static deserializeBinary(bytes: ByteSource): FullTextSearchRequest;
+	/**
+	 * Check all the properties and set default protobuf values if necessary
+	 * @param _instance message instance
+	 */
+	static refineValues(_instance: FullTextSearchRequest): void;
+	/**
+	 * Deserializes / reads binary message into message instance using provided binary reader
+	 * @param _instance message instance
+	 * @param _reader binary reader instance
+	 */
+	static deserializeBinaryFromReader(_instance: FullTextSearchRequest, _reader: BinaryReader): void;
+	/**
+	 * Serializes a message to binary format using provided binary reader
+	 * @param _instance message instance
+	 * @param _writer binary writer instance
+	 */
+	static serializeBinaryToWriter(_instance: FullTextSearchRequest, _writer: BinaryWriter): void;
+	private _parent?;
+	private _languageCode?;
+	private _term?;
+	private _pageToken?;
+	/**
+	 * Message constructor. Initializes the properties and applies default Protobuf values if necessary
+	 * @param _value initial values object or instance of FullTextSearchRequest to deeply clone from
+	 */
+	constructor(_value?: RecursivePartial<FullTextSearchRequest.AsObject>);
+	get parent(): string | undefined;
+	set parent(value: string | undefined);
+	get languageCode(): string | undefined;
+	set languageCode(value: string | undefined);
+	get term(): string | undefined;
+	set term(value: string | undefined);
+	get pageToken(): string | undefined;
+	set pageToken(value: string | undefined);
+	/**
+	 * Serialize message to binary data
+	 * @param instance message instance
+	 */
+	serializeBinary(): any;
+	/**
+	 * Cast message to standard JavaScript object (all non-primitive values are deeply cloned)
+	 */
+	toObject(): FullTextSearchRequest.AsObject;
+	/**
+	 * Convenience method to support JSON.stringify(message), replicates the structure of toObject()
+	 */
+	toJSON(): FullTextSearchRequest.AsObject;
+	/**
+	 * Cast message to JSON using protobuf JSON notation: https://developers.google.com/protocol-buffers/docs/proto3#json
+	 * Attention: output differs from toObject() e.g. enums are represented as names and not as numbers, Timestamp is an ISO Date string format etc.
+	 * If the message itself or some of descendant messages is google.protobuf.Any, you MUST provide a message pool as options. If not, the messagePool is not required
+	 */
+	toProtobufJSON(options?: ToProtobufJSONOptions): FullTextSearchRequest.AsProtobufJSON;
+}
+export declare module FullTextSearchRequest {
+	/**
+	 * Standard JavaScript object representation for FullTextSearchRequest
+	 */
+	interface AsObject {
+		parent?: string;
+		languageCode?: string;
+		term?: string;
+		pageToken?: string;
+	}
+	/**
+	 * Protobuf JSON representation for FullTextSearchRequest
+	 */
+	interface AsProtobufJSON {
+		parent?: string;
+		languageCode?: string;
+		term?: string;
+		pageToken?: string;
+	}
+	enum QueryType {
+		ALL = 0,
+		OndewoEntityQuery = 1,
+		OndewoEntityTypeQuery = 2,
+		OndewoEntitySynonymQuery = 3,
+		OndewoIntentQuery = 4,
+		OndewoIntentContextInQuery = 5,
+		OndewoIntentContextOutQuery = 6,
+		OndewoIntentUsersaysQuery = 7,
+		OndewoIntentTagsQuery = 8,
+		OndewoIntentParametersQuery = 9,
+		OndewoIntentResponseQuery = 10
+	}
+}
+/**
+ * Message implementation for ondewo.nlu.FullTextSearchResponseEntityType
+ */
+export declare class FullTextSearchResponseEntityType implements GrpcMessage {
+	static id: string;
+	/**
+	 * Deserialize binary data to message
+	 * @param instance message instance
+	 */
+	static deserializeBinary(bytes: ByteSource): FullTextSearchResponseEntityType;
+	/**
+	 * Check all the properties and set default protobuf values if necessary
+	 * @param _instance message instance
+	 */
+	static refineValues(_instance: FullTextSearchResponseEntityType): void;
+	/**
+	 * Deserializes / reads binary message into message instance using provided binary reader
+	 * @param _instance message instance
+	 * @param _reader binary reader instance
+	 */
+	static deserializeBinaryFromReader(_instance: FullTextSearchResponseEntityType, _reader: BinaryReader): void;
+	/**
+	 * Serializes a message to binary format using provided binary reader
+	 * @param _instance message instance
+	 * @param _writer binary writer instance
+	 */
+	static serializeBinaryToWriter(_instance: FullTextSearchResponseEntityType, _writer: BinaryWriter): void;
+	private _parent?;
+	private _languageCode?;
+	private _entityTypeResults?;
+	private _term?;
+	private _elasticQuery?;
+	private _time?;
+	private _nextPageToken?;
+	/**
+	 * Message constructor. Initializes the properties and applies default Protobuf values if necessary
+	 * @param _value initial values object or instance of FullTextSearchResponseEntityType to deeply clone from
+	 */
+	constructor(_value?: RecursivePartial<FullTextSearchResponseEntityType.AsObject>);
+	get parent(): string | undefined;
+	set parent(value: string | undefined);
+	get languageCode(): string | undefined;
+	set languageCode(value: string | undefined);
+	get entityTypeResults(): FullTextSearchResponseEntityType.EntityTypeSearchResult[] | undefined;
+	set entityTypeResults(value: FullTextSearchResponseEntityType.EntityTypeSearchResult[] | undefined);
+	get term(): string | undefined;
+	set term(value: string | undefined);
+	get elasticQuery(): string | undefined;
+	set elasticQuery(value: string | undefined);
+	get time(): number | undefined;
+	set time(value: number | undefined);
+	get nextPageToken(): string | undefined;
+	set nextPageToken(value: string | undefined);
+	/**
+	 * Serialize message to binary data
+	 * @param instance message instance
+	 */
+	serializeBinary(): any;
+	/**
+	 * Cast message to standard JavaScript object (all non-primitive values are deeply cloned)
+	 */
+	toObject(): FullTextSearchResponseEntityType.AsObject;
+	/**
+	 * Convenience method to support JSON.stringify(message), replicates the structure of toObject()
+	 */
+	toJSON(): FullTextSearchResponseEntityType.AsObject;
+	/**
+	 * Cast message to JSON using protobuf JSON notation: https://developers.google.com/protocol-buffers/docs/proto3#json
+	 * Attention: output differs from toObject() e.g. enums are represented as names and not as numbers, Timestamp is an ISO Date string format etc.
+	 * If the message itself or some of descendant messages is google.protobuf.Any, you MUST provide a message pool as options. If not, the messagePool is not required
+	 */
+	toProtobufJSON(options?: ToProtobufJSONOptions): FullTextSearchResponseEntityType.AsProtobufJSON;
+}
+export declare module FullTextSearchResponseEntityType {
+	/**
+	 * Standard JavaScript object representation for FullTextSearchResponseEntityType
+	 */
+	interface AsObject {
+		parent?: string;
+		languageCode?: string;
+		entityTypeResults?: FullTextSearchResponseEntityType.EntityTypeSearchResult.AsObject[];
+		term?: string;
+		elasticQuery?: string;
+		time?: number;
+		nextPageToken?: string;
+	}
+	/**
+	 * Protobuf JSON representation for FullTextSearchResponseEntityType
+	 */
+	interface AsProtobufJSON {
+		parent?: string;
+		languageCode?: string;
+		entityTypeResults?: FullTextSearchResponseEntityType.EntityTypeSearchResult.AsProtobufJSON[] | null;
+		term?: string;
+		elasticQuery?: string;
+		time?: number;
+		nextPageToken?: string;
+	}
+	/**
+	 * Message implementation for ondewo.nlu.EntityTypeSearchResult
+	 */
+	class EntityTypeSearchResult implements GrpcMessage {
+		static id: string;
+		/**
+		 * Deserialize binary data to message
+		 * @param instance message instance
+		 */
+		static deserializeBinary(bytes: ByteSource): EntityTypeSearchResult;
+		/**
+		 * Check all the properties and set default protobuf values if necessary
+		 * @param _instance message instance
+		 */
+		static refineValues(_instance: EntityTypeSearchResult): void;
+		/**
+		 * Deserializes / reads binary message into message instance using provided binary reader
+		 * @param _instance message instance
+		 * @param _reader binary reader instance
+		 */
+		static deserializeBinaryFromReader(_instance: EntityTypeSearchResult, _reader: BinaryReader): void;
+		/**
+		 * Serializes a message to binary format using provided binary reader
+		 * @param _instance message instance
+		 * @param _writer binary writer instance
+		 */
+		static serializeBinaryToWriter(_instance: EntityTypeSearchResult, _writer: BinaryWriter): void;
+		private _name?;
+		private _displayName?;
+		private _language?;
+		/**
+		 * Message constructor. Initializes the properties and applies default Protobuf values if necessary
+		 * @param _value initial values object or instance of EntityTypeSearchResult to deeply clone from
+		 */
+		constructor(_value?: RecursivePartial<EntityTypeSearchResult.AsObject>);
+		get name(): string | undefined;
+		set name(value: string | undefined);
+		get displayName(): string | undefined;
+		set displayName(value: string | undefined);
+		get language(): string | undefined;
+		set language(value: string | undefined);
+		/**
+		 * Serialize message to binary data
+		 * @param instance message instance
+		 */
+		serializeBinary(): any;
+		/**
+		 * Cast message to standard JavaScript object (all non-primitive values are deeply cloned)
+		 */
+		toObject(): EntityTypeSearchResult.AsObject;
+		/**
+		 * Convenience method to support JSON.stringify(message), replicates the structure of toObject()
+		 */
+		toJSON(): EntityTypeSearchResult.AsObject;
+		/**
+		 * Cast message to JSON using protobuf JSON notation: https://developers.google.com/protocol-buffers/docs/proto3#json
+		 * Attention: output differs from toObject() e.g. enums are represented as names and not as numbers, Timestamp is an ISO Date string format etc.
+		 * If the message itself or some of descendant messages is google.protobuf.Any, you MUST provide a message pool as options. If not, the messagePool is not required
+		 */
+		toProtobufJSON(options?: ToProtobufJSONOptions): EntityTypeSearchResult.AsProtobufJSON;
+	}
+	module EntityTypeSearchResult {
+		/**
+		 * Standard JavaScript object representation for EntityTypeSearchResult
+		 */
+		interface AsObject {
+			name?: string;
+			displayName?: string;
+			language?: string;
+		}
+		/**
+		 * Protobuf JSON representation for EntityTypeSearchResult
+		 */
+		interface AsProtobufJSON {
+			name?: string;
+			displayName?: string;
+			language?: string;
+		}
+	}
+}
+/**
+ * Message implementation for ondewo.nlu.FullTextSearchResponseEntity
+ */
+export declare class FullTextSearchResponseEntity implements GrpcMessage {
+	static id: string;
+	/**
+	 * Deserialize binary data to message
+	 * @param instance message instance
+	 */
+	static deserializeBinary(bytes: ByteSource): FullTextSearchResponseEntity;
+	/**
+	 * Check all the properties and set default protobuf values if necessary
+	 * @param _instance message instance
+	 */
+	static refineValues(_instance: FullTextSearchResponseEntity): void;
+	/**
+	 * Deserializes / reads binary message into message instance using provided binary reader
+	 * @param _instance message instance
+	 * @param _reader binary reader instance
+	 */
+	static deserializeBinaryFromReader(_instance: FullTextSearchResponseEntity, _reader: BinaryReader): void;
+	/**
+	 * Serializes a message to binary format using provided binary reader
+	 * @param _instance message instance
+	 * @param _writer binary writer instance
+	 */
+	static serializeBinaryToWriter(_instance: FullTextSearchResponseEntity, _writer: BinaryWriter): void;
+	private _parent?;
+	private _languageCode?;
+	private _entityResults?;
+	private _term?;
+	private _elasticQuery?;
+	private _time?;
+	private _nextPageToken?;
+	/**
+	 * Message constructor. Initializes the properties and applies default Protobuf values if necessary
+	 * @param _value initial values object or instance of FullTextSearchResponseEntity to deeply clone from
+	 */
+	constructor(_value?: RecursivePartial<FullTextSearchResponseEntity.AsObject>);
+	get parent(): string | undefined;
+	set parent(value: string | undefined);
+	get languageCode(): string | undefined;
+	set languageCode(value: string | undefined);
+	get entityResults(): FullTextSearchResponseEntity.EntitySearchResult[] | undefined;
+	set entityResults(value: FullTextSearchResponseEntity.EntitySearchResult[] | undefined);
+	get term(): string | undefined;
+	set term(value: string | undefined);
+	get elasticQuery(): string | undefined;
+	set elasticQuery(value: string | undefined);
+	get time(): number | undefined;
+	set time(value: number | undefined);
+	get nextPageToken(): string | undefined;
+	set nextPageToken(value: string | undefined);
+	/**
+	 * Serialize message to binary data
+	 * @param instance message instance
+	 */
+	serializeBinary(): any;
+	/**
+	 * Cast message to standard JavaScript object (all non-primitive values are deeply cloned)
+	 */
+	toObject(): FullTextSearchResponseEntity.AsObject;
+	/**
+	 * Convenience method to support JSON.stringify(message), replicates the structure of toObject()
+	 */
+	toJSON(): FullTextSearchResponseEntity.AsObject;
+	/**
+	 * Cast message to JSON using protobuf JSON notation: https://developers.google.com/protocol-buffers/docs/proto3#json
+	 * Attention: output differs from toObject() e.g. enums are represented as names and not as numbers, Timestamp is an ISO Date string format etc.
+	 * If the message itself or some of descendant messages is google.protobuf.Any, you MUST provide a message pool as options. If not, the messagePool is not required
+	 */
+	toProtobufJSON(options?: ToProtobufJSONOptions): FullTextSearchResponseEntity.AsProtobufJSON;
+}
+export declare module FullTextSearchResponseEntity {
+	/**
+	 * Standard JavaScript object representation for FullTextSearchResponseEntity
+	 */
+	interface AsObject {
+		parent?: string;
+		languageCode?: string;
+		entityResults?: FullTextSearchResponseEntity.EntitySearchResult.AsObject[];
+		term?: string;
+		elasticQuery?: string;
+		time?: number;
+		nextPageToken?: string;
+	}
+	/**
+	 * Protobuf JSON representation for FullTextSearchResponseEntity
+	 */
+	interface AsProtobufJSON {
+		parent?: string;
+		languageCode?: string;
+		entityResults?: FullTextSearchResponseEntity.EntitySearchResult.AsProtobufJSON[] | null;
+		term?: string;
+		elasticQuery?: string;
+		time?: number;
+		nextPageToken?: string;
+	}
+	/**
+	 * Message implementation for ondewo.nlu.EntitySearchResult
+	 */
+	class EntitySearchResult implements GrpcMessage {
+		static id: string;
+		/**
+		 * Deserialize binary data to message
+		 * @param instance message instance
+		 */
+		static deserializeBinary(bytes: ByteSource): EntitySearchResult;
+		/**
+		 * Check all the properties and set default protobuf values if necessary
+		 * @param _instance message instance
+		 */
+		static refineValues(_instance: EntitySearchResult): void;
+		/**
+		 * Deserializes / reads binary message into message instance using provided binary reader
+		 * @param _instance message instance
+		 * @param _reader binary reader instance
+		 */
+		static deserializeBinaryFromReader(_instance: EntitySearchResult, _reader: BinaryReader): void;
+		/**
+		 * Serializes a message to binary format using provided binary reader
+		 * @param _instance message instance
+		 * @param _writer binary writer instance
+		 */
+		static serializeBinaryToWriter(_instance: EntitySearchResult, _writer: BinaryWriter): void;
+		private _name?;
+		private _displayName?;
+		private _entityTypeName?;
+		private _language?;
+		/**
+		 * Message constructor. Initializes the properties and applies default Protobuf values if necessary
+		 * @param _value initial values object or instance of EntitySearchResult to deeply clone from
+		 */
+		constructor(_value?: RecursivePartial<EntitySearchResult.AsObject>);
+		get name(): string | undefined;
+		set name(value: string | undefined);
+		get displayName(): string | undefined;
+		set displayName(value: string | undefined);
+		get entityTypeName(): string | undefined;
+		set entityTypeName(value: string | undefined);
+		get language(): string | undefined;
+		set language(value: string | undefined);
+		/**
+		 * Serialize message to binary data
+		 * @param instance message instance
+		 */
+		serializeBinary(): any;
+		/**
+		 * Cast message to standard JavaScript object (all non-primitive values are deeply cloned)
+		 */
+		toObject(): EntitySearchResult.AsObject;
+		/**
+		 * Convenience method to support JSON.stringify(message), replicates the structure of toObject()
+		 */
+		toJSON(): EntitySearchResult.AsObject;
+		/**
+		 * Cast message to JSON using protobuf JSON notation: https://developers.google.com/protocol-buffers/docs/proto3#json
+		 * Attention: output differs from toObject() e.g. enums are represented as names and not as numbers, Timestamp is an ISO Date string format etc.
+		 * If the message itself or some of descendant messages is google.protobuf.Any, you MUST provide a message pool as options. If not, the messagePool is not required
+		 */
+		toProtobufJSON(options?: ToProtobufJSONOptions): EntitySearchResult.AsProtobufJSON;
+	}
+	module EntitySearchResult {
+		/**
+		 * Standard JavaScript object representation for EntitySearchResult
+		 */
+		interface AsObject {
+			name?: string;
+			displayName?: string;
+			entityTypeName?: string;
+			language?: string;
+		}
+		/**
+		 * Protobuf JSON representation for EntitySearchResult
+		 */
+		interface AsProtobufJSON {
+			name?: string;
+			displayName?: string;
+			entityTypeName?: string;
+			language?: string;
+		}
+	}
+}
+/**
+ * Message implementation for ondewo.nlu.FullTextSearchResponseEntitySynonym
+ */
+export declare class FullTextSearchResponseEntitySynonym implements GrpcMessage {
+	static id: string;
+	/**
+	 * Deserialize binary data to message
+	 * @param instance message instance
+	 */
+	static deserializeBinary(bytes: ByteSource): FullTextSearchResponseEntitySynonym;
+	/**
+	 * Check all the properties and set default protobuf values if necessary
+	 * @param _instance message instance
+	 */
+	static refineValues(_instance: FullTextSearchResponseEntitySynonym): void;
+	/**
+	 * Deserializes / reads binary message into message instance using provided binary reader
+	 * @param _instance message instance
+	 * @param _reader binary reader instance
+	 */
+	static deserializeBinaryFromReader(_instance: FullTextSearchResponseEntitySynonym, _reader: BinaryReader): void;
+	/**
+	 * Serializes a message to binary format using provided binary reader
+	 * @param _instance message instance
+	 * @param _writer binary writer instance
+	 */
+	static serializeBinaryToWriter(_instance: FullTextSearchResponseEntitySynonym, _writer: BinaryWriter): void;
+	private _parent?;
+	private _languageCode?;
+	private _entitySynonymResults?;
+	private _term?;
+	private _elasticQuery?;
+	private _time?;
+	private _nextPageToken?;
+	/**
+	 * Message constructor. Initializes the properties and applies default Protobuf values if necessary
+	 * @param _value initial values object or instance of FullTextSearchResponseEntitySynonym to deeply clone from
+	 */
+	constructor(_value?: RecursivePartial<FullTextSearchResponseEntitySynonym.AsObject>);
+	get parent(): string | undefined;
+	set parent(value: string | undefined);
+	get languageCode(): string | undefined;
+	set languageCode(value: string | undefined);
+	get entitySynonymResults(): FullTextSearchResponseEntitySynonym.EntitySynonymSearchResult[] | undefined;
+	set entitySynonymResults(value: FullTextSearchResponseEntitySynonym.EntitySynonymSearchResult[] | undefined);
+	get term(): string | undefined;
+	set term(value: string | undefined);
+	get elasticQuery(): string | undefined;
+	set elasticQuery(value: string | undefined);
+	get time(): number | undefined;
+	set time(value: number | undefined);
+	get nextPageToken(): string | undefined;
+	set nextPageToken(value: string | undefined);
+	/**
+	 * Serialize message to binary data
+	 * @param instance message instance
+	 */
+	serializeBinary(): any;
+	/**
+	 * Cast message to standard JavaScript object (all non-primitive values are deeply cloned)
+	 */
+	toObject(): FullTextSearchResponseEntitySynonym.AsObject;
+	/**
+	 * Convenience method to support JSON.stringify(message), replicates the structure of toObject()
+	 */
+	toJSON(): FullTextSearchResponseEntitySynonym.AsObject;
+	/**
+	 * Cast message to JSON using protobuf JSON notation: https://developers.google.com/protocol-buffers/docs/proto3#json
+	 * Attention: output differs from toObject() e.g. enums are represented as names and not as numbers, Timestamp is an ISO Date string format etc.
+	 * If the message itself or some of descendant messages is google.protobuf.Any, you MUST provide a message pool as options. If not, the messagePool is not required
+	 */
+	toProtobufJSON(options?: ToProtobufJSONOptions): FullTextSearchResponseEntitySynonym.AsProtobufJSON;
+}
+export declare module FullTextSearchResponseEntitySynonym {
+	/**
+	 * Standard JavaScript object representation for FullTextSearchResponseEntitySynonym
+	 */
+	interface AsObject {
+		parent?: string;
+		languageCode?: string;
+		entitySynonymResults?: FullTextSearchResponseEntitySynonym.EntitySynonymSearchResult.AsObject[];
+		term?: string;
+		elasticQuery?: string;
+		time?: number;
+		nextPageToken?: string;
+	}
+	/**
+	 * Protobuf JSON representation for FullTextSearchResponseEntitySynonym
+	 */
+	interface AsProtobufJSON {
+		parent?: string;
+		languageCode?: string;
+		entitySynonymResults?: FullTextSearchResponseEntitySynonym.EntitySynonymSearchResult.AsProtobufJSON[] | null;
+		term?: string;
+		elasticQuery?: string;
+		time?: number;
+		nextPageToken?: string;
+	}
+	/**
+	 * Message implementation for ondewo.nlu.EntitySynonymSearchResult
+	 */
+	class EntitySynonymSearchResult implements GrpcMessage {
+		static id: string;
+		/**
+		 * Deserialize binary data to message
+		 * @param instance message instance
+		 */
+		static deserializeBinary(bytes: ByteSource): EntitySynonymSearchResult;
+		/**
+		 * Check all the properties and set default protobuf values if necessary
+		 * @param _instance message instance
+		 */
+		static refineValues(_instance: EntitySynonymSearchResult): void;
+		/**
+		 * Deserializes / reads binary message into message instance using provided binary reader
+		 * @param _instance message instance
+		 * @param _reader binary reader instance
+		 */
+		static deserializeBinaryFromReader(_instance: EntitySynonymSearchResult, _reader: BinaryReader): void;
+		/**
+		 * Serializes a message to binary format using provided binary reader
+		 * @param _instance message instance
+		 * @param _writer binary writer instance
+		 */
+		static serializeBinaryToWriter(_instance: EntitySynonymSearchResult, _writer: BinaryWriter): void;
+		private _name?;
+		private _displayName?;
+		private _entityTypeName?;
+		private _entityName?;
+		private _language?;
+		/**
+		 * Message constructor. Initializes the properties and applies default Protobuf values if necessary
+		 * @param _value initial values object or instance of EntitySynonymSearchResult to deeply clone from
+		 */
+		constructor(_value?: RecursivePartial<EntitySynonymSearchResult.AsObject>);
+		get name(): string | undefined;
+		set name(value: string | undefined);
+		get displayName(): string | undefined;
+		set displayName(value: string | undefined);
+		get entityTypeName(): string | undefined;
+		set entityTypeName(value: string | undefined);
+		get entityName(): string | undefined;
+		set entityName(value: string | undefined);
+		get language(): string | undefined;
+		set language(value: string | undefined);
+		/**
+		 * Serialize message to binary data
+		 * @param instance message instance
+		 */
+		serializeBinary(): any;
+		/**
+		 * Cast message to standard JavaScript object (all non-primitive values are deeply cloned)
+		 */
+		toObject(): EntitySynonymSearchResult.AsObject;
+		/**
+		 * Convenience method to support JSON.stringify(message), replicates the structure of toObject()
+		 */
+		toJSON(): EntitySynonymSearchResult.AsObject;
+		/**
+		 * Cast message to JSON using protobuf JSON notation: https://developers.google.com/protocol-buffers/docs/proto3#json
+		 * Attention: output differs from toObject() e.g. enums are represented as names and not as numbers, Timestamp is an ISO Date string format etc.
+		 * If the message itself or some of descendant messages is google.protobuf.Any, you MUST provide a message pool as options. If not, the messagePool is not required
+		 */
+		toProtobufJSON(options?: ToProtobufJSONOptions): EntitySynonymSearchResult.AsProtobufJSON;
+	}
+	module EntitySynonymSearchResult {
+		/**
+		 * Standard JavaScript object representation for EntitySynonymSearchResult
+		 */
+		interface AsObject {
+			name?: string;
+			displayName?: string;
+			entityTypeName?: string;
+			entityName?: string;
+			language?: string;
+		}
+		/**
+		 * Protobuf JSON representation for EntitySynonymSearchResult
+		 */
+		interface AsProtobufJSON {
+			name?: string;
+			displayName?: string;
+			entityTypeName?: string;
+			entityName?: string;
+			language?: string;
+		}
+	}
+}
+/**
+ * Message implementation for ondewo.nlu.FullTextSearchResponseIntent
+ */
+export declare class FullTextSearchResponseIntent implements GrpcMessage {
+	static id: string;
+	/**
+	 * Deserialize binary data to message
+	 * @param instance message instance
+	 */
+	static deserializeBinary(bytes: ByteSource): FullTextSearchResponseIntent;
+	/**
+	 * Check all the properties and set default protobuf values if necessary
+	 * @param _instance message instance
+	 */
+	static refineValues(_instance: FullTextSearchResponseIntent): void;
+	/**
+	 * Deserializes / reads binary message into message instance using provided binary reader
+	 * @param _instance message instance
+	 * @param _reader binary reader instance
+	 */
+	static deserializeBinaryFromReader(_instance: FullTextSearchResponseIntent, _reader: BinaryReader): void;
+	/**
+	 * Serializes a message to binary format using provided binary reader
+	 * @param _instance message instance
+	 * @param _writer binary writer instance
+	 */
+	static serializeBinaryToWriter(_instance: FullTextSearchResponseIntent, _writer: BinaryWriter): void;
+	private _parent?;
+	private _languageCode?;
+	private _intentResults?;
+	private _term?;
+	private _elasticQuery?;
+	private _time?;
+	private _nextPageToken?;
+	/**
+	 * Message constructor. Initializes the properties and applies default Protobuf values if necessary
+	 * @param _value initial values object or instance of FullTextSearchResponseIntent to deeply clone from
+	 */
+	constructor(_value?: RecursivePartial<FullTextSearchResponseIntent.AsObject>);
+	get parent(): string | undefined;
+	set parent(value: string | undefined);
+	get languageCode(): string | undefined;
+	set languageCode(value: string | undefined);
+	get intentResults(): FullTextSearchResponseIntent.IntentSearchResult[] | undefined;
+	set intentResults(value: FullTextSearchResponseIntent.IntentSearchResult[] | undefined);
+	get term(): string | undefined;
+	set term(value: string | undefined);
+	get elasticQuery(): string | undefined;
+	set elasticQuery(value: string | undefined);
+	get time(): number | undefined;
+	set time(value: number | undefined);
+	get nextPageToken(): string | undefined;
+	set nextPageToken(value: string | undefined);
+	/**
+	 * Serialize message to binary data
+	 * @param instance message instance
+	 */
+	serializeBinary(): any;
+	/**
+	 * Cast message to standard JavaScript object (all non-primitive values are deeply cloned)
+	 */
+	toObject(): FullTextSearchResponseIntent.AsObject;
+	/**
+	 * Convenience method to support JSON.stringify(message), replicates the structure of toObject()
+	 */
+	toJSON(): FullTextSearchResponseIntent.AsObject;
+	/**
+	 * Cast message to JSON using protobuf JSON notation: https://developers.google.com/protocol-buffers/docs/proto3#json
+	 * Attention: output differs from toObject() e.g. enums are represented as names and not as numbers, Timestamp is an ISO Date string format etc.
+	 * If the message itself or some of descendant messages is google.protobuf.Any, you MUST provide a message pool as options. If not, the messagePool is not required
+	 */
+	toProtobufJSON(options?: ToProtobufJSONOptions): FullTextSearchResponseIntent.AsProtobufJSON;
+}
+export declare module FullTextSearchResponseIntent {
+	/**
+	 * Standard JavaScript object representation for FullTextSearchResponseIntent
+	 */
+	interface AsObject {
+		parent?: string;
+		languageCode?: string;
+		intentResults?: FullTextSearchResponseIntent.IntentSearchResult.AsObject[];
+		term?: string;
+		elasticQuery?: string;
+		time?: number;
+		nextPageToken?: string;
+	}
+	/**
+	 * Protobuf JSON representation for FullTextSearchResponseIntent
+	 */
+	interface AsProtobufJSON {
+		parent?: string;
+		languageCode?: string;
+		intentResults?: FullTextSearchResponseIntent.IntentSearchResult.AsProtobufJSON[] | null;
+		term?: string;
+		elasticQuery?: string;
+		time?: number;
+		nextPageToken?: string;
+	}
+	/**
+	 * Message implementation for ondewo.nlu.IntentSearchResult
+	 */
+	class IntentSearchResult implements GrpcMessage {
+		static id: string;
+		/**
+		 * Deserialize binary data to message
+		 * @param instance message instance
+		 */
+		static deserializeBinary(bytes: ByteSource): IntentSearchResult;
+		/**
+		 * Check all the properties and set default protobuf values if necessary
+		 * @param _instance message instance
+		 */
+		static refineValues(_instance: IntentSearchResult): void;
+		/**
+		 * Deserializes / reads binary message into message instance using provided binary reader
+		 * @param _instance message instance
+		 * @param _reader binary reader instance
+		 */
+		static deserializeBinaryFromReader(_instance: IntentSearchResult, _reader: BinaryReader): void;
+		/**
+		 * Serializes a message to binary format using provided binary reader
+		 * @param _instance message instance
+		 * @param _writer binary writer instance
+		 */
+		static serializeBinaryToWriter(_instance: IntentSearchResult, _writer: BinaryWriter): void;
+		private _name?;
+		private _displayName?;
+		private _domainName?;
+		private _language?;
+		/**
+		 * Message constructor. Initializes the properties and applies default Protobuf values if necessary
+		 * @param _value initial values object or instance of IntentSearchResult to deeply clone from
+		 */
+		constructor(_value?: RecursivePartial<IntentSearchResult.AsObject>);
+		get name(): string | undefined;
+		set name(value: string | undefined);
+		get displayName(): string | undefined;
+		set displayName(value: string | undefined);
+		get domainName(): string | undefined;
+		set domainName(value: string | undefined);
+		get language(): string | undefined;
+		set language(value: string | undefined);
+		/**
+		 * Serialize message to binary data
+		 * @param instance message instance
+		 */
+		serializeBinary(): any;
+		/**
+		 * Cast message to standard JavaScript object (all non-primitive values are deeply cloned)
+		 */
+		toObject(): IntentSearchResult.AsObject;
+		/**
+		 * Convenience method to support JSON.stringify(message), replicates the structure of toObject()
+		 */
+		toJSON(): IntentSearchResult.AsObject;
+		/**
+		 * Cast message to JSON using protobuf JSON notation: https://developers.google.com/protocol-buffers/docs/proto3#json
+		 * Attention: output differs from toObject() e.g. enums are represented as names and not as numbers, Timestamp is an ISO Date string format etc.
+		 * If the message itself or some of descendant messages is google.protobuf.Any, you MUST provide a message pool as options. If not, the messagePool is not required
+		 */
+		toProtobufJSON(options?: ToProtobufJSONOptions): IntentSearchResult.AsProtobufJSON;
+	}
+	module IntentSearchResult {
+		/**
+		 * Standard JavaScript object representation for IntentSearchResult
+		 */
+		interface AsObject {
+			name?: string;
+			displayName?: string;
+			domainName?: string;
+			language?: string;
+		}
+		/**
+		 * Protobuf JSON representation for IntentSearchResult
+		 */
+		interface AsProtobufJSON {
+			name?: string;
+			displayName?: string;
+			domainName?: string;
+			language?: string;
+		}
+	}
+}
+/**
+ * Message implementation for ondewo.nlu.FullTextSearchResponseIntentContextIn
+ */
+export declare class FullTextSearchResponseIntentContextIn implements GrpcMessage {
+	static id: string;
+	/**
+	 * Deserialize binary data to message
+	 * @param instance message instance
+	 */
+	static deserializeBinary(bytes: ByteSource): FullTextSearchResponseIntentContextIn;
+	/**
+	 * Check all the properties and set default protobuf values if necessary
+	 * @param _instance message instance
+	 */
+	static refineValues(_instance: FullTextSearchResponseIntentContextIn): void;
+	/**
+	 * Deserializes / reads binary message into message instance using provided binary reader
+	 * @param _instance message instance
+	 * @param _reader binary reader instance
+	 */
+	static deserializeBinaryFromReader(_instance: FullTextSearchResponseIntentContextIn, _reader: BinaryReader): void;
+	/**
+	 * Serializes a message to binary format using provided binary reader
+	 * @param _instance message instance
+	 * @param _writer binary writer instance
+	 */
+	static serializeBinaryToWriter(_instance: FullTextSearchResponseIntentContextIn, _writer: BinaryWriter): void;
+	private _parent?;
+	private _languageCode?;
+	private _intentContextInResults?;
+	private _term?;
+	private _elasticQuery?;
+	private _time?;
+	private _nextPageToken?;
+	/**
+	 * Message constructor. Initializes the properties and applies default Protobuf values if necessary
+	 * @param _value initial values object or instance of FullTextSearchResponseIntentContextIn to deeply clone from
+	 */
+	constructor(_value?: RecursivePartial<FullTextSearchResponseIntentContextIn.AsObject>);
+	get parent(): string | undefined;
+	set parent(value: string | undefined);
+	get languageCode(): string | undefined;
+	set languageCode(value: string | undefined);
+	get intentContextInResults(): FullTextSearchResponseIntentContextIn.IntentContextInSearchResult[] | undefined;
+	set intentContextInResults(value: FullTextSearchResponseIntentContextIn.IntentContextInSearchResult[] | undefined);
+	get term(): string | undefined;
+	set term(value: string | undefined);
+	get elasticQuery(): string | undefined;
+	set elasticQuery(value: string | undefined);
+	get time(): number | undefined;
+	set time(value: number | undefined);
+	get nextPageToken(): string | undefined;
+	set nextPageToken(value: string | undefined);
+	/**
+	 * Serialize message to binary data
+	 * @param instance message instance
+	 */
+	serializeBinary(): any;
+	/**
+	 * Cast message to standard JavaScript object (all non-primitive values are deeply cloned)
+	 */
+	toObject(): FullTextSearchResponseIntentContextIn.AsObject;
+	/**
+	 * Convenience method to support JSON.stringify(message), replicates the structure of toObject()
+	 */
+	toJSON(): FullTextSearchResponseIntentContextIn.AsObject;
+	/**
+	 * Cast message to JSON using protobuf JSON notation: https://developers.google.com/protocol-buffers/docs/proto3#json
+	 * Attention: output differs from toObject() e.g. enums are represented as names and not as numbers, Timestamp is an ISO Date string format etc.
+	 * If the message itself or some of descendant messages is google.protobuf.Any, you MUST provide a message pool as options. If not, the messagePool is not required
+	 */
+	toProtobufJSON(options?: ToProtobufJSONOptions): FullTextSearchResponseIntentContextIn.AsProtobufJSON;
+}
+export declare module FullTextSearchResponseIntentContextIn {
+	/**
+	 * Standard JavaScript object representation for FullTextSearchResponseIntentContextIn
+	 */
+	interface AsObject {
+		parent?: string;
+		languageCode?: string;
+		intentContextInResults?: FullTextSearchResponseIntentContextIn.IntentContextInSearchResult.AsObject[];
+		term?: string;
+		elasticQuery?: string;
+		time?: number;
+		nextPageToken?: string;
+	}
+	/**
+	 * Protobuf JSON representation for FullTextSearchResponseIntentContextIn
+	 */
+	interface AsProtobufJSON {
+		parent?: string;
+		languageCode?: string;
+		intentContextInResults?: FullTextSearchResponseIntentContextIn.IntentContextInSearchResult.AsProtobufJSON[] | null;
+		term?: string;
+		elasticQuery?: string;
+		time?: number;
+		nextPageToken?: string;
+	}
+	/**
+	 * Message implementation for ondewo.nlu.IntentContextInSearchResult
+	 */
+	class IntentContextInSearchResult implements GrpcMessage {
+		static id: string;
+		/**
+		 * Deserialize binary data to message
+		 * @param instance message instance
+		 */
+		static deserializeBinary(bytes: ByteSource): IntentContextInSearchResult;
+		/**
+		 * Check all the properties and set default protobuf values if necessary
+		 * @param _instance message instance
+		 */
+		static refineValues(_instance: IntentContextInSearchResult): void;
+		/**
+		 * Deserializes / reads binary message into message instance using provided binary reader
+		 * @param _instance message instance
+		 * @param _reader binary reader instance
+		 */
+		static deserializeBinaryFromReader(_instance: IntentContextInSearchResult, _reader: BinaryReader): void;
+		/**
+		 * Serializes a message to binary format using provided binary reader
+		 * @param _instance message instance
+		 * @param _writer binary writer instance
+		 */
+		static serializeBinaryToWriter(_instance: IntentContextInSearchResult, _writer: BinaryWriter): void;
+		private _name?;
+		private _intentName?;
+		private _language?;
+		/**
+		 * Message constructor. Initializes the properties and applies default Protobuf values if necessary
+		 * @param _value initial values object or instance of IntentContextInSearchResult to deeply clone from
+		 */
+		constructor(_value?: RecursivePartial<IntentContextInSearchResult.AsObject>);
+		get name(): string | undefined;
+		set name(value: string | undefined);
+		get intentName(): string | undefined;
+		set intentName(value: string | undefined);
+		get language(): string | undefined;
+		set language(value: string | undefined);
+		/**
+		 * Serialize message to binary data
+		 * @param instance message instance
+		 */
+		serializeBinary(): any;
+		/**
+		 * Cast message to standard JavaScript object (all non-primitive values are deeply cloned)
+		 */
+		toObject(): IntentContextInSearchResult.AsObject;
+		/**
+		 * Convenience method to support JSON.stringify(message), replicates the structure of toObject()
+		 */
+		toJSON(): IntentContextInSearchResult.AsObject;
+		/**
+		 * Cast message to JSON using protobuf JSON notation: https://developers.google.com/protocol-buffers/docs/proto3#json
+		 * Attention: output differs from toObject() e.g. enums are represented as names and not as numbers, Timestamp is an ISO Date string format etc.
+		 * If the message itself or some of descendant messages is google.protobuf.Any, you MUST provide a message pool as options. If not, the messagePool is not required
+		 */
+		toProtobufJSON(options?: ToProtobufJSONOptions): IntentContextInSearchResult.AsProtobufJSON;
+	}
+	module IntentContextInSearchResult {
+		/**
+		 * Standard JavaScript object representation for IntentContextInSearchResult
+		 */
+		interface AsObject {
+			name?: string;
+			intentName?: string;
+			language?: string;
+		}
+		/**
+		 * Protobuf JSON representation for IntentContextInSearchResult
+		 */
+		interface AsProtobufJSON {
+			name?: string;
+			intentName?: string;
+			language?: string;
+		}
+	}
+}
+/**
+ * Message implementation for ondewo.nlu.FullTextSearchResponseIntentContextOut
+ */
+export declare class FullTextSearchResponseIntentContextOut implements GrpcMessage {
+	static id: string;
+	/**
+	 * Deserialize binary data to message
+	 * @param instance message instance
+	 */
+	static deserializeBinary(bytes: ByteSource): FullTextSearchResponseIntentContextOut;
+	/**
+	 * Check all the properties and set default protobuf values if necessary
+	 * @param _instance message instance
+	 */
+	static refineValues(_instance: FullTextSearchResponseIntentContextOut): void;
+	/**
+	 * Deserializes / reads binary message into message instance using provided binary reader
+	 * @param _instance message instance
+	 * @param _reader binary reader instance
+	 */
+	static deserializeBinaryFromReader(_instance: FullTextSearchResponseIntentContextOut, _reader: BinaryReader): void;
+	/**
+	 * Serializes a message to binary format using provided binary reader
+	 * @param _instance message instance
+	 * @param _writer binary writer instance
+	 */
+	static serializeBinaryToWriter(_instance: FullTextSearchResponseIntentContextOut, _writer: BinaryWriter): void;
+	private _parent?;
+	private _languageCode?;
+	private _intentContextOutResults?;
+	private _term?;
+	private _elasticQuery?;
+	private _time?;
+	private _nextPageToken?;
+	/**
+	 * Message constructor. Initializes the properties and applies default Protobuf values if necessary
+	 * @param _value initial values object or instance of FullTextSearchResponseIntentContextOut to deeply clone from
+	 */
+	constructor(_value?: RecursivePartial<FullTextSearchResponseIntentContextOut.AsObject>);
+	get parent(): string | undefined;
+	set parent(value: string | undefined);
+	get languageCode(): string | undefined;
+	set languageCode(value: string | undefined);
+	get intentContextOutResults(): FullTextSearchResponseIntentContextOut.IntentContextOutSearchResult[] | undefined;
+	set intentContextOutResults(value: FullTextSearchResponseIntentContextOut.IntentContextOutSearchResult[] | undefined);
+	get term(): string | undefined;
+	set term(value: string | undefined);
+	get elasticQuery(): string | undefined;
+	set elasticQuery(value: string | undefined);
+	get time(): number | undefined;
+	set time(value: number | undefined);
+	get nextPageToken(): string | undefined;
+	set nextPageToken(value: string | undefined);
+	/**
+	 * Serialize message to binary data
+	 * @param instance message instance
+	 */
+	serializeBinary(): any;
+	/**
+	 * Cast message to standard JavaScript object (all non-primitive values are deeply cloned)
+	 */
+	toObject(): FullTextSearchResponseIntentContextOut.AsObject;
+	/**
+	 * Convenience method to support JSON.stringify(message), replicates the structure of toObject()
+	 */
+	toJSON(): FullTextSearchResponseIntentContextOut.AsObject;
+	/**
+	 * Cast message to JSON using protobuf JSON notation: https://developers.google.com/protocol-buffers/docs/proto3#json
+	 * Attention: output differs from toObject() e.g. enums are represented as names and not as numbers, Timestamp is an ISO Date string format etc.
+	 * If the message itself or some of descendant messages is google.protobuf.Any, you MUST provide a message pool as options. If not, the messagePool is not required
+	 */
+	toProtobufJSON(options?: ToProtobufJSONOptions): FullTextSearchResponseIntentContextOut.AsProtobufJSON;
+}
+export declare module FullTextSearchResponseIntentContextOut {
+	/**
+	 * Standard JavaScript object representation for FullTextSearchResponseIntentContextOut
+	 */
+	interface AsObject {
+		parent?: string;
+		languageCode?: string;
+		intentContextOutResults?: FullTextSearchResponseIntentContextOut.IntentContextOutSearchResult.AsObject[];
+		term?: string;
+		elasticQuery?: string;
+		time?: number;
+		nextPageToken?: string;
+	}
+	/**
+	 * Protobuf JSON representation for FullTextSearchResponseIntentContextOut
+	 */
+	interface AsProtobufJSON {
+		parent?: string;
+		languageCode?: string;
+		intentContextOutResults?:
+			| FullTextSearchResponseIntentContextOut.IntentContextOutSearchResult.AsProtobufJSON[]
+			| null;
+		term?: string;
+		elasticQuery?: string;
+		time?: number;
+		nextPageToken?: string;
+	}
+	/**
+	 * Message implementation for ondewo.nlu.IntentContextOutSearchResult
+	 */
+	class IntentContextOutSearchResult implements GrpcMessage {
+		static id: string;
+		/**
+		 * Deserialize binary data to message
+		 * @param instance message instance
+		 */
+		static deserializeBinary(bytes: ByteSource): IntentContextOutSearchResult;
+		/**
+		 * Check all the properties and set default protobuf values if necessary
+		 * @param _instance message instance
+		 */
+		static refineValues(_instance: IntentContextOutSearchResult): void;
+		/**
+		 * Deserializes / reads binary message into message instance using provided binary reader
+		 * @param _instance message instance
+		 * @param _reader binary reader instance
+		 */
+		static deserializeBinaryFromReader(_instance: IntentContextOutSearchResult, _reader: BinaryReader): void;
+		/**
+		 * Serializes a message to binary format using provided binary reader
+		 * @param _instance message instance
+		 * @param _writer binary writer instance
+		 */
+		static serializeBinaryToWriter(_instance: IntentContextOutSearchResult, _writer: BinaryWriter): void;
+		private _name?;
+		private _intentName?;
+		private _language?;
+		/**
+		 * Message constructor. Initializes the properties and applies default Protobuf values if necessary
+		 * @param _value initial values object or instance of IntentContextOutSearchResult to deeply clone from
+		 */
+		constructor(_value?: RecursivePartial<IntentContextOutSearchResult.AsObject>);
+		get name(): string | undefined;
+		set name(value: string | undefined);
+		get intentName(): string | undefined;
+		set intentName(value: string | undefined);
+		get language(): string | undefined;
+		set language(value: string | undefined);
+		/**
+		 * Serialize message to binary data
+		 * @param instance message instance
+		 */
+		serializeBinary(): any;
+		/**
+		 * Cast message to standard JavaScript object (all non-primitive values are deeply cloned)
+		 */
+		toObject(): IntentContextOutSearchResult.AsObject;
+		/**
+		 * Convenience method to support JSON.stringify(message), replicates the structure of toObject()
+		 */
+		toJSON(): IntentContextOutSearchResult.AsObject;
+		/**
+		 * Cast message to JSON using protobuf JSON notation: https://developers.google.com/protocol-buffers/docs/proto3#json
+		 * Attention: output differs from toObject() e.g. enums are represented as names and not as numbers, Timestamp is an ISO Date string format etc.
+		 * If the message itself or some of descendant messages is google.protobuf.Any, you MUST provide a message pool as options. If not, the messagePool is not required
+		 */
+		toProtobufJSON(options?: ToProtobufJSONOptions): IntentContextOutSearchResult.AsProtobufJSON;
+	}
+	module IntentContextOutSearchResult {
+		/**
+		 * Standard JavaScript object representation for IntentContextOutSearchResult
+		 */
+		interface AsObject {
+			name?: string;
+			intentName?: string;
+			language?: string;
+		}
+		/**
+		 * Protobuf JSON representation for IntentContextOutSearchResult
+		 */
+		interface AsProtobufJSON {
+			name?: string;
+			intentName?: string;
+			language?: string;
+		}
+	}
+}
+/**
+ * Message implementation for ondewo.nlu.FullTextSearchResponseIntentUsersays
+ */
+export declare class FullTextSearchResponseIntentUsersays implements GrpcMessage {
+	static id: string;
+	/**
+	 * Deserialize binary data to message
+	 * @param instance message instance
+	 */
+	static deserializeBinary(bytes: ByteSource): FullTextSearchResponseIntentUsersays;
+	/**
+	 * Check all the properties and set default protobuf values if necessary
+	 * @param _instance message instance
+	 */
+	static refineValues(_instance: FullTextSearchResponseIntentUsersays): void;
+	/**
+	 * Deserializes / reads binary message into message instance using provided binary reader
+	 * @param _instance message instance
+	 * @param _reader binary reader instance
+	 */
+	static deserializeBinaryFromReader(_instance: FullTextSearchResponseIntentUsersays, _reader: BinaryReader): void;
+	/**
+	 * Serializes a message to binary format using provided binary reader
+	 * @param _instance message instance
+	 * @param _writer binary writer instance
+	 */
+	static serializeBinaryToWriter(_instance: FullTextSearchResponseIntentUsersays, _writer: BinaryWriter): void;
+	private _parent?;
+	private _languageCode?;
+	private _intentUsersaysResults?;
+	private _term?;
+	private _elasticQuery?;
+	private _time?;
+	private _nextPageToken?;
+	/**
+	 * Message constructor. Initializes the properties and applies default Protobuf values if necessary
+	 * @param _value initial values object or instance of FullTextSearchResponseIntentUsersays to deeply clone from
+	 */
+	constructor(_value?: RecursivePartial<FullTextSearchResponseIntentUsersays.AsObject>);
+	get parent(): string | undefined;
+	set parent(value: string | undefined);
+	get languageCode(): string | undefined;
+	set languageCode(value: string | undefined);
+	get intentUsersaysResults(): FullTextSearchResponseIntentUsersays.IntentUsersaysSearchResult[] | undefined;
+	set intentUsersaysResults(value: FullTextSearchResponseIntentUsersays.IntentUsersaysSearchResult[] | undefined);
+	get term(): string | undefined;
+	set term(value: string | undefined);
+	get elasticQuery(): string | undefined;
+	set elasticQuery(value: string | undefined);
+	get time(): number | undefined;
+	set time(value: number | undefined);
+	get nextPageToken(): string | undefined;
+	set nextPageToken(value: string | undefined);
+	/**
+	 * Serialize message to binary data
+	 * @param instance message instance
+	 */
+	serializeBinary(): any;
+	/**
+	 * Cast message to standard JavaScript object (all non-primitive values are deeply cloned)
+	 */
+	toObject(): FullTextSearchResponseIntentUsersays.AsObject;
+	/**
+	 * Convenience method to support JSON.stringify(message), replicates the structure of toObject()
+	 */
+	toJSON(): FullTextSearchResponseIntentUsersays.AsObject;
+	/**
+	 * Cast message to JSON using protobuf JSON notation: https://developers.google.com/protocol-buffers/docs/proto3#json
+	 * Attention: output differs from toObject() e.g. enums are represented as names and not as numbers, Timestamp is an ISO Date string format etc.
+	 * If the message itself or some of descendant messages is google.protobuf.Any, you MUST provide a message pool as options. If not, the messagePool is not required
+	 */
+	toProtobufJSON(options?: ToProtobufJSONOptions): FullTextSearchResponseIntentUsersays.AsProtobufJSON;
+}
+export declare module FullTextSearchResponseIntentUsersays {
+	/**
+	 * Standard JavaScript object representation for FullTextSearchResponseIntentUsersays
+	 */
+	interface AsObject {
+		parent?: string;
+		languageCode?: string;
+		intentUsersaysResults?: FullTextSearchResponseIntentUsersays.IntentUsersaysSearchResult.AsObject[];
+		term?: string;
+		elasticQuery?: string;
+		time?: number;
+		nextPageToken?: string;
+	}
+	/**
+	 * Protobuf JSON representation for FullTextSearchResponseIntentUsersays
+	 */
+	interface AsProtobufJSON {
+		parent?: string;
+		languageCode?: string;
+		intentUsersaysResults?: FullTextSearchResponseIntentUsersays.IntentUsersaysSearchResult.AsProtobufJSON[] | null;
+		term?: string;
+		elasticQuery?: string;
+		time?: number;
+		nextPageToken?: string;
+	}
+	/**
+	 * Message implementation for ondewo.nlu.IntentUsersaysSearchResult
+	 */
+	class IntentUsersaysSearchResult implements GrpcMessage {
+		static id: string;
+		/**
+		 * Deserialize binary data to message
+		 * @param instance message instance
+		 */
+		static deserializeBinary(bytes: ByteSource): IntentUsersaysSearchResult;
+		/**
+		 * Check all the properties and set default protobuf values if necessary
+		 * @param _instance message instance
+		 */
+		static refineValues(_instance: IntentUsersaysSearchResult): void;
+		/**
+		 * Deserializes / reads binary message into message instance using provided binary reader
+		 * @param _instance message instance
+		 * @param _reader binary reader instance
+		 */
+		static deserializeBinaryFromReader(_instance: IntentUsersaysSearchResult, _reader: BinaryReader): void;
+		/**
+		 * Serializes a message to binary format using provided binary reader
+		 * @param _instance message instance
+		 * @param _writer binary writer instance
+		 */
+		static serializeBinaryToWriter(_instance: IntentUsersaysSearchResult, _writer: BinaryWriter): void;
+		private _name?;
+		private _text?;
+		private _textAsEntityTypes?;
+		private _textAsEntityValues?;
+		private _type?;
+		private _intentName?;
+		private _language?;
+		/**
+		 * Message constructor. Initializes the properties and applies default Protobuf values if necessary
+		 * @param _value initial values object or instance of IntentUsersaysSearchResult to deeply clone from
+		 */
+		constructor(_value?: RecursivePartial<IntentUsersaysSearchResult.AsObject>);
+		get name(): string | undefined;
+		set name(value: string | undefined);
+		get text(): string | undefined;
+		set text(value: string | undefined);
+		get textAsEntityTypes(): string | undefined;
+		set textAsEntityTypes(value: string | undefined);
+		get textAsEntityValues(): string | undefined;
+		set textAsEntityValues(value: string | undefined);
+		get type(): string | undefined;
+		set type(value: string | undefined);
+		get intentName(): string | undefined;
+		set intentName(value: string | undefined);
+		get language(): string | undefined;
+		set language(value: string | undefined);
+		/**
+		 * Serialize message to binary data
+		 * @param instance message instance
+		 */
+		serializeBinary(): any;
+		/**
+		 * Cast message to standard JavaScript object (all non-primitive values are deeply cloned)
+		 */
+		toObject(): IntentUsersaysSearchResult.AsObject;
+		/**
+		 * Convenience method to support JSON.stringify(message), replicates the structure of toObject()
+		 */
+		toJSON(): IntentUsersaysSearchResult.AsObject;
+		/**
+		 * Cast message to JSON using protobuf JSON notation: https://developers.google.com/protocol-buffers/docs/proto3#json
+		 * Attention: output differs from toObject() e.g. enums are represented as names and not as numbers, Timestamp is an ISO Date string format etc.
+		 * If the message itself or some of descendant messages is google.protobuf.Any, you MUST provide a message pool as options. If not, the messagePool is not required
+		 */
+		toProtobufJSON(options?: ToProtobufJSONOptions): IntentUsersaysSearchResult.AsProtobufJSON;
+	}
+	module IntentUsersaysSearchResult {
+		/**
+		 * Standard JavaScript object representation for IntentUsersaysSearchResult
+		 */
+		interface AsObject {
+			name?: string;
+			text?: string;
+			textAsEntityTypes?: string;
+			textAsEntityValues?: string;
+			type?: string;
+			intentName?: string;
+			language?: string;
+		}
+		/**
+		 * Protobuf JSON representation for IntentUsersaysSearchResult
+		 */
+		interface AsProtobufJSON {
+			name?: string;
+			text?: string;
+			textAsEntityTypes?: string;
+			textAsEntityValues?: string;
+			type?: string;
+			intentName?: string;
+			language?: string;
+		}
+	}
+}
+/**
+ * Message implementation for ondewo.nlu.FullTextSearchResponseIntentTags
+ */
+export declare class FullTextSearchResponseIntentTags implements GrpcMessage {
+	static id: string;
+	/**
+	 * Deserialize binary data to message
+	 * @param instance message instance
+	 */
+	static deserializeBinary(bytes: ByteSource): FullTextSearchResponseIntentTags;
+	/**
+	 * Check all the properties and set default protobuf values if necessary
+	 * @param _instance message instance
+	 */
+	static refineValues(_instance: FullTextSearchResponseIntentTags): void;
+	/**
+	 * Deserializes / reads binary message into message instance using provided binary reader
+	 * @param _instance message instance
+	 * @param _reader binary reader instance
+	 */
+	static deserializeBinaryFromReader(_instance: FullTextSearchResponseIntentTags, _reader: BinaryReader): void;
+	/**
+	 * Serializes a message to binary format using provided binary reader
+	 * @param _instance message instance
+	 * @param _writer binary writer instance
+	 */
+	static serializeBinaryToWriter(_instance: FullTextSearchResponseIntentTags, _writer: BinaryWriter): void;
+	private _parent?;
+	private _languageCode?;
+	private _intentTagsResults?;
+	private _term?;
+	private _elasticQuery?;
+	private _time?;
+	private _nextPageToken?;
+	/**
+	 * Message constructor. Initializes the properties and applies default Protobuf values if necessary
+	 * @param _value initial values object or instance of FullTextSearchResponseIntentTags to deeply clone from
+	 */
+	constructor(_value?: RecursivePartial<FullTextSearchResponseIntentTags.AsObject>);
+	get parent(): string | undefined;
+	set parent(value: string | undefined);
+	get languageCode(): string | undefined;
+	set languageCode(value: string | undefined);
+	get intentTagsResults(): FullTextSearchResponseIntentTags.IntentTagsSearchResult[] | undefined;
+	set intentTagsResults(value: FullTextSearchResponseIntentTags.IntentTagsSearchResult[] | undefined);
+	get term(): string | undefined;
+	set term(value: string | undefined);
+	get elasticQuery(): string | undefined;
+	set elasticQuery(value: string | undefined);
+	get time(): number | undefined;
+	set time(value: number | undefined);
+	get nextPageToken(): string | undefined;
+	set nextPageToken(value: string | undefined);
+	/**
+	 * Serialize message to binary data
+	 * @param instance message instance
+	 */
+	serializeBinary(): any;
+	/**
+	 * Cast message to standard JavaScript object (all non-primitive values are deeply cloned)
+	 */
+	toObject(): FullTextSearchResponseIntentTags.AsObject;
+	/**
+	 * Convenience method to support JSON.stringify(message), replicates the structure of toObject()
+	 */
+	toJSON(): FullTextSearchResponseIntentTags.AsObject;
+	/**
+	 * Cast message to JSON using protobuf JSON notation: https://developers.google.com/protocol-buffers/docs/proto3#json
+	 * Attention: output differs from toObject() e.g. enums are represented as names and not as numbers, Timestamp is an ISO Date string format etc.
+	 * If the message itself or some of descendant messages is google.protobuf.Any, you MUST provide a message pool as options. If not, the messagePool is not required
+	 */
+	toProtobufJSON(options?: ToProtobufJSONOptions): FullTextSearchResponseIntentTags.AsProtobufJSON;
+}
+export declare module FullTextSearchResponseIntentTags {
+	/**
+	 * Standard JavaScript object representation for FullTextSearchResponseIntentTags
+	 */
+	interface AsObject {
+		parent?: string;
+		languageCode?: string;
+		intentTagsResults?: FullTextSearchResponseIntentTags.IntentTagsSearchResult.AsObject[];
+		term?: string;
+		elasticQuery?: string;
+		time?: number;
+		nextPageToken?: string;
+	}
+	/**
+	 * Protobuf JSON representation for FullTextSearchResponseIntentTags
+	 */
+	interface AsProtobufJSON {
+		parent?: string;
+		languageCode?: string;
+		intentTagsResults?: FullTextSearchResponseIntentTags.IntentTagsSearchResult.AsProtobufJSON[] | null;
+		term?: string;
+		elasticQuery?: string;
+		time?: number;
+		nextPageToken?: string;
+	}
+	/**
+	 * Message implementation for ondewo.nlu.IntentTagsSearchResult
+	 */
+	class IntentTagsSearchResult implements GrpcMessage {
+		static id: string;
+		/**
+		 * Deserialize binary data to message
+		 * @param instance message instance
+		 */
+		static deserializeBinary(bytes: ByteSource): IntentTagsSearchResult;
+		/**
+		 * Check all the properties and set default protobuf values if necessary
+		 * @param _instance message instance
+		 */
+		static refineValues(_instance: IntentTagsSearchResult): void;
+		/**
+		 * Deserializes / reads binary message into message instance using provided binary reader
+		 * @param _instance message instance
+		 * @param _reader binary reader instance
+		 */
+		static deserializeBinaryFromReader(_instance: IntentTagsSearchResult, _reader: BinaryReader): void;
+		/**
+		 * Serializes a message to binary format using provided binary reader
+		 * @param _instance message instance
+		 * @param _writer binary writer instance
+		 */
+		static serializeBinaryToWriter(_instance: IntentTagsSearchResult, _writer: BinaryWriter): void;
+		private _name?;
+		private _text?;
+		private _intentName?;
+		private _language?;
+		/**
+		 * Message constructor. Initializes the properties and applies default Protobuf values if necessary
+		 * @param _value initial values object or instance of IntentTagsSearchResult to deeply clone from
+		 */
+		constructor(_value?: RecursivePartial<IntentTagsSearchResult.AsObject>);
+		get name(): string | undefined;
+		set name(value: string | undefined);
+		get text(): string | undefined;
+		set text(value: string | undefined);
+		get intentName(): string | undefined;
+		set intentName(value: string | undefined);
+		get language(): string | undefined;
+		set language(value: string | undefined);
+		/**
+		 * Serialize message to binary data
+		 * @param instance message instance
+		 */
+		serializeBinary(): any;
+		/**
+		 * Cast message to standard JavaScript object (all non-primitive values are deeply cloned)
+		 */
+		toObject(): IntentTagsSearchResult.AsObject;
+		/**
+		 * Convenience method to support JSON.stringify(message), replicates the structure of toObject()
+		 */
+		toJSON(): IntentTagsSearchResult.AsObject;
+		/**
+		 * Cast message to JSON using protobuf JSON notation: https://developers.google.com/protocol-buffers/docs/proto3#json
+		 * Attention: output differs from toObject() e.g. enums are represented as names and not as numbers, Timestamp is an ISO Date string format etc.
+		 * If the message itself or some of descendant messages is google.protobuf.Any, you MUST provide a message pool as options. If not, the messagePool is not required
+		 */
+		toProtobufJSON(options?: ToProtobufJSONOptions): IntentTagsSearchResult.AsProtobufJSON;
+	}
+	module IntentTagsSearchResult {
+		/**
+		 * Standard JavaScript object representation for IntentTagsSearchResult
+		 */
+		interface AsObject {
+			name?: string;
+			text?: string;
+			intentName?: string;
+			language?: string;
+		}
+		/**
+		 * Protobuf JSON representation for IntentTagsSearchResult
+		 */
+		interface AsProtobufJSON {
+			name?: string;
+			text?: string;
+			intentName?: string;
+			language?: string;
+		}
+	}
+}
+/**
+ * Message implementation for ondewo.nlu.FullTextSearchResponseIntentResponse
+ */
+export declare class FullTextSearchResponseIntentResponse implements GrpcMessage {
+	static id: string;
+	/**
+	 * Deserialize binary data to message
+	 * @param instance message instance
+	 */
+	static deserializeBinary(bytes: ByteSource): FullTextSearchResponseIntentResponse;
+	/**
+	 * Check all the properties and set default protobuf values if necessary
+	 * @param _instance message instance
+	 */
+	static refineValues(_instance: FullTextSearchResponseIntentResponse): void;
+	/**
+	 * Deserializes / reads binary message into message instance using provided binary reader
+	 * @param _instance message instance
+	 * @param _reader binary reader instance
+	 */
+	static deserializeBinaryFromReader(_instance: FullTextSearchResponseIntentResponse, _reader: BinaryReader): void;
+	/**
+	 * Serializes a message to binary format using provided binary reader
+	 * @param _instance message instance
+	 * @param _writer binary writer instance
+	 */
+	static serializeBinaryToWriter(_instance: FullTextSearchResponseIntentResponse, _writer: BinaryWriter): void;
+	private _parent?;
+	private _languageCode?;
+	private _intentResponseResults?;
+	private _term?;
+	private _elasticQuery?;
+	private _time?;
+	private _nextPageToken?;
+	/**
+	 * Message constructor. Initializes the properties and applies default Protobuf values if necessary
+	 * @param _value initial values object or instance of FullTextSearchResponseIntentResponse to deeply clone from
+	 */
+	constructor(_value?: RecursivePartial<FullTextSearchResponseIntentResponse.AsObject>);
+	get parent(): string | undefined;
+	set parent(value: string | undefined);
+	get languageCode(): string | undefined;
+	set languageCode(value: string | undefined);
+	get intentResponseResults(): FullTextSearchResponseIntentResponse.IntentResponseSearchResult[] | undefined;
+	set intentResponseResults(value: FullTextSearchResponseIntentResponse.IntentResponseSearchResult[] | undefined);
+	get term(): string | undefined;
+	set term(value: string | undefined);
+	get elasticQuery(): string | undefined;
+	set elasticQuery(value: string | undefined);
+	get time(): number | undefined;
+	set time(value: number | undefined);
+	get nextPageToken(): string | undefined;
+	set nextPageToken(value: string | undefined);
+	/**
+	 * Serialize message to binary data
+	 * @param instance message instance
+	 */
+	serializeBinary(): any;
+	/**
+	 * Cast message to standard JavaScript object (all non-primitive values are deeply cloned)
+	 */
+	toObject(): FullTextSearchResponseIntentResponse.AsObject;
+	/**
+	 * Convenience method to support JSON.stringify(message), replicates the structure of toObject()
+	 */
+	toJSON(): FullTextSearchResponseIntentResponse.AsObject;
+	/**
+	 * Cast message to JSON using protobuf JSON notation: https://developers.google.com/protocol-buffers/docs/proto3#json
+	 * Attention: output differs from toObject() e.g. enums are represented as names and not as numbers, Timestamp is an ISO Date string format etc.
+	 * If the message itself or some of descendant messages is google.protobuf.Any, you MUST provide a message pool as options. If not, the messagePool is not required
+	 */
+	toProtobufJSON(options?: ToProtobufJSONOptions): FullTextSearchResponseIntentResponse.AsProtobufJSON;
+}
+export declare module FullTextSearchResponseIntentResponse {
+	/**
+	 * Standard JavaScript object representation for FullTextSearchResponseIntentResponse
+	 */
+	interface AsObject {
+		parent?: string;
+		languageCode?: string;
+		intentResponseResults?: FullTextSearchResponseIntentResponse.IntentResponseSearchResult.AsObject[];
+		term?: string;
+		elasticQuery?: string;
+		time?: number;
+		nextPageToken?: string;
+	}
+	/**
+	 * Protobuf JSON representation for FullTextSearchResponseIntentResponse
+	 */
+	interface AsProtobufJSON {
+		parent?: string;
+		languageCode?: string;
+		intentResponseResults?: FullTextSearchResponseIntentResponse.IntentResponseSearchResult.AsProtobufJSON[] | null;
+		term?: string;
+		elasticQuery?: string;
+		time?: number;
+		nextPageToken?: string;
+	}
+	/**
+	 * Message implementation for ondewo.nlu.IntentResponseSearchResult
+	 */
+	class IntentResponseSearchResult implements GrpcMessage {
+		static id: string;
+		/**
+		 * Deserialize binary data to message
+		 * @param instance message instance
+		 */
+		static deserializeBinary(bytes: ByteSource): IntentResponseSearchResult;
+		/**
+		 * Check all the properties and set default protobuf values if necessary
+		 * @param _instance message instance
+		 */
+		static refineValues(_instance: IntentResponseSearchResult): void;
+		/**
+		 * Deserializes / reads binary message into message instance using provided binary reader
+		 * @param _instance message instance
+		 * @param _reader binary reader instance
+		 */
+		static deserializeBinaryFromReader(_instance: IntentResponseSearchResult, _reader: BinaryReader): void;
+		/**
+		 * Serializes a message to binary format using provided binary reader
+		 * @param _instance message instance
+		 * @param _writer binary writer instance
+		 */
+		static serializeBinaryToWriter(_instance: IntentResponseSearchResult, _writer: BinaryWriter): void;
+		private _text?;
+		private _platform?;
+		private _responseType?;
+		private _intentName?;
+		private _language?;
+		/**
+		 * Message constructor. Initializes the properties and applies default Protobuf values if necessary
+		 * @param _value initial values object or instance of IntentResponseSearchResult to deeply clone from
+		 */
+		constructor(_value?: RecursivePartial<IntentResponseSearchResult.AsObject>);
+		get text(): string | undefined;
+		set text(value: string | undefined);
+		get platform(): string | undefined;
+		set platform(value: string | undefined);
+		get responseType(): string | undefined;
+		set responseType(value: string | undefined);
+		get intentName(): string | undefined;
+		set intentName(value: string | undefined);
+		get language(): string | undefined;
+		set language(value: string | undefined);
+		/**
+		 * Serialize message to binary data
+		 * @param instance message instance
+		 */
+		serializeBinary(): any;
+		/**
+		 * Cast message to standard JavaScript object (all non-primitive values are deeply cloned)
+		 */
+		toObject(): IntentResponseSearchResult.AsObject;
+		/**
+		 * Convenience method to support JSON.stringify(message), replicates the structure of toObject()
+		 */
+		toJSON(): IntentResponseSearchResult.AsObject;
+		/**
+		 * Cast message to JSON using protobuf JSON notation: https://developers.google.com/protocol-buffers/docs/proto3#json
+		 * Attention: output differs from toObject() e.g. enums are represented as names and not as numbers, Timestamp is an ISO Date string format etc.
+		 * If the message itself or some of descendant messages is google.protobuf.Any, you MUST provide a message pool as options. If not, the messagePool is not required
+		 */
+		toProtobufJSON(options?: ToProtobufJSONOptions): IntentResponseSearchResult.AsProtobufJSON;
+	}
+	module IntentResponseSearchResult {
+		/**
+		 * Standard JavaScript object representation for IntentResponseSearchResult
+		 */
+		interface AsObject {
+			text?: string;
+			platform?: string;
+			responseType?: string;
+			intentName?: string;
+			language?: string;
+		}
+		/**
+		 * Protobuf JSON representation for IntentResponseSearchResult
+		 */
+		interface AsProtobufJSON {
+			text?: string;
+			platform?: string;
+			responseType?: string;
+			intentName?: string;
+			language?: string;
+		}
+	}
+}
+/**
+ * Message implementation for ondewo.nlu.FullTextSearchResponseIntentParameters
+ */
+export declare class FullTextSearchResponseIntentParameters implements GrpcMessage {
+	static id: string;
+	/**
+	 * Deserialize binary data to message
+	 * @param instance message instance
+	 */
+	static deserializeBinary(bytes: ByteSource): FullTextSearchResponseIntentParameters;
+	/**
+	 * Check all the properties and set default protobuf values if necessary
+	 * @param _instance message instance
+	 */
+	static refineValues(_instance: FullTextSearchResponseIntentParameters): void;
+	/**
+	 * Deserializes / reads binary message into message instance using provided binary reader
+	 * @param _instance message instance
+	 * @param _reader binary reader instance
+	 */
+	static deserializeBinaryFromReader(_instance: FullTextSearchResponseIntentParameters, _reader: BinaryReader): void;
+	/**
+	 * Serializes a message to binary format using provided binary reader
+	 * @param _instance message instance
+	 * @param _writer binary writer instance
+	 */
+	static serializeBinaryToWriter(_instance: FullTextSearchResponseIntentParameters, _writer: BinaryWriter): void;
+	private _parent?;
+	private _languageCode?;
+	private _intentParametersResults?;
+	private _term?;
+	private _elasticQuery?;
+	private _time?;
+	private _nextPageToken?;
+	/**
+	 * Message constructor. Initializes the properties and applies default Protobuf values if necessary
+	 * @param _value initial values object or instance of FullTextSearchResponseIntentParameters to deeply clone from
+	 */
+	constructor(_value?: RecursivePartial<FullTextSearchResponseIntentParameters.AsObject>);
+	get parent(): string | undefined;
+	set parent(value: string | undefined);
+	get languageCode(): string | undefined;
+	set languageCode(value: string | undefined);
+	get intentParametersResults(): FullTextSearchResponseIntentParameters.IntentParametersSearchResult[] | undefined;
+	set intentParametersResults(value: FullTextSearchResponseIntentParameters.IntentParametersSearchResult[] | undefined);
+	get term(): string | undefined;
+	set term(value: string | undefined);
+	get elasticQuery(): string | undefined;
+	set elasticQuery(value: string | undefined);
+	get time(): number | undefined;
+	set time(value: number | undefined);
+	get nextPageToken(): string | undefined;
+	set nextPageToken(value: string | undefined);
+	/**
+	 * Serialize message to binary data
+	 * @param instance message instance
+	 */
+	serializeBinary(): any;
+	/**
+	 * Cast message to standard JavaScript object (all non-primitive values are deeply cloned)
+	 */
+	toObject(): FullTextSearchResponseIntentParameters.AsObject;
+	/**
+	 * Convenience method to support JSON.stringify(message), replicates the structure of toObject()
+	 */
+	toJSON(): FullTextSearchResponseIntentParameters.AsObject;
+	/**
+	 * Cast message to JSON using protobuf JSON notation: https://developers.google.com/protocol-buffers/docs/proto3#json
+	 * Attention: output differs from toObject() e.g. enums are represented as names and not as numbers, Timestamp is an ISO Date string format etc.
+	 * If the message itself or some of descendant messages is google.protobuf.Any, you MUST provide a message pool as options. If not, the messagePool is not required
+	 */
+	toProtobufJSON(options?: ToProtobufJSONOptions): FullTextSearchResponseIntentParameters.AsProtobufJSON;
+}
+export declare module FullTextSearchResponseIntentParameters {
+	/**
+	 * Standard JavaScript object representation for FullTextSearchResponseIntentParameters
+	 */
+	interface AsObject {
+		parent?: string;
+		languageCode?: string;
+		intentParametersResults?: FullTextSearchResponseIntentParameters.IntentParametersSearchResult.AsObject[];
+		term?: string;
+		elasticQuery?: string;
+		time?: number;
+		nextPageToken?: string;
+	}
+	/**
+	 * Protobuf JSON representation for FullTextSearchResponseIntentParameters
+	 */
+	interface AsProtobufJSON {
+		parent?: string;
+		languageCode?: string;
+		intentParametersResults?:
+			| FullTextSearchResponseIntentParameters.IntentParametersSearchResult.AsProtobufJSON[]
+			| null;
+		term?: string;
+		elasticQuery?: string;
+		time?: number;
+		nextPageToken?: string;
+	}
+	/**
+	 * Message implementation for ondewo.nlu.IntentParametersSearchResult
+	 */
+	class IntentParametersSearchResult implements GrpcMessage {
+		static id: string;
+		/**
+		 * Deserialize binary data to message
+		 * @param instance message instance
+		 */
+		static deserializeBinary(bytes: ByteSource): IntentParametersSearchResult;
+		/**
+		 * Check all the properties and set default protobuf values if necessary
+		 * @param _instance message instance
+		 */
+		static refineValues(_instance: IntentParametersSearchResult): void;
+		/**
+		 * Deserializes / reads binary message into message instance using provided binary reader
+		 * @param _instance message instance
+		 * @param _reader binary reader instance
+		 */
+		static deserializeBinaryFromReader(_instance: IntentParametersSearchResult, _reader: BinaryReader): void;
+		/**
+		 * Serializes a message to binary format using provided binary reader
+		 * @param _instance message instance
+		 * @param _writer binary writer instance
+		 */
+		static serializeBinaryToWriter(_instance: IntentParametersSearchResult, _writer: BinaryWriter): void;
+		private _parameterName?;
+		private _parameterDisplayName?;
+		private _intentName?;
+		private _language?;
+		/**
+		 * Message constructor. Initializes the properties and applies default Protobuf values if necessary
+		 * @param _value initial values object or instance of IntentParametersSearchResult to deeply clone from
+		 */
+		constructor(_value?: RecursivePartial<IntentParametersSearchResult.AsObject>);
+		get parameterName(): string | undefined;
+		set parameterName(value: string | undefined);
+		get parameterDisplayName(): string | undefined;
+		set parameterDisplayName(value: string | undefined);
+		get intentName(): string | undefined;
+		set intentName(value: string | undefined);
+		get language(): string | undefined;
+		set language(value: string | undefined);
+		/**
+		 * Serialize message to binary data
+		 * @param instance message instance
+		 */
+		serializeBinary(): any;
+		/**
+		 * Cast message to standard JavaScript object (all non-primitive values are deeply cloned)
+		 */
+		toObject(): IntentParametersSearchResult.AsObject;
+		/**
+		 * Convenience method to support JSON.stringify(message), replicates the structure of toObject()
+		 */
+		toJSON(): IntentParametersSearchResult.AsObject;
+		/**
+		 * Cast message to JSON using protobuf JSON notation: https://developers.google.com/protocol-buffers/docs/proto3#json
+		 * Attention: output differs from toObject() e.g. enums are represented as names and not as numbers, Timestamp is an ISO Date string format etc.
+		 * If the message itself or some of descendant messages is google.protobuf.Any, you MUST provide a message pool as options. If not, the messagePool is not required
+		 */
+		toProtobufJSON(options?: ToProtobufJSONOptions): IntentParametersSearchResult.AsProtobufJSON;
+	}
+	module IntentParametersSearchResult {
+		/**
+		 * Standard JavaScript object representation for IntentParametersSearchResult
+		 */
+		interface AsObject {
+			parameterName?: string;
+			parameterDisplayName?: string;
+			intentName?: string;
+			language?: string;
+		}
+		/**
+		 * Protobuf JSON representation for IntentParametersSearchResult
+		 */
+		interface AsProtobufJSON {
+			parameterName?: string;
+			parameterDisplayName?: string;
+			intentName?: string;
+			language?: string;
+		}
+	}
+}
+/**
+ * Message implementation for ondewo.nlu.ReindexAgentRequest
+ */
+export declare class ReindexAgentRequest implements GrpcMessage {
+	static id: string;
+	/**
+	 * Deserialize binary data to message
+	 * @param instance message instance
+	 */
+	static deserializeBinary(bytes: ByteSource): ReindexAgentRequest;
+	/**
+	 * Check all the properties and set default protobuf values if necessary
+	 * @param _instance message instance
+	 */
+	static refineValues(_instance: ReindexAgentRequest): void;
+	/**
+	 * Deserializes / reads binary message into message instance using provided binary reader
+	 * @param _instance message instance
+	 * @param _reader binary reader instance
+	 */
+	static deserializeBinaryFromReader(_instance: ReindexAgentRequest, _reader: BinaryReader): void;
+	/**
+	 * Serializes a message to binary format using provided binary reader
+	 * @param _instance message instance
+	 * @param _writer binary writer instance
+	 */
+	static serializeBinaryToWriter(_instance: ReindexAgentRequest, _writer: BinaryWriter): void;
+	private _parent?;
+	private _branchName?;
+	private _indexTypes?;
+	/**
+	 * Message constructor. Initializes the properties and applies default Protobuf values if necessary
+	 * @param _value initial values object or instance of ReindexAgentRequest to deeply clone from
+	 */
+	constructor(_value?: RecursivePartial<ReindexAgentRequest.AsObject>);
+	get parent(): string | undefined;
+	set parent(value: string | undefined);
+	get branchName(): string | undefined;
+	set branchName(value: string | undefined);
+	get indexTypes(): FullTextSearchRequest.QueryType[] | undefined;
+	set indexTypes(value: FullTextSearchRequest.QueryType[] | undefined);
+	/**
+	 * Serialize message to binary data
+	 * @param instance message instance
+	 */
+	serializeBinary(): any;
+	/**
+	 * Cast message to standard JavaScript object (all non-primitive values are deeply cloned)
+	 */
+	toObject(): ReindexAgentRequest.AsObject;
+	/**
+	 * Convenience method to support JSON.stringify(message), replicates the structure of toObject()
+	 */
+	toJSON(): ReindexAgentRequest.AsObject;
+	/**
+	 * Cast message to JSON using protobuf JSON notation: https://developers.google.com/protocol-buffers/docs/proto3#json
+	 * Attention: output differs from toObject() e.g. enums are represented as names and not as numbers, Timestamp is an ISO Date string format etc.
+	 * If the message itself or some of descendant messages is google.protobuf.Any, you MUST provide a message pool as options. If not, the messagePool is not required
+	 */
+	toProtobufJSON(options?: ToProtobufJSONOptions): ReindexAgentRequest.AsProtobufJSON;
+}
+export declare module ReindexAgentRequest {
+	/**
+	 * Standard JavaScript object representation for ReindexAgentRequest
+	 */
+	interface AsObject {
+		parent?: string;
+		branchName?: string;
+		indexTypes?: FullTextSearchRequest.QueryType[];
+	}
+	/**
+	 * Protobuf JSON representation for ReindexAgentRequest
+	 */
+	interface AsProtobufJSON {
+		parent?: string;
+		branchName?: string;
+		indexTypes?: string[];
+	}
+}

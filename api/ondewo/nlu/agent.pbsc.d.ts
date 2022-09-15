@@ -325,6 +325,127 @@ export declare class AgentsClient {
 			requestData: thisProto.PlatformMapping,
 			requestMetadata?: GrpcMetadata
 		) => Observable<GrpcEvent<thisProto.PlatformMapping>>;
+		/**
+		 * Unary call: /ondewo.nlu.Agents/GetFullTextSearchEntityType
+		 *
+		 * @param requestMessage Request message
+		 * @param requestMetadata Request metadata
+		 * @returns Observable<GrpcEvent<thisProto.FullTextSearchResponseEntityType>>
+		 */
+		getFullTextSearchEntityType: (
+			requestData: thisProto.FullTextSearchRequest,
+			requestMetadata?: GrpcMetadata
+		) => Observable<GrpcEvent<thisProto.FullTextSearchResponseEntityType>>;
+		/**
+		 * Unary call: /ondewo.nlu.Agents/GetFullTextSearchEntity
+		 *
+		 * @param requestMessage Request message
+		 * @param requestMetadata Request metadata
+		 * @returns Observable<GrpcEvent<thisProto.FullTextSearchResponseEntity>>
+		 */
+		getFullTextSearchEntity: (
+			requestData: thisProto.FullTextSearchRequest,
+			requestMetadata?: GrpcMetadata
+		) => Observable<GrpcEvent<thisProto.FullTextSearchResponseEntity>>;
+		/**
+		 * Unary call: /ondewo.nlu.Agents/GetFullTextSearchEntitySynonym
+		 *
+		 * @param requestMessage Request message
+		 * @param requestMetadata Request metadata
+		 * @returns Observable<GrpcEvent<thisProto.FullTextSearchResponseEntitySynonym>>
+		 */
+		getFullTextSearchEntitySynonym: (
+			requestData: thisProto.FullTextSearchRequest,
+			requestMetadata?: GrpcMetadata
+		) => Observable<GrpcEvent<thisProto.FullTextSearchResponseEntitySynonym>>;
+		/**
+		 * Unary call: /ondewo.nlu.Agents/GetFullTextSearchIntent
+		 *
+		 * @param requestMessage Request message
+		 * @param requestMetadata Request metadata
+		 * @returns Observable<GrpcEvent<thisProto.FullTextSearchResponseIntent>>
+		 */
+		getFullTextSearchIntent: (
+			requestData: thisProto.FullTextSearchRequest,
+			requestMetadata?: GrpcMetadata
+		) => Observable<GrpcEvent<thisProto.FullTextSearchResponseIntent>>;
+		/**
+		 * Unary call: /ondewo.nlu.Agents/GetFullTextSearchIntentContextIn
+		 *
+		 * @param requestMessage Request message
+		 * @param requestMetadata Request metadata
+		 * @returns Observable<GrpcEvent<thisProto.FullTextSearchResponseIntentContextIn>>
+		 */
+		getFullTextSearchIntentContextIn: (
+			requestData: thisProto.FullTextSearchRequest,
+			requestMetadata?: GrpcMetadata
+		) => Observable<GrpcEvent<thisProto.FullTextSearchResponseIntentContextIn>>;
+		/**
+		 * Unary call: /ondewo.nlu.Agents/GetFullTextSearchIntentContextOut
+		 *
+		 * @param requestMessage Request message
+		 * @param requestMetadata Request metadata
+		 * @returns Observable<GrpcEvent<thisProto.FullTextSearchResponseIntentContextOut>>
+		 */
+		getFullTextSearchIntentContextOut: (
+			requestData: thisProto.FullTextSearchRequest,
+			requestMetadata?: GrpcMetadata
+		) => Observable<GrpcEvent<thisProto.FullTextSearchResponseIntentContextOut>>;
+		/**
+		 * Unary call: /ondewo.nlu.Agents/GetFullTextSearchIntentUsersays
+		 *
+		 * @param requestMessage Request message
+		 * @param requestMetadata Request metadata
+		 * @returns Observable<GrpcEvent<thisProto.FullTextSearchResponseIntentUsersays>>
+		 */
+		getFullTextSearchIntentUsersays: (
+			requestData: thisProto.FullTextSearchRequest,
+			requestMetadata?: GrpcMetadata
+		) => Observable<GrpcEvent<thisProto.FullTextSearchResponseIntentUsersays>>;
+		/**
+		 * Unary call: /ondewo.nlu.Agents/GetFullTextSearchIntentTags
+		 *
+		 * @param requestMessage Request message
+		 * @param requestMetadata Request metadata
+		 * @returns Observable<GrpcEvent<thisProto.FullTextSearchResponseIntentTags>>
+		 */
+		getFullTextSearchIntentTags: (
+			requestData: thisProto.FullTextSearchRequest,
+			requestMetadata?: GrpcMetadata
+		) => Observable<GrpcEvent<thisProto.FullTextSearchResponseIntentTags>>;
+		/**
+		 * Unary call: /ondewo.nlu.Agents/GetFullTextSearchIntentResponse
+		 *
+		 * @param requestMessage Request message
+		 * @param requestMetadata Request metadata
+		 * @returns Observable<GrpcEvent<thisProto.FullTextSearchResponseIntentResponse>>
+		 */
+		getFullTextSearchIntentResponse: (
+			requestData: thisProto.FullTextSearchRequest,
+			requestMetadata?: GrpcMetadata
+		) => Observable<GrpcEvent<thisProto.FullTextSearchResponseIntentResponse>>;
+		/**
+		 * Unary call: /ondewo.nlu.Agents/GetFullTextSearchIntentParameters
+		 *
+		 * @param requestMessage Request message
+		 * @param requestMetadata Request metadata
+		 * @returns Observable<GrpcEvent<thisProto.FullTextSearchResponseIntentParameters>>
+		 */
+		getFullTextSearchIntentParameters: (
+			requestData: thisProto.FullTextSearchRequest,
+			requestMetadata?: GrpcMetadata
+		) => Observable<GrpcEvent<thisProto.FullTextSearchResponseIntentParameters>>;
+		/**
+		 * Unary call: /ondewo.nlu.Agents/ReindexAgent
+		 *
+		 * @param requestMessage Request message
+		 * @param requestMetadata Request metadata
+		 * @returns Observable<GrpcEvent<ondewoNlu005.Operation>>
+		 */
+		reindexAgent: (
+			requestData: thisProto.ReindexAgentRequest,
+			requestMetadata?: GrpcMetadata
+		) => Observable<GrpcEvent<ondewoNlu005.Operation>>;
 	};
 	constructor(settings: any, clientFactory: GrpcClientFactory<any>, handler: GrpcHandler);
 	/**
@@ -626,6 +747,127 @@ export declare class AgentsClient {
 		requestData: thisProto.PlatformMapping,
 		requestMetadata?: GrpcMetadata
 	): Observable<thisProto.PlatformMapping>;
+	/**
+	 * Unary call @/ondewo.nlu.Agents/GetFullTextSearchEntityType
+	 *
+	 * @param requestMessage Request message
+	 * @param requestMetadata Request metadata
+	 * @returns Observable<thisProto.FullTextSearchResponseEntityType>
+	 */
+	getFullTextSearchEntityType(
+		requestData: thisProto.FullTextSearchRequest,
+		requestMetadata?: GrpcMetadata
+	): Observable<thisProto.FullTextSearchResponseEntityType>;
+	/**
+	 * Unary call @/ondewo.nlu.Agents/GetFullTextSearchEntity
+	 *
+	 * @param requestMessage Request message
+	 * @param requestMetadata Request metadata
+	 * @returns Observable<thisProto.FullTextSearchResponseEntity>
+	 */
+	getFullTextSearchEntity(
+		requestData: thisProto.FullTextSearchRequest,
+		requestMetadata?: GrpcMetadata
+	): Observable<thisProto.FullTextSearchResponseEntity>;
+	/**
+	 * Unary call @/ondewo.nlu.Agents/GetFullTextSearchEntitySynonym
+	 *
+	 * @param requestMessage Request message
+	 * @param requestMetadata Request metadata
+	 * @returns Observable<thisProto.FullTextSearchResponseEntitySynonym>
+	 */
+	getFullTextSearchEntitySynonym(
+		requestData: thisProto.FullTextSearchRequest,
+		requestMetadata?: GrpcMetadata
+	): Observable<thisProto.FullTextSearchResponseEntitySynonym>;
+	/**
+	 * Unary call @/ondewo.nlu.Agents/GetFullTextSearchIntent
+	 *
+	 * @param requestMessage Request message
+	 * @param requestMetadata Request metadata
+	 * @returns Observable<thisProto.FullTextSearchResponseIntent>
+	 */
+	getFullTextSearchIntent(
+		requestData: thisProto.FullTextSearchRequest,
+		requestMetadata?: GrpcMetadata
+	): Observable<thisProto.FullTextSearchResponseIntent>;
+	/**
+	 * Unary call @/ondewo.nlu.Agents/GetFullTextSearchIntentContextIn
+	 *
+	 * @param requestMessage Request message
+	 * @param requestMetadata Request metadata
+	 * @returns Observable<thisProto.FullTextSearchResponseIntentContextIn>
+	 */
+	getFullTextSearchIntentContextIn(
+		requestData: thisProto.FullTextSearchRequest,
+		requestMetadata?: GrpcMetadata
+	): Observable<thisProto.FullTextSearchResponseIntentContextIn>;
+	/**
+	 * Unary call @/ondewo.nlu.Agents/GetFullTextSearchIntentContextOut
+	 *
+	 * @param requestMessage Request message
+	 * @param requestMetadata Request metadata
+	 * @returns Observable<thisProto.FullTextSearchResponseIntentContextOut>
+	 */
+	getFullTextSearchIntentContextOut(
+		requestData: thisProto.FullTextSearchRequest,
+		requestMetadata?: GrpcMetadata
+	): Observable<thisProto.FullTextSearchResponseIntentContextOut>;
+	/**
+	 * Unary call @/ondewo.nlu.Agents/GetFullTextSearchIntentUsersays
+	 *
+	 * @param requestMessage Request message
+	 * @param requestMetadata Request metadata
+	 * @returns Observable<thisProto.FullTextSearchResponseIntentUsersays>
+	 */
+	getFullTextSearchIntentUsersays(
+		requestData: thisProto.FullTextSearchRequest,
+		requestMetadata?: GrpcMetadata
+	): Observable<thisProto.FullTextSearchResponseIntentUsersays>;
+	/**
+	 * Unary call @/ondewo.nlu.Agents/GetFullTextSearchIntentTags
+	 *
+	 * @param requestMessage Request message
+	 * @param requestMetadata Request metadata
+	 * @returns Observable<thisProto.FullTextSearchResponseIntentTags>
+	 */
+	getFullTextSearchIntentTags(
+		requestData: thisProto.FullTextSearchRequest,
+		requestMetadata?: GrpcMetadata
+	): Observable<thisProto.FullTextSearchResponseIntentTags>;
+	/**
+	 * Unary call @/ondewo.nlu.Agents/GetFullTextSearchIntentResponse
+	 *
+	 * @param requestMessage Request message
+	 * @param requestMetadata Request metadata
+	 * @returns Observable<thisProto.FullTextSearchResponseIntentResponse>
+	 */
+	getFullTextSearchIntentResponse(
+		requestData: thisProto.FullTextSearchRequest,
+		requestMetadata?: GrpcMetadata
+	): Observable<thisProto.FullTextSearchResponseIntentResponse>;
+	/**
+	 * Unary call @/ondewo.nlu.Agents/GetFullTextSearchIntentParameters
+	 *
+	 * @param requestMessage Request message
+	 * @param requestMetadata Request metadata
+	 * @returns Observable<thisProto.FullTextSearchResponseIntentParameters>
+	 */
+	getFullTextSearchIntentParameters(
+		requestData: thisProto.FullTextSearchRequest,
+		requestMetadata?: GrpcMetadata
+	): Observable<thisProto.FullTextSearchResponseIntentParameters>;
+	/**
+	 * Unary call @/ondewo.nlu.Agents/ReindexAgent
+	 *
+	 * @param requestMessage Request message
+	 * @param requestMetadata Request metadata
+	 * @returns Observable<ondewoNlu005.Operation>
+	 */
+	reindexAgent(
+		requestData: thisProto.ReindexAgentRequest,
+		requestMetadata?: GrpcMetadata
+	): Observable<ondewoNlu005.Operation>;
 	static ɵfac: i0.ɵɵFactoryDeclaration<AgentsClient, [{ optional: true }, null, null]>;
 	static ɵprov: i0.ɵɵInjectableDeclaration<AgentsClient>;
 }
