@@ -228,7 +228,7 @@ export declare module Intent {
 		WEBHOOK_STATE_ENABLED_FOR_SLOT_FILLING = 2
 	}
 	/**
-	 * Message implementation for ondewo.nlu.TrainingPhrase
+	 * Message implementation for ondewo.nlu.Intent.TrainingPhrase
 	 */
 	class TrainingPhrase implements GrpcMessage {
 		static id: string;
@@ -326,7 +326,7 @@ export declare module Intent {
 			TEMPLATE = 2
 		}
 		/**
-		 * Message implementation for ondewo.nlu.Entity
+		 * Message implementation for ondewo.nlu.Intent.TrainingPhrase.Entity
 		 */
 		class Entity implements GrpcMessage {
 			static id: string;
@@ -431,7 +431,7 @@ export declare module Intent {
 		}
 	}
 	/**
-	 * Message implementation for ondewo.nlu.Parameter
+	 * Message implementation for ondewo.nlu.Intent.Parameter
 	 */
 	class Parameter implements GrpcMessage {
 		static id: string;
@@ -539,7 +539,7 @@ export declare module Intent {
 			isList?: boolean;
 		}
 		/**
-		 * Message implementation for ondewo.nlu.Prompt
+		 * Message implementation for ondewo.nlu.Intent.Parameter.Prompt
 		 */
 		class Prompt implements GrpcMessage {
 			static id: string;
@@ -619,7 +619,7 @@ export declare module Intent {
 		}
 	}
 	/**
-	 * Message implementation for ondewo.nlu.Message
+	 * Message implementation for ondewo.nlu.Intent.Message
 	 */
 	class Message implements GrpcMessage {
 		static id: string;
@@ -822,7 +822,7 @@ export declare module Intent {
 			PLACEHOLDER_20 = 28
 		}
 		/**
-		 * Message implementation for ondewo.nlu.Text
+		 * Message implementation for ondewo.nlu.Intent.Message.Text
 		 */
 		class Text implements GrpcMessage {
 			static id: string;
@@ -891,7 +891,7 @@ export declare module Intent {
 			}
 		}
 		/**
-		 * Message implementation for ondewo.nlu.Image
+		 * Message implementation for ondewo.nlu.Intent.Message.Image
 		 */
 		class Image implements GrpcMessage {
 			static id: string;
@@ -965,7 +965,7 @@ export declare module Intent {
 			}
 		}
 		/**
-		 * Message implementation for ondewo.nlu.QuickReplies
+		 * Message implementation for ondewo.nlu.Intent.Message.QuickReplies
 		 */
 		class QuickReplies implements GrpcMessage {
 			static id: string;
@@ -1039,7 +1039,7 @@ export declare module Intent {
 			}
 		}
 		/**
-		 * Message implementation for ondewo.nlu.Card
+		 * Message implementation for ondewo.nlu.Intent.Message.Card
 		 */
 		class Card implements GrpcMessage {
 			static id: string;
@@ -1122,7 +1122,7 @@ export declare module Intent {
 				buttons?: Intent.Message.Card.Button.AsProtobufJSON[] | null;
 			}
 			/**
-			 * Message implementation for ondewo.nlu.Button
+			 * Message implementation for ondewo.nlu.Intent.Message.Card.Button
 			 */
 			class Button implements GrpcMessage {
 				static id: string;
@@ -1197,7 +1197,7 @@ export declare module Intent {
 			}
 		}
 		/**
-		 * Message implementation for ondewo.nlu.SimpleResponse
+		 * Message implementation for ondewo.nlu.Intent.Message.SimpleResponse
 		 */
 		class SimpleResponse implements GrpcMessage {
 			static id: string;
@@ -1276,7 +1276,7 @@ export declare module Intent {
 			}
 		}
 		/**
-		 * Message implementation for ondewo.nlu.SimpleResponses
+		 * Message implementation for ondewo.nlu.Intent.Message.SimpleResponses
 		 */
 		class SimpleResponses implements GrpcMessage {
 			static id: string;
@@ -1345,7 +1345,7 @@ export declare module Intent {
 			}
 		}
 		/**
-		 * Message implementation for ondewo.nlu.BasicCard
+		 * Message implementation for ondewo.nlu.Intent.Message.BasicCard
 		 */
 		class BasicCard implements GrpcMessage {
 			static id: string;
@@ -1433,7 +1433,7 @@ export declare module Intent {
 				buttons?: Intent.Message.BasicCard.Button.AsProtobufJSON[] | null;
 			}
 			/**
-			 * Message implementation for ondewo.nlu.Button
+			 * Message implementation for ondewo.nlu.Intent.Message.BasicCard.Button
 			 */
 			class Button implements GrpcMessage {
 				static id: string;
@@ -1506,7 +1506,7 @@ export declare module Intent {
 					openUriAction?: Intent.Message.BasicCard.Button.OpenUriAction.AsProtobufJSON | null;
 				}
 				/**
-				 * Message implementation for ondewo.nlu.OpenUriAction
+				 * Message implementation for ondewo.nlu.Intent.Message.BasicCard.Button.OpenUriAction
 				 */
 				class OpenUriAction implements GrpcMessage {
 					static id: string;
@@ -1577,7 +1577,7 @@ export declare module Intent {
 			}
 		}
 		/**
-		 * Message implementation for ondewo.nlu.Suggestion
+		 * Message implementation for ondewo.nlu.Intent.Message.Suggestion
 		 */
 		class Suggestion implements GrpcMessage {
 			static id: string;
@@ -1646,7 +1646,7 @@ export declare module Intent {
 			}
 		}
 		/**
-		 * Message implementation for ondewo.nlu.Suggestions
+		 * Message implementation for ondewo.nlu.Intent.Message.Suggestions
 		 */
 		class Suggestions implements GrpcMessage {
 			static id: string;
@@ -1715,7 +1715,7 @@ export declare module Intent {
 			}
 		}
 		/**
-		 * Message implementation for ondewo.nlu.LinkOutSuggestion
+		 * Message implementation for ondewo.nlu.Intent.Message.LinkOutSuggestion
 		 */
 		class LinkOutSuggestion implements GrpcMessage {
 			static id: string;
@@ -1789,7 +1789,7 @@ export declare module Intent {
 			}
 		}
 		/**
-		 * Message implementation for ondewo.nlu.ListSelect
+		 * Message implementation for ondewo.nlu.Intent.Message.ListSelect
 		 */
 		class ListSelect implements GrpcMessage {
 			static id: string;
@@ -1862,7 +1862,7 @@ export declare module Intent {
 				items?: Intent.Message.ListSelect.Item.AsProtobufJSON[] | null;
 			}
 			/**
-			 * Message implementation for ondewo.nlu.Item
+			 * Message implementation for ondewo.nlu.Intent.Message.ListSelect.Item
 			 */
 			class Item implements GrpcMessage {
 				static id: string;
@@ -1947,7 +1947,7 @@ export declare module Intent {
 			}
 		}
 		/**
-		 * Message implementation for ondewo.nlu.CarouselSelect
+		 * Message implementation for ondewo.nlu.Intent.Message.CarouselSelect
 		 */
 		class CarouselSelect implements GrpcMessage {
 			static id: string;
@@ -2015,7 +2015,7 @@ export declare module Intent {
 				items?: Intent.Message.CarouselSelect.Item.AsProtobufJSON[] | null;
 			}
 			/**
-			 * Message implementation for ondewo.nlu.Item
+			 * Message implementation for ondewo.nlu.Intent.Message.CarouselSelect.Item
 			 */
 			class Item implements GrpcMessage {
 				static id: string;
@@ -2100,7 +2100,7 @@ export declare module Intent {
 			}
 		}
 		/**
-		 * Message implementation for ondewo.nlu.HTMLText
+		 * Message implementation for ondewo.nlu.Intent.Message.HTMLText
 		 */
 		class HTMLText implements GrpcMessage {
 			static id: string;
@@ -2169,7 +2169,7 @@ export declare module Intent {
 			}
 		}
 		/**
-		 * Message implementation for ondewo.nlu.Video
+		 * Message implementation for ondewo.nlu.Intent.Message.Video
 		 */
 		class Video implements GrpcMessage {
 			static id: string;
@@ -2243,7 +2243,7 @@ export declare module Intent {
 			}
 		}
 		/**
-		 * Message implementation for ondewo.nlu.Audio
+		 * Message implementation for ondewo.nlu.Intent.Message.Audio
 		 */
 		class Audio implements GrpcMessage {
 			static id: string;
@@ -2317,7 +2317,7 @@ export declare module Intent {
 			}
 		}
 		/**
-		 * Message implementation for ondewo.nlu.SelectItemInfo
+		 * Message implementation for ondewo.nlu.Intent.Message.SelectItemInfo
 		 */
 		class SelectItemInfo implements GrpcMessage {
 			static id: string;
@@ -2392,7 +2392,7 @@ export declare module Intent {
 		}
 	}
 	/**
-	 * Message implementation for ondewo.nlu.FollowupIntentInfo
+	 * Message implementation for ondewo.nlu.Intent.FollowupIntentInfo
 	 */
 	class FollowupIntentInfo implements GrpcMessage {
 		static id: string;
@@ -3930,7 +3930,7 @@ export declare module BatchCreateTrainingPhrasesRequest {
 		trainingPhraseRequests?: BatchCreateTrainingPhrasesRequest.CreateTrainingPhraseRequest.AsProtobufJSON[] | null;
 	}
 	/**
-	 * Message implementation for ondewo.nlu.CreateTrainingPhraseRequest
+	 * Message implementation for ondewo.nlu.BatchCreateTrainingPhrasesRequest.CreateTrainingPhraseRequest
 	 */
 	class CreateTrainingPhraseRequest implements GrpcMessage {
 		static id: string;
@@ -4216,7 +4216,7 @@ export declare module BatchDeleteTrainingPhrasesResponse {
 		hasErrors?: boolean;
 	}
 	/**
-	 * Message implementation for ondewo.nlu.DeleteTrainingPhraseStatus
+	 * Message implementation for ondewo.nlu.BatchDeleteTrainingPhrasesResponse.DeleteTrainingPhraseStatus
 	 */
 	class DeleteTrainingPhraseStatus implements GrpcMessage {
 		static id: string;
@@ -4524,7 +4524,7 @@ export declare module BatchResponseMessagesStatusResponse {
 		hasErrors?: boolean;
 	}
 	/**
-	 * Message implementation for ondewo.nlu.ResponseMessageStatus
+	 * Message implementation for ondewo.nlu.BatchResponseMessagesStatusResponse.ResponseMessageStatus
 	 */
 	class ResponseMessageStatus implements GrpcMessage {
 		static id: string;
@@ -4674,7 +4674,7 @@ export declare module BatchCreateResponseMessagesRequest {
 		responseMessageRequests?: BatchCreateResponseMessagesRequest.CreateResponseMessageRequest.AsProtobufJSON[] | null;
 	}
 	/**
-	 * Message implementation for ondewo.nlu.CreateResponseMessageRequest
+	 * Message implementation for ondewo.nlu.BatchCreateResponseMessagesRequest.CreateResponseMessageRequest
 	 */
 	class CreateResponseMessageRequest implements GrpcMessage {
 		static id: string;
@@ -5029,7 +5029,7 @@ export declare module BatchDeleteResponseMessagesResponse {
 		hasErrors?: boolean;
 	}
 	/**
-	 * Message implementation for ondewo.nlu.DeleteResponseMessageStatus
+	 * Message implementation for ondewo.nlu.BatchDeleteResponseMessagesResponse.DeleteResponseMessageStatus
 	 */
 	class DeleteResponseMessageStatus implements GrpcMessage {
 		static id: string;
@@ -5337,7 +5337,7 @@ export declare module BatchParametersStatusResponse {
 		hasErrors?: boolean;
 	}
 	/**
-	 * Message implementation for ondewo.nlu.ParameterStatus
+	 * Message implementation for ondewo.nlu.BatchParametersStatusResponse.ParameterStatus
 	 */
 	class ParameterStatus implements GrpcMessage {
 		static id: string;
@@ -5487,7 +5487,7 @@ export declare module BatchCreateParametersRequest {
 		parameterRequests?: BatchCreateParametersRequest.CreateParameterRequest.AsProtobufJSON[] | null;
 	}
 	/**
-	 * Message implementation for ondewo.nlu.CreateParameterRequest
+	 * Message implementation for ondewo.nlu.BatchCreateParametersRequest.CreateParameterRequest
 	 */
 	class CreateParameterRequest implements GrpcMessage {
 		static id: string;
@@ -5842,7 +5842,7 @@ export declare module BatchDeleteParametersResponse {
 		hasErrors?: boolean;
 	}
 	/**
-	 * Message implementation for ondewo.nlu.DeleteParameterStatus
+	 * Message implementation for ondewo.nlu.BatchDeleteParametersResponse.DeleteParameterStatus
 	 */
 	class DeleteParameterStatus implements GrpcMessage {
 		static id: string;

@@ -115,7 +115,7 @@ export class ServerStatisticsClient {
 }
 ServerStatisticsClient.ɵfac = i0.ɵɵngDeclareFactory({
 	minVersion: '12.0.0',
-	version: '14.2.0',
+	version: '14.2.5',
 	ngImport: i0,
 	type: ServerStatisticsClient,
 	deps: [
@@ -127,14 +127,14 @@ ServerStatisticsClient.ɵfac = i0.ɵɵngDeclareFactory({
 });
 ServerStatisticsClient.ɵprov = i0.ɵɵngDeclareInjectable({
 	minVersion: '12.0.0',
-	version: '14.2.0',
+	version: '14.2.5',
 	ngImport: i0,
 	type: ServerStatisticsClient,
 	providedIn: 'any'
 });
 i0.ɵɵngDeclareClassMetadata({
 	minVersion: '12.0.0',
-	version: '14.2.0',
+	version: '14.2.5',
 	ngImport: i0,
 	type: ServerStatisticsClient,
 	decorators: [

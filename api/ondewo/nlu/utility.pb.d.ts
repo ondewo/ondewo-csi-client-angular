@@ -873,7 +873,7 @@ export declare module IntentUpdate {
 		deletedParameters?: string[];
 	}
 	/**
-	 * Message implementation for ondewo.nlu.TrainingPhraseUpdate
+	 * Message implementation for ondewo.nlu.IntentUpdate.TrainingPhraseUpdate
 	 */
 	class TrainingPhraseUpdate implements GrpcMessage {
 		static id: string;
@@ -1031,7 +1031,7 @@ export declare module EntityTypeUpdate {
 		valuesUpdateList?: EntityTypeUpdate.EntityUpdate.AsProtobufJSON[] | null;
 	}
 	/**
-	 * Message implementation for ondewo.nlu.EntityUpdate
+	 * Message implementation for ondewo.nlu.EntityTypeUpdate.EntityUpdate
 	 */
 	class EntityUpdate implements GrpcMessage {
 		static id: string;
@@ -1565,7 +1565,7 @@ export declare module AddTrainingPhrasesRequest {
 		numberOfWorkers?: number;
 	}
 	/**
-	 * Message implementation for ondewo.nlu.TrainingPhraseForIntent
+	 * Message implementation for ondewo.nlu.AddTrainingPhrasesRequest.TrainingPhraseForIntent
 	 */
 	class TrainingPhraseForIntent implements GrpcMessage {
 		static id: string;

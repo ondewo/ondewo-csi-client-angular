@@ -255,7 +255,7 @@ export class AiServicesClient {
 }
 AiServicesClient.ɵfac = i0.ɵɵngDeclareFactory({
 	minVersion: '12.0.0',
-	version: '14.2.0',
+	version: '14.2.5',
 	ngImport: i0,
 	type: AiServicesClient,
 	deps: [
@@ -267,14 +267,14 @@ AiServicesClient.ɵfac = i0.ɵɵngDeclareFactory({
 });
 AiServicesClient.ɵprov = i0.ɵɵngDeclareInjectable({
 	minVersion: '12.0.0',
-	version: '14.2.0',
+	version: '14.2.5',
 	ngImport: i0,
 	type: AiServicesClient,
 	providedIn: 'any'
 });
 i0.ɵɵngDeclareClassMetadata({
 	minVersion: '12.0.0',
-	version: '14.2.0',
+	version: '14.2.5',
 	ngImport: i0,
 	type: AiServicesClient,
 	decorators: [

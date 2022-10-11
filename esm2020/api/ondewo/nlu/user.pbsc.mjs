@@ -450,7 +450,7 @@ export class UsersClient {
 }
 UsersClient.ɵfac = i0.ɵɵngDeclareFactory({
 	minVersion: '12.0.0',
-	version: '14.2.0',
+	version: '14.2.5',
 	ngImport: i0,
 	type: UsersClient,
 	deps: [
@@ -462,14 +462,14 @@ UsersClient.ɵfac = i0.ɵɵngDeclareFactory({
 });
 UsersClient.ɵprov = i0.ɵɵngDeclareInjectable({
 	minVersion: '12.0.0',
-	version: '14.2.0',
+	version: '14.2.5',
 	ngImport: i0,
 	type: UsersClient,
 	providedIn: 'any'
 });
 i0.ɵɵngDeclareClassMetadata({
 	minVersion: '12.0.0',
-	version: '14.2.0',
+	version: '14.2.5',
 	ngImport: i0,
 	type: UsersClient,
 	decorators: [

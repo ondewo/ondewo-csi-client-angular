@@ -1592,7 +1592,7 @@ export declare module SessionInfo {
 		outputContextSteps?: SessionInfo.ContextSteps.AsProtobufJSON[] | null;
 	}
 	/**
-	 * Message implementation for ondewo.nlu.ContextSteps
+	 * Message implementation for ondewo.nlu.SessionInfo.ContextSteps
 	 */
 	class ContextSteps implements GrpcMessage {
 		static id: string;

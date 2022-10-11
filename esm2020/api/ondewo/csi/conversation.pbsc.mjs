@@ -282,7 +282,7 @@ export class ConversationsClient {
 }
 ConversationsClient.ɵfac = i0.ɵɵngDeclareFactory({
 	minVersion: '12.0.0',
-	version: '14.2.0',
+	version: '14.2.5',
 	ngImport: i0,
 	type: ConversationsClient,
 	deps: [
@@ -294,14 +294,14 @@ ConversationsClient.ɵfac = i0.ɵɵngDeclareFactory({
 });
 ConversationsClient.ɵprov = i0.ɵɵngDeclareInjectable({
 	minVersion: '12.0.0',
-	version: '14.2.0',
+	version: '14.2.5',
 	ngImport: i0,
 	type: ConversationsClient,
 	providedIn: 'any'
 });
 i0.ɵɵngDeclareClassMetadata({
 	minVersion: '12.0.0',
-	version: '14.2.0',
+	version: '14.2.5',
 	ngImport: i0,
 	type: ConversationsClient,
 	decorators: [

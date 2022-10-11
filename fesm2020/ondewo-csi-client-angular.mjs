@@ -7588,7 +7588,7 @@ class Speech2TextClient {
 }
 Speech2TextClient.ɵfac = i0.ɵɵngDeclareFactory({
 	minVersion: '12.0.0',
-	version: '14.2.0',
+	version: '14.2.5',
 	ngImport: i0,
 	type: Speech2TextClient,
 	deps: [
@@ -7600,14 +7600,14 @@ Speech2TextClient.ɵfac = i0.ɵɵngDeclareFactory({
 });
 Speech2TextClient.ɵprov = i0.ɵɵngDeclareInjectable({
 	minVersion: '12.0.0',
-	version: '14.2.0',
+	version: '14.2.5',
 	ngImport: i0,
 	type: Speech2TextClient,
 	providedIn: 'any'
 });
 i0.ɵɵngDeclareClassMetadata({
 	minVersion: '12.0.0',
-	version: '14.2.0',
+	version: '14.2.5',
 	ngImport: i0,
 	type: Speech2TextClient,
 	decorators: [
@@ -13693,7 +13693,7 @@ class Text2SpeechClient {
 }
 Text2SpeechClient.ɵfac = i0.ɵɵngDeclareFactory({
 	minVersion: '12.0.0',
-	version: '14.2.0',
+	version: '14.2.5',
 	ngImport: i0,
 	type: Text2SpeechClient,
 	deps: [
@@ -13705,14 +13705,14 @@ Text2SpeechClient.ɵfac = i0.ɵɵngDeclareFactory({
 });
 Text2SpeechClient.ɵprov = i0.ɵɵngDeclareInjectable({
 	minVersion: '12.0.0',
-	version: '14.2.0',
+	version: '14.2.5',
 	ngImport: i0,
 	type: Text2SpeechClient,
 	providedIn: 'any'
 });
 i0.ɵɵngDeclareClassMetadata({
 	minVersion: '12.0.0',
-	version: '14.2.0',
+	version: '14.2.5',
 	ngImport: i0,
 	type: Text2SpeechClient,
 	decorators: [
@@ -13906,7 +13906,7 @@ class CustomPhonemizersClient {
 }
 CustomPhonemizersClient.ɵfac = i0.ɵɵngDeclareFactory({
 	minVersion: '12.0.0',
-	version: '14.2.0',
+	version: '14.2.5',
 	ngImport: i0,
 	type: CustomPhonemizersClient,
 	deps: [
@@ -13918,14 +13918,14 @@ CustomPhonemizersClient.ɵfac = i0.ɵɵngDeclareFactory({
 });
 CustomPhonemizersClient.ɵprov = i0.ɵɵngDeclareInjectable({
 	minVersion: '12.0.0',
-	version: '14.2.0',
+	version: '14.2.5',
 	ngImport: i0,
 	type: CustomPhonemizersClient,
 	providedIn: 'any'
 });
 i0.ɵɵngDeclareClassMetadata({
 	minVersion: '12.0.0',
-	version: '14.2.0',
+	version: '14.2.5',
 	ngImport: i0,
 	type: CustomPhonemizersClient,
 	decorators: [
@@ -14146,7 +14146,7 @@ class Context {
 Context.id = 'ondewo.nlu.Context';
 (function (Context) {
 	/**
-	 * Message implementation for ondewo.nlu.Parameter
+	 * Message implementation for ondewo.nlu.Context.Parameter
 	 */
 	class Parameter {
 		/**
@@ -14293,10 +14293,10 @@ Context.id = 'ondewo.nlu.Context';
 			};
 		}
 	}
-	Parameter.id = 'ondewo.nlu.Parameter';
+	Parameter.id = 'ondewo.nlu.Context.Parameter';
 	Context.Parameter = Parameter;
 	/**
-	 * Message implementation for ondewo.nlu.ParametersEntry
+	 * Message implementation for ondewo.nlu.Context.ParametersEntry
 	 */
 	class ParametersEntry {
 		/**
@@ -14412,7 +14412,7 @@ Context.id = 'ondewo.nlu.Context';
 			};
 		}
 	}
-	ParametersEntry.id = 'ondewo.nlu.ParametersEntry';
+	ParametersEntry.id = 'ondewo.nlu.Context.ParametersEntry';
 	Context.ParametersEntry = ParametersEntry;
 })(Context || (Context = {}));
 /**
@@ -15861,7 +15861,7 @@ Intent.id = 'ondewo.nlu.Intent';
 			'WEBHOOK_STATE_ENABLED_FOR_SLOT_FILLING';
 	})((WebhookState = Intent.WebhookState || (Intent.WebhookState = {})));
 	/**
-	 * Message implementation for ondewo.nlu.TrainingPhrase
+	 * Message implementation for ondewo.nlu.Intent.TrainingPhrase
 	 */
 	class TrainingPhrase {
 		/**
@@ -16042,7 +16042,7 @@ Intent.id = 'ondewo.nlu.Intent';
 			};
 		}
 	}
-	TrainingPhrase.id = 'ondewo.nlu.TrainingPhrase';
+	TrainingPhrase.id = 'ondewo.nlu.Intent.TrainingPhrase';
 	Intent.TrainingPhrase = TrainingPhrase;
 	(function (TrainingPhrase) {
 		let Type;
@@ -16052,7 +16052,7 @@ Intent.id = 'ondewo.nlu.Intent';
 			Type[(Type['TEMPLATE'] = 2)] = 'TEMPLATE';
 		})((Type = TrainingPhrase.Type || (TrainingPhrase.Type = {})));
 		/**
-		 * Message implementation for ondewo.nlu.Entity
+		 * Message implementation for ondewo.nlu.Intent.TrainingPhrase.Entity
 		 */
 		class Entity {
 			/**
@@ -16263,11 +16263,11 @@ Intent.id = 'ondewo.nlu.Intent';
 				};
 			}
 		}
-		Entity.id = 'ondewo.nlu.Entity';
+		Entity.id = 'ondewo.nlu.Intent.TrainingPhrase.Entity';
 		TrainingPhrase.Entity = Entity;
 	})((TrainingPhrase = Intent.TrainingPhrase || (Intent.TrainingPhrase = {})));
 	/**
-	 * Message implementation for ondewo.nlu.Parameter
+	 * Message implementation for ondewo.nlu.Intent.Parameter
 	 */
 	class Parameter {
 		/**
@@ -16496,11 +16496,11 @@ Intent.id = 'ondewo.nlu.Intent';
 			};
 		}
 	}
-	Parameter.id = 'ondewo.nlu.Parameter';
+	Parameter.id = 'ondewo.nlu.Intent.Parameter';
 	Intent.Parameter = Parameter;
 	(function (Parameter) {
 		/**
-		 * Message implementation for ondewo.nlu.Prompt
+		 * Message implementation for ondewo.nlu.Intent.Parameter.Prompt
 		 */
 		class Prompt {
 			/**
@@ -16631,11 +16631,11 @@ Intent.id = 'ondewo.nlu.Intent';
 				};
 			}
 		}
-		Prompt.id = 'ondewo.nlu.Prompt';
+		Prompt.id = 'ondewo.nlu.Intent.Parameter.Prompt';
 		Parameter.Prompt = Prompt;
 	})((Parameter = Intent.Parameter || (Intent.Parameter = {})));
 	/**
-	 * Message implementation for ondewo.nlu.Message
+	 * Message implementation for ondewo.nlu.Intent.Message
 	 */
 	class Message {
 		/**
@@ -17257,7 +17257,7 @@ Intent.id = 'ondewo.nlu.Intent';
 			};
 		}
 	}
-	Message.id = 'ondewo.nlu.Message';
+	Message.id = 'ondewo.nlu.Intent.Message';
 	Intent.Message = Message;
 	(function (Message) {
 		let MessageCase;
@@ -17311,7 +17311,7 @@ Intent.id = 'ondewo.nlu.Intent';
 			Platform[(Platform['PLACEHOLDER_20'] = 28)] = 'PLACEHOLDER_20';
 		})((Platform = Message.Platform || (Message.Platform = {})));
 		/**
-		 * Message implementation for ondewo.nlu.Text
+		 * Message implementation for ondewo.nlu.Intent.Message.Text
 		 */
 		class Text {
 			/**
@@ -17410,10 +17410,10 @@ Intent.id = 'ondewo.nlu.Intent';
 				};
 			}
 		}
-		Text.id = 'ondewo.nlu.Text';
+		Text.id = 'ondewo.nlu.Intent.Message.Text';
 		Message.Text = Text;
 		/**
-		 * Message implementation for ondewo.nlu.Image
+		 * Message implementation for ondewo.nlu.Intent.Message.Image
 		 */
 		class Image {
 			/**
@@ -17528,10 +17528,10 @@ Intent.id = 'ondewo.nlu.Intent';
 				};
 			}
 		}
-		Image.id = 'ondewo.nlu.Image';
+		Image.id = 'ondewo.nlu.Intent.Message.Image';
 		Message.Image = Image;
 		/**
-		 * Message implementation for ondewo.nlu.QuickReplies
+		 * Message implementation for ondewo.nlu.Intent.Message.QuickReplies
 		 */
 		class QuickReplies {
 			/**
@@ -17646,10 +17646,10 @@ Intent.id = 'ondewo.nlu.Intent';
 				};
 			}
 		}
-		QuickReplies.id = 'ondewo.nlu.QuickReplies';
+		QuickReplies.id = 'ondewo.nlu.Intent.Message.QuickReplies';
 		Message.QuickReplies = QuickReplies;
 		/**
-		 * Message implementation for ondewo.nlu.Card
+		 * Message implementation for ondewo.nlu.Intent.Message.Card
 		 */
 		class Card {
 			/**
@@ -17798,11 +17798,11 @@ Intent.id = 'ondewo.nlu.Intent';
 				};
 			}
 		}
-		Card.id = 'ondewo.nlu.Card';
+		Card.id = 'ondewo.nlu.Intent.Message.Card';
 		Message.Card = Card;
 		(function (Card) {
 			/**
-			 * Message implementation for ondewo.nlu.Button
+			 * Message implementation for ondewo.nlu.Intent.Message.Card.Button
 			 */
 			class Button {
 				/**
@@ -17917,11 +17917,11 @@ Intent.id = 'ondewo.nlu.Intent';
 					};
 				}
 			}
-			Button.id = 'ondewo.nlu.Button';
+			Button.id = 'ondewo.nlu.Intent.Message.Card.Button';
 			Card.Button = Button;
 		})((Card = Message.Card || (Message.Card = {})));
 		/**
-		 * Message implementation for ondewo.nlu.SimpleResponse
+		 * Message implementation for ondewo.nlu.Intent.Message.SimpleResponse
 		 */
 		class SimpleResponse {
 			/**
@@ -18052,10 +18052,10 @@ Intent.id = 'ondewo.nlu.Intent';
 				};
 			}
 		}
-		SimpleResponse.id = 'ondewo.nlu.SimpleResponse';
+		SimpleResponse.id = 'ondewo.nlu.Intent.Message.SimpleResponse';
 		Message.SimpleResponse = SimpleResponse;
 		/**
-		 * Message implementation for ondewo.nlu.SimpleResponses
+		 * Message implementation for ondewo.nlu.Intent.Message.SimpleResponses
 		 */
 		class SimpleResponses {
 			/**
@@ -18160,10 +18160,10 @@ Intent.id = 'ondewo.nlu.Intent';
 				};
 			}
 		}
-		SimpleResponses.id = 'ondewo.nlu.SimpleResponses';
+		SimpleResponses.id = 'ondewo.nlu.Intent.Message.SimpleResponses';
 		Message.SimpleResponses = SimpleResponses;
 		/**
-		 * Message implementation for ondewo.nlu.BasicCard
+		 * Message implementation for ondewo.nlu.Intent.Message.BasicCard
 		 */
 		class BasicCard {
 			/**
@@ -18329,11 +18329,11 @@ Intent.id = 'ondewo.nlu.Intent';
 				};
 			}
 		}
-		BasicCard.id = 'ondewo.nlu.BasicCard';
+		BasicCard.id = 'ondewo.nlu.Intent.Message.BasicCard';
 		Message.BasicCard = BasicCard;
 		(function (BasicCard) {
 			/**
-			 * Message implementation for ondewo.nlu.Button
+			 * Message implementation for ondewo.nlu.Intent.Message.BasicCard.Button
 			 */
 			class Button {
 				/**
@@ -18458,11 +18458,11 @@ Intent.id = 'ondewo.nlu.Intent';
 					};
 				}
 			}
-			Button.id = 'ondewo.nlu.Button';
+			Button.id = 'ondewo.nlu.Intent.Message.BasicCard.Button';
 			BasicCard.Button = Button;
 			(function (Button) {
 				/**
-				 * Message implementation for ondewo.nlu.OpenUriAction
+				 * Message implementation for ondewo.nlu.Intent.Message.BasicCard.Button.OpenUriAction
 				 */
 				class OpenUriAction {
 					/**
@@ -18561,12 +18561,12 @@ Intent.id = 'ondewo.nlu.Intent';
 						};
 					}
 				}
-				OpenUriAction.id = 'ondewo.nlu.OpenUriAction';
+				OpenUriAction.id = 'ondewo.nlu.Intent.Message.BasicCard.Button.OpenUriAction';
 				Button.OpenUriAction = OpenUriAction;
 			})((Button = BasicCard.Button || (BasicCard.Button = {})));
 		})((BasicCard = Message.BasicCard || (Message.BasicCard = {})));
 		/**
-		 * Message implementation for ondewo.nlu.Suggestion
+		 * Message implementation for ondewo.nlu.Intent.Message.Suggestion
 		 */
 		class Suggestion {
 			/**
@@ -18665,10 +18665,10 @@ Intent.id = 'ondewo.nlu.Intent';
 				};
 			}
 		}
-		Suggestion.id = 'ondewo.nlu.Suggestion';
+		Suggestion.id = 'ondewo.nlu.Intent.Message.Suggestion';
 		Message.Suggestion = Suggestion;
 		/**
-		 * Message implementation for ondewo.nlu.Suggestions
+		 * Message implementation for ondewo.nlu.Intent.Message.Suggestions
 		 */
 		class Suggestions {
 			/**
@@ -18769,10 +18769,10 @@ Intent.id = 'ondewo.nlu.Intent';
 				};
 			}
 		}
-		Suggestions.id = 'ondewo.nlu.Suggestions';
+		Suggestions.id = 'ondewo.nlu.Intent.Message.Suggestions';
 		Message.Suggestions = Suggestions;
 		/**
-		 * Message implementation for ondewo.nlu.LinkOutSuggestion
+		 * Message implementation for ondewo.nlu.Intent.Message.LinkOutSuggestion
 		 */
 		class LinkOutSuggestion {
 			/**
@@ -18887,10 +18887,10 @@ Intent.id = 'ondewo.nlu.Intent';
 				};
 			}
 		}
-		LinkOutSuggestion.id = 'ondewo.nlu.LinkOutSuggestion';
+		LinkOutSuggestion.id = 'ondewo.nlu.Intent.Message.LinkOutSuggestion';
 		Message.LinkOutSuggestion = LinkOutSuggestion;
 		/**
-		 * Message implementation for ondewo.nlu.ListSelect
+		 * Message implementation for ondewo.nlu.Intent.Message.ListSelect
 		 */
 		class ListSelect {
 			/**
@@ -19007,11 +19007,11 @@ Intent.id = 'ondewo.nlu.Intent';
 				};
 			}
 		}
-		ListSelect.id = 'ondewo.nlu.ListSelect';
+		ListSelect.id = 'ondewo.nlu.Intent.Message.ListSelect';
 		Message.ListSelect = ListSelect;
 		(function (ListSelect) {
 			/**
-			 * Message implementation for ondewo.nlu.Item
+			 * Message implementation for ondewo.nlu.Intent.Message.ListSelect.Item
 			 */
 			class Item {
 				/**
@@ -19160,11 +19160,11 @@ Intent.id = 'ondewo.nlu.Intent';
 					};
 				}
 			}
-			Item.id = 'ondewo.nlu.Item';
+			Item.id = 'ondewo.nlu.Intent.Message.ListSelect.Item';
 			ListSelect.Item = Item;
 		})((ListSelect = Message.ListSelect || (Message.ListSelect = {})));
 		/**
-		 * Message implementation for ondewo.nlu.CarouselSelect
+		 * Message implementation for ondewo.nlu.Intent.Message.CarouselSelect
 		 */
 		class CarouselSelect {
 			/**
@@ -19265,11 +19265,11 @@ Intent.id = 'ondewo.nlu.Intent';
 				};
 			}
 		}
-		CarouselSelect.id = 'ondewo.nlu.CarouselSelect';
+		CarouselSelect.id = 'ondewo.nlu.Intent.Message.CarouselSelect';
 		Message.CarouselSelect = CarouselSelect;
 		(function (CarouselSelect) {
 			/**
-			 * Message implementation for ondewo.nlu.Item
+			 * Message implementation for ondewo.nlu.Intent.Message.CarouselSelect.Item
 			 */
 			class Item {
 				/**
@@ -19418,11 +19418,11 @@ Intent.id = 'ondewo.nlu.Intent';
 					};
 				}
 			}
-			Item.id = 'ondewo.nlu.Item';
+			Item.id = 'ondewo.nlu.Intent.Message.CarouselSelect.Item';
 			CarouselSelect.Item = Item;
 		})((CarouselSelect = Message.CarouselSelect || (Message.CarouselSelect = {})));
 		/**
-		 * Message implementation for ondewo.nlu.HTMLText
+		 * Message implementation for ondewo.nlu.Intent.Message.HTMLText
 		 */
 		class HTMLText {
 			/**
@@ -19521,10 +19521,10 @@ Intent.id = 'ondewo.nlu.Intent';
 				};
 			}
 		}
-		HTMLText.id = 'ondewo.nlu.HTMLText';
+		HTMLText.id = 'ondewo.nlu.Intent.Message.HTMLText';
 		Message.HTMLText = HTMLText;
 		/**
-		 * Message implementation for ondewo.nlu.Video
+		 * Message implementation for ondewo.nlu.Intent.Message.Video
 		 */
 		class Video {
 			/**
@@ -19639,10 +19639,10 @@ Intent.id = 'ondewo.nlu.Intent';
 				};
 			}
 		}
-		Video.id = 'ondewo.nlu.Video';
+		Video.id = 'ondewo.nlu.Intent.Message.Video';
 		Message.Video = Video;
 		/**
-		 * Message implementation for ondewo.nlu.Audio
+		 * Message implementation for ondewo.nlu.Intent.Message.Audio
 		 */
 		class Audio {
 			/**
@@ -19757,10 +19757,10 @@ Intent.id = 'ondewo.nlu.Intent';
 				};
 			}
 		}
-		Audio.id = 'ondewo.nlu.Audio';
+		Audio.id = 'ondewo.nlu.Intent.Message.Audio';
 		Message.Audio = Audio;
 		/**
-		 * Message implementation for ondewo.nlu.SelectItemInfo
+		 * Message implementation for ondewo.nlu.Intent.Message.SelectItemInfo
 		 */
 		class SelectItemInfo {
 			/**
@@ -19875,11 +19875,11 @@ Intent.id = 'ondewo.nlu.Intent';
 				};
 			}
 		}
-		SelectItemInfo.id = 'ondewo.nlu.SelectItemInfo';
+		SelectItemInfo.id = 'ondewo.nlu.Intent.Message.SelectItemInfo';
 		Message.SelectItemInfo = SelectItemInfo;
 	})((Message = Intent.Message || (Intent.Message = {})));
 	/**
-	 * Message implementation for ondewo.nlu.FollowupIntentInfo
+	 * Message implementation for ondewo.nlu.Intent.FollowupIntentInfo
 	 */
 	class FollowupIntentInfo {
 		/**
@@ -19994,7 +19994,7 @@ Intent.id = 'ondewo.nlu.Intent';
 			};
 		}
 	}
-	FollowupIntentInfo.id = 'ondewo.nlu.FollowupIntentInfo';
+	FollowupIntentInfo.id = 'ondewo.nlu.Intent.FollowupIntentInfo';
 	Intent.FollowupIntentInfo = FollowupIntentInfo;
 })(Intent || (Intent = {}));
 /**
@@ -22417,7 +22417,7 @@ class BatchCreateTrainingPhrasesRequest {
 BatchCreateTrainingPhrasesRequest.id = 'ondewo.nlu.BatchCreateTrainingPhrasesRequest';
 (function (BatchCreateTrainingPhrasesRequest) {
 	/**
-	 * Message implementation for ondewo.nlu.CreateTrainingPhraseRequest
+	 * Message implementation for ondewo.nlu.BatchCreateTrainingPhrasesRequest.CreateTrainingPhraseRequest
 	 */
 	class CreateTrainingPhraseRequest {
 		/**
@@ -22533,7 +22533,7 @@ BatchCreateTrainingPhrasesRequest.id = 'ondewo.nlu.BatchCreateTrainingPhrasesReq
 			};
 		}
 	}
-	CreateTrainingPhraseRequest.id = 'ondewo.nlu.CreateTrainingPhraseRequest';
+	CreateTrainingPhraseRequest.id = 'ondewo.nlu.BatchCreateTrainingPhrasesRequest.CreateTrainingPhraseRequest';
 	BatchCreateTrainingPhrasesRequest.CreateTrainingPhraseRequest = CreateTrainingPhraseRequest;
 })(BatchCreateTrainingPhrasesRequest || (BatchCreateTrainingPhrasesRequest = {}));
 /**
@@ -22868,7 +22868,7 @@ class BatchDeleteTrainingPhrasesResponse {
 BatchDeleteTrainingPhrasesResponse.id = 'ondewo.nlu.BatchDeleteTrainingPhrasesResponse';
 (function (BatchDeleteTrainingPhrasesResponse) {
 	/**
-	 * Message implementation for ondewo.nlu.DeleteTrainingPhraseStatus
+	 * Message implementation for ondewo.nlu.BatchDeleteTrainingPhrasesResponse.DeleteTrainingPhraseStatus
 	 */
 	class DeleteTrainingPhraseStatus {
 		/**
@@ -22995,7 +22995,7 @@ BatchDeleteTrainingPhrasesResponse.id = 'ondewo.nlu.BatchDeleteTrainingPhrasesRe
 			};
 		}
 	}
-	DeleteTrainingPhraseStatus.id = 'ondewo.nlu.DeleteTrainingPhraseStatus';
+	DeleteTrainingPhraseStatus.id = 'ondewo.nlu.BatchDeleteTrainingPhrasesResponse.DeleteTrainingPhraseStatus';
 	BatchDeleteTrainingPhrasesResponse.DeleteTrainingPhraseStatus = DeleteTrainingPhraseStatus;
 	(function (DeleteTrainingPhraseStatus) {
 		let DeleteStatusCase;
@@ -23395,7 +23395,7 @@ class BatchResponseMessagesStatusResponse {
 BatchResponseMessagesStatusResponse.id = 'ondewo.nlu.BatchResponseMessagesStatusResponse';
 (function (BatchResponseMessagesStatusResponse) {
 	/**
-	 * Message implementation for ondewo.nlu.ResponseMessageStatus
+	 * Message implementation for ondewo.nlu.BatchResponseMessagesStatusResponse.ResponseMessageStatus
 	 */
 	class ResponseMessageStatus {
 		/**
@@ -23520,7 +23520,7 @@ BatchResponseMessagesStatusResponse.id = 'ondewo.nlu.BatchResponseMessagesStatus
 			};
 		}
 	}
-	ResponseMessageStatus.id = 'ondewo.nlu.ResponseMessageStatus';
+	ResponseMessageStatus.id = 'ondewo.nlu.BatchResponseMessagesStatusResponse.ResponseMessageStatus';
 	BatchResponseMessagesStatusResponse.ResponseMessageStatus = ResponseMessageStatus;
 	(function (ResponseMessageStatus) {
 		let PhraseOrStatusCase;
@@ -23651,7 +23651,7 @@ class BatchCreateResponseMessagesRequest {
 BatchCreateResponseMessagesRequest.id = 'ondewo.nlu.BatchCreateResponseMessagesRequest';
 (function (BatchCreateResponseMessagesRequest) {
 	/**
-	 * Message implementation for ondewo.nlu.CreateResponseMessageRequest
+	 * Message implementation for ondewo.nlu.BatchCreateResponseMessagesRequest.CreateResponseMessageRequest
 	 */
 	class CreateResponseMessageRequest {
 		/**
@@ -23767,7 +23767,7 @@ BatchCreateResponseMessagesRequest.id = 'ondewo.nlu.BatchCreateResponseMessagesR
 			};
 		}
 	}
-	CreateResponseMessageRequest.id = 'ondewo.nlu.CreateResponseMessageRequest';
+	CreateResponseMessageRequest.id = 'ondewo.nlu.BatchCreateResponseMessagesRequest.CreateResponseMessageRequest';
 	BatchCreateResponseMessagesRequest.CreateResponseMessageRequest = CreateResponseMessageRequest;
 })(BatchCreateResponseMessagesRequest || (BatchCreateResponseMessagesRequest = {}));
 /**
@@ -24205,7 +24205,7 @@ class BatchDeleteResponseMessagesResponse {
 BatchDeleteResponseMessagesResponse.id = 'ondewo.nlu.BatchDeleteResponseMessagesResponse';
 (function (BatchDeleteResponseMessagesResponse) {
 	/**
-	 * Message implementation for ondewo.nlu.DeleteResponseMessageStatus
+	 * Message implementation for ondewo.nlu.BatchDeleteResponseMessagesResponse.DeleteResponseMessageStatus
 	 */
 	class DeleteResponseMessageStatus {
 		/**
@@ -24332,7 +24332,7 @@ BatchDeleteResponseMessagesResponse.id = 'ondewo.nlu.BatchDeleteResponseMessages
 			};
 		}
 	}
-	DeleteResponseMessageStatus.id = 'ondewo.nlu.DeleteResponseMessageStatus';
+	DeleteResponseMessageStatus.id = 'ondewo.nlu.BatchDeleteResponseMessagesResponse.DeleteResponseMessageStatus';
 	BatchDeleteResponseMessagesResponse.DeleteResponseMessageStatus = DeleteResponseMessageStatus;
 	(function (DeleteResponseMessageStatus) {
 		let DeleteStatusCase;
@@ -24732,7 +24732,7 @@ class BatchParametersStatusResponse {
 BatchParametersStatusResponse.id = 'ondewo.nlu.BatchParametersStatusResponse';
 (function (BatchParametersStatusResponse) {
 	/**
-	 * Message implementation for ondewo.nlu.ParameterStatus
+	 * Message implementation for ondewo.nlu.BatchParametersStatusResponse.ParameterStatus
 	 */
 	class ParameterStatus {
 		/**
@@ -24857,7 +24857,7 @@ BatchParametersStatusResponse.id = 'ondewo.nlu.BatchParametersStatusResponse';
 			};
 		}
 	}
-	ParameterStatus.id = 'ondewo.nlu.ParameterStatus';
+	ParameterStatus.id = 'ondewo.nlu.BatchParametersStatusResponse.ParameterStatus';
 	BatchParametersStatusResponse.ParameterStatus = ParameterStatus;
 	(function (ParameterStatus) {
 		let PhraseOrStatusCase;
@@ -24985,7 +24985,7 @@ class BatchCreateParametersRequest {
 BatchCreateParametersRequest.id = 'ondewo.nlu.BatchCreateParametersRequest';
 (function (BatchCreateParametersRequest) {
 	/**
-	 * Message implementation for ondewo.nlu.CreateParameterRequest
+	 * Message implementation for ondewo.nlu.BatchCreateParametersRequest.CreateParameterRequest
 	 */
 	class CreateParameterRequest {
 		/**
@@ -25101,7 +25101,7 @@ BatchCreateParametersRequest.id = 'ondewo.nlu.BatchCreateParametersRequest';
 			};
 		}
 	}
-	CreateParameterRequest.id = 'ondewo.nlu.CreateParameterRequest';
+	CreateParameterRequest.id = 'ondewo.nlu.BatchCreateParametersRequest.CreateParameterRequest';
 	BatchCreateParametersRequest.CreateParameterRequest = CreateParameterRequest;
 })(BatchCreateParametersRequest || (BatchCreateParametersRequest = {}));
 /**
@@ -25539,7 +25539,7 @@ class BatchDeleteParametersResponse {
 BatchDeleteParametersResponse.id = 'ondewo.nlu.BatchDeleteParametersResponse';
 (function (BatchDeleteParametersResponse) {
 	/**
-	 * Message implementation for ondewo.nlu.DeleteParameterStatus
+	 * Message implementation for ondewo.nlu.BatchDeleteParametersResponse.DeleteParameterStatus
 	 */
 	class DeleteParameterStatus {
 		/**
@@ -25666,7 +25666,7 @@ BatchDeleteParametersResponse.id = 'ondewo.nlu.BatchDeleteParametersResponse';
 			};
 		}
 	}
-	DeleteParameterStatus.id = 'ondewo.nlu.DeleteParameterStatus';
+	DeleteParameterStatus.id = 'ondewo.nlu.BatchDeleteParametersResponse.DeleteParameterStatus';
 	BatchDeleteParametersResponse.DeleteParameterStatus = DeleteParameterStatus;
 	(function (DeleteParameterStatus) {
 		let DeleteStatusCase;
@@ -26464,7 +26464,7 @@ EntityType.id = 'ondewo.nlu.EntityType';
 		AutoExpansionMode[(AutoExpansionMode['AUTO_EXPANSION_MODE_DEFAULT'] = 1)] = 'AUTO_EXPANSION_MODE_DEFAULT';
 	})((AutoExpansionMode = EntityType.AutoExpansionMode || (EntityType.AutoExpansionMode = {})));
 	/**
-	 * Message implementation for ondewo.nlu.Entity
+	 * Message implementation for ondewo.nlu.EntityType.Entity
 	 */
 	class Entity {
 		/**
@@ -26643,7 +26643,7 @@ EntityType.id = 'ondewo.nlu.EntityType';
 			};
 		}
 	}
-	Entity.id = 'ondewo.nlu.Entity';
+	Entity.id = 'ondewo.nlu.EntityType.Entity';
 	EntityType.Entity = Entity;
 })(EntityType || (EntityType = {}));
 /**
@@ -28282,7 +28282,7 @@ class BatchEntitiesResponse {
 BatchEntitiesResponse.id = 'ondewo.nlu.BatchEntitiesResponse';
 (function (BatchEntitiesResponse) {
 	/**
-	 * Message implementation for ondewo.nlu.EntityStatus
+	 * Message implementation for ondewo.nlu.BatchEntitiesResponse.EntityStatus
 	 */
 	class EntityStatus {
 		/**
@@ -28407,7 +28407,7 @@ BatchEntitiesResponse.id = 'ondewo.nlu.BatchEntitiesResponse';
 			};
 		}
 	}
-	EntityStatus.id = 'ondewo.nlu.EntityStatus';
+	EntityStatus.id = 'ondewo.nlu.BatchEntitiesResponse.EntityStatus';
 	BatchEntitiesResponse.EntityStatus = EntityStatus;
 	(function (EntityStatus) {
 		let EntityOrStatusCase;
@@ -28532,7 +28532,7 @@ class BatchCreateEntitiesRequest {
 BatchCreateEntitiesRequest.id = 'ondewo.nlu.BatchCreateEntitiesRequest';
 (function (BatchCreateEntitiesRequest) {
 	/**
-	 * Message implementation for ondewo.nlu.CreateEntityRequest
+	 * Message implementation for ondewo.nlu.BatchCreateEntitiesRequest.CreateEntityRequest
 	 */
 	class CreateEntityRequest {
 		/**
@@ -28648,7 +28648,7 @@ BatchCreateEntitiesRequest.id = 'ondewo.nlu.BatchCreateEntitiesRequest';
 			};
 		}
 	}
-	CreateEntityRequest.id = 'ondewo.nlu.CreateEntityRequest';
+	CreateEntityRequest.id = 'ondewo.nlu.BatchCreateEntitiesRequest.CreateEntityRequest';
 	BatchCreateEntitiesRequest.CreateEntityRequest = CreateEntityRequest;
 })(BatchCreateEntitiesRequest || (BatchCreateEntitiesRequest = {}));
 /**
@@ -29086,7 +29086,7 @@ class BatchDeleteEntitiesResponse {
 BatchDeleteEntitiesResponse.id = 'ondewo.nlu.BatchDeleteEntitiesResponse';
 (function (BatchDeleteEntitiesResponse) {
 	/**
-	 * Message implementation for ondewo.nlu.DeleteEntityStatus
+	 * Message implementation for ondewo.nlu.BatchDeleteEntitiesResponse.DeleteEntityStatus
 	 */
 	class DeleteEntityStatus {
 		/**
@@ -29213,7 +29213,7 @@ BatchDeleteEntitiesResponse.id = 'ondewo.nlu.BatchDeleteEntitiesResponse';
 			};
 		}
 	}
-	DeleteEntityStatus.id = 'ondewo.nlu.DeleteEntityStatus';
+	DeleteEntityStatus.id = 'ondewo.nlu.BatchDeleteEntitiesResponse.DeleteEntityStatus';
 	BatchDeleteEntitiesResponse.DeleteEntityStatus = DeleteEntityStatus;
 	(function (DeleteEntityStatus) {
 		let DeleteStatusCase;
@@ -32707,7 +32707,7 @@ class SessionInfo {
 SessionInfo.id = 'ondewo.nlu.SessionInfo';
 (function (SessionInfo) {
 	/**
-	 * Message implementation for ondewo.nlu.ContextSteps
+	 * Message implementation for ondewo.nlu.SessionInfo.ContextSteps
 	 */
 	class ContextSteps {
 		/**
@@ -32808,7 +32808,7 @@ SessionInfo.id = 'ondewo.nlu.SessionInfo';
 			};
 		}
 	}
-	ContextSteps.id = 'ondewo.nlu.ContextSteps';
+	ContextSteps.id = 'ondewo.nlu.SessionInfo.ContextSteps';
 	SessionInfo.ContextSteps = ContextSteps;
 })(SessionInfo || (SessionInfo = {}));
 /**
@@ -37291,7 +37291,7 @@ class ConversationsClient {
 }
 ConversationsClient.ɵfac = i0.ɵɵngDeclareFactory({
 	minVersion: '12.0.0',
-	version: '14.2.0',
+	version: '14.2.5',
 	ngImport: i0,
 	type: ConversationsClient,
 	deps: [
@@ -37303,14 +37303,14 @@ ConversationsClient.ɵfac = i0.ɵɵngDeclareFactory({
 });
 ConversationsClient.ɵprov = i0.ɵɵngDeclareInjectable({
 	minVersion: '12.0.0',
-	version: '14.2.0',
+	version: '14.2.5',
 	ngImport: i0,
 	type: ConversationsClient,
 	providedIn: 'any'
 });
 i0.ɵɵngDeclareClassMetadata({
 	minVersion: '12.0.0',
-	version: '14.2.0',
+	version: '14.2.5',
 	ngImport: i0,
 	type: ConversationsClient,
 	decorators: [
@@ -38873,7 +38873,7 @@ class IntentUpdate {
 IntentUpdate.id = 'ondewo.nlu.IntentUpdate';
 (function (IntentUpdate) {
 	/**
-	 * Message implementation for ondewo.nlu.TrainingPhraseUpdate
+	 * Message implementation for ondewo.nlu.IntentUpdate.TrainingPhraseUpdate
 	 */
 	class TrainingPhraseUpdate {
 		/**
@@ -39025,7 +39025,7 @@ IntentUpdate.id = 'ondewo.nlu.IntentUpdate';
 			};
 		}
 	}
-	TrainingPhraseUpdate.id = 'ondewo.nlu.TrainingPhraseUpdate';
+	TrainingPhraseUpdate.id = 'ondewo.nlu.IntentUpdate.TrainingPhraseUpdate';
 	IntentUpdate.TrainingPhraseUpdate = TrainingPhraseUpdate;
 })(IntentUpdate || (IntentUpdate = {}));
 /**
@@ -39153,7 +39153,7 @@ class EntityTypeUpdate {
 EntityTypeUpdate.id = 'ondewo.nlu.EntityTypeUpdate';
 (function (EntityTypeUpdate) {
 	/**
-	 * Message implementation for ondewo.nlu.EntityUpdate
+	 * Message implementation for ondewo.nlu.EntityTypeUpdate.EntityUpdate
 	 */
 	class EntityUpdate {
 		/**
@@ -39271,7 +39271,7 @@ EntityTypeUpdate.id = 'ondewo.nlu.EntityTypeUpdate';
 			};
 		}
 	}
-	EntityUpdate.id = 'ondewo.nlu.EntityUpdate';
+	EntityUpdate.id = 'ondewo.nlu.EntityTypeUpdate.EntityUpdate';
 	EntityTypeUpdate.EntityUpdate = EntityUpdate;
 })(EntityTypeUpdate || (EntityTypeUpdate = {}));
 /**
@@ -40186,7 +40186,7 @@ class AddTrainingPhrasesRequest {
 AddTrainingPhrasesRequest.id = 'ondewo.nlu.AddTrainingPhrasesRequest';
 (function (AddTrainingPhrasesRequest) {
 	/**
-	 * Message implementation for ondewo.nlu.TrainingPhraseForIntent
+	 * Message implementation for ondewo.nlu.AddTrainingPhrasesRequest.TrainingPhraseForIntent
 	 */
 	class TrainingPhraseForIntent {
 		/**
@@ -40319,7 +40319,7 @@ AddTrainingPhrasesRequest.id = 'ondewo.nlu.AddTrainingPhrasesRequest';
 			};
 		}
 	}
-	TrainingPhraseForIntent.id = 'ondewo.nlu.TrainingPhraseForIntent';
+	TrainingPhraseForIntent.id = 'ondewo.nlu.AddTrainingPhrasesRequest.TrainingPhraseForIntent';
 	AddTrainingPhrasesRequest.TrainingPhraseForIntent = TrainingPhraseForIntent;
 })(AddTrainingPhrasesRequest || (AddTrainingPhrasesRequest = {}));
 /**
@@ -40885,7 +40885,7 @@ class UtilitiesClient {
 }
 UtilitiesClient.ɵfac = i0.ɵɵngDeclareFactory({
 	minVersion: '12.0.0',
-	version: '14.2.0',
+	version: '14.2.5',
 	ngImport: i0,
 	type: UtilitiesClient,
 	deps: [
@@ -40897,14 +40897,14 @@ UtilitiesClient.ɵfac = i0.ɵɵngDeclareFactory({
 });
 UtilitiesClient.ɵprov = i0.ɵɵngDeclareInjectable({
 	minVersion: '12.0.0',
-	version: '14.2.0',
+	version: '14.2.5',
 	ngImport: i0,
 	type: UtilitiesClient,
 	providedIn: 'any'
 });
 i0.ɵɵngDeclareClassMetadata({
 	minVersion: '12.0.0',
-	version: '14.2.0',
+	version: '14.2.5',
 	ngImport: i0,
 	type: UtilitiesClient,
 	decorators: [
@@ -42231,7 +42231,7 @@ class UserInfo {
 UserInfo.id = 'ondewo.nlu.UserInfo';
 (function (UserInfo) {
 	/**
-	 * Message implementation for ondewo.nlu.ProjectRolesEntry
+	 * Message implementation for ondewo.nlu.UserInfo.ProjectRolesEntry
 	 */
 	class ProjectRolesEntry {
 		/**
@@ -42347,7 +42347,7 @@ UserInfo.id = 'ondewo.nlu.UserInfo';
 			};
 		}
 	}
-	ProjectRolesEntry.id = 'ondewo.nlu.ProjectRolesEntry';
+	ProjectRolesEntry.id = 'ondewo.nlu.UserInfo.ProjectRolesEntry';
 	UserInfo.ProjectRolesEntry = ProjectRolesEntry;
 })(UserInfo || (UserInfo = {}));
 /**
@@ -46309,7 +46309,7 @@ class SessionsClient {
 }
 SessionsClient.ɵfac = i0.ɵɵngDeclareFactory({
 	minVersion: '12.0.0',
-	version: '14.2.0',
+	version: '14.2.5',
 	ngImport: i0,
 	type: SessionsClient,
 	deps: [
@@ -46321,14 +46321,14 @@ SessionsClient.ɵfac = i0.ɵɵngDeclareFactory({
 });
 SessionsClient.ɵprov = i0.ɵɵngDeclareInjectable({
 	minVersion: '12.0.0',
-	version: '14.2.0',
+	version: '14.2.5',
 	ngImport: i0,
 	type: SessionsClient,
 	providedIn: 'any'
 });
 i0.ɵɵngDeclareClassMetadata({
 	minVersion: '12.0.0',
-	version: '14.2.0',
+	version: '14.2.5',
 	ngImport: i0,
 	type: SessionsClient,
 	decorators: [
@@ -50922,7 +50922,7 @@ class AiServicesClient {
 }
 AiServicesClient.ɵfac = i0.ɵɵngDeclareFactory({
 	minVersion: '12.0.0',
-	version: '14.2.0',
+	version: '14.2.5',
 	ngImport: i0,
 	type: AiServicesClient,
 	deps: [
@@ -50934,14 +50934,14 @@ AiServicesClient.ɵfac = i0.ɵɵngDeclareFactory({
 });
 AiServicesClient.ɵprov = i0.ɵɵngDeclareInjectable({
 	minVersion: '12.0.0',
-	version: '14.2.0',
+	version: '14.2.5',
 	ngImport: i0,
 	type: AiServicesClient,
 	providedIn: 'any'
 });
 i0.ɵɵngDeclareClassMetadata({
 	minVersion: '12.0.0',
-	version: '14.2.0',
+	version: '14.2.5',
 	ngImport: i0,
 	type: AiServicesClient,
 	decorators: [
@@ -51417,7 +51417,7 @@ class UsersClient {
 }
 UsersClient.ɵfac = i0.ɵɵngDeclareFactory({
 	minVersion: '12.0.0',
-	version: '14.2.0',
+	version: '14.2.5',
 	ngImport: i0,
 	type: UsersClient,
 	deps: [
@@ -51429,14 +51429,14 @@ UsersClient.ɵfac = i0.ɵɵngDeclareFactory({
 });
 UsersClient.ɵprov = i0.ɵɵngDeclareInjectable({
 	minVersion: '12.0.0',
-	version: '14.2.0',
+	version: '14.2.5',
 	ngImport: i0,
 	type: UsersClient,
 	providedIn: 'any'
 });
 i0.ɵɵngDeclareClassMetadata({
 	minVersion: '12.0.0',
-	version: '14.2.0',
+	version: '14.2.5',
 	ngImport: i0,
 	type: UsersClient,
 	decorators: [
@@ -51646,7 +51646,7 @@ class ProjectRolesClient {
 }
 ProjectRolesClient.ɵfac = i0.ɵɵngDeclareFactory({
 	minVersion: '12.0.0',
-	version: '14.2.0',
+	version: '14.2.5',
 	ngImport: i0,
 	type: ProjectRolesClient,
 	deps: [
@@ -51658,14 +51658,14 @@ ProjectRolesClient.ɵfac = i0.ɵɵngDeclareFactory({
 });
 ProjectRolesClient.ɵprov = i0.ɵɵngDeclareInjectable({
 	minVersion: '12.0.0',
-	version: '14.2.0',
+	version: '14.2.5',
 	ngImport: i0,
 	type: ProjectRolesClient,
 	providedIn: 'any'
 });
 i0.ɵɵngDeclareClassMetadata({
 	minVersion: '12.0.0',
-	version: '14.2.0',
+	version: '14.2.5',
 	ngImport: i0,
 	type: ProjectRolesClient,
 	decorators: [
@@ -52411,7 +52411,7 @@ class ProjectStatisticsClient {
 }
 ProjectStatisticsClient.ɵfac = i0.ɵɵngDeclareFactory({
 	minVersion: '12.0.0',
-	version: '14.2.0',
+	version: '14.2.5',
 	ngImport: i0,
 	type: ProjectStatisticsClient,
 	deps: [
@@ -52423,14 +52423,14 @@ ProjectStatisticsClient.ɵfac = i0.ɵɵngDeclareFactory({
 });
 ProjectStatisticsClient.ɵprov = i0.ɵɵngDeclareInjectable({
 	minVersion: '12.0.0',
-	version: '14.2.0',
+	version: '14.2.5',
 	ngImport: i0,
 	type: ProjectStatisticsClient,
 	providedIn: 'any'
 });
 i0.ɵɵngDeclareClassMetadata({
 	minVersion: '12.0.0',
-	version: '14.2.0',
+	version: '14.2.5',
 	ngImport: i0,
 	type: ProjectStatisticsClient,
 	decorators: [
@@ -54677,7 +54677,7 @@ class ExportBenchmarkAgentResponse {
 ExportBenchmarkAgentResponse.id = 'ondewo.nlu.ExportBenchmarkAgentResponse';
 (function (ExportBenchmarkAgentResponse) {
 	/**
-	 * Message implementation for ondewo.nlu.TrainingPhrasesEntry
+	 * Message implementation for ondewo.nlu.ExportBenchmarkAgentResponse.TrainingPhrasesEntry
 	 */
 	class TrainingPhrasesEntry {
 		/**
@@ -54793,7 +54793,7 @@ ExportBenchmarkAgentResponse.id = 'ondewo.nlu.ExportBenchmarkAgentResponse';
 			};
 		}
 	}
-	TrainingPhrasesEntry.id = 'ondewo.nlu.TrainingPhrasesEntry';
+	TrainingPhrasesEntry.id = 'ondewo.nlu.ExportBenchmarkAgentResponse.TrainingPhrasesEntry';
 	ExportBenchmarkAgentResponse.TrainingPhrasesEntry = TrainingPhrasesEntry;
 })(ExportBenchmarkAgentResponse || (ExportBenchmarkAgentResponse = {}));
 /**
@@ -58828,7 +58828,7 @@ class FullTextSearchResponseEntityType {
 FullTextSearchResponseEntityType.id = 'ondewo.nlu.FullTextSearchResponseEntityType';
 (function (FullTextSearchResponseEntityType) {
 	/**
-	 * Message implementation for ondewo.nlu.EntityTypeSearchResult
+	 * Message implementation for ondewo.nlu.FullTextSearchResponseEntityType.EntityTypeSearchResult
 	 */
 	class EntityTypeSearchResult {
 		/**
@@ -58959,7 +58959,7 @@ FullTextSearchResponseEntityType.id = 'ondewo.nlu.FullTextSearchResponseEntityTy
 			};
 		}
 	}
-	EntityTypeSearchResult.id = 'ondewo.nlu.EntityTypeSearchResult';
+	EntityTypeSearchResult.id = 'ondewo.nlu.FullTextSearchResponseEntityType.EntityTypeSearchResult';
 	FullTextSearchResponseEntityType.EntityTypeSearchResult = EntityTypeSearchResult;
 })(FullTextSearchResponseEntityType || (FullTextSearchResponseEntityType = {}));
 /**
@@ -59172,7 +59172,7 @@ class FullTextSearchResponseEntity {
 FullTextSearchResponseEntity.id = 'ondewo.nlu.FullTextSearchResponseEntity';
 (function (FullTextSearchResponseEntity) {
 	/**
-	 * Message implementation for ondewo.nlu.EntitySearchResult
+	 * Message implementation for ondewo.nlu.FullTextSearchResponseEntity.EntitySearchResult
 	 */
 	class EntitySearchResult {
 		/**
@@ -59319,7 +59319,7 @@ FullTextSearchResponseEntity.id = 'ondewo.nlu.FullTextSearchResponseEntity';
 			};
 		}
 	}
-	EntitySearchResult.id = 'ondewo.nlu.EntitySearchResult';
+	EntitySearchResult.id = 'ondewo.nlu.FullTextSearchResponseEntity.EntitySearchResult';
 	FullTextSearchResponseEntity.EntitySearchResult = EntitySearchResult;
 })(FullTextSearchResponseEntity || (FullTextSearchResponseEntity = {}));
 /**
@@ -59532,7 +59532,7 @@ class FullTextSearchResponseEntitySynonym {
 FullTextSearchResponseEntitySynonym.id = 'ondewo.nlu.FullTextSearchResponseEntitySynonym';
 (function (FullTextSearchResponseEntitySynonym) {
 	/**
-	 * Message implementation for ondewo.nlu.EntitySynonymSearchResult
+	 * Message implementation for ondewo.nlu.FullTextSearchResponseEntitySynonym.EntitySynonymSearchResult
 	 */
 	class EntitySynonymSearchResult {
 		/**
@@ -59695,7 +59695,7 @@ FullTextSearchResponseEntitySynonym.id = 'ondewo.nlu.FullTextSearchResponseEntit
 			};
 		}
 	}
-	EntitySynonymSearchResult.id = 'ondewo.nlu.EntitySynonymSearchResult';
+	EntitySynonymSearchResult.id = 'ondewo.nlu.FullTextSearchResponseEntitySynonym.EntitySynonymSearchResult';
 	FullTextSearchResponseEntitySynonym.EntitySynonymSearchResult = EntitySynonymSearchResult;
 })(FullTextSearchResponseEntitySynonym || (FullTextSearchResponseEntitySynonym = {}));
 /**
@@ -59908,7 +59908,7 @@ class FullTextSearchResponseIntent {
 FullTextSearchResponseIntent.id = 'ondewo.nlu.FullTextSearchResponseIntent';
 (function (FullTextSearchResponseIntent) {
 	/**
-	 * Message implementation for ondewo.nlu.IntentSearchResult
+	 * Message implementation for ondewo.nlu.FullTextSearchResponseIntent.IntentSearchResult
 	 */
 	class IntentSearchResult {
 		/**
@@ -60055,7 +60055,7 @@ FullTextSearchResponseIntent.id = 'ondewo.nlu.FullTextSearchResponseIntent';
 			};
 		}
 	}
-	IntentSearchResult.id = 'ondewo.nlu.IntentSearchResult';
+	IntentSearchResult.id = 'ondewo.nlu.FullTextSearchResponseIntent.IntentSearchResult';
 	FullTextSearchResponseIntent.IntentSearchResult = IntentSearchResult;
 })(FullTextSearchResponseIntent || (FullTextSearchResponseIntent = {}));
 /**
@@ -60268,7 +60268,7 @@ class FullTextSearchResponseIntentContextIn {
 FullTextSearchResponseIntentContextIn.id = 'ondewo.nlu.FullTextSearchResponseIntentContextIn';
 (function (FullTextSearchResponseIntentContextIn) {
 	/**
-	 * Message implementation for ondewo.nlu.IntentContextInSearchResult
+	 * Message implementation for ondewo.nlu.FullTextSearchResponseIntentContextIn.IntentContextInSearchResult
 	 */
 	class IntentContextInSearchResult {
 		/**
@@ -60399,7 +60399,7 @@ FullTextSearchResponseIntentContextIn.id = 'ondewo.nlu.FullTextSearchResponseInt
 			};
 		}
 	}
-	IntentContextInSearchResult.id = 'ondewo.nlu.IntentContextInSearchResult';
+	IntentContextInSearchResult.id = 'ondewo.nlu.FullTextSearchResponseIntentContextIn.IntentContextInSearchResult';
 	FullTextSearchResponseIntentContextIn.IntentContextInSearchResult = IntentContextInSearchResult;
 })(FullTextSearchResponseIntentContextIn || (FullTextSearchResponseIntentContextIn = {}));
 /**
@@ -60612,7 +60612,7 @@ class FullTextSearchResponseIntentContextOut {
 FullTextSearchResponseIntentContextOut.id = 'ondewo.nlu.FullTextSearchResponseIntentContextOut';
 (function (FullTextSearchResponseIntentContextOut) {
 	/**
-	 * Message implementation for ondewo.nlu.IntentContextOutSearchResult
+	 * Message implementation for ondewo.nlu.FullTextSearchResponseIntentContextOut.IntentContextOutSearchResult
 	 */
 	class IntentContextOutSearchResult {
 		/**
@@ -60743,7 +60743,7 @@ FullTextSearchResponseIntentContextOut.id = 'ondewo.nlu.FullTextSearchResponseIn
 			};
 		}
 	}
-	IntentContextOutSearchResult.id = 'ondewo.nlu.IntentContextOutSearchResult';
+	IntentContextOutSearchResult.id = 'ondewo.nlu.FullTextSearchResponseIntentContextOut.IntentContextOutSearchResult';
 	FullTextSearchResponseIntentContextOut.IntentContextOutSearchResult = IntentContextOutSearchResult;
 })(FullTextSearchResponseIntentContextOut || (FullTextSearchResponseIntentContextOut = {}));
 /**
@@ -60956,7 +60956,7 @@ class FullTextSearchResponseIntentUsersays {
 FullTextSearchResponseIntentUsersays.id = 'ondewo.nlu.FullTextSearchResponseIntentUsersays';
 (function (FullTextSearchResponseIntentUsersays) {
 	/**
-	 * Message implementation for ondewo.nlu.IntentUsersaysSearchResult
+	 * Message implementation for ondewo.nlu.FullTextSearchResponseIntentUsersays.IntentUsersaysSearchResult
 	 */
 	class IntentUsersaysSearchResult {
 		/**
@@ -61151,7 +61151,7 @@ FullTextSearchResponseIntentUsersays.id = 'ondewo.nlu.FullTextSearchResponseInte
 			};
 		}
 	}
-	IntentUsersaysSearchResult.id = 'ondewo.nlu.IntentUsersaysSearchResult';
+	IntentUsersaysSearchResult.id = 'ondewo.nlu.FullTextSearchResponseIntentUsersays.IntentUsersaysSearchResult';
 	FullTextSearchResponseIntentUsersays.IntentUsersaysSearchResult = IntentUsersaysSearchResult;
 })(FullTextSearchResponseIntentUsersays || (FullTextSearchResponseIntentUsersays = {}));
 /**
@@ -61364,7 +61364,7 @@ class FullTextSearchResponseIntentTags {
 FullTextSearchResponseIntentTags.id = 'ondewo.nlu.FullTextSearchResponseIntentTags';
 (function (FullTextSearchResponseIntentTags) {
 	/**
-	 * Message implementation for ondewo.nlu.IntentTagsSearchResult
+	 * Message implementation for ondewo.nlu.FullTextSearchResponseIntentTags.IntentTagsSearchResult
 	 */
 	class IntentTagsSearchResult {
 		/**
@@ -61511,7 +61511,7 @@ FullTextSearchResponseIntentTags.id = 'ondewo.nlu.FullTextSearchResponseIntentTa
 			};
 		}
 	}
-	IntentTagsSearchResult.id = 'ondewo.nlu.IntentTagsSearchResult';
+	IntentTagsSearchResult.id = 'ondewo.nlu.FullTextSearchResponseIntentTags.IntentTagsSearchResult';
 	FullTextSearchResponseIntentTags.IntentTagsSearchResult = IntentTagsSearchResult;
 })(FullTextSearchResponseIntentTags || (FullTextSearchResponseIntentTags = {}));
 /**
@@ -61724,7 +61724,7 @@ class FullTextSearchResponseIntentResponse {
 FullTextSearchResponseIntentResponse.id = 'ondewo.nlu.FullTextSearchResponseIntentResponse';
 (function (FullTextSearchResponseIntentResponse) {
 	/**
-	 * Message implementation for ondewo.nlu.IntentResponseSearchResult
+	 * Message implementation for ondewo.nlu.FullTextSearchResponseIntentResponse.IntentResponseSearchResult
 	 */
 	class IntentResponseSearchResult {
 		/**
@@ -61887,7 +61887,7 @@ FullTextSearchResponseIntentResponse.id = 'ondewo.nlu.FullTextSearchResponseInte
 			};
 		}
 	}
-	IntentResponseSearchResult.id = 'ondewo.nlu.IntentResponseSearchResult';
+	IntentResponseSearchResult.id = 'ondewo.nlu.FullTextSearchResponseIntentResponse.IntentResponseSearchResult';
 	FullTextSearchResponseIntentResponse.IntentResponseSearchResult = IntentResponseSearchResult;
 })(FullTextSearchResponseIntentResponse || (FullTextSearchResponseIntentResponse = {}));
 /**
@@ -62100,7 +62100,7 @@ class FullTextSearchResponseIntentParameters {
 FullTextSearchResponseIntentParameters.id = 'ondewo.nlu.FullTextSearchResponseIntentParameters';
 (function (FullTextSearchResponseIntentParameters) {
 	/**
-	 * Message implementation for ondewo.nlu.IntentParametersSearchResult
+	 * Message implementation for ondewo.nlu.FullTextSearchResponseIntentParameters.IntentParametersSearchResult
 	 */
 	class IntentParametersSearchResult {
 		/**
@@ -62247,7 +62247,7 @@ FullTextSearchResponseIntentParameters.id = 'ondewo.nlu.FullTextSearchResponseIn
 			};
 		}
 	}
-	IntentParametersSearchResult.id = 'ondewo.nlu.IntentParametersSearchResult';
+	IntentParametersSearchResult.id = 'ondewo.nlu.FullTextSearchResponseIntentParameters.IntentParametersSearchResult';
 	FullTextSearchResponseIntentParameters.IntentParametersSearchResult = IntentParametersSearchResult;
 })(FullTextSearchResponseIntentParameters || (FullTextSearchResponseIntentParameters = {}));
 /**
@@ -63511,7 +63511,7 @@ class AgentsClient {
 }
 AgentsClient.ɵfac = i0.ɵɵngDeclareFactory({
 	minVersion: '12.0.0',
-	version: '14.2.0',
+	version: '14.2.5',
 	ngImport: i0,
 	type: AgentsClient,
 	deps: [
@@ -63523,14 +63523,14 @@ AgentsClient.ɵfac = i0.ɵɵngDeclareFactory({
 });
 AgentsClient.ɵprov = i0.ɵɵngDeclareInjectable({
 	minVersion: '12.0.0',
-	version: '14.2.0',
+	version: '14.2.5',
 	ngImport: i0,
 	type: AgentsClient,
 	providedIn: 'any'
 });
 i0.ɵɵngDeclareClassMetadata({
 	minVersion: '12.0.0',
-	version: '14.2.0',
+	version: '14.2.5',
 	ngImport: i0,
 	type: AgentsClient,
 	decorators: [
@@ -64364,7 +64364,7 @@ class IntentsClient {
 }
 IntentsClient.ɵfac = i0.ɵɵngDeclareFactory({
 	minVersion: '12.0.0',
-	version: '14.2.0',
+	version: '14.2.5',
 	ngImport: i0,
 	type: IntentsClient,
 	deps: [
@@ -64376,14 +64376,14 @@ IntentsClient.ɵfac = i0.ɵɵngDeclareFactory({
 });
 IntentsClient.ɵprov = i0.ɵɵngDeclareInjectable({
 	minVersion: '12.0.0',
-	version: '14.2.0',
+	version: '14.2.5',
 	ngImport: i0,
 	type: IntentsClient,
 	providedIn: 'any'
 });
 i0.ɵɵngDeclareClassMetadata({
 	minVersion: '12.0.0',
-	version: '14.2.0',
+	version: '14.2.5',
 	ngImport: i0,
 	type: IntentsClient,
 	decorators: [
@@ -65212,7 +65212,7 @@ class WebhookClient {
 }
 WebhookClient.ɵfac = i0.ɵɵngDeclareFactory({
 	minVersion: '12.0.0',
-	version: '14.2.0',
+	version: '14.2.5',
 	ngImport: i0,
 	type: WebhookClient,
 	deps: [
@@ -65224,14 +65224,14 @@ WebhookClient.ɵfac = i0.ɵɵngDeclareFactory({
 });
 WebhookClient.ɵprov = i0.ɵɵngDeclareInjectable({
 	minVersion: '12.0.0',
-	version: '14.2.0',
+	version: '14.2.5',
 	ngImport: i0,
 	type: WebhookClient,
 	providedIn: 'any'
 });
 i0.ɵɵngDeclareClassMetadata({
 	minVersion: '12.0.0',
-	version: '14.2.0',
+	version: '14.2.5',
 	ngImport: i0,
 	type: WebhookClient,
 	decorators: [
@@ -65406,7 +65406,7 @@ class OperationsClient {
 }
 OperationsClient.ɵfac = i0.ɵɵngDeclareFactory({
 	minVersion: '12.0.0',
-	version: '14.2.0',
+	version: '14.2.5',
 	ngImport: i0,
 	type: OperationsClient,
 	deps: [
@@ -65418,14 +65418,14 @@ OperationsClient.ɵfac = i0.ɵɵngDeclareFactory({
 });
 OperationsClient.ɵprov = i0.ɵɵngDeclareInjectable({
 	minVersion: '12.0.0',
-	version: '14.2.0',
+	version: '14.2.5',
 	ngImport: i0,
 	type: OperationsClient,
 	providedIn: 'any'
 });
 i0.ɵɵngDeclareClassMetadata({
 	minVersion: '12.0.0',
-	version: '14.2.0',
+	version: '14.2.5',
 	ngImport: i0,
 	type: OperationsClient,
 	decorators: [
@@ -65656,7 +65656,7 @@ class ContextsClient {
 }
 ContextsClient.ɵfac = i0.ɵɵngDeclareFactory({
 	minVersion: '12.0.0',
-	version: '14.2.0',
+	version: '14.2.5',
 	ngImport: i0,
 	type: ContextsClient,
 	deps: [
@@ -65668,14 +65668,14 @@ ContextsClient.ɵfac = i0.ɵɵngDeclareFactory({
 });
 ContextsClient.ɵprov = i0.ɵɵngDeclareInjectable({
 	minVersion: '12.0.0',
-	version: '14.2.0',
+	version: '14.2.5',
 	ngImport: i0,
 	type: ContextsClient,
 	providedIn: 'any'
 });
 i0.ɵɵngDeclareClassMetadata({
 	minVersion: '12.0.0',
-	version: '14.2.0',
+	version: '14.2.5',
 	ngImport: i0,
 	type: ContextsClient,
 	decorators: [
@@ -65815,7 +65815,7 @@ class ServerStatisticsClient {
 }
 ServerStatisticsClient.ɵfac = i0.ɵɵngDeclareFactory({
 	minVersion: '12.0.0',
-	version: '14.2.0',
+	version: '14.2.5',
 	ngImport: i0,
 	type: ServerStatisticsClient,
 	deps: [
@@ -65827,14 +65827,14 @@ ServerStatisticsClient.ɵfac = i0.ɵɵngDeclareFactory({
 });
 ServerStatisticsClient.ɵprov = i0.ɵɵngDeclareInjectable({
 	minVersion: '12.0.0',
-	version: '14.2.0',
+	version: '14.2.5',
 	ngImport: i0,
 	type: ServerStatisticsClient,
 	providedIn: 'any'
 });
 i0.ɵɵngDeclareClassMetadata({
 	minVersion: '12.0.0',
-	version: '14.2.0',
+	version: '14.2.5',
 	ngImport: i0,
 	type: ServerStatisticsClient,
 	decorators: [
@@ -66226,7 +66226,7 @@ class EntityTypesClient {
 }
 EntityTypesClient.ɵfac = i0.ɵɵngDeclareFactory({
 	minVersion: '12.0.0',
-	version: '14.2.0',
+	version: '14.2.5',
 	ngImport: i0,
 	type: EntityTypesClient,
 	deps: [
@@ -66238,14 +66238,14 @@ EntityTypesClient.ɵfac = i0.ɵɵngDeclareFactory({
 });
 EntityTypesClient.ɵprov = i0.ɵɵngDeclareInjectable({
 	minVersion: '12.0.0',
-	version: '14.2.0',
+	version: '14.2.5',
 	ngImport: i0,
 	type: EntityTypesClient,
 	providedIn: 'any'
 });
 i0.ɵɵngDeclareClassMetadata({
 	minVersion: '12.0.0',
-	version: '14.2.0',
+	version: '14.2.5',
 	ngImport: i0,
 	type: EntityTypesClient,
 	decorators: [

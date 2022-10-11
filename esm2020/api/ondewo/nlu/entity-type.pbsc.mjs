@@ -367,7 +367,7 @@ export class EntityTypesClient {
 }
 EntityTypesClient.ɵfac = i0.ɵɵngDeclareFactory({
 	minVersion: '12.0.0',
-	version: '14.2.0',
+	version: '14.2.5',
 	ngImport: i0,
 	type: EntityTypesClient,
 	deps: [
@@ -379,14 +379,14 @@ EntityTypesClient.ɵfac = i0.ɵɵngDeclareFactory({
 });
 EntityTypesClient.ɵprov = i0.ɵɵngDeclareInjectable({
 	minVersion: '12.0.0',
-	version: '14.2.0',
+	version: '14.2.5',
 	ngImport: i0,
 	type: EntityTypesClient,
 	providedIn: 'any'
 });
 i0.ɵɵngDeclareClassMetadata({
 	minVersion: '12.0.0',
-	version: '14.2.0',
+	version: '14.2.5',
 	ngImport: i0,
 	type: EntityTypesClient,
 	decorators: [

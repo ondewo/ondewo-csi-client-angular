@@ -181,7 +181,7 @@ export declare module UserInfo {
 		};
 	}
 	/**
-	 * Message implementation for ondewo.nlu.ProjectRolesEntry
+	 * Message implementation for ondewo.nlu.UserInfo.ProjectRolesEntry
 	 */
 	class ProjectRolesEntry implements GrpcMessage {
 		static id: string;

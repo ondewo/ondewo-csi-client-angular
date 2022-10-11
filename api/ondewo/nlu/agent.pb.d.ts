@@ -1308,7 +1308,7 @@ export declare module ExportBenchmarkAgentResponse {
 		};
 	}
 	/**
-	 * Message implementation for ondewo.nlu.TrainingPhrasesEntry
+	 * Message implementation for ondewo.nlu.ExportBenchmarkAgentResponse.TrainingPhrasesEntry
 	 */
 	class TrainingPhrasesEntry implements GrpcMessage {
 		static id: string;
@@ -3736,7 +3736,7 @@ export declare module FullTextSearchResponseEntityType {
 		nextPageToken?: string;
 	}
 	/**
-	 * Message implementation for ondewo.nlu.EntityTypeSearchResult
+	 * Message implementation for ondewo.nlu.FullTextSearchResponseEntityType.EntityTypeSearchResult
 	 */
 	class EntityTypeSearchResult implements GrpcMessage {
 		static id: string;
@@ -3914,7 +3914,7 @@ export declare module FullTextSearchResponseEntity {
 		nextPageToken?: string;
 	}
 	/**
-	 * Message implementation for ondewo.nlu.EntitySearchResult
+	 * Message implementation for ondewo.nlu.FullTextSearchResponseEntity.EntitySearchResult
 	 */
 	class EntitySearchResult implements GrpcMessage {
 		static id: string;
@@ -4097,7 +4097,7 @@ export declare module FullTextSearchResponseEntitySynonym {
 		nextPageToken?: string;
 	}
 	/**
-	 * Message implementation for ondewo.nlu.EntitySynonymSearchResult
+	 * Message implementation for ondewo.nlu.FullTextSearchResponseEntitySynonym.EntitySynonymSearchResult
 	 */
 	class EntitySynonymSearchResult implements GrpcMessage {
 		static id: string;
@@ -4285,7 +4285,7 @@ export declare module FullTextSearchResponseIntent {
 		nextPageToken?: string;
 	}
 	/**
-	 * Message implementation for ondewo.nlu.IntentSearchResult
+	 * Message implementation for ondewo.nlu.FullTextSearchResponseIntent.IntentSearchResult
 	 */
 	class IntentSearchResult implements GrpcMessage {
 		static id: string;
@@ -4468,7 +4468,7 @@ export declare module FullTextSearchResponseIntentContextIn {
 		nextPageToken?: string;
 	}
 	/**
-	 * Message implementation for ondewo.nlu.IntentContextInSearchResult
+	 * Message implementation for ondewo.nlu.FullTextSearchResponseIntentContextIn.IntentContextInSearchResult
 	 */
 	class IntentContextInSearchResult implements GrpcMessage {
 		static id: string;
@@ -4648,7 +4648,7 @@ export declare module FullTextSearchResponseIntentContextOut {
 		nextPageToken?: string;
 	}
 	/**
-	 * Message implementation for ondewo.nlu.IntentContextOutSearchResult
+	 * Message implementation for ondewo.nlu.FullTextSearchResponseIntentContextOut.IntentContextOutSearchResult
 	 */
 	class IntentContextOutSearchResult implements GrpcMessage {
 		static id: string;
@@ -4826,7 +4826,7 @@ export declare module FullTextSearchResponseIntentUsersays {
 		nextPageToken?: string;
 	}
 	/**
-	 * Message implementation for ondewo.nlu.IntentUsersaysSearchResult
+	 * Message implementation for ondewo.nlu.FullTextSearchResponseIntentUsersays.IntentUsersaysSearchResult
 	 */
 	class IntentUsersaysSearchResult implements GrpcMessage {
 		static id: string;
@@ -5024,7 +5024,7 @@ export declare module FullTextSearchResponseIntentTags {
 		nextPageToken?: string;
 	}
 	/**
-	 * Message implementation for ondewo.nlu.IntentTagsSearchResult
+	 * Message implementation for ondewo.nlu.FullTextSearchResponseIntentTags.IntentTagsSearchResult
 	 */
 	class IntentTagsSearchResult implements GrpcMessage {
 		static id: string;
@@ -5207,7 +5207,7 @@ export declare module FullTextSearchResponseIntentResponse {
 		nextPageToken?: string;
 	}
 	/**
-	 * Message implementation for ondewo.nlu.IntentResponseSearchResult
+	 * Message implementation for ondewo.nlu.FullTextSearchResponseIntentResponse.IntentResponseSearchResult
 	 */
 	class IntentResponseSearchResult implements GrpcMessage {
 		static id: string;
@@ -5397,7 +5397,7 @@ export declare module FullTextSearchResponseIntentParameters {
 		nextPageToken?: string;
 	}
 	/**
-	 * Message implementation for ondewo.nlu.IntentParametersSearchResult
+	 * Message implementation for ondewo.nlu.FullTextSearchResponseIntentParameters.IntentParametersSearchResult
 	 */
 	class IntentParametersSearchResult implements GrpcMessage {
 		static id: string;

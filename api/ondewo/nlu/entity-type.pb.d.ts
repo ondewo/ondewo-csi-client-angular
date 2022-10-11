@@ -136,7 +136,7 @@ export declare module EntityType {
 		AUTO_EXPANSION_MODE_DEFAULT = 1
 	}
 	/**
-	 * Message implementation for ondewo.nlu.Entity
+	 * Message implementation for ondewo.nlu.EntityType.Entity
 	 */
 	class Entity implements GrpcMessage {
 		static id: string;
@@ -1183,7 +1183,7 @@ export declare module BatchEntitiesResponse {
 		hasErrors?: boolean;
 	}
 	/**
-	 * Message implementation for ondewo.nlu.EntityStatus
+	 * Message implementation for ondewo.nlu.BatchEntitiesResponse.EntityStatus
 	 */
 	class EntityStatus implements GrpcMessage {
 		static id: string;
@@ -1333,7 +1333,7 @@ export declare module BatchCreateEntitiesRequest {
 		createEntityRequests?: BatchCreateEntitiesRequest.CreateEntityRequest.AsProtobufJSON[] | null;
 	}
 	/**
-	 * Message implementation for ondewo.nlu.CreateEntityRequest
+	 * Message implementation for ondewo.nlu.BatchCreateEntitiesRequest.CreateEntityRequest
 	 */
 	class CreateEntityRequest implements GrpcMessage {
 		static id: string;
@@ -1688,7 +1688,7 @@ export declare module BatchDeleteEntitiesResponse {
 		hasErrors?: boolean;
 	}
 	/**
-	 * Message implementation for ondewo.nlu.DeleteEntityStatus
+	 * Message implementation for ondewo.nlu.BatchDeleteEntitiesResponse.DeleteEntityStatus
 	 */
 	class DeleteEntityStatus implements GrpcMessage {
 		static id: string;
