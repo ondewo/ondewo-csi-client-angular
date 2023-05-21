@@ -114,7 +114,7 @@ release: ## Create Github and NPM Release
 	git add api
 	git add esm2020
 	git add fesm2020
-	git add fesm2015
+	-git add fesm2015
 	git add src
 	git add README.md
 	git add RELEASE.md
