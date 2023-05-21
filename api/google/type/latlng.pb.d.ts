@@ -27,17 +27,17 @@ export declare class LatLng implements GrpcMessage {
 	 * @param _writer binary writer instance
 	 */
 	static serializeBinaryToWriter(_instance: LatLng, _writer: BinaryWriter): void;
-	private _latitude?;
-	private _longitude?;
+	private _latitude;
+	private _longitude;
 	/**
 	 * Message constructor. Initializes the properties and applies default Protobuf values if necessary
 	 * @param _value initial values object or instance of LatLng to deeply clone from
 	 */
 	constructor(_value?: RecursivePartial<LatLng.AsObject>);
-	get latitude(): number | undefined;
-	set latitude(value: number | undefined);
-	get longitude(): number | undefined;
-	set longitude(value: number | undefined);
+	get latitude(): number;
+	set latitude(value: number);
+	get longitude(): number;
+	set longitude(value: number);
 	/**
 	 * Serialize message to binary data
 	 * @param instance message instance
@@ -63,14 +63,14 @@ export declare module LatLng {
 	 * Standard JavaScript object representation for LatLng
 	 */
 	interface AsObject {
-		latitude?: number;
-		longitude?: number;
+		latitude: number;
+		longitude: number;
 	}
 	/**
 	 * Protobuf JSON representation for LatLng
 	 */
 	interface AsProtobufJSON {
-		latitude?: number;
-		longitude?: number;
+		latitude: number;
+		longitude: number;
 	}
 }

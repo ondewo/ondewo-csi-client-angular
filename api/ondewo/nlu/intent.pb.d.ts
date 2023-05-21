@@ -10,7 +10,8 @@ export declare enum IntentView {
 	INTENT_VIEW_UNSPECIFIED = 0,
 	INTENT_VIEW_FULL = 1,
 	INTENT_VIEW_PARTIAL = 2,
-	INTENT_VIEW_SHALLOW = 3
+	INTENT_VIEW_SHALLOW = 3,
+	INTENT_VIEW_MINIMUM = 4
 }
 export declare enum IntentCategory {
 	ALL_INTENTS = 0,
@@ -47,92 +48,92 @@ export declare class Intent implements GrpcMessage {
 	 * @param _writer binary writer instance
 	 */
 	static serializeBinaryToWriter(_instance: Intent, _writer: BinaryWriter): void;
-	private _name?;
-	private _displayName?;
-	private _webhookState?;
-	private _priority?;
-	private _isFallback?;
-	private _mlDisabled?;
-	private _inputContextNames?;
-	private _events?;
+	private _name;
+	private _displayName;
+	private _webhookState;
+	private _priority;
+	private _isFallback;
+	private _mlDisabled;
+	private _inputContextNames;
+	private _events;
 	private _trainingPhrases?;
-	private _action?;
+	private _action;
 	private _outputContexts?;
-	private _resetContexts?;
+	private _resetContexts;
 	private _parameters?;
 	private _messages?;
-	private _defaultResponsePlatforms?;
-	private _rootFollowupIntentName?;
-	private _parentFollowupIntentName?;
+	private _defaultResponsePlatforms;
+	private _rootFollowupIntentName;
+	private _parentFollowupIntentName;
 	private _followupIntentInfo?;
-	private _nextPageToken?;
-	private _domainName?;
-	private _isStartOfDeviation?;
-	private _isEndOfDeviation?;
-	private _trainingPhraseCount?;
-	private _status?;
+	private _nextPageToken;
+	private _domainName;
+	private _isStartOfDeviation;
+	private _isEndOfDeviation;
+	private _trainingPhraseCount;
+	private _status;
 	private _startDate?;
 	private _endDate?;
-	private _tags?;
+	private _tags;
 	/**
 	 * Message constructor. Initializes the properties and applies default Protobuf values if necessary
 	 * @param _value initial values object or instance of Intent to deeply clone from
 	 */
 	constructor(_value?: RecursivePartial<Intent.AsObject>);
-	get name(): string | undefined;
-	set name(value: string | undefined);
-	get displayName(): string | undefined;
-	set displayName(value: string | undefined);
-	get webhookState(): Intent.WebhookState | undefined;
-	set webhookState(value: Intent.WebhookState | undefined);
-	get priority(): number | undefined;
-	set priority(value: number | undefined);
-	get isFallback(): boolean | undefined;
-	set isFallback(value: boolean | undefined);
-	get mlDisabled(): boolean | undefined;
-	set mlDisabled(value: boolean | undefined);
-	get inputContextNames(): string[] | undefined;
-	set inputContextNames(value: string[] | undefined);
-	get events(): string[] | undefined;
-	set events(value: string[] | undefined);
+	get name(): string;
+	set name(value: string);
+	get displayName(): string;
+	set displayName(value: string);
+	get webhookState(): Intent.WebhookState;
+	set webhookState(value: Intent.WebhookState);
+	get priority(): number;
+	set priority(value: number);
+	get isFallback(): boolean;
+	set isFallback(value: boolean);
+	get mlDisabled(): boolean;
+	set mlDisabled(value: boolean);
+	get inputContextNames(): string[];
+	set inputContextNames(value: string[]);
+	get events(): string[];
+	set events(value: string[]);
 	get trainingPhrases(): Intent.TrainingPhrase[] | undefined;
 	set trainingPhrases(value: Intent.TrainingPhrase[] | undefined);
-	get action(): string | undefined;
-	set action(value: string | undefined);
+	get action(): string;
+	set action(value: string);
 	get outputContexts(): ondewoNlu009.Context[] | undefined;
 	set outputContexts(value: ondewoNlu009.Context[] | undefined);
-	get resetContexts(): boolean | undefined;
-	set resetContexts(value: boolean | undefined);
+	get resetContexts(): boolean;
+	set resetContexts(value: boolean);
 	get parameters(): Intent.Parameter[] | undefined;
 	set parameters(value: Intent.Parameter[] | undefined);
 	get messages(): Intent.Message[] | undefined;
 	set messages(value: Intent.Message[] | undefined);
-	get defaultResponsePlatforms(): Intent.Message.Platform[] | undefined;
-	set defaultResponsePlatforms(value: Intent.Message.Platform[] | undefined);
-	get rootFollowupIntentName(): string | undefined;
-	set rootFollowupIntentName(value: string | undefined);
-	get parentFollowupIntentName(): string | undefined;
-	set parentFollowupIntentName(value: string | undefined);
+	get defaultResponsePlatforms(): Intent.Message.Platform[];
+	set defaultResponsePlatforms(value: Intent.Message.Platform[]);
+	get rootFollowupIntentName(): string;
+	set rootFollowupIntentName(value: string);
+	get parentFollowupIntentName(): string;
+	set parentFollowupIntentName(value: string);
 	get followupIntentInfo(): Intent.FollowupIntentInfo[] | undefined;
 	set followupIntentInfo(value: Intent.FollowupIntentInfo[] | undefined);
-	get nextPageToken(): string | undefined;
-	set nextPageToken(value: string | undefined);
-	get domainName(): string | undefined;
-	set domainName(value: string | undefined);
-	get isStartOfDeviation(): boolean | undefined;
-	set isStartOfDeviation(value: boolean | undefined);
-	get isEndOfDeviation(): boolean | undefined;
-	set isEndOfDeviation(value: boolean | undefined);
-	get trainingPhraseCount(): number | undefined;
-	set trainingPhraseCount(value: number | undefined);
-	get status(): Intent.IntentStatus | undefined;
-	set status(value: Intent.IntentStatus | undefined);
+	get nextPageToken(): string;
+	set nextPageToken(value: string);
+	get domainName(): string;
+	set domainName(value: string);
+	get isStartOfDeviation(): boolean;
+	set isStartOfDeviation(value: boolean);
+	get isEndOfDeviation(): boolean;
+	set isEndOfDeviation(value: boolean);
+	get trainingPhraseCount(): number;
+	set trainingPhraseCount(value: number);
+	get status(): Intent.IntentStatus;
+	set status(value: Intent.IntentStatus);
 	get startDate(): googleProtobuf007.Timestamp | undefined;
 	set startDate(value: googleProtobuf007.Timestamp | undefined);
 	get endDate(): googleProtobuf007.Timestamp | undefined;
 	set endDate(value: googleProtobuf007.Timestamp | undefined);
-	get tags(): string[] | undefined;
-	set tags(value: string[] | undefined);
+	get tags(): string[];
+	set tags(value: string[]);
 	/**
 	 * Serialize message to binary data
 	 * @param instance message instance
@@ -158,65 +159,65 @@ export declare module Intent {
 	 * Standard JavaScript object representation for Intent
 	 */
 	interface AsObject {
-		name?: string;
-		displayName?: string;
-		webhookState?: Intent.WebhookState;
-		priority?: number;
-		isFallback?: boolean;
-		mlDisabled?: boolean;
-		inputContextNames?: string[];
-		events?: string[];
+		name: string;
+		displayName: string;
+		webhookState: Intent.WebhookState;
+		priority: number;
+		isFallback: boolean;
+		mlDisabled: boolean;
+		inputContextNames: string[];
+		events: string[];
 		trainingPhrases?: Intent.TrainingPhrase.AsObject[];
-		action?: string;
+		action: string;
 		outputContexts?: ondewoNlu009.Context.AsObject[];
-		resetContexts?: boolean;
+		resetContexts: boolean;
 		parameters?: Intent.Parameter.AsObject[];
 		messages?: Intent.Message.AsObject[];
-		defaultResponsePlatforms?: Intent.Message.Platform[];
-		rootFollowupIntentName?: string;
-		parentFollowupIntentName?: string;
+		defaultResponsePlatforms: Intent.Message.Platform[];
+		rootFollowupIntentName: string;
+		parentFollowupIntentName: string;
 		followupIntentInfo?: Intent.FollowupIntentInfo.AsObject[];
-		nextPageToken?: string;
-		domainName?: string;
-		isStartOfDeviation?: boolean;
-		isEndOfDeviation?: boolean;
-		trainingPhraseCount?: number;
-		status?: Intent.IntentStatus;
+		nextPageToken: string;
+		domainName: string;
+		isStartOfDeviation: boolean;
+		isEndOfDeviation: boolean;
+		trainingPhraseCount: number;
+		status: Intent.IntentStatus;
 		startDate?: googleProtobuf007.Timestamp.AsObject;
 		endDate?: googleProtobuf007.Timestamp.AsObject;
-		tags?: string[];
+		tags: string[];
 	}
 	/**
 	 * Protobuf JSON representation for Intent
 	 */
 	interface AsProtobufJSON {
-		name?: string;
-		displayName?: string;
-		webhookState?: string;
-		priority?: number;
-		isFallback?: boolean;
-		mlDisabled?: boolean;
-		inputContextNames?: string[];
-		events?: string[];
-		trainingPhrases?: Intent.TrainingPhrase.AsProtobufJSON[] | null;
-		action?: string;
-		outputContexts?: ondewoNlu009.Context.AsProtobufJSON[] | null;
-		resetContexts?: boolean;
-		parameters?: Intent.Parameter.AsProtobufJSON[] | null;
-		messages?: Intent.Message.AsProtobufJSON[] | null;
-		defaultResponsePlatforms?: string[];
-		rootFollowupIntentName?: string;
-		parentFollowupIntentName?: string;
-		followupIntentInfo?: Intent.FollowupIntentInfo.AsProtobufJSON[] | null;
-		nextPageToken?: string;
-		domainName?: string;
-		isStartOfDeviation?: boolean;
-		isEndOfDeviation?: boolean;
-		trainingPhraseCount?: number;
-		status?: string;
-		startDate?: googleProtobuf007.Timestamp.AsProtobufJSON | null;
-		endDate?: googleProtobuf007.Timestamp.AsProtobufJSON | null;
-		tags?: string[];
+		name: string;
+		displayName: string;
+		webhookState: string;
+		priority: number;
+		isFallback: boolean;
+		mlDisabled: boolean;
+		inputContextNames: string[];
+		events: string[];
+		trainingPhrases: Intent.TrainingPhrase.AsProtobufJSON[] | null;
+		action: string;
+		outputContexts: ondewoNlu009.Context.AsProtobufJSON[] | null;
+		resetContexts: boolean;
+		parameters: Intent.Parameter.AsProtobufJSON[] | null;
+		messages: Intent.Message.AsProtobufJSON[] | null;
+		defaultResponsePlatforms: string[];
+		rootFollowupIntentName: string;
+		parentFollowupIntentName: string;
+		followupIntentInfo: Intent.FollowupIntentInfo.AsProtobufJSON[] | null;
+		nextPageToken: string;
+		domainName: string;
+		isStartOfDeviation: boolean;
+		isEndOfDeviation: boolean;
+		trainingPhraseCount: number;
+		status: string;
+		startDate: googleProtobuf007.Timestamp.AsProtobufJSON | null;
+		endDate: googleProtobuf007.Timestamp.AsProtobufJSON | null;
+		tags: string[];
 	}
 	enum IntentStatus {
 		ACTIVE = 0,
@@ -254,29 +255,29 @@ export declare module Intent {
 		 * @param _writer binary writer instance
 		 */
 		static serializeBinaryToWriter(_instance: TrainingPhrase, _writer: BinaryWriter): void;
-		private _name?;
-		private _type?;
-		private _text?;
+		private _name;
+		private _type;
+		private _text;
 		private _entities?;
-		private _timesAddedCount?;
-		private _languageCode?;
+		private _timesAddedCount;
+		private _languageCode;
 		/**
 		 * Message constructor. Initializes the properties and applies default Protobuf values if necessary
 		 * @param _value initial values object or instance of TrainingPhrase to deeply clone from
 		 */
 		constructor(_value?: RecursivePartial<TrainingPhrase.AsObject>);
-		get name(): string | undefined;
-		set name(value: string | undefined);
-		get type(): Intent.TrainingPhrase.Type | undefined;
-		set type(value: Intent.TrainingPhrase.Type | undefined);
-		get text(): string | undefined;
-		set text(value: string | undefined);
+		get name(): string;
+		set name(value: string);
+		get type(): Intent.TrainingPhrase.Type;
+		set type(value: Intent.TrainingPhrase.Type);
+		get text(): string;
+		set text(value: string);
 		get entities(): Intent.TrainingPhrase.Entity[] | undefined;
 		set entities(value: Intent.TrainingPhrase.Entity[] | undefined);
-		get timesAddedCount(): number | undefined;
-		set timesAddedCount(value: number | undefined);
-		get languageCode(): string | undefined;
-		set languageCode(value: string | undefined);
+		get timesAddedCount(): number;
+		set timesAddedCount(value: number);
+		get languageCode(): string;
+		set languageCode(value: string);
 		/**
 		 * Serialize message to binary data
 		 * @param instance message instance
@@ -302,23 +303,23 @@ export declare module Intent {
 		 * Standard JavaScript object representation for TrainingPhrase
 		 */
 		interface AsObject {
-			name?: string;
-			type?: Intent.TrainingPhrase.Type;
-			text?: string;
+			name: string;
+			type: Intent.TrainingPhrase.Type;
+			text: string;
 			entities?: Intent.TrainingPhrase.Entity.AsObject[];
-			timesAddedCount?: number;
-			languageCode?: string;
+			timesAddedCount: number;
+			languageCode: string;
 		}
 		/**
 		 * Protobuf JSON representation for TrainingPhrase
 		 */
 		interface AsProtobufJSON {
-			name?: string;
-			type?: string;
-			text?: string;
-			entities?: Intent.TrainingPhrase.Entity.AsProtobufJSON[] | null;
-			timesAddedCount?: number;
-			languageCode?: string;
+			name: string;
+			type: string;
+			text: string;
+			entities: Intent.TrainingPhrase.Entity.AsProtobufJSON[] | null;
+			timesAddedCount: number;
+			languageCode: string;
 		}
 		enum Type {
 			TYPE_UNSPECIFIED = 0,
@@ -352,35 +353,35 @@ export declare module Intent {
 			 * @param _writer binary writer instance
 			 */
 			static serializeBinaryToWriter(_instance: Entity, _writer: BinaryWriter): void;
-			private _entityTypeName?;
-			private _entityTypeDisplayName?;
-			private _entityValueName?;
-			private _entityValueDisplayName?;
-			private _start?;
-			private _end?;
-			private _parameterName?;
-			private _parameterDisplayName?;
+			private _entityTypeName;
+			private _entityTypeDisplayName;
+			private _entityValueName;
+			private _entityValueDisplayName;
+			private _start;
+			private _end;
+			private _parameterName;
+			private _parameterDisplayName;
 			/**
 			 * Message constructor. Initializes the properties and applies default Protobuf values if necessary
 			 * @param _value initial values object or instance of Entity to deeply clone from
 			 */
 			constructor(_value?: RecursivePartial<Entity.AsObject>);
-			get entityTypeName(): string | undefined;
-			set entityTypeName(value: string | undefined);
-			get entityTypeDisplayName(): string | undefined;
-			set entityTypeDisplayName(value: string | undefined);
-			get entityValueName(): string | undefined;
-			set entityValueName(value: string | undefined);
-			get entityValueDisplayName(): string | undefined;
-			set entityValueDisplayName(value: string | undefined);
-			get start(): number | undefined;
-			set start(value: number | undefined);
-			get end(): number | undefined;
-			set end(value: number | undefined);
-			get parameterName(): string | undefined;
-			set parameterName(value: string | undefined);
-			get parameterDisplayName(): string | undefined;
-			set parameterDisplayName(value: string | undefined);
+			get entityTypeName(): string;
+			set entityTypeName(value: string);
+			get entityTypeDisplayName(): string;
+			set entityTypeDisplayName(value: string);
+			get entityValueName(): string;
+			set entityValueName(value: string);
+			get entityValueDisplayName(): string;
+			set entityValueDisplayName(value: string);
+			get start(): number;
+			set start(value: number);
+			get end(): number;
+			set end(value: number);
+			get parameterName(): string;
+			set parameterName(value: string);
+			get parameterDisplayName(): string;
+			set parameterDisplayName(value: string);
 			/**
 			 * Serialize message to binary data
 			 * @param instance message instance
@@ -406,27 +407,27 @@ export declare module Intent {
 			 * Standard JavaScript object representation for Entity
 			 */
 			interface AsObject {
-				entityTypeName?: string;
-				entityTypeDisplayName?: string;
-				entityValueName?: string;
-				entityValueDisplayName?: string;
-				start?: number;
-				end?: number;
-				parameterName?: string;
-				parameterDisplayName?: string;
+				entityTypeName: string;
+				entityTypeDisplayName: string;
+				entityValueName: string;
+				entityValueDisplayName: string;
+				start: number;
+				end: number;
+				parameterName: string;
+				parameterDisplayName: string;
 			}
 			/**
 			 * Protobuf JSON representation for Entity
 			 */
 			interface AsProtobufJSON {
-				entityTypeName?: string;
-				entityTypeDisplayName?: string;
-				entityValueName?: string;
-				entityValueDisplayName?: string;
-				start?: number;
-				end?: number;
-				parameterName?: string;
-				parameterDisplayName?: string;
+				entityTypeName: string;
+				entityTypeDisplayName: string;
+				entityValueName: string;
+				entityValueDisplayName: string;
+				start: number;
+				end: number;
+				parameterName: string;
+				parameterDisplayName: string;
 			}
 		}
 	}
@@ -457,38 +458,38 @@ export declare module Intent {
 		 * @param _writer binary writer instance
 		 */
 		static serializeBinaryToWriter(_instance: Parameter, _writer: BinaryWriter): void;
-		private _name?;
-		private _displayName?;
-		private _value?;
-		private _defaultValue?;
-		private _entityTypeName?;
-		private _entityTypeDisplayName?;
-		private _mandatory?;
+		private _name;
+		private _displayName;
+		private _value;
+		private _defaultValue;
+		private _entityTypeName;
+		private _entityTypeDisplayName;
+		private _mandatory;
 		private _prompts?;
-		private _isList?;
+		private _isList;
 		/**
 		 * Message constructor. Initializes the properties and applies default Protobuf values if necessary
 		 * @param _value initial values object or instance of Parameter to deeply clone from
 		 */
 		constructor(_value?: RecursivePartial<Parameter.AsObject>);
-		get name(): string | undefined;
-		set name(value: string | undefined);
-		get displayName(): string | undefined;
-		set displayName(value: string | undefined);
-		get value(): string | undefined;
-		set value(value: string | undefined);
-		get defaultValue(): string | undefined;
-		set defaultValue(value: string | undefined);
-		get entityTypeName(): string | undefined;
-		set entityTypeName(value: string | undefined);
-		get entityTypeDisplayName(): string | undefined;
-		set entityTypeDisplayName(value: string | undefined);
-		get mandatory(): boolean | undefined;
-		set mandatory(value: boolean | undefined);
+		get name(): string;
+		set name(value: string);
+		get displayName(): string;
+		set displayName(value: string);
+		get value(): string;
+		set value(value: string);
+		get defaultValue(): string;
+		set defaultValue(value: string);
+		get entityTypeName(): string;
+		set entityTypeName(value: string);
+		get entityTypeDisplayName(): string;
+		set entityTypeDisplayName(value: string);
+		get mandatory(): boolean;
+		set mandatory(value: boolean);
 		get prompts(): Intent.Parameter.Prompt[] | undefined;
 		set prompts(value: Intent.Parameter.Prompt[] | undefined);
-		get isList(): boolean | undefined;
-		set isList(value: boolean | undefined);
+		get isList(): boolean;
+		set isList(value: boolean);
 		/**
 		 * Serialize message to binary data
 		 * @param instance message instance
@@ -514,29 +515,29 @@ export declare module Intent {
 		 * Standard JavaScript object representation for Parameter
 		 */
 		interface AsObject {
-			name?: string;
-			displayName?: string;
-			value?: string;
-			defaultValue?: string;
-			entityTypeName?: string;
-			entityTypeDisplayName?: string;
-			mandatory?: boolean;
+			name: string;
+			displayName: string;
+			value: string;
+			defaultValue: string;
+			entityTypeName: string;
+			entityTypeDisplayName: string;
+			mandatory: boolean;
 			prompts?: Intent.Parameter.Prompt.AsObject[];
-			isList?: boolean;
+			isList: boolean;
 		}
 		/**
 		 * Protobuf JSON representation for Parameter
 		 */
 		interface AsProtobufJSON {
-			name?: string;
-			displayName?: string;
-			value?: string;
-			defaultValue?: string;
-			entityTypeName?: string;
-			entityTypeDisplayName?: string;
-			mandatory?: boolean;
-			prompts?: Intent.Parameter.Prompt.AsProtobufJSON[] | null;
-			isList?: boolean;
+			name: string;
+			displayName: string;
+			value: string;
+			defaultValue: string;
+			entityTypeName: string;
+			entityTypeDisplayName: string;
+			mandatory: boolean;
+			prompts: Intent.Parameter.Prompt.AsProtobufJSON[] | null;
+			isList: boolean;
 		}
 		/**
 		 * Message implementation for ondewo.nlu.Intent.Parameter.Prompt
@@ -565,20 +566,20 @@ export declare module Intent {
 			 * @param _writer binary writer instance
 			 */
 			static serializeBinaryToWriter(_instance: Prompt, _writer: BinaryWriter): void;
-			private _name?;
-			private _text?;
-			private _languageCode?;
+			private _name;
+			private _text;
+			private _languageCode;
 			/**
 			 * Message constructor. Initializes the properties and applies default Protobuf values if necessary
 			 * @param _value initial values object or instance of Prompt to deeply clone from
 			 */
 			constructor(_value?: RecursivePartial<Prompt.AsObject>);
-			get name(): string | undefined;
-			set name(value: string | undefined);
-			get text(): string | undefined;
-			set text(value: string | undefined);
-			get languageCode(): string | undefined;
-			set languageCode(value: string | undefined);
+			get name(): string;
+			set name(value: string);
+			get text(): string;
+			set text(value: string);
+			get languageCode(): string;
+			set languageCode(value: string);
 			/**
 			 * Serialize message to binary data
 			 * @param instance message instance
@@ -604,17 +605,17 @@ export declare module Intent {
 			 * Standard JavaScript object representation for Prompt
 			 */
 			interface AsObject {
-				name?: string;
-				text?: string;
-				languageCode?: string;
+				name: string;
+				text: string;
+				languageCode: string;
 			}
 			/**
 			 * Protobuf JSON representation for Prompt
 			 */
 			interface AsProtobufJSON {
-				name?: string;
-				text?: string;
-				languageCode?: string;
+				name: string;
+				text: string;
+				languageCode: string;
 			}
 		}
 	}
@@ -645,8 +646,8 @@ export declare module Intent {
 		 * @param _writer binary writer instance
 		 */
 		static serializeBinaryToWriter(_instance: Message, _writer: BinaryWriter): void;
-		private _name?;
-		private _languageCode?;
+		private _name;
+		private _languageCode;
 		private _text?;
 		private _image?;
 		private _quickReplies?;
@@ -661,18 +662,18 @@ export declare module Intent {
 		private _htmlText?;
 		private _video?;
 		private _audio?;
-		private _platform?;
-		private _isPrompt?;
+		private _platform;
+		private _isPrompt;
 		private _message;
 		/**
 		 * Message constructor. Initializes the properties and applies default Protobuf values if necessary
 		 * @param _value initial values object or instance of Message to deeply clone from
 		 */
 		constructor(_value?: RecursivePartial<Message.AsObject>);
-		get name(): string | undefined;
-		set name(value: string | undefined);
-		get languageCode(): string | undefined;
-		set languageCode(value: string | undefined);
+		get name(): string;
+		set name(value: string);
+		get languageCode(): string;
+		set languageCode(value: string);
 		get text(): Intent.Message.Text | undefined;
 		set text(value: Intent.Message.Text | undefined);
 		get image(): Intent.Message.Image | undefined;
@@ -701,10 +702,10 @@ export declare module Intent {
 		set video(value: Intent.Message.Video | undefined);
 		get audio(): Intent.Message.Audio | undefined;
 		set audio(value: Intent.Message.Audio | undefined);
-		get platform(): Intent.Message.Platform | undefined;
-		set platform(value: Intent.Message.Platform | undefined);
-		get isPrompt(): boolean | undefined;
-		set isPrompt(value: boolean | undefined);
+		get platform(): Intent.Message.Platform;
+		set platform(value: Intent.Message.Platform);
+		get isPrompt(): boolean;
+		set isPrompt(value: boolean);
 		get message(): Message.MessageCase;
 		/**
 		 * Serialize message to binary data
@@ -731,8 +732,8 @@ export declare module Intent {
 		 * Standard JavaScript object representation for Message
 		 */
 		interface AsObject {
-			name?: string;
-			languageCode?: string;
+			name: string;
+			languageCode: string;
 			text?: Intent.Message.Text.AsObject;
 			image?: Intent.Message.Image.AsObject;
 			quickReplies?: Intent.Message.QuickReplies.AsObject;
@@ -747,31 +748,31 @@ export declare module Intent {
 			htmlText?: Intent.Message.HTMLText.AsObject;
 			video?: Intent.Message.Video.AsObject;
 			audio?: Intent.Message.Audio.AsObject;
-			platform?: Intent.Message.Platform;
-			isPrompt?: boolean;
+			platform: Intent.Message.Platform;
+			isPrompt: boolean;
 		}
 		/**
 		 * Protobuf JSON representation for Message
 		 */
 		interface AsProtobufJSON {
-			name?: string;
-			languageCode?: string;
-			text?: Intent.Message.Text.AsProtobufJSON | null;
-			image?: Intent.Message.Image.AsProtobufJSON | null;
-			quickReplies?: Intent.Message.QuickReplies.AsProtobufJSON | null;
-			card?: Intent.Message.Card.AsProtobufJSON | null;
-			payload?: googleProtobuf012.Struct.AsProtobufJSON | null;
-			simpleResponses?: Intent.Message.SimpleResponses.AsProtobufJSON | null;
-			basicCard?: Intent.Message.BasicCard.AsProtobufJSON | null;
-			suggestions?: Intent.Message.Suggestions.AsProtobufJSON | null;
-			linkOutSuggestion?: Intent.Message.LinkOutSuggestion.AsProtobufJSON | null;
-			listSelect?: Intent.Message.ListSelect.AsProtobufJSON | null;
-			carouselSelect?: Intent.Message.CarouselSelect.AsProtobufJSON | null;
-			htmlText?: Intent.Message.HTMLText.AsProtobufJSON | null;
-			video?: Intent.Message.Video.AsProtobufJSON | null;
-			audio?: Intent.Message.Audio.AsProtobufJSON | null;
-			platform?: string;
-			isPrompt?: boolean;
+			name: string;
+			languageCode: string;
+			text: Intent.Message.Text.AsProtobufJSON | null;
+			image: Intent.Message.Image.AsProtobufJSON | null;
+			quickReplies: Intent.Message.QuickReplies.AsProtobufJSON | null;
+			card: Intent.Message.Card.AsProtobufJSON | null;
+			payload: googleProtobuf012.Struct.AsProtobufJSON | null;
+			simpleResponses: Intent.Message.SimpleResponses.AsProtobufJSON | null;
+			basicCard: Intent.Message.BasicCard.AsProtobufJSON | null;
+			suggestions: Intent.Message.Suggestions.AsProtobufJSON | null;
+			linkOutSuggestion: Intent.Message.LinkOutSuggestion.AsProtobufJSON | null;
+			listSelect: Intent.Message.ListSelect.AsProtobufJSON | null;
+			carouselSelect: Intent.Message.CarouselSelect.AsProtobufJSON | null;
+			htmlText: Intent.Message.HTMLText.AsProtobufJSON | null;
+			video: Intent.Message.Video.AsProtobufJSON | null;
+			audio: Intent.Message.Audio.AsProtobufJSON | null;
+			platform: string;
+			isPrompt: boolean;
 		}
 		enum MessageCase {
 			none = 0,
@@ -848,14 +849,14 @@ export declare module Intent {
 			 * @param _writer binary writer instance
 			 */
 			static serializeBinaryToWriter(_instance: Text, _writer: BinaryWriter): void;
-			private _text?;
+			private _text;
 			/**
 			 * Message constructor. Initializes the properties and applies default Protobuf values if necessary
 			 * @param _value initial values object or instance of Text to deeply clone from
 			 */
 			constructor(_value?: RecursivePartial<Text.AsObject>);
-			get text(): string[] | undefined;
-			set text(value: string[] | undefined);
+			get text(): string[];
+			set text(value: string[]);
 			/**
 			 * Serialize message to binary data
 			 * @param instance message instance
@@ -881,13 +882,13 @@ export declare module Intent {
 			 * Standard JavaScript object representation for Text
 			 */
 			interface AsObject {
-				text?: string[];
+				text: string[];
 			}
 			/**
 			 * Protobuf JSON representation for Text
 			 */
 			interface AsProtobufJSON {
-				text?: string[];
+				text: string[];
 			}
 		}
 		/**
@@ -917,17 +918,17 @@ export declare module Intent {
 			 * @param _writer binary writer instance
 			 */
 			static serializeBinaryToWriter(_instance: Image, _writer: BinaryWriter): void;
-			private _imageUri?;
-			private _accessibilityText?;
+			private _imageUri;
+			private _accessibilityText;
 			/**
 			 * Message constructor. Initializes the properties and applies default Protobuf values if necessary
 			 * @param _value initial values object or instance of Image to deeply clone from
 			 */
 			constructor(_value?: RecursivePartial<Image.AsObject>);
-			get imageUri(): string | undefined;
-			set imageUri(value: string | undefined);
-			get accessibilityText(): string | undefined;
-			set accessibilityText(value: string | undefined);
+			get imageUri(): string;
+			set imageUri(value: string);
+			get accessibilityText(): string;
+			set accessibilityText(value: string);
 			/**
 			 * Serialize message to binary data
 			 * @param instance message instance
@@ -953,15 +954,15 @@ export declare module Intent {
 			 * Standard JavaScript object representation for Image
 			 */
 			interface AsObject {
-				imageUri?: string;
-				accessibilityText?: string;
+				imageUri: string;
+				accessibilityText: string;
 			}
 			/**
 			 * Protobuf JSON representation for Image
 			 */
 			interface AsProtobufJSON {
-				imageUri?: string;
-				accessibilityText?: string;
+				imageUri: string;
+				accessibilityText: string;
 			}
 		}
 		/**
@@ -991,17 +992,17 @@ export declare module Intent {
 			 * @param _writer binary writer instance
 			 */
 			static serializeBinaryToWriter(_instance: QuickReplies, _writer: BinaryWriter): void;
-			private _title?;
-			private _quickReplies?;
+			private _title;
+			private _quickReplies;
 			/**
 			 * Message constructor. Initializes the properties and applies default Protobuf values if necessary
 			 * @param _value initial values object or instance of QuickReplies to deeply clone from
 			 */
 			constructor(_value?: RecursivePartial<QuickReplies.AsObject>);
-			get title(): string | undefined;
-			set title(value: string | undefined);
-			get quickReplies(): string[] | undefined;
-			set quickReplies(value: string[] | undefined);
+			get title(): string;
+			set title(value: string);
+			get quickReplies(): string[];
+			set quickReplies(value: string[]);
 			/**
 			 * Serialize message to binary data
 			 * @param instance message instance
@@ -1027,15 +1028,15 @@ export declare module Intent {
 			 * Standard JavaScript object representation for QuickReplies
 			 */
 			interface AsObject {
-				title?: string;
-				quickReplies?: string[];
+				title: string;
+				quickReplies: string[];
 			}
 			/**
 			 * Protobuf JSON representation for QuickReplies
 			 */
 			interface AsProtobufJSON {
-				title?: string;
-				quickReplies?: string[];
+				title: string;
+				quickReplies: string[];
 			}
 		}
 		/**
@@ -1065,21 +1066,21 @@ export declare module Intent {
 			 * @param _writer binary writer instance
 			 */
 			static serializeBinaryToWriter(_instance: Card, _writer: BinaryWriter): void;
-			private _title?;
-			private _subtitle?;
-			private _imageUri?;
+			private _title;
+			private _subtitle;
+			private _imageUri;
 			private _buttons?;
 			/**
 			 * Message constructor. Initializes the properties and applies default Protobuf values if necessary
 			 * @param _value initial values object or instance of Card to deeply clone from
 			 */
 			constructor(_value?: RecursivePartial<Card.AsObject>);
-			get title(): string | undefined;
-			set title(value: string | undefined);
-			get subtitle(): string | undefined;
-			set subtitle(value: string | undefined);
-			get imageUri(): string | undefined;
-			set imageUri(value: string | undefined);
+			get title(): string;
+			set title(value: string);
+			get subtitle(): string;
+			set subtitle(value: string);
+			get imageUri(): string;
+			set imageUri(value: string);
 			get buttons(): Intent.Message.Card.Button[] | undefined;
 			set buttons(value: Intent.Message.Card.Button[] | undefined);
 			/**
@@ -1107,19 +1108,19 @@ export declare module Intent {
 			 * Standard JavaScript object representation for Card
 			 */
 			interface AsObject {
-				title?: string;
-				subtitle?: string;
-				imageUri?: string;
+				title: string;
+				subtitle: string;
+				imageUri: string;
 				buttons?: Intent.Message.Card.Button.AsObject[];
 			}
 			/**
 			 * Protobuf JSON representation for Card
 			 */
 			interface AsProtobufJSON {
-				title?: string;
-				subtitle?: string;
-				imageUri?: string;
-				buttons?: Intent.Message.Card.Button.AsProtobufJSON[] | null;
+				title: string;
+				subtitle: string;
+				imageUri: string;
+				buttons: Intent.Message.Card.Button.AsProtobufJSON[] | null;
 			}
 			/**
 			 * Message implementation for ondewo.nlu.Intent.Message.Card.Button
@@ -1148,17 +1149,17 @@ export declare module Intent {
 				 * @param _writer binary writer instance
 				 */
 				static serializeBinaryToWriter(_instance: Button, _writer: BinaryWriter): void;
-				private _text?;
-				private _postback?;
+				private _text;
+				private _postback;
 				/**
 				 * Message constructor. Initializes the properties and applies default Protobuf values if necessary
 				 * @param _value initial values object or instance of Button to deeply clone from
 				 */
 				constructor(_value?: RecursivePartial<Button.AsObject>);
-				get text(): string | undefined;
-				set text(value: string | undefined);
-				get postback(): string | undefined;
-				set postback(value: string | undefined);
+				get text(): string;
+				set text(value: string);
+				get postback(): string;
+				set postback(value: string);
 				/**
 				 * Serialize message to binary data
 				 * @param instance message instance
@@ -1184,15 +1185,15 @@ export declare module Intent {
 				 * Standard JavaScript object representation for Button
 				 */
 				interface AsObject {
-					text?: string;
-					postback?: string;
+					text: string;
+					postback: string;
 				}
 				/**
 				 * Protobuf JSON representation for Button
 				 */
 				interface AsProtobufJSON {
-					text?: string;
-					postback?: string;
+					text: string;
+					postback: string;
 				}
 			}
 		}
@@ -1223,20 +1224,20 @@ export declare module Intent {
 			 * @param _writer binary writer instance
 			 */
 			static serializeBinaryToWriter(_instance: SimpleResponse, _writer: BinaryWriter): void;
-			private _textToSpeech?;
-			private _ssml?;
-			private _displayText?;
+			private _textToSpeech;
+			private _ssml;
+			private _displayText;
 			/**
 			 * Message constructor. Initializes the properties and applies default Protobuf values if necessary
 			 * @param _value initial values object or instance of SimpleResponse to deeply clone from
 			 */
 			constructor(_value?: RecursivePartial<SimpleResponse.AsObject>);
-			get textToSpeech(): string | undefined;
-			set textToSpeech(value: string | undefined);
-			get ssml(): string | undefined;
-			set ssml(value: string | undefined);
-			get displayText(): string | undefined;
-			set displayText(value: string | undefined);
+			get textToSpeech(): string;
+			set textToSpeech(value: string);
+			get ssml(): string;
+			set ssml(value: string);
+			get displayText(): string;
+			set displayText(value: string);
 			/**
 			 * Serialize message to binary data
 			 * @param instance message instance
@@ -1262,17 +1263,17 @@ export declare module Intent {
 			 * Standard JavaScript object representation for SimpleResponse
 			 */
 			interface AsObject {
-				textToSpeech?: string;
-				ssml?: string;
-				displayText?: string;
+				textToSpeech: string;
+				ssml: string;
+				displayText: string;
 			}
 			/**
 			 * Protobuf JSON representation for SimpleResponse
 			 */
 			interface AsProtobufJSON {
-				textToSpeech?: string;
-				ssml?: string;
-				displayText?: string;
+				textToSpeech: string;
+				ssml: string;
+				displayText: string;
 			}
 		}
 		/**
@@ -1341,7 +1342,7 @@ export declare module Intent {
 			 * Protobuf JSON representation for SimpleResponses
 			 */
 			interface AsProtobufJSON {
-				simpleResponses?: Intent.Message.SimpleResponse.AsProtobufJSON[] | null;
+				simpleResponses: Intent.Message.SimpleResponse.AsProtobufJSON[] | null;
 			}
 		}
 		/**
@@ -1371,9 +1372,9 @@ export declare module Intent {
 			 * @param _writer binary writer instance
 			 */
 			static serializeBinaryToWriter(_instance: BasicCard, _writer: BinaryWriter): void;
-			private _title?;
-			private _subtitle?;
-			private _formattedText?;
+			private _title;
+			private _subtitle;
+			private _formattedText;
 			private _image?;
 			private _buttons?;
 			/**
@@ -1381,12 +1382,12 @@ export declare module Intent {
 			 * @param _value initial values object or instance of BasicCard to deeply clone from
 			 */
 			constructor(_value?: RecursivePartial<BasicCard.AsObject>);
-			get title(): string | undefined;
-			set title(value: string | undefined);
-			get subtitle(): string | undefined;
-			set subtitle(value: string | undefined);
-			get formattedText(): string | undefined;
-			set formattedText(value: string | undefined);
+			get title(): string;
+			set title(value: string);
+			get subtitle(): string;
+			set subtitle(value: string);
+			get formattedText(): string;
+			set formattedText(value: string);
 			get image(): Intent.Message.Image | undefined;
 			set image(value: Intent.Message.Image | undefined);
 			get buttons(): Intent.Message.BasicCard.Button[] | undefined;
@@ -1416,9 +1417,9 @@ export declare module Intent {
 			 * Standard JavaScript object representation for BasicCard
 			 */
 			interface AsObject {
-				title?: string;
-				subtitle?: string;
-				formattedText?: string;
+				title: string;
+				subtitle: string;
+				formattedText: string;
 				image?: Intent.Message.Image.AsObject;
 				buttons?: Intent.Message.BasicCard.Button.AsObject[];
 			}
@@ -1426,11 +1427,11 @@ export declare module Intent {
 			 * Protobuf JSON representation for BasicCard
 			 */
 			interface AsProtobufJSON {
-				title?: string;
-				subtitle?: string;
-				formattedText?: string;
-				image?: Intent.Message.Image.AsProtobufJSON | null;
-				buttons?: Intent.Message.BasicCard.Button.AsProtobufJSON[] | null;
+				title: string;
+				subtitle: string;
+				formattedText: string;
+				image: Intent.Message.Image.AsProtobufJSON | null;
+				buttons: Intent.Message.BasicCard.Button.AsProtobufJSON[] | null;
 			}
 			/**
 			 * Message implementation for ondewo.nlu.Intent.Message.BasicCard.Button
@@ -1459,15 +1460,15 @@ export declare module Intent {
 				 * @param _writer binary writer instance
 				 */
 				static serializeBinaryToWriter(_instance: Button, _writer: BinaryWriter): void;
-				private _title?;
+				private _title;
 				private _openUriAction?;
 				/**
 				 * Message constructor. Initializes the properties and applies default Protobuf values if necessary
 				 * @param _value initial values object or instance of Button to deeply clone from
 				 */
 				constructor(_value?: RecursivePartial<Button.AsObject>);
-				get title(): string | undefined;
-				set title(value: string | undefined);
+				get title(): string;
+				set title(value: string);
 				get openUriAction(): Intent.Message.BasicCard.Button.OpenUriAction | undefined;
 				set openUriAction(value: Intent.Message.BasicCard.Button.OpenUriAction | undefined);
 				/**
@@ -1495,15 +1496,15 @@ export declare module Intent {
 				 * Standard JavaScript object representation for Button
 				 */
 				interface AsObject {
-					title?: string;
+					title: string;
 					openUriAction?: Intent.Message.BasicCard.Button.OpenUriAction.AsObject;
 				}
 				/**
 				 * Protobuf JSON representation for Button
 				 */
 				interface AsProtobufJSON {
-					title?: string;
-					openUriAction?: Intent.Message.BasicCard.Button.OpenUriAction.AsProtobufJSON | null;
+					title: string;
+					openUriAction: Intent.Message.BasicCard.Button.OpenUriAction.AsProtobufJSON | null;
 				}
 				/**
 				 * Message implementation for ondewo.nlu.Intent.Message.BasicCard.Button.OpenUriAction
@@ -1532,14 +1533,14 @@ export declare module Intent {
 					 * @param _writer binary writer instance
 					 */
 					static serializeBinaryToWriter(_instance: OpenUriAction, _writer: BinaryWriter): void;
-					private _uri?;
+					private _uri;
 					/**
 					 * Message constructor. Initializes the properties and applies default Protobuf values if necessary
 					 * @param _value initial values object or instance of OpenUriAction to deeply clone from
 					 */
 					constructor(_value?: RecursivePartial<OpenUriAction.AsObject>);
-					get uri(): string | undefined;
-					set uri(value: string | undefined);
+					get uri(): string;
+					set uri(value: string);
 					/**
 					 * Serialize message to binary data
 					 * @param instance message instance
@@ -1565,13 +1566,13 @@ export declare module Intent {
 					 * Standard JavaScript object representation for OpenUriAction
 					 */
 					interface AsObject {
-						uri?: string;
+						uri: string;
 					}
 					/**
 					 * Protobuf JSON representation for OpenUriAction
 					 */
 					interface AsProtobufJSON {
-						uri?: string;
+						uri: string;
 					}
 				}
 			}
@@ -1603,14 +1604,14 @@ export declare module Intent {
 			 * @param _writer binary writer instance
 			 */
 			static serializeBinaryToWriter(_instance: Suggestion, _writer: BinaryWriter): void;
-			private _title?;
+			private _title;
 			/**
 			 * Message constructor. Initializes the properties and applies default Protobuf values if necessary
 			 * @param _value initial values object or instance of Suggestion to deeply clone from
 			 */
 			constructor(_value?: RecursivePartial<Suggestion.AsObject>);
-			get title(): string | undefined;
-			set title(value: string | undefined);
+			get title(): string;
+			set title(value: string);
 			/**
 			 * Serialize message to binary data
 			 * @param instance message instance
@@ -1636,13 +1637,13 @@ export declare module Intent {
 			 * Standard JavaScript object representation for Suggestion
 			 */
 			interface AsObject {
-				title?: string;
+				title: string;
 			}
 			/**
 			 * Protobuf JSON representation for Suggestion
 			 */
 			interface AsProtobufJSON {
-				title?: string;
+				title: string;
 			}
 		}
 		/**
@@ -1711,7 +1712,7 @@ export declare module Intent {
 			 * Protobuf JSON representation for Suggestions
 			 */
 			interface AsProtobufJSON {
-				suggestions?: Intent.Message.Suggestion.AsProtobufJSON[] | null;
+				suggestions: Intent.Message.Suggestion.AsProtobufJSON[] | null;
 			}
 		}
 		/**
@@ -1741,17 +1742,17 @@ export declare module Intent {
 			 * @param _writer binary writer instance
 			 */
 			static serializeBinaryToWriter(_instance: LinkOutSuggestion, _writer: BinaryWriter): void;
-			private _destinationName?;
-			private _uri?;
+			private _destinationName;
+			private _uri;
 			/**
 			 * Message constructor. Initializes the properties and applies default Protobuf values if necessary
 			 * @param _value initial values object or instance of LinkOutSuggestion to deeply clone from
 			 */
 			constructor(_value?: RecursivePartial<LinkOutSuggestion.AsObject>);
-			get destinationName(): string | undefined;
-			set destinationName(value: string | undefined);
-			get uri(): string | undefined;
-			set uri(value: string | undefined);
+			get destinationName(): string;
+			set destinationName(value: string);
+			get uri(): string;
+			set uri(value: string);
 			/**
 			 * Serialize message to binary data
 			 * @param instance message instance
@@ -1777,15 +1778,15 @@ export declare module Intent {
 			 * Standard JavaScript object representation for LinkOutSuggestion
 			 */
 			interface AsObject {
-				destinationName?: string;
-				uri?: string;
+				destinationName: string;
+				uri: string;
 			}
 			/**
 			 * Protobuf JSON representation for LinkOutSuggestion
 			 */
 			interface AsProtobufJSON {
-				destinationName?: string;
-				uri?: string;
+				destinationName: string;
+				uri: string;
 			}
 		}
 		/**
@@ -1815,15 +1816,15 @@ export declare module Intent {
 			 * @param _writer binary writer instance
 			 */
 			static serializeBinaryToWriter(_instance: ListSelect, _writer: BinaryWriter): void;
-			private _title?;
+			private _title;
 			private _items?;
 			/**
 			 * Message constructor. Initializes the properties and applies default Protobuf values if necessary
 			 * @param _value initial values object or instance of ListSelect to deeply clone from
 			 */
 			constructor(_value?: RecursivePartial<ListSelect.AsObject>);
-			get title(): string | undefined;
-			set title(value: string | undefined);
+			get title(): string;
+			set title(value: string);
 			get items(): Intent.Message.ListSelect.Item[] | undefined;
 			set items(value: Intent.Message.ListSelect.Item[] | undefined);
 			/**
@@ -1851,15 +1852,15 @@ export declare module Intent {
 			 * Standard JavaScript object representation for ListSelect
 			 */
 			interface AsObject {
-				title?: string;
+				title: string;
 				items?: Intent.Message.ListSelect.Item.AsObject[];
 			}
 			/**
 			 * Protobuf JSON representation for ListSelect
 			 */
 			interface AsProtobufJSON {
-				title?: string;
-				items?: Intent.Message.ListSelect.Item.AsProtobufJSON[] | null;
+				title: string;
+				items: Intent.Message.ListSelect.Item.AsProtobufJSON[] | null;
 			}
 			/**
 			 * Message implementation for ondewo.nlu.Intent.Message.ListSelect.Item
@@ -1889,8 +1890,8 @@ export declare module Intent {
 				 */
 				static serializeBinaryToWriter(_instance: Item, _writer: BinaryWriter): void;
 				private _info?;
-				private _title?;
-				private _description?;
+				private _title;
+				private _description;
 				private _image?;
 				/**
 				 * Message constructor. Initializes the properties and applies default Protobuf values if necessary
@@ -1899,10 +1900,10 @@ export declare module Intent {
 				constructor(_value?: RecursivePartial<Item.AsObject>);
 				get info(): Intent.Message.SelectItemInfo | undefined;
 				set info(value: Intent.Message.SelectItemInfo | undefined);
-				get title(): string | undefined;
-				set title(value: string | undefined);
-				get description(): string | undefined;
-				set description(value: string | undefined);
+				get title(): string;
+				set title(value: string);
+				get description(): string;
+				set description(value: string);
 				get image(): Intent.Message.Image | undefined;
 				set image(value: Intent.Message.Image | undefined);
 				/**
@@ -1931,18 +1932,18 @@ export declare module Intent {
 				 */
 				interface AsObject {
 					info?: Intent.Message.SelectItemInfo.AsObject;
-					title?: string;
-					description?: string;
+					title: string;
+					description: string;
 					image?: Intent.Message.Image.AsObject;
 				}
 				/**
 				 * Protobuf JSON representation for Item
 				 */
 				interface AsProtobufJSON {
-					info?: Intent.Message.SelectItemInfo.AsProtobufJSON | null;
-					title?: string;
-					description?: string;
-					image?: Intent.Message.Image.AsProtobufJSON | null;
+					info: Intent.Message.SelectItemInfo.AsProtobufJSON | null;
+					title: string;
+					description: string;
+					image: Intent.Message.Image.AsProtobufJSON | null;
 				}
 			}
 		}
@@ -2012,7 +2013,7 @@ export declare module Intent {
 			 * Protobuf JSON representation for CarouselSelect
 			 */
 			interface AsProtobufJSON {
-				items?: Intent.Message.CarouselSelect.Item.AsProtobufJSON[] | null;
+				items: Intent.Message.CarouselSelect.Item.AsProtobufJSON[] | null;
 			}
 			/**
 			 * Message implementation for ondewo.nlu.Intent.Message.CarouselSelect.Item
@@ -2042,8 +2043,8 @@ export declare module Intent {
 				 */
 				static serializeBinaryToWriter(_instance: Item, _writer: BinaryWriter): void;
 				private _info?;
-				private _title?;
-				private _description?;
+				private _title;
+				private _description;
 				private _image?;
 				/**
 				 * Message constructor. Initializes the properties and applies default Protobuf values if necessary
@@ -2052,10 +2053,10 @@ export declare module Intent {
 				constructor(_value?: RecursivePartial<Item.AsObject>);
 				get info(): Intent.Message.SelectItemInfo | undefined;
 				set info(value: Intent.Message.SelectItemInfo | undefined);
-				get title(): string | undefined;
-				set title(value: string | undefined);
-				get description(): string | undefined;
-				set description(value: string | undefined);
+				get title(): string;
+				set title(value: string);
+				get description(): string;
+				set description(value: string);
 				get image(): Intent.Message.Image | undefined;
 				set image(value: Intent.Message.Image | undefined);
 				/**
@@ -2084,18 +2085,18 @@ export declare module Intent {
 				 */
 				interface AsObject {
 					info?: Intent.Message.SelectItemInfo.AsObject;
-					title?: string;
-					description?: string;
+					title: string;
+					description: string;
 					image?: Intent.Message.Image.AsObject;
 				}
 				/**
 				 * Protobuf JSON representation for Item
 				 */
 				interface AsProtobufJSON {
-					info?: Intent.Message.SelectItemInfo.AsProtobufJSON | null;
-					title?: string;
-					description?: string;
-					image?: Intent.Message.Image.AsProtobufJSON | null;
+					info: Intent.Message.SelectItemInfo.AsProtobufJSON | null;
+					title: string;
+					description: string;
+					image: Intent.Message.Image.AsProtobufJSON | null;
 				}
 			}
 		}
@@ -2126,14 +2127,14 @@ export declare module Intent {
 			 * @param _writer binary writer instance
 			 */
 			static serializeBinaryToWriter(_instance: HTMLText, _writer: BinaryWriter): void;
-			private _text?;
+			private _text;
 			/**
 			 * Message constructor. Initializes the properties and applies default Protobuf values if necessary
 			 * @param _value initial values object or instance of HTMLText to deeply clone from
 			 */
 			constructor(_value?: RecursivePartial<HTMLText.AsObject>);
-			get text(): string[] | undefined;
-			set text(value: string[] | undefined);
+			get text(): string[];
+			set text(value: string[]);
 			/**
 			 * Serialize message to binary data
 			 * @param instance message instance
@@ -2159,13 +2160,13 @@ export declare module Intent {
 			 * Standard JavaScript object representation for HTMLText
 			 */
 			interface AsObject {
-				text?: string[];
+				text: string[];
 			}
 			/**
 			 * Protobuf JSON representation for HTMLText
 			 */
 			interface AsProtobufJSON {
-				text?: string[];
+				text: string[];
 			}
 		}
 		/**
@@ -2195,17 +2196,17 @@ export declare module Intent {
 			 * @param _writer binary writer instance
 			 */
 			static serializeBinaryToWriter(_instance: Video, _writer: BinaryWriter): void;
-			private _uri?;
-			private _accessibilityText?;
+			private _uri;
+			private _accessibilityText;
 			/**
 			 * Message constructor. Initializes the properties and applies default Protobuf values if necessary
 			 * @param _value initial values object or instance of Video to deeply clone from
 			 */
 			constructor(_value?: RecursivePartial<Video.AsObject>);
-			get uri(): string | undefined;
-			set uri(value: string | undefined);
-			get accessibilityText(): string | undefined;
-			set accessibilityText(value: string | undefined);
+			get uri(): string;
+			set uri(value: string);
+			get accessibilityText(): string;
+			set accessibilityText(value: string);
 			/**
 			 * Serialize message to binary data
 			 * @param instance message instance
@@ -2231,15 +2232,15 @@ export declare module Intent {
 			 * Standard JavaScript object representation for Video
 			 */
 			interface AsObject {
-				uri?: string;
-				accessibilityText?: string;
+				uri: string;
+				accessibilityText: string;
 			}
 			/**
 			 * Protobuf JSON representation for Video
 			 */
 			interface AsProtobufJSON {
-				uri?: string;
-				accessibilityText?: string;
+				uri: string;
+				accessibilityText: string;
 			}
 		}
 		/**
@@ -2269,17 +2270,17 @@ export declare module Intent {
 			 * @param _writer binary writer instance
 			 */
 			static serializeBinaryToWriter(_instance: Audio, _writer: BinaryWriter): void;
-			private _uri?;
-			private _accessibilityText?;
+			private _uri;
+			private _accessibilityText;
 			/**
 			 * Message constructor. Initializes the properties and applies default Protobuf values if necessary
 			 * @param _value initial values object or instance of Audio to deeply clone from
 			 */
 			constructor(_value?: RecursivePartial<Audio.AsObject>);
-			get uri(): string | undefined;
-			set uri(value: string | undefined);
-			get accessibilityText(): string | undefined;
-			set accessibilityText(value: string | undefined);
+			get uri(): string;
+			set uri(value: string);
+			get accessibilityText(): string;
+			set accessibilityText(value: string);
 			/**
 			 * Serialize message to binary data
 			 * @param instance message instance
@@ -2305,15 +2306,15 @@ export declare module Intent {
 			 * Standard JavaScript object representation for Audio
 			 */
 			interface AsObject {
-				uri?: string;
-				accessibilityText?: string;
+				uri: string;
+				accessibilityText: string;
 			}
 			/**
 			 * Protobuf JSON representation for Audio
 			 */
 			interface AsProtobufJSON {
-				uri?: string;
-				accessibilityText?: string;
+				uri: string;
+				accessibilityText: string;
 			}
 		}
 		/**
@@ -2343,17 +2344,17 @@ export declare module Intent {
 			 * @param _writer binary writer instance
 			 */
 			static serializeBinaryToWriter(_instance: SelectItemInfo, _writer: BinaryWriter): void;
-			private _key?;
-			private _synonyms?;
+			private _key;
+			private _synonyms;
 			/**
 			 * Message constructor. Initializes the properties and applies default Protobuf values if necessary
 			 * @param _value initial values object or instance of SelectItemInfo to deeply clone from
 			 */
 			constructor(_value?: RecursivePartial<SelectItemInfo.AsObject>);
-			get key(): string | undefined;
-			set key(value: string | undefined);
-			get synonyms(): string[] | undefined;
-			set synonyms(value: string[] | undefined);
+			get key(): string;
+			set key(value: string);
+			get synonyms(): string[];
+			set synonyms(value: string[]);
 			/**
 			 * Serialize message to binary data
 			 * @param instance message instance
@@ -2379,15 +2380,15 @@ export declare module Intent {
 			 * Standard JavaScript object representation for SelectItemInfo
 			 */
 			interface AsObject {
-				key?: string;
-				synonyms?: string[];
+				key: string;
+				synonyms: string[];
 			}
 			/**
 			 * Protobuf JSON representation for SelectItemInfo
 			 */
 			interface AsProtobufJSON {
-				key?: string;
-				synonyms?: string[];
+				key: string;
+				synonyms: string[];
 			}
 		}
 	}
@@ -2418,17 +2419,17 @@ export declare module Intent {
 		 * @param _writer binary writer instance
 		 */
 		static serializeBinaryToWriter(_instance: FollowupIntentInfo, _writer: BinaryWriter): void;
-		private _followupIntentName?;
-		private _parentFollowupIntentName?;
+		private _followupIntentName;
+		private _parentFollowupIntentName;
 		/**
 		 * Message constructor. Initializes the properties and applies default Protobuf values if necessary
 		 * @param _value initial values object or instance of FollowupIntentInfo to deeply clone from
 		 */
 		constructor(_value?: RecursivePartial<FollowupIntentInfo.AsObject>);
-		get followupIntentName(): string | undefined;
-		set followupIntentName(value: string | undefined);
-		get parentFollowupIntentName(): string | undefined;
-		set parentFollowupIntentName(value: string | undefined);
+		get followupIntentName(): string;
+		set followupIntentName(value: string);
+		get parentFollowupIntentName(): string;
+		set parentFollowupIntentName(value: string);
 		/**
 		 * Serialize message to binary data
 		 * @param instance message instance
@@ -2454,15 +2455,15 @@ export declare module Intent {
 		 * Standard JavaScript object representation for FollowupIntentInfo
 		 */
 		interface AsObject {
-			followupIntentName?: string;
-			parentFollowupIntentName?: string;
+			followupIntentName: string;
+			parentFollowupIntentName: string;
 		}
 		/**
 		 * Protobuf JSON representation for FollowupIntentInfo
 		 */
 		interface AsProtobufJSON {
-			followupIntentName?: string;
-			parentFollowupIntentName?: string;
+			followupIntentName: string;
+			parentFollowupIntentName: string;
 		}
 	}
 }
@@ -2493,32 +2494,32 @@ export declare class ListIntentsRequest implements GrpcMessage {
 	 * @param _writer binary writer instance
 	 */
 	static serializeBinaryToWriter(_instance: ListIntentsRequest, _writer: BinaryWriter): void;
-	private _parent?;
-	private _languageCode?;
-	private _intentView?;
-	private _pageToken?;
-	private _filterByCategory?;
+	private _parent;
+	private _languageCode;
+	private _intentView;
+	private _pageToken;
+	private _filterByCategory;
 	private _sortByField?;
-	private _filterByTags?;
+	private _filterByTags;
 	/**
 	 * Message constructor. Initializes the properties and applies default Protobuf values if necessary
 	 * @param _value initial values object or instance of ListIntentsRequest to deeply clone from
 	 */
 	constructor(_value?: RecursivePartial<ListIntentsRequest.AsObject>);
-	get parent(): string | undefined;
-	set parent(value: string | undefined);
-	get languageCode(): string | undefined;
-	set languageCode(value: string | undefined);
-	get intentView(): IntentView | undefined;
-	set intentView(value: IntentView | undefined);
-	get pageToken(): string | undefined;
-	set pageToken(value: string | undefined);
-	get filterByCategory(): IntentCategory | undefined;
-	set filterByCategory(value: IntentCategory | undefined);
+	get parent(): string;
+	set parent(value: string);
+	get languageCode(): string;
+	set languageCode(value: string);
+	get intentView(): IntentView;
+	set intentView(value: IntentView);
+	get pageToken(): string;
+	set pageToken(value: string);
+	get filterByCategory(): IntentCategory;
+	set filterByCategory(value: IntentCategory);
 	get sortByField(): IntentSorting | undefined;
 	set sortByField(value: IntentSorting | undefined);
-	get filterByTags(): string[] | undefined;
-	set filterByTags(value: string[] | undefined);
+	get filterByTags(): string[];
+	set filterByTags(value: string[]);
 	/**
 	 * Serialize message to binary data
 	 * @param instance message instance
@@ -2544,25 +2545,25 @@ export declare module ListIntentsRequest {
 	 * Standard JavaScript object representation for ListIntentsRequest
 	 */
 	interface AsObject {
-		parent?: string;
-		languageCode?: string;
-		intentView?: IntentView;
-		pageToken?: string;
-		filterByCategory?: IntentCategory;
+		parent: string;
+		languageCode: string;
+		intentView: IntentView;
+		pageToken: string;
+		filterByCategory: IntentCategory;
 		sortByField?: IntentSorting.AsObject;
-		filterByTags?: string[];
+		filterByTags: string[];
 	}
 	/**
 	 * Protobuf JSON representation for ListIntentsRequest
 	 */
 	interface AsProtobufJSON {
-		parent?: string;
-		languageCode?: string;
-		intentView?: string;
-		pageToken?: string;
-		filterByCategory?: string;
-		sortByField?: IntentSorting.AsProtobufJSON | null;
-		filterByTags?: string[];
+		parent: string;
+		languageCode: string;
+		intentView: string;
+		pageToken: string;
+		filterByCategory: string;
+		sortByField: IntentSorting.AsProtobufJSON | null;
+		filterByTags: string[];
 	}
 }
 /**
@@ -2593,7 +2594,7 @@ export declare class ListIntentsResponse implements GrpcMessage {
 	 */
 	static serializeBinaryToWriter(_instance: ListIntentsResponse, _writer: BinaryWriter): void;
 	private _intents?;
-	private _nextPageToken?;
+	private _nextPageToken;
 	/**
 	 * Message constructor. Initializes the properties and applies default Protobuf values if necessary
 	 * @param _value initial values object or instance of ListIntentsResponse to deeply clone from
@@ -2601,8 +2602,8 @@ export declare class ListIntentsResponse implements GrpcMessage {
 	constructor(_value?: RecursivePartial<ListIntentsResponse.AsObject>);
 	get intents(): Intent[] | undefined;
 	set intents(value: Intent[] | undefined);
-	get nextPageToken(): string | undefined;
-	set nextPageToken(value: string | undefined);
+	get nextPageToken(): string;
+	set nextPageToken(value: string);
 	/**
 	 * Serialize message to binary data
 	 * @param instance message instance
@@ -2629,14 +2630,14 @@ export declare module ListIntentsResponse {
 	 */
 	interface AsObject {
 		intents?: Intent.AsObject[];
-		nextPageToken?: string;
+		nextPageToken: string;
 	}
 	/**
 	 * Protobuf JSON representation for ListIntentsResponse
 	 */
 	interface AsProtobufJSON {
-		intents?: Intent.AsProtobufJSON[] | null;
-		nextPageToken?: string;
+		intents: Intent.AsProtobufJSON[] | null;
+		nextPageToken: string;
 	}
 }
 /**
@@ -2666,23 +2667,23 @@ export declare class GetIntentRequest implements GrpcMessage {
 	 * @param _writer binary writer instance
 	 */
 	static serializeBinaryToWriter(_instance: GetIntentRequest, _writer: BinaryWriter): void;
-	private _name?;
-	private _languageCode?;
-	private _intentView?;
-	private _pageToken?;
+	private _name;
+	private _languageCode;
+	private _intentView;
+	private _pageToken;
 	/**
 	 * Message constructor. Initializes the properties and applies default Protobuf values if necessary
 	 * @param _value initial values object or instance of GetIntentRequest to deeply clone from
 	 */
 	constructor(_value?: RecursivePartial<GetIntentRequest.AsObject>);
-	get name(): string | undefined;
-	set name(value: string | undefined);
-	get languageCode(): string | undefined;
-	set languageCode(value: string | undefined);
-	get intentView(): IntentView | undefined;
-	set intentView(value: IntentView | undefined);
-	get pageToken(): string | undefined;
-	set pageToken(value: string | undefined);
+	get name(): string;
+	set name(value: string);
+	get languageCode(): string;
+	set languageCode(value: string);
+	get intentView(): IntentView;
+	set intentView(value: IntentView);
+	get pageToken(): string;
+	set pageToken(value: string);
 	/**
 	 * Serialize message to binary data
 	 * @param instance message instance
@@ -2708,19 +2709,19 @@ export declare module GetIntentRequest {
 	 * Standard JavaScript object representation for GetIntentRequest
 	 */
 	interface AsObject {
-		name?: string;
-		languageCode?: string;
-		intentView?: IntentView;
-		pageToken?: string;
+		name: string;
+		languageCode: string;
+		intentView: IntentView;
+		pageToken: string;
 	}
 	/**
 	 * Protobuf JSON representation for GetIntentRequest
 	 */
 	interface AsProtobufJSON {
-		name?: string;
-		languageCode?: string;
-		intentView?: string;
-		pageToken?: string;
+		name: string;
+		languageCode: string;
+		intentView: string;
+		pageToken: string;
 	}
 }
 /**
@@ -2750,23 +2751,23 @@ export declare class CreateIntentRequest implements GrpcMessage {
 	 * @param _writer binary writer instance
 	 */
 	static serializeBinaryToWriter(_instance: CreateIntentRequest, _writer: BinaryWriter): void;
-	private _parent?;
+	private _parent;
 	private _intent?;
-	private _languageCode?;
-	private _intentView?;
+	private _languageCode;
+	private _intentView;
 	/**
 	 * Message constructor. Initializes the properties and applies default Protobuf values if necessary
 	 * @param _value initial values object or instance of CreateIntentRequest to deeply clone from
 	 */
 	constructor(_value?: RecursivePartial<CreateIntentRequest.AsObject>);
-	get parent(): string | undefined;
-	set parent(value: string | undefined);
+	get parent(): string;
+	set parent(value: string);
 	get intent(): Intent | undefined;
 	set intent(value: Intent | undefined);
-	get languageCode(): string | undefined;
-	set languageCode(value: string | undefined);
-	get intentView(): IntentView | undefined;
-	set intentView(value: IntentView | undefined);
+	get languageCode(): string;
+	set languageCode(value: string);
+	get intentView(): IntentView;
+	set intentView(value: IntentView);
 	/**
 	 * Serialize message to binary data
 	 * @param instance message instance
@@ -2792,19 +2793,19 @@ export declare module CreateIntentRequest {
 	 * Standard JavaScript object representation for CreateIntentRequest
 	 */
 	interface AsObject {
-		parent?: string;
+		parent: string;
 		intent?: Intent.AsObject;
-		languageCode?: string;
-		intentView?: IntentView;
+		languageCode: string;
+		intentView: IntentView;
 	}
 	/**
 	 * Protobuf JSON representation for CreateIntentRequest
 	 */
 	interface AsProtobufJSON {
-		parent?: string;
-		intent?: Intent.AsProtobufJSON | null;
-		languageCode?: string;
-		intentView?: string;
+		parent: string;
+		intent: Intent.AsProtobufJSON | null;
+		languageCode: string;
+		intentView: string;
 	}
 }
 /**
@@ -2835,9 +2836,9 @@ export declare class UpdateIntentRequest implements GrpcMessage {
 	 */
 	static serializeBinaryToWriter(_instance: UpdateIntentRequest, _writer: BinaryWriter): void;
 	private _intent?;
-	private _languageCode?;
+	private _languageCode;
 	private _updateMask?;
-	private _intentView?;
+	private _intentView;
 	/**
 	 * Message constructor. Initializes the properties and applies default Protobuf values if necessary
 	 * @param _value initial values object or instance of UpdateIntentRequest to deeply clone from
@@ -2845,12 +2846,12 @@ export declare class UpdateIntentRequest implements GrpcMessage {
 	constructor(_value?: RecursivePartial<UpdateIntentRequest.AsObject>);
 	get intent(): Intent | undefined;
 	set intent(value: Intent | undefined);
-	get languageCode(): string | undefined;
-	set languageCode(value: string | undefined);
+	get languageCode(): string;
+	set languageCode(value: string);
 	get updateMask(): googleProtobuf004.FieldMask | undefined;
 	set updateMask(value: googleProtobuf004.FieldMask | undefined);
-	get intentView(): IntentView | undefined;
-	set intentView(value: IntentView | undefined);
+	get intentView(): IntentView;
+	set intentView(value: IntentView);
 	/**
 	 * Serialize message to binary data
 	 * @param instance message instance
@@ -2877,18 +2878,18 @@ export declare module UpdateIntentRequest {
 	 */
 	interface AsObject {
 		intent?: Intent.AsObject;
-		languageCode?: string;
+		languageCode: string;
 		updateMask?: googleProtobuf004.FieldMask.AsObject;
-		intentView?: IntentView;
+		intentView: IntentView;
 	}
 	/**
 	 * Protobuf JSON representation for UpdateIntentRequest
 	 */
 	interface AsProtobufJSON {
-		intent?: Intent.AsProtobufJSON | null;
-		languageCode?: string;
-		updateMask?: googleProtobuf004.FieldMask.AsProtobufJSON | null;
-		intentView?: string;
+		intent: Intent.AsProtobufJSON | null;
+		languageCode: string;
+		updateMask: googleProtobuf004.FieldMask.AsProtobufJSON | null;
+		intentView: string;
 	}
 }
 /**
@@ -2918,14 +2919,14 @@ export declare class DeleteIntentRequest implements GrpcMessage {
 	 * @param _writer binary writer instance
 	 */
 	static serializeBinaryToWriter(_instance: DeleteIntentRequest, _writer: BinaryWriter): void;
-	private _name?;
+	private _name;
 	/**
 	 * Message constructor. Initializes the properties and applies default Protobuf values if necessary
 	 * @param _value initial values object or instance of DeleteIntentRequest to deeply clone from
 	 */
 	constructor(_value?: RecursivePartial<DeleteIntentRequest.AsObject>);
-	get name(): string | undefined;
-	set name(value: string | undefined);
+	get name(): string;
+	set name(value: string);
 	/**
 	 * Serialize message to binary data
 	 * @param instance message instance
@@ -2951,13 +2952,13 @@ export declare module DeleteIntentRequest {
 	 * Standard JavaScript object representation for DeleteIntentRequest
 	 */
 	interface AsObject {
-		name?: string;
+		name: string;
 	}
 	/**
 	 * Protobuf JSON representation for DeleteIntentRequest
 	 */
 	interface AsProtobufJSON {
-		name?: string;
+		name: string;
 	}
 }
 /**
@@ -2987,30 +2988,30 @@ export declare class BatchUpdateIntentsRequest implements GrpcMessage {
 	 * @param _writer binary writer instance
 	 */
 	static serializeBinaryToWriter(_instance: BatchUpdateIntentsRequest, _writer: BinaryWriter): void;
-	private _parent?;
-	private _intentBatchUri?;
+	private _parent;
+	private _intentBatchUri;
 	private _intentBatchInline?;
-	private _languageCode?;
+	private _languageCode;
 	private _updateMask?;
-	private _intentView?;
+	private _intentView;
 	private _intentBatch;
 	/**
 	 * Message constructor. Initializes the properties and applies default Protobuf values if necessary
 	 * @param _value initial values object or instance of BatchUpdateIntentsRequest to deeply clone from
 	 */
 	constructor(_value?: RecursivePartial<BatchUpdateIntentsRequest.AsObject>);
-	get parent(): string | undefined;
-	set parent(value: string | undefined);
-	get intentBatchUri(): string | undefined;
-	set intentBatchUri(value: string | undefined);
+	get parent(): string;
+	set parent(value: string);
+	get intentBatchUri(): string;
+	set intentBatchUri(value: string);
 	get intentBatchInline(): IntentBatch | undefined;
 	set intentBatchInline(value: IntentBatch | undefined);
-	get languageCode(): string | undefined;
-	set languageCode(value: string | undefined);
+	get languageCode(): string;
+	set languageCode(value: string);
 	get updateMask(): googleProtobuf004.FieldMask | undefined;
 	set updateMask(value: googleProtobuf004.FieldMask | undefined);
-	get intentView(): IntentView | undefined;
-	set intentView(value: IntentView | undefined);
+	get intentView(): IntentView;
+	set intentView(value: IntentView);
 	get intentBatch(): BatchUpdateIntentsRequest.IntentBatchCase;
 	/**
 	 * Serialize message to binary data
@@ -3037,23 +3038,23 @@ export declare module BatchUpdateIntentsRequest {
 	 * Standard JavaScript object representation for BatchUpdateIntentsRequest
 	 */
 	interface AsObject {
-		parent?: string;
-		intentBatchUri?: string;
+		parent: string;
+		intentBatchUri: string;
 		intentBatchInline?: IntentBatch.AsObject;
-		languageCode?: string;
+		languageCode: string;
 		updateMask?: googleProtobuf004.FieldMask.AsObject;
-		intentView?: IntentView;
+		intentView: IntentView;
 	}
 	/**
 	 * Protobuf JSON representation for BatchUpdateIntentsRequest
 	 */
 	interface AsProtobufJSON {
-		parent?: string;
-		intentBatchUri?: string | null;
-		intentBatchInline?: IntentBatch.AsProtobufJSON | null;
-		languageCode?: string;
-		updateMask?: googleProtobuf004.FieldMask.AsProtobufJSON | null;
-		intentView?: string;
+		parent: string;
+		intentBatchUri: string | null;
+		intentBatchInline: IntentBatch.AsProtobufJSON | null;
+		languageCode: string;
+		updateMask: googleProtobuf004.FieldMask.AsProtobufJSON | null;
+		intentView: string;
 	}
 	enum IntentBatchCase {
 		none = 0,
@@ -3127,7 +3128,7 @@ export declare module BatchUpdateIntentsResponse {
 	 * Protobuf JSON representation for BatchUpdateIntentsResponse
 	 */
 	interface AsProtobufJSON {
-		intents?: Intent.AsProtobufJSON[] | null;
+		intents: Intent.AsProtobufJSON[] | null;
 	}
 }
 /**
@@ -3157,15 +3158,15 @@ export declare class BatchDeleteIntentsRequest implements GrpcMessage {
 	 * @param _writer binary writer instance
 	 */
 	static serializeBinaryToWriter(_instance: BatchDeleteIntentsRequest, _writer: BinaryWriter): void;
-	private _parent?;
+	private _parent;
 	private _intents?;
 	/**
 	 * Message constructor. Initializes the properties and applies default Protobuf values if necessary
 	 * @param _value initial values object or instance of BatchDeleteIntentsRequest to deeply clone from
 	 */
 	constructor(_value?: RecursivePartial<BatchDeleteIntentsRequest.AsObject>);
-	get parent(): string | undefined;
-	set parent(value: string | undefined);
+	get parent(): string;
+	set parent(value: string);
 	get intents(): Intent[] | undefined;
 	set intents(value: Intent[] | undefined);
 	/**
@@ -3193,15 +3194,15 @@ export declare module BatchDeleteIntentsRequest {
 	 * Standard JavaScript object representation for BatchDeleteIntentsRequest
 	 */
 	interface AsObject {
-		parent?: string;
+		parent: string;
 		intents?: Intent.AsObject[];
 	}
 	/**
 	 * Protobuf JSON representation for BatchDeleteIntentsRequest
 	 */
 	interface AsProtobufJSON {
-		parent?: string;
-		intents?: Intent.AsProtobufJSON[] | null;
+		parent: string;
+		intents: Intent.AsProtobufJSON[] | null;
 	}
 }
 /**
@@ -3270,7 +3271,7 @@ export declare module IntentBatch {
 	 * Protobuf JSON representation for IntentBatch
 	 */
 	interface AsProtobufJSON {
-		intents?: Intent.AsProtobufJSON[] | null;
+		intents: Intent.AsProtobufJSON[] | null;
 	}
 }
 /**
@@ -3300,17 +3301,17 @@ export declare class IntentSorting implements GrpcMessage {
 	 * @param _writer binary writer instance
 	 */
 	static serializeBinaryToWriter(_instance: IntentSorting, _writer: BinaryWriter): void;
-	private _sortingField?;
-	private _sortingMode?;
+	private _sortingField;
+	private _sortingMode;
 	/**
 	 * Message constructor. Initializes the properties and applies default Protobuf values if necessary
 	 * @param _value initial values object or instance of IntentSorting to deeply clone from
 	 */
 	constructor(_value?: RecursivePartial<IntentSorting.AsObject>);
-	get sortingField(): IntentSorting.IntentSortingField | undefined;
-	set sortingField(value: IntentSorting.IntentSortingField | undefined);
-	get sortingMode(): ondewoNlu010.SortingMode | undefined;
-	set sortingMode(value: ondewoNlu010.SortingMode | undefined);
+	get sortingField(): IntentSorting.IntentSortingField;
+	set sortingField(value: IntentSorting.IntentSortingField);
+	get sortingMode(): ondewoNlu010.SortingMode;
+	set sortingMode(value: ondewoNlu010.SortingMode);
 	/**
 	 * Serialize message to binary data
 	 * @param instance message instance
@@ -3336,15 +3337,15 @@ export declare module IntentSorting {
 	 * Standard JavaScript object representation for IntentSorting
 	 */
 	interface AsObject {
-		sortingField?: IntentSorting.IntentSortingField;
-		sortingMode?: ondewoNlu010.SortingMode;
+		sortingField: IntentSorting.IntentSortingField;
+		sortingMode: ondewoNlu010.SortingMode;
 	}
 	/**
 	 * Protobuf JSON representation for IntentSorting
 	 */
 	interface AsProtobufJSON {
-		sortingField?: string;
-		sortingMode?: string;
+		sortingField: string;
+		sortingMode: string;
 	}
 	enum IntentSortingField {
 		NO_INTENT_SORTING = 0,
@@ -3383,17 +3384,17 @@ export declare class IntentTagRequest implements GrpcMessage {
 	 * @param _writer binary writer instance
 	 */
 	static serializeBinaryToWriter(_instance: IntentTagRequest, _writer: BinaryWriter): void;
-	private _intentName?;
-	private _tags?;
+	private _intentName;
+	private _tags;
 	/**
 	 * Message constructor. Initializes the properties and applies default Protobuf values if necessary
 	 * @param _value initial values object or instance of IntentTagRequest to deeply clone from
 	 */
 	constructor(_value?: RecursivePartial<IntentTagRequest.AsObject>);
-	get intentName(): string | undefined;
-	set intentName(value: string | undefined);
-	get tags(): string[] | undefined;
-	set tags(value: string[] | undefined);
+	get intentName(): string;
+	set intentName(value: string);
+	get tags(): string[];
+	set tags(value: string[]);
 	/**
 	 * Serialize message to binary data
 	 * @param instance message instance
@@ -3419,15 +3420,15 @@ export declare module IntentTagRequest {
 	 * Standard JavaScript object representation for IntentTagRequest
 	 */
 	interface AsObject {
-		intentName?: string;
-		tags?: string[];
+		intentName: string;
+		tags: string[];
 	}
 	/**
 	 * Protobuf JSON representation for IntentTagRequest
 	 */
 	interface AsProtobufJSON {
-		intentName?: string;
-		tags?: string[];
+		intentName: string;
+		tags: string[];
 	}
 }
 /**
@@ -3457,14 +3458,14 @@ export declare class GetIntentTagsRequest implements GrpcMessage {
 	 * @param _writer binary writer instance
 	 */
 	static serializeBinaryToWriter(_instance: GetIntentTagsRequest, _writer: BinaryWriter): void;
-	private _intentName?;
+	private _intentName;
 	/**
 	 * Message constructor. Initializes the properties and applies default Protobuf values if necessary
 	 * @param _value initial values object or instance of GetIntentTagsRequest to deeply clone from
 	 */
 	constructor(_value?: RecursivePartial<GetIntentTagsRequest.AsObject>);
-	get intentName(): string | undefined;
-	set intentName(value: string | undefined);
+	get intentName(): string;
+	set intentName(value: string);
 	/**
 	 * Serialize message to binary data
 	 * @param instance message instance
@@ -3490,13 +3491,13 @@ export declare module GetIntentTagsRequest {
 	 * Standard JavaScript object representation for GetIntentTagsRequest
 	 */
 	interface AsObject {
-		intentName?: string;
+		intentName: string;
 	}
 	/**
 	 * Protobuf JSON representation for GetIntentTagsRequest
 	 */
 	interface AsProtobufJSON {
-		intentName?: string;
+		intentName: string;
 	}
 }
 /**
@@ -3526,14 +3527,14 @@ export declare class GetIntentTagsResponse implements GrpcMessage {
 	 * @param _writer binary writer instance
 	 */
 	static serializeBinaryToWriter(_instance: GetIntentTagsResponse, _writer: BinaryWriter): void;
-	private _intentTags?;
+	private _intentTags;
 	/**
 	 * Message constructor. Initializes the properties and applies default Protobuf values if necessary
 	 * @param _value initial values object or instance of GetIntentTagsResponse to deeply clone from
 	 */
 	constructor(_value?: RecursivePartial<GetIntentTagsResponse.AsObject>);
-	get intentTags(): string[] | undefined;
-	set intentTags(value: string[] | undefined);
+	get intentTags(): string[];
+	set intentTags(value: string[]);
 	/**
 	 * Serialize message to binary data
 	 * @param instance message instance
@@ -3559,13 +3560,13 @@ export declare module GetIntentTagsResponse {
 	 * Standard JavaScript object representation for GetIntentTagsResponse
 	 */
 	interface AsObject {
-		intentTags?: string[];
+		intentTags: string[];
 	}
 	/**
 	 * Protobuf JSON representation for GetIntentTagsResponse
 	 */
 	interface AsProtobufJSON {
-		intentTags?: string[];
+		intentTags: string[];
 	}
 }
 /**
@@ -3595,14 +3596,14 @@ export declare class GetAllIntentTagsRequest implements GrpcMessage {
 	 * @param _writer binary writer instance
 	 */
 	static serializeBinaryToWriter(_instance: GetAllIntentTagsRequest, _writer: BinaryWriter): void;
-	private _parent?;
+	private _parent;
 	/**
 	 * Message constructor. Initializes the properties and applies default Protobuf values if necessary
 	 * @param _value initial values object or instance of GetAllIntentTagsRequest to deeply clone from
 	 */
 	constructor(_value?: RecursivePartial<GetAllIntentTagsRequest.AsObject>);
-	get parent(): string | undefined;
-	set parent(value: string | undefined);
+	get parent(): string;
+	set parent(value: string);
 	/**
 	 * Serialize message to binary data
 	 * @param instance message instance
@@ -3628,13 +3629,13 @@ export declare module GetAllIntentTagsRequest {
 	 * Standard JavaScript object representation for GetAllIntentTagsRequest
 	 */
 	interface AsObject {
-		parent?: string;
+		parent: string;
 	}
 	/**
 	 * Protobuf JSON representation for GetAllIntentTagsRequest
 	 */
 	interface AsProtobufJSON {
-		parent?: string;
+		parent: string;
 	}
 }
 /**
@@ -3703,7 +3704,7 @@ export declare module BatchUpdateTrainingPhrasesRequest {
 	 * Protobuf JSON representation for BatchUpdateTrainingPhrasesRequest
 	 */
 	interface AsProtobufJSON {
-		trainingPhrases?: Intent.TrainingPhrase.AsProtobufJSON[] | null;
+		trainingPhrases: Intent.TrainingPhrase.AsProtobufJSON[] | null;
 	}
 }
 /**
@@ -3734,7 +3735,7 @@ export declare class TrainingPhraseStatus implements GrpcMessage {
 	 */
 	static serializeBinaryToWriter(_instance: TrainingPhraseStatus, _writer: BinaryWriter): void;
 	private _trainingPhrase?;
-	private _errorMessage?;
+	private _errorMessage;
 	private _phraseOrStatus;
 	/**
 	 * Message constructor. Initializes the properties and applies default Protobuf values if necessary
@@ -3743,8 +3744,8 @@ export declare class TrainingPhraseStatus implements GrpcMessage {
 	constructor(_value?: RecursivePartial<TrainingPhraseStatus.AsObject>);
 	get trainingPhrase(): Intent.TrainingPhrase | undefined;
 	set trainingPhrase(value: Intent.TrainingPhrase | undefined);
-	get errorMessage(): string | undefined;
-	set errorMessage(value: string | undefined);
+	get errorMessage(): string;
+	set errorMessage(value: string);
 	get phraseOrStatus(): TrainingPhraseStatus.PhraseOrStatusCase;
 	/**
 	 * Serialize message to binary data
@@ -3772,14 +3773,14 @@ export declare module TrainingPhraseStatus {
 	 */
 	interface AsObject {
 		trainingPhrase?: Intent.TrainingPhrase.AsObject;
-		errorMessage?: string;
+		errorMessage: string;
 	}
 	/**
 	 * Protobuf JSON representation for TrainingPhraseStatus
 	 */
 	interface AsProtobufJSON {
-		trainingPhrase?: Intent.TrainingPhrase.AsProtobufJSON | null;
-		errorMessage?: string | null;
+		trainingPhrase: Intent.TrainingPhrase.AsProtobufJSON | null;
+		errorMessage: string | null;
 	}
 	enum PhraseOrStatusCase {
 		none = 0,
@@ -3815,7 +3816,7 @@ export declare class BatchTrainingPhrasesStatusResponse implements GrpcMessage {
 	 */
 	static serializeBinaryToWriter(_instance: BatchTrainingPhrasesStatusResponse, _writer: BinaryWriter): void;
 	private _trainingPhraseStatuses?;
-	private _hasErrors?;
+	private _hasErrors;
 	/**
 	 * Message constructor. Initializes the properties and applies default Protobuf values if necessary
 	 * @param _value initial values object or instance of BatchTrainingPhrasesStatusResponse to deeply clone from
@@ -3823,8 +3824,8 @@ export declare class BatchTrainingPhrasesStatusResponse implements GrpcMessage {
 	constructor(_value?: RecursivePartial<BatchTrainingPhrasesStatusResponse.AsObject>);
 	get trainingPhraseStatuses(): TrainingPhraseStatus[] | undefined;
 	set trainingPhraseStatuses(value: TrainingPhraseStatus[] | undefined);
-	get hasErrors(): boolean | undefined;
-	set hasErrors(value: boolean | undefined);
+	get hasErrors(): boolean;
+	set hasErrors(value: boolean);
 	/**
 	 * Serialize message to binary data
 	 * @param instance message instance
@@ -3851,14 +3852,14 @@ export declare module BatchTrainingPhrasesStatusResponse {
 	 */
 	interface AsObject {
 		trainingPhraseStatuses?: TrainingPhraseStatus.AsObject[];
-		hasErrors?: boolean;
+		hasErrors: boolean;
 	}
 	/**
 	 * Protobuf JSON representation for BatchTrainingPhrasesStatusResponse
 	 */
 	interface AsProtobufJSON {
-		trainingPhraseStatuses?: TrainingPhraseStatus.AsProtobufJSON[] | null;
-		hasErrors?: boolean;
+		trainingPhraseStatuses: TrainingPhraseStatus.AsProtobufJSON[] | null;
+		hasErrors: boolean;
 	}
 }
 /**
@@ -3927,7 +3928,7 @@ export declare module BatchCreateTrainingPhrasesRequest {
 	 * Protobuf JSON representation for BatchCreateTrainingPhrasesRequest
 	 */
 	interface AsProtobufJSON {
-		trainingPhraseRequests?: BatchCreateTrainingPhrasesRequest.CreateTrainingPhraseRequest.AsProtobufJSON[] | null;
+		trainingPhraseRequests: BatchCreateTrainingPhrasesRequest.CreateTrainingPhraseRequest.AsProtobufJSON[] | null;
 	}
 	/**
 	 * Message implementation for ondewo.nlu.BatchCreateTrainingPhrasesRequest.CreateTrainingPhraseRequest
@@ -3956,15 +3957,15 @@ export declare module BatchCreateTrainingPhrasesRequest {
 		 * @param _writer binary writer instance
 		 */
 		static serializeBinaryToWriter(_instance: CreateTrainingPhraseRequest, _writer: BinaryWriter): void;
-		private _intentName?;
+		private _intentName;
 		private _trainingPhrase?;
 		/**
 		 * Message constructor. Initializes the properties and applies default Protobuf values if necessary
 		 * @param _value initial values object or instance of CreateTrainingPhraseRequest to deeply clone from
 		 */
 		constructor(_value?: RecursivePartial<CreateTrainingPhraseRequest.AsObject>);
-		get intentName(): string | undefined;
-		set intentName(value: string | undefined);
+		get intentName(): string;
+		set intentName(value: string);
 		get trainingPhrase(): Intent.TrainingPhrase | undefined;
 		set trainingPhrase(value: Intent.TrainingPhrase | undefined);
 		/**
@@ -3992,15 +3993,15 @@ export declare module BatchCreateTrainingPhrasesRequest {
 		 * Standard JavaScript object representation for CreateTrainingPhraseRequest
 		 */
 		interface AsObject {
-			intentName?: string;
+			intentName: string;
 			trainingPhrase?: Intent.TrainingPhrase.AsObject;
 		}
 		/**
 		 * Protobuf JSON representation for CreateTrainingPhraseRequest
 		 */
 		interface AsProtobufJSON {
-			intentName?: string;
-			trainingPhrase?: Intent.TrainingPhrase.AsProtobufJSON | null;
+			intentName: string;
+			trainingPhrase: Intent.TrainingPhrase.AsProtobufJSON | null;
 		}
 	}
 }
@@ -4031,14 +4032,14 @@ export declare class BatchGetTrainingPhrasesRequest implements GrpcMessage {
 	 * @param _writer binary writer instance
 	 */
 	static serializeBinaryToWriter(_instance: BatchGetTrainingPhrasesRequest, _writer: BinaryWriter): void;
-	private _names?;
+	private _names;
 	/**
 	 * Message constructor. Initializes the properties and applies default Protobuf values if necessary
 	 * @param _value initial values object or instance of BatchGetTrainingPhrasesRequest to deeply clone from
 	 */
 	constructor(_value?: RecursivePartial<BatchGetTrainingPhrasesRequest.AsObject>);
-	get names(): string[] | undefined;
-	set names(value: string[] | undefined);
+	get names(): string[];
+	set names(value: string[]);
 	/**
 	 * Serialize message to binary data
 	 * @param instance message instance
@@ -4064,13 +4065,13 @@ export declare module BatchGetTrainingPhrasesRequest {
 	 * Standard JavaScript object representation for BatchGetTrainingPhrasesRequest
 	 */
 	interface AsObject {
-		names?: string[];
+		names: string[];
 	}
 	/**
 	 * Protobuf JSON representation for BatchGetTrainingPhrasesRequest
 	 */
 	interface AsProtobufJSON {
-		names?: string[];
+		names: string[];
 	}
 }
 /**
@@ -4100,14 +4101,14 @@ export declare class BatchDeleteTrainingPhrasesRequest implements GrpcMessage {
 	 * @param _writer binary writer instance
 	 */
 	static serializeBinaryToWriter(_instance: BatchDeleteTrainingPhrasesRequest, _writer: BinaryWriter): void;
-	private _names?;
+	private _names;
 	/**
 	 * Message constructor. Initializes the properties and applies default Protobuf values if necessary
 	 * @param _value initial values object or instance of BatchDeleteTrainingPhrasesRequest to deeply clone from
 	 */
 	constructor(_value?: RecursivePartial<BatchDeleteTrainingPhrasesRequest.AsObject>);
-	get names(): string[] | undefined;
-	set names(value: string[] | undefined);
+	get names(): string[];
+	set names(value: string[]);
 	/**
 	 * Serialize message to binary data
 	 * @param instance message instance
@@ -4133,13 +4134,13 @@ export declare module BatchDeleteTrainingPhrasesRequest {
 	 * Standard JavaScript object representation for BatchDeleteTrainingPhrasesRequest
 	 */
 	interface AsObject {
-		names?: string[];
+		names: string[];
 	}
 	/**
 	 * Protobuf JSON representation for BatchDeleteTrainingPhrasesRequest
 	 */
 	interface AsProtobufJSON {
-		names?: string[];
+		names: string[];
 	}
 }
 /**
@@ -4170,7 +4171,7 @@ export declare class BatchDeleteTrainingPhrasesResponse implements GrpcMessage {
 	 */
 	static serializeBinaryToWriter(_instance: BatchDeleteTrainingPhrasesResponse, _writer: BinaryWriter): void;
 	private _deleteStatuses?;
-	private _hasErrors?;
+	private _hasErrors;
 	/**
 	 * Message constructor. Initializes the properties and applies default Protobuf values if necessary
 	 * @param _value initial values object or instance of BatchDeleteTrainingPhrasesResponse to deeply clone from
@@ -4178,8 +4179,8 @@ export declare class BatchDeleteTrainingPhrasesResponse implements GrpcMessage {
 	constructor(_value?: RecursivePartial<BatchDeleteTrainingPhrasesResponse.AsObject>);
 	get deleteStatuses(): BatchDeleteTrainingPhrasesResponse.DeleteTrainingPhraseStatus[] | undefined;
 	set deleteStatuses(value: BatchDeleteTrainingPhrasesResponse.DeleteTrainingPhraseStatus[] | undefined);
-	get hasErrors(): boolean | undefined;
-	set hasErrors(value: boolean | undefined);
+	get hasErrors(): boolean;
+	set hasErrors(value: boolean);
 	/**
 	 * Serialize message to binary data
 	 * @param instance message instance
@@ -4206,14 +4207,14 @@ export declare module BatchDeleteTrainingPhrasesResponse {
 	 */
 	interface AsObject {
 		deleteStatuses?: BatchDeleteTrainingPhrasesResponse.DeleteTrainingPhraseStatus.AsObject[];
-		hasErrors?: boolean;
+		hasErrors: boolean;
 	}
 	/**
 	 * Protobuf JSON representation for BatchDeleteTrainingPhrasesResponse
 	 */
 	interface AsProtobufJSON {
-		deleteStatuses?: BatchDeleteTrainingPhrasesResponse.DeleteTrainingPhraseStatus.AsProtobufJSON[] | null;
-		hasErrors?: boolean;
+		deleteStatuses: BatchDeleteTrainingPhrasesResponse.DeleteTrainingPhraseStatus.AsProtobufJSON[] | null;
+		hasErrors: boolean;
 	}
 	/**
 	 * Message implementation for ondewo.nlu.BatchDeleteTrainingPhrasesResponse.DeleteTrainingPhraseStatus
@@ -4243,7 +4244,7 @@ export declare module BatchDeleteTrainingPhrasesResponse {
 		 */
 		static serializeBinaryToWriter(_instance: DeleteTrainingPhraseStatus, _writer: BinaryWriter): void;
 		private _successfullyDeleted?;
-		private _errorMessage?;
+		private _errorMessage;
 		private _deleteStatus;
 		/**
 		 * Message constructor. Initializes the properties and applies default Protobuf values if necessary
@@ -4252,8 +4253,8 @@ export declare module BatchDeleteTrainingPhrasesResponse {
 		constructor(_value?: RecursivePartial<DeleteTrainingPhraseStatus.AsObject>);
 		get successfullyDeleted(): googleProtobuf003.Empty | undefined;
 		set successfullyDeleted(value: googleProtobuf003.Empty | undefined);
-		get errorMessage(): string | undefined;
-		set errorMessage(value: string | undefined);
+		get errorMessage(): string;
+		set errorMessage(value: string);
 		get deleteStatus(): DeleteTrainingPhraseStatus.DeleteStatusCase;
 		/**
 		 * Serialize message to binary data
@@ -4281,14 +4282,14 @@ export declare module BatchDeleteTrainingPhrasesResponse {
 		 */
 		interface AsObject {
 			successfullyDeleted?: googleProtobuf003.Empty.AsObject;
-			errorMessage?: string;
+			errorMessage: string;
 		}
 		/**
 		 * Protobuf JSON representation for DeleteTrainingPhraseStatus
 		 */
 		interface AsProtobufJSON {
-			successfullyDeleted?: googleProtobuf003.Empty.AsProtobufJSON | null;
-			errorMessage?: string | null;
+			successfullyDeleted: googleProtobuf003.Empty.AsProtobufJSON | null;
+			errorMessage: string | null;
 		}
 		enum DeleteStatusCase {
 			none = 0,
@@ -4324,20 +4325,20 @@ export declare class ListTrainingPhrasesRequest implements GrpcMessage {
 	 * @param _writer binary writer instance
 	 */
 	static serializeBinaryToWriter(_instance: ListTrainingPhrasesRequest, _writer: BinaryWriter): void;
-	private _intentName?;
-	private _languageCode?;
-	private _pageToken?;
+	private _intentName;
+	private _languageCode;
+	private _pageToken;
 	/**
 	 * Message constructor. Initializes the properties and applies default Protobuf values if necessary
 	 * @param _value initial values object or instance of ListTrainingPhrasesRequest to deeply clone from
 	 */
 	constructor(_value?: RecursivePartial<ListTrainingPhrasesRequest.AsObject>);
-	get intentName(): string | undefined;
-	set intentName(value: string | undefined);
-	get languageCode(): string | undefined;
-	set languageCode(value: string | undefined);
-	get pageToken(): string | undefined;
-	set pageToken(value: string | undefined);
+	get intentName(): string;
+	set intentName(value: string);
+	get languageCode(): string;
+	set languageCode(value: string);
+	get pageToken(): string;
+	set pageToken(value: string);
 	/**
 	 * Serialize message to binary data
 	 * @param instance message instance
@@ -4363,17 +4364,17 @@ export declare module ListTrainingPhrasesRequest {
 	 * Standard JavaScript object representation for ListTrainingPhrasesRequest
 	 */
 	interface AsObject {
-		intentName?: string;
-		languageCode?: string;
-		pageToken?: string;
+		intentName: string;
+		languageCode: string;
+		pageToken: string;
 	}
 	/**
 	 * Protobuf JSON representation for ListTrainingPhrasesRequest
 	 */
 	interface AsProtobufJSON {
-		intentName?: string;
-		languageCode?: string;
-		pageToken?: string;
+		intentName: string;
+		languageCode: string;
+		pageToken: string;
 	}
 }
 /**
@@ -4404,7 +4405,7 @@ export declare class ListTrainingPhrasesResponse implements GrpcMessage {
 	 */
 	static serializeBinaryToWriter(_instance: ListTrainingPhrasesResponse, _writer: BinaryWriter): void;
 	private _trainingPhrases?;
-	private _nextPageToken?;
+	private _nextPageToken;
 	/**
 	 * Message constructor. Initializes the properties and applies default Protobuf values if necessary
 	 * @param _value initial values object or instance of ListTrainingPhrasesResponse to deeply clone from
@@ -4412,8 +4413,8 @@ export declare class ListTrainingPhrasesResponse implements GrpcMessage {
 	constructor(_value?: RecursivePartial<ListTrainingPhrasesResponse.AsObject>);
 	get trainingPhrases(): Intent.TrainingPhrase[] | undefined;
 	set trainingPhrases(value: Intent.TrainingPhrase[] | undefined);
-	get nextPageToken(): string | undefined;
-	set nextPageToken(value: string | undefined);
+	get nextPageToken(): string;
+	set nextPageToken(value: string);
 	/**
 	 * Serialize message to binary data
 	 * @param instance message instance
@@ -4440,14 +4441,14 @@ export declare module ListTrainingPhrasesResponse {
 	 */
 	interface AsObject {
 		trainingPhrases?: Intent.TrainingPhrase.AsObject[];
-		nextPageToken?: string;
+		nextPageToken: string;
 	}
 	/**
 	 * Protobuf JSON representation for ListTrainingPhrasesResponse
 	 */
 	interface AsProtobufJSON {
-		trainingPhrases?: Intent.TrainingPhrase.AsProtobufJSON[] | null;
-		nextPageToken?: string;
+		trainingPhrases: Intent.TrainingPhrase.AsProtobufJSON[] | null;
+		nextPageToken: string;
 	}
 }
 /**
@@ -4478,7 +4479,7 @@ export declare class BatchResponseMessagesStatusResponse implements GrpcMessage 
 	 */
 	static serializeBinaryToWriter(_instance: BatchResponseMessagesStatusResponse, _writer: BinaryWriter): void;
 	private _responseMessageStatuses?;
-	private _hasErrors?;
+	private _hasErrors;
 	/**
 	 * Message constructor. Initializes the properties and applies default Protobuf values if necessary
 	 * @param _value initial values object or instance of BatchResponseMessagesStatusResponse to deeply clone from
@@ -4486,8 +4487,8 @@ export declare class BatchResponseMessagesStatusResponse implements GrpcMessage 
 	constructor(_value?: RecursivePartial<BatchResponseMessagesStatusResponse.AsObject>);
 	get responseMessageStatuses(): BatchResponseMessagesStatusResponse.ResponseMessageStatus[] | undefined;
 	set responseMessageStatuses(value: BatchResponseMessagesStatusResponse.ResponseMessageStatus[] | undefined);
-	get hasErrors(): boolean | undefined;
-	set hasErrors(value: boolean | undefined);
+	get hasErrors(): boolean;
+	set hasErrors(value: boolean);
 	/**
 	 * Serialize message to binary data
 	 * @param instance message instance
@@ -4514,14 +4515,14 @@ export declare module BatchResponseMessagesStatusResponse {
 	 */
 	interface AsObject {
 		responseMessageStatuses?: BatchResponseMessagesStatusResponse.ResponseMessageStatus.AsObject[];
-		hasErrors?: boolean;
+		hasErrors: boolean;
 	}
 	/**
 	 * Protobuf JSON representation for BatchResponseMessagesStatusResponse
 	 */
 	interface AsProtobufJSON {
-		responseMessageStatuses?: BatchResponseMessagesStatusResponse.ResponseMessageStatus.AsProtobufJSON[] | null;
-		hasErrors?: boolean;
+		responseMessageStatuses: BatchResponseMessagesStatusResponse.ResponseMessageStatus.AsProtobufJSON[] | null;
+		hasErrors: boolean;
 	}
 	/**
 	 * Message implementation for ondewo.nlu.BatchResponseMessagesStatusResponse.ResponseMessageStatus
@@ -4551,7 +4552,7 @@ export declare module BatchResponseMessagesStatusResponse {
 		 */
 		static serializeBinaryToWriter(_instance: ResponseMessageStatus, _writer: BinaryWriter): void;
 		private _responseMessage?;
-		private _errorMessage?;
+		private _errorMessage;
 		private _phraseOrStatus;
 		/**
 		 * Message constructor. Initializes the properties and applies default Protobuf values if necessary
@@ -4560,8 +4561,8 @@ export declare module BatchResponseMessagesStatusResponse {
 		constructor(_value?: RecursivePartial<ResponseMessageStatus.AsObject>);
 		get responseMessage(): Intent.Message | undefined;
 		set responseMessage(value: Intent.Message | undefined);
-		get errorMessage(): string | undefined;
-		set errorMessage(value: string | undefined);
+		get errorMessage(): string;
+		set errorMessage(value: string);
 		get phraseOrStatus(): ResponseMessageStatus.PhraseOrStatusCase;
 		/**
 		 * Serialize message to binary data
@@ -4589,14 +4590,14 @@ export declare module BatchResponseMessagesStatusResponse {
 		 */
 		interface AsObject {
 			responseMessage?: Intent.Message.AsObject;
-			errorMessage?: string;
+			errorMessage: string;
 		}
 		/**
 		 * Protobuf JSON representation for ResponseMessageStatus
 		 */
 		interface AsProtobufJSON {
-			responseMessage?: Intent.Message.AsProtobufJSON | null;
-			errorMessage?: string | null;
+			responseMessage: Intent.Message.AsProtobufJSON | null;
+			errorMessage: string | null;
 		}
 		enum PhraseOrStatusCase {
 			none = 0,
@@ -4671,7 +4672,7 @@ export declare module BatchCreateResponseMessagesRequest {
 	 * Protobuf JSON representation for BatchCreateResponseMessagesRequest
 	 */
 	interface AsProtobufJSON {
-		responseMessageRequests?: BatchCreateResponseMessagesRequest.CreateResponseMessageRequest.AsProtobufJSON[] | null;
+		responseMessageRequests: BatchCreateResponseMessagesRequest.CreateResponseMessageRequest.AsProtobufJSON[] | null;
 	}
 	/**
 	 * Message implementation for ondewo.nlu.BatchCreateResponseMessagesRequest.CreateResponseMessageRequest
@@ -4700,15 +4701,15 @@ export declare module BatchCreateResponseMessagesRequest {
 		 * @param _writer binary writer instance
 		 */
 		static serializeBinaryToWriter(_instance: CreateResponseMessageRequest, _writer: BinaryWriter): void;
-		private _intentName?;
+		private _intentName;
 		private _responseMessage?;
 		/**
 		 * Message constructor. Initializes the properties and applies default Protobuf values if necessary
 		 * @param _value initial values object or instance of CreateResponseMessageRequest to deeply clone from
 		 */
 		constructor(_value?: RecursivePartial<CreateResponseMessageRequest.AsObject>);
-		get intentName(): string | undefined;
-		set intentName(value: string | undefined);
+		get intentName(): string;
+		set intentName(value: string);
 		get responseMessage(): Intent.Message | undefined;
 		set responseMessage(value: Intent.Message | undefined);
 		/**
@@ -4736,15 +4737,15 @@ export declare module BatchCreateResponseMessagesRequest {
 		 * Standard JavaScript object representation for CreateResponseMessageRequest
 		 */
 		interface AsObject {
-			intentName?: string;
+			intentName: string;
 			responseMessage?: Intent.Message.AsObject;
 		}
 		/**
 		 * Protobuf JSON representation for CreateResponseMessageRequest
 		 */
 		interface AsProtobufJSON {
-			intentName?: string;
-			responseMessage?: Intent.Message.AsProtobufJSON | null;
+			intentName: string;
+			responseMessage: Intent.Message.AsProtobufJSON | null;
 		}
 	}
 }
@@ -4814,7 +4815,7 @@ export declare module BatchUpdateResponseMessagesRequest {
 	 * Protobuf JSON representation for BatchUpdateResponseMessagesRequest
 	 */
 	interface AsProtobufJSON {
-		responseMessages?: Intent.Message.AsProtobufJSON[] | null;
+		responseMessages: Intent.Message.AsProtobufJSON[] | null;
 	}
 }
 /**
@@ -4844,14 +4845,14 @@ export declare class BatchGetResponseMessagesRequest implements GrpcMessage {
 	 * @param _writer binary writer instance
 	 */
 	static serializeBinaryToWriter(_instance: BatchGetResponseMessagesRequest, _writer: BinaryWriter): void;
-	private _names?;
+	private _names;
 	/**
 	 * Message constructor. Initializes the properties and applies default Protobuf values if necessary
 	 * @param _value initial values object or instance of BatchGetResponseMessagesRequest to deeply clone from
 	 */
 	constructor(_value?: RecursivePartial<BatchGetResponseMessagesRequest.AsObject>);
-	get names(): string[] | undefined;
-	set names(value: string[] | undefined);
+	get names(): string[];
+	set names(value: string[]);
 	/**
 	 * Serialize message to binary data
 	 * @param instance message instance
@@ -4877,13 +4878,13 @@ export declare module BatchGetResponseMessagesRequest {
 	 * Standard JavaScript object representation for BatchGetResponseMessagesRequest
 	 */
 	interface AsObject {
-		names?: string[];
+		names: string[];
 	}
 	/**
 	 * Protobuf JSON representation for BatchGetResponseMessagesRequest
 	 */
 	interface AsProtobufJSON {
-		names?: string[];
+		names: string[];
 	}
 }
 /**
@@ -4913,14 +4914,14 @@ export declare class BatchDeleteResponseMessagesRequest implements GrpcMessage {
 	 * @param _writer binary writer instance
 	 */
 	static serializeBinaryToWriter(_instance: BatchDeleteResponseMessagesRequest, _writer: BinaryWriter): void;
-	private _names?;
+	private _names;
 	/**
 	 * Message constructor. Initializes the properties and applies default Protobuf values if necessary
 	 * @param _value initial values object or instance of BatchDeleteResponseMessagesRequest to deeply clone from
 	 */
 	constructor(_value?: RecursivePartial<BatchDeleteResponseMessagesRequest.AsObject>);
-	get names(): string[] | undefined;
-	set names(value: string[] | undefined);
+	get names(): string[];
+	set names(value: string[]);
 	/**
 	 * Serialize message to binary data
 	 * @param instance message instance
@@ -4946,13 +4947,13 @@ export declare module BatchDeleteResponseMessagesRequest {
 	 * Standard JavaScript object representation for BatchDeleteResponseMessagesRequest
 	 */
 	interface AsObject {
-		names?: string[];
+		names: string[];
 	}
 	/**
 	 * Protobuf JSON representation for BatchDeleteResponseMessagesRequest
 	 */
 	interface AsProtobufJSON {
-		names?: string[];
+		names: string[];
 	}
 }
 /**
@@ -4983,7 +4984,7 @@ export declare class BatchDeleteResponseMessagesResponse implements GrpcMessage 
 	 */
 	static serializeBinaryToWriter(_instance: BatchDeleteResponseMessagesResponse, _writer: BinaryWriter): void;
 	private _deleteStatuses?;
-	private _hasErrors?;
+	private _hasErrors;
 	/**
 	 * Message constructor. Initializes the properties and applies default Protobuf values if necessary
 	 * @param _value initial values object or instance of BatchDeleteResponseMessagesResponse to deeply clone from
@@ -4991,8 +4992,8 @@ export declare class BatchDeleteResponseMessagesResponse implements GrpcMessage 
 	constructor(_value?: RecursivePartial<BatchDeleteResponseMessagesResponse.AsObject>);
 	get deleteStatuses(): BatchDeleteResponseMessagesResponse.DeleteResponseMessageStatus[] | undefined;
 	set deleteStatuses(value: BatchDeleteResponseMessagesResponse.DeleteResponseMessageStatus[] | undefined);
-	get hasErrors(): boolean | undefined;
-	set hasErrors(value: boolean | undefined);
+	get hasErrors(): boolean;
+	set hasErrors(value: boolean);
 	/**
 	 * Serialize message to binary data
 	 * @param instance message instance
@@ -5019,14 +5020,14 @@ export declare module BatchDeleteResponseMessagesResponse {
 	 */
 	interface AsObject {
 		deleteStatuses?: BatchDeleteResponseMessagesResponse.DeleteResponseMessageStatus.AsObject[];
-		hasErrors?: boolean;
+		hasErrors: boolean;
 	}
 	/**
 	 * Protobuf JSON representation for BatchDeleteResponseMessagesResponse
 	 */
 	interface AsProtobufJSON {
-		deleteStatuses?: BatchDeleteResponseMessagesResponse.DeleteResponseMessageStatus.AsProtobufJSON[] | null;
-		hasErrors?: boolean;
+		deleteStatuses: BatchDeleteResponseMessagesResponse.DeleteResponseMessageStatus.AsProtobufJSON[] | null;
+		hasErrors: boolean;
 	}
 	/**
 	 * Message implementation for ondewo.nlu.BatchDeleteResponseMessagesResponse.DeleteResponseMessageStatus
@@ -5056,7 +5057,7 @@ export declare module BatchDeleteResponseMessagesResponse {
 		 */
 		static serializeBinaryToWriter(_instance: DeleteResponseMessageStatus, _writer: BinaryWriter): void;
 		private _successfullyDeleted?;
-		private _errorMessage?;
+		private _errorMessage;
 		private _deleteStatus;
 		/**
 		 * Message constructor. Initializes the properties and applies default Protobuf values if necessary
@@ -5065,8 +5066,8 @@ export declare module BatchDeleteResponseMessagesResponse {
 		constructor(_value?: RecursivePartial<DeleteResponseMessageStatus.AsObject>);
 		get successfullyDeleted(): googleProtobuf003.Empty | undefined;
 		set successfullyDeleted(value: googleProtobuf003.Empty | undefined);
-		get errorMessage(): string | undefined;
-		set errorMessage(value: string | undefined);
+		get errorMessage(): string;
+		set errorMessage(value: string);
 		get deleteStatus(): DeleteResponseMessageStatus.DeleteStatusCase;
 		/**
 		 * Serialize message to binary data
@@ -5094,14 +5095,14 @@ export declare module BatchDeleteResponseMessagesResponse {
 		 */
 		interface AsObject {
 			successfullyDeleted?: googleProtobuf003.Empty.AsObject;
-			errorMessage?: string;
+			errorMessage: string;
 		}
 		/**
 		 * Protobuf JSON representation for DeleteResponseMessageStatus
 		 */
 		interface AsProtobufJSON {
-			successfullyDeleted?: googleProtobuf003.Empty.AsProtobufJSON | null;
-			errorMessage?: string | null;
+			successfullyDeleted: googleProtobuf003.Empty.AsProtobufJSON | null;
+			errorMessage: string | null;
 		}
 		enum DeleteStatusCase {
 			none = 0,
@@ -5137,20 +5138,20 @@ export declare class ListResponseMessagesRequest implements GrpcMessage {
 	 * @param _writer binary writer instance
 	 */
 	static serializeBinaryToWriter(_instance: ListResponseMessagesRequest, _writer: BinaryWriter): void;
-	private _intentName?;
-	private _languageCode?;
-	private _pageToken?;
+	private _intentName;
+	private _languageCode;
+	private _pageToken;
 	/**
 	 * Message constructor. Initializes the properties and applies default Protobuf values if necessary
 	 * @param _value initial values object or instance of ListResponseMessagesRequest to deeply clone from
 	 */
 	constructor(_value?: RecursivePartial<ListResponseMessagesRequest.AsObject>);
-	get intentName(): string | undefined;
-	set intentName(value: string | undefined);
-	get languageCode(): string | undefined;
-	set languageCode(value: string | undefined);
-	get pageToken(): string | undefined;
-	set pageToken(value: string | undefined);
+	get intentName(): string;
+	set intentName(value: string);
+	get languageCode(): string;
+	set languageCode(value: string);
+	get pageToken(): string;
+	set pageToken(value: string);
 	/**
 	 * Serialize message to binary data
 	 * @param instance message instance
@@ -5176,17 +5177,17 @@ export declare module ListResponseMessagesRequest {
 	 * Standard JavaScript object representation for ListResponseMessagesRequest
 	 */
 	interface AsObject {
-		intentName?: string;
-		languageCode?: string;
-		pageToken?: string;
+		intentName: string;
+		languageCode: string;
+		pageToken: string;
 	}
 	/**
 	 * Protobuf JSON representation for ListResponseMessagesRequest
 	 */
 	interface AsProtobufJSON {
-		intentName?: string;
-		languageCode?: string;
-		pageToken?: string;
+		intentName: string;
+		languageCode: string;
+		pageToken: string;
 	}
 }
 /**
@@ -5217,7 +5218,7 @@ export declare class ListResponseMessagesResponse implements GrpcMessage {
 	 */
 	static serializeBinaryToWriter(_instance: ListResponseMessagesResponse, _writer: BinaryWriter): void;
 	private _responseMessages?;
-	private _nextPageToken?;
+	private _nextPageToken;
 	/**
 	 * Message constructor. Initializes the properties and applies default Protobuf values if necessary
 	 * @param _value initial values object or instance of ListResponseMessagesResponse to deeply clone from
@@ -5225,8 +5226,8 @@ export declare class ListResponseMessagesResponse implements GrpcMessage {
 	constructor(_value?: RecursivePartial<ListResponseMessagesResponse.AsObject>);
 	get responseMessages(): Intent.Message[] | undefined;
 	set responseMessages(value: Intent.Message[] | undefined);
-	get nextPageToken(): string | undefined;
-	set nextPageToken(value: string | undefined);
+	get nextPageToken(): string;
+	set nextPageToken(value: string);
 	/**
 	 * Serialize message to binary data
 	 * @param instance message instance
@@ -5253,14 +5254,14 @@ export declare module ListResponseMessagesResponse {
 	 */
 	interface AsObject {
 		responseMessages?: Intent.Message.AsObject[];
-		nextPageToken?: string;
+		nextPageToken: string;
 	}
 	/**
 	 * Protobuf JSON representation for ListResponseMessagesResponse
 	 */
 	interface AsProtobufJSON {
-		responseMessages?: Intent.Message.AsProtobufJSON[] | null;
-		nextPageToken?: string;
+		responseMessages: Intent.Message.AsProtobufJSON[] | null;
+		nextPageToken: string;
 	}
 }
 /**
@@ -5291,7 +5292,7 @@ export declare class BatchParametersStatusResponse implements GrpcMessage {
 	 */
 	static serializeBinaryToWriter(_instance: BatchParametersStatusResponse, _writer: BinaryWriter): void;
 	private _parameterStatuses?;
-	private _hasErrors?;
+	private _hasErrors;
 	/**
 	 * Message constructor. Initializes the properties and applies default Protobuf values if necessary
 	 * @param _value initial values object or instance of BatchParametersStatusResponse to deeply clone from
@@ -5299,8 +5300,8 @@ export declare class BatchParametersStatusResponse implements GrpcMessage {
 	constructor(_value?: RecursivePartial<BatchParametersStatusResponse.AsObject>);
 	get parameterStatuses(): BatchParametersStatusResponse.ParameterStatus[] | undefined;
 	set parameterStatuses(value: BatchParametersStatusResponse.ParameterStatus[] | undefined);
-	get hasErrors(): boolean | undefined;
-	set hasErrors(value: boolean | undefined);
+	get hasErrors(): boolean;
+	set hasErrors(value: boolean);
 	/**
 	 * Serialize message to binary data
 	 * @param instance message instance
@@ -5327,14 +5328,14 @@ export declare module BatchParametersStatusResponse {
 	 */
 	interface AsObject {
 		parameterStatuses?: BatchParametersStatusResponse.ParameterStatus.AsObject[];
-		hasErrors?: boolean;
+		hasErrors: boolean;
 	}
 	/**
 	 * Protobuf JSON representation for BatchParametersStatusResponse
 	 */
 	interface AsProtobufJSON {
-		parameterStatuses?: BatchParametersStatusResponse.ParameterStatus.AsProtobufJSON[] | null;
-		hasErrors?: boolean;
+		parameterStatuses: BatchParametersStatusResponse.ParameterStatus.AsProtobufJSON[] | null;
+		hasErrors: boolean;
 	}
 	/**
 	 * Message implementation for ondewo.nlu.BatchParametersStatusResponse.ParameterStatus
@@ -5364,7 +5365,7 @@ export declare module BatchParametersStatusResponse {
 		 */
 		static serializeBinaryToWriter(_instance: ParameterStatus, _writer: BinaryWriter): void;
 		private _parameter?;
-		private _errorMessage?;
+		private _errorMessage;
 		private _phraseOrStatus;
 		/**
 		 * Message constructor. Initializes the properties and applies default Protobuf values if necessary
@@ -5373,8 +5374,8 @@ export declare module BatchParametersStatusResponse {
 		constructor(_value?: RecursivePartial<ParameterStatus.AsObject>);
 		get parameter(): Intent.Parameter | undefined;
 		set parameter(value: Intent.Parameter | undefined);
-		get errorMessage(): string | undefined;
-		set errorMessage(value: string | undefined);
+		get errorMessage(): string;
+		set errorMessage(value: string);
 		get phraseOrStatus(): ParameterStatus.PhraseOrStatusCase;
 		/**
 		 * Serialize message to binary data
@@ -5402,14 +5403,14 @@ export declare module BatchParametersStatusResponse {
 		 */
 		interface AsObject {
 			parameter?: Intent.Parameter.AsObject;
-			errorMessage?: string;
+			errorMessage: string;
 		}
 		/**
 		 * Protobuf JSON representation for ParameterStatus
 		 */
 		interface AsProtobufJSON {
-			parameter?: Intent.Parameter.AsProtobufJSON | null;
-			errorMessage?: string | null;
+			parameter: Intent.Parameter.AsProtobufJSON | null;
+			errorMessage: string | null;
 		}
 		enum PhraseOrStatusCase {
 			none = 0,
@@ -5484,7 +5485,7 @@ export declare module BatchCreateParametersRequest {
 	 * Protobuf JSON representation for BatchCreateParametersRequest
 	 */
 	interface AsProtobufJSON {
-		parameterRequests?: BatchCreateParametersRequest.CreateParameterRequest.AsProtobufJSON[] | null;
+		parameterRequests: BatchCreateParametersRequest.CreateParameterRequest.AsProtobufJSON[] | null;
 	}
 	/**
 	 * Message implementation for ondewo.nlu.BatchCreateParametersRequest.CreateParameterRequest
@@ -5513,15 +5514,15 @@ export declare module BatchCreateParametersRequest {
 		 * @param _writer binary writer instance
 		 */
 		static serializeBinaryToWriter(_instance: CreateParameterRequest, _writer: BinaryWriter): void;
-		private _intentName?;
+		private _intentName;
 		private _parameter?;
 		/**
 		 * Message constructor. Initializes the properties and applies default Protobuf values if necessary
 		 * @param _value initial values object or instance of CreateParameterRequest to deeply clone from
 		 */
 		constructor(_value?: RecursivePartial<CreateParameterRequest.AsObject>);
-		get intentName(): string | undefined;
-		set intentName(value: string | undefined);
+		get intentName(): string;
+		set intentName(value: string);
 		get parameter(): Intent.Parameter | undefined;
 		set parameter(value: Intent.Parameter | undefined);
 		/**
@@ -5549,15 +5550,15 @@ export declare module BatchCreateParametersRequest {
 		 * Standard JavaScript object representation for CreateParameterRequest
 		 */
 		interface AsObject {
-			intentName?: string;
+			intentName: string;
 			parameter?: Intent.Parameter.AsObject;
 		}
 		/**
 		 * Protobuf JSON representation for CreateParameterRequest
 		 */
 		interface AsProtobufJSON {
-			intentName?: string;
-			parameter?: Intent.Parameter.AsProtobufJSON | null;
+			intentName: string;
+			parameter: Intent.Parameter.AsProtobufJSON | null;
 		}
 	}
 }
@@ -5627,7 +5628,7 @@ export declare module BatchUpdateParametersRequest {
 	 * Protobuf JSON representation for BatchUpdateParametersRequest
 	 */
 	interface AsProtobufJSON {
-		parameters?: Intent.Parameter.AsProtobufJSON[] | null;
+		parameters: Intent.Parameter.AsProtobufJSON[] | null;
 	}
 }
 /**
@@ -5657,14 +5658,14 @@ export declare class BatchGetParametersRequest implements GrpcMessage {
 	 * @param _writer binary writer instance
 	 */
 	static serializeBinaryToWriter(_instance: BatchGetParametersRequest, _writer: BinaryWriter): void;
-	private _names?;
+	private _names;
 	/**
 	 * Message constructor. Initializes the properties and applies default Protobuf values if necessary
 	 * @param _value initial values object or instance of BatchGetParametersRequest to deeply clone from
 	 */
 	constructor(_value?: RecursivePartial<BatchGetParametersRequest.AsObject>);
-	get names(): string[] | undefined;
-	set names(value: string[] | undefined);
+	get names(): string[];
+	set names(value: string[]);
 	/**
 	 * Serialize message to binary data
 	 * @param instance message instance
@@ -5690,13 +5691,13 @@ export declare module BatchGetParametersRequest {
 	 * Standard JavaScript object representation for BatchGetParametersRequest
 	 */
 	interface AsObject {
-		names?: string[];
+		names: string[];
 	}
 	/**
 	 * Protobuf JSON representation for BatchGetParametersRequest
 	 */
 	interface AsProtobufJSON {
-		names?: string[];
+		names: string[];
 	}
 }
 /**
@@ -5726,14 +5727,14 @@ export declare class BatchDeleteParametersRequest implements GrpcMessage {
 	 * @param _writer binary writer instance
 	 */
 	static serializeBinaryToWriter(_instance: BatchDeleteParametersRequest, _writer: BinaryWriter): void;
-	private _names?;
+	private _names;
 	/**
 	 * Message constructor. Initializes the properties and applies default Protobuf values if necessary
 	 * @param _value initial values object or instance of BatchDeleteParametersRequest to deeply clone from
 	 */
 	constructor(_value?: RecursivePartial<BatchDeleteParametersRequest.AsObject>);
-	get names(): string[] | undefined;
-	set names(value: string[] | undefined);
+	get names(): string[];
+	set names(value: string[]);
 	/**
 	 * Serialize message to binary data
 	 * @param instance message instance
@@ -5759,13 +5760,13 @@ export declare module BatchDeleteParametersRequest {
 	 * Standard JavaScript object representation for BatchDeleteParametersRequest
 	 */
 	interface AsObject {
-		names?: string[];
+		names: string[];
 	}
 	/**
 	 * Protobuf JSON representation for BatchDeleteParametersRequest
 	 */
 	interface AsProtobufJSON {
-		names?: string[];
+		names: string[];
 	}
 }
 /**
@@ -5796,7 +5797,7 @@ export declare class BatchDeleteParametersResponse implements GrpcMessage {
 	 */
 	static serializeBinaryToWriter(_instance: BatchDeleteParametersResponse, _writer: BinaryWriter): void;
 	private _deleteStatuses?;
-	private _hasErrors?;
+	private _hasErrors;
 	/**
 	 * Message constructor. Initializes the properties and applies default Protobuf values if necessary
 	 * @param _value initial values object or instance of BatchDeleteParametersResponse to deeply clone from
@@ -5804,8 +5805,8 @@ export declare class BatchDeleteParametersResponse implements GrpcMessage {
 	constructor(_value?: RecursivePartial<BatchDeleteParametersResponse.AsObject>);
 	get deleteStatuses(): BatchDeleteParametersResponse.DeleteParameterStatus[] | undefined;
 	set deleteStatuses(value: BatchDeleteParametersResponse.DeleteParameterStatus[] | undefined);
-	get hasErrors(): boolean | undefined;
-	set hasErrors(value: boolean | undefined);
+	get hasErrors(): boolean;
+	set hasErrors(value: boolean);
 	/**
 	 * Serialize message to binary data
 	 * @param instance message instance
@@ -5832,14 +5833,14 @@ export declare module BatchDeleteParametersResponse {
 	 */
 	interface AsObject {
 		deleteStatuses?: BatchDeleteParametersResponse.DeleteParameterStatus.AsObject[];
-		hasErrors?: boolean;
+		hasErrors: boolean;
 	}
 	/**
 	 * Protobuf JSON representation for BatchDeleteParametersResponse
 	 */
 	interface AsProtobufJSON {
-		deleteStatuses?: BatchDeleteParametersResponse.DeleteParameterStatus.AsProtobufJSON[] | null;
-		hasErrors?: boolean;
+		deleteStatuses: BatchDeleteParametersResponse.DeleteParameterStatus.AsProtobufJSON[] | null;
+		hasErrors: boolean;
 	}
 	/**
 	 * Message implementation for ondewo.nlu.BatchDeleteParametersResponse.DeleteParameterStatus
@@ -5869,7 +5870,7 @@ export declare module BatchDeleteParametersResponse {
 		 */
 		static serializeBinaryToWriter(_instance: DeleteParameterStatus, _writer: BinaryWriter): void;
 		private _successfullyDeleted?;
-		private _errorMessage?;
+		private _errorMessage;
 		private _deleteStatus;
 		/**
 		 * Message constructor. Initializes the properties and applies default Protobuf values if necessary
@@ -5878,8 +5879,8 @@ export declare module BatchDeleteParametersResponse {
 		constructor(_value?: RecursivePartial<DeleteParameterStatus.AsObject>);
 		get successfullyDeleted(): googleProtobuf003.Empty | undefined;
 		set successfullyDeleted(value: googleProtobuf003.Empty | undefined);
-		get errorMessage(): string | undefined;
-		set errorMessage(value: string | undefined);
+		get errorMessage(): string;
+		set errorMessage(value: string);
 		get deleteStatus(): DeleteParameterStatus.DeleteStatusCase;
 		/**
 		 * Serialize message to binary data
@@ -5907,14 +5908,14 @@ export declare module BatchDeleteParametersResponse {
 		 */
 		interface AsObject {
 			successfullyDeleted?: googleProtobuf003.Empty.AsObject;
-			errorMessage?: string;
+			errorMessage: string;
 		}
 		/**
 		 * Protobuf JSON representation for DeleteParameterStatus
 		 */
 		interface AsProtobufJSON {
-			successfullyDeleted?: googleProtobuf003.Empty.AsProtobufJSON | null;
-			errorMessage?: string | null;
+			successfullyDeleted: googleProtobuf003.Empty.AsProtobufJSON | null;
+			errorMessage: string | null;
 		}
 		enum DeleteStatusCase {
 			none = 0,
@@ -5950,20 +5951,20 @@ export declare class ListParametersRequest implements GrpcMessage {
 	 * @param _writer binary writer instance
 	 */
 	static serializeBinaryToWriter(_instance: ListParametersRequest, _writer: BinaryWriter): void;
-	private _intentName?;
-	private _languageCode?;
-	private _pageToken?;
+	private _intentName;
+	private _languageCode;
+	private _pageToken;
 	/**
 	 * Message constructor. Initializes the properties and applies default Protobuf values if necessary
 	 * @param _value initial values object or instance of ListParametersRequest to deeply clone from
 	 */
 	constructor(_value?: RecursivePartial<ListParametersRequest.AsObject>);
-	get intentName(): string | undefined;
-	set intentName(value: string | undefined);
-	get languageCode(): string | undefined;
-	set languageCode(value: string | undefined);
-	get pageToken(): string | undefined;
-	set pageToken(value: string | undefined);
+	get intentName(): string;
+	set intentName(value: string);
+	get languageCode(): string;
+	set languageCode(value: string);
+	get pageToken(): string;
+	set pageToken(value: string);
 	/**
 	 * Serialize message to binary data
 	 * @param instance message instance
@@ -5989,17 +5990,17 @@ export declare module ListParametersRequest {
 	 * Standard JavaScript object representation for ListParametersRequest
 	 */
 	interface AsObject {
-		intentName?: string;
-		languageCode?: string;
-		pageToken?: string;
+		intentName: string;
+		languageCode: string;
+		pageToken: string;
 	}
 	/**
 	 * Protobuf JSON representation for ListParametersRequest
 	 */
 	interface AsProtobufJSON {
-		intentName?: string;
-		languageCode?: string;
-		pageToken?: string;
+		intentName: string;
+		languageCode: string;
+		pageToken: string;
 	}
 }
 /**
@@ -6030,7 +6031,7 @@ export declare class ListParametersResponse implements GrpcMessage {
 	 */
 	static serializeBinaryToWriter(_instance: ListParametersResponse, _writer: BinaryWriter): void;
 	private _parameters?;
-	private _nextPageToken?;
+	private _nextPageToken;
 	/**
 	 * Message constructor. Initializes the properties and applies default Protobuf values if necessary
 	 * @param _value initial values object or instance of ListParametersResponse to deeply clone from
@@ -6038,8 +6039,8 @@ export declare class ListParametersResponse implements GrpcMessage {
 	constructor(_value?: RecursivePartial<ListParametersResponse.AsObject>);
 	get parameters(): Intent.Parameter[] | undefined;
 	set parameters(value: Intent.Parameter[] | undefined);
-	get nextPageToken(): string | undefined;
-	set nextPageToken(value: string | undefined);
+	get nextPageToken(): string;
+	set nextPageToken(value: string);
 	/**
 	 * Serialize message to binary data
 	 * @param instance message instance
@@ -6066,14 +6067,14 @@ export declare module ListParametersResponse {
 	 */
 	interface AsObject {
 		parameters?: Intent.Parameter.AsObject[];
-		nextPageToken?: string;
+		nextPageToken: string;
 	}
 	/**
 	 * Protobuf JSON representation for ListParametersResponse
 	 */
 	interface AsProtobufJSON {
-		parameters?: Intent.Parameter.AsProtobufJSON[] | null;
-		nextPageToken?: string;
+		parameters: Intent.Parameter.AsProtobufJSON[] | null;
+		nextPageToken: string;
 	}
 }
 /**
@@ -6109,23 +6110,23 @@ export declare class ListTrainingPhrasesofIntentsWithEnrichmentRequest implement
 		_instance: ListTrainingPhrasesofIntentsWithEnrichmentRequest,
 		_writer: BinaryWriter
 	): void;
-	private _parent?;
-	private _languageCode?;
-	private _intentIds?;
-	private _pageToken?;
+	private _parent;
+	private _languageCode;
+	private _intentIds;
+	private _pageToken;
 	/**
 	 * Message constructor. Initializes the properties and applies default Protobuf values if necessary
 	 * @param _value initial values object or instance of ListTrainingPhrasesofIntentsWithEnrichmentRequest to deeply clone from
 	 */
 	constructor(_value?: RecursivePartial<ListTrainingPhrasesofIntentsWithEnrichmentRequest.AsObject>);
-	get parent(): string | undefined;
-	set parent(value: string | undefined);
-	get languageCode(): string | undefined;
-	set languageCode(value: string | undefined);
-	get intentIds(): string[] | undefined;
-	set intentIds(value: string[] | undefined);
-	get pageToken(): string | undefined;
-	set pageToken(value: string | undefined);
+	get parent(): string;
+	set parent(value: string);
+	get languageCode(): string;
+	set languageCode(value: string);
+	get intentIds(): string[];
+	set intentIds(value: string[]);
+	get pageToken(): string;
+	set pageToken(value: string);
 	/**
 	 * Serialize message to binary data
 	 * @param instance message instance
@@ -6151,19 +6152,19 @@ export declare module ListTrainingPhrasesofIntentsWithEnrichmentRequest {
 	 * Standard JavaScript object representation for ListTrainingPhrasesofIntentsWithEnrichmentRequest
 	 */
 	interface AsObject {
-		parent?: string;
-		languageCode?: string;
-		intentIds?: string[];
-		pageToken?: string;
+		parent: string;
+		languageCode: string;
+		intentIds: string[];
+		pageToken: string;
 	}
 	/**
 	 * Protobuf JSON representation for ListTrainingPhrasesofIntentsWithEnrichmentRequest
 	 */
 	interface AsProtobufJSON {
-		parent?: string;
-		languageCode?: string;
-		intentIds?: string[];
-		pageToken?: string;
+		parent: string;
+		languageCode: string;
+		intentIds: string[];
+		pageToken: string;
 	}
 }
 /**
@@ -6199,17 +6200,17 @@ export declare class ListTrainingPhrasesofIntentsWithEnrichmentResponse implemen
 		_instance: ListTrainingPhrasesofIntentsWithEnrichmentResponse,
 		_writer: BinaryWriter
 	): void;
-	private _trainingPhrases?;
-	private _nextPageToken?;
+	private _trainingPhrases;
+	private _nextPageToken;
 	/**
 	 * Message constructor. Initializes the properties and applies default Protobuf values if necessary
 	 * @param _value initial values object or instance of ListTrainingPhrasesofIntentsWithEnrichmentResponse to deeply clone from
 	 */
 	constructor(_value?: RecursivePartial<ListTrainingPhrasesofIntentsWithEnrichmentResponse.AsObject>);
-	get trainingPhrases(): string[] | undefined;
-	set trainingPhrases(value: string[] | undefined);
-	get nextPageToken(): string | undefined;
-	set nextPageToken(value: string | undefined);
+	get trainingPhrases(): string[];
+	set trainingPhrases(value: string[]);
+	get nextPageToken(): string;
+	set nextPageToken(value: string);
 	/**
 	 * Serialize message to binary data
 	 * @param instance message instance
@@ -6235,14 +6236,14 @@ export declare module ListTrainingPhrasesofIntentsWithEnrichmentResponse {
 	 * Standard JavaScript object representation for ListTrainingPhrasesofIntentsWithEnrichmentResponse
 	 */
 	interface AsObject {
-		trainingPhrases?: string[];
-		nextPageToken?: string;
+		trainingPhrases: string[];
+		nextPageToken: string;
 	}
 	/**
 	 * Protobuf JSON representation for ListTrainingPhrasesofIntentsWithEnrichmentResponse
 	 */
 	interface AsProtobufJSON {
-		trainingPhrases?: string[];
-		nextPageToken?: string;
+		trainingPhrases: string[];
+		nextPageToken: string;
 	}
 }

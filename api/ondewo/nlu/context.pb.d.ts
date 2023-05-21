@@ -28,33 +28,25 @@ export declare class Context implements GrpcMessage {
 	 * @param _writer binary writer instance
 	 */
 	static serializeBinaryToWriter(_instance: Context, _writer: BinaryWriter): void;
-	private _name?;
-	private _lifespanCount?;
-	private _parameters?;
-	private _lifespanTime?;
+	private _name;
+	private _lifespanCount;
+	private _parameters;
+	private _lifespanTime;
 	/**
 	 * Message constructor. Initializes the properties and applies default Protobuf values if necessary
 	 * @param _value initial values object or instance of Context to deeply clone from
 	 */
 	constructor(_value?: RecursivePartial<Context.AsObject>);
-	get name(): string | undefined;
-	set name(value: string | undefined);
-	get lifespanCount(): number | undefined;
-	set lifespanCount(value: number | undefined);
-	get parameters():
-		| {
-				[prop: string]: Context.Parameter;
-		  }
-		| undefined;
-	set parameters(
-		value:
-			| {
-					[prop: string]: Context.Parameter;
-			  }
-			| undefined
-	);
-	get lifespanTime(): number | undefined;
-	set lifespanTime(value: number | undefined);
+	get name(): string;
+	set name(value: string);
+	get lifespanCount(): number;
+	set lifespanCount(value: number);
+	get parameters(): {
+		[prop: string]: Context.Parameter;
+	};
+	set parameters(value: { [prop: string]: Context.Parameter });
+	get lifespanTime(): number;
+	set lifespanTime(value: number);
 	/**
 	 * Serialize message to binary data
 	 * @param instance message instance
@@ -80,23 +72,23 @@ export declare module Context {
 	 * Standard JavaScript object representation for Context
 	 */
 	interface AsObject {
-		name?: string;
-		lifespanCount?: number;
-		parameters?: {
+		name: string;
+		lifespanCount: number;
+		parameters: {
 			[prop: string]: Context.Parameter;
 		};
-		lifespanTime?: number;
+		lifespanTime: number;
 	}
 	/**
 	 * Protobuf JSON representation for Context
 	 */
 	interface AsProtobufJSON {
-		name?: string;
-		lifespanCount?: number;
-		parameters?: {
+		name: string;
+		lifespanCount: number;
+		parameters: {
 			[prop: string]: Context.Parameter;
 		};
-		lifespanTime?: number;
+		lifespanTime: number;
 	}
 	/**
 	 * Message implementation for ondewo.nlu.Context.Parameter
@@ -125,23 +117,23 @@ export declare module Context {
 		 * @param _writer binary writer instance
 		 */
 		static serializeBinaryToWriter(_instance: Parameter, _writer: BinaryWriter): void;
-		private _name?;
-		private _displayName?;
-		private _value?;
-		private _valueOriginal?;
+		private _name;
+		private _displayName;
+		private _value;
+		private _valueOriginal;
 		/**
 		 * Message constructor. Initializes the properties and applies default Protobuf values if necessary
 		 * @param _value initial values object or instance of Parameter to deeply clone from
 		 */
 		constructor(_value?: RecursivePartial<Parameter.AsObject>);
-		get name(): string | undefined;
-		set name(value: string | undefined);
-		get displayName(): string | undefined;
-		set displayName(value: string | undefined);
-		get value(): string | undefined;
-		set value(value: string | undefined);
-		get valueOriginal(): string | undefined;
-		set valueOriginal(value: string | undefined);
+		get name(): string;
+		set name(value: string);
+		get displayName(): string;
+		set displayName(value: string);
+		get value(): string;
+		set value(value: string);
+		get valueOriginal(): string;
+		set valueOriginal(value: string);
 		/**
 		 * Serialize message to binary data
 		 * @param instance message instance
@@ -167,19 +159,19 @@ export declare module Context {
 		 * Standard JavaScript object representation for Parameter
 		 */
 		interface AsObject {
-			name?: string;
-			displayName?: string;
-			value?: string;
-			valueOriginal?: string;
+			name: string;
+			displayName: string;
+			value: string;
+			valueOriginal: string;
 		}
 		/**
 		 * Protobuf JSON representation for Parameter
 		 */
 		interface AsProtobufJSON {
-			name?: string;
-			displayName?: string;
-			value?: string;
-			valueOriginal?: string;
+			name: string;
+			displayName: string;
+			value: string;
+			valueOriginal: string;
 		}
 	}
 	/**
@@ -209,15 +201,15 @@ export declare module Context {
 		 * @param _writer binary writer instance
 		 */
 		static serializeBinaryToWriter(_instance: ParametersEntry, _writer: BinaryWriter): void;
-		private _key?;
+		private _key;
 		private _value?;
 		/**
 		 * Message constructor. Initializes the properties and applies default Protobuf values if necessary
 		 * @param _value initial values object or instance of ParametersEntry to deeply clone from
 		 */
 		constructor(_value?: RecursivePartial<ParametersEntry.AsObject>);
-		get key(): string | undefined;
-		set key(value: string | undefined);
+		get key(): string;
+		set key(value: string);
 		get value(): Context.Parameter | undefined;
 		set value(value: Context.Parameter | undefined);
 		/**
@@ -245,15 +237,15 @@ export declare module Context {
 		 * Standard JavaScript object representation for ParametersEntry
 		 */
 		interface AsObject {
-			key?: string;
+			key: string;
 			value?: Context.Parameter.AsObject;
 		}
 		/**
 		 * Protobuf JSON representation for ParametersEntry
 		 */
 		interface AsProtobufJSON {
-			key?: string;
-			value?: Context.Parameter.AsProtobufJSON | null;
+			key: string;
+			value: Context.Parameter.AsProtobufJSON | null;
 		}
 	}
 }
@@ -284,17 +276,17 @@ export declare class ListContextsRequest implements GrpcMessage {
 	 * @param _writer binary writer instance
 	 */
 	static serializeBinaryToWriter(_instance: ListContextsRequest, _writer: BinaryWriter): void;
-	private _parent?;
-	private _pageToken?;
+	private _sessionId;
+	private _pageToken;
 	/**
 	 * Message constructor. Initializes the properties and applies default Protobuf values if necessary
 	 * @param _value initial values object or instance of ListContextsRequest to deeply clone from
 	 */
 	constructor(_value?: RecursivePartial<ListContextsRequest.AsObject>);
-	get parent(): string | undefined;
-	set parent(value: string | undefined);
-	get pageToken(): string | undefined;
-	set pageToken(value: string | undefined);
+	get sessionId(): string;
+	set sessionId(value: string);
+	get pageToken(): string;
+	set pageToken(value: string);
 	/**
 	 * Serialize message to binary data
 	 * @param instance message instance
@@ -320,15 +312,15 @@ export declare module ListContextsRequest {
 	 * Standard JavaScript object representation for ListContextsRequest
 	 */
 	interface AsObject {
-		parent?: string;
-		pageToken?: string;
+		sessionId: string;
+		pageToken: string;
 	}
 	/**
 	 * Protobuf JSON representation for ListContextsRequest
 	 */
 	interface AsProtobufJSON {
-		parent?: string;
-		pageToken?: string;
+		sessionId: string;
+		pageToken: string;
 	}
 }
 /**
@@ -359,7 +351,7 @@ export declare class ListContextsResponse implements GrpcMessage {
 	 */
 	static serializeBinaryToWriter(_instance: ListContextsResponse, _writer: BinaryWriter): void;
 	private _contexts?;
-	private _nextPageToken?;
+	private _nextPageToken;
 	/**
 	 * Message constructor. Initializes the properties and applies default Protobuf values if necessary
 	 * @param _value initial values object or instance of ListContextsResponse to deeply clone from
@@ -367,8 +359,8 @@ export declare class ListContextsResponse implements GrpcMessage {
 	constructor(_value?: RecursivePartial<ListContextsResponse.AsObject>);
 	get contexts(): Context[] | undefined;
 	set contexts(value: Context[] | undefined);
-	get nextPageToken(): string | undefined;
-	set nextPageToken(value: string | undefined);
+	get nextPageToken(): string;
+	set nextPageToken(value: string);
 	/**
 	 * Serialize message to binary data
 	 * @param instance message instance
@@ -395,14 +387,14 @@ export declare module ListContextsResponse {
 	 */
 	interface AsObject {
 		contexts?: Context.AsObject[];
-		nextPageToken?: string;
+		nextPageToken: string;
 	}
 	/**
 	 * Protobuf JSON representation for ListContextsResponse
 	 */
 	interface AsProtobufJSON {
-		contexts?: Context.AsProtobufJSON[] | null;
-		nextPageToken?: string;
+		contexts: Context.AsProtobufJSON[] | null;
+		nextPageToken: string;
 	}
 }
 /**
@@ -432,14 +424,14 @@ export declare class GetContextRequest implements GrpcMessage {
 	 * @param _writer binary writer instance
 	 */
 	static serializeBinaryToWriter(_instance: GetContextRequest, _writer: BinaryWriter): void;
-	private _name?;
+	private _name;
 	/**
 	 * Message constructor. Initializes the properties and applies default Protobuf values if necessary
 	 * @param _value initial values object or instance of GetContextRequest to deeply clone from
 	 */
 	constructor(_value?: RecursivePartial<GetContextRequest.AsObject>);
-	get name(): string | undefined;
-	set name(value: string | undefined);
+	get name(): string;
+	set name(value: string);
 	/**
 	 * Serialize message to binary data
 	 * @param instance message instance
@@ -465,13 +457,13 @@ export declare module GetContextRequest {
 	 * Standard JavaScript object representation for GetContextRequest
 	 */
 	interface AsObject {
-		name?: string;
+		name: string;
 	}
 	/**
 	 * Protobuf JSON representation for GetContextRequest
 	 */
 	interface AsProtobufJSON {
-		name?: string;
+		name: string;
 	}
 }
 /**
@@ -501,15 +493,15 @@ export declare class CreateContextRequest implements GrpcMessage {
 	 * @param _writer binary writer instance
 	 */
 	static serializeBinaryToWriter(_instance: CreateContextRequest, _writer: BinaryWriter): void;
-	private _parent?;
+	private _sessionId;
 	private _context?;
 	/**
 	 * Message constructor. Initializes the properties and applies default Protobuf values if necessary
 	 * @param _value initial values object or instance of CreateContextRequest to deeply clone from
 	 */
 	constructor(_value?: RecursivePartial<CreateContextRequest.AsObject>);
-	get parent(): string | undefined;
-	set parent(value: string | undefined);
+	get sessionId(): string;
+	set sessionId(value: string);
 	get context(): Context | undefined;
 	set context(value: Context | undefined);
 	/**
@@ -537,15 +529,15 @@ export declare module CreateContextRequest {
 	 * Standard JavaScript object representation for CreateContextRequest
 	 */
 	interface AsObject {
-		parent?: string;
+		sessionId: string;
 		context?: Context.AsObject;
 	}
 	/**
 	 * Protobuf JSON representation for CreateContextRequest
 	 */
 	interface AsProtobufJSON {
-		parent?: string;
-		context?: Context.AsProtobufJSON | null;
+		sessionId: string;
+		context: Context.AsProtobufJSON | null;
 	}
 }
 /**
@@ -618,8 +610,8 @@ export declare module UpdateContextRequest {
 	 * Protobuf JSON representation for UpdateContextRequest
 	 */
 	interface AsProtobufJSON {
-		context?: Context.AsProtobufJSON | null;
-		updateMask?: googleProtobuf004.FieldMask.AsProtobufJSON | null;
+		context: Context.AsProtobufJSON | null;
+		updateMask: googleProtobuf004.FieldMask.AsProtobufJSON | null;
 	}
 }
 /**
@@ -649,14 +641,14 @@ export declare class DeleteContextRequest implements GrpcMessage {
 	 * @param _writer binary writer instance
 	 */
 	static serializeBinaryToWriter(_instance: DeleteContextRequest, _writer: BinaryWriter): void;
-	private _name?;
+	private _name;
 	/**
 	 * Message constructor. Initializes the properties and applies default Protobuf values if necessary
 	 * @param _value initial values object or instance of DeleteContextRequest to deeply clone from
 	 */
 	constructor(_value?: RecursivePartial<DeleteContextRequest.AsObject>);
-	get name(): string | undefined;
-	set name(value: string | undefined);
+	get name(): string;
+	set name(value: string);
 	/**
 	 * Serialize message to binary data
 	 * @param instance message instance
@@ -682,13 +674,13 @@ export declare module DeleteContextRequest {
 	 * Standard JavaScript object representation for DeleteContextRequest
 	 */
 	interface AsObject {
-		name?: string;
+		name: string;
 	}
 	/**
 	 * Protobuf JSON representation for DeleteContextRequest
 	 */
 	interface AsProtobufJSON {
-		name?: string;
+		name: string;
 	}
 }
 /**
@@ -718,14 +710,14 @@ export declare class DeleteAllContextsRequest implements GrpcMessage {
 	 * @param _writer binary writer instance
 	 */
 	static serializeBinaryToWriter(_instance: DeleteAllContextsRequest, _writer: BinaryWriter): void;
-	private _parent?;
+	private _sessionId;
 	/**
 	 * Message constructor. Initializes the properties and applies default Protobuf values if necessary
 	 * @param _value initial values object or instance of DeleteAllContextsRequest to deeply clone from
 	 */
 	constructor(_value?: RecursivePartial<DeleteAllContextsRequest.AsObject>);
-	get parent(): string | undefined;
-	set parent(value: string | undefined);
+	get sessionId(): string;
+	set sessionId(value: string);
 	/**
 	 * Serialize message to binary data
 	 * @param instance message instance
@@ -751,12 +743,12 @@ export declare module DeleteAllContextsRequest {
 	 * Standard JavaScript object representation for DeleteAllContextsRequest
 	 */
 	interface AsObject {
-		parent?: string;
+		sessionId: string;
 	}
 	/**
 	 * Protobuf JSON representation for DeleteAllContextsRequest
 	 */
 	interface AsProtobufJSON {
-		parent?: string;
+		sessionId: string;
 	}
 }

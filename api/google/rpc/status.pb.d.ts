@@ -28,18 +28,18 @@ export declare class Status implements GrpcMessage {
 	 * @param _writer binary writer instance
 	 */
 	static serializeBinaryToWriter(_instance: Status, _writer: BinaryWriter): void;
-	private _code?;
-	private _message?;
+	private _code;
+	private _message;
 	private _details?;
 	/**
 	 * Message constructor. Initializes the properties and applies default Protobuf values if necessary
 	 * @param _value initial values object or instance of Status to deeply clone from
 	 */
 	constructor(_value?: RecursivePartial<Status.AsObject>);
-	get code(): number | undefined;
-	set code(value: number | undefined);
-	get message(): string | undefined;
-	set message(value: string | undefined);
+	get code(): number;
+	set code(value: number);
+	get message(): string;
+	set message(value: string);
 	get details(): googleProtobuf000.Any[] | undefined;
 	set details(value: googleProtobuf000.Any[] | undefined);
 	/**
@@ -67,16 +67,16 @@ export declare module Status {
 	 * Standard JavaScript object representation for Status
 	 */
 	interface AsObject {
-		code?: number;
-		message?: string;
+		code: number;
+		message: string;
 		details?: googleProtobuf000.Any.AsObject[];
 	}
 	/**
 	 * Protobuf JSON representation for Status
 	 */
 	interface AsProtobufJSON {
-		code?: number;
-		message?: string;
-		details?: googleProtobuf000.Any.AsProtobufJSON[] | null;
+		code: number;
+		message: string;
+		details: googleProtobuf000.Any.AsProtobufJSON[] | null;
 	}
 }

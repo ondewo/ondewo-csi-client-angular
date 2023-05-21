@@ -27,14 +27,14 @@ export declare class GetUserProjectCountRequest implements GrpcMessage {
 	 * @param _writer binary writer instance
 	 */
 	static serializeBinaryToWriter(_instance: GetUserProjectCountRequest, _writer: BinaryWriter): void;
-	private _userId?;
+	private _userId;
 	/**
 	 * Message constructor. Initializes the properties and applies default Protobuf values if necessary
 	 * @param _value initial values object or instance of GetUserProjectCountRequest to deeply clone from
 	 */
 	constructor(_value?: RecursivePartial<GetUserProjectCountRequest.AsObject>);
-	get userId(): string | undefined;
-	set userId(value: string | undefined);
+	get userId(): string;
+	set userId(value: string);
 	/**
 	 * Serialize message to binary data
 	 * @param instance message instance
@@ -60,12 +60,12 @@ export declare module GetUserProjectCountRequest {
 	 * Standard JavaScript object representation for GetUserProjectCountRequest
 	 */
 	interface AsObject {
-		userId?: string;
+		userId: string;
 	}
 	/**
 	 * Protobuf JSON representation for GetUserProjectCountRequest
 	 */
 	interface AsProtobufJSON {
-		userId?: string;
+		userId: string;
 	}
 }

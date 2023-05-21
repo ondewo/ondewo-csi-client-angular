@@ -36,14 +36,14 @@ export declare class ValidateRegexRequest implements GrpcMessage {
 	 * @param _writer binary writer instance
 	 */
 	static serializeBinaryToWriter(_instance: ValidateRegexRequest, _writer: BinaryWriter): void;
-	private _regex?;
+	private _regex;
 	/**
 	 * Message constructor. Initializes the properties and applies default Protobuf values if necessary
 	 * @param _value initial values object or instance of ValidateRegexRequest to deeply clone from
 	 */
 	constructor(_value?: RecursivePartial<ValidateRegexRequest.AsObject>);
-	get regex(): string | undefined;
-	set regex(value: string | undefined);
+	get regex(): string;
+	set regex(value: string);
 	/**
 	 * Serialize message to binary data
 	 * @param instance message instance
@@ -69,13 +69,13 @@ export declare module ValidateRegexRequest {
 	 * Standard JavaScript object representation for ValidateRegexRequest
 	 */
 	interface AsObject {
-		regex?: string;
+		regex: string;
 	}
 	/**
 	 * Protobuf JSON representation for ValidateRegexRequest
 	 */
 	interface AsProtobufJSON {
-		regex?: string;
+		regex: string;
 	}
 }
 /**
@@ -105,14 +105,14 @@ export declare class ValidateRegexResponse implements GrpcMessage {
 	 * @param _writer binary writer instance
 	 */
 	static serializeBinaryToWriter(_instance: ValidateRegexResponse, _writer: BinaryWriter): void;
-	private _errorMessages?;
+	private _errorMessages;
 	/**
 	 * Message constructor. Initializes the properties and applies default Protobuf values if necessary
 	 * @param _value initial values object or instance of ValidateRegexResponse to deeply clone from
 	 */
 	constructor(_value?: RecursivePartial<ValidateRegexResponse.AsObject>);
-	get errorMessages(): string[] | undefined;
-	set errorMessages(value: string[] | undefined);
+	get errorMessages(): string[];
+	set errorMessages(value: string[]);
 	/**
 	 * Serialize message to binary data
 	 * @param instance message instance
@@ -138,13 +138,13 @@ export declare module ValidateRegexResponse {
 	 * Standard JavaScript object representation for ValidateRegexResponse
 	 */
 	interface AsObject {
-		errorMessages?: string[];
+		errorMessages: string[];
 	}
 	/**
 	 * Protobuf JSON representation for ValidateRegexResponse
 	 */
 	interface AsProtobufJSON {
-		errorMessages?: string[];
+		errorMessages: string[];
 	}
 }
 /**
@@ -213,7 +213,7 @@ export declare module ValidateEmbeddedRegexRequest {
 	 * Protobuf JSON representation for ValidateEmbeddedRegexRequest
 	 */
 	interface AsProtobufJSON {
-		entityType?: ondewoNlu009.EntityType.Entity.AsProtobufJSON | null;
+		entityType: ondewoNlu009.EntityType.Entity.AsProtobufJSON | null;
 	}
 }
 /**
@@ -243,14 +243,14 @@ export declare class ValidateEmbeddedRegexResponse implements GrpcMessage {
 	 * @param _writer binary writer instance
 	 */
 	static serializeBinaryToWriter(_instance: ValidateEmbeddedRegexResponse, _writer: BinaryWriter): void;
-	private _errorMessages?;
+	private _errorMessages;
 	/**
 	 * Message constructor. Initializes the properties and applies default Protobuf values if necessary
 	 * @param _value initial values object or instance of ValidateEmbeddedRegexResponse to deeply clone from
 	 */
 	constructor(_value?: RecursivePartial<ValidateEmbeddedRegexResponse.AsObject>);
-	get errorMessages(): string[] | undefined;
-	set errorMessages(value: string[] | undefined);
+	get errorMessages(): string[];
+	set errorMessages(value: string[]);
 	/**
 	 * Serialize message to binary data
 	 * @param instance message instance
@@ -276,13 +276,13 @@ export declare module ValidateEmbeddedRegexResponse {
 	 * Standard JavaScript object representation for ValidateEmbeddedRegexResponse
 	 */
 	interface AsObject {
-		errorMessages?: string[];
+		errorMessages: string[];
 	}
 	/**
 	 * Protobuf JSON representation for ValidateEmbeddedRegexResponse
 	 */
 	interface AsProtobufJSON {
-		errorMessages?: string[];
+		errorMessages: string[];
 	}
 }
 /**
@@ -312,35 +312,35 @@ export declare class CleanAllIntentsRequest implements GrpcMessage {
 	 * @param _writer binary writer instance
 	 */
 	static serializeBinaryToWriter(_instance: CleanAllIntentsRequest, _writer: BinaryWriter): void;
-	private _parent?;
-	private _languageCode?;
-	private _specialCharacters?;
-	private _substringWhiteList?;
-	private _dryRun?;
+	private _parent;
+	private _languageCode;
+	private _specialCharacters;
+	private _substringWhiteList;
+	private _dryRun;
 	private _trainingPhraseCleanerOptions?;
-	private _reannotateEntitiesOptions?;
-	private _numberOfWorkers?;
+	private _reannotateEntitiesOptions;
+	private _numberOfWorkers;
 	/**
 	 * Message constructor. Initializes the properties and applies default Protobuf values if necessary
 	 * @param _value initial values object or instance of CleanAllIntentsRequest to deeply clone from
 	 */
 	constructor(_value?: RecursivePartial<CleanAllIntentsRequest.AsObject>);
-	get parent(): string | undefined;
-	set parent(value: string | undefined);
-	get languageCode(): string | undefined;
-	set languageCode(value: string | undefined);
-	get specialCharacters(): string | undefined;
-	set specialCharacters(value: string | undefined);
-	get substringWhiteList(): string[] | undefined;
-	set substringWhiteList(value: string[] | undefined);
-	get dryRun(): boolean | undefined;
-	set dryRun(value: boolean | undefined);
+	get parent(): string;
+	set parent(value: string);
+	get languageCode(): string;
+	set languageCode(value: string);
+	get specialCharacters(): string;
+	set specialCharacters(value: string);
+	get substringWhiteList(): string[];
+	set substringWhiteList(value: string[]);
+	get dryRun(): boolean;
+	set dryRun(value: boolean);
 	get trainingPhraseCleanerOptions(): TrainingPhraseCleanerOptions | undefined;
 	set trainingPhraseCleanerOptions(value: TrainingPhraseCleanerOptions | undefined);
-	get reannotateEntitiesOptions(): ReannotateEntitiesOptions | undefined;
-	set reannotateEntitiesOptions(value: ReannotateEntitiesOptions | undefined);
-	get numberOfWorkers(): number | undefined;
-	set numberOfWorkers(value: number | undefined);
+	get reannotateEntitiesOptions(): ReannotateEntitiesOptions;
+	set reannotateEntitiesOptions(value: ReannotateEntitiesOptions);
+	get numberOfWorkers(): number;
+	set numberOfWorkers(value: number);
 	/**
 	 * Serialize message to binary data
 	 * @param instance message instance
@@ -366,27 +366,27 @@ export declare module CleanAllIntentsRequest {
 	 * Standard JavaScript object representation for CleanAllIntentsRequest
 	 */
 	interface AsObject {
-		parent?: string;
-		languageCode?: string;
-		specialCharacters?: string;
-		substringWhiteList?: string[];
-		dryRun?: boolean;
+		parent: string;
+		languageCode: string;
+		specialCharacters: string;
+		substringWhiteList: string[];
+		dryRun: boolean;
 		trainingPhraseCleanerOptions?: TrainingPhraseCleanerOptions.AsObject;
-		reannotateEntitiesOptions?: ReannotateEntitiesOptions;
-		numberOfWorkers?: number;
+		reannotateEntitiesOptions: ReannotateEntitiesOptions;
+		numberOfWorkers: number;
 	}
 	/**
 	 * Protobuf JSON representation for CleanAllIntentsRequest
 	 */
 	interface AsProtobufJSON {
-		parent?: string;
-		languageCode?: string;
-		specialCharacters?: string;
-		substringWhiteList?: string[];
-		dryRun?: boolean;
-		trainingPhraseCleanerOptions?: TrainingPhraseCleanerOptions.AsProtobufJSON | null;
-		reannotateEntitiesOptions?: string;
-		numberOfWorkers?: number;
+		parent: string;
+		languageCode: string;
+		specialCharacters: string;
+		substringWhiteList: string[];
+		dryRun: boolean;
+		trainingPhraseCleanerOptions: TrainingPhraseCleanerOptions.AsProtobufJSON | null;
+		reannotateEntitiesOptions: string;
+		numberOfWorkers: number;
 	}
 }
 /**
@@ -459,8 +459,8 @@ export declare module CleanAllIntentsResponse {
 	 * Protobuf JSON representation for CleanAllIntentsResponse
 	 */
 	interface AsProtobufJSON {
-		cleanedIntents?: ondewoNlu008.Intent.AsProtobufJSON[] | null;
-		intentUpdateList?: IntentUpdate.AsProtobufJSON[] | null;
+		cleanedIntents: ondewoNlu008.Intent.AsProtobufJSON[] | null;
+		intentUpdateList: IntentUpdate.AsProtobufJSON[] | null;
 	}
 }
 /**
@@ -490,35 +490,35 @@ export declare class CleanIntentRequest implements GrpcMessage {
 	 * @param _writer binary writer instance
 	 */
 	static serializeBinaryToWriter(_instance: CleanIntentRequest, _writer: BinaryWriter): void;
-	private _parent?;
-	private _intentName?;
-	private _languageCode?;
-	private _specialCharacters?;
-	private _substringWhiteList?;
-	private _dryRun?;
+	private _parent;
+	private _intentName;
+	private _languageCode;
+	private _specialCharacters;
+	private _substringWhiteList;
+	private _dryRun;
 	private _trainingPhraseCleanerOptions?;
-	private _reannotateEntitiesOptions?;
+	private _reannotateEntitiesOptions;
 	/**
 	 * Message constructor. Initializes the properties and applies default Protobuf values if necessary
 	 * @param _value initial values object or instance of CleanIntentRequest to deeply clone from
 	 */
 	constructor(_value?: RecursivePartial<CleanIntentRequest.AsObject>);
-	get parent(): string | undefined;
-	set parent(value: string | undefined);
-	get intentName(): string | undefined;
-	set intentName(value: string | undefined);
-	get languageCode(): string | undefined;
-	set languageCode(value: string | undefined);
-	get specialCharacters(): string | undefined;
-	set specialCharacters(value: string | undefined);
-	get substringWhiteList(): string[] | undefined;
-	set substringWhiteList(value: string[] | undefined);
-	get dryRun(): boolean | undefined;
-	set dryRun(value: boolean | undefined);
+	get parent(): string;
+	set parent(value: string);
+	get intentName(): string;
+	set intentName(value: string);
+	get languageCode(): string;
+	set languageCode(value: string);
+	get specialCharacters(): string;
+	set specialCharacters(value: string);
+	get substringWhiteList(): string[];
+	set substringWhiteList(value: string[]);
+	get dryRun(): boolean;
+	set dryRun(value: boolean);
 	get trainingPhraseCleanerOptions(): TrainingPhraseCleanerOptions | undefined;
 	set trainingPhraseCleanerOptions(value: TrainingPhraseCleanerOptions | undefined);
-	get reannotateEntitiesOptions(): ReannotateEntitiesOptions | undefined;
-	set reannotateEntitiesOptions(value: ReannotateEntitiesOptions | undefined);
+	get reannotateEntitiesOptions(): ReannotateEntitiesOptions;
+	set reannotateEntitiesOptions(value: ReannotateEntitiesOptions);
 	/**
 	 * Serialize message to binary data
 	 * @param instance message instance
@@ -544,27 +544,27 @@ export declare module CleanIntentRequest {
 	 * Standard JavaScript object representation for CleanIntentRequest
 	 */
 	interface AsObject {
-		parent?: string;
-		intentName?: string;
-		languageCode?: string;
-		specialCharacters?: string;
-		substringWhiteList?: string[];
-		dryRun?: boolean;
+		parent: string;
+		intentName: string;
+		languageCode: string;
+		specialCharacters: string;
+		substringWhiteList: string[];
+		dryRun: boolean;
 		trainingPhraseCleanerOptions?: TrainingPhraseCleanerOptions.AsObject;
-		reannotateEntitiesOptions?: ReannotateEntitiesOptions;
+		reannotateEntitiesOptions: ReannotateEntitiesOptions;
 	}
 	/**
 	 * Protobuf JSON representation for CleanIntentRequest
 	 */
 	interface AsProtobufJSON {
-		parent?: string;
-		intentName?: string;
-		languageCode?: string;
-		specialCharacters?: string;
-		substringWhiteList?: string[];
-		dryRun?: boolean;
-		trainingPhraseCleanerOptions?: TrainingPhraseCleanerOptions.AsProtobufJSON | null;
-		reannotateEntitiesOptions?: string;
+		parent: string;
+		intentName: string;
+		languageCode: string;
+		specialCharacters: string;
+		substringWhiteList: string[];
+		dryRun: boolean;
+		trainingPhraseCleanerOptions: TrainingPhraseCleanerOptions.AsProtobufJSON | null;
+		reannotateEntitiesOptions: string;
 	}
 }
 /**
@@ -637,8 +637,8 @@ export declare module CleanIntentResponse {
 	 * Protobuf JSON representation for CleanIntentResponse
 	 */
 	interface AsProtobufJSON {
-		cleanedIntent?: ondewoNlu008.Intent.AsProtobufJSON | null;
-		intentUpdate?: IntentUpdate.AsProtobufJSON | null;
+		cleanedIntent: ondewoNlu008.Intent.AsProtobufJSON | null;
+		intentUpdate: IntentUpdate.AsProtobufJSON | null;
 	}
 }
 /**
@@ -668,20 +668,20 @@ export declare class TrainingPhraseCleanerOptions implements GrpcMessage {
 	 * @param _writer binary writer instance
 	 */
 	static serializeBinaryToWriter(_instance: TrainingPhraseCleanerOptions, _writer: BinaryWriter): void;
-	private _deleteRepeatedWhitespaces?;
-	private _deleteLeadingSpecialCharacters?;
-	private _deleteTrailingSpecialCharacters?;
+	private _deleteRepeatedWhitespaces;
+	private _deleteLeadingSpecialCharacters;
+	private _deleteTrailingSpecialCharacters;
 	/**
 	 * Message constructor. Initializes the properties and applies default Protobuf values if necessary
 	 * @param _value initial values object or instance of TrainingPhraseCleanerOptions to deeply clone from
 	 */
 	constructor(_value?: RecursivePartial<TrainingPhraseCleanerOptions.AsObject>);
-	get deleteRepeatedWhitespaces(): boolean | undefined;
-	set deleteRepeatedWhitespaces(value: boolean | undefined);
-	get deleteLeadingSpecialCharacters(): boolean | undefined;
-	set deleteLeadingSpecialCharacters(value: boolean | undefined);
-	get deleteTrailingSpecialCharacters(): boolean | undefined;
-	set deleteTrailingSpecialCharacters(value: boolean | undefined);
+	get deleteRepeatedWhitespaces(): boolean;
+	set deleteRepeatedWhitespaces(value: boolean);
+	get deleteLeadingSpecialCharacters(): boolean;
+	set deleteLeadingSpecialCharacters(value: boolean);
+	get deleteTrailingSpecialCharacters(): boolean;
+	set deleteTrailingSpecialCharacters(value: boolean);
 	/**
 	 * Serialize message to binary data
 	 * @param instance message instance
@@ -707,17 +707,17 @@ export declare module TrainingPhraseCleanerOptions {
 	 * Standard JavaScript object representation for TrainingPhraseCleanerOptions
 	 */
 	interface AsObject {
-		deleteRepeatedWhitespaces?: boolean;
-		deleteLeadingSpecialCharacters?: boolean;
-		deleteTrailingSpecialCharacters?: boolean;
+		deleteRepeatedWhitespaces: boolean;
+		deleteLeadingSpecialCharacters: boolean;
+		deleteTrailingSpecialCharacters: boolean;
 	}
 	/**
 	 * Protobuf JSON representation for TrainingPhraseCleanerOptions
 	 */
 	interface AsProtobufJSON {
-		deleteRepeatedWhitespaces?: boolean;
-		deleteLeadingSpecialCharacters?: boolean;
-		deleteTrailingSpecialCharacters?: boolean;
+		deleteRepeatedWhitespaces: boolean;
+		deleteLeadingSpecialCharacters: boolean;
+		deleteTrailingSpecialCharacters: boolean;
 	}
 }
 /**
@@ -747,17 +747,17 @@ export declare class StringUpdate implements GrpcMessage {
 	 * @param _writer binary writer instance
 	 */
 	static serializeBinaryToWriter(_instance: StringUpdate, _writer: BinaryWriter): void;
-	private _new?;
-	private _old?;
+	private _new;
+	private _old;
 	/**
 	 * Message constructor. Initializes the properties and applies default Protobuf values if necessary
 	 * @param _value initial values object or instance of StringUpdate to deeply clone from
 	 */
 	constructor(_value?: RecursivePartial<StringUpdate.AsObject>);
-	get new(): string | undefined;
-	set new(value: string | undefined);
-	get old(): string | undefined;
-	set old(value: string | undefined);
+	get new(): string;
+	set new(value: string);
+	get old(): string;
+	set old(value: string);
 	/**
 	 * Serialize message to binary data
 	 * @param instance message instance
@@ -783,15 +783,15 @@ export declare module StringUpdate {
 	 * Standard JavaScript object representation for StringUpdate
 	 */
 	interface AsObject {
-		new?: string;
-		old?: string;
+		new: string;
+		old: string;
 	}
 	/**
 	 * Protobuf JSON representation for StringUpdate
 	 */
 	interface AsProtobufJSON {
-		new?: string;
-		old?: string;
+		new: string;
+		old: string;
 	}
 }
 /**
@@ -821,20 +821,20 @@ export declare class IntentUpdate implements GrpcMessage {
 	 * @param _writer binary writer instance
 	 */
 	static serializeBinaryToWriter(_instance: IntentUpdate, _writer: BinaryWriter): void;
-	private _intentDisplayName?;
+	private _intentDisplayName;
 	private _trainingPhraseUpdateList?;
-	private _deletedParameters?;
+	private _deletedParameters;
 	/**
 	 * Message constructor. Initializes the properties and applies default Protobuf values if necessary
 	 * @param _value initial values object or instance of IntentUpdate to deeply clone from
 	 */
 	constructor(_value?: RecursivePartial<IntentUpdate.AsObject>);
-	get intentDisplayName(): string | undefined;
-	set intentDisplayName(value: string | undefined);
+	get intentDisplayName(): string;
+	set intentDisplayName(value: string);
 	get trainingPhraseUpdateList(): IntentUpdate.TrainingPhraseUpdate[] | undefined;
 	set trainingPhraseUpdateList(value: IntentUpdate.TrainingPhraseUpdate[] | undefined);
-	get deletedParameters(): string[] | undefined;
-	set deletedParameters(value: string[] | undefined);
+	get deletedParameters(): string[];
+	set deletedParameters(value: string[]);
 	/**
 	 * Serialize message to binary data
 	 * @param instance message instance
@@ -860,17 +860,17 @@ export declare module IntentUpdate {
 	 * Standard JavaScript object representation for IntentUpdate
 	 */
 	interface AsObject {
-		intentDisplayName?: string;
+		intentDisplayName: string;
 		trainingPhraseUpdateList?: IntentUpdate.TrainingPhraseUpdate.AsObject[];
-		deletedParameters?: string[];
+		deletedParameters: string[];
 	}
 	/**
 	 * Protobuf JSON representation for IntentUpdate
 	 */
 	interface AsProtobufJSON {
-		intentDisplayName?: string;
-		trainingPhraseUpdateList?: IntentUpdate.TrainingPhraseUpdate.AsProtobufJSON[] | null;
-		deletedParameters?: string[];
+		intentDisplayName: string;
+		trainingPhraseUpdateList: IntentUpdate.TrainingPhraseUpdate.AsProtobufJSON[] | null;
+		deletedParameters: string[];
 	}
 	/**
 	 * Message implementation for ondewo.nlu.IntentUpdate.TrainingPhraseUpdate
@@ -901,8 +901,8 @@ export declare module IntentUpdate {
 		static serializeBinaryToWriter(_instance: TrainingPhraseUpdate, _writer: BinaryWriter): void;
 		private _trainingPhraseUpdate?;
 		private _entityUpdates?;
-		private _entitiesReannotated?;
-		private _containsUpdateVariable?;
+		private _entitiesReannotated;
+		private _containsUpdateVariable;
 		/**
 		 * Message constructor. Initializes the properties and applies default Protobuf values if necessary
 		 * @param _value initial values object or instance of TrainingPhraseUpdate to deeply clone from
@@ -912,10 +912,10 @@ export declare module IntentUpdate {
 		set trainingPhraseUpdate(value: StringUpdate | undefined);
 		get entityUpdates(): StringUpdate[] | undefined;
 		set entityUpdates(value: StringUpdate[] | undefined);
-		get entitiesReannotated(): string[] | undefined;
-		set entitiesReannotated(value: string[] | undefined);
-		get containsUpdateVariable(): boolean | undefined;
-		set containsUpdateVariable(value: boolean | undefined);
+		get entitiesReannotated(): string[];
+		set entitiesReannotated(value: string[]);
+		get containsUpdateVariable(): boolean;
+		set containsUpdateVariable(value: boolean);
 		/**
 		 * Serialize message to binary data
 		 * @param instance message instance
@@ -943,17 +943,17 @@ export declare module IntentUpdate {
 		interface AsObject {
 			trainingPhraseUpdate?: StringUpdate.AsObject;
 			entityUpdates?: StringUpdate.AsObject[];
-			entitiesReannotated?: string[];
-			containsUpdateVariable?: boolean;
+			entitiesReannotated: string[];
+			containsUpdateVariable: boolean;
 		}
 		/**
 		 * Protobuf JSON representation for TrainingPhraseUpdate
 		 */
 		interface AsProtobufJSON {
-			trainingPhraseUpdate?: StringUpdate.AsProtobufJSON | null;
-			entityUpdates?: StringUpdate.AsProtobufJSON[] | null;
-			entitiesReannotated?: string[];
-			containsUpdateVariable?: boolean;
+			trainingPhraseUpdate: StringUpdate.AsProtobufJSON | null;
+			entityUpdates: StringUpdate.AsProtobufJSON[] | null;
+			entitiesReannotated: string[];
+			containsUpdateVariable: boolean;
 		}
 	}
 }
@@ -984,15 +984,15 @@ export declare class EntityTypeUpdate implements GrpcMessage {
 	 * @param _writer binary writer instance
 	 */
 	static serializeBinaryToWriter(_instance: EntityTypeUpdate, _writer: BinaryWriter): void;
-	private _entityTypeName?;
+	private _entityTypeName;
 	private _valuesUpdateList?;
 	/**
 	 * Message constructor. Initializes the properties and applies default Protobuf values if necessary
 	 * @param _value initial values object or instance of EntityTypeUpdate to deeply clone from
 	 */
 	constructor(_value?: RecursivePartial<EntityTypeUpdate.AsObject>);
-	get entityTypeName(): string | undefined;
-	set entityTypeName(value: string | undefined);
+	get entityTypeName(): string;
+	set entityTypeName(value: string);
 	get valuesUpdateList(): EntityTypeUpdate.EntityUpdate[] | undefined;
 	set valuesUpdateList(value: EntityTypeUpdate.EntityUpdate[] | undefined);
 	/**
@@ -1020,15 +1020,15 @@ export declare module EntityTypeUpdate {
 	 * Standard JavaScript object representation for EntityTypeUpdate
 	 */
 	interface AsObject {
-		entityTypeName?: string;
+		entityTypeName: string;
 		valuesUpdateList?: EntityTypeUpdate.EntityUpdate.AsObject[];
 	}
 	/**
 	 * Protobuf JSON representation for EntityTypeUpdate
 	 */
 	interface AsProtobufJSON {
-		entityTypeName?: string;
-		valuesUpdateList?: EntityTypeUpdate.EntityUpdate.AsProtobufJSON[] | null;
+		entityTypeName: string;
+		valuesUpdateList: EntityTypeUpdate.EntityUpdate.AsProtobufJSON[] | null;
 	}
 	/**
 	 * Message implementation for ondewo.nlu.EntityTypeUpdate.EntityUpdate
@@ -1100,8 +1100,8 @@ export declare module EntityTypeUpdate {
 		 * Protobuf JSON representation for EntityUpdate
 		 */
 		interface AsProtobufJSON {
-			entityValueUpdate?: StringUpdate.AsProtobufJSON | null;
-			entitySynonymUpdates?: StringUpdate.AsProtobufJSON[] | null;
+			entityValueUpdate: StringUpdate.AsProtobufJSON | null;
+			entitySynonymUpdates: StringUpdate.AsProtobufJSON[] | null;
 		}
 	}
 }
@@ -1132,35 +1132,35 @@ export declare class CleanAllEntityTypesRequest implements GrpcMessage {
 	 * @param _writer binary writer instance
 	 */
 	static serializeBinaryToWriter(_instance: CleanAllEntityTypesRequest, _writer: BinaryWriter): void;
-	private _parent?;
-	private _languageCode?;
-	private _specialCharacters?;
-	private _substringWhiteList?;
-	private _maxEntityCountUpdate?;
-	private _forbiddenEntityTypePatterns?;
-	private _dryRun?;
-	private _numberOfWorkers?;
+	private _parent;
+	private _languageCode;
+	private _specialCharacters;
+	private _substringWhiteList;
+	private _maxEntityCountUpdate;
+	private _forbiddenEntityTypePatterns;
+	private _dryRun;
+	private _numberOfWorkers;
 	/**
 	 * Message constructor. Initializes the properties and applies default Protobuf values if necessary
 	 * @param _value initial values object or instance of CleanAllEntityTypesRequest to deeply clone from
 	 */
 	constructor(_value?: RecursivePartial<CleanAllEntityTypesRequest.AsObject>);
-	get parent(): string | undefined;
-	set parent(value: string | undefined);
-	get languageCode(): string | undefined;
-	set languageCode(value: string | undefined);
-	get specialCharacters(): string | undefined;
-	set specialCharacters(value: string | undefined);
-	get substringWhiteList(): string[] | undefined;
-	set substringWhiteList(value: string[] | undefined);
-	get maxEntityCountUpdate(): number | undefined;
-	set maxEntityCountUpdate(value: number | undefined);
-	get forbiddenEntityTypePatterns(): string[] | undefined;
-	set forbiddenEntityTypePatterns(value: string[] | undefined);
-	get dryRun(): boolean | undefined;
-	set dryRun(value: boolean | undefined);
-	get numberOfWorkers(): number | undefined;
-	set numberOfWorkers(value: number | undefined);
+	get parent(): string;
+	set parent(value: string);
+	get languageCode(): string;
+	set languageCode(value: string);
+	get specialCharacters(): string;
+	set specialCharacters(value: string);
+	get substringWhiteList(): string[];
+	set substringWhiteList(value: string[]);
+	get maxEntityCountUpdate(): number;
+	set maxEntityCountUpdate(value: number);
+	get forbiddenEntityTypePatterns(): string[];
+	set forbiddenEntityTypePatterns(value: string[]);
+	get dryRun(): boolean;
+	set dryRun(value: boolean);
+	get numberOfWorkers(): number;
+	set numberOfWorkers(value: number);
 	/**
 	 * Serialize message to binary data
 	 * @param instance message instance
@@ -1186,27 +1186,27 @@ export declare module CleanAllEntityTypesRequest {
 	 * Standard JavaScript object representation for CleanAllEntityTypesRequest
 	 */
 	interface AsObject {
-		parent?: string;
-		languageCode?: string;
-		specialCharacters?: string;
-		substringWhiteList?: string[];
-		maxEntityCountUpdate?: number;
-		forbiddenEntityTypePatterns?: string[];
-		dryRun?: boolean;
-		numberOfWorkers?: number;
+		parent: string;
+		languageCode: string;
+		specialCharacters: string;
+		substringWhiteList: string[];
+		maxEntityCountUpdate: number;
+		forbiddenEntityTypePatterns: string[];
+		dryRun: boolean;
+		numberOfWorkers: number;
 	}
 	/**
 	 * Protobuf JSON representation for CleanAllEntityTypesRequest
 	 */
 	interface AsProtobufJSON {
-		parent?: string;
-		languageCode?: string;
-		specialCharacters?: string;
-		substringWhiteList?: string[];
-		maxEntityCountUpdate?: number;
-		forbiddenEntityTypePatterns?: string[];
-		dryRun?: boolean;
-		numberOfWorkers?: number;
+		parent: string;
+		languageCode: string;
+		specialCharacters: string;
+		substringWhiteList: string[];
+		maxEntityCountUpdate: number;
+		forbiddenEntityTypePatterns: string[];
+		dryRun: boolean;
+		numberOfWorkers: number;
 	}
 }
 /**
@@ -1287,10 +1287,10 @@ export declare module CleanAllEntityTypesResponse {
 	 * Protobuf JSON representation for CleanAllEntityTypesResponse
 	 */
 	interface AsProtobufJSON {
-		cleanedEntityTypes?: ondewoNlu009.EntityType.AsProtobufJSON[] | null;
-		deletedEntityTypes?: ondewoNlu009.EntityType.AsProtobufJSON[] | null;
-		entityTypeUpdates?: EntityTypeUpdate.AsProtobufJSON[] | null;
-		entityTypeDeletions?: EntityTypeUpdate.AsProtobufJSON[] | null;
+		cleanedEntityTypes: ondewoNlu009.EntityType.AsProtobufJSON[] | null;
+		deletedEntityTypes: ondewoNlu009.EntityType.AsProtobufJSON[] | null;
+		entityTypeUpdates: EntityTypeUpdate.AsProtobufJSON[] | null;
+		entityTypeDeletions: EntityTypeUpdate.AsProtobufJSON[] | null;
 	}
 }
 /**
@@ -1320,32 +1320,32 @@ export declare class CleanEntityTypeRequest implements GrpcMessage {
 	 * @param _writer binary writer instance
 	 */
 	static serializeBinaryToWriter(_instance: CleanEntityTypeRequest, _writer: BinaryWriter): void;
-	private _parent?;
-	private _entityTypeName?;
-	private _languageCode?;
-	private _specialCharacters?;
-	private _substringWhiteList?;
-	private _maxEntityCountUpdate?;
-	private _dryRun?;
+	private _parent;
+	private _entityTypeName;
+	private _languageCode;
+	private _specialCharacters;
+	private _substringWhiteList;
+	private _maxEntityCountUpdate;
+	private _dryRun;
 	/**
 	 * Message constructor. Initializes the properties and applies default Protobuf values if necessary
 	 * @param _value initial values object or instance of CleanEntityTypeRequest to deeply clone from
 	 */
 	constructor(_value?: RecursivePartial<CleanEntityTypeRequest.AsObject>);
-	get parent(): string | undefined;
-	set parent(value: string | undefined);
-	get entityTypeName(): string | undefined;
-	set entityTypeName(value: string | undefined);
-	get languageCode(): string | undefined;
-	set languageCode(value: string | undefined);
-	get specialCharacters(): string | undefined;
-	set specialCharacters(value: string | undefined);
-	get substringWhiteList(): string[] | undefined;
-	set substringWhiteList(value: string[] | undefined);
-	get maxEntityCountUpdate(): number | undefined;
-	set maxEntityCountUpdate(value: number | undefined);
-	get dryRun(): boolean | undefined;
-	set dryRun(value: boolean | undefined);
+	get parent(): string;
+	set parent(value: string);
+	get entityTypeName(): string;
+	set entityTypeName(value: string);
+	get languageCode(): string;
+	set languageCode(value: string);
+	get specialCharacters(): string;
+	set specialCharacters(value: string);
+	get substringWhiteList(): string[];
+	set substringWhiteList(value: string[]);
+	get maxEntityCountUpdate(): number;
+	set maxEntityCountUpdate(value: number);
+	get dryRun(): boolean;
+	set dryRun(value: boolean);
 	/**
 	 * Serialize message to binary data
 	 * @param instance message instance
@@ -1371,25 +1371,25 @@ export declare module CleanEntityTypeRequest {
 	 * Standard JavaScript object representation for CleanEntityTypeRequest
 	 */
 	interface AsObject {
-		parent?: string;
-		entityTypeName?: string;
-		languageCode?: string;
-		specialCharacters?: string;
-		substringWhiteList?: string[];
-		maxEntityCountUpdate?: number;
-		dryRun?: boolean;
+		parent: string;
+		entityTypeName: string;
+		languageCode: string;
+		specialCharacters: string;
+		substringWhiteList: string[];
+		maxEntityCountUpdate: number;
+		dryRun: boolean;
 	}
 	/**
 	 * Protobuf JSON representation for CleanEntityTypeRequest
 	 */
 	interface AsProtobufJSON {
-		parent?: string;
-		entityTypeName?: string;
-		languageCode?: string;
-		specialCharacters?: string;
-		substringWhiteList?: string[];
-		maxEntityCountUpdate?: number;
-		dryRun?: boolean;
+		parent: string;
+		entityTypeName: string;
+		languageCode: string;
+		specialCharacters: string;
+		substringWhiteList: string[];
+		maxEntityCountUpdate: number;
+		dryRun: boolean;
 	}
 }
 /**
@@ -1462,8 +1462,8 @@ export declare module CleanEntityTypeResponse {
 	 * Protobuf JSON representation for CleanEntityTypeResponse
 	 */
 	interface AsProtobufJSON {
-		cleanedEntityType?: ondewoNlu009.EntityType.AsProtobufJSON | null;
-		entityTypeUpdate?: EntityTypeUpdate.AsProtobufJSON | null;
+		cleanedEntityType: ondewoNlu009.EntityType.AsProtobufJSON | null;
+		entityTypeUpdate: EntityTypeUpdate.AsProtobufJSON | null;
 	}
 }
 /**
@@ -1493,32 +1493,32 @@ export declare class AddTrainingPhrasesRequest implements GrpcMessage {
 	 * @param _writer binary writer instance
 	 */
 	static serializeBinaryToWriter(_instance: AddTrainingPhrasesRequest, _writer: BinaryWriter): void;
-	private _parent?;
-	private _languageCode?;
+	private _parent;
+	private _languageCode;
 	private _trainingPhraseList?;
-	private _extractEntities?;
-	private _specialCharacters?;
+	private _extractEntities;
+	private _specialCharacters;
 	private _trainingPhraseCleanerOptions?;
-	private _numberOfWorkers?;
+	private _numberOfWorkers;
 	/**
 	 * Message constructor. Initializes the properties and applies default Protobuf values if necessary
 	 * @param _value initial values object or instance of AddTrainingPhrasesRequest to deeply clone from
 	 */
 	constructor(_value?: RecursivePartial<AddTrainingPhrasesRequest.AsObject>);
-	get parent(): string | undefined;
-	set parent(value: string | undefined);
-	get languageCode(): string | undefined;
-	set languageCode(value: string | undefined);
+	get parent(): string;
+	set parent(value: string);
+	get languageCode(): string;
+	set languageCode(value: string);
 	get trainingPhraseList(): AddTrainingPhrasesRequest.TrainingPhraseForIntent[] | undefined;
 	set trainingPhraseList(value: AddTrainingPhrasesRequest.TrainingPhraseForIntent[] | undefined);
-	get extractEntities(): boolean | undefined;
-	set extractEntities(value: boolean | undefined);
-	get specialCharacters(): string | undefined;
-	set specialCharacters(value: string | undefined);
+	get extractEntities(): boolean;
+	set extractEntities(value: boolean);
+	get specialCharacters(): string;
+	set specialCharacters(value: string);
 	get trainingPhraseCleanerOptions(): TrainingPhraseCleanerOptions | undefined;
 	set trainingPhraseCleanerOptions(value: TrainingPhraseCleanerOptions | undefined);
-	get numberOfWorkers(): number | undefined;
-	set numberOfWorkers(value: number | undefined);
+	get numberOfWorkers(): number;
+	set numberOfWorkers(value: number);
 	/**
 	 * Serialize message to binary data
 	 * @param instance message instance
@@ -1544,25 +1544,25 @@ export declare module AddTrainingPhrasesRequest {
 	 * Standard JavaScript object representation for AddTrainingPhrasesRequest
 	 */
 	interface AsObject {
-		parent?: string;
-		languageCode?: string;
+		parent: string;
+		languageCode: string;
 		trainingPhraseList?: AddTrainingPhrasesRequest.TrainingPhraseForIntent.AsObject[];
-		extractEntities?: boolean;
-		specialCharacters?: string;
+		extractEntities: boolean;
+		specialCharacters: string;
 		trainingPhraseCleanerOptions?: TrainingPhraseCleanerOptions.AsObject;
-		numberOfWorkers?: number;
+		numberOfWorkers: number;
 	}
 	/**
 	 * Protobuf JSON representation for AddTrainingPhrasesRequest
 	 */
 	interface AsProtobufJSON {
-		parent?: string;
-		languageCode?: string;
-		trainingPhraseList?: AddTrainingPhrasesRequest.TrainingPhraseForIntent.AsProtobufJSON[] | null;
-		extractEntities?: boolean;
-		specialCharacters?: string;
-		trainingPhraseCleanerOptions?: TrainingPhraseCleanerOptions.AsProtobufJSON | null;
-		numberOfWorkers?: number;
+		parent: string;
+		languageCode: string;
+		trainingPhraseList: AddTrainingPhrasesRequest.TrainingPhraseForIntent.AsProtobufJSON[] | null;
+		extractEntities: boolean;
+		specialCharacters: string;
+		trainingPhraseCleanerOptions: TrainingPhraseCleanerOptions.AsProtobufJSON | null;
+		numberOfWorkers: number;
 	}
 	/**
 	 * Message implementation for ondewo.nlu.AddTrainingPhrasesRequest.TrainingPhraseForIntent
@@ -1591,18 +1591,18 @@ export declare module AddTrainingPhrasesRequest {
 		 * @param _writer binary writer instance
 		 */
 		static serializeBinaryToWriter(_instance: TrainingPhraseForIntent, _writer: BinaryWriter): void;
-		private _trainingPhrase?;
-		private _intentDisplayName?;
+		private _trainingPhrase;
+		private _intentDisplayName;
 		private _entities?;
 		/**
 		 * Message constructor. Initializes the properties and applies default Protobuf values if necessary
 		 * @param _value initial values object or instance of TrainingPhraseForIntent to deeply clone from
 		 */
 		constructor(_value?: RecursivePartial<TrainingPhraseForIntent.AsObject>);
-		get trainingPhrase(): string | undefined;
-		set trainingPhrase(value: string | undefined);
-		get intentDisplayName(): string | undefined;
-		set intentDisplayName(value: string | undefined);
+		get trainingPhrase(): string;
+		set trainingPhrase(value: string);
+		get intentDisplayName(): string;
+		set intentDisplayName(value: string);
 		get entities(): ondewoNlu008.Intent.TrainingPhrase.Entity[] | undefined;
 		set entities(value: ondewoNlu008.Intent.TrainingPhrase.Entity[] | undefined);
 		/**
@@ -1630,17 +1630,17 @@ export declare module AddTrainingPhrasesRequest {
 		 * Standard JavaScript object representation for TrainingPhraseForIntent
 		 */
 		interface AsObject {
-			trainingPhrase?: string;
-			intentDisplayName?: string;
+			trainingPhrase: string;
+			intentDisplayName: string;
 			entities?: ondewoNlu008.Intent.TrainingPhrase.Entity.AsObject[];
 		}
 		/**
 		 * Protobuf JSON representation for TrainingPhraseForIntent
 		 */
 		interface AsProtobufJSON {
-			trainingPhrase?: string;
-			intentDisplayName?: string;
-			entities?: ondewoNlu008.Intent.TrainingPhrase.Entity.AsProtobufJSON[] | null;
+			trainingPhrase: string;
+			intentDisplayName: string;
+			entities: ondewoNlu008.Intent.TrainingPhrase.Entity.AsProtobufJSON[] | null;
 		}
 	}
 }
@@ -1671,14 +1671,14 @@ export declare class AddTrainingPhrasesResponse implements GrpcMessage {
 	 * @param _writer binary writer instance
 	 */
 	static serializeBinaryToWriter(_instance: AddTrainingPhrasesResponse, _writer: BinaryWriter): void;
-	private _errorMessages?;
+	private _errorMessages;
 	/**
 	 * Message constructor. Initializes the properties and applies default Protobuf values if necessary
 	 * @param _value initial values object or instance of AddTrainingPhrasesResponse to deeply clone from
 	 */
 	constructor(_value?: RecursivePartial<AddTrainingPhrasesResponse.AsObject>);
-	get errorMessages(): string[] | undefined;
-	set errorMessages(value: string[] | undefined);
+	get errorMessages(): string[];
+	set errorMessages(value: string[]);
 	/**
 	 * Serialize message to binary data
 	 * @param instance message instance
@@ -1704,13 +1704,13 @@ export declare module AddTrainingPhrasesResponse {
 	 * Standard JavaScript object representation for AddTrainingPhrasesResponse
 	 */
 	interface AsObject {
-		errorMessages?: string[];
+		errorMessages: string[];
 	}
 	/**
 	 * Protobuf JSON representation for AddTrainingPhrasesResponse
 	 */
 	interface AsProtobufJSON {
-		errorMessages?: string[];
+		errorMessages: string[];
 	}
 }
 /**
@@ -1740,32 +1740,32 @@ export declare class AddTrainingPhrasesFromCSVRequest implements GrpcMessage {
 	 * @param _writer binary writer instance
 	 */
 	static serializeBinaryToWriter(_instance: AddTrainingPhrasesFromCSVRequest, _writer: BinaryWriter): void;
-	private _parent?;
-	private _languageCode?;
-	private _csvContents?;
-	private _extractEntities?;
-	private _specialCharacters?;
+	private _parent;
+	private _languageCode;
+	private _csvContents;
+	private _extractEntities;
+	private _specialCharacters;
 	private _trainingPhraseCleanerOptions?;
-	private _numberOfWorkers?;
+	private _numberOfWorkers;
 	/**
 	 * Message constructor. Initializes the properties and applies default Protobuf values if necessary
 	 * @param _value initial values object or instance of AddTrainingPhrasesFromCSVRequest to deeply clone from
 	 */
 	constructor(_value?: RecursivePartial<AddTrainingPhrasesFromCSVRequest.AsObject>);
-	get parent(): string | undefined;
-	set parent(value: string | undefined);
-	get languageCode(): string | undefined;
-	set languageCode(value: string | undefined);
-	get csvContents(): Uint8Array | undefined;
-	set csvContents(value: Uint8Array | undefined);
-	get extractEntities(): boolean | undefined;
-	set extractEntities(value: boolean | undefined);
-	get specialCharacters(): string | undefined;
-	set specialCharacters(value: string | undefined);
+	get parent(): string;
+	set parent(value: string);
+	get languageCode(): string;
+	set languageCode(value: string);
+	get csvContents(): Uint8Array;
+	set csvContents(value: Uint8Array);
+	get extractEntities(): boolean;
+	set extractEntities(value: boolean);
+	get specialCharacters(): string;
+	set specialCharacters(value: string);
 	get trainingPhraseCleanerOptions(): TrainingPhraseCleanerOptions | undefined;
 	set trainingPhraseCleanerOptions(value: TrainingPhraseCleanerOptions | undefined);
-	get numberOfWorkers(): number | undefined;
-	set numberOfWorkers(value: number | undefined);
+	get numberOfWorkers(): number;
+	set numberOfWorkers(value: number);
 	/**
 	 * Serialize message to binary data
 	 * @param instance message instance
@@ -1791,24 +1791,24 @@ export declare module AddTrainingPhrasesFromCSVRequest {
 	 * Standard JavaScript object representation for AddTrainingPhrasesFromCSVRequest
 	 */
 	interface AsObject {
-		parent?: string;
-		languageCode?: string;
-		csvContents?: Uint8Array;
-		extractEntities?: boolean;
-		specialCharacters?: string;
+		parent: string;
+		languageCode: string;
+		csvContents: Uint8Array;
+		extractEntities: boolean;
+		specialCharacters: string;
 		trainingPhraseCleanerOptions?: TrainingPhraseCleanerOptions.AsObject;
-		numberOfWorkers?: number;
+		numberOfWorkers: number;
 	}
 	/**
 	 * Protobuf JSON representation for AddTrainingPhrasesFromCSVRequest
 	 */
 	interface AsProtobufJSON {
-		parent?: string;
-		languageCode?: string;
-		csvContents?: string;
-		extractEntities?: boolean;
-		specialCharacters?: string;
-		trainingPhraseCleanerOptions?: TrainingPhraseCleanerOptions.AsProtobufJSON | null;
-		numberOfWorkers?: number;
+		parent: string;
+		languageCode: string;
+		csvContents: string;
+		extractEntities: boolean;
+		specialCharacters: string;
+		trainingPhraseCleanerOptions: TrainingPhraseCleanerOptions.AsProtobufJSON | null;
+		numberOfWorkers: number;
 	}
 }

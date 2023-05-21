@@ -48,23 +48,23 @@ export declare class ExtractEntitiesRequest implements GrpcMessage {
 	 * @param _writer binary writer instance
 	 */
 	static serializeBinaryToWriter(_instance: ExtractEntitiesRequest, _writer: BinaryWriter): void;
-	private _parent?;
-	private _text?;
-	private _languageCode?;
-	private _intentName?;
+	private _parent;
+	private _text;
+	private _languageCode;
+	private _intentName;
 	/**
 	 * Message constructor. Initializes the properties and applies default Protobuf values if necessary
 	 * @param _value initial values object or instance of ExtractEntitiesRequest to deeply clone from
 	 */
 	constructor(_value?: RecursivePartial<ExtractEntitiesRequest.AsObject>);
-	get parent(): string | undefined;
-	set parent(value: string | undefined);
-	get text(): string | undefined;
-	set text(value: string | undefined);
-	get languageCode(): string | undefined;
-	set languageCode(value: string | undefined);
-	get intentName(): string | undefined;
-	set intentName(value: string | undefined);
+	get parent(): string;
+	set parent(value: string);
+	get text(): string;
+	set text(value: string);
+	get languageCode(): string;
+	set languageCode(value: string);
+	get intentName(): string;
+	set intentName(value: string);
 	/**
 	 * Serialize message to binary data
 	 * @param instance message instance
@@ -90,19 +90,19 @@ export declare module ExtractEntitiesRequest {
 	 * Standard JavaScript object representation for ExtractEntitiesRequest
 	 */
 	interface AsObject {
-		parent?: string;
-		text?: string;
-		languageCode?: string;
-		intentName?: string;
+		parent: string;
+		text: string;
+		languageCode: string;
+		intentName: string;
 	}
 	/**
 	 * Protobuf JSON representation for ExtractEntitiesRequest
 	 */
 	interface AsProtobufJSON {
-		parent?: string;
-		text?: string;
-		languageCode?: string;
-		intentName?: string;
+		parent: string;
+		text: string;
+		languageCode: string;
+		intentName: string;
 	}
 }
 /**
@@ -132,26 +132,26 @@ export declare class ExtractEntitiesFuzzyRequest implements GrpcMessage {
 	 * @param _writer binary writer instance
 	 */
 	static serializeBinaryToWriter(_instance: ExtractEntitiesFuzzyRequest, _writer: BinaryWriter): void;
-	private _parent?;
-	private _text?;
+	private _parent;
+	private _text;
 	private _potentialEntities?;
-	private _minimalScore?;
-	private _allowOverlaps?;
+	private _minimalScore;
+	private _allowOverlaps;
 	/**
 	 * Message constructor. Initializes the properties and applies default Protobuf values if necessary
 	 * @param _value initial values object or instance of ExtractEntitiesFuzzyRequest to deeply clone from
 	 */
 	constructor(_value?: RecursivePartial<ExtractEntitiesFuzzyRequest.AsObject>);
-	get parent(): string | undefined;
-	set parent(value: string | undefined);
-	get text(): string | undefined;
-	set text(value: string | undefined);
+	get parent(): string;
+	set parent(value: string);
+	get text(): string;
+	set text(value: string);
 	get potentialEntities(): EntityTypeFuzzyNerConfig[] | undefined;
 	set potentialEntities(value: EntityTypeFuzzyNerConfig[] | undefined);
-	get minimalScore(): number | undefined;
-	set minimalScore(value: number | undefined);
-	get allowOverlaps(): boolean | undefined;
-	set allowOverlaps(value: boolean | undefined);
+	get minimalScore(): number;
+	set minimalScore(value: number);
+	get allowOverlaps(): boolean;
+	set allowOverlaps(value: boolean);
 	/**
 	 * Serialize message to binary data
 	 * @param instance message instance
@@ -177,21 +177,21 @@ export declare module ExtractEntitiesFuzzyRequest {
 	 * Standard JavaScript object representation for ExtractEntitiesFuzzyRequest
 	 */
 	interface AsObject {
-		parent?: string;
-		text?: string;
+		parent: string;
+		text: string;
 		potentialEntities?: EntityTypeFuzzyNerConfig.AsObject[];
-		minimalScore?: number;
-		allowOverlaps?: boolean;
+		minimalScore: number;
+		allowOverlaps: boolean;
 	}
 	/**
 	 * Protobuf JSON representation for ExtractEntitiesFuzzyRequest
 	 */
 	interface AsProtobufJSON {
-		parent?: string;
-		text?: string;
-		potentialEntities?: EntityTypeFuzzyNerConfig.AsProtobufJSON[] | null;
-		minimalScore?: number;
-		allowOverlaps?: boolean;
+		parent: string;
+		text: string;
+		potentialEntities: EntityTypeFuzzyNerConfig.AsProtobufJSON[] | null;
+		minimalScore: number;
+		allowOverlaps: boolean;
 	}
 }
 /**
@@ -222,9 +222,10 @@ export declare class EntityTypeFuzzyNerConfig implements GrpcMessage {
 	 */
 	static serializeBinaryToWriter(_instance: EntityTypeFuzzyNerConfig, _writer: BinaryWriter): void;
 	private _entityType?;
-	private _minimalScore?;
-	private _entityValues?;
-	private _algorithm?;
+	private _minimalScore;
+	private _entityValues;
+	private _algorithm;
+	private _allowOverlaps;
 	/**
 	 * Message constructor. Initializes the properties and applies default Protobuf values if necessary
 	 * @param _value initial values object or instance of EntityTypeFuzzyNerConfig to deeply clone from
@@ -232,12 +233,14 @@ export declare class EntityTypeFuzzyNerConfig implements GrpcMessage {
 	constructor(_value?: RecursivePartial<EntityTypeFuzzyNerConfig.AsObject>);
 	get entityType(): ondewoNlu011.EntityType | undefined;
 	set entityType(value: ondewoNlu011.EntityType | undefined);
-	get minimalScore(): number | undefined;
-	set minimalScore(value: number | undefined);
-	get entityValues(): string[] | undefined;
-	set entityValues(value: string[] | undefined);
-	get algorithm(): EntityTypeFuzzyNerConfig.FuzzyNerAlgorithm | undefined;
-	set algorithm(value: EntityTypeFuzzyNerConfig.FuzzyNerAlgorithm | undefined);
+	get minimalScore(): number;
+	set minimalScore(value: number);
+	get entityValues(): string[];
+	set entityValues(value: string[]);
+	get algorithm(): EntityTypeFuzzyNerConfig.FuzzyNerAlgorithm;
+	set algorithm(value: EntityTypeFuzzyNerConfig.FuzzyNerAlgorithm);
+	get allowOverlaps(): boolean;
+	set allowOverlaps(value: boolean);
 	/**
 	 * Serialize message to binary data
 	 * @param instance message instance
@@ -264,18 +267,20 @@ export declare module EntityTypeFuzzyNerConfig {
 	 */
 	interface AsObject {
 		entityType?: ondewoNlu011.EntityType.AsObject;
-		minimalScore?: number;
-		entityValues?: string[];
-		algorithm?: EntityTypeFuzzyNerConfig.FuzzyNerAlgorithm;
+		minimalScore: number;
+		entityValues: string[];
+		algorithm: EntityTypeFuzzyNerConfig.FuzzyNerAlgorithm;
+		allowOverlaps: boolean;
 	}
 	/**
 	 * Protobuf JSON representation for EntityTypeFuzzyNerConfig
 	 */
 	interface AsProtobufJSON {
-		entityType?: ondewoNlu011.EntityType.AsProtobufJSON | null;
-		minimalScore?: number;
-		entityValues?: string[];
-		algorithm?: string;
+		entityType: ondewoNlu011.EntityType.AsProtobufJSON | null;
+		minimalScore: number;
+		entityValues: string[];
+		algorithm: string;
+		allowOverlaps: boolean;
 	}
 	enum FuzzyNerAlgorithm {
 		PREFILTER_LEVENSHTEIN = 0,
@@ -310,8 +315,8 @@ export declare class EntityDetected implements GrpcMessage {
 	 */
 	static serializeBinaryToWriter(_instance: EntityDetected, _writer: BinaryWriter): void;
 	private _entity?;
-	private _extractionMethod?;
-	private _score?;
+	private _extractionMethod;
+	private _score;
 	/**
 	 * Message constructor. Initializes the properties and applies default Protobuf values if necessary
 	 * @param _value initial values object or instance of EntityDetected to deeply clone from
@@ -319,10 +324,10 @@ export declare class EntityDetected implements GrpcMessage {
 	constructor(_value?: RecursivePartial<EntityDetected.AsObject>);
 	get entity(): ondewoNlu010.Intent.TrainingPhrase.Entity | undefined;
 	set entity(value: ondewoNlu010.Intent.TrainingPhrase.Entity | undefined);
-	get extractionMethod(): string | undefined;
-	set extractionMethod(value: string | undefined);
-	get score(): number | undefined;
-	set score(value: number | undefined);
+	get extractionMethod(): string;
+	set extractionMethod(value: string);
+	get score(): number;
+	set score(value: number);
 	/**
 	 * Serialize message to binary data
 	 * @param instance message instance
@@ -349,16 +354,16 @@ export declare module EntityDetected {
 	 */
 	interface AsObject {
 		entity?: ondewoNlu010.Intent.TrainingPhrase.Entity.AsObject;
-		extractionMethod?: string;
-		score?: number;
+		extractionMethod: string;
+		score: number;
 	}
 	/**
 	 * Protobuf JSON representation for EntityDetected
 	 */
 	interface AsProtobufJSON {
-		entity?: ondewoNlu010.Intent.TrainingPhrase.Entity.AsProtobufJSON | null;
-		extractionMethod?: string;
-		score?: number;
+		entity: ondewoNlu010.Intent.TrainingPhrase.Entity.AsProtobufJSON | null;
+		extractionMethod: string;
+		score: number;
 	}
 }
 /**
@@ -389,7 +394,7 @@ export declare class ExtractEntitiesResponse implements GrpcMessage {
 	 */
 	static serializeBinaryToWriter(_instance: ExtractEntitiesResponse, _writer: BinaryWriter): void;
 	private _entitiesDetected?;
-	private _text?;
+	private _text;
 	/**
 	 * Message constructor. Initializes the properties and applies default Protobuf values if necessary
 	 * @param _value initial values object or instance of ExtractEntitiesResponse to deeply clone from
@@ -397,8 +402,8 @@ export declare class ExtractEntitiesResponse implements GrpcMessage {
 	constructor(_value?: RecursivePartial<ExtractEntitiesResponse.AsObject>);
 	get entitiesDetected(): EntityDetected[] | undefined;
 	set entitiesDetected(value: EntityDetected[] | undefined);
-	get text(): string | undefined;
-	set text(value: string | undefined);
+	get text(): string;
+	set text(value: string);
 	/**
 	 * Serialize message to binary data
 	 * @param instance message instance
@@ -425,14 +430,14 @@ export declare module ExtractEntitiesResponse {
 	 */
 	interface AsObject {
 		entitiesDetected?: EntityDetected.AsObject[];
-		text?: string;
+		text: string;
 	}
 	/**
 	 * Protobuf JSON representation for ExtractEntitiesResponse
 	 */
 	interface AsProtobufJSON {
-		entitiesDetected?: EntityDetected.AsProtobufJSON[] | null;
-		text?: string;
+		entitiesDetected: EntityDetected.AsProtobufJSON[] | null;
+		text: string;
 	}
 }
 /**
@@ -463,11 +468,11 @@ export declare class GetAlternativeSentencesRequest implements GrpcMessage {
 	 */
 	static serializeBinaryToWriter(_instance: GetAlternativeSentencesRequest, _writer: BinaryWriter): void;
 	private _config?;
-	private _sentence?;
-	private _languageCode?;
-	private _parent?;
-	private _protectedWords?;
-	private _wordsToChange?;
+	private _sentence;
+	private _languageCode;
+	private _parent;
+	private _protectedWords;
+	private _wordsToChange;
 	/**
 	 * Message constructor. Initializes the properties and applies default Protobuf values if necessary
 	 * @param _value initial values object or instance of GetAlternativeSentencesRequest to deeply clone from
@@ -475,16 +480,16 @@ export declare class GetAlternativeSentencesRequest implements GrpcMessage {
 	constructor(_value?: RecursivePartial<GetAlternativeSentencesRequest.AsObject>);
 	get config(): DataEnrichmentConfig | undefined;
 	set config(value: DataEnrichmentConfig | undefined);
-	get sentence(): string | undefined;
-	set sentence(value: string | undefined);
-	get languageCode(): string | undefined;
-	set languageCode(value: string | undefined);
-	get parent(): string | undefined;
-	set parent(value: string | undefined);
-	get protectedWords(): string[] | undefined;
-	set protectedWords(value: string[] | undefined);
-	get wordsToChange(): string[] | undefined;
-	set wordsToChange(value: string[] | undefined);
+	get sentence(): string;
+	set sentence(value: string);
+	get languageCode(): string;
+	set languageCode(value: string);
+	get parent(): string;
+	set parent(value: string);
+	get protectedWords(): string[];
+	set protectedWords(value: string[]);
+	get wordsToChange(): string[];
+	set wordsToChange(value: string[]);
 	/**
 	 * Serialize message to binary data
 	 * @param instance message instance
@@ -511,22 +516,22 @@ export declare module GetAlternativeSentencesRequest {
 	 */
 	interface AsObject {
 		config?: DataEnrichmentConfig.AsObject;
-		sentence?: string;
-		languageCode?: string;
-		parent?: string;
-		protectedWords?: string[];
-		wordsToChange?: string[];
+		sentence: string;
+		languageCode: string;
+		parent: string;
+		protectedWords: string[];
+		wordsToChange: string[];
 	}
 	/**
 	 * Protobuf JSON representation for GetAlternativeSentencesRequest
 	 */
 	interface AsProtobufJSON {
-		config?: DataEnrichmentConfig.AsProtobufJSON | null;
-		sentence?: string;
-		languageCode?: string;
-		parent?: string;
-		protectedWords?: string[];
-		wordsToChange?: string[];
+		config: DataEnrichmentConfig.AsProtobufJSON | null;
+		sentence: string;
+		languageCode: string;
+		parent: string;
+		protectedWords: string[];
+		wordsToChange: string[];
 	}
 }
 /**
@@ -556,23 +561,23 @@ export declare class GenerateUserSaysRequest implements GrpcMessage {
 	 * @param _writer binary writer instance
 	 */
 	static serializeBinaryToWriter(_instance: GenerateUserSaysRequest, _writer: BinaryWriter): void;
-	private _languageCode?;
-	private _parent?;
-	private _nRepeatSynonym?;
-	private _branch?;
+	private _languageCode;
+	private _parent;
+	private _nRepeatSynonym;
+	private _branch;
 	/**
 	 * Message constructor. Initializes the properties and applies default Protobuf values if necessary
 	 * @param _value initial values object or instance of GenerateUserSaysRequest to deeply clone from
 	 */
 	constructor(_value?: RecursivePartial<GenerateUserSaysRequest.AsObject>);
-	get languageCode(): string | undefined;
-	set languageCode(value: string | undefined);
-	get parent(): string | undefined;
-	set parent(value: string | undefined);
-	get nRepeatSynonym(): number | undefined;
-	set nRepeatSynonym(value: number | undefined);
-	get branch(): string | undefined;
-	set branch(value: string | undefined);
+	get languageCode(): string;
+	set languageCode(value: string);
+	get parent(): string;
+	set parent(value: string);
+	get nRepeatSynonym(): number;
+	set nRepeatSynonym(value: number);
+	get branch(): string;
+	set branch(value: string);
 	/**
 	 * Serialize message to binary data
 	 * @param instance message instance
@@ -598,19 +603,19 @@ export declare module GenerateUserSaysRequest {
 	 * Standard JavaScript object representation for GenerateUserSaysRequest
 	 */
 	interface AsObject {
-		languageCode?: string;
-		parent?: string;
-		nRepeatSynonym?: number;
-		branch?: string;
+		languageCode: string;
+		parent: string;
+		nRepeatSynonym: number;
+		branch: string;
 	}
 	/**
 	 * Protobuf JSON representation for GenerateUserSaysRequest
 	 */
 	interface AsProtobufJSON {
-		languageCode?: string;
-		parent?: string;
-		nRepeatSynonym?: number;
-		branch?: string;
+		languageCode: string;
+		parent: string;
+		nRepeatSynonym: number;
+		branch: string;
 	}
 }
 /**
@@ -640,26 +645,26 @@ export declare class GenerateResponsesRequest implements GrpcMessage {
 	 * @param _writer binary writer instance
 	 */
 	static serializeBinaryToWriter(_instance: GenerateResponsesRequest, _writer: BinaryWriter): void;
-	private _languageCode?;
-	private _parent?;
-	private _nRepeatSynonym?;
-	private _branch?;
-	private _dropUnknownParameters?;
+	private _languageCode;
+	private _parent;
+	private _nRepeatSynonym;
+	private _branch;
+	private _dropUnknownParameters;
 	/**
 	 * Message constructor. Initializes the properties and applies default Protobuf values if necessary
 	 * @param _value initial values object or instance of GenerateResponsesRequest to deeply clone from
 	 */
 	constructor(_value?: RecursivePartial<GenerateResponsesRequest.AsObject>);
-	get languageCode(): string | undefined;
-	set languageCode(value: string | undefined);
-	get parent(): string | undefined;
-	set parent(value: string | undefined);
-	get nRepeatSynonym(): number | undefined;
-	set nRepeatSynonym(value: number | undefined);
-	get branch(): string | undefined;
-	set branch(value: string | undefined);
-	get dropUnknownParameters(): boolean | undefined;
-	set dropUnknownParameters(value: boolean | undefined);
+	get languageCode(): string;
+	set languageCode(value: string);
+	get parent(): string;
+	set parent(value: string);
+	get nRepeatSynonym(): number;
+	set nRepeatSynonym(value: number);
+	get branch(): string;
+	set branch(value: string);
+	get dropUnknownParameters(): boolean;
+	set dropUnknownParameters(value: boolean);
 	/**
 	 * Serialize message to binary data
 	 * @param instance message instance
@@ -685,21 +690,21 @@ export declare module GenerateResponsesRequest {
 	 * Standard JavaScript object representation for GenerateResponsesRequest
 	 */
 	interface AsObject {
-		languageCode?: string;
-		parent?: string;
-		nRepeatSynonym?: number;
-		branch?: string;
-		dropUnknownParameters?: boolean;
+		languageCode: string;
+		parent: string;
+		nRepeatSynonym: number;
+		branch: string;
+		dropUnknownParameters: boolean;
 	}
 	/**
 	 * Protobuf JSON representation for GenerateResponsesRequest
 	 */
 	interface AsProtobufJSON {
-		languageCode?: string;
-		parent?: string;
-		nRepeatSynonym?: number;
-		branch?: string;
-		dropUnknownParameters?: boolean;
+		languageCode: string;
+		parent: string;
+		nRepeatSynonym: number;
+		branch: string;
+		dropUnknownParameters: boolean;
 	}
 }
 /**
@@ -731,14 +736,14 @@ export declare class GetAlternativeTrainingPhrasesRequest implements GrpcMessage
 	static serializeBinaryToWriter(_instance: GetAlternativeTrainingPhrasesRequest, _writer: BinaryWriter): void;
 	private _config?;
 	private _trainingPhrase?;
-	private _intentName?;
-	private _languageCode?;
-	private _parent?;
-	private _detectEntities?;
-	private _similarityThreshold?;
-	private _protectedWords?;
-	private _wordsToChange?;
-	private _branch?;
+	private _intentName;
+	private _languageCode;
+	private _parent;
+	private _detectEntities;
+	private _similarityThreshold;
+	private _protectedWords;
+	private _wordsToChange;
+	private _branch;
 	/**
 	 * Message constructor. Initializes the properties and applies default Protobuf values if necessary
 	 * @param _value initial values object or instance of GetAlternativeTrainingPhrasesRequest to deeply clone from
@@ -748,22 +753,22 @@ export declare class GetAlternativeTrainingPhrasesRequest implements GrpcMessage
 	set config(value: DataEnrichmentConfig | undefined);
 	get trainingPhrase(): ondewoNlu010.Intent.TrainingPhrase | undefined;
 	set trainingPhrase(value: ondewoNlu010.Intent.TrainingPhrase | undefined);
-	get intentName(): string | undefined;
-	set intentName(value: string | undefined);
-	get languageCode(): string | undefined;
-	set languageCode(value: string | undefined);
-	get parent(): string | undefined;
-	set parent(value: string | undefined);
-	get detectEntities(): boolean | undefined;
-	set detectEntities(value: boolean | undefined);
-	get similarityThreshold(): number | undefined;
-	set similarityThreshold(value: number | undefined);
-	get protectedWords(): string[] | undefined;
-	set protectedWords(value: string[] | undefined);
-	get wordsToChange(): string[] | undefined;
-	set wordsToChange(value: string[] | undefined);
-	get branch(): string | undefined;
-	set branch(value: string | undefined);
+	get intentName(): string;
+	set intentName(value: string);
+	get languageCode(): string;
+	set languageCode(value: string);
+	get parent(): string;
+	set parent(value: string);
+	get detectEntities(): boolean;
+	set detectEntities(value: boolean);
+	get similarityThreshold(): number;
+	set similarityThreshold(value: number);
+	get protectedWords(): string[];
+	set protectedWords(value: string[]);
+	get wordsToChange(): string[];
+	set wordsToChange(value: string[]);
+	get branch(): string;
+	set branch(value: string);
 	/**
 	 * Serialize message to binary data
 	 * @param instance message instance
@@ -791,29 +796,29 @@ export declare module GetAlternativeTrainingPhrasesRequest {
 	interface AsObject {
 		config?: DataEnrichmentConfig.AsObject;
 		trainingPhrase?: ondewoNlu010.Intent.TrainingPhrase.AsObject;
-		intentName?: string;
-		languageCode?: string;
-		parent?: string;
-		detectEntities?: boolean;
-		similarityThreshold?: number;
-		protectedWords?: string[];
-		wordsToChange?: string[];
-		branch?: string;
+		intentName: string;
+		languageCode: string;
+		parent: string;
+		detectEntities: boolean;
+		similarityThreshold: number;
+		protectedWords: string[];
+		wordsToChange: string[];
+		branch: string;
 	}
 	/**
 	 * Protobuf JSON representation for GetAlternativeTrainingPhrasesRequest
 	 */
 	interface AsProtobufJSON {
-		config?: DataEnrichmentConfig.AsProtobufJSON | null;
-		trainingPhrase?: ondewoNlu010.Intent.TrainingPhrase.AsProtobufJSON | null;
-		intentName?: string;
-		languageCode?: string;
-		parent?: string;
-		detectEntities?: boolean;
-		similarityThreshold?: number;
-		protectedWords?: string[];
-		wordsToChange?: string[];
-		branch?: string;
+		config: DataEnrichmentConfig.AsProtobufJSON | null;
+		trainingPhrase: ondewoNlu010.Intent.TrainingPhrase.AsProtobufJSON | null;
+		intentName: string;
+		languageCode: string;
+		parent: string;
+		detectEntities: boolean;
+		similarityThreshold: number;
+		protectedWords: string[];
+		wordsToChange: string[];
+		branch: string;
 	}
 }
 /**
@@ -844,9 +849,9 @@ export declare class GetSynonymsRequest implements GrpcMessage {
 	 */
 	static serializeBinaryToWriter(_instance: GetSynonymsRequest, _writer: BinaryWriter): void;
 	private _config?;
-	private _word?;
-	private _languageCode?;
-	private _parent?;
+	private _word;
+	private _languageCode;
+	private _parent;
 	/**
 	 * Message constructor. Initializes the properties and applies default Protobuf values if necessary
 	 * @param _value initial values object or instance of GetSynonymsRequest to deeply clone from
@@ -854,12 +859,12 @@ export declare class GetSynonymsRequest implements GrpcMessage {
 	constructor(_value?: RecursivePartial<GetSynonymsRequest.AsObject>);
 	get config(): DataEnrichmentConfig | undefined;
 	set config(value: DataEnrichmentConfig | undefined);
-	get word(): string | undefined;
-	set word(value: string | undefined);
-	get languageCode(): string | undefined;
-	set languageCode(value: string | undefined);
-	get parent(): string | undefined;
-	set parent(value: string | undefined);
+	get word(): string;
+	set word(value: string);
+	get languageCode(): string;
+	set languageCode(value: string);
+	get parent(): string;
+	set parent(value: string);
 	/**
 	 * Serialize message to binary data
 	 * @param instance message instance
@@ -886,18 +891,18 @@ export declare module GetSynonymsRequest {
 	 */
 	interface AsObject {
 		config?: DataEnrichmentConfig.AsObject;
-		word?: string;
-		languageCode?: string;
-		parent?: string;
+		word: string;
+		languageCode: string;
+		parent: string;
 	}
 	/**
 	 * Protobuf JSON representation for GetSynonymsRequest
 	 */
 	interface AsProtobufJSON {
-		config?: DataEnrichmentConfig.AsProtobufJSON | null;
-		word?: string;
-		languageCode?: string;
-		parent?: string;
+		config: DataEnrichmentConfig.AsProtobufJSON | null;
+		word: string;
+		languageCode: string;
+		parent: string;
 	}
 }
 /**
@@ -966,7 +971,7 @@ export declare module GetSynonymsResponse {
 	 * Protobuf JSON representation for GetSynonymsResponse
 	 */
 	interface AsProtobufJSON {
-		synonyms?: Synonym.AsProtobufJSON[] | null;
+		synonyms: Synonym.AsProtobufJSON[] | null;
 	}
 }
 /**
@@ -996,17 +1001,17 @@ export declare class Synonym implements GrpcMessage {
 	 * @param _writer binary writer instance
 	 */
 	static serializeBinaryToWriter(_instance: Synonym, _writer: BinaryWriter): void;
-	private _synonym?;
-	private _score?;
+	private _synonym;
+	private _score;
 	/**
 	 * Message constructor. Initializes the properties and applies default Protobuf values if necessary
 	 * @param _value initial values object or instance of Synonym to deeply clone from
 	 */
 	constructor(_value?: RecursivePartial<Synonym.AsObject>);
-	get synonym(): string | undefined;
-	set synonym(value: string | undefined);
-	get score(): number | undefined;
-	set score(value: number | undefined);
+	get synonym(): string;
+	set synonym(value: string);
+	get score(): number;
+	set score(value: number);
 	/**
 	 * Serialize message to binary data
 	 * @param instance message instance
@@ -1032,15 +1037,15 @@ export declare module Synonym {
 	 * Standard JavaScript object representation for Synonym
 	 */
 	interface AsObject {
-		synonym?: string;
-		score?: number;
+		synonym: string;
+		score: number;
 	}
 	/**
 	 * Protobuf JSON representation for Synonym
 	 */
 	interface AsProtobufJSON {
-		synonym?: string;
-		score?: number;
+		synonym: string;
+		score: number;
 	}
 }
 /**
@@ -1109,7 +1114,7 @@ export declare module GetAlternativeSentencesResponse {
 	 * Protobuf JSON representation for GetAlternativeSentencesResponse
 	 */
 	interface AsProtobufJSON {
-		alternativeSentences?: AltSentence.AsProtobufJSON[] | null;
+		alternativeSentences: AltSentence.AsProtobufJSON[] | null;
 	}
 }
 /**
@@ -1139,14 +1144,14 @@ export declare class GenerateResponsesResponse implements GrpcMessage {
 	 * @param _writer binary writer instance
 	 */
 	static serializeBinaryToWriter(_instance: GenerateResponsesResponse, _writer: BinaryWriter): void;
-	private _responses?;
+	private _responses;
 	/**
 	 * Message constructor. Initializes the properties and applies default Protobuf values if necessary
 	 * @param _value initial values object or instance of GenerateResponsesResponse to deeply clone from
 	 */
 	constructor(_value?: RecursivePartial<GenerateResponsesResponse.AsObject>);
-	get responses(): string[] | undefined;
-	set responses(value: string[] | undefined);
+	get responses(): string[];
+	set responses(value: string[]);
 	/**
 	 * Serialize message to binary data
 	 * @param instance message instance
@@ -1172,13 +1177,13 @@ export declare module GenerateResponsesResponse {
 	 * Standard JavaScript object representation for GenerateResponsesResponse
 	 */
 	interface AsObject {
-		responses?: string[];
+		responses: string[];
 	}
 	/**
 	 * Protobuf JSON representation for GenerateResponsesResponse
 	 */
 	interface AsProtobufJSON {
-		responses?: string[];
+		responses: string[];
 	}
 }
 /**
@@ -1208,14 +1213,14 @@ export declare class GenerateUserSaysResponse implements GrpcMessage {
 	 * @param _writer binary writer instance
 	 */
 	static serializeBinaryToWriter(_instance: GenerateUserSaysResponse, _writer: BinaryWriter): void;
-	private _userSays?;
+	private _userSays;
 	/**
 	 * Message constructor. Initializes the properties and applies default Protobuf values if necessary
 	 * @param _value initial values object or instance of GenerateUserSaysResponse to deeply clone from
 	 */
 	constructor(_value?: RecursivePartial<GenerateUserSaysResponse.AsObject>);
-	get userSays(): string[] | undefined;
-	set userSays(value: string[] | undefined);
+	get userSays(): string[];
+	set userSays(value: string[]);
 	/**
 	 * Serialize message to binary data
 	 * @param instance message instance
@@ -1241,13 +1246,13 @@ export declare module GenerateUserSaysResponse {
 	 * Standard JavaScript object representation for GenerateUserSaysResponse
 	 */
 	interface AsObject {
-		userSays?: string[];
+		userSays: string[];
 	}
 	/**
 	 * Protobuf JSON representation for GenerateUserSaysResponse
 	 */
 	interface AsProtobufJSON {
-		userSays?: string[];
+		userSays: string[];
 	}
 }
 /**
@@ -1316,7 +1321,7 @@ export declare module GetAlternativeTrainingPhrasesResponse {
 	 * Protobuf JSON representation for GetAlternativeTrainingPhrasesResponse
 	 */
 	interface AsProtobufJSON {
-		alternativeTrainingPhrases?: AltTrainingPhrase.AsProtobufJSON[] | null;
+		alternativeTrainingPhrases: AltTrainingPhrase.AsProtobufJSON[] | null;
 	}
 }
 /**
@@ -1346,17 +1351,17 @@ export declare class AltSentence implements GrpcMessage {
 	 * @param _writer binary writer instance
 	 */
 	static serializeBinaryToWriter(_instance: AltSentence, _writer: BinaryWriter): void;
-	private _sentence?;
-	private _score?;
+	private _sentence;
+	private _score;
 	/**
 	 * Message constructor. Initializes the properties and applies default Protobuf values if necessary
 	 * @param _value initial values object or instance of AltSentence to deeply clone from
 	 */
 	constructor(_value?: RecursivePartial<AltSentence.AsObject>);
-	get sentence(): string | undefined;
-	set sentence(value: string | undefined);
-	get score(): number | undefined;
-	set score(value: number | undefined);
+	get sentence(): string;
+	set sentence(value: string);
+	get score(): number;
+	set score(value: number);
 	/**
 	 * Serialize message to binary data
 	 * @param instance message instance
@@ -1382,15 +1387,15 @@ export declare module AltSentence {
 	 * Standard JavaScript object representation for AltSentence
 	 */
 	interface AsObject {
-		sentence?: string;
-		score?: number;
+		sentence: string;
+		score: number;
 	}
 	/**
 	 * Protobuf JSON representation for AltSentence
 	 */
 	interface AsProtobufJSON {
-		sentence?: string;
-		score?: number;
+		sentence: string;
+		score: number;
 	}
 }
 /**
@@ -1421,7 +1426,7 @@ export declare class AltTrainingPhrase implements GrpcMessage {
 	 */
 	static serializeBinaryToWriter(_instance: AltTrainingPhrase, _writer: BinaryWriter): void;
 	private _trainingPhrase?;
-	private _score?;
+	private _score;
 	/**
 	 * Message constructor. Initializes the properties and applies default Protobuf values if necessary
 	 * @param _value initial values object or instance of AltTrainingPhrase to deeply clone from
@@ -1429,8 +1434,8 @@ export declare class AltTrainingPhrase implements GrpcMessage {
 	constructor(_value?: RecursivePartial<AltTrainingPhrase.AsObject>);
 	get trainingPhrase(): ondewoNlu010.Intent.TrainingPhrase | undefined;
 	set trainingPhrase(value: ondewoNlu010.Intent.TrainingPhrase | undefined);
-	get score(): number | undefined;
-	set score(value: number | undefined);
+	get score(): number;
+	set score(value: number);
 	/**
 	 * Serialize message to binary data
 	 * @param instance message instance
@@ -1457,14 +1462,14 @@ export declare module AltTrainingPhrase {
 	 */
 	interface AsObject {
 		trainingPhrase?: ondewoNlu010.Intent.TrainingPhrase.AsObject;
-		score?: number;
+		score: number;
 	}
 	/**
 	 * Protobuf JSON representation for AltTrainingPhrase
 	 */
 	interface AsProtobufJSON {
-		trainingPhrase?: ondewoNlu010.Intent.TrainingPhrase.AsProtobufJSON | null;
-		score?: number;
+		trainingPhrase: ondewoNlu010.Intent.TrainingPhrase.AsProtobufJSON | null;
+		score: number;
 	}
 }
 /**
@@ -1561,14 +1566,14 @@ export declare module DataEnrichmentConfig {
 	 * Protobuf JSON representation for DataEnrichmentConfig
 	 */
 	interface AsProtobufJSON {
-		entityEnrichment?: EntityEnrichmentConfig.AsProtobufJSON | null;
-		thesaurusEnrichment?: ThesaurusEnrichmentConfig.AsProtobufJSON | null;
-		word2vecEnrichment?: Word2VecEnrichmentConfig.AsProtobufJSON | null;
-		wordNetEnrichment?: WordNetAugEnrichmentConfig.AsProtobufJSON | null;
-		gpt2Enrichment?: GPT2EnrichmentConfig.AsProtobufJSON | null;
-		gloveEnrichment?: GloVeEnrichmentConfig.AsProtobufJSON | null;
-		bertEnrichment?: BertAugEnrichmentConfig.AsProtobufJSON | null;
-		xlnetEnrichment?: XLNetAugEnrichmentConfig.AsProtobufJSON | null;
+		entityEnrichment: EntityEnrichmentConfig.AsProtobufJSON | null;
+		thesaurusEnrichment: ThesaurusEnrichmentConfig.AsProtobufJSON | null;
+		word2vecEnrichment: Word2VecEnrichmentConfig.AsProtobufJSON | null;
+		wordNetEnrichment: WordNetAugEnrichmentConfig.AsProtobufJSON | null;
+		gpt2Enrichment: GPT2EnrichmentConfig.AsProtobufJSON | null;
+		gloveEnrichment: GloVeEnrichmentConfig.AsProtobufJSON | null;
+		bertEnrichment: BertAugEnrichmentConfig.AsProtobufJSON | null;
+		xlnetEnrichment: XLNetAugEnrichmentConfig.AsProtobufJSON | null;
 	}
 }
 /**
@@ -1598,20 +1603,20 @@ export declare class EntityEnrichmentConfig implements GrpcMessage {
 	 * @param _writer binary writer instance
 	 */
 	static serializeBinaryToWriter(_instance: EntityEnrichmentConfig, _writer: BinaryWriter): void;
-	private _isActive?;
-	private _enrichmentFactor?;
-	private _executionOrder?;
+	private _isActive;
+	private _enrichmentFactor;
+	private _executionOrder;
 	/**
 	 * Message constructor. Initializes the properties and applies default Protobuf values if necessary
 	 * @param _value initial values object or instance of EntityEnrichmentConfig to deeply clone from
 	 */
 	constructor(_value?: RecursivePartial<EntityEnrichmentConfig.AsObject>);
-	get isActive(): boolean | undefined;
-	set isActive(value: boolean | undefined);
-	get enrichmentFactor(): number | undefined;
-	set enrichmentFactor(value: number | undefined);
-	get executionOrder(): number | undefined;
-	set executionOrder(value: number | undefined);
+	get isActive(): boolean;
+	set isActive(value: boolean);
+	get enrichmentFactor(): number;
+	set enrichmentFactor(value: number);
+	get executionOrder(): number;
+	set executionOrder(value: number);
 	/**
 	 * Serialize message to binary data
 	 * @param instance message instance
@@ -1637,17 +1642,17 @@ export declare module EntityEnrichmentConfig {
 	 * Standard JavaScript object representation for EntityEnrichmentConfig
 	 */
 	interface AsObject {
-		isActive?: boolean;
-		enrichmentFactor?: number;
-		executionOrder?: number;
+		isActive: boolean;
+		enrichmentFactor: number;
+		executionOrder: number;
 	}
 	/**
 	 * Protobuf JSON representation for EntityEnrichmentConfig
 	 */
 	interface AsProtobufJSON {
-		isActive?: boolean;
-		enrichmentFactor?: number;
-		executionOrder?: number;
+		isActive: boolean;
+		enrichmentFactor: number;
+		executionOrder: number;
 	}
 }
 /**
@@ -1677,20 +1682,20 @@ export declare class ThesaurusEnrichmentConfig implements GrpcMessage {
 	 * @param _writer binary writer instance
 	 */
 	static serializeBinaryToWriter(_instance: ThesaurusEnrichmentConfig, _writer: BinaryWriter): void;
-	private _isActive?;
-	private _enrichmentFactor?;
-	private _executionOrder?;
+	private _isActive;
+	private _enrichmentFactor;
+	private _executionOrder;
 	/**
 	 * Message constructor. Initializes the properties and applies default Protobuf values if necessary
 	 * @param _value initial values object or instance of ThesaurusEnrichmentConfig to deeply clone from
 	 */
 	constructor(_value?: RecursivePartial<ThesaurusEnrichmentConfig.AsObject>);
-	get isActive(): boolean | undefined;
-	set isActive(value: boolean | undefined);
-	get enrichmentFactor(): number | undefined;
-	set enrichmentFactor(value: number | undefined);
-	get executionOrder(): number | undefined;
-	set executionOrder(value: number | undefined);
+	get isActive(): boolean;
+	set isActive(value: boolean);
+	get enrichmentFactor(): number;
+	set enrichmentFactor(value: number);
+	get executionOrder(): number;
+	set executionOrder(value: number);
 	/**
 	 * Serialize message to binary data
 	 * @param instance message instance
@@ -1716,17 +1721,17 @@ export declare module ThesaurusEnrichmentConfig {
 	 * Standard JavaScript object representation for ThesaurusEnrichmentConfig
 	 */
 	interface AsObject {
-		isActive?: boolean;
-		enrichmentFactor?: number;
-		executionOrder?: number;
+		isActive: boolean;
+		enrichmentFactor: number;
+		executionOrder: number;
 	}
 	/**
 	 * Protobuf JSON representation for ThesaurusEnrichmentConfig
 	 */
 	interface AsProtobufJSON {
-		isActive?: boolean;
-		enrichmentFactor?: number;
-		executionOrder?: number;
+		isActive: boolean;
+		enrichmentFactor: number;
+		executionOrder: number;
 	}
 }
 /**
@@ -1756,20 +1761,20 @@ export declare class BertAugEnrichmentConfig implements GrpcMessage {
 	 * @param _writer binary writer instance
 	 */
 	static serializeBinaryToWriter(_instance: BertAugEnrichmentConfig, _writer: BinaryWriter): void;
-	private _isActive?;
-	private _enrichmentFactor?;
-	private _executionOrder?;
+	private _isActive;
+	private _enrichmentFactor;
+	private _executionOrder;
 	/**
 	 * Message constructor. Initializes the properties and applies default Protobuf values if necessary
 	 * @param _value initial values object or instance of BertAugEnrichmentConfig to deeply clone from
 	 */
 	constructor(_value?: RecursivePartial<BertAugEnrichmentConfig.AsObject>);
-	get isActive(): boolean | undefined;
-	set isActive(value: boolean | undefined);
-	get enrichmentFactor(): number | undefined;
-	set enrichmentFactor(value: number | undefined);
-	get executionOrder(): number | undefined;
-	set executionOrder(value: number | undefined);
+	get isActive(): boolean;
+	set isActive(value: boolean);
+	get enrichmentFactor(): number;
+	set enrichmentFactor(value: number);
+	get executionOrder(): number;
+	set executionOrder(value: number);
 	/**
 	 * Serialize message to binary data
 	 * @param instance message instance
@@ -1795,17 +1800,17 @@ export declare module BertAugEnrichmentConfig {
 	 * Standard JavaScript object representation for BertAugEnrichmentConfig
 	 */
 	interface AsObject {
-		isActive?: boolean;
-		enrichmentFactor?: number;
-		executionOrder?: number;
+		isActive: boolean;
+		enrichmentFactor: number;
+		executionOrder: number;
 	}
 	/**
 	 * Protobuf JSON representation for BertAugEnrichmentConfig
 	 */
 	interface AsProtobufJSON {
-		isActive?: boolean;
-		enrichmentFactor?: number;
-		executionOrder?: number;
+		isActive: boolean;
+		enrichmentFactor: number;
+		executionOrder: number;
 	}
 }
 /**
@@ -1835,20 +1840,20 @@ export declare class GloVeEnrichmentConfig implements GrpcMessage {
 	 * @param _writer binary writer instance
 	 */
 	static serializeBinaryToWriter(_instance: GloVeEnrichmentConfig, _writer: BinaryWriter): void;
-	private _isActive?;
-	private _enrichmentFactor?;
-	private _executionOrder?;
+	private _isActive;
+	private _enrichmentFactor;
+	private _executionOrder;
 	/**
 	 * Message constructor. Initializes the properties and applies default Protobuf values if necessary
 	 * @param _value initial values object or instance of GloVeEnrichmentConfig to deeply clone from
 	 */
 	constructor(_value?: RecursivePartial<GloVeEnrichmentConfig.AsObject>);
-	get isActive(): boolean | undefined;
-	set isActive(value: boolean | undefined);
-	get enrichmentFactor(): number | undefined;
-	set enrichmentFactor(value: number | undefined);
-	get executionOrder(): number | undefined;
-	set executionOrder(value: number | undefined);
+	get isActive(): boolean;
+	set isActive(value: boolean);
+	get enrichmentFactor(): number;
+	set enrichmentFactor(value: number);
+	get executionOrder(): number;
+	set executionOrder(value: number);
 	/**
 	 * Serialize message to binary data
 	 * @param instance message instance
@@ -1874,17 +1879,17 @@ export declare module GloVeEnrichmentConfig {
 	 * Standard JavaScript object representation for GloVeEnrichmentConfig
 	 */
 	interface AsObject {
-		isActive?: boolean;
-		enrichmentFactor?: number;
-		executionOrder?: number;
+		isActive: boolean;
+		enrichmentFactor: number;
+		executionOrder: number;
 	}
 	/**
 	 * Protobuf JSON representation for GloVeEnrichmentConfig
 	 */
 	interface AsProtobufJSON {
-		isActive?: boolean;
-		enrichmentFactor?: number;
-		executionOrder?: number;
+		isActive: boolean;
+		enrichmentFactor: number;
+		executionOrder: number;
 	}
 }
 /**
@@ -1914,20 +1919,20 @@ export declare class GPT2EnrichmentConfig implements GrpcMessage {
 	 * @param _writer binary writer instance
 	 */
 	static serializeBinaryToWriter(_instance: GPT2EnrichmentConfig, _writer: BinaryWriter): void;
-	private _isActive?;
-	private _enrichmentFactor?;
-	private _executionOrder?;
+	private _isActive;
+	private _enrichmentFactor;
+	private _executionOrder;
 	/**
 	 * Message constructor. Initializes the properties and applies default Protobuf values if necessary
 	 * @param _value initial values object or instance of GPT2EnrichmentConfig to deeply clone from
 	 */
 	constructor(_value?: RecursivePartial<GPT2EnrichmentConfig.AsObject>);
-	get isActive(): boolean | undefined;
-	set isActive(value: boolean | undefined);
-	get enrichmentFactor(): number | undefined;
-	set enrichmentFactor(value: number | undefined);
-	get executionOrder(): number | undefined;
-	set executionOrder(value: number | undefined);
+	get isActive(): boolean;
+	set isActive(value: boolean);
+	get enrichmentFactor(): number;
+	set enrichmentFactor(value: number);
+	get executionOrder(): number;
+	set executionOrder(value: number);
 	/**
 	 * Serialize message to binary data
 	 * @param instance message instance
@@ -1953,17 +1958,17 @@ export declare module GPT2EnrichmentConfig {
 	 * Standard JavaScript object representation for GPT2EnrichmentConfig
 	 */
 	interface AsObject {
-		isActive?: boolean;
-		enrichmentFactor?: number;
-		executionOrder?: number;
+		isActive: boolean;
+		enrichmentFactor: number;
+		executionOrder: number;
 	}
 	/**
 	 * Protobuf JSON representation for GPT2EnrichmentConfig
 	 */
 	interface AsProtobufJSON {
-		isActive?: boolean;
-		enrichmentFactor?: number;
-		executionOrder?: number;
+		isActive: boolean;
+		enrichmentFactor: number;
+		executionOrder: number;
 	}
 }
 /**
@@ -1993,20 +1998,20 @@ export declare class Word2VecEnrichmentConfig implements GrpcMessage {
 	 * @param _writer binary writer instance
 	 */
 	static serializeBinaryToWriter(_instance: Word2VecEnrichmentConfig, _writer: BinaryWriter): void;
-	private _isActive?;
-	private _enrichmentFactor?;
-	private _executionOrder?;
+	private _isActive;
+	private _enrichmentFactor;
+	private _executionOrder;
 	/**
 	 * Message constructor. Initializes the properties and applies default Protobuf values if necessary
 	 * @param _value initial values object or instance of Word2VecEnrichmentConfig to deeply clone from
 	 */
 	constructor(_value?: RecursivePartial<Word2VecEnrichmentConfig.AsObject>);
-	get isActive(): boolean | undefined;
-	set isActive(value: boolean | undefined);
-	get enrichmentFactor(): number | undefined;
-	set enrichmentFactor(value: number | undefined);
-	get executionOrder(): number | undefined;
-	set executionOrder(value: number | undefined);
+	get isActive(): boolean;
+	set isActive(value: boolean);
+	get enrichmentFactor(): number;
+	set enrichmentFactor(value: number);
+	get executionOrder(): number;
+	set executionOrder(value: number);
 	/**
 	 * Serialize message to binary data
 	 * @param instance message instance
@@ -2032,17 +2037,17 @@ export declare module Word2VecEnrichmentConfig {
 	 * Standard JavaScript object representation for Word2VecEnrichmentConfig
 	 */
 	interface AsObject {
-		isActive?: boolean;
-		enrichmentFactor?: number;
-		executionOrder?: number;
+		isActive: boolean;
+		enrichmentFactor: number;
+		executionOrder: number;
 	}
 	/**
 	 * Protobuf JSON representation for Word2VecEnrichmentConfig
 	 */
 	interface AsProtobufJSON {
-		isActive?: boolean;
-		enrichmentFactor?: number;
-		executionOrder?: number;
+		isActive: boolean;
+		enrichmentFactor: number;
+		executionOrder: number;
 	}
 }
 /**
@@ -2072,20 +2077,20 @@ export declare class WordNetAugEnrichmentConfig implements GrpcMessage {
 	 * @param _writer binary writer instance
 	 */
 	static serializeBinaryToWriter(_instance: WordNetAugEnrichmentConfig, _writer: BinaryWriter): void;
-	private _isActive?;
-	private _enrichmentFactor?;
-	private _executionOrder?;
+	private _isActive;
+	private _enrichmentFactor;
+	private _executionOrder;
 	/**
 	 * Message constructor. Initializes the properties and applies default Protobuf values if necessary
 	 * @param _value initial values object or instance of WordNetAugEnrichmentConfig to deeply clone from
 	 */
 	constructor(_value?: RecursivePartial<WordNetAugEnrichmentConfig.AsObject>);
-	get isActive(): boolean | undefined;
-	set isActive(value: boolean | undefined);
-	get enrichmentFactor(): number | undefined;
-	set enrichmentFactor(value: number | undefined);
-	get executionOrder(): number | undefined;
-	set executionOrder(value: number | undefined);
+	get isActive(): boolean;
+	set isActive(value: boolean);
+	get enrichmentFactor(): number;
+	set enrichmentFactor(value: number);
+	get executionOrder(): number;
+	set executionOrder(value: number);
 	/**
 	 * Serialize message to binary data
 	 * @param instance message instance
@@ -2111,17 +2116,17 @@ export declare module WordNetAugEnrichmentConfig {
 	 * Standard JavaScript object representation for WordNetAugEnrichmentConfig
 	 */
 	interface AsObject {
-		isActive?: boolean;
-		enrichmentFactor?: number;
-		executionOrder?: number;
+		isActive: boolean;
+		enrichmentFactor: number;
+		executionOrder: number;
 	}
 	/**
 	 * Protobuf JSON representation for WordNetAugEnrichmentConfig
 	 */
 	interface AsProtobufJSON {
-		isActive?: boolean;
-		enrichmentFactor?: number;
-		executionOrder?: number;
+		isActive: boolean;
+		enrichmentFactor: number;
+		executionOrder: number;
 	}
 }
 /**
@@ -2151,20 +2156,20 @@ export declare class XLNetAugEnrichmentConfig implements GrpcMessage {
 	 * @param _writer binary writer instance
 	 */
 	static serializeBinaryToWriter(_instance: XLNetAugEnrichmentConfig, _writer: BinaryWriter): void;
-	private _isActive?;
-	private _enrichmentFactor?;
-	private _executionOrder?;
+	private _isActive;
+	private _enrichmentFactor;
+	private _executionOrder;
 	/**
 	 * Message constructor. Initializes the properties and applies default Protobuf values if necessary
 	 * @param _value initial values object or instance of XLNetAugEnrichmentConfig to deeply clone from
 	 */
 	constructor(_value?: RecursivePartial<XLNetAugEnrichmentConfig.AsObject>);
-	get isActive(): boolean | undefined;
-	set isActive(value: boolean | undefined);
-	get enrichmentFactor(): number | undefined;
-	set enrichmentFactor(value: number | undefined);
-	get executionOrder(): number | undefined;
-	set executionOrder(value: number | undefined);
+	get isActive(): boolean;
+	set isActive(value: boolean);
+	get enrichmentFactor(): number;
+	set enrichmentFactor(value: number);
+	get executionOrder(): number;
+	set executionOrder(value: number);
 	/**
 	 * Serialize message to binary data
 	 * @param instance message instance
@@ -2190,17 +2195,17 @@ export declare module XLNetAugEnrichmentConfig {
 	 * Standard JavaScript object representation for XLNetAugEnrichmentConfig
 	 */
 	interface AsObject {
-		isActive?: boolean;
-		enrichmentFactor?: number;
-		executionOrder?: number;
+		isActive: boolean;
+		enrichmentFactor: number;
+		executionOrder: number;
 	}
 	/**
 	 * Protobuf JSON representation for XLNetAugEnrichmentConfig
 	 */
 	interface AsProtobufJSON {
-		isActive?: boolean;
-		enrichmentFactor?: number;
-		executionOrder?: number;
+		isActive: boolean;
+		enrichmentFactor: number;
+		executionOrder: number;
 	}
 }
 /**
@@ -2230,32 +2235,32 @@ export declare class ClassifyIntentsRequest implements GrpcMessage {
 	 * @param _writer binary writer instance
 	 */
 	static serializeBinaryToWriter(_instance: ClassifyIntentsRequest, _writer: BinaryWriter): void;
-	private _parent?;
-	private _text?;
-	private _languageCode?;
-	private _activeContexts?;
-	private _contextNames?;
-	private _mode?;
-	private _algorithms?;
+	private _parent;
+	private _text;
+	private _languageCode;
+	private _activeContexts;
+	private _contextNames;
+	private _mode;
+	private _algorithms;
 	/**
 	 * Message constructor. Initializes the properties and applies default Protobuf values if necessary
 	 * @param _value initial values object or instance of ClassifyIntentsRequest to deeply clone from
 	 */
 	constructor(_value?: RecursivePartial<ClassifyIntentsRequest.AsObject>);
-	get parent(): string | undefined;
-	set parent(value: string | undefined);
-	get text(): string | undefined;
-	set text(value: string | undefined);
-	get languageCode(): string | undefined;
-	set languageCode(value: string | undefined);
-	get activeContexts(): boolean | undefined;
-	set activeContexts(value: boolean | undefined);
-	get contextNames(): string[] | undefined;
-	set contextNames(value: string[] | undefined);
-	get mode(): Mode | undefined;
-	set mode(value: Mode | undefined);
-	get algorithms(): IntentAlgorithms[] | undefined;
-	set algorithms(value: IntentAlgorithms[] | undefined);
+	get parent(): string;
+	set parent(value: string);
+	get text(): string;
+	set text(value: string);
+	get languageCode(): string;
+	set languageCode(value: string);
+	get activeContexts(): boolean;
+	set activeContexts(value: boolean);
+	get contextNames(): string[];
+	set contextNames(value: string[]);
+	get mode(): Mode;
+	set mode(value: Mode);
+	get algorithms(): IntentAlgorithms[];
+	set algorithms(value: IntentAlgorithms[]);
 	/**
 	 * Serialize message to binary data
 	 * @param instance message instance
@@ -2281,25 +2286,25 @@ export declare module ClassifyIntentsRequest {
 	 * Standard JavaScript object representation for ClassifyIntentsRequest
 	 */
 	interface AsObject {
-		parent?: string;
-		text?: string;
-		languageCode?: string;
-		activeContexts?: boolean;
-		contextNames?: string[];
-		mode?: Mode;
-		algorithms?: IntentAlgorithms[];
+		parent: string;
+		text: string;
+		languageCode: string;
+		activeContexts: boolean;
+		contextNames: string[];
+		mode: Mode;
+		algorithms: IntentAlgorithms[];
 	}
 	/**
 	 * Protobuf JSON representation for ClassifyIntentsRequest
 	 */
 	interface AsProtobufJSON {
-		parent?: string;
-		text?: string;
-		languageCode?: string;
-		activeContexts?: boolean;
-		contextNames?: string[];
-		mode?: string;
-		algorithms?: string[];
+		parent: string;
+		text: string;
+		languageCode: string;
+		activeContexts: boolean;
+		contextNames: string[];
+		mode: string;
+		algorithms: string[];
 	}
 }
 /**
@@ -2329,23 +2334,23 @@ export declare class IntentClassified implements GrpcMessage {
 	 * @param _writer binary writer instance
 	 */
 	static serializeBinaryToWriter(_instance: IntentClassified, _writer: BinaryWriter): void;
-	private _intentName?;
-	private _intentDisplayName?;
-	private _classifier?;
-	private _score?;
+	private _intentName;
+	private _intentDisplayName;
+	private _classifier;
+	private _score;
 	/**
 	 * Message constructor. Initializes the properties and applies default Protobuf values if necessary
 	 * @param _value initial values object or instance of IntentClassified to deeply clone from
 	 */
 	constructor(_value?: RecursivePartial<IntentClassified.AsObject>);
-	get intentName(): string | undefined;
-	set intentName(value: string | undefined);
-	get intentDisplayName(): string | undefined;
-	set intentDisplayName(value: string | undefined);
-	get classifier(): string | undefined;
-	set classifier(value: string | undefined);
-	get score(): number | undefined;
-	set score(value: number | undefined);
+	get intentName(): string;
+	set intentName(value: string);
+	get intentDisplayName(): string;
+	set intentDisplayName(value: string);
+	get classifier(): string;
+	set classifier(value: string);
+	get score(): number;
+	set score(value: number);
 	/**
 	 * Serialize message to binary data
 	 * @param instance message instance
@@ -2371,19 +2376,19 @@ export declare module IntentClassified {
 	 * Standard JavaScript object representation for IntentClassified
 	 */
 	interface AsObject {
-		intentName?: string;
-		intentDisplayName?: string;
-		classifier?: string;
-		score?: number;
+		intentName: string;
+		intentDisplayName: string;
+		classifier: string;
+		score: number;
 	}
 	/**
 	 * Protobuf JSON representation for IntentClassified
 	 */
 	interface AsProtobufJSON {
-		intentName?: string;
-		intentDisplayName?: string;
-		classifier?: string;
-		score?: number;
+		intentName: string;
+		intentDisplayName: string;
+		classifier: string;
+		score: number;
 	}
 }
 /**
@@ -2414,9 +2419,9 @@ export declare class ClassifyIntentsResponse implements GrpcMessage {
 	 */
 	static serializeBinaryToWriter(_instance: ClassifyIntentsResponse, _writer: BinaryWriter): void;
 	private _intentsClassified?;
-	private _text?;
-	private _activeContexts?;
-	private _contextNames?;
+	private _text;
+	private _activeContexts;
+	private _contextNames;
 	/**
 	 * Message constructor. Initializes the properties and applies default Protobuf values if necessary
 	 * @param _value initial values object or instance of ClassifyIntentsResponse to deeply clone from
@@ -2424,12 +2429,12 @@ export declare class ClassifyIntentsResponse implements GrpcMessage {
 	constructor(_value?: RecursivePartial<ClassifyIntentsResponse.AsObject>);
 	get intentsClassified(): IntentClassified[] | undefined;
 	set intentsClassified(value: IntentClassified[] | undefined);
-	get text(): string | undefined;
-	set text(value: string | undefined);
-	get activeContexts(): boolean | undefined;
-	set activeContexts(value: boolean | undefined);
-	get contextNames(): string[] | undefined;
-	set contextNames(value: string[] | undefined);
+	get text(): string;
+	set text(value: string);
+	get activeContexts(): boolean;
+	set activeContexts(value: boolean);
+	get contextNames(): string[];
+	set contextNames(value: string[]);
 	/**
 	 * Serialize message to binary data
 	 * @param instance message instance
@@ -2456,17 +2461,17 @@ export declare module ClassifyIntentsResponse {
 	 */
 	interface AsObject {
 		intentsClassified?: IntentClassified.AsObject[];
-		text?: string;
-		activeContexts?: boolean;
-		contextNames?: string[];
+		text: string;
+		activeContexts: boolean;
+		contextNames: string[];
 	}
 	/**
 	 * Protobuf JSON representation for ClassifyIntentsResponse
 	 */
 	interface AsProtobufJSON {
-		intentsClassified?: IntentClassified.AsProtobufJSON[] | null;
-		text?: string;
-		activeContexts?: boolean;
-		contextNames?: string[];
+		intentsClassified: IntentClassified.AsProtobufJSON[] | null;
+		text: string;
+		activeContexts: boolean;
+		contextNames: string[];
 	}
 }

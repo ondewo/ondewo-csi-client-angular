@@ -31,9 +31,9 @@ export declare class Operation implements GrpcMessage {
 	 * @param _writer binary writer instance
 	 */
 	static serializeBinaryToWriter(_instance: Operation, _writer: BinaryWriter): void;
-	private _name?;
+	private _name;
 	private _metadata?;
-	private _done?;
+	private _done;
 	private _error?;
 	private _response?;
 	private _result;
@@ -42,12 +42,12 @@ export declare class Operation implements GrpcMessage {
 	 * @param _value initial values object or instance of Operation to deeply clone from
 	 */
 	constructor(_value?: RecursivePartial<Operation.AsObject>);
-	get name(): string | undefined;
-	set name(value: string | undefined);
+	get name(): string;
+	set name(value: string);
 	get metadata(): ondewoNlu007.OperationMetadata | undefined;
 	set metadata(value: ondewoNlu007.OperationMetadata | undefined);
-	get done(): boolean | undefined;
-	set done(value: boolean | undefined);
+	get done(): boolean;
+	set done(value: boolean);
 	get error(): googleRpc006.Status | undefined;
 	set error(value: googleRpc006.Status | undefined);
 	get response(): googleProtobuf002.Any | undefined;
@@ -78,9 +78,9 @@ export declare module Operation {
 	 * Standard JavaScript object representation for Operation
 	 */
 	interface AsObject {
-		name?: string;
+		name: string;
 		metadata?: ondewoNlu007.OperationMetadata.AsObject;
-		done?: boolean;
+		done: boolean;
 		error?: googleRpc006.Status.AsObject;
 		response?: googleProtobuf002.Any.AsObject;
 	}
@@ -88,11 +88,11 @@ export declare module Operation {
 	 * Protobuf JSON representation for Operation
 	 */
 	interface AsProtobufJSON {
-		name?: string;
-		metadata?: ondewoNlu007.OperationMetadata.AsProtobufJSON | null;
-		done?: boolean;
-		error?: googleRpc006.Status.AsProtobufJSON | null;
-		response?: googleProtobuf002.Any.AsProtobufJSON | null;
+		name: string;
+		metadata: ondewoNlu007.OperationMetadata.AsProtobufJSON | null;
+		done: boolean;
+		error: googleRpc006.Status.AsProtobufJSON | null;
+		response: googleProtobuf002.Any.AsProtobufJSON | null;
 	}
 	enum ResultCase {
 		none = 0,
@@ -127,14 +127,14 @@ export declare class GetOperationRequest implements GrpcMessage {
 	 * @param _writer binary writer instance
 	 */
 	static serializeBinaryToWriter(_instance: GetOperationRequest, _writer: BinaryWriter): void;
-	private _name?;
+	private _name;
 	/**
 	 * Message constructor. Initializes the properties and applies default Protobuf values if necessary
 	 * @param _value initial values object or instance of GetOperationRequest to deeply clone from
 	 */
 	constructor(_value?: RecursivePartial<GetOperationRequest.AsObject>);
-	get name(): string | undefined;
-	set name(value: string | undefined);
+	get name(): string;
+	set name(value: string);
 	/**
 	 * Serialize message to binary data
 	 * @param instance message instance
@@ -160,13 +160,13 @@ export declare module GetOperationRequest {
 	 * Standard JavaScript object representation for GetOperationRequest
 	 */
 	interface AsObject {
-		name?: string;
+		name: string;
 	}
 	/**
 	 * Protobuf JSON representation for GetOperationRequest
 	 */
 	interface AsProtobufJSON {
-		name?: string;
+		name: string;
 	}
 }
 /**
@@ -196,24 +196,24 @@ export declare class ListOperationsRequest implements GrpcMessage {
 	 * @param _writer binary writer instance
 	 */
 	static serializeBinaryToWriter(_instance: ListOperationsRequest, _writer: BinaryWriter): void;
-	private _name?;
-	private _filter?;
-	private _pageSize?;
-	private _pageToken?;
+	private _name;
+	private _filter;
+	private _pageSize;
+	private _pageToken;
 	private _operationFilter?;
 	/**
 	 * Message constructor. Initializes the properties and applies default Protobuf values if necessary
 	 * @param _value initial values object or instance of ListOperationsRequest to deeply clone from
 	 */
 	constructor(_value?: RecursivePartial<ListOperationsRequest.AsObject>);
-	get name(): string | undefined;
-	set name(value: string | undefined);
-	get filter(): string | undefined;
-	set filter(value: string | undefined);
-	get pageSize(): number | undefined;
-	set pageSize(value: number | undefined);
-	get pageToken(): string | undefined;
-	set pageToken(value: string | undefined);
+	get name(): string;
+	set name(value: string);
+	get filter(): string;
+	set filter(value: string);
+	get pageSize(): number;
+	set pageSize(value: number);
+	get pageToken(): string;
+	set pageToken(value: string);
 	get operationFilter(): OperationFilter | undefined;
 	set operationFilter(value: OperationFilter | undefined);
 	/**
@@ -241,21 +241,21 @@ export declare module ListOperationsRequest {
 	 * Standard JavaScript object representation for ListOperationsRequest
 	 */
 	interface AsObject {
-		name?: string;
-		filter?: string;
-		pageSize?: number;
-		pageToken?: string;
+		name: string;
+		filter: string;
+		pageSize: number;
+		pageToken: string;
 		operationFilter?: OperationFilter.AsObject;
 	}
 	/**
 	 * Protobuf JSON representation for ListOperationsRequest
 	 */
 	interface AsProtobufJSON {
-		name?: string;
-		filter?: string;
-		pageSize?: number;
-		pageToken?: string;
-		operationFilter?: OperationFilter.AsProtobufJSON | null;
+		name: string;
+		filter: string;
+		pageSize: number;
+		pageToken: string;
+		operationFilter: OperationFilter.AsProtobufJSON | null;
 	}
 }
 /**
@@ -285,12 +285,12 @@ export declare class OperationFilter implements GrpcMessage {
 	 * @param _writer binary writer instance
 	 */
 	static serializeBinaryToWriter(_instance: OperationFilter, _writer: BinaryWriter): void;
-	private _projectParents?;
-	private _statuses?;
-	private _types?;
+	private _projectParents;
+	private _statuses;
+	private _types;
 	private _startTime?;
 	private _endTime?;
-	private _userIds?;
+	private _userIds;
 	private _startTimeOneof;
 	private _endTimeOneof;
 	/**
@@ -298,18 +298,18 @@ export declare class OperationFilter implements GrpcMessage {
 	 * @param _value initial values object or instance of OperationFilter to deeply clone from
 	 */
 	constructor(_value?: RecursivePartial<OperationFilter.AsObject>);
-	get projectParents(): string[] | undefined;
-	set projectParents(value: string[] | undefined);
-	get statuses(): ondewoNlu007.OperationMetadata.Status[] | undefined;
-	set statuses(value: ondewoNlu007.OperationMetadata.Status[] | undefined);
-	get types(): ondewoNlu007.OperationMetadata.OperationType[] | undefined;
-	set types(value: ondewoNlu007.OperationMetadata.OperationType[] | undefined);
+	get projectParents(): string[];
+	set projectParents(value: string[]);
+	get statuses(): ondewoNlu007.OperationMetadata.Status[];
+	set statuses(value: ondewoNlu007.OperationMetadata.Status[]);
+	get types(): ondewoNlu007.OperationMetadata.OperationType[];
+	set types(value: ondewoNlu007.OperationMetadata.OperationType[]);
 	get startTime(): googleProtobuf003.Timestamp | undefined;
 	set startTime(value: googleProtobuf003.Timestamp | undefined);
 	get endTime(): googleProtobuf003.Timestamp | undefined;
 	set endTime(value: googleProtobuf003.Timestamp | undefined);
-	get userIds(): string[] | undefined;
-	set userIds(value: string[] | undefined);
+	get userIds(): string[];
+	set userIds(value: string[]);
 	get startTimeOneof(): OperationFilter.StartTimeOneofCase;
 	get endTimeOneof(): OperationFilter.EndTimeOneofCase;
 	/**
@@ -337,23 +337,23 @@ export declare module OperationFilter {
 	 * Standard JavaScript object representation for OperationFilter
 	 */
 	interface AsObject {
-		projectParents?: string[];
-		statuses?: ondewoNlu007.OperationMetadata.Status[];
-		types?: ondewoNlu007.OperationMetadata.OperationType[];
+		projectParents: string[];
+		statuses: ondewoNlu007.OperationMetadata.Status[];
+		types: ondewoNlu007.OperationMetadata.OperationType[];
 		startTime?: googleProtobuf003.Timestamp.AsObject;
 		endTime?: googleProtobuf003.Timestamp.AsObject;
-		userIds?: string[];
+		userIds: string[];
 	}
 	/**
 	 * Protobuf JSON representation for OperationFilter
 	 */
 	interface AsProtobufJSON {
-		projectParents?: string[];
-		statuses?: string[];
-		types?: string[];
-		startTime?: googleProtobuf003.Timestamp.AsProtobufJSON | null;
-		endTime?: googleProtobuf003.Timestamp.AsProtobufJSON | null;
-		userIds?: string[];
+		projectParents: string[];
+		statuses: string[];
+		types: string[];
+		startTime: googleProtobuf003.Timestamp.AsProtobufJSON | null;
+		endTime: googleProtobuf003.Timestamp.AsProtobufJSON | null;
+		userIds: string[];
 	}
 	enum StartTimeOneofCase {
 		none = 0,
@@ -392,7 +392,7 @@ export declare class ListOperationsResponse implements GrpcMessage {
 	 */
 	static serializeBinaryToWriter(_instance: ListOperationsResponse, _writer: BinaryWriter): void;
 	private _operations?;
-	private _nextPageToken?;
+	private _nextPageToken;
 	/**
 	 * Message constructor. Initializes the properties and applies default Protobuf values if necessary
 	 * @param _value initial values object or instance of ListOperationsResponse to deeply clone from
@@ -400,8 +400,8 @@ export declare class ListOperationsResponse implements GrpcMessage {
 	constructor(_value?: RecursivePartial<ListOperationsResponse.AsObject>);
 	get operations(): Operation[] | undefined;
 	set operations(value: Operation[] | undefined);
-	get nextPageToken(): string | undefined;
-	set nextPageToken(value: string | undefined);
+	get nextPageToken(): string;
+	set nextPageToken(value: string);
 	/**
 	 * Serialize message to binary data
 	 * @param instance message instance
@@ -428,14 +428,14 @@ export declare module ListOperationsResponse {
 	 */
 	interface AsObject {
 		operations?: Operation.AsObject[];
-		nextPageToken?: string;
+		nextPageToken: string;
 	}
 	/**
 	 * Protobuf JSON representation for ListOperationsResponse
 	 */
 	interface AsProtobufJSON {
-		operations?: Operation.AsProtobufJSON[] | null;
-		nextPageToken?: string;
+		operations: Operation.AsProtobufJSON[] | null;
+		nextPageToken: string;
 	}
 }
 /**
@@ -465,14 +465,14 @@ export declare class CancelOperationRequest implements GrpcMessage {
 	 * @param _writer binary writer instance
 	 */
 	static serializeBinaryToWriter(_instance: CancelOperationRequest, _writer: BinaryWriter): void;
-	private _name?;
+	private _name;
 	/**
 	 * Message constructor. Initializes the properties and applies default Protobuf values if necessary
 	 * @param _value initial values object or instance of CancelOperationRequest to deeply clone from
 	 */
 	constructor(_value?: RecursivePartial<CancelOperationRequest.AsObject>);
-	get name(): string | undefined;
-	set name(value: string | undefined);
+	get name(): string;
+	set name(value: string);
 	/**
 	 * Serialize message to binary data
 	 * @param instance message instance
@@ -498,13 +498,13 @@ export declare module CancelOperationRequest {
 	 * Standard JavaScript object representation for CancelOperationRequest
 	 */
 	interface AsObject {
-		name?: string;
+		name: string;
 	}
 	/**
 	 * Protobuf JSON representation for CancelOperationRequest
 	 */
 	interface AsProtobufJSON {
-		name?: string;
+		name: string;
 	}
 }
 /**
@@ -534,14 +534,14 @@ export declare class DeleteOperationRequest implements GrpcMessage {
 	 * @param _writer binary writer instance
 	 */
 	static serializeBinaryToWriter(_instance: DeleteOperationRequest, _writer: BinaryWriter): void;
-	private _name?;
+	private _name;
 	/**
 	 * Message constructor. Initializes the properties and applies default Protobuf values if necessary
 	 * @param _value initial values object or instance of DeleteOperationRequest to deeply clone from
 	 */
 	constructor(_value?: RecursivePartial<DeleteOperationRequest.AsObject>);
-	get name(): string | undefined;
-	set name(value: string | undefined);
+	get name(): string;
+	set name(value: string);
 	/**
 	 * Serialize message to binary data
 	 * @param instance message instance
@@ -567,12 +567,12 @@ export declare module DeleteOperationRequest {
 	 * Standard JavaScript object representation for DeleteOperationRequest
 	 */
 	interface AsObject {
-		name?: string;
+		name: string;
 	}
 	/**
 	 * Protobuf JSON representation for DeleteOperationRequest
 	 */
 	interface AsProtobufJSON {
-		name?: string;
+		name: string;
 	}
 }

@@ -29,17 +29,17 @@ export declare class GetIntentCountRequest implements GrpcMessage {
 	 * @param _writer binary writer instance
 	 */
 	static serializeBinaryToWriter(_instance: GetIntentCountRequest, _writer: BinaryWriter): void;
-	private _parent?;
-	private _filterByCategory?;
+	private _parent;
+	private _filterByCategory;
 	/**
 	 * Message constructor. Initializes the properties and applies default Protobuf values if necessary
 	 * @param _value initial values object or instance of GetIntentCountRequest to deeply clone from
 	 */
 	constructor(_value?: RecursivePartial<GetIntentCountRequest.AsObject>);
-	get parent(): string | undefined;
-	set parent(value: string | undefined);
-	get filterByCategory(): ondewoNlu010.IntentCategory | undefined;
-	set filterByCategory(value: ondewoNlu010.IntentCategory | undefined);
+	get parent(): string;
+	set parent(value: string);
+	get filterByCategory(): ondewoNlu010.IntentCategory;
+	set filterByCategory(value: ondewoNlu010.IntentCategory);
 	/**
 	 * Serialize message to binary data
 	 * @param instance message instance
@@ -65,15 +65,15 @@ export declare module GetIntentCountRequest {
 	 * Standard JavaScript object representation for GetIntentCountRequest
 	 */
 	interface AsObject {
-		parent?: string;
-		filterByCategory?: ondewoNlu010.IntentCategory;
+		parent: string;
+		filterByCategory: ondewoNlu010.IntentCategory;
 	}
 	/**
 	 * Protobuf JSON representation for GetIntentCountRequest
 	 */
 	interface AsProtobufJSON {
-		parent?: string;
-		filterByCategory?: string;
+		parent: string;
+		filterByCategory: string;
 	}
 }
 /**
@@ -103,17 +103,17 @@ export declare class GetEntityTypeCountRequest implements GrpcMessage {
 	 * @param _writer binary writer instance
 	 */
 	static serializeBinaryToWriter(_instance: GetEntityTypeCountRequest, _writer: BinaryWriter): void;
-	private _parent?;
-	private _filterByCategory?;
+	private _parent;
+	private _filterByCategory;
 	/**
 	 * Message constructor. Initializes the properties and applies default Protobuf values if necessary
 	 * @param _value initial values object or instance of GetEntityTypeCountRequest to deeply clone from
 	 */
 	constructor(_value?: RecursivePartial<GetEntityTypeCountRequest.AsObject>);
-	get parent(): string | undefined;
-	set parent(value: string | undefined);
-	get filterByCategory(): ondewoNlu011.EntityTypeCategory | undefined;
-	set filterByCategory(value: ondewoNlu011.EntityTypeCategory | undefined);
+	get parent(): string;
+	set parent(value: string);
+	get filterByCategory(): ondewoNlu011.EntityTypeCategory;
+	set filterByCategory(value: ondewoNlu011.EntityTypeCategory);
 	/**
 	 * Serialize message to binary data
 	 * @param instance message instance
@@ -139,15 +139,15 @@ export declare module GetEntityTypeCountRequest {
 	 * Standard JavaScript object representation for GetEntityTypeCountRequest
 	 */
 	interface AsObject {
-		parent?: string;
-		filterByCategory?: ondewoNlu011.EntityTypeCategory;
+		parent: string;
+		filterByCategory: ondewoNlu011.EntityTypeCategory;
 	}
 	/**
 	 * Protobuf JSON representation for GetEntityTypeCountRequest
 	 */
 	interface AsProtobufJSON {
-		parent?: string;
-		filterByCategory?: string;
+		parent: string;
+		filterByCategory: string;
 	}
 }
 /**
@@ -177,14 +177,14 @@ export declare class GetProjectStatRequest implements GrpcMessage {
 	 * @param _writer binary writer instance
 	 */
 	static serializeBinaryToWriter(_instance: GetProjectStatRequest, _writer: BinaryWriter): void;
-	private _parent?;
+	private _parent;
 	/**
 	 * Message constructor. Initializes the properties and applies default Protobuf values if necessary
 	 * @param _value initial values object or instance of GetProjectStatRequest to deeply clone from
 	 */
 	constructor(_value?: RecursivePartial<GetProjectStatRequest.AsObject>);
-	get parent(): string | undefined;
-	set parent(value: string | undefined);
+	get parent(): string;
+	set parent(value: string);
 	/**
 	 * Serialize message to binary data
 	 * @param instance message instance
@@ -210,13 +210,13 @@ export declare module GetProjectStatRequest {
 	 * Standard JavaScript object representation for GetProjectStatRequest
 	 */
 	interface AsObject {
-		parent?: string;
+		parent: string;
 	}
 	/**
 	 * Protobuf JSON representation for GetProjectStatRequest
 	 */
 	interface AsProtobufJSON {
-		parent?: string;
+		parent: string;
 	}
 }
 /**
@@ -246,17 +246,17 @@ export declare class GetProjectElementStatRequest implements GrpcMessage {
 	 * @param _writer binary writer instance
 	 */
 	static serializeBinaryToWriter(_instance: GetProjectElementStatRequest, _writer: BinaryWriter): void;
-	private _name?;
-	private _languageCode?;
+	private _name;
+	private _languageCode;
 	/**
 	 * Message constructor. Initializes the properties and applies default Protobuf values if necessary
 	 * @param _value initial values object or instance of GetProjectElementStatRequest to deeply clone from
 	 */
 	constructor(_value?: RecursivePartial<GetProjectElementStatRequest.AsObject>);
-	get name(): string | undefined;
-	set name(value: string | undefined);
-	get languageCode(): string | undefined;
-	set languageCode(value: string | undefined);
+	get name(): string;
+	set name(value: string);
+	get languageCode(): string;
+	set languageCode(value: string);
 	/**
 	 * Serialize message to binary data
 	 * @param instance message instance
@@ -282,14 +282,14 @@ export declare module GetProjectElementStatRequest {
 	 * Standard JavaScript object representation for GetProjectElementStatRequest
 	 */
 	interface AsObject {
-		name?: string;
-		languageCode?: string;
+		name: string;
+		languageCode: string;
 	}
 	/**
 	 * Protobuf JSON representation for GetProjectElementStatRequest
 	 */
 	interface AsProtobufJSON {
-		name?: string;
-		languageCode?: string;
+		name: string;
+		languageCode: string;
 	}
 }

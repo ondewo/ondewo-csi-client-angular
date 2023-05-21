@@ -31,14 +31,14 @@ export declare class PingRequest implements GrpcMessage {
 	 * @param _writer binary writer instance
 	 */
 	static serializeBinaryToWriter(_instance: PingRequest, _writer: BinaryWriter): void;
-	private _session?;
+	private _session;
 	/**
 	 * Message constructor. Initializes the properties and applies default Protobuf values if necessary
 	 * @param _value initial values object or instance of PingRequest to deeply clone from
 	 */
 	constructor(_value?: RecursivePartial<PingRequest.AsObject>);
-	get session(): string | undefined;
-	set session(value: string | undefined);
+	get session(): string;
+	set session(value: string);
 	/**
 	 * Serialize message to binary data
 	 * @param instance message instance
@@ -64,13 +64,13 @@ export declare module PingRequest {
 	 * Standard JavaScript object representation for PingRequest
 	 */
 	interface AsObject {
-		session?: string;
+		session: string;
 	}
 	/**
 	 * Protobuf JSON representation for PingRequest
 	 */
 	interface AsProtobufJSON {
-		session?: string;
+		session: string;
 	}
 }
 /**
@@ -100,8 +100,8 @@ export declare class WebhookRequest implements GrpcMessage {
 	 * @param _writer binary writer instance
 	 */
 	static serializeBinaryToWriter(_instance: WebhookRequest, _writer: BinaryWriter): void;
-	private _session?;
-	private _responseId?;
+	private _session;
+	private _responseId;
 	private _queryResult?;
 	private _originalDetectIntentRequest?;
 	private _headers?;
@@ -110,10 +110,10 @@ export declare class WebhookRequest implements GrpcMessage {
 	 * @param _value initial values object or instance of WebhookRequest to deeply clone from
 	 */
 	constructor(_value?: RecursivePartial<WebhookRequest.AsObject>);
-	get session(): string | undefined;
-	set session(value: string | undefined);
-	get responseId(): string | undefined;
-	set responseId(value: string | undefined);
+	get session(): string;
+	set session(value: string);
+	get responseId(): string;
+	set responseId(value: string);
 	get queryResult(): ondewoNlu014.QueryResult | undefined;
 	set queryResult(value: ondewoNlu014.QueryResult | undefined);
 	get originalDetectIntentRequest(): OriginalDetectIntentRequest | undefined;
@@ -145,8 +145,8 @@ export declare module WebhookRequest {
 	 * Standard JavaScript object representation for WebhookRequest
 	 */
 	interface AsObject {
-		session?: string;
-		responseId?: string;
+		session: string;
+		responseId: string;
 		queryResult?: ondewoNlu014.QueryResult.AsObject;
 		originalDetectIntentRequest?: OriginalDetectIntentRequest.AsObject;
 		headers?: googleProtobuf009.Struct.AsObject;
@@ -155,11 +155,11 @@ export declare module WebhookRequest {
 	 * Protobuf JSON representation for WebhookRequest
 	 */
 	interface AsProtobufJSON {
-		session?: string;
-		responseId?: string;
-		queryResult?: ondewoNlu014.QueryResult.AsProtobufJSON | null;
-		originalDetectIntentRequest?: OriginalDetectIntentRequest.AsProtobufJSON | null;
-		headers?: googleProtobuf009.Struct.AsProtobufJSON | null;
+		session: string;
+		responseId: string;
+		queryResult: ondewoNlu014.QueryResult.AsProtobufJSON | null;
+		originalDetectIntentRequest: OriginalDetectIntentRequest.AsProtobufJSON | null;
+		headers: googleProtobuf009.Struct.AsProtobufJSON | null;
 	}
 }
 /**
@@ -189,9 +189,9 @@ export declare class WebhookResponse implements GrpcMessage {
 	 * @param _writer binary writer instance
 	 */
 	static serializeBinaryToWriter(_instance: WebhookResponse, _writer: BinaryWriter): void;
-	private _fulfillmentText?;
+	private _fulfillmentText;
 	private _fulfillmentMessages?;
-	private _source?;
+	private _source;
 	private _payload?;
 	private _outputContexts?;
 	private _followupEventInput?;
@@ -200,12 +200,12 @@ export declare class WebhookResponse implements GrpcMessage {
 	 * @param _value initial values object or instance of WebhookResponse to deeply clone from
 	 */
 	constructor(_value?: RecursivePartial<WebhookResponse.AsObject>);
-	get fulfillmentText(): string | undefined;
-	set fulfillmentText(value: string | undefined);
+	get fulfillmentText(): string;
+	set fulfillmentText(value: string);
 	get fulfillmentMessages(): ondewoNlu012.Intent.Message[] | undefined;
 	set fulfillmentMessages(value: ondewoNlu012.Intent.Message[] | undefined);
-	get source(): string | undefined;
-	set source(value: string | undefined);
+	get source(): string;
+	set source(value: string);
 	get payload(): googleProtobuf009.Struct | undefined;
 	set payload(value: googleProtobuf009.Struct | undefined);
 	get outputContexts(): ondewoNlu005.Context[] | undefined;
@@ -237,9 +237,9 @@ export declare module WebhookResponse {
 	 * Standard JavaScript object representation for WebhookResponse
 	 */
 	interface AsObject {
-		fulfillmentText?: string;
+		fulfillmentText: string;
 		fulfillmentMessages?: ondewoNlu012.Intent.Message.AsObject[];
-		source?: string;
+		source: string;
 		payload?: googleProtobuf009.Struct.AsObject;
 		outputContexts?: ondewoNlu005.Context.AsObject[];
 		followupEventInput?: ondewoNlu014.EventInput.AsObject;
@@ -248,12 +248,12 @@ export declare module WebhookResponse {
 	 * Protobuf JSON representation for WebhookResponse
 	 */
 	interface AsProtobufJSON {
-		fulfillmentText?: string;
-		fulfillmentMessages?: ondewoNlu012.Intent.Message.AsProtobufJSON[] | null;
-		source?: string;
-		payload?: googleProtobuf009.Struct.AsProtobufJSON | null;
-		outputContexts?: ondewoNlu005.Context.AsProtobufJSON[] | null;
-		followupEventInput?: ondewoNlu014.EventInput.AsProtobufJSON | null;
+		fulfillmentText: string;
+		fulfillmentMessages: ondewoNlu012.Intent.Message.AsProtobufJSON[] | null;
+		source: string;
+		payload: googleProtobuf009.Struct.AsProtobufJSON | null;
+		outputContexts: ondewoNlu005.Context.AsProtobufJSON[] | null;
+		followupEventInput: ondewoNlu014.EventInput.AsProtobufJSON | null;
 	}
 }
 /**
@@ -283,15 +283,15 @@ export declare class OriginalDetectIntentRequest implements GrpcMessage {
 	 * @param _writer binary writer instance
 	 */
 	static serializeBinaryToWriter(_instance: OriginalDetectIntentRequest, _writer: BinaryWriter): void;
-	private _source?;
+	private _source;
 	private _payload?;
 	/**
 	 * Message constructor. Initializes the properties and applies default Protobuf values if necessary
 	 * @param _value initial values object or instance of OriginalDetectIntentRequest to deeply clone from
 	 */
 	constructor(_value?: RecursivePartial<OriginalDetectIntentRequest.AsObject>);
-	get source(): string | undefined;
-	set source(value: string | undefined);
+	get source(): string;
+	set source(value: string);
 	get payload(): googleProtobuf009.Struct | undefined;
 	set payload(value: googleProtobuf009.Struct | undefined);
 	/**
@@ -319,15 +319,15 @@ export declare module OriginalDetectIntentRequest {
 	 * Standard JavaScript object representation for OriginalDetectIntentRequest
 	 */
 	interface AsObject {
-		source?: string;
+		source: string;
 		payload?: googleProtobuf009.Struct.AsObject;
 	}
 	/**
 	 * Protobuf JSON representation for OriginalDetectIntentRequest
 	 */
 	interface AsProtobufJSON {
-		source?: string;
-		payload?: googleProtobuf009.Struct.AsProtobufJSON | null;
+		source: string;
+		payload: googleProtobuf009.Struct.AsProtobufJSON | null;
 	}
 }
 /**
@@ -357,14 +357,14 @@ export declare class PingResponse implements GrpcMessage {
 	 * @param _writer binary writer instance
 	 */
 	static serializeBinaryToWriter(_instance: PingResponse, _writer: BinaryWriter): void;
-	private _isReachable?;
+	private _isReachable;
 	/**
 	 * Message constructor. Initializes the properties and applies default Protobuf values if necessary
 	 * @param _value initial values object or instance of PingResponse to deeply clone from
 	 */
 	constructor(_value?: RecursivePartial<PingResponse.AsObject>);
-	get isReachable(): boolean | undefined;
-	set isReachable(value: boolean | undefined);
+	get isReachable(): boolean;
+	set isReachable(value: boolean);
 	/**
 	 * Serialize message to binary data
 	 * @param instance message instance
@@ -390,12 +390,12 @@ export declare module PingResponse {
 	 * Standard JavaScript object representation for PingResponse
 	 */
 	interface AsObject {
-		isReachable?: boolean;
+		isReachable: boolean;
 	}
 	/**
 	 * Protobuf JSON representation for PingResponse
 	 */
 	interface AsProtobufJSON {
-		isReachable?: boolean;
+		isReachable: boolean;
 	}
 }

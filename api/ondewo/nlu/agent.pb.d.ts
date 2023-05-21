@@ -5,12 +5,14 @@ import * as googleProtobuf007 from '@ngx-grpc/well-known-types';
 import * as googleProtobuf008 from '@ngx-grpc/well-known-types';
 import * as googleProtobuf009 from '@ngx-grpc/well-known-types';
 import * as ondewoNlu010 from '../../ondewo/nlu/project-role.pb';
-import * as ondewoNlu014 from '../../ondewo/nlu/intent.pb';
-import * as ondewoNlu015 from '../../ondewo/nlu/user.pb';
+import * as ondewoNlu015 from '../../ondewo/nlu/intent.pb';
+import * as ondewoNlu017 from '../../ondewo/nlu/user.pb';
+import * as ondewoNlu018 from '../../ondewo/nlu/session.pb';
 export declare enum AgentView {
 	AGENT_VIEW_UNSPECIFIED = 0,
 	AGENT_VIEW_FULL = 1,
-	AGENT_VIEW_SHALLOW = 2
+	AGENT_VIEW_SHALLOW = 2,
+	AGENT_VIEW_MINIMUM = 3
 }
 export declare enum InitiationProtocol {
 	AS_SOON_AS_POSSIBLE = 0,
@@ -23,6 +25,26 @@ export declare enum ReportType {
 	ENTITY_PER_LANGUAGE = 2,
 	ENTITY_COLLISION = 3,
 	INTENT_GENERAL = 4
+}
+export declare enum SessionsReportType {
+	SESSIONS = 0,
+	SESSION_STEPS = 1,
+	SESSION_TOP_X_INTENTS = 2,
+	SESSION_TOP_X_ENTITY_TYPES = 3,
+	SESSION_TOP_X_ENTITY_VALUES = 4,
+	SESSION_TOP_X_USERS = 5,
+	SESSION_TOP_X_LABELS = 6,
+	SESSION_TOP_X_TAGS = 7,
+	SESSION_TOP_X_PHONE_NUMBERS = 8,
+	SESSION_HUMAN_HANDOVERS = 9,
+	SESSION_SQL_QUERY = 10,
+	SESSION_LEAST_X_INTENTS = 11,
+	SESSION_LEAST_X_ENTITY_TYPES = 12,
+	SESSION_LEAST_X_ENTITY_VALUES = 13,
+	SESSION_LEAST_X_USERS = 14,
+	SESSION_LEAST_X_LABELS = 15,
+	SESSION_LEAST_X_TAGS = 16,
+	TOTAL_STATISTICS = 17
 }
 export declare enum ReportFormat {
 	CSV = 0,
@@ -60,41 +82,41 @@ export declare class Agent implements GrpcMessage {
 	 * @param _writer binary writer instance
 	 */
 	static serializeBinaryToWriter(_instance: Agent, _writer: BinaryWriter): void;
-	private _parent?;
-	private _displayName?;
-	private _defaultLanguageCode?;
-	private _supportedLanguageCodes?;
-	private _timeZone?;
-	private _nluPlatform?;
+	private _parent;
+	private _displayName;
+	private _defaultLanguageCode;
+	private _supportedLanguageCodes;
+	private _timeZone;
+	private _nluPlatform;
 	private _configs?;
-	private _ownerId?;
-	private _status?;
-	private _description?;
+	private _ownerId;
+	private _status;
+	private _description;
 	/**
 	 * Message constructor. Initializes the properties and applies default Protobuf values if necessary
 	 * @param _value initial values object or instance of Agent to deeply clone from
 	 */
 	constructor(_value?: RecursivePartial<Agent.AsObject>);
-	get parent(): string | undefined;
-	set parent(value: string | undefined);
-	get displayName(): string | undefined;
-	set displayName(value: string | undefined);
-	get defaultLanguageCode(): string | undefined;
-	set defaultLanguageCode(value: string | undefined);
-	get supportedLanguageCodes(): string[] | undefined;
-	set supportedLanguageCodes(value: string[] | undefined);
-	get timeZone(): string | undefined;
-	set timeZone(value: string | undefined);
-	get nluPlatform(): string | undefined;
-	set nluPlatform(value: string | undefined);
+	get parent(): string;
+	set parent(value: string);
+	get displayName(): string;
+	set displayName(value: string);
+	get defaultLanguageCode(): string;
+	set defaultLanguageCode(value: string);
+	get supportedLanguageCodes(): string[];
+	set supportedLanguageCodes(value: string[]);
+	get timeZone(): string;
+	set timeZone(value: string);
+	get nluPlatform(): string;
+	set nluPlatform(value: string);
 	get configs(): googleProtobuf009.Struct | undefined;
 	set configs(value: googleProtobuf009.Struct | undefined);
-	get ownerId(): string | undefined;
-	set ownerId(value: string | undefined);
-	get status(): AgentStatus | undefined;
-	set status(value: AgentStatus | undefined);
-	get description(): string | undefined;
-	set description(value: string | undefined);
+	get ownerId(): string;
+	set ownerId(value: string);
+	get status(): AgentStatus;
+	set status(value: AgentStatus);
+	get description(): string;
+	set description(value: string);
 	/**
 	 * Serialize message to binary data
 	 * @param instance message instance
@@ -120,31 +142,31 @@ export declare module Agent {
 	 * Standard JavaScript object representation for Agent
 	 */
 	interface AsObject {
-		parent?: string;
-		displayName?: string;
-		defaultLanguageCode?: string;
-		supportedLanguageCodes?: string[];
-		timeZone?: string;
-		nluPlatform?: string;
+		parent: string;
+		displayName: string;
+		defaultLanguageCode: string;
+		supportedLanguageCodes: string[];
+		timeZone: string;
+		nluPlatform: string;
 		configs?: googleProtobuf009.Struct.AsObject;
-		ownerId?: string;
-		status?: AgentStatus;
-		description?: string;
+		ownerId: string;
+		status: AgentStatus;
+		description: string;
 	}
 	/**
 	 * Protobuf JSON representation for Agent
 	 */
 	interface AsProtobufJSON {
-		parent?: string;
-		displayName?: string;
-		defaultLanguageCode?: string;
-		supportedLanguageCodes?: string[];
-		timeZone?: string;
-		nluPlatform?: string;
-		configs?: googleProtobuf009.Struct.AsProtobufJSON | null;
-		ownerId?: string;
-		status?: string;
-		description?: string;
+		parent: string;
+		displayName: string;
+		defaultLanguageCode: string;
+		supportedLanguageCodes: string[];
+		timeZone: string;
+		nluPlatform: string;
+		configs: googleProtobuf009.Struct.AsProtobufJSON | null;
+		ownerId: string;
+		status: string;
+		description: string;
 	}
 }
 /**
@@ -183,8 +205,8 @@ export declare class AgentWithOwner implements GrpcMessage {
 	constructor(_value?: RecursivePartial<AgentWithOwner.AsObject>);
 	get agent(): Agent | undefined;
 	set agent(value: Agent | undefined);
-	get owner(): ondewoNlu015.User | undefined;
-	set owner(value: ondewoNlu015.User | undefined);
+	get owner(): ondewoNlu017.User | undefined;
+	set owner(value: ondewoNlu017.User | undefined);
 	/**
 	 * Serialize message to binary data
 	 * @param instance message instance
@@ -211,14 +233,14 @@ export declare module AgentWithOwner {
 	 */
 	interface AsObject {
 		agent?: Agent.AsObject;
-		owner?: ondewoNlu015.User.AsObject;
+		owner?: ondewoNlu017.User.AsObject;
 	}
 	/**
 	 * Protobuf JSON representation for AgentWithOwner
 	 */
 	interface AsProtobufJSON {
-		agent?: Agent.AsProtobufJSON | null;
-		owner?: ondewoNlu015.User.AsProtobufJSON | null;
+		agent: Agent.AsProtobufJSON | null;
+		owner: ondewoNlu017.User.AsProtobufJSON | null;
 	}
 }
 /**
@@ -291,8 +313,8 @@ export declare module AgentOfUserWithOwner {
 	 * Protobuf JSON representation for AgentOfUserWithOwner
 	 */
 	interface AsProtobufJSON {
-		agentWithOwner?: AgentWithOwner.AsProtobufJSON | null;
-		projectRole?: ondewoNlu010.ProjectRole.AsProtobufJSON | null;
+		agentWithOwner: AgentWithOwner.AsProtobufJSON | null;
+		projectRole: ondewoNlu010.ProjectRole.AsProtobufJSON | null;
 	}
 }
 /**
@@ -323,7 +345,7 @@ export declare class CreateAgentRequest implements GrpcMessage {
 	 */
 	static serializeBinaryToWriter(_instance: CreateAgentRequest, _writer: BinaryWriter): void;
 	private _agent?;
-	private _agentView?;
+	private _agentView;
 	/**
 	 * Message constructor. Initializes the properties and applies default Protobuf values if necessary
 	 * @param _value initial values object or instance of CreateAgentRequest to deeply clone from
@@ -331,8 +353,8 @@ export declare class CreateAgentRequest implements GrpcMessage {
 	constructor(_value?: RecursivePartial<CreateAgentRequest.AsObject>);
 	get agent(): Agent | undefined;
 	set agent(value: Agent | undefined);
-	get agentView(): AgentView | undefined;
-	set agentView(value: AgentView | undefined);
+	get agentView(): AgentView;
+	set agentView(value: AgentView);
 	/**
 	 * Serialize message to binary data
 	 * @param instance message instance
@@ -359,14 +381,14 @@ export declare module CreateAgentRequest {
 	 */
 	interface AsObject {
 		agent?: Agent.AsObject;
-		agentView?: AgentView;
+		agentView: AgentView;
 	}
 	/**
 	 * Protobuf JSON representation for CreateAgentRequest
 	 */
 	interface AsProtobufJSON {
-		agent?: Agent.AsProtobufJSON | null;
-		agentView?: string;
+		agent: Agent.AsProtobufJSON | null;
+		agentView: string;
 	}
 }
 /**
@@ -397,7 +419,7 @@ export declare class UpdateAgentRequest implements GrpcMessage {
 	 */
 	static serializeBinaryToWriter(_instance: UpdateAgentRequest, _writer: BinaryWriter): void;
 	private _agent?;
-	private _agentView?;
+	private _agentView;
 	private _updateMask?;
 	/**
 	 * Message constructor. Initializes the properties and applies default Protobuf values if necessary
@@ -406,8 +428,8 @@ export declare class UpdateAgentRequest implements GrpcMessage {
 	constructor(_value?: RecursivePartial<UpdateAgentRequest.AsObject>);
 	get agent(): Agent | undefined;
 	set agent(value: Agent | undefined);
-	get agentView(): AgentView | undefined;
-	set agentView(value: AgentView | undefined);
+	get agentView(): AgentView;
+	set agentView(value: AgentView);
 	get updateMask(): googleProtobuf008.FieldMask | undefined;
 	set updateMask(value: googleProtobuf008.FieldMask | undefined);
 	/**
@@ -436,16 +458,16 @@ export declare module UpdateAgentRequest {
 	 */
 	interface AsObject {
 		agent?: Agent.AsObject;
-		agentView?: AgentView;
+		agentView: AgentView;
 		updateMask?: googleProtobuf008.FieldMask.AsObject;
 	}
 	/**
 	 * Protobuf JSON representation for UpdateAgentRequest
 	 */
 	interface AsProtobufJSON {
-		agent?: Agent.AsProtobufJSON | null;
-		agentView?: string;
-		updateMask?: googleProtobuf008.FieldMask.AsProtobufJSON | null;
+		agent: Agent.AsProtobufJSON | null;
+		agentView: string;
+		updateMask: googleProtobuf008.FieldMask.AsProtobufJSON | null;
 	}
 }
 /**
@@ -475,14 +497,14 @@ export declare class DeleteAgentRequest implements GrpcMessage {
 	 * @param _writer binary writer instance
 	 */
 	static serializeBinaryToWriter(_instance: DeleteAgentRequest, _writer: BinaryWriter): void;
-	private _parent?;
+	private _parent;
 	/**
 	 * Message constructor. Initializes the properties and applies default Protobuf values if necessary
 	 * @param _value initial values object or instance of DeleteAgentRequest to deeply clone from
 	 */
 	constructor(_value?: RecursivePartial<DeleteAgentRequest.AsObject>);
-	get parent(): string | undefined;
-	set parent(value: string | undefined);
+	get parent(): string;
+	set parent(value: string);
 	/**
 	 * Serialize message to binary data
 	 * @param instance message instance
@@ -508,13 +530,13 @@ export declare module DeleteAgentRequest {
 	 * Standard JavaScript object representation for DeleteAgentRequest
 	 */
 	interface AsObject {
-		parent?: string;
+		parent: string;
 	}
 	/**
 	 * Protobuf JSON representation for DeleteAgentRequest
 	 */
 	interface AsProtobufJSON {
-		parent?: string;
+		parent: string;
 	}
 }
 /**
@@ -544,17 +566,17 @@ export declare class GetAgentRequest implements GrpcMessage {
 	 * @param _writer binary writer instance
 	 */
 	static serializeBinaryToWriter(_instance: GetAgentRequest, _writer: BinaryWriter): void;
-	private _parent?;
-	private _agentView?;
+	private _parent;
+	private _agentView;
 	/**
 	 * Message constructor. Initializes the properties and applies default Protobuf values if necessary
 	 * @param _value initial values object or instance of GetAgentRequest to deeply clone from
 	 */
 	constructor(_value?: RecursivePartial<GetAgentRequest.AsObject>);
-	get parent(): string | undefined;
-	set parent(value: string | undefined);
-	get agentView(): AgentView | undefined;
-	set agentView(value: AgentView | undefined);
+	get parent(): string;
+	set parent(value: string);
+	get agentView(): AgentView;
+	set agentView(value: AgentView);
 	/**
 	 * Serialize message to binary data
 	 * @param instance message instance
@@ -580,15 +602,15 @@ export declare module GetAgentRequest {
 	 * Standard JavaScript object representation for GetAgentRequest
 	 */
 	interface AsObject {
-		parent?: string;
-		agentView?: AgentView;
+		parent: string;
+		agentView: AgentView;
 	}
 	/**
 	 * Protobuf JSON representation for GetAgentRequest
 	 */
 	interface AsProtobufJSON {
-		parent?: string;
-		agentView?: string;
+		parent: string;
+		agentView: string;
 	}
 }
 /**
@@ -618,18 +640,18 @@ export declare class ListAgentsRequest implements GrpcMessage {
 	 * @param _writer binary writer instance
 	 */
 	static serializeBinaryToWriter(_instance: ListAgentsRequest, _writer: BinaryWriter): void;
-	private _agentView?;
-	private _pageToken?;
+	private _agentView;
+	private _pageToken;
 	private _sortByField?;
 	/**
 	 * Message constructor. Initializes the properties and applies default Protobuf values if necessary
 	 * @param _value initial values object or instance of ListAgentsRequest to deeply clone from
 	 */
 	constructor(_value?: RecursivePartial<ListAgentsRequest.AsObject>);
-	get agentView(): AgentView | undefined;
-	set agentView(value: AgentView | undefined);
-	get pageToken(): string | undefined;
-	set pageToken(value: string | undefined);
+	get agentView(): AgentView;
+	set agentView(value: AgentView);
+	get pageToken(): string;
+	set pageToken(value: string);
 	get sortByField(): AgentSorting | undefined;
 	set sortByField(value: AgentSorting | undefined);
 	/**
@@ -657,17 +679,17 @@ export declare module ListAgentsRequest {
 	 * Standard JavaScript object representation for ListAgentsRequest
 	 */
 	interface AsObject {
-		agentView?: AgentView;
-		pageToken?: string;
+		agentView: AgentView;
+		pageToken: string;
 		sortByField?: AgentSorting.AsObject;
 	}
 	/**
 	 * Protobuf JSON representation for ListAgentsRequest
 	 */
 	interface AsProtobufJSON {
-		agentView?: string;
-		pageToken?: string;
-		sortByField?: AgentSorting.AsProtobufJSON | null;
+		agentView: string;
+		pageToken: string;
+		sortByField: AgentSorting.AsProtobufJSON | null;
 	}
 }
 /**
@@ -698,7 +720,7 @@ export declare class ListAgentsResponse implements GrpcMessage {
 	 */
 	static serializeBinaryToWriter(_instance: ListAgentsResponse, _writer: BinaryWriter): void;
 	private _agentsWithOwners?;
-	private _nextPageToken?;
+	private _nextPageToken;
 	/**
 	 * Message constructor. Initializes the properties and applies default Protobuf values if necessary
 	 * @param _value initial values object or instance of ListAgentsResponse to deeply clone from
@@ -706,8 +728,8 @@ export declare class ListAgentsResponse implements GrpcMessage {
 	constructor(_value?: RecursivePartial<ListAgentsResponse.AsObject>);
 	get agentsWithOwners(): AgentWithOwner[] | undefined;
 	set agentsWithOwners(value: AgentWithOwner[] | undefined);
-	get nextPageToken(): string | undefined;
-	set nextPageToken(value: string | undefined);
+	get nextPageToken(): string;
+	set nextPageToken(value: string);
 	/**
 	 * Serialize message to binary data
 	 * @param instance message instance
@@ -734,14 +756,14 @@ export declare module ListAgentsResponse {
 	 */
 	interface AsObject {
 		agentsWithOwners?: AgentWithOwner.AsObject[];
-		nextPageToken?: string;
+		nextPageToken: string;
 	}
 	/**
 	 * Protobuf JSON representation for ListAgentsResponse
 	 */
 	interface AsProtobufJSON {
-		agentsWithOwners?: AgentWithOwner.AsProtobufJSON[] | null;
-		nextPageToken?: string;
+		agentsWithOwners: AgentWithOwner.AsProtobufJSON[] | null;
+		nextPageToken: string;
 	}
 }
 /**
@@ -772,7 +794,7 @@ export declare class ListAgentsOfUserResponse implements GrpcMessage {
 	 */
 	static serializeBinaryToWriter(_instance: ListAgentsOfUserResponse, _writer: BinaryWriter): void;
 	private _agentsOfUserWithOwners?;
-	private _nextPageToken?;
+	private _nextPageToken;
 	/**
 	 * Message constructor. Initializes the properties and applies default Protobuf values if necessary
 	 * @param _value initial values object or instance of ListAgentsOfUserResponse to deeply clone from
@@ -780,8 +802,8 @@ export declare class ListAgentsOfUserResponse implements GrpcMessage {
 	constructor(_value?: RecursivePartial<ListAgentsOfUserResponse.AsObject>);
 	get agentsOfUserWithOwners(): AgentOfUserWithOwner[] | undefined;
 	set agentsOfUserWithOwners(value: AgentOfUserWithOwner[] | undefined);
-	get nextPageToken(): string | undefined;
-	set nextPageToken(value: string | undefined);
+	get nextPageToken(): string;
+	set nextPageToken(value: string);
 	/**
 	 * Serialize message to binary data
 	 * @param instance message instance
@@ -808,14 +830,14 @@ export declare module ListAgentsOfUserResponse {
 	 */
 	interface AsObject {
 		agentsOfUserWithOwners?: AgentOfUserWithOwner.AsObject[];
-		nextPageToken?: string;
+		nextPageToken: string;
 	}
 	/**
 	 * Protobuf JSON representation for ListAgentsOfUserResponse
 	 */
 	interface AsProtobufJSON {
-		agentsOfUserWithOwners?: AgentOfUserWithOwner.AsProtobufJSON[] | null;
-		nextPageToken?: string;
+		agentsOfUserWithOwners: AgentOfUserWithOwner.AsProtobufJSON[] | null;
+		nextPageToken: string;
 	}
 }
 /**
@@ -845,20 +867,20 @@ export declare class TrainAgentRequest implements GrpcMessage {
 	 * @param _writer binary writer instance
 	 */
 	static serializeBinaryToWriter(_instance: TrainAgentRequest, _writer: BinaryWriter): void;
-	private _parent?;
-	private _branch?;
-	private _initiationProtocol?;
+	private _parent;
+	private _branch;
+	private _initiationProtocol;
 	/**
 	 * Message constructor. Initializes the properties and applies default Protobuf values if necessary
 	 * @param _value initial values object or instance of TrainAgentRequest to deeply clone from
 	 */
 	constructor(_value?: RecursivePartial<TrainAgentRequest.AsObject>);
-	get parent(): string | undefined;
-	set parent(value: string | undefined);
-	get branch(): string | undefined;
-	set branch(value: string | undefined);
-	get initiationProtocol(): InitiationProtocol | undefined;
-	set initiationProtocol(value: InitiationProtocol | undefined);
+	get parent(): string;
+	set parent(value: string);
+	get branch(): string;
+	set branch(value: string);
+	get initiationProtocol(): InitiationProtocol;
+	set initiationProtocol(value: InitiationProtocol);
 	/**
 	 * Serialize message to binary data
 	 * @param instance message instance
@@ -884,17 +906,17 @@ export declare module TrainAgentRequest {
 	 * Standard JavaScript object representation for TrainAgentRequest
 	 */
 	interface AsObject {
-		parent?: string;
-		branch?: string;
-		initiationProtocol?: InitiationProtocol;
+		parent: string;
+		branch: string;
+		initiationProtocol: InitiationProtocol;
 	}
 	/**
 	 * Protobuf JSON representation for TrainAgentRequest
 	 */
 	interface AsProtobufJSON {
-		parent?: string;
-		branch?: string;
-		initiationProtocol?: string;
+		parent: string;
+		branch: string;
+		initiationProtocol: string;
 	}
 }
 /**
@@ -924,17 +946,17 @@ export declare class BuildCacheRequest implements GrpcMessage {
 	 * @param _writer binary writer instance
 	 */
 	static serializeBinaryToWriter(_instance: BuildCacheRequest, _writer: BinaryWriter): void;
-	private _parent?;
-	private _branch?;
+	private _parent;
+	private _branch;
 	/**
 	 * Message constructor. Initializes the properties and applies default Protobuf values if necessary
 	 * @param _value initial values object or instance of BuildCacheRequest to deeply clone from
 	 */
 	constructor(_value?: RecursivePartial<BuildCacheRequest.AsObject>);
-	get parent(): string | undefined;
-	set parent(value: string | undefined);
-	get branch(): string | undefined;
-	set branch(value: string | undefined);
+	get parent(): string;
+	set parent(value: string);
+	get branch(): string;
+	set branch(value: string);
 	/**
 	 * Serialize message to binary data
 	 * @param instance message instance
@@ -960,15 +982,15 @@ export declare module BuildCacheRequest {
 	 * Standard JavaScript object representation for BuildCacheRequest
 	 */
 	interface AsObject {
-		parent?: string;
-		branch?: string;
+		parent: string;
+		branch: string;
 	}
 	/**
 	 * Protobuf JSON representation for BuildCacheRequest
 	 */
 	interface AsProtobufJSON {
-		parent?: string;
-		branch?: string;
+		parent: string;
+		branch: string;
 	}
 }
 /**
@@ -998,20 +1020,20 @@ export declare class ExportAgentRequest implements GrpcMessage {
 	 * @param _writer binary writer instance
 	 */
 	static serializeBinaryToWriter(_instance: ExportAgentRequest, _writer: BinaryWriter): void;
-	private _parent?;
-	private _agentUri?;
-	private _compressionLevel?;
+	private _parent;
+	private _agentUri;
+	private _compressionLevel;
 	/**
 	 * Message constructor. Initializes the properties and applies default Protobuf values if necessary
 	 * @param _value initial values object or instance of ExportAgentRequest to deeply clone from
 	 */
 	constructor(_value?: RecursivePartial<ExportAgentRequest.AsObject>);
-	get parent(): string | undefined;
-	set parent(value: string | undefined);
-	get agentUri(): string | undefined;
-	set agentUri(value: string | undefined);
-	get compressionLevel(): number | undefined;
-	set compressionLevel(value: number | undefined);
+	get parent(): string;
+	set parent(value: string);
+	get agentUri(): string;
+	set agentUri(value: string);
+	get compressionLevel(): number;
+	set compressionLevel(value: number);
 	/**
 	 * Serialize message to binary data
 	 * @param instance message instance
@@ -1037,17 +1059,17 @@ export declare module ExportAgentRequest {
 	 * Standard JavaScript object representation for ExportAgentRequest
 	 */
 	interface AsObject {
-		parent?: string;
-		agentUri?: string;
-		compressionLevel?: number;
+		parent: string;
+		agentUri: string;
+		compressionLevel: number;
 	}
 	/**
 	 * Protobuf JSON representation for ExportAgentRequest
 	 */
 	interface AsProtobufJSON {
-		parent?: string;
-		agentUri?: string;
-		compressionLevel?: number;
+		parent: string;
+		agentUri: string;
+		compressionLevel: number;
 	}
 }
 /**
@@ -1077,18 +1099,18 @@ export declare class ExportAgentResponse implements GrpcMessage {
 	 * @param _writer binary writer instance
 	 */
 	static serializeBinaryToWriter(_instance: ExportAgentResponse, _writer: BinaryWriter): void;
-	private _agentUri?;
-	private _agentContent?;
+	private _agentUri;
+	private _agentContent;
 	private _agent;
 	/**
 	 * Message constructor. Initializes the properties and applies default Protobuf values if necessary
 	 * @param _value initial values object or instance of ExportAgentResponse to deeply clone from
 	 */
 	constructor(_value?: RecursivePartial<ExportAgentResponse.AsObject>);
-	get agentUri(): string | undefined;
-	set agentUri(value: string | undefined);
-	get agentContent(): Uint8Array | undefined;
-	set agentContent(value: Uint8Array | undefined);
+	get agentUri(): string;
+	set agentUri(value: string);
+	get agentContent(): Uint8Array;
+	set agentContent(value: Uint8Array);
 	get agent(): ExportAgentResponse.AgentCase;
 	/**
 	 * Serialize message to binary data
@@ -1115,15 +1137,15 @@ export declare module ExportAgentResponse {
 	 * Standard JavaScript object representation for ExportAgentResponse
 	 */
 	interface AsObject {
-		agentUri?: string;
-		agentContent?: Uint8Array;
+		agentUri: string;
+		agentContent: Uint8Array;
 	}
 	/**
 	 * Protobuf JSON representation for ExportAgentResponse
 	 */
 	interface AsProtobufJSON {
-		agentUri?: string | null;
-		agentContent?: string;
+		agentUri: string | null;
+		agentContent: string;
 	}
 	enum AgentCase {
 		none = 0,
@@ -1158,26 +1180,26 @@ export declare class ExportBenchmarkAgentRequest implements GrpcMessage {
 	 * @param _writer binary writer instance
 	 */
 	static serializeBinaryToWriter(_instance: ExportBenchmarkAgentRequest, _writer: BinaryWriter): void;
-	private _parent?;
-	private _compressionLevel?;
-	private _testSize?;
-	private _trainSize?;
-	private _randomState?;
+	private _parent;
+	private _compressionLevel;
+	private _testSize;
+	private _trainSize;
+	private _randomState;
 	/**
 	 * Message constructor. Initializes the properties and applies default Protobuf values if necessary
 	 * @param _value initial values object or instance of ExportBenchmarkAgentRequest to deeply clone from
 	 */
 	constructor(_value?: RecursivePartial<ExportBenchmarkAgentRequest.AsObject>);
-	get parent(): string | undefined;
-	set parent(value: string | undefined);
-	get compressionLevel(): number | undefined;
-	set compressionLevel(value: number | undefined);
-	get testSize(): number | undefined;
-	set testSize(value: number | undefined);
-	get trainSize(): number | undefined;
-	set trainSize(value: number | undefined);
-	get randomState(): number | undefined;
-	set randomState(value: number | undefined);
+	get parent(): string;
+	set parent(value: string);
+	get compressionLevel(): number;
+	set compressionLevel(value: number);
+	get testSize(): number;
+	set testSize(value: number);
+	get trainSize(): number;
+	set trainSize(value: number);
+	get randomState(): number;
+	set randomState(value: number);
 	/**
 	 * Serialize message to binary data
 	 * @param instance message instance
@@ -1203,21 +1225,21 @@ export declare module ExportBenchmarkAgentRequest {
 	 * Standard JavaScript object representation for ExportBenchmarkAgentRequest
 	 */
 	interface AsObject {
-		parent?: string;
-		compressionLevel?: number;
-		testSize?: number;
-		trainSize?: number;
-		randomState?: number;
+		parent: string;
+		compressionLevel: number;
+		testSize: number;
+		trainSize: number;
+		randomState: number;
 	}
 	/**
 	 * Protobuf JSON representation for ExportBenchmarkAgentRequest
 	 */
 	interface AsProtobufJSON {
-		parent?: string;
-		compressionLevel?: number;
-		testSize?: number;
-		trainSize?: number;
-		randomState?: number;
+		parent: string;
+		compressionLevel: number;
+		testSize: number;
+		trainSize: number;
+		randomState: number;
 	}
 }
 /**
@@ -1247,27 +1269,19 @@ export declare class ExportBenchmarkAgentResponse implements GrpcMessage {
 	 * @param _writer binary writer instance
 	 */
 	static serializeBinaryToWriter(_instance: ExportBenchmarkAgentResponse, _writer: BinaryWriter): void;
-	private _agentContent?;
-	private _trainingPhrases?;
+	private _agentContent;
+	private _trainingPhrases;
 	/**
 	 * Message constructor. Initializes the properties and applies default Protobuf values if necessary
 	 * @param _value initial values object or instance of ExportBenchmarkAgentResponse to deeply clone from
 	 */
 	constructor(_value?: RecursivePartial<ExportBenchmarkAgentResponse.AsObject>);
-	get agentContent(): Uint8Array | undefined;
-	set agentContent(value: Uint8Array | undefined);
-	get trainingPhrases():
-		| {
-				[prop: string]: ondewoNlu014.ListTrainingPhrasesResponse;
-		  }
-		| undefined;
-	set trainingPhrases(
-		value:
-			| {
-					[prop: string]: ondewoNlu014.ListTrainingPhrasesResponse;
-			  }
-			| undefined
-	);
+	get agentContent(): Uint8Array;
+	set agentContent(value: Uint8Array);
+	get trainingPhrases(): {
+		[prop: string]: ondewoNlu015.ListTrainingPhrasesResponse;
+	};
+	set trainingPhrases(value: { [prop: string]: ondewoNlu015.ListTrainingPhrasesResponse });
 	/**
 	 * Serialize message to binary data
 	 * @param instance message instance
@@ -1293,18 +1307,18 @@ export declare module ExportBenchmarkAgentResponse {
 	 * Standard JavaScript object representation for ExportBenchmarkAgentResponse
 	 */
 	interface AsObject {
-		agentContent?: Uint8Array;
-		trainingPhrases?: {
-			[prop: string]: ondewoNlu014.ListTrainingPhrasesResponse;
+		agentContent: Uint8Array;
+		trainingPhrases: {
+			[prop: string]: ondewoNlu015.ListTrainingPhrasesResponse;
 		};
 	}
 	/**
 	 * Protobuf JSON representation for ExportBenchmarkAgentResponse
 	 */
 	interface AsProtobufJSON {
-		agentContent?: string;
-		trainingPhrases?: {
-			[prop: string]: ondewoNlu014.ListTrainingPhrasesResponse;
+		agentContent: string;
+		trainingPhrases: {
+			[prop: string]: ondewoNlu015.ListTrainingPhrasesResponse;
 		};
 	}
 	/**
@@ -1334,17 +1348,17 @@ export declare module ExportBenchmarkAgentResponse {
 		 * @param _writer binary writer instance
 		 */
 		static serializeBinaryToWriter(_instance: TrainingPhrasesEntry, _writer: BinaryWriter): void;
-		private _key?;
+		private _key;
 		private _value?;
 		/**
 		 * Message constructor. Initializes the properties and applies default Protobuf values if necessary
 		 * @param _value initial values object or instance of TrainingPhrasesEntry to deeply clone from
 		 */
 		constructor(_value?: RecursivePartial<TrainingPhrasesEntry.AsObject>);
-		get key(): string | undefined;
-		set key(value: string | undefined);
-		get value(): ondewoNlu014.ListTrainingPhrasesResponse | undefined;
-		set value(value: ondewoNlu014.ListTrainingPhrasesResponse | undefined);
+		get key(): string;
+		set key(value: string);
+		get value(): ondewoNlu015.ListTrainingPhrasesResponse | undefined;
+		set value(value: ondewoNlu015.ListTrainingPhrasesResponse | undefined);
 		/**
 		 * Serialize message to binary data
 		 * @param instance message instance
@@ -1370,15 +1384,15 @@ export declare module ExportBenchmarkAgentResponse {
 		 * Standard JavaScript object representation for TrainingPhrasesEntry
 		 */
 		interface AsObject {
-			key?: string;
-			value?: ondewoNlu014.ListTrainingPhrasesResponse.AsObject;
+			key: string;
+			value?: ondewoNlu015.ListTrainingPhrasesResponse.AsObject;
 		}
 		/**
 		 * Protobuf JSON representation for TrainingPhrasesEntry
 		 */
 		interface AsProtobufJSON {
-			key?: string;
-			value?: ondewoNlu014.ListTrainingPhrasesResponse.AsProtobufJSON | null;
+			key: string;
+			value: ondewoNlu015.ListTrainingPhrasesResponse.AsProtobufJSON | null;
 		}
 	}
 }
@@ -1409,23 +1423,23 @@ export declare class OptimizeRankingMatchRequest implements GrpcMessage {
 	 * @param _writer binary writer instance
 	 */
 	static serializeBinaryToWriter(_instance: OptimizeRankingMatchRequest, _writer: BinaryWriter): void;
-	private _parent?;
-	private _languageCodes?;
+	private _parent;
+	private _languageCodes;
 	private _optimizationConfigs?;
-	private _inPlace?;
+	private _inPlace;
 	/**
 	 * Message constructor. Initializes the properties and applies default Protobuf values if necessary
 	 * @param _value initial values object or instance of OptimizeRankingMatchRequest to deeply clone from
 	 */
 	constructor(_value?: RecursivePartial<OptimizeRankingMatchRequest.AsObject>);
-	get parent(): string | undefined;
-	set parent(value: string | undefined);
-	get languageCodes(): string[] | undefined;
-	set languageCodes(value: string[] | undefined);
+	get parent(): string;
+	set parent(value: string);
+	get languageCodes(): string[];
+	set languageCodes(value: string[]);
 	get optimizationConfigs(): RankingMatchOptimizationConfig[] | undefined;
 	set optimizationConfigs(value: RankingMatchOptimizationConfig[] | undefined);
-	get inPlace(): boolean | undefined;
-	set inPlace(value: boolean | undefined);
+	get inPlace(): boolean;
+	set inPlace(value: boolean);
 	/**
 	 * Serialize message to binary data
 	 * @param instance message instance
@@ -1451,19 +1465,19 @@ export declare module OptimizeRankingMatchRequest {
 	 * Standard JavaScript object representation for OptimizeRankingMatchRequest
 	 */
 	interface AsObject {
-		parent?: string;
-		languageCodes?: string[];
+		parent: string;
+		languageCodes: string[];
 		optimizationConfigs?: RankingMatchOptimizationConfig.AsObject[];
-		inPlace?: boolean;
+		inPlace: boolean;
 	}
 	/**
 	 * Protobuf JSON representation for OptimizeRankingMatchRequest
 	 */
 	interface AsProtobufJSON {
-		parent?: string;
-		languageCodes?: string[];
-		optimizationConfigs?: RankingMatchOptimizationConfig.AsProtobufJSON[] | null;
-		inPlace?: boolean;
+		parent: string;
+		languageCodes: string[];
+		optimizationConfigs: RankingMatchOptimizationConfig.AsProtobufJSON[] | null;
+		inPlace: boolean;
 	}
 }
 /**
@@ -1493,21 +1507,21 @@ export declare class RankingMatchOptimizationConfig implements GrpcMessage {
 	 * @param _writer binary writer instance
 	 */
 	static serializeBinaryToWriter(_instance: RankingMatchOptimizationConfig, _writer: BinaryWriter): void;
-	private _languageCode?;
-	private _nSplits?;
-	private _randomSeed?;
+	private _languageCode;
+	private _nSplits;
+	private _randomSeed;
 	private _initialThresholds?;
 	/**
 	 * Message constructor. Initializes the properties and applies default Protobuf values if necessary
 	 * @param _value initial values object or instance of RankingMatchOptimizationConfig to deeply clone from
 	 */
 	constructor(_value?: RecursivePartial<RankingMatchOptimizationConfig.AsObject>);
-	get languageCode(): string | undefined;
-	set languageCode(value: string | undefined);
-	get nSplits(): number | undefined;
-	set nSplits(value: number | undefined);
-	get randomSeed(): number | undefined;
-	set randomSeed(value: number | undefined);
+	get languageCode(): string;
+	set languageCode(value: string);
+	get nSplits(): number;
+	set nSplits(value: number);
+	get randomSeed(): number;
+	set randomSeed(value: number);
 	get initialThresholds(): googleProtobuf009.Struct | undefined;
 	set initialThresholds(value: googleProtobuf009.Struct | undefined);
 	/**
@@ -1535,19 +1549,19 @@ export declare module RankingMatchOptimizationConfig {
 	 * Standard JavaScript object representation for RankingMatchOptimizationConfig
 	 */
 	interface AsObject {
-		languageCode?: string;
-		nSplits?: number;
-		randomSeed?: number;
+		languageCode: string;
+		nSplits: number;
+		randomSeed: number;
 		initialThresholds?: googleProtobuf009.Struct.AsObject;
 	}
 	/**
 	 * Protobuf JSON representation for RankingMatchOptimizationConfig
 	 */
 	interface AsProtobufJSON {
-		languageCode?: string;
-		nSplits?: number;
-		randomSeed?: number;
-		initialThresholds?: googleProtobuf009.Struct.AsProtobufJSON | null;
+		languageCode: string;
+		nSplits: number;
+		randomSeed: number;
+		initialThresholds: googleProtobuf009.Struct.AsProtobufJSON | null;
 	}
 }
 /**
@@ -1620,8 +1634,8 @@ export declare module OptimizeRankingMatchResponse {
 	 * Protobuf JSON representation for OptimizeRankingMatchResponse
 	 */
 	interface AsProtobufJSON {
-		optimizationInfo?: googleProtobuf009.Struct.AsProtobufJSON | null;
-		optimizedOndewoConfig?: googleProtobuf009.Struct.AsProtobufJSON | null;
+		optimizationInfo: googleProtobuf009.Struct.AsProtobufJSON | null;
+		optimizedOndewoConfig: googleProtobuf009.Struct.AsProtobufJSON | null;
 	}
 }
 /**
@@ -1651,21 +1665,21 @@ export declare class ImportAgentRequest implements GrpcMessage {
 	 * @param _writer binary writer instance
 	 */
 	static serializeBinaryToWriter(_instance: ImportAgentRequest, _writer: BinaryWriter): void;
-	private _parent?;
-	private _agentUri?;
-	private _agentContent?;
+	private _parent;
+	private _agentUri;
+	private _agentContent;
 	private _agent;
 	/**
 	 * Message constructor. Initializes the properties and applies default Protobuf values if necessary
 	 * @param _value initial values object or instance of ImportAgentRequest to deeply clone from
 	 */
 	constructor(_value?: RecursivePartial<ImportAgentRequest.AsObject>);
-	get parent(): string | undefined;
-	set parent(value: string | undefined);
-	get agentUri(): string | undefined;
-	set agentUri(value: string | undefined);
-	get agentContent(): Uint8Array | undefined;
-	set agentContent(value: Uint8Array | undefined);
+	get parent(): string;
+	set parent(value: string);
+	get agentUri(): string;
+	set agentUri(value: string);
+	get agentContent(): Uint8Array;
+	set agentContent(value: Uint8Array);
 	get agent(): ImportAgentRequest.AgentCase;
 	/**
 	 * Serialize message to binary data
@@ -1692,17 +1706,17 @@ export declare module ImportAgentRequest {
 	 * Standard JavaScript object representation for ImportAgentRequest
 	 */
 	interface AsObject {
-		parent?: string;
-		agentUri?: string;
-		agentContent?: Uint8Array;
+		parent: string;
+		agentUri: string;
+		agentContent: Uint8Array;
 	}
 	/**
 	 * Protobuf JSON representation for ImportAgentRequest
 	 */
 	interface AsProtobufJSON {
-		parent?: string;
-		agentUri?: string | null;
-		agentContent?: string;
+		parent: string;
+		agentUri: string | null;
+		agentContent: string;
 	}
 	enum AgentCase {
 		none = 0,
@@ -1737,21 +1751,21 @@ export declare class RestoreAgentRequest implements GrpcMessage {
 	 * @param _writer binary writer instance
 	 */
 	static serializeBinaryToWriter(_instance: RestoreAgentRequest, _writer: BinaryWriter): void;
-	private _parent?;
-	private _agentUri?;
-	private _agentContent?;
+	private _parent;
+	private _agentUri;
+	private _agentContent;
 	private _agent;
 	/**
 	 * Message constructor. Initializes the properties and applies default Protobuf values if necessary
 	 * @param _value initial values object or instance of RestoreAgentRequest to deeply clone from
 	 */
 	constructor(_value?: RecursivePartial<RestoreAgentRequest.AsObject>);
-	get parent(): string | undefined;
-	set parent(value: string | undefined);
-	get agentUri(): string | undefined;
-	set agentUri(value: string | undefined);
-	get agentContent(): Uint8Array | undefined;
-	set agentContent(value: Uint8Array | undefined);
+	get parent(): string;
+	set parent(value: string);
+	get agentUri(): string;
+	set agentUri(value: string);
+	get agentContent(): Uint8Array;
+	set agentContent(value: Uint8Array);
 	get agent(): RestoreAgentRequest.AgentCase;
 	/**
 	 * Serialize message to binary data
@@ -1778,17 +1792,17 @@ export declare module RestoreAgentRequest {
 	 * Standard JavaScript object representation for RestoreAgentRequest
 	 */
 	interface AsObject {
-		parent?: string;
-		agentUri?: string;
-		agentContent?: Uint8Array;
+		parent: string;
+		agentUri: string;
+		agentContent: Uint8Array;
 	}
 	/**
 	 * Protobuf JSON representation for RestoreAgentRequest
 	 */
 	interface AsProtobufJSON {
-		parent?: string;
-		agentUri?: string | null;
-		agentContent?: string;
+		parent: string;
+		agentUri: string | null;
+		agentContent: string;
 	}
 	enum AgentCase {
 		none = 0,
@@ -1823,23 +1837,23 @@ export declare class GetAgentStatisticsRequest implements GrpcMessage {
 	 * @param _writer binary writer instance
 	 */
 	static serializeBinaryToWriter(_instance: GetAgentStatisticsRequest, _writer: BinaryWriter): void;
-	private _parent?;
-	private _format?;
-	private _languageCode?;
-	private _type?;
+	private _parent;
+	private _format;
+	private _languageCode;
+	private _type;
 	/**
 	 * Message constructor. Initializes the properties and applies default Protobuf values if necessary
 	 * @param _value initial values object or instance of GetAgentStatisticsRequest to deeply clone from
 	 */
 	constructor(_value?: RecursivePartial<GetAgentStatisticsRequest.AsObject>);
-	get parent(): string | undefined;
-	set parent(value: string | undefined);
-	get format(): ReportFormat | undefined;
-	set format(value: ReportFormat | undefined);
-	get languageCode(): string | undefined;
-	set languageCode(value: string | undefined);
-	get type(): ReportType | undefined;
-	set type(value: ReportType | undefined);
+	get parent(): string;
+	set parent(value: string);
+	get format(): ReportFormat;
+	set format(value: ReportFormat);
+	get languageCode(): string;
+	set languageCode(value: string);
+	get type(): ReportType;
+	set type(value: ReportType);
 	/**
 	 * Serialize message to binary data
 	 * @param instance message instance
@@ -1865,19 +1879,19 @@ export declare module GetAgentStatisticsRequest {
 	 * Standard JavaScript object representation for GetAgentStatisticsRequest
 	 */
 	interface AsObject {
-		parent?: string;
-		format?: ReportFormat;
-		languageCode?: string;
-		type?: ReportType;
+		parent: string;
+		format: ReportFormat;
+		languageCode: string;
+		type: ReportType;
 	}
 	/**
 	 * Protobuf JSON representation for GetAgentStatisticsRequest
 	 */
 	interface AsProtobufJSON {
-		parent?: string;
-		format?: string;
-		languageCode?: string;
-		type?: string;
+		parent: string;
+		format: string;
+		languageCode: string;
+		type: string;
 	}
 }
 /**
@@ -1907,20 +1921,20 @@ export declare class GetAgentStatisticsResponse implements GrpcMessage {
 	 * @param _writer binary writer instance
 	 */
 	static serializeBinaryToWriter(_instance: GetAgentStatisticsResponse, _writer: BinaryWriter): void;
-	private _reports?;
-	private _format?;
-	private _type?;
+	private _reports;
+	private _format;
+	private _type;
 	/**
 	 * Message constructor. Initializes the properties and applies default Protobuf values if necessary
 	 * @param _value initial values object or instance of GetAgentStatisticsResponse to deeply clone from
 	 */
 	constructor(_value?: RecursivePartial<GetAgentStatisticsResponse.AsObject>);
-	get reports(): Uint8Array | undefined;
-	set reports(value: Uint8Array | undefined);
-	get format(): ReportFormat | undefined;
-	set format(value: ReportFormat | undefined);
-	get type(): ReportType | undefined;
-	set type(value: ReportType | undefined);
+	get reports(): Uint8Array;
+	set reports(value: Uint8Array);
+	get format(): ReportFormat;
+	set format(value: ReportFormat);
+	get type(): ReportType;
+	set type(value: ReportType);
 	/**
 	 * Serialize message to binary data
 	 * @param instance message instance
@@ -1946,17 +1960,210 @@ export declare module GetAgentStatisticsResponse {
 	 * Standard JavaScript object representation for GetAgentStatisticsResponse
 	 */
 	interface AsObject {
-		reports?: Uint8Array;
-		format?: ReportFormat;
-		type?: ReportType;
+		reports: Uint8Array;
+		format: ReportFormat;
+		type: ReportType;
 	}
 	/**
 	 * Protobuf JSON representation for GetAgentStatisticsResponse
 	 */
 	interface AsProtobufJSON {
-		reports?: string;
-		format?: string;
-		type?: string;
+		reports: string;
+		format: string;
+		type: string;
+	}
+}
+/**
+ * Message implementation for ondewo.nlu.GetSessionsStatisticsRequest
+ */
+export declare class GetSessionsStatisticsRequest implements GrpcMessage {
+	static id: string;
+	/**
+	 * Deserialize binary data to message
+	 * @param instance message instance
+	 */
+	static deserializeBinary(bytes: ByteSource): GetSessionsStatisticsRequest;
+	/**
+	 * Check all the properties and set default protobuf values if necessary
+	 * @param _instance message instance
+	 */
+	static refineValues(_instance: GetSessionsStatisticsRequest): void;
+	/**
+	 * Deserializes / reads binary message into message instance using provided binary reader
+	 * @param _instance message instance
+	 * @param _reader binary reader instance
+	 */
+	static deserializeBinaryFromReader(_instance: GetSessionsStatisticsRequest, _reader: BinaryReader): void;
+	/**
+	 * Serializes a message to binary format using provided binary reader
+	 * @param _instance message instance
+	 * @param _writer binary writer instance
+	 */
+	static serializeBinaryToWriter(_instance: GetSessionsStatisticsRequest, _writer: BinaryWriter): void;
+	private _parent;
+	private _format;
+	private _type;
+	private _sessionFilter?;
+	private _contextFilters?;
+	private _limit;
+	private _groupBys;
+	private _orderBys;
+	private _fieldMask?;
+	private _sqlQuery;
+	/**
+	 * Message constructor. Initializes the properties and applies default Protobuf values if necessary
+	 * @param _value initial values object or instance of GetSessionsStatisticsRequest to deeply clone from
+	 */
+	constructor(_value?: RecursivePartial<GetSessionsStatisticsRequest.AsObject>);
+	get parent(): string;
+	set parent(value: string);
+	get format(): ReportFormat;
+	set format(value: ReportFormat);
+	get type(): SessionsReportType;
+	set type(value: SessionsReportType);
+	get sessionFilter(): ondewoNlu018.SessionFilter | undefined;
+	set sessionFilter(value: ondewoNlu018.SessionFilter | undefined);
+	get contextFilters(): ondewoNlu018.ContextFilter[] | undefined;
+	set contextFilters(value: ondewoNlu018.ContextFilter[] | undefined);
+	get limit(): number;
+	set limit(value: number);
+	get groupBys(): string[];
+	set groupBys(value: string[]);
+	get orderBys(): string[];
+	set orderBys(value: string[]);
+	get fieldMask(): googleProtobuf008.FieldMask | undefined;
+	set fieldMask(value: googleProtobuf008.FieldMask | undefined);
+	get sqlQuery(): string;
+	set sqlQuery(value: string);
+	/**
+	 * Serialize message to binary data
+	 * @param instance message instance
+	 */
+	serializeBinary(): any;
+	/**
+	 * Cast message to standard JavaScript object (all non-primitive values are deeply cloned)
+	 */
+	toObject(): GetSessionsStatisticsRequest.AsObject;
+	/**
+	 * Convenience method to support JSON.stringify(message), replicates the structure of toObject()
+	 */
+	toJSON(): GetSessionsStatisticsRequest.AsObject;
+	/**
+	 * Cast message to JSON using protobuf JSON notation: https://developers.google.com/protocol-buffers/docs/proto3#json
+	 * Attention: output differs from toObject() e.g. enums are represented as names and not as numbers, Timestamp is an ISO Date string format etc.
+	 * If the message itself or some of descendant messages is google.protobuf.Any, you MUST provide a message pool as options. If not, the messagePool is not required
+	 */
+	toProtobufJSON(options?: ToProtobufJSONOptions): GetSessionsStatisticsRequest.AsProtobufJSON;
+}
+export declare module GetSessionsStatisticsRequest {
+	/**
+	 * Standard JavaScript object representation for GetSessionsStatisticsRequest
+	 */
+	interface AsObject {
+		parent: string;
+		format: ReportFormat;
+		type: SessionsReportType;
+		sessionFilter?: ondewoNlu018.SessionFilter.AsObject;
+		contextFilters?: ondewoNlu018.ContextFilter.AsObject[];
+		limit: number;
+		groupBys: string[];
+		orderBys: string[];
+		fieldMask?: googleProtobuf008.FieldMask.AsObject;
+		sqlQuery: string;
+	}
+	/**
+	 * Protobuf JSON representation for GetSessionsStatisticsRequest
+	 */
+	interface AsProtobufJSON {
+		parent: string;
+		format: string;
+		type: string;
+		sessionFilter: ondewoNlu018.SessionFilter.AsProtobufJSON | null;
+		contextFilters: ondewoNlu018.ContextFilter.AsProtobufJSON[] | null;
+		limit: number;
+		groupBys: string[];
+		orderBys: string[];
+		fieldMask: googleProtobuf008.FieldMask.AsProtobufJSON | null;
+		sqlQuery: string;
+	}
+}
+/**
+ * Message implementation for ondewo.nlu.GetSessionsStatisticsResponse
+ */
+export declare class GetSessionsStatisticsResponse implements GrpcMessage {
+	static id: string;
+	/**
+	 * Deserialize binary data to message
+	 * @param instance message instance
+	 */
+	static deserializeBinary(bytes: ByteSource): GetSessionsStatisticsResponse;
+	/**
+	 * Check all the properties and set default protobuf values if necessary
+	 * @param _instance message instance
+	 */
+	static refineValues(_instance: GetSessionsStatisticsResponse): void;
+	/**
+	 * Deserializes / reads binary message into message instance using provided binary reader
+	 * @param _instance message instance
+	 * @param _reader binary reader instance
+	 */
+	static deserializeBinaryFromReader(_instance: GetSessionsStatisticsResponse, _reader: BinaryReader): void;
+	/**
+	 * Serializes a message to binary format using provided binary reader
+	 * @param _instance message instance
+	 * @param _writer binary writer instance
+	 */
+	static serializeBinaryToWriter(_instance: GetSessionsStatisticsResponse, _writer: BinaryWriter): void;
+	private _reports;
+	private _format;
+	private _type;
+	/**
+	 * Message constructor. Initializes the properties and applies default Protobuf values if necessary
+	 * @param _value initial values object or instance of GetSessionsStatisticsResponse to deeply clone from
+	 */
+	constructor(_value?: RecursivePartial<GetSessionsStatisticsResponse.AsObject>);
+	get reports(): Uint8Array;
+	set reports(value: Uint8Array);
+	get format(): ReportFormat;
+	set format(value: ReportFormat);
+	get type(): SessionsReportType;
+	set type(value: SessionsReportType);
+	/**
+	 * Serialize message to binary data
+	 * @param instance message instance
+	 */
+	serializeBinary(): any;
+	/**
+	 * Cast message to standard JavaScript object (all non-primitive values are deeply cloned)
+	 */
+	toObject(): GetSessionsStatisticsResponse.AsObject;
+	/**
+	 * Convenience method to support JSON.stringify(message), replicates the structure of toObject()
+	 */
+	toJSON(): GetSessionsStatisticsResponse.AsObject;
+	/**
+	 * Cast message to JSON using protobuf JSON notation: https://developers.google.com/protocol-buffers/docs/proto3#json
+	 * Attention: output differs from toObject() e.g. enums are represented as names and not as numbers, Timestamp is an ISO Date string format etc.
+	 * If the message itself or some of descendant messages is google.protobuf.Any, you MUST provide a message pool as options. If not, the messagePool is not required
+	 */
+	toProtobufJSON(options?: ToProtobufJSONOptions): GetSessionsStatisticsResponse.AsProtobufJSON;
+}
+export declare module GetSessionsStatisticsResponse {
+	/**
+	 * Standard JavaScript object representation for GetSessionsStatisticsResponse
+	 */
+	interface AsObject {
+		reports: Uint8Array;
+		format: ReportFormat;
+		type: SessionsReportType;
+	}
+	/**
+	 * Protobuf JSON representation for GetSessionsStatisticsResponse
+	 */
+	interface AsProtobufJSON {
+		reports: string;
+		format: string;
+		type: string;
 	}
 }
 /**
@@ -1986,20 +2193,20 @@ export declare class AddUserToProjectRequest implements GrpcMessage {
 	 * @param _writer binary writer instance
 	 */
 	static serializeBinaryToWriter(_instance: AddUserToProjectRequest, _writer: BinaryWriter): void;
-	private _parent?;
-	private _userId?;
-	private _projectRoleId?;
+	private _parent;
+	private _userId;
+	private _projectRoleId;
 	/**
 	 * Message constructor. Initializes the properties and applies default Protobuf values if necessary
 	 * @param _value initial values object or instance of AddUserToProjectRequest to deeply clone from
 	 */
 	constructor(_value?: RecursivePartial<AddUserToProjectRequest.AsObject>);
-	get parent(): string | undefined;
-	set parent(value: string | undefined);
-	get userId(): string | undefined;
-	set userId(value: string | undefined);
-	get projectRoleId(): number | undefined;
-	set projectRoleId(value: number | undefined);
+	get parent(): string;
+	set parent(value: string);
+	get userId(): string;
+	set userId(value: string);
+	get projectRoleId(): number;
+	set projectRoleId(value: number);
 	/**
 	 * Serialize message to binary data
 	 * @param instance message instance
@@ -2025,17 +2232,17 @@ export declare module AddUserToProjectRequest {
 	 * Standard JavaScript object representation for AddUserToProjectRequest
 	 */
 	interface AsObject {
-		parent?: string;
-		userId?: string;
-		projectRoleId?: number;
+		parent: string;
+		userId: string;
+		projectRoleId: number;
 	}
 	/**
 	 * Protobuf JSON representation for AddUserToProjectRequest
 	 */
 	interface AsProtobufJSON {
-		parent?: string;
-		userId?: string;
-		projectRoleId?: number;
+		parent: string;
+		userId: string;
+		projectRoleId: number;
 	}
 }
 /**
@@ -2065,17 +2272,17 @@ export declare class RemoveUserFromProjectRequest implements GrpcMessage {
 	 * @param _writer binary writer instance
 	 */
 	static serializeBinaryToWriter(_instance: RemoveUserFromProjectRequest, _writer: BinaryWriter): void;
-	private _parent?;
-	private _userId?;
+	private _parent;
+	private _userId;
 	/**
 	 * Message constructor. Initializes the properties and applies default Protobuf values if necessary
 	 * @param _value initial values object or instance of RemoveUserFromProjectRequest to deeply clone from
 	 */
 	constructor(_value?: RecursivePartial<RemoveUserFromProjectRequest.AsObject>);
-	get parent(): string | undefined;
-	set parent(value: string | undefined);
-	get userId(): string | undefined;
-	set userId(value: string | undefined);
+	get parent(): string;
+	set parent(value: string);
+	get userId(): string;
+	set userId(value: string);
 	/**
 	 * Serialize message to binary data
 	 * @param instance message instance
@@ -2101,15 +2308,15 @@ export declare module RemoveUserFromProjectRequest {
 	 * Standard JavaScript object representation for RemoveUserFromProjectRequest
 	 */
 	interface AsObject {
-		parent?: string;
-		userId?: string;
+		parent: string;
+		userId: string;
 	}
 	/**
 	 * Protobuf JSON representation for RemoveUserFromProjectRequest
 	 */
 	interface AsProtobufJSON {
-		parent?: string;
-		userId?: string;
+		parent: string;
+		userId: string;
 	}
 }
 /**
@@ -2139,17 +2346,17 @@ export declare class ListUsersInProjectRequest implements GrpcMessage {
 	 * @param _writer binary writer instance
 	 */
 	static serializeBinaryToWriter(_instance: ListUsersInProjectRequest, _writer: BinaryWriter): void;
-	private _parent?;
-	private _pageToken?;
+	private _parent;
+	private _pageToken;
 	/**
 	 * Message constructor. Initializes the properties and applies default Protobuf values if necessary
 	 * @param _value initial values object or instance of ListUsersInProjectRequest to deeply clone from
 	 */
 	constructor(_value?: RecursivePartial<ListUsersInProjectRequest.AsObject>);
-	get parent(): string | undefined;
-	set parent(value: string | undefined);
-	get pageToken(): string | undefined;
-	set pageToken(value: string | undefined);
+	get parent(): string;
+	set parent(value: string);
+	get pageToken(): string;
+	set pageToken(value: string);
 	/**
 	 * Serialize message to binary data
 	 * @param instance message instance
@@ -2175,15 +2382,15 @@ export declare module ListUsersInProjectRequest {
 	 * Standard JavaScript object representation for ListUsersInProjectRequest
 	 */
 	interface AsObject {
-		parent?: string;
-		pageToken?: string;
+		parent: string;
+		pageToken: string;
 	}
 	/**
 	 * Protobuf JSON representation for ListUsersInProjectRequest
 	 */
 	interface AsProtobufJSON {
-		parent?: string;
-		pageToken?: string;
+		parent: string;
+		pageToken: string;
 	}
 }
 /**
@@ -2213,20 +2420,20 @@ export declare class UserInProject implements GrpcMessage {
 	 * @param _writer binary writer instance
 	 */
 	static serializeBinaryToWriter(_instance: UserInProject, _writer: BinaryWriter): void;
-	private _parent?;
+	private _parent;
 	private _user?;
-	private _roleId?;
+	private _roleId;
 	/**
 	 * Message constructor. Initializes the properties and applies default Protobuf values if necessary
 	 * @param _value initial values object or instance of UserInProject to deeply clone from
 	 */
 	constructor(_value?: RecursivePartial<UserInProject.AsObject>);
-	get parent(): string | undefined;
-	set parent(value: string | undefined);
-	get user(): ondewoNlu015.User | undefined;
-	set user(value: ondewoNlu015.User | undefined);
-	get roleId(): number | undefined;
-	set roleId(value: number | undefined);
+	get parent(): string;
+	set parent(value: string);
+	get user(): ondewoNlu017.User | undefined;
+	set user(value: ondewoNlu017.User | undefined);
+	get roleId(): number;
+	set roleId(value: number);
 	/**
 	 * Serialize message to binary data
 	 * @param instance message instance
@@ -2252,17 +2459,17 @@ export declare module UserInProject {
 	 * Standard JavaScript object representation for UserInProject
 	 */
 	interface AsObject {
-		parent?: string;
-		user?: ondewoNlu015.User.AsObject;
-		roleId?: number;
+		parent: string;
+		user?: ondewoNlu017.User.AsObject;
+		roleId: number;
 	}
 	/**
 	 * Protobuf JSON representation for UserInProject
 	 */
 	interface AsProtobufJSON {
-		parent?: string;
-		user?: ondewoNlu015.User.AsProtobufJSON | null;
-		roleId?: number;
+		parent: string;
+		user: ondewoNlu017.User.AsProtobufJSON | null;
+		roleId: number;
 	}
 }
 /**
@@ -2293,7 +2500,7 @@ export declare class ListUsersInProjectResponse implements GrpcMessage {
 	 */
 	static serializeBinaryToWriter(_instance: ListUsersInProjectResponse, _writer: BinaryWriter): void;
 	private _users?;
-	private _nextPageToken?;
+	private _nextPageToken;
 	/**
 	 * Message constructor. Initializes the properties and applies default Protobuf values if necessary
 	 * @param _value initial values object or instance of ListUsersInProjectResponse to deeply clone from
@@ -2301,8 +2508,8 @@ export declare class ListUsersInProjectResponse implements GrpcMessage {
 	constructor(_value?: RecursivePartial<ListUsersInProjectResponse.AsObject>);
 	get users(): UserInProject[] | undefined;
 	set users(value: UserInProject[] | undefined);
-	get nextPageToken(): string | undefined;
-	set nextPageToken(value: string | undefined);
+	get nextPageToken(): string;
+	set nextPageToken(value: string);
 	/**
 	 * Serialize message to binary data
 	 * @param instance message instance
@@ -2329,14 +2536,14 @@ export declare module ListUsersInProjectResponse {
 	 */
 	interface AsObject {
 		users?: UserInProject.AsObject[];
-		nextPageToken?: string;
+		nextPageToken: string;
 	}
 	/**
 	 * Protobuf JSON representation for ListUsersInProjectResponse
 	 */
 	interface AsProtobufJSON {
-		users?: UserInProject.AsProtobufJSON[] | null;
-		nextPageToken?: string;
+		users: UserInProject.AsProtobufJSON[] | null;
+		nextPageToken: string;
 	}
 }
 /**
@@ -2366,17 +2573,17 @@ export declare class GetPlatformInfoResponse implements GrpcMessage {
 	 * @param _writer binary writer instance
 	 */
 	static serializeBinaryToWriter(_instance: GetPlatformInfoResponse, _writer: BinaryWriter): void;
-	private _version?;
-	private _commitHash?;
+	private _version;
+	private _commitHash;
 	/**
 	 * Message constructor. Initializes the properties and applies default Protobuf values if necessary
 	 * @param _value initial values object or instance of GetPlatformInfoResponse to deeply clone from
 	 */
 	constructor(_value?: RecursivePartial<GetPlatformInfoResponse.AsObject>);
-	get version(): string | undefined;
-	set version(value: string | undefined);
-	get commitHash(): string | undefined;
-	set commitHash(value: string | undefined);
+	get version(): string;
+	set version(value: string);
+	get commitHash(): string;
+	set commitHash(value: string);
 	/**
 	 * Serialize message to binary data
 	 * @param instance message instance
@@ -2402,15 +2609,15 @@ export declare module GetPlatformInfoResponse {
 	 * Standard JavaScript object representation for GetPlatformInfoResponse
 	 */
 	interface AsObject {
-		version?: string;
-		commitHash?: string;
+		version: string;
+		commitHash: string;
 	}
 	/**
 	 * Protobuf JSON representation for GetPlatformInfoResponse
 	 */
 	interface AsProtobufJSON {
-		version?: string;
-		commitHash?: string;
+		version: string;
+		commitHash: string;
 	}
 }
 /**
@@ -2440,14 +2647,14 @@ export declare class ListProjectPermissionsRequest implements GrpcMessage {
 	 * @param _writer binary writer instance
 	 */
 	static serializeBinaryToWriter(_instance: ListProjectPermissionsRequest, _writer: BinaryWriter): void;
-	private _pageToken?;
+	private _pageToken;
 	/**
 	 * Message constructor. Initializes the properties and applies default Protobuf values if necessary
 	 * @param _value initial values object or instance of ListProjectPermissionsRequest to deeply clone from
 	 */
 	constructor(_value?: RecursivePartial<ListProjectPermissionsRequest.AsObject>);
-	get pageToken(): string | undefined;
-	set pageToken(value: string | undefined);
+	get pageToken(): string;
+	set pageToken(value: string);
 	/**
 	 * Serialize message to binary data
 	 * @param instance message instance
@@ -2473,13 +2680,13 @@ export declare module ListProjectPermissionsRequest {
 	 * Standard JavaScript object representation for ListProjectPermissionsRequest
 	 */
 	interface AsObject {
-		pageToken?: string;
+		pageToken: string;
 	}
 	/**
 	 * Protobuf JSON representation for ListProjectPermissionsRequest
 	 */
 	interface AsProtobufJSON {
-		pageToken?: string;
+		pageToken: string;
 	}
 }
 /**
@@ -2509,17 +2716,17 @@ export declare class ListProjectPermissionsResponse implements GrpcMessage {
 	 * @param _writer binary writer instance
 	 */
 	static serializeBinaryToWriter(_instance: ListProjectPermissionsResponse, _writer: BinaryWriter): void;
-	private _permissions?;
-	private _nextPageToken?;
+	private _permissions;
+	private _nextPageToken;
 	/**
 	 * Message constructor. Initializes the properties and applies default Protobuf values if necessary
 	 * @param _value initial values object or instance of ListProjectPermissionsResponse to deeply clone from
 	 */
 	constructor(_value?: RecursivePartial<ListProjectPermissionsResponse.AsObject>);
-	get permissions(): string[] | undefined;
-	set permissions(value: string[] | undefined);
-	get nextPageToken(): string | undefined;
-	set nextPageToken(value: string | undefined);
+	get permissions(): string[];
+	set permissions(value: string[]);
+	get nextPageToken(): string;
+	set nextPageToken(value: string);
 	/**
 	 * Serialize message to binary data
 	 * @param instance message instance
@@ -2545,15 +2752,15 @@ export declare module ListProjectPermissionsResponse {
 	 * Standard JavaScript object representation for ListProjectPermissionsResponse
 	 */
 	interface AsObject {
-		permissions?: string[];
-		nextPageToken?: string;
+		permissions: string[];
+		nextPageToken: string;
 	}
 	/**
 	 * Protobuf JSON representation for ListProjectPermissionsResponse
 	 */
 	interface AsProtobufJSON {
-		permissions?: string[];
-		nextPageToken?: string;
+		permissions: string[];
+		nextPageToken: string;
 	}
 }
 /**
@@ -2583,20 +2790,20 @@ export declare class SetAgentStatusRequest implements GrpcMessage {
 	 * @param _writer binary writer instance
 	 */
 	static serializeBinaryToWriter(_instance: SetAgentStatusRequest, _writer: BinaryWriter): void;
-	private _parent?;
-	private _status?;
-	private _agentView?;
+	private _parent;
+	private _status;
+	private _agentView;
 	/**
 	 * Message constructor. Initializes the properties and applies default Protobuf values if necessary
 	 * @param _value initial values object or instance of SetAgentStatusRequest to deeply clone from
 	 */
 	constructor(_value?: RecursivePartial<SetAgentStatusRequest.AsObject>);
-	get parent(): string | undefined;
-	set parent(value: string | undefined);
-	get status(): AgentStatus | undefined;
-	set status(value: AgentStatus | undefined);
-	get agentView(): AgentView | undefined;
-	set agentView(value: AgentView | undefined);
+	get parent(): string;
+	set parent(value: string);
+	get status(): AgentStatus;
+	set status(value: AgentStatus);
+	get agentView(): AgentView;
+	set agentView(value: AgentView);
 	/**
 	 * Serialize message to binary data
 	 * @param instance message instance
@@ -2622,17 +2829,17 @@ export declare module SetAgentStatusRequest {
 	 * Standard JavaScript object representation for SetAgentStatusRequest
 	 */
 	interface AsObject {
-		parent?: string;
-		status?: AgentStatus;
-		agentView?: AgentView;
+		parent: string;
+		status: AgentStatus;
+		agentView: AgentView;
 	}
 	/**
 	 * Protobuf JSON representation for SetAgentStatusRequest
 	 */
 	interface AsProtobufJSON {
-		parent?: string;
-		status?: string;
-		agentView?: string;
+		parent: string;
+		status: string;
+		agentView: string;
 	}
 }
 /**
@@ -2662,17 +2869,17 @@ export declare class AgentSorting implements GrpcMessage {
 	 * @param _writer binary writer instance
 	 */
 	static serializeBinaryToWriter(_instance: AgentSorting, _writer: BinaryWriter): void;
-	private _sortingField?;
-	private _sortingMode?;
+	private _sortingField;
+	private _sortingMode;
 	/**
 	 * Message constructor. Initializes the properties and applies default Protobuf values if necessary
 	 * @param _value initial values object or instance of AgentSorting to deeply clone from
 	 */
 	constructor(_value?: RecursivePartial<AgentSorting.AsObject>);
-	get sortingField(): AgentSorting.AgentSortingField | undefined;
-	set sortingField(value: AgentSorting.AgentSortingField | undefined);
-	get sortingMode(): ondewoNlu004.SortingMode | undefined;
-	set sortingMode(value: ondewoNlu004.SortingMode | undefined);
+	get sortingField(): AgentSorting.AgentSortingField;
+	set sortingField(value: AgentSorting.AgentSortingField);
+	get sortingMode(): ondewoNlu004.SortingMode;
+	set sortingMode(value: ondewoNlu004.SortingMode);
 	/**
 	 * Serialize message to binary data
 	 * @param instance message instance
@@ -2698,15 +2905,15 @@ export declare module AgentSorting {
 	 * Standard JavaScript object representation for AgentSorting
 	 */
 	interface AsObject {
-		sortingField?: AgentSorting.AgentSortingField;
-		sortingMode?: ondewoNlu004.SortingMode;
+		sortingField: AgentSorting.AgentSortingField;
+		sortingMode: ondewoNlu004.SortingMode;
 	}
 	/**
 	 * Protobuf JSON representation for AgentSorting
 	 */
 	interface AsProtobufJSON {
-		sortingField?: string;
-		sortingMode?: string;
+		sortingField: string;
+		sortingMode: string;
 	}
 	enum AgentSortingField {
 		NO_AGENT_SORTING = 0,
@@ -2743,26 +2950,26 @@ export declare class SetResourcesRequest implements GrpcMessage {
 	 * @param _writer binary writer instance
 	 */
 	static serializeBinaryToWriter(_instance: SetResourcesRequest, _writer: BinaryWriter): void;
-	private _parent?;
-	private _name?;
-	private _type?;
-	private _resourceFile?;
-	private _languageCode?;
+	private _parent;
+	private _name;
+	private _type;
+	private _resourceFile;
+	private _languageCode;
 	/**
 	 * Message constructor. Initializes the properties and applies default Protobuf values if necessary
 	 * @param _value initial values object or instance of SetResourcesRequest to deeply clone from
 	 */
 	constructor(_value?: RecursivePartial<SetResourcesRequest.AsObject>);
-	get parent(): string | undefined;
-	set parent(value: string | undefined);
-	get name(): string | undefined;
-	set name(value: string | undefined);
-	get type(): string | undefined;
-	set type(value: string | undefined);
-	get resourceFile(): Uint8Array | undefined;
-	set resourceFile(value: Uint8Array | undefined);
-	get languageCode(): string | undefined;
-	set languageCode(value: string | undefined);
+	get parent(): string;
+	set parent(value: string);
+	get name(): string;
+	set name(value: string);
+	get type(): string;
+	set type(value: string);
+	get resourceFile(): Uint8Array;
+	set resourceFile(value: Uint8Array);
+	get languageCode(): string;
+	set languageCode(value: string);
 	/**
 	 * Serialize message to binary data
 	 * @param instance message instance
@@ -2788,21 +2995,21 @@ export declare module SetResourcesRequest {
 	 * Standard JavaScript object representation for SetResourcesRequest
 	 */
 	interface AsObject {
-		parent?: string;
-		name?: string;
-		type?: string;
-		resourceFile?: Uint8Array;
-		languageCode?: string;
+		parent: string;
+		name: string;
+		type: string;
+		resourceFile: Uint8Array;
+		languageCode: string;
 	}
 	/**
 	 * Protobuf JSON representation for SetResourcesRequest
 	 */
 	interface AsProtobufJSON {
-		parent?: string;
-		name?: string;
-		type?: string;
-		resourceFile?: string;
-		languageCode?: string;
+		parent: string;
+		name: string;
+		type: string;
+		resourceFile: string;
+		languageCode: string;
 	}
 }
 /**
@@ -2832,23 +3039,23 @@ export declare class DeleteResourcesRequest implements GrpcMessage {
 	 * @param _writer binary writer instance
 	 */
 	static serializeBinaryToWriter(_instance: DeleteResourcesRequest, _writer: BinaryWriter): void;
-	private _parent?;
-	private _name?;
-	private _type?;
-	private _languageCode?;
+	private _parent;
+	private _name;
+	private _type;
+	private _languageCode;
 	/**
 	 * Message constructor. Initializes the properties and applies default Protobuf values if necessary
 	 * @param _value initial values object or instance of DeleteResourcesRequest to deeply clone from
 	 */
 	constructor(_value?: RecursivePartial<DeleteResourcesRequest.AsObject>);
-	get parent(): string | undefined;
-	set parent(value: string | undefined);
-	get name(): string | undefined;
-	set name(value: string | undefined);
-	get type(): string | undefined;
-	set type(value: string | undefined);
-	get languageCode(): string | undefined;
-	set languageCode(value: string | undefined);
+	get parent(): string;
+	set parent(value: string);
+	get name(): string;
+	set name(value: string);
+	get type(): string;
+	set type(value: string);
+	get languageCode(): string;
+	set languageCode(value: string);
 	/**
 	 * Serialize message to binary data
 	 * @param instance message instance
@@ -2874,19 +3081,19 @@ export declare module DeleteResourcesRequest {
 	 * Standard JavaScript object representation for DeleteResourcesRequest
 	 */
 	interface AsObject {
-		parent?: string;
-		name?: string;
-		type?: string;
-		languageCode?: string;
+		parent: string;
+		name: string;
+		type: string;
+		languageCode: string;
 	}
 	/**
 	 * Protobuf JSON representation for DeleteResourcesRequest
 	 */
 	interface AsProtobufJSON {
-		parent?: string;
-		name?: string;
-		type?: string;
-		languageCode?: string;
+		parent: string;
+		name: string;
+		type: string;
+		languageCode: string;
 	}
 }
 /**
@@ -2916,23 +3123,23 @@ export declare class ExportResourcesRequest implements GrpcMessage {
 	 * @param _writer binary writer instance
 	 */
 	static serializeBinaryToWriter(_instance: ExportResourcesRequest, _writer: BinaryWriter): void;
-	private _parent?;
-	private _name?;
-	private _type?;
-	private _languageCode?;
+	private _parent;
+	private _name;
+	private _type;
+	private _languageCode;
 	/**
 	 * Message constructor. Initializes the properties and applies default Protobuf values if necessary
 	 * @param _value initial values object or instance of ExportResourcesRequest to deeply clone from
 	 */
 	constructor(_value?: RecursivePartial<ExportResourcesRequest.AsObject>);
-	get parent(): string | undefined;
-	set parent(value: string | undefined);
-	get name(): string | undefined;
-	set name(value: string | undefined);
-	get type(): string | undefined;
-	set type(value: string | undefined);
-	get languageCode(): string | undefined;
-	set languageCode(value: string | undefined);
+	get parent(): string;
+	set parent(value: string);
+	get name(): string;
+	set name(value: string);
+	get type(): string;
+	set type(value: string);
+	get languageCode(): string;
+	set languageCode(value: string);
 	/**
 	 * Serialize message to binary data
 	 * @param instance message instance
@@ -2958,19 +3165,19 @@ export declare module ExportResourcesRequest {
 	 * Standard JavaScript object representation for ExportResourcesRequest
 	 */
 	interface AsObject {
-		parent?: string;
-		name?: string;
-		type?: string;
-		languageCode?: string;
+		parent: string;
+		name: string;
+		type: string;
+		languageCode: string;
 	}
 	/**
 	 * Protobuf JSON representation for ExportResourcesRequest
 	 */
 	interface AsProtobufJSON {
-		parent?: string;
-		name?: string;
-		type?: string;
-		languageCode?: string;
+		parent: string;
+		name: string;
+		type: string;
+		languageCode: string;
 	}
 }
 /**
@@ -3000,26 +3207,26 @@ export declare class ExportResourcesResponse implements GrpcMessage {
 	 * @param _writer binary writer instance
 	 */
 	static serializeBinaryToWriter(_instance: ExportResourcesResponse, _writer: BinaryWriter): void;
-	private _parent?;
-	private _name?;
-	private _type?;
-	private _languageCode?;
-	private _resourceFile?;
+	private _parent;
+	private _name;
+	private _type;
+	private _languageCode;
+	private _resourceFile;
 	/**
 	 * Message constructor. Initializes the properties and applies default Protobuf values if necessary
 	 * @param _value initial values object or instance of ExportResourcesResponse to deeply clone from
 	 */
 	constructor(_value?: RecursivePartial<ExportResourcesResponse.AsObject>);
-	get parent(): string | undefined;
-	set parent(value: string | undefined);
-	get name(): string | undefined;
-	set name(value: string | undefined);
-	get type(): string | undefined;
-	set type(value: string | undefined);
-	get languageCode(): string | undefined;
-	set languageCode(value: string | undefined);
-	get resourceFile(): Uint8Array | undefined;
-	set resourceFile(value: Uint8Array | undefined);
+	get parent(): string;
+	set parent(value: string);
+	get name(): string;
+	set name(value: string);
+	get type(): string;
+	set type(value: string);
+	get languageCode(): string;
+	set languageCode(value: string);
+	get resourceFile(): Uint8Array;
+	set resourceFile(value: Uint8Array);
 	/**
 	 * Serialize message to binary data
 	 * @param instance message instance
@@ -3045,21 +3252,21 @@ export declare module ExportResourcesResponse {
 	 * Standard JavaScript object representation for ExportResourcesResponse
 	 */
 	interface AsObject {
-		parent?: string;
-		name?: string;
-		type?: string;
-		languageCode?: string;
-		resourceFile?: Uint8Array;
+		parent: string;
+		name: string;
+		type: string;
+		languageCode: string;
+		resourceFile: Uint8Array;
 	}
 	/**
 	 * Protobuf JSON representation for ExportResourcesResponse
 	 */
 	interface AsProtobufJSON {
-		parent?: string;
-		name?: string;
-		type?: string;
-		languageCode?: string;
-		resourceFile?: string;
+		parent: string;
+		name: string;
+		type: string;
+		languageCode: string;
+		resourceFile: string;
 	}
 }
 /**
@@ -3089,23 +3296,23 @@ export declare class GetModelStatusesRequest implements GrpcMessage {
 	 * @param _writer binary writer instance
 	 */
 	static serializeBinaryToWriter(_instance: GetModelStatusesRequest, _writer: BinaryWriter): void;
-	private _parent?;
-	private _cacheVersion?;
-	private _languageCode?;
-	private _modelName?;
+	private _parent;
+	private _cacheVersion;
+	private _languageCode;
+	private _modelName;
 	/**
 	 * Message constructor. Initializes the properties and applies default Protobuf values if necessary
 	 * @param _value initial values object or instance of GetModelStatusesRequest to deeply clone from
 	 */
 	constructor(_value?: RecursivePartial<GetModelStatusesRequest.AsObject>);
-	get parent(): string | undefined;
-	set parent(value: string | undefined);
-	get cacheVersion(): number | undefined;
-	set cacheVersion(value: number | undefined);
-	get languageCode(): string | undefined;
-	set languageCode(value: string | undefined);
-	get modelName(): string | undefined;
-	set modelName(value: string | undefined);
+	get parent(): string;
+	set parent(value: string);
+	get cacheVersion(): number;
+	set cacheVersion(value: number);
+	get languageCode(): string;
+	set languageCode(value: string);
+	get modelName(): string;
+	set modelName(value: string);
 	/**
 	 * Serialize message to binary data
 	 * @param instance message instance
@@ -3131,19 +3338,19 @@ export declare module GetModelStatusesRequest {
 	 * Standard JavaScript object representation for GetModelStatusesRequest
 	 */
 	interface AsObject {
-		parent?: string;
-		cacheVersion?: number;
-		languageCode?: string;
-		modelName?: string;
+		parent: string;
+		cacheVersion: number;
+		languageCode: string;
+		modelName: string;
 	}
 	/**
 	 * Protobuf JSON representation for GetModelStatusesRequest
 	 */
 	interface AsProtobufJSON {
-		parent?: string;
-		cacheVersion?: number;
-		languageCode?: string;
-		modelName?: string;
+		parent: string;
+		cacheVersion: number;
+		languageCode: string;
+		modelName: string;
 	}
 }
 /**
@@ -3173,29 +3380,29 @@ export declare class ModelStatus implements GrpcMessage {
 	 * @param _writer binary writer instance
 	 */
 	static serializeBinaryToWriter(_instance: ModelStatus, _writer: BinaryWriter): void;
-	private _cacheVersion?;
-	private _languageCode?;
-	private _modelName?;
+	private _cacheVersion;
+	private _languageCode;
+	private _modelName;
 	private _statusSetTime?;
-	private _config?;
-	private _status?;
+	private _config;
+	private _status;
 	/**
 	 * Message constructor. Initializes the properties and applies default Protobuf values if necessary
 	 * @param _value initial values object or instance of ModelStatus to deeply clone from
 	 */
 	constructor(_value?: RecursivePartial<ModelStatus.AsObject>);
-	get cacheVersion(): number | undefined;
-	set cacheVersion(value: number | undefined);
-	get languageCode(): string | undefined;
-	set languageCode(value: string | undefined);
-	get modelName(): string | undefined;
-	set modelName(value: string | undefined);
+	get cacheVersion(): number;
+	set cacheVersion(value: number);
+	get languageCode(): string;
+	set languageCode(value: string);
+	get modelName(): string;
+	set modelName(value: string);
 	get statusSetTime(): googleProtobuf007.Timestamp | undefined;
 	set statusSetTime(value: googleProtobuf007.Timestamp | undefined);
-	get config(): string | undefined;
-	set config(value: string | undefined);
-	get status(): ModelStatus.StatusName | undefined;
-	set status(value: ModelStatus.StatusName | undefined);
+	get config(): string;
+	set config(value: string);
+	get status(): ModelStatus.StatusName;
+	set status(value: ModelStatus.StatusName);
 	/**
 	 * Serialize message to binary data
 	 * @param instance message instance
@@ -3221,23 +3428,23 @@ export declare module ModelStatus {
 	 * Standard JavaScript object representation for ModelStatus
 	 */
 	interface AsObject {
-		cacheVersion?: number;
-		languageCode?: string;
-		modelName?: string;
+		cacheVersion: number;
+		languageCode: string;
+		modelName: string;
 		statusSetTime?: googleProtobuf007.Timestamp.AsObject;
-		config?: string;
-		status?: ModelStatus.StatusName;
+		config: string;
+		status: ModelStatus.StatusName;
 	}
 	/**
 	 * Protobuf JSON representation for ModelStatus
 	 */
 	interface AsProtobufJSON {
-		cacheVersion?: number;
-		languageCode?: string;
-		modelName?: string;
-		statusSetTime?: googleProtobuf007.Timestamp.AsProtobufJSON | null;
-		config?: string;
-		status?: string;
+		cacheVersion: number;
+		languageCode: string;
+		modelName: string;
+		statusSetTime: googleProtobuf007.Timestamp.AsProtobufJSON | null;
+		config: string;
+		status: string;
 	}
 	enum StatusName {
 		UNKNOWN = 0,
@@ -3315,7 +3522,7 @@ export declare module GetModelStatusesResponse {
 	 * Protobuf JSON representation for GetModelStatusesResponse
 	 */
 	interface AsProtobufJSON {
-		modelStatuses?: ModelStatus.AsProtobufJSON[] | null;
+		modelStatuses: ModelStatus.AsProtobufJSON[] | null;
 	}
 }
 /**
@@ -3345,20 +3552,20 @@ export declare class CustomPlatformInfo implements GrpcMessage {
 	 * @param _writer binary writer instance
 	 */
 	static serializeBinaryToWriter(_instance: CustomPlatformInfo, _writer: BinaryWriter): void;
-	private _platform?;
-	private _displayName?;
-	private _position?;
+	private _platform;
+	private _displayName;
+	private _position;
 	/**
 	 * Message constructor. Initializes the properties and applies default Protobuf values if necessary
 	 * @param _value initial values object or instance of CustomPlatformInfo to deeply clone from
 	 */
 	constructor(_value?: RecursivePartial<CustomPlatformInfo.AsObject>);
-	get platform(): ondewoNlu014.Intent.Message.Platform | undefined;
-	set platform(value: ondewoNlu014.Intent.Message.Platform | undefined);
-	get displayName(): string | undefined;
-	set displayName(value: string | undefined);
-	get position(): number | undefined;
-	set position(value: number | undefined);
+	get platform(): ondewoNlu015.Intent.Message.Platform;
+	set platform(value: ondewoNlu015.Intent.Message.Platform);
+	get displayName(): string;
+	set displayName(value: string);
+	get position(): number;
+	set position(value: number);
 	/**
 	 * Serialize message to binary data
 	 * @param instance message instance
@@ -3384,17 +3591,17 @@ export declare module CustomPlatformInfo {
 	 * Standard JavaScript object representation for CustomPlatformInfo
 	 */
 	interface AsObject {
-		platform?: ondewoNlu014.Intent.Message.Platform;
-		displayName?: string;
-		position?: number;
+		platform: ondewoNlu015.Intent.Message.Platform;
+		displayName: string;
+		position: number;
 	}
 	/**
 	 * Protobuf JSON representation for CustomPlatformInfo
 	 */
 	interface AsProtobufJSON {
-		platform?: string;
-		displayName?: string;
-		position?: number;
+		platform: string;
+		displayName: string;
+		position: number;
 	}
 }
 /**
@@ -3424,14 +3631,14 @@ export declare class GetPlatformMappingRequest implements GrpcMessage {
 	 * @param _writer binary writer instance
 	 */
 	static serializeBinaryToWriter(_instance: GetPlatformMappingRequest, _writer: BinaryWriter): void;
-	private _parent?;
+	private _parent;
 	/**
 	 * Message constructor. Initializes the properties and applies default Protobuf values if necessary
 	 * @param _value initial values object or instance of GetPlatformMappingRequest to deeply clone from
 	 */
 	constructor(_value?: RecursivePartial<GetPlatformMappingRequest.AsObject>);
-	get parent(): string | undefined;
-	set parent(value: string | undefined);
+	get parent(): string;
+	set parent(value: string);
 	/**
 	 * Serialize message to binary data
 	 * @param instance message instance
@@ -3457,13 +3664,13 @@ export declare module GetPlatformMappingRequest {
 	 * Standard JavaScript object representation for GetPlatformMappingRequest
 	 */
 	interface AsObject {
-		parent?: string;
+		parent: string;
 	}
 	/**
 	 * Protobuf JSON representation for GetPlatformMappingRequest
 	 */
 	interface AsProtobufJSON {
-		parent?: string;
+		parent: string;
 	}
 }
 /**
@@ -3493,15 +3700,15 @@ export declare class PlatformMapping implements GrpcMessage {
 	 * @param _writer binary writer instance
 	 */
 	static serializeBinaryToWriter(_instance: PlatformMapping, _writer: BinaryWriter): void;
-	private _parent?;
+	private _parent;
 	private _platformInfo?;
 	/**
 	 * Message constructor. Initializes the properties and applies default Protobuf values if necessary
 	 * @param _value initial values object or instance of PlatformMapping to deeply clone from
 	 */
 	constructor(_value?: RecursivePartial<PlatformMapping.AsObject>);
-	get parent(): string | undefined;
-	set parent(value: string | undefined);
+	get parent(): string;
+	set parent(value: string);
 	get platformInfo(): CustomPlatformInfo[] | undefined;
 	set platformInfo(value: CustomPlatformInfo[] | undefined);
 	/**
@@ -3529,15 +3736,15 @@ export declare module PlatformMapping {
 	 * Standard JavaScript object representation for PlatformMapping
 	 */
 	interface AsObject {
-		parent?: string;
+		parent: string;
 		platformInfo?: CustomPlatformInfo.AsObject[];
 	}
 	/**
 	 * Protobuf JSON representation for PlatformMapping
 	 */
 	interface AsProtobufJSON {
-		parent?: string;
-		platformInfo?: CustomPlatformInfo.AsProtobufJSON[] | null;
+		parent: string;
+		platformInfo: CustomPlatformInfo.AsProtobufJSON[] | null;
 	}
 }
 /**
@@ -3567,23 +3774,23 @@ export declare class FullTextSearchRequest implements GrpcMessage {
 	 * @param _writer binary writer instance
 	 */
 	static serializeBinaryToWriter(_instance: FullTextSearchRequest, _writer: BinaryWriter): void;
-	private _parent?;
-	private _languageCode?;
-	private _term?;
-	private _pageToken?;
+	private _parent;
+	private _languageCode;
+	private _term;
+	private _pageToken;
 	/**
 	 * Message constructor. Initializes the properties and applies default Protobuf values if necessary
 	 * @param _value initial values object or instance of FullTextSearchRequest to deeply clone from
 	 */
 	constructor(_value?: RecursivePartial<FullTextSearchRequest.AsObject>);
-	get parent(): string | undefined;
-	set parent(value: string | undefined);
-	get languageCode(): string | undefined;
-	set languageCode(value: string | undefined);
-	get term(): string | undefined;
-	set term(value: string | undefined);
-	get pageToken(): string | undefined;
-	set pageToken(value: string | undefined);
+	get parent(): string;
+	set parent(value: string);
+	get languageCode(): string;
+	set languageCode(value: string);
+	get term(): string;
+	set term(value: string);
+	get pageToken(): string;
+	set pageToken(value: string);
 	/**
 	 * Serialize message to binary data
 	 * @param instance message instance
@@ -3609,19 +3816,19 @@ export declare module FullTextSearchRequest {
 	 * Standard JavaScript object representation for FullTextSearchRequest
 	 */
 	interface AsObject {
-		parent?: string;
-		languageCode?: string;
-		term?: string;
-		pageToken?: string;
+		parent: string;
+		languageCode: string;
+		term: string;
+		pageToken: string;
 	}
 	/**
 	 * Protobuf JSON representation for FullTextSearchRequest
 	 */
 	interface AsProtobufJSON {
-		parent?: string;
-		languageCode?: string;
-		term?: string;
-		pageToken?: string;
+		parent: string;
+		languageCode: string;
+		term: string;
+		pageToken: string;
 	}
 	enum QueryType {
 		ALL = 0,
@@ -3664,32 +3871,32 @@ export declare class FullTextSearchResponseEntityType implements GrpcMessage {
 	 * @param _writer binary writer instance
 	 */
 	static serializeBinaryToWriter(_instance: FullTextSearchResponseEntityType, _writer: BinaryWriter): void;
-	private _parent?;
-	private _languageCode?;
+	private _parent;
+	private _languageCode;
 	private _entityTypeResults?;
-	private _term?;
-	private _elasticQuery?;
-	private _time?;
-	private _nextPageToken?;
+	private _term;
+	private _elasticQuery;
+	private _time;
+	private _nextPageToken;
 	/**
 	 * Message constructor. Initializes the properties and applies default Protobuf values if necessary
 	 * @param _value initial values object or instance of FullTextSearchResponseEntityType to deeply clone from
 	 */
 	constructor(_value?: RecursivePartial<FullTextSearchResponseEntityType.AsObject>);
-	get parent(): string | undefined;
-	set parent(value: string | undefined);
-	get languageCode(): string | undefined;
-	set languageCode(value: string | undefined);
+	get parent(): string;
+	set parent(value: string);
+	get languageCode(): string;
+	set languageCode(value: string);
 	get entityTypeResults(): FullTextSearchResponseEntityType.EntityTypeSearchResult[] | undefined;
 	set entityTypeResults(value: FullTextSearchResponseEntityType.EntityTypeSearchResult[] | undefined);
-	get term(): string | undefined;
-	set term(value: string | undefined);
-	get elasticQuery(): string | undefined;
-	set elasticQuery(value: string | undefined);
-	get time(): number | undefined;
-	set time(value: number | undefined);
-	get nextPageToken(): string | undefined;
-	set nextPageToken(value: string | undefined);
+	get term(): string;
+	set term(value: string);
+	get elasticQuery(): string;
+	set elasticQuery(value: string);
+	get time(): number;
+	set time(value: number);
+	get nextPageToken(): string;
+	set nextPageToken(value: string);
 	/**
 	 * Serialize message to binary data
 	 * @param instance message instance
@@ -3715,25 +3922,25 @@ export declare module FullTextSearchResponseEntityType {
 	 * Standard JavaScript object representation for FullTextSearchResponseEntityType
 	 */
 	interface AsObject {
-		parent?: string;
-		languageCode?: string;
+		parent: string;
+		languageCode: string;
 		entityTypeResults?: FullTextSearchResponseEntityType.EntityTypeSearchResult.AsObject[];
-		term?: string;
-		elasticQuery?: string;
-		time?: number;
-		nextPageToken?: string;
+		term: string;
+		elasticQuery: string;
+		time: number;
+		nextPageToken: string;
 	}
 	/**
 	 * Protobuf JSON representation for FullTextSearchResponseEntityType
 	 */
 	interface AsProtobufJSON {
-		parent?: string;
-		languageCode?: string;
-		entityTypeResults?: FullTextSearchResponseEntityType.EntityTypeSearchResult.AsProtobufJSON[] | null;
-		term?: string;
-		elasticQuery?: string;
-		time?: number;
-		nextPageToken?: string;
+		parent: string;
+		languageCode: string;
+		entityTypeResults: FullTextSearchResponseEntityType.EntityTypeSearchResult.AsProtobufJSON[] | null;
+		term: string;
+		elasticQuery: string;
+		time: number;
+		nextPageToken: string;
 	}
 	/**
 	 * Message implementation for ondewo.nlu.FullTextSearchResponseEntityType.EntityTypeSearchResult
@@ -3762,20 +3969,20 @@ export declare module FullTextSearchResponseEntityType {
 		 * @param _writer binary writer instance
 		 */
 		static serializeBinaryToWriter(_instance: EntityTypeSearchResult, _writer: BinaryWriter): void;
-		private _name?;
-		private _displayName?;
-		private _language?;
+		private _name;
+		private _displayName;
+		private _language;
 		/**
 		 * Message constructor. Initializes the properties and applies default Protobuf values if necessary
 		 * @param _value initial values object or instance of EntityTypeSearchResult to deeply clone from
 		 */
 		constructor(_value?: RecursivePartial<EntityTypeSearchResult.AsObject>);
-		get name(): string | undefined;
-		set name(value: string | undefined);
-		get displayName(): string | undefined;
-		set displayName(value: string | undefined);
-		get language(): string | undefined;
-		set language(value: string | undefined);
+		get name(): string;
+		set name(value: string);
+		get displayName(): string;
+		set displayName(value: string);
+		get language(): string;
+		set language(value: string);
 		/**
 		 * Serialize message to binary data
 		 * @param instance message instance
@@ -3801,17 +4008,17 @@ export declare module FullTextSearchResponseEntityType {
 		 * Standard JavaScript object representation for EntityTypeSearchResult
 		 */
 		interface AsObject {
-			name?: string;
-			displayName?: string;
-			language?: string;
+			name: string;
+			displayName: string;
+			language: string;
 		}
 		/**
 		 * Protobuf JSON representation for EntityTypeSearchResult
 		 */
 		interface AsProtobufJSON {
-			name?: string;
-			displayName?: string;
-			language?: string;
+			name: string;
+			displayName: string;
+			language: string;
 		}
 	}
 }
@@ -3842,32 +4049,32 @@ export declare class FullTextSearchResponseEntity implements GrpcMessage {
 	 * @param _writer binary writer instance
 	 */
 	static serializeBinaryToWriter(_instance: FullTextSearchResponseEntity, _writer: BinaryWriter): void;
-	private _parent?;
-	private _languageCode?;
+	private _parent;
+	private _languageCode;
 	private _entityResults?;
-	private _term?;
-	private _elasticQuery?;
-	private _time?;
-	private _nextPageToken?;
+	private _term;
+	private _elasticQuery;
+	private _time;
+	private _nextPageToken;
 	/**
 	 * Message constructor. Initializes the properties and applies default Protobuf values if necessary
 	 * @param _value initial values object or instance of FullTextSearchResponseEntity to deeply clone from
 	 */
 	constructor(_value?: RecursivePartial<FullTextSearchResponseEntity.AsObject>);
-	get parent(): string | undefined;
-	set parent(value: string | undefined);
-	get languageCode(): string | undefined;
-	set languageCode(value: string | undefined);
+	get parent(): string;
+	set parent(value: string);
+	get languageCode(): string;
+	set languageCode(value: string);
 	get entityResults(): FullTextSearchResponseEntity.EntitySearchResult[] | undefined;
 	set entityResults(value: FullTextSearchResponseEntity.EntitySearchResult[] | undefined);
-	get term(): string | undefined;
-	set term(value: string | undefined);
-	get elasticQuery(): string | undefined;
-	set elasticQuery(value: string | undefined);
-	get time(): number | undefined;
-	set time(value: number | undefined);
-	get nextPageToken(): string | undefined;
-	set nextPageToken(value: string | undefined);
+	get term(): string;
+	set term(value: string);
+	get elasticQuery(): string;
+	set elasticQuery(value: string);
+	get time(): number;
+	set time(value: number);
+	get nextPageToken(): string;
+	set nextPageToken(value: string);
 	/**
 	 * Serialize message to binary data
 	 * @param instance message instance
@@ -3893,25 +4100,25 @@ export declare module FullTextSearchResponseEntity {
 	 * Standard JavaScript object representation for FullTextSearchResponseEntity
 	 */
 	interface AsObject {
-		parent?: string;
-		languageCode?: string;
+		parent: string;
+		languageCode: string;
 		entityResults?: FullTextSearchResponseEntity.EntitySearchResult.AsObject[];
-		term?: string;
-		elasticQuery?: string;
-		time?: number;
-		nextPageToken?: string;
+		term: string;
+		elasticQuery: string;
+		time: number;
+		nextPageToken: string;
 	}
 	/**
 	 * Protobuf JSON representation for FullTextSearchResponseEntity
 	 */
 	interface AsProtobufJSON {
-		parent?: string;
-		languageCode?: string;
-		entityResults?: FullTextSearchResponseEntity.EntitySearchResult.AsProtobufJSON[] | null;
-		term?: string;
-		elasticQuery?: string;
-		time?: number;
-		nextPageToken?: string;
+		parent: string;
+		languageCode: string;
+		entityResults: FullTextSearchResponseEntity.EntitySearchResult.AsProtobufJSON[] | null;
+		term: string;
+		elasticQuery: string;
+		time: number;
+		nextPageToken: string;
 	}
 	/**
 	 * Message implementation for ondewo.nlu.FullTextSearchResponseEntity.EntitySearchResult
@@ -3940,23 +4147,26 @@ export declare module FullTextSearchResponseEntity {
 		 * @param _writer binary writer instance
 		 */
 		static serializeBinaryToWriter(_instance: EntitySearchResult, _writer: BinaryWriter): void;
-		private _name?;
-		private _displayName?;
-		private _entityTypeName?;
-		private _language?;
+		private _name;
+		private _displayName;
+		private _entityTypeName;
+		private _entityTypeDisplayName;
+		private _language;
 		/**
 		 * Message constructor. Initializes the properties and applies default Protobuf values if necessary
 		 * @param _value initial values object or instance of EntitySearchResult to deeply clone from
 		 */
 		constructor(_value?: RecursivePartial<EntitySearchResult.AsObject>);
-		get name(): string | undefined;
-		set name(value: string | undefined);
-		get displayName(): string | undefined;
-		set displayName(value: string | undefined);
-		get entityTypeName(): string | undefined;
-		set entityTypeName(value: string | undefined);
-		get language(): string | undefined;
-		set language(value: string | undefined);
+		get name(): string;
+		set name(value: string);
+		get displayName(): string;
+		set displayName(value: string);
+		get entityTypeName(): string;
+		set entityTypeName(value: string);
+		get entityTypeDisplayName(): string;
+		set entityTypeDisplayName(value: string);
+		get language(): string;
+		set language(value: string);
 		/**
 		 * Serialize message to binary data
 		 * @param instance message instance
@@ -3982,19 +4192,21 @@ export declare module FullTextSearchResponseEntity {
 		 * Standard JavaScript object representation for EntitySearchResult
 		 */
 		interface AsObject {
-			name?: string;
-			displayName?: string;
-			entityTypeName?: string;
-			language?: string;
+			name: string;
+			displayName: string;
+			entityTypeName: string;
+			entityTypeDisplayName: string;
+			language: string;
 		}
 		/**
 		 * Protobuf JSON representation for EntitySearchResult
 		 */
 		interface AsProtobufJSON {
-			name?: string;
-			displayName?: string;
-			entityTypeName?: string;
-			language?: string;
+			name: string;
+			displayName: string;
+			entityTypeName: string;
+			entityTypeDisplayName: string;
+			language: string;
 		}
 	}
 }
@@ -4025,32 +4237,32 @@ export declare class FullTextSearchResponseEntitySynonym implements GrpcMessage 
 	 * @param _writer binary writer instance
 	 */
 	static serializeBinaryToWriter(_instance: FullTextSearchResponseEntitySynonym, _writer: BinaryWriter): void;
-	private _parent?;
-	private _languageCode?;
+	private _parent;
+	private _languageCode;
 	private _entitySynonymResults?;
-	private _term?;
-	private _elasticQuery?;
-	private _time?;
-	private _nextPageToken?;
+	private _term;
+	private _elasticQuery;
+	private _time;
+	private _nextPageToken;
 	/**
 	 * Message constructor. Initializes the properties and applies default Protobuf values if necessary
 	 * @param _value initial values object or instance of FullTextSearchResponseEntitySynonym to deeply clone from
 	 */
 	constructor(_value?: RecursivePartial<FullTextSearchResponseEntitySynonym.AsObject>);
-	get parent(): string | undefined;
-	set parent(value: string | undefined);
-	get languageCode(): string | undefined;
-	set languageCode(value: string | undefined);
+	get parent(): string;
+	set parent(value: string);
+	get languageCode(): string;
+	set languageCode(value: string);
 	get entitySynonymResults(): FullTextSearchResponseEntitySynonym.EntitySynonymSearchResult[] | undefined;
 	set entitySynonymResults(value: FullTextSearchResponseEntitySynonym.EntitySynonymSearchResult[] | undefined);
-	get term(): string | undefined;
-	set term(value: string | undefined);
-	get elasticQuery(): string | undefined;
-	set elasticQuery(value: string | undefined);
-	get time(): number | undefined;
-	set time(value: number | undefined);
-	get nextPageToken(): string | undefined;
-	set nextPageToken(value: string | undefined);
+	get term(): string;
+	set term(value: string);
+	get elasticQuery(): string;
+	set elasticQuery(value: string);
+	get time(): number;
+	set time(value: number);
+	get nextPageToken(): string;
+	set nextPageToken(value: string);
 	/**
 	 * Serialize message to binary data
 	 * @param instance message instance
@@ -4076,25 +4288,25 @@ export declare module FullTextSearchResponseEntitySynonym {
 	 * Standard JavaScript object representation for FullTextSearchResponseEntitySynonym
 	 */
 	interface AsObject {
-		parent?: string;
-		languageCode?: string;
+		parent: string;
+		languageCode: string;
 		entitySynonymResults?: FullTextSearchResponseEntitySynonym.EntitySynonymSearchResult.AsObject[];
-		term?: string;
-		elasticQuery?: string;
-		time?: number;
-		nextPageToken?: string;
+		term: string;
+		elasticQuery: string;
+		time: number;
+		nextPageToken: string;
 	}
 	/**
 	 * Protobuf JSON representation for FullTextSearchResponseEntitySynonym
 	 */
 	interface AsProtobufJSON {
-		parent?: string;
-		languageCode?: string;
-		entitySynonymResults?: FullTextSearchResponseEntitySynonym.EntitySynonymSearchResult.AsProtobufJSON[] | null;
-		term?: string;
-		elasticQuery?: string;
-		time?: number;
-		nextPageToken?: string;
+		parent: string;
+		languageCode: string;
+		entitySynonymResults: FullTextSearchResponseEntitySynonym.EntitySynonymSearchResult.AsProtobufJSON[] | null;
+		term: string;
+		elasticQuery: string;
+		time: number;
+		nextPageToken: string;
 	}
 	/**
 	 * Message implementation for ondewo.nlu.FullTextSearchResponseEntitySynonym.EntitySynonymSearchResult
@@ -4123,26 +4335,32 @@ export declare module FullTextSearchResponseEntitySynonym {
 		 * @param _writer binary writer instance
 		 */
 		static serializeBinaryToWriter(_instance: EntitySynonymSearchResult, _writer: BinaryWriter): void;
-		private _name?;
-		private _displayName?;
-		private _entityTypeName?;
-		private _entityName?;
-		private _language?;
+		private _name;
+		private _displayName;
+		private _entityTypeName;
+		private _entityTypeDisplayName;
+		private _entityName;
+		private _entityDisplayName;
+		private _language;
 		/**
 		 * Message constructor. Initializes the properties and applies default Protobuf values if necessary
 		 * @param _value initial values object or instance of EntitySynonymSearchResult to deeply clone from
 		 */
 		constructor(_value?: RecursivePartial<EntitySynonymSearchResult.AsObject>);
-		get name(): string | undefined;
-		set name(value: string | undefined);
-		get displayName(): string | undefined;
-		set displayName(value: string | undefined);
-		get entityTypeName(): string | undefined;
-		set entityTypeName(value: string | undefined);
-		get entityName(): string | undefined;
-		set entityName(value: string | undefined);
-		get language(): string | undefined;
-		set language(value: string | undefined);
+		get name(): string;
+		set name(value: string);
+		get displayName(): string;
+		set displayName(value: string);
+		get entityTypeName(): string;
+		set entityTypeName(value: string);
+		get entityTypeDisplayName(): string;
+		set entityTypeDisplayName(value: string);
+		get entityName(): string;
+		set entityName(value: string);
+		get entityDisplayName(): string;
+		set entityDisplayName(value: string);
+		get language(): string;
+		set language(value: string);
 		/**
 		 * Serialize message to binary data
 		 * @param instance message instance
@@ -4168,21 +4386,25 @@ export declare module FullTextSearchResponseEntitySynonym {
 		 * Standard JavaScript object representation for EntitySynonymSearchResult
 		 */
 		interface AsObject {
-			name?: string;
-			displayName?: string;
-			entityTypeName?: string;
-			entityName?: string;
-			language?: string;
+			name: string;
+			displayName: string;
+			entityTypeName: string;
+			entityTypeDisplayName: string;
+			entityName: string;
+			entityDisplayName: string;
+			language: string;
 		}
 		/**
 		 * Protobuf JSON representation for EntitySynonymSearchResult
 		 */
 		interface AsProtobufJSON {
-			name?: string;
-			displayName?: string;
-			entityTypeName?: string;
-			entityName?: string;
-			language?: string;
+			name: string;
+			displayName: string;
+			entityTypeName: string;
+			entityTypeDisplayName: string;
+			entityName: string;
+			entityDisplayName: string;
+			language: string;
 		}
 	}
 }
@@ -4213,32 +4435,32 @@ export declare class FullTextSearchResponseIntent implements GrpcMessage {
 	 * @param _writer binary writer instance
 	 */
 	static serializeBinaryToWriter(_instance: FullTextSearchResponseIntent, _writer: BinaryWriter): void;
-	private _parent?;
-	private _languageCode?;
+	private _parent;
+	private _languageCode;
 	private _intentResults?;
-	private _term?;
-	private _elasticQuery?;
-	private _time?;
-	private _nextPageToken?;
+	private _term;
+	private _elasticQuery;
+	private _time;
+	private _nextPageToken;
 	/**
 	 * Message constructor. Initializes the properties and applies default Protobuf values if necessary
 	 * @param _value initial values object or instance of FullTextSearchResponseIntent to deeply clone from
 	 */
 	constructor(_value?: RecursivePartial<FullTextSearchResponseIntent.AsObject>);
-	get parent(): string | undefined;
-	set parent(value: string | undefined);
-	get languageCode(): string | undefined;
-	set languageCode(value: string | undefined);
+	get parent(): string;
+	set parent(value: string);
+	get languageCode(): string;
+	set languageCode(value: string);
 	get intentResults(): FullTextSearchResponseIntent.IntentSearchResult[] | undefined;
 	set intentResults(value: FullTextSearchResponseIntent.IntentSearchResult[] | undefined);
-	get term(): string | undefined;
-	set term(value: string | undefined);
-	get elasticQuery(): string | undefined;
-	set elasticQuery(value: string | undefined);
-	get time(): number | undefined;
-	set time(value: number | undefined);
-	get nextPageToken(): string | undefined;
-	set nextPageToken(value: string | undefined);
+	get term(): string;
+	set term(value: string);
+	get elasticQuery(): string;
+	set elasticQuery(value: string);
+	get time(): number;
+	set time(value: number);
+	get nextPageToken(): string;
+	set nextPageToken(value: string);
 	/**
 	 * Serialize message to binary data
 	 * @param instance message instance
@@ -4264,25 +4486,25 @@ export declare module FullTextSearchResponseIntent {
 	 * Standard JavaScript object representation for FullTextSearchResponseIntent
 	 */
 	interface AsObject {
-		parent?: string;
-		languageCode?: string;
+		parent: string;
+		languageCode: string;
 		intentResults?: FullTextSearchResponseIntent.IntentSearchResult.AsObject[];
-		term?: string;
-		elasticQuery?: string;
-		time?: number;
-		nextPageToken?: string;
+		term: string;
+		elasticQuery: string;
+		time: number;
+		nextPageToken: string;
 	}
 	/**
 	 * Protobuf JSON representation for FullTextSearchResponseIntent
 	 */
 	interface AsProtobufJSON {
-		parent?: string;
-		languageCode?: string;
-		intentResults?: FullTextSearchResponseIntent.IntentSearchResult.AsProtobufJSON[] | null;
-		term?: string;
-		elasticQuery?: string;
-		time?: number;
-		nextPageToken?: string;
+		parent: string;
+		languageCode: string;
+		intentResults: FullTextSearchResponseIntent.IntentSearchResult.AsProtobufJSON[] | null;
+		term: string;
+		elasticQuery: string;
+		time: number;
+		nextPageToken: string;
 	}
 	/**
 	 * Message implementation for ondewo.nlu.FullTextSearchResponseIntent.IntentSearchResult
@@ -4311,23 +4533,26 @@ export declare module FullTextSearchResponseIntent {
 		 * @param _writer binary writer instance
 		 */
 		static serializeBinaryToWriter(_instance: IntentSearchResult, _writer: BinaryWriter): void;
-		private _name?;
-		private _displayName?;
-		private _domainName?;
-		private _language?;
+		private _name;
+		private _displayName;
+		private _domainName;
+		private _tags;
+		private _language;
 		/**
 		 * Message constructor. Initializes the properties and applies default Protobuf values if necessary
 		 * @param _value initial values object or instance of IntentSearchResult to deeply clone from
 		 */
 		constructor(_value?: RecursivePartial<IntentSearchResult.AsObject>);
-		get name(): string | undefined;
-		set name(value: string | undefined);
-		get displayName(): string | undefined;
-		set displayName(value: string | undefined);
-		get domainName(): string | undefined;
-		set domainName(value: string | undefined);
-		get language(): string | undefined;
-		set language(value: string | undefined);
+		get name(): string;
+		set name(value: string);
+		get displayName(): string;
+		set displayName(value: string);
+		get domainName(): string;
+		set domainName(value: string);
+		get tags(): string[];
+		set tags(value: string[]);
+		get language(): string;
+		set language(value: string);
 		/**
 		 * Serialize message to binary data
 		 * @param instance message instance
@@ -4353,19 +4578,21 @@ export declare module FullTextSearchResponseIntent {
 		 * Standard JavaScript object representation for IntentSearchResult
 		 */
 		interface AsObject {
-			name?: string;
-			displayName?: string;
-			domainName?: string;
-			language?: string;
+			name: string;
+			displayName: string;
+			domainName: string;
+			tags: string[];
+			language: string;
 		}
 		/**
 		 * Protobuf JSON representation for IntentSearchResult
 		 */
 		interface AsProtobufJSON {
-			name?: string;
-			displayName?: string;
-			domainName?: string;
-			language?: string;
+			name: string;
+			displayName: string;
+			domainName: string;
+			tags: string[];
+			language: string;
 		}
 	}
 }
@@ -4396,32 +4623,32 @@ export declare class FullTextSearchResponseIntentContextIn implements GrpcMessag
 	 * @param _writer binary writer instance
 	 */
 	static serializeBinaryToWriter(_instance: FullTextSearchResponseIntentContextIn, _writer: BinaryWriter): void;
-	private _parent?;
-	private _languageCode?;
+	private _parent;
+	private _languageCode;
 	private _intentContextInResults?;
-	private _term?;
-	private _elasticQuery?;
-	private _time?;
-	private _nextPageToken?;
+	private _term;
+	private _elasticQuery;
+	private _time;
+	private _nextPageToken;
 	/**
 	 * Message constructor. Initializes the properties and applies default Protobuf values if necessary
 	 * @param _value initial values object or instance of FullTextSearchResponseIntentContextIn to deeply clone from
 	 */
 	constructor(_value?: RecursivePartial<FullTextSearchResponseIntentContextIn.AsObject>);
-	get parent(): string | undefined;
-	set parent(value: string | undefined);
-	get languageCode(): string | undefined;
-	set languageCode(value: string | undefined);
+	get parent(): string;
+	set parent(value: string);
+	get languageCode(): string;
+	set languageCode(value: string);
 	get intentContextInResults(): FullTextSearchResponseIntentContextIn.IntentContextInSearchResult[] | undefined;
 	set intentContextInResults(value: FullTextSearchResponseIntentContextIn.IntentContextInSearchResult[] | undefined);
-	get term(): string | undefined;
-	set term(value: string | undefined);
-	get elasticQuery(): string | undefined;
-	set elasticQuery(value: string | undefined);
-	get time(): number | undefined;
-	set time(value: number | undefined);
-	get nextPageToken(): string | undefined;
-	set nextPageToken(value: string | undefined);
+	get term(): string;
+	set term(value: string);
+	get elasticQuery(): string;
+	set elasticQuery(value: string);
+	get time(): number;
+	set time(value: number);
+	get nextPageToken(): string;
+	set nextPageToken(value: string);
 	/**
 	 * Serialize message to binary data
 	 * @param instance message instance
@@ -4447,25 +4674,25 @@ export declare module FullTextSearchResponseIntentContextIn {
 	 * Standard JavaScript object representation for FullTextSearchResponseIntentContextIn
 	 */
 	interface AsObject {
-		parent?: string;
-		languageCode?: string;
+		parent: string;
+		languageCode: string;
 		intentContextInResults?: FullTextSearchResponseIntentContextIn.IntentContextInSearchResult.AsObject[];
-		term?: string;
-		elasticQuery?: string;
-		time?: number;
-		nextPageToken?: string;
+		term: string;
+		elasticQuery: string;
+		time: number;
+		nextPageToken: string;
 	}
 	/**
 	 * Protobuf JSON representation for FullTextSearchResponseIntentContextIn
 	 */
 	interface AsProtobufJSON {
-		parent?: string;
-		languageCode?: string;
-		intentContextInResults?: FullTextSearchResponseIntentContextIn.IntentContextInSearchResult.AsProtobufJSON[] | null;
-		term?: string;
-		elasticQuery?: string;
-		time?: number;
-		nextPageToken?: string;
+		parent: string;
+		languageCode: string;
+		intentContextInResults: FullTextSearchResponseIntentContextIn.IntentContextInSearchResult.AsProtobufJSON[] | null;
+		term: string;
+		elasticQuery: string;
+		time: number;
+		nextPageToken: string;
 	}
 	/**
 	 * Message implementation for ondewo.nlu.FullTextSearchResponseIntentContextIn.IntentContextInSearchResult
@@ -4494,20 +4721,26 @@ export declare module FullTextSearchResponseIntentContextIn {
 		 * @param _writer binary writer instance
 		 */
 		static serializeBinaryToWriter(_instance: IntentContextInSearchResult, _writer: BinaryWriter): void;
-		private _name?;
-		private _intentName?;
-		private _language?;
+		private _name;
+		private _intentName;
+		private _intentDisplayName;
+		private _tags;
+		private _language;
 		/**
 		 * Message constructor. Initializes the properties and applies default Protobuf values if necessary
 		 * @param _value initial values object or instance of IntentContextInSearchResult to deeply clone from
 		 */
 		constructor(_value?: RecursivePartial<IntentContextInSearchResult.AsObject>);
-		get name(): string | undefined;
-		set name(value: string | undefined);
-		get intentName(): string | undefined;
-		set intentName(value: string | undefined);
-		get language(): string | undefined;
-		set language(value: string | undefined);
+		get name(): string;
+		set name(value: string);
+		get intentName(): string;
+		set intentName(value: string);
+		get intentDisplayName(): string;
+		set intentDisplayName(value: string);
+		get tags(): string[];
+		set tags(value: string[]);
+		get language(): string;
+		set language(value: string);
 		/**
 		 * Serialize message to binary data
 		 * @param instance message instance
@@ -4533,17 +4766,21 @@ export declare module FullTextSearchResponseIntentContextIn {
 		 * Standard JavaScript object representation for IntentContextInSearchResult
 		 */
 		interface AsObject {
-			name?: string;
-			intentName?: string;
-			language?: string;
+			name: string;
+			intentName: string;
+			intentDisplayName: string;
+			tags: string[];
+			language: string;
 		}
 		/**
 		 * Protobuf JSON representation for IntentContextInSearchResult
 		 */
 		interface AsProtobufJSON {
-			name?: string;
-			intentName?: string;
-			language?: string;
+			name: string;
+			intentName: string;
+			intentDisplayName: string;
+			tags: string[];
+			language: string;
 		}
 	}
 }
@@ -4574,32 +4811,32 @@ export declare class FullTextSearchResponseIntentContextOut implements GrpcMessa
 	 * @param _writer binary writer instance
 	 */
 	static serializeBinaryToWriter(_instance: FullTextSearchResponseIntentContextOut, _writer: BinaryWriter): void;
-	private _parent?;
-	private _languageCode?;
+	private _parent;
+	private _languageCode;
 	private _intentContextOutResults?;
-	private _term?;
-	private _elasticQuery?;
-	private _time?;
-	private _nextPageToken?;
+	private _term;
+	private _elasticQuery;
+	private _time;
+	private _nextPageToken;
 	/**
 	 * Message constructor. Initializes the properties and applies default Protobuf values if necessary
 	 * @param _value initial values object or instance of FullTextSearchResponseIntentContextOut to deeply clone from
 	 */
 	constructor(_value?: RecursivePartial<FullTextSearchResponseIntentContextOut.AsObject>);
-	get parent(): string | undefined;
-	set parent(value: string | undefined);
-	get languageCode(): string | undefined;
-	set languageCode(value: string | undefined);
+	get parent(): string;
+	set parent(value: string);
+	get languageCode(): string;
+	set languageCode(value: string);
 	get intentContextOutResults(): FullTextSearchResponseIntentContextOut.IntentContextOutSearchResult[] | undefined;
 	set intentContextOutResults(value: FullTextSearchResponseIntentContextOut.IntentContextOutSearchResult[] | undefined);
-	get term(): string | undefined;
-	set term(value: string | undefined);
-	get elasticQuery(): string | undefined;
-	set elasticQuery(value: string | undefined);
-	get time(): number | undefined;
-	set time(value: number | undefined);
-	get nextPageToken(): string | undefined;
-	set nextPageToken(value: string | undefined);
+	get term(): string;
+	set term(value: string);
+	get elasticQuery(): string;
+	set elasticQuery(value: string);
+	get time(): number;
+	set time(value: number);
+	get nextPageToken(): string;
+	set nextPageToken(value: string);
 	/**
 	 * Serialize message to binary data
 	 * @param instance message instance
@@ -4625,27 +4862,27 @@ export declare module FullTextSearchResponseIntentContextOut {
 	 * Standard JavaScript object representation for FullTextSearchResponseIntentContextOut
 	 */
 	interface AsObject {
-		parent?: string;
-		languageCode?: string;
+		parent: string;
+		languageCode: string;
 		intentContextOutResults?: FullTextSearchResponseIntentContextOut.IntentContextOutSearchResult.AsObject[];
-		term?: string;
-		elasticQuery?: string;
-		time?: number;
-		nextPageToken?: string;
+		term: string;
+		elasticQuery: string;
+		time: number;
+		nextPageToken: string;
 	}
 	/**
 	 * Protobuf JSON representation for FullTextSearchResponseIntentContextOut
 	 */
 	interface AsProtobufJSON {
-		parent?: string;
-		languageCode?: string;
-		intentContextOutResults?:
+		parent: string;
+		languageCode: string;
+		intentContextOutResults:
 			| FullTextSearchResponseIntentContextOut.IntentContextOutSearchResult.AsProtobufJSON[]
 			| null;
-		term?: string;
-		elasticQuery?: string;
-		time?: number;
-		nextPageToken?: string;
+		term: string;
+		elasticQuery: string;
+		time: number;
+		nextPageToken: string;
 	}
 	/**
 	 * Message implementation for ondewo.nlu.FullTextSearchResponseIntentContextOut.IntentContextOutSearchResult
@@ -4674,20 +4911,26 @@ export declare module FullTextSearchResponseIntentContextOut {
 		 * @param _writer binary writer instance
 		 */
 		static serializeBinaryToWriter(_instance: IntentContextOutSearchResult, _writer: BinaryWriter): void;
-		private _name?;
-		private _intentName?;
-		private _language?;
+		private _name;
+		private _intentName;
+		private _intentDisplayName;
+		private _tags;
+		private _language;
 		/**
 		 * Message constructor. Initializes the properties and applies default Protobuf values if necessary
 		 * @param _value initial values object or instance of IntentContextOutSearchResult to deeply clone from
 		 */
 		constructor(_value?: RecursivePartial<IntentContextOutSearchResult.AsObject>);
-		get name(): string | undefined;
-		set name(value: string | undefined);
-		get intentName(): string | undefined;
-		set intentName(value: string | undefined);
-		get language(): string | undefined;
-		set language(value: string | undefined);
+		get name(): string;
+		set name(value: string);
+		get intentName(): string;
+		set intentName(value: string);
+		get intentDisplayName(): string;
+		set intentDisplayName(value: string);
+		get tags(): string[];
+		set tags(value: string[]);
+		get language(): string;
+		set language(value: string);
 		/**
 		 * Serialize message to binary data
 		 * @param instance message instance
@@ -4713,17 +4956,21 @@ export declare module FullTextSearchResponseIntentContextOut {
 		 * Standard JavaScript object representation for IntentContextOutSearchResult
 		 */
 		interface AsObject {
-			name?: string;
-			intentName?: string;
-			language?: string;
+			name: string;
+			intentName: string;
+			intentDisplayName: string;
+			tags: string[];
+			language: string;
 		}
 		/**
 		 * Protobuf JSON representation for IntentContextOutSearchResult
 		 */
 		interface AsProtobufJSON {
-			name?: string;
-			intentName?: string;
-			language?: string;
+			name: string;
+			intentName: string;
+			intentDisplayName: string;
+			tags: string[];
+			language: string;
 		}
 	}
 }
@@ -4754,32 +5001,32 @@ export declare class FullTextSearchResponseIntentUsersays implements GrpcMessage
 	 * @param _writer binary writer instance
 	 */
 	static serializeBinaryToWriter(_instance: FullTextSearchResponseIntentUsersays, _writer: BinaryWriter): void;
-	private _parent?;
-	private _languageCode?;
+	private _parent;
+	private _languageCode;
 	private _intentUsersaysResults?;
-	private _term?;
-	private _elasticQuery?;
-	private _time?;
-	private _nextPageToken?;
+	private _term;
+	private _elasticQuery;
+	private _time;
+	private _nextPageToken;
 	/**
 	 * Message constructor. Initializes the properties and applies default Protobuf values if necessary
 	 * @param _value initial values object or instance of FullTextSearchResponseIntentUsersays to deeply clone from
 	 */
 	constructor(_value?: RecursivePartial<FullTextSearchResponseIntentUsersays.AsObject>);
-	get parent(): string | undefined;
-	set parent(value: string | undefined);
-	get languageCode(): string | undefined;
-	set languageCode(value: string | undefined);
+	get parent(): string;
+	set parent(value: string);
+	get languageCode(): string;
+	set languageCode(value: string);
 	get intentUsersaysResults(): FullTextSearchResponseIntentUsersays.IntentUsersaysSearchResult[] | undefined;
 	set intentUsersaysResults(value: FullTextSearchResponseIntentUsersays.IntentUsersaysSearchResult[] | undefined);
-	get term(): string | undefined;
-	set term(value: string | undefined);
-	get elasticQuery(): string | undefined;
-	set elasticQuery(value: string | undefined);
-	get time(): number | undefined;
-	set time(value: number | undefined);
-	get nextPageToken(): string | undefined;
-	set nextPageToken(value: string | undefined);
+	get term(): string;
+	set term(value: string);
+	get elasticQuery(): string;
+	set elasticQuery(value: string);
+	get time(): number;
+	set time(value: number);
+	get nextPageToken(): string;
+	set nextPageToken(value: string);
 	/**
 	 * Serialize message to binary data
 	 * @param instance message instance
@@ -4805,25 +5052,25 @@ export declare module FullTextSearchResponseIntentUsersays {
 	 * Standard JavaScript object representation for FullTextSearchResponseIntentUsersays
 	 */
 	interface AsObject {
-		parent?: string;
-		languageCode?: string;
+		parent: string;
+		languageCode: string;
 		intentUsersaysResults?: FullTextSearchResponseIntentUsersays.IntentUsersaysSearchResult.AsObject[];
-		term?: string;
-		elasticQuery?: string;
-		time?: number;
-		nextPageToken?: string;
+		term: string;
+		elasticQuery: string;
+		time: number;
+		nextPageToken: string;
 	}
 	/**
 	 * Protobuf JSON representation for FullTextSearchResponseIntentUsersays
 	 */
 	interface AsProtobufJSON {
-		parent?: string;
-		languageCode?: string;
-		intentUsersaysResults?: FullTextSearchResponseIntentUsersays.IntentUsersaysSearchResult.AsProtobufJSON[] | null;
-		term?: string;
-		elasticQuery?: string;
-		time?: number;
-		nextPageToken?: string;
+		parent: string;
+		languageCode: string;
+		intentUsersaysResults: FullTextSearchResponseIntentUsersays.IntentUsersaysSearchResult.AsProtobufJSON[] | null;
+		term: string;
+		elasticQuery: string;
+		time: number;
+		nextPageToken: string;
 	}
 	/**
 	 * Message implementation for ondewo.nlu.FullTextSearchResponseIntentUsersays.IntentUsersaysSearchResult
@@ -4852,32 +5099,38 @@ export declare module FullTextSearchResponseIntentUsersays {
 		 * @param _writer binary writer instance
 		 */
 		static serializeBinaryToWriter(_instance: IntentUsersaysSearchResult, _writer: BinaryWriter): void;
-		private _name?;
-		private _text?;
-		private _textAsEntityTypes?;
-		private _textAsEntityValues?;
-		private _type?;
-		private _intentName?;
-		private _language?;
+		private _name;
+		private _text;
+		private _textAsEntityTypes;
+		private _textAsEntityValues;
+		private _type;
+		private _intentName;
+		private _intentDisplayName;
+		private _tags;
+		private _language;
 		/**
 		 * Message constructor. Initializes the properties and applies default Protobuf values if necessary
 		 * @param _value initial values object or instance of IntentUsersaysSearchResult to deeply clone from
 		 */
 		constructor(_value?: RecursivePartial<IntentUsersaysSearchResult.AsObject>);
-		get name(): string | undefined;
-		set name(value: string | undefined);
-		get text(): string | undefined;
-		set text(value: string | undefined);
-		get textAsEntityTypes(): string | undefined;
-		set textAsEntityTypes(value: string | undefined);
-		get textAsEntityValues(): string | undefined;
-		set textAsEntityValues(value: string | undefined);
-		get type(): string | undefined;
-		set type(value: string | undefined);
-		get intentName(): string | undefined;
-		set intentName(value: string | undefined);
-		get language(): string | undefined;
-		set language(value: string | undefined);
+		get name(): string;
+		set name(value: string);
+		get text(): string;
+		set text(value: string);
+		get textAsEntityTypes(): string;
+		set textAsEntityTypes(value: string);
+		get textAsEntityValues(): string;
+		set textAsEntityValues(value: string);
+		get type(): string;
+		set type(value: string);
+		get intentName(): string;
+		set intentName(value: string);
+		get intentDisplayName(): string;
+		set intentDisplayName(value: string);
+		get tags(): string[];
+		set tags(value: string[]);
+		get language(): string;
+		set language(value: string);
 		/**
 		 * Serialize message to binary data
 		 * @param instance message instance
@@ -4903,25 +5156,29 @@ export declare module FullTextSearchResponseIntentUsersays {
 		 * Standard JavaScript object representation for IntentUsersaysSearchResult
 		 */
 		interface AsObject {
-			name?: string;
-			text?: string;
-			textAsEntityTypes?: string;
-			textAsEntityValues?: string;
-			type?: string;
-			intentName?: string;
-			language?: string;
+			name: string;
+			text: string;
+			textAsEntityTypes: string;
+			textAsEntityValues: string;
+			type: string;
+			intentName: string;
+			intentDisplayName: string;
+			tags: string[];
+			language: string;
 		}
 		/**
 		 * Protobuf JSON representation for IntentUsersaysSearchResult
 		 */
 		interface AsProtobufJSON {
-			name?: string;
-			text?: string;
-			textAsEntityTypes?: string;
-			textAsEntityValues?: string;
-			type?: string;
-			intentName?: string;
-			language?: string;
+			name: string;
+			text: string;
+			textAsEntityTypes: string;
+			textAsEntityValues: string;
+			type: string;
+			intentName: string;
+			intentDisplayName: string;
+			tags: string[];
+			language: string;
 		}
 	}
 }
@@ -4952,32 +5209,32 @@ export declare class FullTextSearchResponseIntentTags implements GrpcMessage {
 	 * @param _writer binary writer instance
 	 */
 	static serializeBinaryToWriter(_instance: FullTextSearchResponseIntentTags, _writer: BinaryWriter): void;
-	private _parent?;
-	private _languageCode?;
+	private _parent;
+	private _languageCode;
 	private _intentTagsResults?;
-	private _term?;
-	private _elasticQuery?;
-	private _time?;
-	private _nextPageToken?;
+	private _term;
+	private _elasticQuery;
+	private _time;
+	private _nextPageToken;
 	/**
 	 * Message constructor. Initializes the properties and applies default Protobuf values if necessary
 	 * @param _value initial values object or instance of FullTextSearchResponseIntentTags to deeply clone from
 	 */
 	constructor(_value?: RecursivePartial<FullTextSearchResponseIntentTags.AsObject>);
-	get parent(): string | undefined;
-	set parent(value: string | undefined);
-	get languageCode(): string | undefined;
-	set languageCode(value: string | undefined);
+	get parent(): string;
+	set parent(value: string);
+	get languageCode(): string;
+	set languageCode(value: string);
 	get intentTagsResults(): FullTextSearchResponseIntentTags.IntentTagsSearchResult[] | undefined;
 	set intentTagsResults(value: FullTextSearchResponseIntentTags.IntentTagsSearchResult[] | undefined);
-	get term(): string | undefined;
-	set term(value: string | undefined);
-	get elasticQuery(): string | undefined;
-	set elasticQuery(value: string | undefined);
-	get time(): number | undefined;
-	set time(value: number | undefined);
-	get nextPageToken(): string | undefined;
-	set nextPageToken(value: string | undefined);
+	get term(): string;
+	set term(value: string);
+	get elasticQuery(): string;
+	set elasticQuery(value: string);
+	get time(): number;
+	set time(value: number);
+	get nextPageToken(): string;
+	set nextPageToken(value: string);
 	/**
 	 * Serialize message to binary data
 	 * @param instance message instance
@@ -5003,25 +5260,25 @@ export declare module FullTextSearchResponseIntentTags {
 	 * Standard JavaScript object representation for FullTextSearchResponseIntentTags
 	 */
 	interface AsObject {
-		parent?: string;
-		languageCode?: string;
+		parent: string;
+		languageCode: string;
 		intentTagsResults?: FullTextSearchResponseIntentTags.IntentTagsSearchResult.AsObject[];
-		term?: string;
-		elasticQuery?: string;
-		time?: number;
-		nextPageToken?: string;
+		term: string;
+		elasticQuery: string;
+		time: number;
+		nextPageToken: string;
 	}
 	/**
 	 * Protobuf JSON representation for FullTextSearchResponseIntentTags
 	 */
 	interface AsProtobufJSON {
-		parent?: string;
-		languageCode?: string;
-		intentTagsResults?: FullTextSearchResponseIntentTags.IntentTagsSearchResult.AsProtobufJSON[] | null;
-		term?: string;
-		elasticQuery?: string;
-		time?: number;
-		nextPageToken?: string;
+		parent: string;
+		languageCode: string;
+		intentTagsResults: FullTextSearchResponseIntentTags.IntentTagsSearchResult.AsProtobufJSON[] | null;
+		term: string;
+		elasticQuery: string;
+		time: number;
+		nextPageToken: string;
 	}
 	/**
 	 * Message implementation for ondewo.nlu.FullTextSearchResponseIntentTags.IntentTagsSearchResult
@@ -5050,23 +5307,29 @@ export declare module FullTextSearchResponseIntentTags {
 		 * @param _writer binary writer instance
 		 */
 		static serializeBinaryToWriter(_instance: IntentTagsSearchResult, _writer: BinaryWriter): void;
-		private _name?;
-		private _text?;
-		private _intentName?;
-		private _language?;
+		private _name;
+		private _text;
+		private _intentName;
+		private _intentDisplayName;
+		private _tags;
+		private _language;
 		/**
 		 * Message constructor. Initializes the properties and applies default Protobuf values if necessary
 		 * @param _value initial values object or instance of IntentTagsSearchResult to deeply clone from
 		 */
 		constructor(_value?: RecursivePartial<IntentTagsSearchResult.AsObject>);
-		get name(): string | undefined;
-		set name(value: string | undefined);
-		get text(): string | undefined;
-		set text(value: string | undefined);
-		get intentName(): string | undefined;
-		set intentName(value: string | undefined);
-		get language(): string | undefined;
-		set language(value: string | undefined);
+		get name(): string;
+		set name(value: string);
+		get text(): string;
+		set text(value: string);
+		get intentName(): string;
+		set intentName(value: string);
+		get intentDisplayName(): string;
+		set intentDisplayName(value: string);
+		get tags(): string[];
+		set tags(value: string[]);
+		get language(): string;
+		set language(value: string);
 		/**
 		 * Serialize message to binary data
 		 * @param instance message instance
@@ -5092,19 +5355,23 @@ export declare module FullTextSearchResponseIntentTags {
 		 * Standard JavaScript object representation for IntentTagsSearchResult
 		 */
 		interface AsObject {
-			name?: string;
-			text?: string;
-			intentName?: string;
-			language?: string;
+			name: string;
+			text: string;
+			intentName: string;
+			intentDisplayName: string;
+			tags: string[];
+			language: string;
 		}
 		/**
 		 * Protobuf JSON representation for IntentTagsSearchResult
 		 */
 		interface AsProtobufJSON {
-			name?: string;
-			text?: string;
-			intentName?: string;
-			language?: string;
+			name: string;
+			text: string;
+			intentName: string;
+			intentDisplayName: string;
+			tags: string[];
+			language: string;
 		}
 	}
 }
@@ -5135,32 +5402,32 @@ export declare class FullTextSearchResponseIntentResponse implements GrpcMessage
 	 * @param _writer binary writer instance
 	 */
 	static serializeBinaryToWriter(_instance: FullTextSearchResponseIntentResponse, _writer: BinaryWriter): void;
-	private _parent?;
-	private _languageCode?;
+	private _parent;
+	private _languageCode;
 	private _intentResponseResults?;
-	private _term?;
-	private _elasticQuery?;
-	private _time?;
-	private _nextPageToken?;
+	private _term;
+	private _elasticQuery;
+	private _time;
+	private _nextPageToken;
 	/**
 	 * Message constructor. Initializes the properties and applies default Protobuf values if necessary
 	 * @param _value initial values object or instance of FullTextSearchResponseIntentResponse to deeply clone from
 	 */
 	constructor(_value?: RecursivePartial<FullTextSearchResponseIntentResponse.AsObject>);
-	get parent(): string | undefined;
-	set parent(value: string | undefined);
-	get languageCode(): string | undefined;
-	set languageCode(value: string | undefined);
+	get parent(): string;
+	set parent(value: string);
+	get languageCode(): string;
+	set languageCode(value: string);
 	get intentResponseResults(): FullTextSearchResponseIntentResponse.IntentResponseSearchResult[] | undefined;
 	set intentResponseResults(value: FullTextSearchResponseIntentResponse.IntentResponseSearchResult[] | undefined);
-	get term(): string | undefined;
-	set term(value: string | undefined);
-	get elasticQuery(): string | undefined;
-	set elasticQuery(value: string | undefined);
-	get time(): number | undefined;
-	set time(value: number | undefined);
-	get nextPageToken(): string | undefined;
-	set nextPageToken(value: string | undefined);
+	get term(): string;
+	set term(value: string);
+	get elasticQuery(): string;
+	set elasticQuery(value: string);
+	get time(): number;
+	set time(value: number);
+	get nextPageToken(): string;
+	set nextPageToken(value: string);
 	/**
 	 * Serialize message to binary data
 	 * @param instance message instance
@@ -5186,25 +5453,25 @@ export declare module FullTextSearchResponseIntentResponse {
 	 * Standard JavaScript object representation for FullTextSearchResponseIntentResponse
 	 */
 	interface AsObject {
-		parent?: string;
-		languageCode?: string;
+		parent: string;
+		languageCode: string;
 		intentResponseResults?: FullTextSearchResponseIntentResponse.IntentResponseSearchResult.AsObject[];
-		term?: string;
-		elasticQuery?: string;
-		time?: number;
-		nextPageToken?: string;
+		term: string;
+		elasticQuery: string;
+		time: number;
+		nextPageToken: string;
 	}
 	/**
 	 * Protobuf JSON representation for FullTextSearchResponseIntentResponse
 	 */
 	interface AsProtobufJSON {
-		parent?: string;
-		languageCode?: string;
-		intentResponseResults?: FullTextSearchResponseIntentResponse.IntentResponseSearchResult.AsProtobufJSON[] | null;
-		term?: string;
-		elasticQuery?: string;
-		time?: number;
-		nextPageToken?: string;
+		parent: string;
+		languageCode: string;
+		intentResponseResults: FullTextSearchResponseIntentResponse.IntentResponseSearchResult.AsProtobufJSON[] | null;
+		term: string;
+		elasticQuery: string;
+		time: number;
+		nextPageToken: string;
 	}
 	/**
 	 * Message implementation for ondewo.nlu.FullTextSearchResponseIntentResponse.IntentResponseSearchResult
@@ -5233,26 +5500,32 @@ export declare module FullTextSearchResponseIntentResponse {
 		 * @param _writer binary writer instance
 		 */
 		static serializeBinaryToWriter(_instance: IntentResponseSearchResult, _writer: BinaryWriter): void;
-		private _text?;
-		private _platform?;
-		private _responseType?;
-		private _intentName?;
-		private _language?;
+		private _text;
+		private _platform;
+		private _responseType;
+		private _intentName;
+		private _intentDisplayName;
+		private _tags;
+		private _language;
 		/**
 		 * Message constructor. Initializes the properties and applies default Protobuf values if necessary
 		 * @param _value initial values object or instance of IntentResponseSearchResult to deeply clone from
 		 */
 		constructor(_value?: RecursivePartial<IntentResponseSearchResult.AsObject>);
-		get text(): string | undefined;
-		set text(value: string | undefined);
-		get platform(): string | undefined;
-		set platform(value: string | undefined);
-		get responseType(): string | undefined;
-		set responseType(value: string | undefined);
-		get intentName(): string | undefined;
-		set intentName(value: string | undefined);
-		get language(): string | undefined;
-		set language(value: string | undefined);
+		get text(): string;
+		set text(value: string);
+		get platform(): string;
+		set platform(value: string);
+		get responseType(): string;
+		set responseType(value: string);
+		get intentName(): string;
+		set intentName(value: string);
+		get intentDisplayName(): string;
+		set intentDisplayName(value: string);
+		get tags(): string[];
+		set tags(value: string[]);
+		get language(): string;
+		set language(value: string);
 		/**
 		 * Serialize message to binary data
 		 * @param instance message instance
@@ -5278,21 +5551,25 @@ export declare module FullTextSearchResponseIntentResponse {
 		 * Standard JavaScript object representation for IntentResponseSearchResult
 		 */
 		interface AsObject {
-			text?: string;
-			platform?: string;
-			responseType?: string;
-			intentName?: string;
-			language?: string;
+			text: string;
+			platform: string;
+			responseType: string;
+			intentName: string;
+			intentDisplayName: string;
+			tags: string[];
+			language: string;
 		}
 		/**
 		 * Protobuf JSON representation for IntentResponseSearchResult
 		 */
 		interface AsProtobufJSON {
-			text?: string;
-			platform?: string;
-			responseType?: string;
-			intentName?: string;
-			language?: string;
+			text: string;
+			platform: string;
+			responseType: string;
+			intentName: string;
+			intentDisplayName: string;
+			tags: string[];
+			language: string;
 		}
 	}
 }
@@ -5323,32 +5600,32 @@ export declare class FullTextSearchResponseIntentParameters implements GrpcMessa
 	 * @param _writer binary writer instance
 	 */
 	static serializeBinaryToWriter(_instance: FullTextSearchResponseIntentParameters, _writer: BinaryWriter): void;
-	private _parent?;
-	private _languageCode?;
+	private _parent;
+	private _languageCode;
 	private _intentParametersResults?;
-	private _term?;
-	private _elasticQuery?;
-	private _time?;
-	private _nextPageToken?;
+	private _term;
+	private _elasticQuery;
+	private _time;
+	private _nextPageToken;
 	/**
 	 * Message constructor. Initializes the properties and applies default Protobuf values if necessary
 	 * @param _value initial values object or instance of FullTextSearchResponseIntentParameters to deeply clone from
 	 */
 	constructor(_value?: RecursivePartial<FullTextSearchResponseIntentParameters.AsObject>);
-	get parent(): string | undefined;
-	set parent(value: string | undefined);
-	get languageCode(): string | undefined;
-	set languageCode(value: string | undefined);
+	get parent(): string;
+	set parent(value: string);
+	get languageCode(): string;
+	set languageCode(value: string);
 	get intentParametersResults(): FullTextSearchResponseIntentParameters.IntentParametersSearchResult[] | undefined;
 	set intentParametersResults(value: FullTextSearchResponseIntentParameters.IntentParametersSearchResult[] | undefined);
-	get term(): string | undefined;
-	set term(value: string | undefined);
-	get elasticQuery(): string | undefined;
-	set elasticQuery(value: string | undefined);
-	get time(): number | undefined;
-	set time(value: number | undefined);
-	get nextPageToken(): string | undefined;
-	set nextPageToken(value: string | undefined);
+	get term(): string;
+	set term(value: string);
+	get elasticQuery(): string;
+	set elasticQuery(value: string);
+	get time(): number;
+	set time(value: number);
+	get nextPageToken(): string;
+	set nextPageToken(value: string);
 	/**
 	 * Serialize message to binary data
 	 * @param instance message instance
@@ -5374,27 +5651,27 @@ export declare module FullTextSearchResponseIntentParameters {
 	 * Standard JavaScript object representation for FullTextSearchResponseIntentParameters
 	 */
 	interface AsObject {
-		parent?: string;
-		languageCode?: string;
+		parent: string;
+		languageCode: string;
 		intentParametersResults?: FullTextSearchResponseIntentParameters.IntentParametersSearchResult.AsObject[];
-		term?: string;
-		elasticQuery?: string;
-		time?: number;
-		nextPageToken?: string;
+		term: string;
+		elasticQuery: string;
+		time: number;
+		nextPageToken: string;
 	}
 	/**
 	 * Protobuf JSON representation for FullTextSearchResponseIntentParameters
 	 */
 	interface AsProtobufJSON {
-		parent?: string;
-		languageCode?: string;
-		intentParametersResults?:
+		parent: string;
+		languageCode: string;
+		intentParametersResults:
 			| FullTextSearchResponseIntentParameters.IntentParametersSearchResult.AsProtobufJSON[]
 			| null;
-		term?: string;
-		elasticQuery?: string;
-		time?: number;
-		nextPageToken?: string;
+		term: string;
+		elasticQuery: string;
+		time: number;
+		nextPageToken: string;
 	}
 	/**
 	 * Message implementation for ondewo.nlu.FullTextSearchResponseIntentParameters.IntentParametersSearchResult
@@ -5423,23 +5700,29 @@ export declare module FullTextSearchResponseIntentParameters {
 		 * @param _writer binary writer instance
 		 */
 		static serializeBinaryToWriter(_instance: IntentParametersSearchResult, _writer: BinaryWriter): void;
-		private _parameterName?;
-		private _parameterDisplayName?;
-		private _intentName?;
-		private _language?;
+		private _parameterName;
+		private _parameterDisplayName;
+		private _intentName;
+		private _intentDisplayName;
+		private _tags;
+		private _language;
 		/**
 		 * Message constructor. Initializes the properties and applies default Protobuf values if necessary
 		 * @param _value initial values object or instance of IntentParametersSearchResult to deeply clone from
 		 */
 		constructor(_value?: RecursivePartial<IntentParametersSearchResult.AsObject>);
-		get parameterName(): string | undefined;
-		set parameterName(value: string | undefined);
-		get parameterDisplayName(): string | undefined;
-		set parameterDisplayName(value: string | undefined);
-		get intentName(): string | undefined;
-		set intentName(value: string | undefined);
-		get language(): string | undefined;
-		set language(value: string | undefined);
+		get parameterName(): string;
+		set parameterName(value: string);
+		get parameterDisplayName(): string;
+		set parameterDisplayName(value: string);
+		get intentName(): string;
+		set intentName(value: string);
+		get intentDisplayName(): string;
+		set intentDisplayName(value: string);
+		get tags(): string[];
+		set tags(value: string[]);
+		get language(): string;
+		set language(value: string);
 		/**
 		 * Serialize message to binary data
 		 * @param instance message instance
@@ -5465,19 +5748,23 @@ export declare module FullTextSearchResponseIntentParameters {
 		 * Standard JavaScript object representation for IntentParametersSearchResult
 		 */
 		interface AsObject {
-			parameterName?: string;
-			parameterDisplayName?: string;
-			intentName?: string;
-			language?: string;
+			parameterName: string;
+			parameterDisplayName: string;
+			intentName: string;
+			intentDisplayName: string;
+			tags: string[];
+			language: string;
 		}
 		/**
 		 * Protobuf JSON representation for IntentParametersSearchResult
 		 */
 		interface AsProtobufJSON {
-			parameterName?: string;
-			parameterDisplayName?: string;
-			intentName?: string;
-			language?: string;
+			parameterName: string;
+			parameterDisplayName: string;
+			intentName: string;
+			intentDisplayName: string;
+			tags: string[];
+			language: string;
 		}
 	}
 }
@@ -5508,20 +5795,20 @@ export declare class ReindexAgentRequest implements GrpcMessage {
 	 * @param _writer binary writer instance
 	 */
 	static serializeBinaryToWriter(_instance: ReindexAgentRequest, _writer: BinaryWriter): void;
-	private _parent?;
-	private _branchName?;
-	private _indexTypes?;
+	private _parent;
+	private _branchName;
+	private _indexTypes;
 	/**
 	 * Message constructor. Initializes the properties and applies default Protobuf values if necessary
 	 * @param _value initial values object or instance of ReindexAgentRequest to deeply clone from
 	 */
 	constructor(_value?: RecursivePartial<ReindexAgentRequest.AsObject>);
-	get parent(): string | undefined;
-	set parent(value: string | undefined);
-	get branchName(): string | undefined;
-	set branchName(value: string | undefined);
-	get indexTypes(): FullTextSearchRequest.QueryType[] | undefined;
-	set indexTypes(value: FullTextSearchRequest.QueryType[] | undefined);
+	get parent(): string;
+	set parent(value: string);
+	get branchName(): string;
+	set branchName(value: string);
+	get indexTypes(): FullTextSearchRequest.QueryType[];
+	set indexTypes(value: FullTextSearchRequest.QueryType[]);
 	/**
 	 * Serialize message to binary data
 	 * @param instance message instance
@@ -5547,16 +5834,16 @@ export declare module ReindexAgentRequest {
 	 * Standard JavaScript object representation for ReindexAgentRequest
 	 */
 	interface AsObject {
-		parent?: string;
-		branchName?: string;
-		indexTypes?: FullTextSearchRequest.QueryType[];
+		parent: string;
+		branchName: string;
+		indexTypes: FullTextSearchRequest.QueryType[];
 	}
 	/**
 	 * Protobuf JSON representation for ReindexAgentRequest
 	 */
 	interface AsProtobufJSON {
-		parent?: string;
-		branchName?: string;
-		indexTypes?: string[];
+		parent: string;
+		branchName: string;
+		indexTypes: string[];
 	}
 }

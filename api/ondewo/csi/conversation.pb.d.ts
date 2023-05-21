@@ -1,9 +1,8 @@
 import { GrpcMessage, RecursivePartial, ToProtobufJSONOptions } from '@ngx-grpc/common';
 import { BinaryReader, BinaryWriter, ByteSource } from 'google-protobuf';
-import * as googleProtobuf003 from '@ngx-grpc/well-known-types';
-import * as googleRpc004 from '../../google/rpc/status.pb';
-import * as ondewoNlu006 from '../../ondewo/nlu/context.pb';
-import * as googleProtobuf010 from '@ngx-grpc/well-known-types';
+import * as googleProtobuf004 from '@ngx-grpc/well-known-types';
+import * as googleRpc006 from '../../google/rpc/status.pb';
+import * as ondewoNlu008 from '../../ondewo/nlu/context.pb';
 import * as ondewoNlu011 from '../../ondewo/nlu/session.pb';
 import * as ondewoT2s012 from '../../ondewo/t2s/text-to-speech.pb';
 import * as ondewoS2t013 from '../../ondewo/s2t/speech-to-text.pb';
@@ -73,26 +72,26 @@ export declare class S2sPipeline implements GrpcMessage {
 	 * @param _writer binary writer instance
 	 */
 	static serializeBinaryToWriter(_instance: S2sPipeline, _writer: BinaryWriter): void;
-	private _id?;
-	private _s2tPipelineId?;
-	private _nluProjectId?;
-	private _nluLanguageCode?;
-	private _t2sPipelineId?;
+	private _id;
+	private _s2tPipelineId;
+	private _nluProjectId;
+	private _nluLanguageCode;
+	private _t2sPipelineId;
 	/**
 	 * Message constructor. Initializes the properties and applies default Protobuf values if necessary
 	 * @param _value initial values object or instance of S2sPipeline to deeply clone from
 	 */
 	constructor(_value?: RecursivePartial<S2sPipeline.AsObject>);
-	get id(): string | undefined;
-	set id(value: string | undefined);
-	get s2tPipelineId(): string | undefined;
-	set s2tPipelineId(value: string | undefined);
-	get nluProjectId(): string | undefined;
-	set nluProjectId(value: string | undefined);
-	get nluLanguageCode(): string | undefined;
-	set nluLanguageCode(value: string | undefined);
-	get t2sPipelineId(): string | undefined;
-	set t2sPipelineId(value: string | undefined);
+	get id(): string;
+	set id(value: string);
+	get s2tPipelineId(): string;
+	set s2tPipelineId(value: string);
+	get nluProjectId(): string;
+	set nluProjectId(value: string);
+	get nluLanguageCode(): string;
+	set nluLanguageCode(value: string);
+	get t2sPipelineId(): string;
+	set t2sPipelineId(value: string);
 	/**
 	 * Serialize message to binary data
 	 * @param instance message instance
@@ -118,21 +117,21 @@ export declare module S2sPipeline {
 	 * Standard JavaScript object representation for S2sPipeline
 	 */
 	interface AsObject {
-		id?: string;
-		s2tPipelineId?: string;
-		nluProjectId?: string;
-		nluLanguageCode?: string;
-		t2sPipelineId?: string;
+		id: string;
+		s2tPipelineId: string;
+		nluProjectId: string;
+		nluLanguageCode: string;
+		t2sPipelineId: string;
 	}
 	/**
 	 * Protobuf JSON representation for S2sPipeline
 	 */
 	interface AsProtobufJSON {
-		id?: string;
-		s2tPipelineId?: string;
-		nluProjectId?: string;
-		nluLanguageCode?: string;
-		t2sPipelineId?: string;
+		id: string;
+		s2tPipelineId: string;
+		nluProjectId: string;
+		nluLanguageCode: string;
+		t2sPipelineId: string;
 	}
 }
 /**
@@ -162,14 +161,14 @@ export declare class S2sPipelineId implements GrpcMessage {
 	 * @param _writer binary writer instance
 	 */
 	static serializeBinaryToWriter(_instance: S2sPipelineId, _writer: BinaryWriter): void;
-	private _id?;
+	private _id;
 	/**
 	 * Message constructor. Initializes the properties and applies default Protobuf values if necessary
 	 * @param _value initial values object or instance of S2sPipelineId to deeply clone from
 	 */
 	constructor(_value?: RecursivePartial<S2sPipelineId.AsObject>);
-	get id(): string | undefined;
-	set id(value: string | undefined);
+	get id(): string;
+	set id(value: string);
 	/**
 	 * Serialize message to binary data
 	 * @param instance message instance
@@ -195,13 +194,13 @@ export declare module S2sPipelineId {
 	 * Standard JavaScript object representation for S2sPipelineId
 	 */
 	interface AsObject {
-		id?: string;
+		id: string;
 	}
 	/**
 	 * Protobuf JSON representation for S2sPipelineId
 	 */
 	interface AsProtobufJSON {
-		id?: string;
+		id: string;
 	}
 }
 /**
@@ -332,7 +331,7 @@ export declare module ListS2sPipelinesResponse {
 	 * Protobuf JSON representation for ListS2sPipelinesResponse
 	 */
 	interface AsProtobufJSON {
-		pipelines?: S2sPipeline.AsProtobufJSON[] | null;
+		pipelines: S2sPipeline.AsProtobufJSON[] | null;
 	}
 }
 /**
@@ -362,26 +361,26 @@ export declare class S2sStreamRequest implements GrpcMessage {
 	 * @param _writer binary writer instance
 	 */
 	static serializeBinaryToWriter(_instance: S2sStreamRequest, _writer: BinaryWriter): void;
-	private _pipelineId?;
-	private _sessionId?;
-	private _audio?;
-	private _endOfStream?;
-	private _initialIntentDisplayName?;
+	private _pipelineId;
+	private _sessionId;
+	private _audio;
+	private _endOfStream;
+	private _initialIntentDisplayName;
 	/**
 	 * Message constructor. Initializes the properties and applies default Protobuf values if necessary
 	 * @param _value initial values object or instance of S2sStreamRequest to deeply clone from
 	 */
 	constructor(_value?: RecursivePartial<S2sStreamRequest.AsObject>);
-	get pipelineId(): string | undefined;
-	set pipelineId(value: string | undefined);
-	get sessionId(): string | undefined;
-	set sessionId(value: string | undefined);
-	get audio(): Uint8Array | undefined;
-	set audio(value: Uint8Array | undefined);
-	get endOfStream(): boolean | undefined;
-	set endOfStream(value: boolean | undefined);
-	get initialIntentDisplayName(): string | undefined;
-	set initialIntentDisplayName(value: string | undefined);
+	get pipelineId(): string;
+	set pipelineId(value: string);
+	get sessionId(): string;
+	set sessionId(value: string);
+	get audio(): Uint8Array;
+	set audio(value: Uint8Array);
+	get endOfStream(): boolean;
+	set endOfStream(value: boolean);
+	get initialIntentDisplayName(): string;
+	set initialIntentDisplayName(value: string);
 	/**
 	 * Serialize message to binary data
 	 * @param instance message instance
@@ -407,21 +406,21 @@ export declare module S2sStreamRequest {
 	 * Standard JavaScript object representation for S2sStreamRequest
 	 */
 	interface AsObject {
-		pipelineId?: string;
-		sessionId?: string;
-		audio?: Uint8Array;
-		endOfStream?: boolean;
-		initialIntentDisplayName?: string;
+		pipelineId: string;
+		sessionId: string;
+		audio: Uint8Array;
+		endOfStream: boolean;
+		initialIntentDisplayName: string;
 	}
 	/**
 	 * Protobuf JSON representation for S2sStreamRequest
 	 */
 	interface AsProtobufJSON {
-		pipelineId?: string;
-		sessionId?: string;
-		audio?: string;
-		endOfStream?: boolean;
-		initialIntentDisplayName?: string;
+		pipelineId: string;
+		sessionId: string;
+		audio: string;
+		endOfStream: boolean;
+		initialIntentDisplayName: string;
 	}
 }
 /**
@@ -452,7 +451,7 @@ export declare class S2sStreamResponse implements GrpcMessage {
 	 */
 	static serializeBinaryToWriter(_instance: S2sStreamResponse, _writer: BinaryWriter): void;
 	private _detectIntentResponse?;
-	private _synthetizeResponse?;
+	private _synthesizeResponse?;
 	private _sipTrigger?;
 	private _response;
 	/**
@@ -462,8 +461,8 @@ export declare class S2sStreamResponse implements GrpcMessage {
 	constructor(_value?: RecursivePartial<S2sStreamResponse.AsObject>);
 	get detectIntentResponse(): ondewoNlu011.DetectIntentResponse | undefined;
 	set detectIntentResponse(value: ondewoNlu011.DetectIntentResponse | undefined);
-	get synthetizeResponse(): ondewoT2s012.SynthesizeResponse | undefined;
-	set synthetizeResponse(value: ondewoT2s012.SynthesizeResponse | undefined);
+	get synthesizeResponse(): ondewoT2s012.SynthesizeResponse | undefined;
+	set synthesizeResponse(value: ondewoT2s012.SynthesizeResponse | undefined);
 	get sipTrigger(): SipTrigger | undefined;
 	set sipTrigger(value: SipTrigger | undefined);
 	get response(): S2sStreamResponse.ResponseCase;
@@ -493,21 +492,21 @@ export declare module S2sStreamResponse {
 	 */
 	interface AsObject {
 		detectIntentResponse?: ondewoNlu011.DetectIntentResponse.AsObject;
-		synthetizeResponse?: ondewoT2s012.SynthesizeResponse.AsObject;
+		synthesizeResponse?: ondewoT2s012.SynthesizeResponse.AsObject;
 		sipTrigger?: SipTrigger.AsObject;
 	}
 	/**
 	 * Protobuf JSON representation for S2sStreamResponse
 	 */
 	interface AsProtobufJSON {
-		detectIntentResponse?: ondewoNlu011.DetectIntentResponse.AsProtobufJSON | null;
-		synthetizeResponse?: ondewoT2s012.SynthesizeResponse.AsProtobufJSON | null;
-		sipTrigger?: SipTrigger.AsProtobufJSON | null;
+		detectIntentResponse: ondewoNlu011.DetectIntentResponse.AsProtobufJSON | null;
+		synthesizeResponse: ondewoT2s012.SynthesizeResponse.AsProtobufJSON | null;
+		sipTrigger: SipTrigger.AsProtobufJSON | null;
 	}
 	enum ResponseCase {
 		none = 0,
 		detectIntentResponse = 1,
-		synthetizeResponse = 2,
+		synthesizeResponse = 2,
 		sipTrigger = 3
 	}
 }
@@ -538,17 +537,17 @@ export declare class SipTrigger implements GrpcMessage {
 	 * @param _writer binary writer instance
 	 */
 	static serializeBinaryToWriter(_instance: SipTrigger, _writer: BinaryWriter): void;
-	private _type?;
+	private _type;
 	private _content?;
 	/**
 	 * Message constructor. Initializes the properties and applies default Protobuf values if necessary
 	 * @param _value initial values object or instance of SipTrigger to deeply clone from
 	 */
 	constructor(_value?: RecursivePartial<SipTrigger.AsObject>);
-	get type(): SipTrigger.SipTriggerType | undefined;
-	set type(value: SipTrigger.SipTriggerType | undefined);
-	get content(): googleProtobuf003.Struct | undefined;
-	set content(value: googleProtobuf003.Struct | undefined);
+	get type(): SipTrigger.SipTriggerType;
+	set type(value: SipTrigger.SipTriggerType);
+	get content(): googleProtobuf004.Struct | undefined;
+	set content(value: googleProtobuf004.Struct | undefined);
 	/**
 	 * Serialize message to binary data
 	 * @param instance message instance
@@ -574,15 +573,15 @@ export declare module SipTrigger {
 	 * Standard JavaScript object representation for SipTrigger
 	 */
 	interface AsObject {
-		type?: SipTrigger.SipTriggerType;
-		content?: googleProtobuf003.Struct.AsObject;
+		type: SipTrigger.SipTriggerType;
+		content?: googleProtobuf004.Struct.AsObject;
 	}
 	/**
 	 * Protobuf JSON representation for SipTrigger
 	 */
 	interface AsProtobufJSON {
-		type?: string;
-		content?: googleProtobuf003.Struct.AsProtobufJSON | null;
+		type: string;
+		content: googleProtobuf004.Struct.AsProtobufJSON | null;
 	}
 	enum SipTriggerType {
 		UNSPECIFIED = 0,
@@ -627,12 +626,12 @@ export declare class CheckUpstreamHealthResponse implements GrpcMessage {
 	 * @param _value initial values object or instance of CheckUpstreamHealthResponse to deeply clone from
 	 */
 	constructor(_value?: RecursivePartial<CheckUpstreamHealthResponse.AsObject>);
-	get s2tStatus(): googleRpc004.Status | undefined;
-	set s2tStatus(value: googleRpc004.Status | undefined);
-	get nluStatus(): googleRpc004.Status | undefined;
-	set nluStatus(value: googleRpc004.Status | undefined);
-	get t2sStatus(): googleRpc004.Status | undefined;
-	set t2sStatus(value: googleRpc004.Status | undefined);
+	get s2tStatus(): googleRpc006.Status | undefined;
+	set s2tStatus(value: googleRpc006.Status | undefined);
+	get nluStatus(): googleRpc006.Status | undefined;
+	set nluStatus(value: googleRpc006.Status | undefined);
+	get t2sStatus(): googleRpc006.Status | undefined;
+	set t2sStatus(value: googleRpc006.Status | undefined);
 	/**
 	 * Serialize message to binary data
 	 * @param instance message instance
@@ -658,17 +657,17 @@ export declare module CheckUpstreamHealthResponse {
 	 * Standard JavaScript object representation for CheckUpstreamHealthResponse
 	 */
 	interface AsObject {
-		s2tStatus?: googleRpc004.Status.AsObject;
-		nluStatus?: googleRpc004.Status.AsObject;
-		t2sStatus?: googleRpc004.Status.AsObject;
+		s2tStatus?: googleRpc006.Status.AsObject;
+		nluStatus?: googleRpc006.Status.AsObject;
+		t2sStatus?: googleRpc006.Status.AsObject;
 	}
 	/**
 	 * Protobuf JSON representation for CheckUpstreamHealthResponse
 	 */
 	interface AsProtobufJSON {
-		s2tStatus?: googleRpc004.Status.AsProtobufJSON | null;
-		nluStatus?: googleRpc004.Status.AsProtobufJSON | null;
-		t2sStatus?: googleRpc004.Status.AsProtobufJSON | null;
+		s2tStatus: googleRpc006.Status.AsProtobufJSON | null;
+		nluStatus: googleRpc006.Status.AsProtobufJSON | null;
+		t2sStatus: googleRpc006.Status.AsProtobufJSON | null;
 	}
 }
 /**
@@ -760,14 +759,14 @@ export declare class ControlStreamResponse implements GrpcMessage {
 	 * @param _writer binary writer instance
 	 */
 	static serializeBinaryToWriter(_instance: ControlStreamResponse, _writer: BinaryWriter): void;
-	private _controlStatus?;
+	private _controlStatus;
 	/**
 	 * Message constructor. Initializes the properties and applies default Protobuf values if necessary
 	 * @param _value initial values object or instance of ControlStreamResponse to deeply clone from
 	 */
 	constructor(_value?: RecursivePartial<ControlStreamResponse.AsObject>);
-	get controlStatus(): ControlStatus | undefined;
-	set controlStatus(value: ControlStatus | undefined);
+	get controlStatus(): ControlStatus;
+	set controlStatus(value: ControlStatus);
 	/**
 	 * Serialize message to binary data
 	 * @param instance message instance
@@ -793,13 +792,13 @@ export declare module ControlStreamResponse {
 	 * Standard JavaScript object representation for ControlStreamResponse
 	 */
 	interface AsObject {
-		controlStatus?: ControlStatus;
+		controlStatus: ControlStatus;
 	}
 	/**
 	 * Protobuf JSON representation for ControlStreamResponse
 	 */
 	interface AsProtobufJSON {
-		controlStatus?: string;
+		controlStatus: string;
 	}
 }
 /**
@@ -829,14 +828,14 @@ export declare class SetControlStatusRequest implements GrpcMessage {
 	 * @param _writer binary writer instance
 	 */
 	static serializeBinaryToWriter(_instance: SetControlStatusRequest, _writer: BinaryWriter): void;
-	private _controlStatus?;
+	private _controlStatus;
 	/**
 	 * Message constructor. Initializes the properties and applies default Protobuf values if necessary
 	 * @param _value initial values object or instance of SetControlStatusRequest to deeply clone from
 	 */
 	constructor(_value?: RecursivePartial<SetControlStatusRequest.AsObject>);
-	get controlStatus(): ControlStatus | undefined;
-	set controlStatus(value: ControlStatus | undefined);
+	get controlStatus(): ControlStatus;
+	set controlStatus(value: ControlStatus);
 	/**
 	 * Serialize message to binary data
 	 * @param instance message instance
@@ -862,13 +861,13 @@ export declare module SetControlStatusRequest {
 	 * Standard JavaScript object representation for SetControlStatusRequest
 	 */
 	interface AsObject {
-		controlStatus?: ControlStatus;
+		controlStatus: ControlStatus;
 	}
 	/**
 	 * Protobuf JSON representation for SetControlStatusRequest
 	 */
 	interface AsProtobufJSON {
-		controlStatus?: string;
+		controlStatus: string;
 	}
 }
 /**
@@ -898,17 +897,17 @@ export declare class SetControlStatusResponse implements GrpcMessage {
 	 * @param _writer binary writer instance
 	 */
 	static serializeBinaryToWriter(_instance: SetControlStatusResponse, _writer: BinaryWriter): void;
-	private _oldControlStatus?;
-	private _newControlStatus?;
+	private _oldControlStatus;
+	private _newControlStatus;
 	/**
 	 * Message constructor. Initializes the properties and applies default Protobuf values if necessary
 	 * @param _value initial values object or instance of SetControlStatusResponse to deeply clone from
 	 */
 	constructor(_value?: RecursivePartial<SetControlStatusResponse.AsObject>);
-	get oldControlStatus(): ControlStatus | undefined;
-	set oldControlStatus(value: ControlStatus | undefined);
-	get newControlStatus(): ControlStatus | undefined;
-	set newControlStatus(value: ControlStatus | undefined);
+	get oldControlStatus(): ControlStatus;
+	set oldControlStatus(value: ControlStatus);
+	get newControlStatus(): ControlStatus;
+	set newControlStatus(value: ControlStatus);
 	/**
 	 * Serialize message to binary data
 	 * @param instance message instance
@@ -934,102 +933,15 @@ export declare module SetControlStatusResponse {
 	 * Standard JavaScript object representation for SetControlStatusResponse
 	 */
 	interface AsObject {
-		oldControlStatus?: ControlStatus;
-		newControlStatus?: ControlStatus;
+		oldControlStatus: ControlStatus;
+		newControlStatus: ControlStatus;
 	}
 	/**
 	 * Protobuf JSON representation for SetControlStatusResponse
 	 */
 	interface AsProtobufJSON {
-		oldControlStatus?: string;
-		newControlStatus?: string;
-	}
-}
-/**
- * Message implementation for ondewo.csi.CondtionValueUnion
- */
-export declare class CondtionValueUnion implements GrpcMessage {
-	static id: string;
-	/**
-	 * Deserialize binary data to message
-	 * @param instance message instance
-	 */
-	static deserializeBinary(bytes: ByteSource): CondtionValueUnion;
-	/**
-	 * Check all the properties and set default protobuf values if necessary
-	 * @param _instance message instance
-	 */
-	static refineValues(_instance: CondtionValueUnion): void;
-	/**
-	 * Deserializes / reads binary message into message instance using provided binary reader
-	 * @param _instance message instance
-	 * @param _reader binary reader instance
-	 */
-	static deserializeBinaryFromReader(_instance: CondtionValueUnion, _reader: BinaryReader): void;
-	/**
-	 * Serializes a message to binary format using provided binary reader
-	 * @param _instance message instance
-	 * @param _writer binary writer instance
-	 */
-	static serializeBinaryToWriter(_instance: CondtionValueUnion, _writer: BinaryWriter): void;
-	private _intValue?;
-	private _floatValue?;
-	private _datetimeValue?;
-	private _unionOneof;
-	/**
-	 * Message constructor. Initializes the properties and applies default Protobuf values if necessary
-	 * @param _value initial values object or instance of CondtionValueUnion to deeply clone from
-	 */
-	constructor(_value?: RecursivePartial<CondtionValueUnion.AsObject>);
-	get intValue(): string | undefined;
-	set intValue(value: string | undefined);
-	get floatValue(): number | undefined;
-	set floatValue(value: number | undefined);
-	get datetimeValue(): googleProtobuf010.Timestamp | undefined;
-	set datetimeValue(value: googleProtobuf010.Timestamp | undefined);
-	get unionOneof(): CondtionValueUnion.UnionOneofCase;
-	/**
-	 * Serialize message to binary data
-	 * @param instance message instance
-	 */
-	serializeBinary(): any;
-	/**
-	 * Cast message to standard JavaScript object (all non-primitive values are deeply cloned)
-	 */
-	toObject(): CondtionValueUnion.AsObject;
-	/**
-	 * Convenience method to support JSON.stringify(message), replicates the structure of toObject()
-	 */
-	toJSON(): CondtionValueUnion.AsObject;
-	/**
-	 * Cast message to JSON using protobuf JSON notation: https://developers.google.com/protocol-buffers/docs/proto3#json
-	 * Attention: output differs from toObject() e.g. enums are represented as names and not as numbers, Timestamp is an ISO Date string format etc.
-	 * If the message itself or some of descendant messages is google.protobuf.Any, you MUST provide a message pool as options. If not, the messagePool is not required
-	 */
-	toProtobufJSON(options?: ToProtobufJSONOptions): CondtionValueUnion.AsProtobufJSON;
-}
-export declare module CondtionValueUnion {
-	/**
-	 * Standard JavaScript object representation for CondtionValueUnion
-	 */
-	interface AsObject {
-		intValue?: string;
-		floatValue?: number;
-		datetimeValue?: googleProtobuf010.Timestamp.AsObject;
-	}
-	/**
-	 * Protobuf JSON representation for CondtionValueUnion
-	 */
-	interface AsProtobufJSON {
-		intValue?: string | null;
-		floatValue?: number | null;
-		datetimeValue?: googleProtobuf010.Timestamp.AsProtobufJSON | null;
-	}
-	enum UnionOneofCase {
-		none = 0,
-		intValue = 1,
-		floatValue = 2,
-		datetimeValue = 3
+		oldControlStatus: string;
+		newControlStatus: string;
 	}
 }
 /**
@@ -1059,17 +971,17 @@ export declare class Condition implements GrpcMessage {
 	 * @param _writer binary writer instance
 	 */
 	static serializeBinaryToWriter(_instance: Condition, _writer: BinaryWriter): void;
-	private _type?;
-	private _value?;
+	private _type;
+	private _value;
 	/**
 	 * Message constructor. Initializes the properties and applies default Protobuf values if necessary
 	 * @param _value initial values object or instance of Condition to deeply clone from
 	 */
 	constructor(_value?: RecursivePartial<Condition.AsObject>);
-	get type(): ConditionType | undefined;
-	set type(value: ConditionType | undefined);
-	get value(): string | undefined;
-	set value(value: string | undefined);
+	get type(): ConditionType;
+	set type(value: ConditionType);
+	get value(): string;
+	set value(value: string);
 	/**
 	 * Serialize message to binary data
 	 * @param instance message instance
@@ -1095,15 +1007,15 @@ export declare module Condition {
 	 * Standard JavaScript object representation for Condition
 	 */
 	interface AsObject {
-		type?: ConditionType;
-		value?: string;
+		type: ConditionType;
+		value: string;
 	}
 	/**
 	 * Protobuf JSON representation for Condition
 	 */
 	interface AsProtobufJSON {
-		type?: string;
-		value?: string;
+		type: string;
+		value: string;
 	}
 }
 /**
@@ -1135,12 +1047,12 @@ export declare class ControlMessageServiceParameters implements GrpcMessage {
 	static serializeBinaryToWriter(_instance: ControlMessageServiceParameters, _writer: BinaryWriter): void;
 	private _t2sConfig?;
 	private _s2tConfig?;
-	private _transferId?;
-	private _wavFiles?;
-	private _text?;
+	private _transferId;
+	private _wavFiles;
+	private _text;
 	private _context?;
-	private _sessionId?;
-	private _contextName?;
+	private _sessionId;
+	private _contextName;
 	private _conditionStart?;
 	private _conditionEnd?;
 	private _config;
@@ -1153,18 +1065,18 @@ export declare class ControlMessageServiceParameters implements GrpcMessage {
 	set t2sConfig(value: ondewoT2s012.RequestConfig | undefined);
 	get s2tConfig(): ondewoS2t013.TranscribeRequestConfig | undefined;
 	set s2tConfig(value: ondewoS2t013.TranscribeRequestConfig | undefined);
-	get transferId(): string | undefined;
-	set transferId(value: string | undefined);
-	get wavFiles(): Uint8Array[] | undefined;
-	set wavFiles(value: Uint8Array[] | undefined);
-	get text(): string | undefined;
-	set text(value: string | undefined);
-	get context(): ondewoNlu006.Context | undefined;
-	set context(value: ondewoNlu006.Context | undefined);
-	get sessionId(): string | undefined;
-	set sessionId(value: string | undefined);
-	get contextName(): string | undefined;
-	set contextName(value: string | undefined);
+	get transferId(): string;
+	set transferId(value: string);
+	get wavFiles(): Uint8Array[];
+	set wavFiles(value: Uint8Array[]);
+	get text(): string;
+	set text(value: string);
+	get context(): ondewoNlu008.Context | undefined;
+	set context(value: ondewoNlu008.Context | undefined);
+	get sessionId(): string;
+	set sessionId(value: string);
+	get contextName(): string;
+	set contextName(value: string);
 	get conditionStart(): Condition | undefined;
 	set conditionStart(value: Condition | undefined);
 	get conditionEnd(): Condition | undefined;
@@ -1197,12 +1109,12 @@ export declare module ControlMessageServiceParameters {
 	interface AsObject {
 		t2sConfig?: ondewoT2s012.RequestConfig.AsObject;
 		s2tConfig?: ondewoS2t013.TranscribeRequestConfig.AsObject;
-		transferId?: string;
-		wavFiles?: Uint8Array[];
-		text?: string;
-		context?: ondewoNlu006.Context.AsObject;
-		sessionId?: string;
-		contextName?: string;
+		transferId: string;
+		wavFiles: Uint8Array[];
+		text: string;
+		context?: ondewoNlu008.Context.AsObject;
+		sessionId: string;
+		contextName: string;
 		conditionStart?: Condition.AsObject;
 		conditionEnd?: Condition.AsObject;
 	}
@@ -1210,16 +1122,16 @@ export declare module ControlMessageServiceParameters {
 	 * Protobuf JSON representation for ControlMessageServiceParameters
 	 */
 	interface AsProtobufJSON {
-		t2sConfig?: ondewoT2s012.RequestConfig.AsProtobufJSON | null;
-		s2tConfig?: ondewoS2t013.TranscribeRequestConfig.AsProtobufJSON | null;
-		transferId?: string;
-		wavFiles?: string[];
-		text?: string;
-		context?: ondewoNlu006.Context.AsProtobufJSON | null;
-		sessionId?: string;
-		contextName?: string;
-		conditionStart?: Condition.AsProtobufJSON | null;
-		conditionEnd?: Condition.AsProtobufJSON | null;
+		t2sConfig: ondewoT2s012.RequestConfig.AsProtobufJSON | null;
+		s2tConfig: ondewoS2t013.TranscribeRequestConfig.AsProtobufJSON | null;
+		transferId: string;
+		wavFiles: string[];
+		text: string;
+		context: ondewoNlu008.Context.AsProtobufJSON | null;
+		sessionId: string;
+		contextName: string;
+		conditionStart: Condition.AsProtobufJSON | null;
+		conditionEnd: Condition.AsProtobufJSON | null;
 	}
 	enum ConfigCase {
 		none = 0,
@@ -1254,18 +1166,18 @@ export declare class ControlMessage implements GrpcMessage {
 	 * @param _writer binary writer instance
 	 */
 	static serializeBinaryToWriter(_instance: ControlMessage, _writer: BinaryWriter): void;
-	private _service?;
-	private _method?;
+	private _service;
+	private _method;
 	private _parameters?;
 	/**
 	 * Message constructor. Initializes the properties and applies default Protobuf values if necessary
 	 * @param _value initial values object or instance of ControlMessage to deeply clone from
 	 */
 	constructor(_value?: RecursivePartial<ControlMessage.AsObject>);
-	get service(): ControlMessageServiceName | undefined;
-	set service(value: ControlMessageServiceName | undefined);
-	get method(): ControlMessageServiceMethod | undefined;
-	set method(value: ControlMessageServiceMethod | undefined);
+	get service(): ControlMessageServiceName;
+	set service(value: ControlMessageServiceName);
+	get method(): ControlMessageServiceMethod;
+	set method(value: ControlMessageServiceMethod);
 	get parameters(): ControlMessageServiceParameters | undefined;
 	set parameters(value: ControlMessageServiceParameters | undefined);
 	/**
@@ -1293,16 +1205,16 @@ export declare module ControlMessage {
 	 * Standard JavaScript object representation for ControlMessage
 	 */
 	interface AsObject {
-		service?: ControlMessageServiceName;
-		method?: ControlMessageServiceMethod;
+		service: ControlMessageServiceName;
+		method: ControlMessageServiceMethod;
 		parameters?: ControlMessageServiceParameters.AsObject;
 	}
 	/**
 	 * Protobuf JSON representation for ControlMessage
 	 */
 	interface AsProtobufJSON {
-		service?: string;
-		method?: string;
-		parameters?: ControlMessageServiceParameters.AsProtobufJSON | null;
+		service: string;
+		method: string;
+		parameters: ControlMessageServiceParameters.AsProtobufJSON | null;
 	}
 }

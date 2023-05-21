@@ -28,59 +28,65 @@ export declare class OperationMetadata implements GrpcMessage {
 	 * @param _writer binary writer instance
 	 */
 	static serializeBinaryToWriter(_instance: OperationMetadata, _writer: BinaryWriter): void;
-	private _status?;
-	private _parentOperationName?;
-	private _subOperationNames?;
+	private _status;
+	private _parentOperationName;
+	private _subOperationNames;
 	private _createTime?;
 	private _startTime?;
 	private _endTime?;
-	private _isCancellationRequested?;
-	private _cancelCommand?;
-	private _userIdCreated?;
-	private _userIdCancelled?;
-	private _projectParent?;
-	private _operationType?;
-	private _hostName?;
-	private _numReruns?;
-	private _maxNumReruns?;
-	private _description?;
+	private _isCancellationRequested;
+	private _cancelCommand;
+	private _userIdCreated;
+	private _userIdCancelled;
+	private _projectParent;
+	private _operationType;
+	private _hostName;
+	private _numReruns;
+	private _maxNumReruns;
+	private _description;
+	private _log;
+	private _logLimit;
 	/**
 	 * Message constructor. Initializes the properties and applies default Protobuf values if necessary
 	 * @param _value initial values object or instance of OperationMetadata to deeply clone from
 	 */
 	constructor(_value?: RecursivePartial<OperationMetadata.AsObject>);
-	get status(): OperationMetadata.Status | undefined;
-	set status(value: OperationMetadata.Status | undefined);
-	get parentOperationName(): string | undefined;
-	set parentOperationName(value: string | undefined);
-	get subOperationNames(): string[] | undefined;
-	set subOperationNames(value: string[] | undefined);
+	get status(): OperationMetadata.Status;
+	set status(value: OperationMetadata.Status);
+	get parentOperationName(): string;
+	set parentOperationName(value: string);
+	get subOperationNames(): string[];
+	set subOperationNames(value: string[]);
 	get createTime(): googleProtobuf000.Timestamp | undefined;
 	set createTime(value: googleProtobuf000.Timestamp | undefined);
 	get startTime(): googleProtobuf000.Timestamp | undefined;
 	set startTime(value: googleProtobuf000.Timestamp | undefined);
 	get endTime(): googleProtobuf000.Timestamp | undefined;
 	set endTime(value: googleProtobuf000.Timestamp | undefined);
-	get isCancellationRequested(): boolean | undefined;
-	set isCancellationRequested(value: boolean | undefined);
-	get cancelCommand(): string | undefined;
-	set cancelCommand(value: string | undefined);
-	get userIdCreated(): string | undefined;
-	set userIdCreated(value: string | undefined);
-	get userIdCancelled(): string | undefined;
-	set userIdCancelled(value: string | undefined);
-	get projectParent(): string | undefined;
-	set projectParent(value: string | undefined);
-	get operationType(): OperationMetadata.OperationType | undefined;
-	set operationType(value: OperationMetadata.OperationType | undefined);
-	get hostName(): string | undefined;
-	set hostName(value: string | undefined);
-	get numReruns(): number | undefined;
-	set numReruns(value: number | undefined);
-	get maxNumReruns(): number | undefined;
-	set maxNumReruns(value: number | undefined);
-	get description(): string | undefined;
-	set description(value: string | undefined);
+	get isCancellationRequested(): boolean;
+	set isCancellationRequested(value: boolean);
+	get cancelCommand(): string;
+	set cancelCommand(value: string);
+	get userIdCreated(): string;
+	set userIdCreated(value: string);
+	get userIdCancelled(): string;
+	set userIdCancelled(value: string);
+	get projectParent(): string;
+	set projectParent(value: string);
+	get operationType(): OperationMetadata.OperationType;
+	set operationType(value: OperationMetadata.OperationType);
+	get hostName(): string;
+	set hostName(value: string);
+	get numReruns(): number;
+	set numReruns(value: number);
+	get maxNumReruns(): number;
+	set maxNumReruns(value: number);
+	get description(): string;
+	set description(value: string);
+	get log(): string[];
+	set log(value: string[]);
+	get logLimit(): number;
+	set logLimit(value: number);
 	/**
 	 * Serialize message to binary data
 	 * @param instance message instance
@@ -106,43 +112,47 @@ export declare module OperationMetadata {
 	 * Standard JavaScript object representation for OperationMetadata
 	 */
 	interface AsObject {
-		status?: OperationMetadata.Status;
-		parentOperationName?: string;
-		subOperationNames?: string[];
+		status: OperationMetadata.Status;
+		parentOperationName: string;
+		subOperationNames: string[];
 		createTime?: googleProtobuf000.Timestamp.AsObject;
 		startTime?: googleProtobuf000.Timestamp.AsObject;
 		endTime?: googleProtobuf000.Timestamp.AsObject;
-		isCancellationRequested?: boolean;
-		cancelCommand?: string;
-		userIdCreated?: string;
-		userIdCancelled?: string;
-		projectParent?: string;
-		operationType?: OperationMetadata.OperationType;
-		hostName?: string;
-		numReruns?: number;
-		maxNumReruns?: number;
-		description?: string;
+		isCancellationRequested: boolean;
+		cancelCommand: string;
+		userIdCreated: string;
+		userIdCancelled: string;
+		projectParent: string;
+		operationType: OperationMetadata.OperationType;
+		hostName: string;
+		numReruns: number;
+		maxNumReruns: number;
+		description: string;
+		log: string[];
+		logLimit: number;
 	}
 	/**
 	 * Protobuf JSON representation for OperationMetadata
 	 */
 	interface AsProtobufJSON {
-		status?: string;
-		parentOperationName?: string;
-		subOperationNames?: string[];
-		createTime?: googleProtobuf000.Timestamp.AsProtobufJSON | null;
-		startTime?: googleProtobuf000.Timestamp.AsProtobufJSON | null;
-		endTime?: googleProtobuf000.Timestamp.AsProtobufJSON | null;
-		isCancellationRequested?: boolean;
-		cancelCommand?: string;
-		userIdCreated?: string;
-		userIdCancelled?: string;
-		projectParent?: string;
-		operationType?: string;
-		hostName?: string;
-		numReruns?: number;
-		maxNumReruns?: number;
-		description?: string;
+		status: string;
+		parentOperationName: string;
+		subOperationNames: string[];
+		createTime: googleProtobuf000.Timestamp.AsProtobufJSON | null;
+		startTime: googleProtobuf000.Timestamp.AsProtobufJSON | null;
+		endTime: googleProtobuf000.Timestamp.AsProtobufJSON | null;
+		isCancellationRequested: boolean;
+		cancelCommand: string;
+		userIdCreated: string;
+		userIdCancelled: string;
+		projectParent: string;
+		operationType: string;
+		hostName: string;
+		numReruns: number;
+		maxNumReruns: number;
+		description: string;
+		log: string[];
+		logLimit: number;
 	}
 	enum Status {
 		STATUS_UNSPECIFIED = 0,

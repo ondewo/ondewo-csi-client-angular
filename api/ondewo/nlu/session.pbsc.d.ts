@@ -105,6 +105,160 @@ export declare class SessionsClient {
 			requestMetadata?: GrpcMetadata
 		) => Observable<GrpcEvent<thisProto.ListSessionLabelsResponse>>;
 		/**
+		 * Unary call: /ondewo.nlu.Sessions/ListSessionLabelsOfAllSessions
+		 *
+		 * @param requestMessage Request message
+		 * @param requestMetadata Request metadata
+		 * @returns Observable<GrpcEvent<thisProto.ListSessionLabelsResponse>>
+		 */
+		listSessionLabelsOfAllSessions: (
+			requestData: thisProto.ListSessionLabelsOfAllSessionsRequest,
+			requestMetadata?: GrpcMetadata
+		) => Observable<GrpcEvent<thisProto.ListSessionLabelsResponse>>;
+		/**
+		 * Unary call: /ondewo.nlu.Sessions/ListLanguageCodesOfAllSessions
+		 *
+		 * @param requestMessage Request message
+		 * @param requestMetadata Request metadata
+		 * @returns Observable<GrpcEvent<thisProto.ListLanguageCodesResponse>>
+		 */
+		listLanguageCodesOfAllSessions: (
+			requestData: thisProto.ListLanguageCodesOfAllSessionsRequest,
+			requestMetadata?: GrpcMetadata
+		) => Observable<GrpcEvent<thisProto.ListLanguageCodesResponse>>;
+		/**
+		 * Unary call: /ondewo.nlu.Sessions/ListMatchedIntentsOfAllSessions
+		 *
+		 * @param requestMessage Request message
+		 * @param requestMetadata Request metadata
+		 * @returns Observable<GrpcEvent<thisProto.ListMatchedIntentsResponse>>
+		 */
+		listMatchedIntentsOfAllSessions: (
+			requestData: thisProto.ListMatchedIntentsOfAllSessionsRequest,
+			requestMetadata?: GrpcMetadata
+		) => Observable<GrpcEvent<thisProto.ListMatchedIntentsResponse>>;
+		/**
+		 * Unary call: /ondewo.nlu.Sessions/ListMatchedEntityTypesOfAllSessions
+		 *
+		 * @param requestMessage Request message
+		 * @param requestMetadata Request metadata
+		 * @returns Observable<GrpcEvent<thisProto.ListMatchedEntityTypesResponse>>
+		 */
+		listMatchedEntityTypesOfAllSessions: (
+			requestData: thisProto.ListMatchedEntityTypesOfAllSessionsRequest,
+			requestMetadata?: GrpcMetadata
+		) => Observable<GrpcEvent<thisProto.ListMatchedEntityTypesResponse>>;
+		/**
+		 * Unary call: /ondewo.nlu.Sessions/ListUserIdsOfAllSessions
+		 *
+		 * @param requestMessage Request message
+		 * @param requestMetadata Request metadata
+		 * @returns Observable<GrpcEvent<thisProto.ListUserIdsResponse>>
+		 */
+		listUserIdsOfAllSessions: (
+			requestData: thisProto.ListUserIdsOfAllSessionsRequest,
+			requestMetadata?: GrpcMetadata
+		) => Observable<GrpcEvent<thisProto.ListUserIdsResponse>>;
+		/**
+		 * Unary call: /ondewo.nlu.Sessions/ListIdentifiedUserIdsOfAllSessions
+		 *
+		 * @param requestMessage Request message
+		 * @param requestMetadata Request metadata
+		 * @returns Observable<GrpcEvent<thisProto.ListIdentifiedUserIdsResponse>>
+		 */
+		listIdentifiedUserIdsOfAllSessions: (
+			requestData: thisProto.ListIdentifiedUserIdsOfAllSessionsRequest,
+			requestMetadata?: GrpcMetadata
+		) => Observable<GrpcEvent<thisProto.ListIdentifiedUserIdsResponse>>;
+		/**
+		 * Unary call: /ondewo.nlu.Sessions/ListTagsOfAllSessions
+		 *
+		 * @param requestMessage Request message
+		 * @param requestMetadata Request metadata
+		 * @returns Observable<GrpcEvent<thisProto.ListTagsResponse>>
+		 */
+		listTagsOfAllSessions: (
+			requestData: thisProto.ListTagsOfAllSessionsRequest,
+			requestMetadata?: GrpcMetadata
+		) => Observable<GrpcEvent<thisProto.ListTagsResponse>>;
+		/**
+		 * Unary call: /ondewo.nlu.Sessions/ListInputContextsOfAllSessions
+		 *
+		 * @param requestMessage Request message
+		 * @param requestMetadata Request metadata
+		 * @returns Observable<GrpcEvent<thisProto.ListInputContextsResponse>>
+		 */
+		listInputContextsOfAllSessions: (
+			requestData: thisProto.ListInputContextsOfAllSessionsRequest,
+			requestMetadata?: GrpcMetadata
+		) => Observable<GrpcEvent<thisProto.ListInputContextsResponse>>;
+		/**
+		 * Unary call: /ondewo.nlu.Sessions/ListOutputContextsOfAllSessions
+		 *
+		 * @param requestMessage Request message
+		 * @param requestMetadata Request metadata
+		 * @returns Observable<GrpcEvent<thisProto.ListOutputContextsResponse>>
+		 */
+		listOutputContextsOfAllSessions: (
+			requestData: thisProto.ListOutputContextsOfAllSessionsRequest,
+			requestMetadata?: GrpcMetadata
+		) => Observable<GrpcEvent<thisProto.ListOutputContextsResponse>>;
+		/**
+		 * Unary call: /ondewo.nlu.Sessions/ListPlatformsOfAllSessions
+		 *
+		 * @param requestMessage Request message
+		 * @param requestMetadata Request metadata
+		 * @returns Observable<GrpcEvent<thisProto.ListPlatformsResponse>>
+		 */
+		listPlatformsOfAllSessions: (
+			requestData: thisProto.ListPlatformsOfAllSessionsRequest,
+			requestMetadata?: GrpcMetadata
+		) => Observable<GrpcEvent<thisProto.ListPlatformsResponse>>;
+		/**
+		 * Unary call: /ondewo.nlu.Sessions/ListAccountIdsOfAllSessions
+		 *
+		 * @param requestMessage Request message
+		 * @param requestMetadata Request metadata
+		 * @returns Observable<GrpcEvent<thisProto.ListAccountIdsResponse>>
+		 */
+		listAccountIdsOfAllSessions: (
+			requestData: thisProto.ListAccountIdsOfAllSessionsRequest,
+			requestMetadata?: GrpcMetadata
+		) => Observable<GrpcEvent<thisProto.ListAccountIdsResponse>>;
+		/**
+		 * Unary call: /ondewo.nlu.Sessions/ListPropertyIdsOfAllSessions
+		 *
+		 * @param requestMessage Request message
+		 * @param requestMetadata Request metadata
+		 * @returns Observable<GrpcEvent<thisProto.ListPropertyIdsResponse>>
+		 */
+		listPropertyIdsOfAllSessions: (
+			requestData: thisProto.ListPropertyIdsOfAllSessionsRequest,
+			requestMetadata?: GrpcMetadata
+		) => Observable<GrpcEvent<thisProto.ListPropertyIdsResponse>>;
+		/**
+		 * Unary call: /ondewo.nlu.Sessions/ListDatastreamIdsOfAllSessions
+		 *
+		 * @param requestMessage Request message
+		 * @param requestMetadata Request metadata
+		 * @returns Observable<GrpcEvent<thisProto.ListDatastreamIdsResponse>>
+		 */
+		listDatastreamIdsOfAllSessions: (
+			requestData: thisProto.ListDatastreamIdsOfAllSessionsRequest,
+			requestMetadata?: GrpcMetadata
+		) => Observable<GrpcEvent<thisProto.ListDatastreamIdsResponse>>;
+		/**
+		 * Unary call: /ondewo.nlu.Sessions/ListOriginIdsOfAllSessions
+		 *
+		 * @param requestMessage Request message
+		 * @param requestMetadata Request metadata
+		 * @returns Observable<GrpcEvent<thisProto.ListOriginIdsResponse>>
+		 */
+		listOriginIdsOfAllSessions: (
+			requestData: thisProto.ListOriginIdsOfAllSessionsRequest,
+			requestMetadata?: GrpcMetadata
+		) => Observable<GrpcEvent<thisProto.ListOriginIdsResponse>>;
+		/**
 		 * Unary call: /ondewo.nlu.Sessions/AddSessionLabels
 		 *
 		 * @param requestMessage Request message
@@ -116,14 +270,14 @@ export declare class SessionsClient {
 			requestMetadata?: GrpcMetadata
 		) => Observable<GrpcEvent<thisProto.Session>>;
 		/**
-		 * Unary call: /ondewo.nlu.Sessions/RemoveSessionLabels
+		 * Unary call: /ondewo.nlu.Sessions/DeleteSessionLabels
 		 *
 		 * @param requestMessage Request message
 		 * @param requestMetadata Request metadata
 		 * @returns Observable<GrpcEvent<thisProto.Session>>
 		 */
-		removeSessionLabels: (
-			requestData: thisProto.RemoveSessionLabelsRequest,
+		deleteSessionLabels: (
+			requestData: thisProto.DeleteSessionLabelsRequest,
 			requestMetadata?: GrpcMetadata
 		) => Observable<GrpcEvent<thisProto.Session>>;
 		/**
@@ -258,6 +412,160 @@ export declare class SessionsClient {
 		requestMetadata?: GrpcMetadata
 	): Observable<thisProto.ListSessionLabelsResponse>;
 	/**
+	 * Unary call @/ondewo.nlu.Sessions/ListSessionLabelsOfAllSessions
+	 *
+	 * @param requestMessage Request message
+	 * @param requestMetadata Request metadata
+	 * @returns Observable<thisProto.ListSessionLabelsResponse>
+	 */
+	listSessionLabelsOfAllSessions(
+		requestData: thisProto.ListSessionLabelsOfAllSessionsRequest,
+		requestMetadata?: GrpcMetadata
+	): Observable<thisProto.ListSessionLabelsResponse>;
+	/**
+	 * Unary call @/ondewo.nlu.Sessions/ListLanguageCodesOfAllSessions
+	 *
+	 * @param requestMessage Request message
+	 * @param requestMetadata Request metadata
+	 * @returns Observable<thisProto.ListLanguageCodesResponse>
+	 */
+	listLanguageCodesOfAllSessions(
+		requestData: thisProto.ListLanguageCodesOfAllSessionsRequest,
+		requestMetadata?: GrpcMetadata
+	): Observable<thisProto.ListLanguageCodesResponse>;
+	/**
+	 * Unary call @/ondewo.nlu.Sessions/ListMatchedIntentsOfAllSessions
+	 *
+	 * @param requestMessage Request message
+	 * @param requestMetadata Request metadata
+	 * @returns Observable<thisProto.ListMatchedIntentsResponse>
+	 */
+	listMatchedIntentsOfAllSessions(
+		requestData: thisProto.ListMatchedIntentsOfAllSessionsRequest,
+		requestMetadata?: GrpcMetadata
+	): Observable<thisProto.ListMatchedIntentsResponse>;
+	/**
+	 * Unary call @/ondewo.nlu.Sessions/ListMatchedEntityTypesOfAllSessions
+	 *
+	 * @param requestMessage Request message
+	 * @param requestMetadata Request metadata
+	 * @returns Observable<thisProto.ListMatchedEntityTypesResponse>
+	 */
+	listMatchedEntityTypesOfAllSessions(
+		requestData: thisProto.ListMatchedEntityTypesOfAllSessionsRequest,
+		requestMetadata?: GrpcMetadata
+	): Observable<thisProto.ListMatchedEntityTypesResponse>;
+	/**
+	 * Unary call @/ondewo.nlu.Sessions/ListUserIdsOfAllSessions
+	 *
+	 * @param requestMessage Request message
+	 * @param requestMetadata Request metadata
+	 * @returns Observable<thisProto.ListUserIdsResponse>
+	 */
+	listUserIdsOfAllSessions(
+		requestData: thisProto.ListUserIdsOfAllSessionsRequest,
+		requestMetadata?: GrpcMetadata
+	): Observable<thisProto.ListUserIdsResponse>;
+	/**
+	 * Unary call @/ondewo.nlu.Sessions/ListIdentifiedUserIdsOfAllSessions
+	 *
+	 * @param requestMessage Request message
+	 * @param requestMetadata Request metadata
+	 * @returns Observable<thisProto.ListIdentifiedUserIdsResponse>
+	 */
+	listIdentifiedUserIdsOfAllSessions(
+		requestData: thisProto.ListIdentifiedUserIdsOfAllSessionsRequest,
+		requestMetadata?: GrpcMetadata
+	): Observable<thisProto.ListIdentifiedUserIdsResponse>;
+	/**
+	 * Unary call @/ondewo.nlu.Sessions/ListTagsOfAllSessions
+	 *
+	 * @param requestMessage Request message
+	 * @param requestMetadata Request metadata
+	 * @returns Observable<thisProto.ListTagsResponse>
+	 */
+	listTagsOfAllSessions(
+		requestData: thisProto.ListTagsOfAllSessionsRequest,
+		requestMetadata?: GrpcMetadata
+	): Observable<thisProto.ListTagsResponse>;
+	/**
+	 * Unary call @/ondewo.nlu.Sessions/ListInputContextsOfAllSessions
+	 *
+	 * @param requestMessage Request message
+	 * @param requestMetadata Request metadata
+	 * @returns Observable<thisProto.ListInputContextsResponse>
+	 */
+	listInputContextsOfAllSessions(
+		requestData: thisProto.ListInputContextsOfAllSessionsRequest,
+		requestMetadata?: GrpcMetadata
+	): Observable<thisProto.ListInputContextsResponse>;
+	/**
+	 * Unary call @/ondewo.nlu.Sessions/ListOutputContextsOfAllSessions
+	 *
+	 * @param requestMessage Request message
+	 * @param requestMetadata Request metadata
+	 * @returns Observable<thisProto.ListOutputContextsResponse>
+	 */
+	listOutputContextsOfAllSessions(
+		requestData: thisProto.ListOutputContextsOfAllSessionsRequest,
+		requestMetadata?: GrpcMetadata
+	): Observable<thisProto.ListOutputContextsResponse>;
+	/**
+	 * Unary call @/ondewo.nlu.Sessions/ListPlatformsOfAllSessions
+	 *
+	 * @param requestMessage Request message
+	 * @param requestMetadata Request metadata
+	 * @returns Observable<thisProto.ListPlatformsResponse>
+	 */
+	listPlatformsOfAllSessions(
+		requestData: thisProto.ListPlatformsOfAllSessionsRequest,
+		requestMetadata?: GrpcMetadata
+	): Observable<thisProto.ListPlatformsResponse>;
+	/**
+	 * Unary call @/ondewo.nlu.Sessions/ListAccountIdsOfAllSessions
+	 *
+	 * @param requestMessage Request message
+	 * @param requestMetadata Request metadata
+	 * @returns Observable<thisProto.ListAccountIdsResponse>
+	 */
+	listAccountIdsOfAllSessions(
+		requestData: thisProto.ListAccountIdsOfAllSessionsRequest,
+		requestMetadata?: GrpcMetadata
+	): Observable<thisProto.ListAccountIdsResponse>;
+	/**
+	 * Unary call @/ondewo.nlu.Sessions/ListPropertyIdsOfAllSessions
+	 *
+	 * @param requestMessage Request message
+	 * @param requestMetadata Request metadata
+	 * @returns Observable<thisProto.ListPropertyIdsResponse>
+	 */
+	listPropertyIdsOfAllSessions(
+		requestData: thisProto.ListPropertyIdsOfAllSessionsRequest,
+		requestMetadata?: GrpcMetadata
+	): Observable<thisProto.ListPropertyIdsResponse>;
+	/**
+	 * Unary call @/ondewo.nlu.Sessions/ListDatastreamIdsOfAllSessions
+	 *
+	 * @param requestMessage Request message
+	 * @param requestMetadata Request metadata
+	 * @returns Observable<thisProto.ListDatastreamIdsResponse>
+	 */
+	listDatastreamIdsOfAllSessions(
+		requestData: thisProto.ListDatastreamIdsOfAllSessionsRequest,
+		requestMetadata?: GrpcMetadata
+	): Observable<thisProto.ListDatastreamIdsResponse>;
+	/**
+	 * Unary call @/ondewo.nlu.Sessions/ListOriginIdsOfAllSessions
+	 *
+	 * @param requestMessage Request message
+	 * @param requestMetadata Request metadata
+	 * @returns Observable<thisProto.ListOriginIdsResponse>
+	 */
+	listOriginIdsOfAllSessions(
+		requestData: thisProto.ListOriginIdsOfAllSessionsRequest,
+		requestMetadata?: GrpcMetadata
+	): Observable<thisProto.ListOriginIdsResponse>;
+	/**
 	 * Unary call @/ondewo.nlu.Sessions/AddSessionLabels
 	 *
 	 * @param requestMessage Request message
@@ -269,14 +577,14 @@ export declare class SessionsClient {
 		requestMetadata?: GrpcMetadata
 	): Observable<thisProto.Session>;
 	/**
-	 * Unary call @/ondewo.nlu.Sessions/RemoveSessionLabels
+	 * Unary call @/ondewo.nlu.Sessions/DeleteSessionLabels
 	 *
 	 * @param requestMessage Request message
 	 * @param requestMetadata Request metadata
 	 * @returns Observable<thisProto.Session>
 	 */
-	removeSessionLabels(
-		requestData: thisProto.RemoveSessionLabelsRequest,
+	deleteSessionLabels(
+		requestData: thisProto.DeleteSessionLabelsRequest,
 		requestMetadata?: GrpcMetadata
 	): Observable<thisProto.Session>;
 	/**

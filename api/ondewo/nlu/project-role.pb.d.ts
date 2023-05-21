@@ -41,20 +41,20 @@ export declare class ProjectRole implements GrpcMessage {
 	 * @param _writer binary writer instance
 	 */
 	static serializeBinaryToWriter(_instance: ProjectRole, _writer: BinaryWriter): void;
-	private _roleId?;
-	private _name?;
-	private _permissions?;
+	private _roleId;
+	private _name;
+	private _permissions;
 	/**
 	 * Message constructor. Initializes the properties and applies default Protobuf values if necessary
 	 * @param _value initial values object or instance of ProjectRole to deeply clone from
 	 */
 	constructor(_value?: RecursivePartial<ProjectRole.AsObject>);
-	get roleId(): number | undefined;
-	set roleId(value: number | undefined);
-	get name(): string | undefined;
-	set name(value: string | undefined);
-	get permissions(): string[] | undefined;
-	set permissions(value: string[] | undefined);
+	get roleId(): number;
+	set roleId(value: number);
+	get name(): string;
+	set name(value: string);
+	get permissions(): string[];
+	set permissions(value: string[]);
 	/**
 	 * Serialize message to binary data
 	 * @param instance message instance
@@ -80,17 +80,17 @@ export declare module ProjectRole {
 	 * Standard JavaScript object representation for ProjectRole
 	 */
 	interface AsObject {
-		roleId?: number;
-		name?: string;
-		permissions?: string[];
+		roleId: number;
+		name: string;
+		permissions: string[];
 	}
 	/**
 	 * Protobuf JSON representation for ProjectRole
 	 */
 	interface AsProtobufJSON {
-		roleId?: number;
-		name?: string;
-		permissions?: string[];
+		roleId: number;
+		name: string;
+		permissions: string[];
 	}
 }
 /**
@@ -120,20 +120,20 @@ export declare class CreateProjectRoleRequest implements GrpcMessage {
 	 * @param _writer binary writer instance
 	 */
 	static serializeBinaryToWriter(_instance: CreateProjectRoleRequest, _writer: BinaryWriter): void;
-	private _parent?;
+	private _parent;
 	private _role?;
-	private _projectRoleView?;
+	private _projectRoleView;
 	/**
 	 * Message constructor. Initializes the properties and applies default Protobuf values if necessary
 	 * @param _value initial values object or instance of CreateProjectRoleRequest to deeply clone from
 	 */
 	constructor(_value?: RecursivePartial<CreateProjectRoleRequest.AsObject>);
-	get parent(): string | undefined;
-	set parent(value: string | undefined);
+	get parent(): string;
+	set parent(value: string);
 	get role(): ProjectRole | undefined;
 	set role(value: ProjectRole | undefined);
-	get projectRoleView(): ProjectRoleView | undefined;
-	set projectRoleView(value: ProjectRoleView | undefined);
+	get projectRoleView(): ProjectRoleView;
+	set projectRoleView(value: ProjectRoleView);
 	/**
 	 * Serialize message to binary data
 	 * @param instance message instance
@@ -159,17 +159,17 @@ export declare module CreateProjectRoleRequest {
 	 * Standard JavaScript object representation for CreateProjectRoleRequest
 	 */
 	interface AsObject {
-		parent?: string;
+		parent: string;
 		role?: ProjectRole.AsObject;
-		projectRoleView?: ProjectRoleView;
+		projectRoleView: ProjectRoleView;
 	}
 	/**
 	 * Protobuf JSON representation for CreateProjectRoleRequest
 	 */
 	interface AsProtobufJSON {
-		parent?: string;
-		role?: ProjectRole.AsProtobufJSON | null;
-		projectRoleView?: string;
+		parent: string;
+		role: ProjectRole.AsProtobufJSON | null;
+		projectRoleView: string;
 	}
 }
 /**
@@ -199,23 +199,23 @@ export declare class UpdateProjectRoleRequest implements GrpcMessage {
 	 * @param _writer binary writer instance
 	 */
 	static serializeBinaryToWriter(_instance: UpdateProjectRoleRequest, _writer: BinaryWriter): void;
-	private _parent?;
+	private _parent;
 	private _role?;
 	private _updateMask?;
-	private _projectRoleView?;
+	private _projectRoleView;
 	/**
 	 * Message constructor. Initializes the properties and applies default Protobuf values if necessary
 	 * @param _value initial values object or instance of UpdateProjectRoleRequest to deeply clone from
 	 */
 	constructor(_value?: RecursivePartial<UpdateProjectRoleRequest.AsObject>);
-	get parent(): string | undefined;
-	set parent(value: string | undefined);
+	get parent(): string;
+	set parent(value: string);
 	get role(): ProjectRole | undefined;
 	set role(value: ProjectRole | undefined);
 	get updateMask(): googleProtobuf003.FieldMask | undefined;
 	set updateMask(value: googleProtobuf003.FieldMask | undefined);
-	get projectRoleView(): ProjectRoleView | undefined;
-	set projectRoleView(value: ProjectRoleView | undefined);
+	get projectRoleView(): ProjectRoleView;
+	set projectRoleView(value: ProjectRoleView);
 	/**
 	 * Serialize message to binary data
 	 * @param instance message instance
@@ -241,19 +241,19 @@ export declare module UpdateProjectRoleRequest {
 	 * Standard JavaScript object representation for UpdateProjectRoleRequest
 	 */
 	interface AsObject {
-		parent?: string;
+		parent: string;
 		role?: ProjectRole.AsObject;
 		updateMask?: googleProtobuf003.FieldMask.AsObject;
-		projectRoleView?: ProjectRoleView;
+		projectRoleView: ProjectRoleView;
 	}
 	/**
 	 * Protobuf JSON representation for UpdateProjectRoleRequest
 	 */
 	interface AsProtobufJSON {
-		parent?: string;
-		role?: ProjectRole.AsProtobufJSON | null;
-		updateMask?: googleProtobuf003.FieldMask.AsProtobufJSON | null;
-		projectRoleView?: string;
+		parent: string;
+		role: ProjectRole.AsProtobufJSON | null;
+		updateMask: googleProtobuf003.FieldMask.AsProtobufJSON | null;
+		projectRoleView: string;
 	}
 }
 /**
@@ -283,24 +283,24 @@ export declare class GetProjectRoleRequest implements GrpcMessage {
 	 * @param _writer binary writer instance
 	 */
 	static serializeBinaryToWriter(_instance: GetProjectRoleRequest, _writer: BinaryWriter): void;
-	private _parent?;
-	private _roleId?;
-	private _roleName?;
-	private _projectRoleView?;
+	private _parent;
+	private _roleId;
+	private _roleName;
+	private _projectRoleView;
 	private _projectRoleIdentifier;
 	/**
 	 * Message constructor. Initializes the properties and applies default Protobuf values if necessary
 	 * @param _value initial values object or instance of GetProjectRoleRequest to deeply clone from
 	 */
 	constructor(_value?: RecursivePartial<GetProjectRoleRequest.AsObject>);
-	get parent(): string | undefined;
-	set parent(value: string | undefined);
-	get roleId(): number | undefined;
-	set roleId(value: number | undefined);
-	get roleName(): string | undefined;
-	set roleName(value: string | undefined);
-	get projectRoleView(): ProjectRoleView | undefined;
-	set projectRoleView(value: ProjectRoleView | undefined);
+	get parent(): string;
+	set parent(value: string);
+	get roleId(): number;
+	set roleId(value: number);
+	get roleName(): string;
+	set roleName(value: string);
+	get projectRoleView(): ProjectRoleView;
+	set projectRoleView(value: ProjectRoleView);
 	get projectRoleIdentifier(): GetProjectRoleRequest.ProjectRoleIdentifierCase;
 	/**
 	 * Serialize message to binary data
@@ -327,19 +327,19 @@ export declare module GetProjectRoleRequest {
 	 * Standard JavaScript object representation for GetProjectRoleRequest
 	 */
 	interface AsObject {
-		parent?: string;
-		roleId?: number;
-		roleName?: string;
-		projectRoleView?: ProjectRoleView;
+		parent: string;
+		roleId: number;
+		roleName: string;
+		projectRoleView: ProjectRoleView;
 	}
 	/**
 	 * Protobuf JSON representation for GetProjectRoleRequest
 	 */
 	interface AsProtobufJSON {
-		parent?: string;
-		roleId?: number | null;
-		roleName?: string | null;
-		projectRoleView?: string;
+		parent: string;
+		roleId: number | null;
+		roleName: string | null;
+		projectRoleView: string;
 	}
 	enum ProjectRoleIdentifierCase {
 		none = 0,
@@ -374,17 +374,17 @@ export declare class DeleteProjectRoleRequest implements GrpcMessage {
 	 * @param _writer binary writer instance
 	 */
 	static serializeBinaryToWriter(_instance: DeleteProjectRoleRequest, _writer: BinaryWriter): void;
-	private _parent?;
-	private _roleId?;
+	private _parent;
+	private _roleId;
 	/**
 	 * Message constructor. Initializes the properties and applies default Protobuf values if necessary
 	 * @param _value initial values object or instance of DeleteProjectRoleRequest to deeply clone from
 	 */
 	constructor(_value?: RecursivePartial<DeleteProjectRoleRequest.AsObject>);
-	get parent(): string | undefined;
-	set parent(value: string | undefined);
-	get roleId(): number | undefined;
-	set roleId(value: number | undefined);
+	get parent(): string;
+	set parent(value: string);
+	get roleId(): number;
+	set roleId(value: number);
 	/**
 	 * Serialize message to binary data
 	 * @param instance message instance
@@ -410,15 +410,15 @@ export declare module DeleteProjectRoleRequest {
 	 * Standard JavaScript object representation for DeleteProjectRoleRequest
 	 */
 	interface AsObject {
-		parent?: string;
-		roleId?: number;
+		parent: string;
+		roleId: number;
 	}
 	/**
 	 * Protobuf JSON representation for DeleteProjectRoleRequest
 	 */
 	interface AsProtobufJSON {
-		parent?: string;
-		roleId?: number;
+		parent: string;
+		roleId: number;
 	}
 }
 /**
@@ -448,20 +448,20 @@ export declare class ListProjectRolesRequest implements GrpcMessage {
 	 * @param _writer binary writer instance
 	 */
 	static serializeBinaryToWriter(_instance: ListProjectRolesRequest, _writer: BinaryWriter): void;
-	private _parent?;
-	private _pageToken?;
-	private _projectRoleView?;
+	private _parent;
+	private _pageToken;
+	private _projectRoleView;
 	/**
 	 * Message constructor. Initializes the properties and applies default Protobuf values if necessary
 	 * @param _value initial values object or instance of ListProjectRolesRequest to deeply clone from
 	 */
 	constructor(_value?: RecursivePartial<ListProjectRolesRequest.AsObject>);
-	get parent(): string | undefined;
-	set parent(value: string | undefined);
-	get pageToken(): string | undefined;
-	set pageToken(value: string | undefined);
-	get projectRoleView(): ProjectRoleView | undefined;
-	set projectRoleView(value: ProjectRoleView | undefined);
+	get parent(): string;
+	set parent(value: string);
+	get pageToken(): string;
+	set pageToken(value: string);
+	get projectRoleView(): ProjectRoleView;
+	set projectRoleView(value: ProjectRoleView);
 	/**
 	 * Serialize message to binary data
 	 * @param instance message instance
@@ -487,17 +487,17 @@ export declare module ListProjectRolesRequest {
 	 * Standard JavaScript object representation for ListProjectRolesRequest
 	 */
 	interface AsObject {
-		parent?: string;
-		pageToken?: string;
-		projectRoleView?: ProjectRoleView;
+		parent: string;
+		pageToken: string;
+		projectRoleView: ProjectRoleView;
 	}
 	/**
 	 * Protobuf JSON representation for ListProjectRolesRequest
 	 */
 	interface AsProtobufJSON {
-		parent?: string;
-		pageToken?: string;
-		projectRoleView?: string;
+		parent: string;
+		pageToken: string;
+		projectRoleView: string;
 	}
 }
 /**
@@ -528,7 +528,7 @@ export declare class ListProjectRolesResponse implements GrpcMessage {
 	 */
 	static serializeBinaryToWriter(_instance: ListProjectRolesResponse, _writer: BinaryWriter): void;
 	private _projectRoles?;
-	private _nextPageToken?;
+	private _nextPageToken;
 	/**
 	 * Message constructor. Initializes the properties and applies default Protobuf values if necessary
 	 * @param _value initial values object or instance of ListProjectRolesResponse to deeply clone from
@@ -536,8 +536,8 @@ export declare class ListProjectRolesResponse implements GrpcMessage {
 	constructor(_value?: RecursivePartial<ListProjectRolesResponse.AsObject>);
 	get projectRoles(): ProjectRole[] | undefined;
 	set projectRoles(value: ProjectRole[] | undefined);
-	get nextPageToken(): string | undefined;
-	set nextPageToken(value: string | undefined);
+	get nextPageToken(): string;
+	set nextPageToken(value: string);
 	/**
 	 * Serialize message to binary data
 	 * @param instance message instance
@@ -564,13 +564,13 @@ export declare module ListProjectRolesResponse {
 	 */
 	interface AsObject {
 		projectRoles?: ProjectRole.AsObject[];
-		nextPageToken?: string;
+		nextPageToken: string;
 	}
 	/**
 	 * Protobuf JSON representation for ListProjectRolesResponse
 	 */
 	interface AsProtobufJSON {
-		projectRoles?: ProjectRole.AsProtobufJSON[] | null;
-		nextPageToken?: string;
+		projectRoles: ProjectRole.AsProtobufJSON[] | null;
+		nextPageToken: string;
 	}
 }

@@ -1,9 +1,15 @@
 import { GrpcMessage, RecursivePartial, ToProtobufJSONOptions } from '@ngx-grpc/common';
 import { BinaryReader, BinaryWriter, ByteSource } from 'google-protobuf';
-export declare enum CTCDecoding {
+export declare enum Decoding {
 	DEFAULT = 0,
 	GREEDY = 1,
-	BEAM_SEARCH_WITH_LM = 2
+	BEAM_SEARCH_WITH_LM = 2,
+	BEAM_SEARCH = 3
+}
+export declare enum InferenceBackend {
+	INFERENCE_BACKEND_UNKNOWN = 0,
+	INFERENCE_BACKEND_PYTORCH = 1,
+	INFERENCE_BACKEND_FLAX = 2
 }
 /**
  * Message implementation for ondewo.s2t.TranscribeRequestConfig
@@ -32,9 +38,9 @@ export declare class TranscribeRequestConfig implements GrpcMessage {
 	 * @param _writer binary writer instance
 	 */
 	static serializeBinaryToWriter(_instance: TranscribeRequestConfig, _writer: BinaryWriter): void;
-	private _s2tPipelineId?;
-	private _ctcDecoding?;
-	private _languageModelName?;
+	private _s2tPipelineId;
+	private _decoding;
+	private _languageModelName;
 	private _postProcessing?;
 	private _utteranceDetection?;
 	private _pyannote?;
@@ -50,12 +56,12 @@ export declare class TranscribeRequestConfig implements GrpcMessage {
 	 * @param _value initial values object or instance of TranscribeRequestConfig to deeply clone from
 	 */
 	constructor(_value?: RecursivePartial<TranscribeRequestConfig.AsObject>);
-	get s2tPipelineId(): string | undefined;
-	set s2tPipelineId(value: string | undefined);
-	get ctcDecoding(): CTCDecoding | undefined;
-	set ctcDecoding(value: CTCDecoding | undefined);
-	get languageModelName(): string | undefined;
-	set languageModelName(value: string | undefined);
+	get s2tPipelineId(): string;
+	set s2tPipelineId(value: string);
+	get decoding(): Decoding;
+	set decoding(value: Decoding);
+	get languageModelName(): string;
+	set languageModelName(value: string);
 	get postProcessing(): PostProcessingOptions | undefined;
 	set postProcessing(value: PostProcessingOptions | undefined);
 	get utteranceDetection(): UtteranceDetectionOptions | undefined;
@@ -96,9 +102,9 @@ export declare module TranscribeRequestConfig {
 	 * Standard JavaScript object representation for TranscribeRequestConfig
 	 */
 	interface AsObject {
-		s2tPipelineId?: string;
-		ctcDecoding?: CTCDecoding;
-		languageModelName?: string;
+		s2tPipelineId: string;
+		decoding: Decoding;
+		languageModelName: string;
 		postProcessing?: PostProcessingOptions.AsObject;
 		utteranceDetection?: UtteranceDetectionOptions.AsObject;
 		pyannote?: Pyannote.AsObject;
@@ -109,14 +115,14 @@ export declare module TranscribeRequestConfig {
 	 * Protobuf JSON representation for TranscribeRequestConfig
 	 */
 	interface AsProtobufJSON {
-		s2tPipelineId?: string;
-		ctcDecoding?: string;
-		languageModelName?: string | null;
-		postProcessing?: PostProcessingOptions.AsProtobufJSON | null;
-		utteranceDetection?: UtteranceDetectionOptions.AsProtobufJSON | null;
-		pyannote?: Pyannote.AsProtobufJSON | null;
-		matchbox?: Matchbox.AsProtobufJSON | null;
-		returnOptions?: TranscriptionReturnOptions.AsProtobufJSON | null;
+		s2tPipelineId: string;
+		decoding: string;
+		languageModelName: string | null;
+		postProcessing: PostProcessingOptions.AsProtobufJSON | null;
+		utteranceDetection: UtteranceDetectionOptions.AsProtobufJSON | null;
+		pyannote: Pyannote.AsProtobufJSON | null;
+		matchbox: Matchbox.AsProtobufJSON | null;
+		returnOptions: TranscriptionReturnOptions.AsProtobufJSON | null;
 	}
 	enum OneofLanguageModelNameCase {
 		none = 0,
@@ -167,26 +173,35 @@ export declare class TranscriptionReturnOptions implements GrpcMessage {
 	 * @param _writer binary writer instance
 	 */
 	static serializeBinaryToWriter(_instance: TranscriptionReturnOptions, _writer: BinaryWriter): void;
-	private _returnStartOfSpeech?;
-	private _returnAudio?;
-	private _returnAlternativeTranscriptions?;
-	private _returnConfidenceScore?;
-	private _returnWordTiming?;
+	private _returnStartOfSpeech;
+	private _returnAudio;
+	private _returnConfidenceScore;
+	private _returnAlternativeTranscriptions;
+	private _returnAlternativeTranscriptionsNr;
+	private _returnAlternativeWords;
+	private _returnAlternativeWordsNr;
+	private _returnWordTiming;
 	/**
 	 * Message constructor. Initializes the properties and applies default Protobuf values if necessary
 	 * @param _value initial values object or instance of TranscriptionReturnOptions to deeply clone from
 	 */
 	constructor(_value?: RecursivePartial<TranscriptionReturnOptions.AsObject>);
-	get returnStartOfSpeech(): boolean | undefined;
-	set returnStartOfSpeech(value: boolean | undefined);
-	get returnAudio(): boolean | undefined;
-	set returnAudio(value: boolean | undefined);
-	get returnAlternativeTranscriptions(): boolean | undefined;
-	set returnAlternativeTranscriptions(value: boolean | undefined);
-	get returnConfidenceScore(): boolean | undefined;
-	set returnConfidenceScore(value: boolean | undefined);
-	get returnWordTiming(): boolean | undefined;
-	set returnWordTiming(value: boolean | undefined);
+	get returnStartOfSpeech(): boolean;
+	set returnStartOfSpeech(value: boolean);
+	get returnAudio(): boolean;
+	set returnAudio(value: boolean);
+	get returnConfidenceScore(): boolean;
+	set returnConfidenceScore(value: boolean);
+	get returnAlternativeTranscriptions(): boolean;
+	set returnAlternativeTranscriptions(value: boolean);
+	get returnAlternativeTranscriptionsNr(): number;
+	set returnAlternativeTranscriptionsNr(value: number);
+	get returnAlternativeWords(): boolean;
+	set returnAlternativeWords(value: boolean);
+	get returnAlternativeWordsNr(): number;
+	set returnAlternativeWordsNr(value: number);
+	get returnWordTiming(): boolean;
+	set returnWordTiming(value: boolean);
 	/**
 	 * Serialize message to binary data
 	 * @param instance message instance
@@ -212,21 +227,27 @@ export declare module TranscriptionReturnOptions {
 	 * Standard JavaScript object representation for TranscriptionReturnOptions
 	 */
 	interface AsObject {
-		returnStartOfSpeech?: boolean;
-		returnAudio?: boolean;
-		returnAlternativeTranscriptions?: boolean;
-		returnConfidenceScore?: boolean;
-		returnWordTiming?: boolean;
+		returnStartOfSpeech: boolean;
+		returnAudio: boolean;
+		returnConfidenceScore: boolean;
+		returnAlternativeTranscriptions: boolean;
+		returnAlternativeTranscriptionsNr: number;
+		returnAlternativeWords: boolean;
+		returnAlternativeWordsNr: number;
+		returnWordTiming: boolean;
 	}
 	/**
 	 * Protobuf JSON representation for TranscriptionReturnOptions
 	 */
 	interface AsProtobufJSON {
-		returnStartOfSpeech?: boolean;
-		returnAudio?: boolean;
-		returnAlternativeTranscriptions?: boolean;
-		returnConfidenceScore?: boolean;
-		returnWordTiming?: boolean;
+		returnStartOfSpeech: boolean;
+		returnAudio: boolean;
+		returnConfidenceScore: boolean;
+		returnAlternativeTranscriptions: boolean;
+		returnAlternativeTranscriptionsNr: number;
+		returnAlternativeWords: boolean;
+		returnAlternativeWordsNr: number;
+		returnWordTiming: boolean;
 	}
 }
 /**
@@ -256,24 +277,24 @@ export declare class UtteranceDetectionOptions implements GrpcMessage {
 	 * @param _writer binary writer instance
 	 */
 	static serializeBinaryToWriter(_instance: UtteranceDetectionOptions, _writer: BinaryWriter): void;
-	private _transcribeNotFinal?;
-	private _startOfUtteranceThreshold?;
-	private _endOfUtteranceThreshold?;
-	private _nextChunkTimeout?;
+	private _transcribeNotFinal;
+	private _startOfUtteranceThreshold;
+	private _endOfUtteranceThreshold;
+	private _nextChunkTimeout;
 	private _oneofTranscribeNotFinal;
 	/**
 	 * Message constructor. Initializes the properties and applies default Protobuf values if necessary
 	 * @param _value initial values object or instance of UtteranceDetectionOptions to deeply clone from
 	 */
 	constructor(_value?: RecursivePartial<UtteranceDetectionOptions.AsObject>);
-	get transcribeNotFinal(): boolean | undefined;
-	set transcribeNotFinal(value: boolean | undefined);
-	get startOfUtteranceThreshold(): number | undefined;
-	set startOfUtteranceThreshold(value: number | undefined);
-	get endOfUtteranceThreshold(): number | undefined;
-	set endOfUtteranceThreshold(value: number | undefined);
-	get nextChunkTimeout(): number | undefined;
-	set nextChunkTimeout(value: number | undefined);
+	get transcribeNotFinal(): boolean;
+	set transcribeNotFinal(value: boolean);
+	get startOfUtteranceThreshold(): number;
+	set startOfUtteranceThreshold(value: number);
+	get endOfUtteranceThreshold(): number;
+	set endOfUtteranceThreshold(value: number);
+	get nextChunkTimeout(): number;
+	set nextChunkTimeout(value: number);
 	get oneofTranscribeNotFinal(): UtteranceDetectionOptions.OneofTranscribeNotFinalCase;
 	/**
 	 * Serialize message to binary data
@@ -300,19 +321,19 @@ export declare module UtteranceDetectionOptions {
 	 * Standard JavaScript object representation for UtteranceDetectionOptions
 	 */
 	interface AsObject {
-		transcribeNotFinal?: boolean;
-		startOfUtteranceThreshold?: number;
-		endOfUtteranceThreshold?: number;
-		nextChunkTimeout?: number;
+		transcribeNotFinal: boolean;
+		startOfUtteranceThreshold: number;
+		endOfUtteranceThreshold: number;
+		nextChunkTimeout: number;
 	}
 	/**
 	 * Protobuf JSON representation for UtteranceDetectionOptions
 	 */
 	interface AsProtobufJSON {
-		transcribeNotFinal?: boolean;
-		startOfUtteranceThreshold?: number;
-		endOfUtteranceThreshold?: number;
-		nextChunkTimeout?: number;
+		transcribeNotFinal: boolean;
+		startOfUtteranceThreshold: number;
+		endOfUtteranceThreshold: number;
+		nextChunkTimeout: number;
 	}
 	enum OneofTranscribeNotFinalCase {
 		none = 0,
@@ -346,18 +367,18 @@ export declare class PostProcessingOptions implements GrpcMessage {
 	 * @param _writer binary writer instance
 	 */
 	static serializeBinaryToWriter(_instance: PostProcessingOptions, _writer: BinaryWriter): void;
-	private _spellingCorrection?;
-	private _normalize?;
+	private _spellingCorrection;
+	private _normalize;
 	private _config?;
 	/**
 	 * Message constructor. Initializes the properties and applies default Protobuf values if necessary
 	 * @param _value initial values object or instance of PostProcessingOptions to deeply clone from
 	 */
 	constructor(_value?: RecursivePartial<PostProcessingOptions.AsObject>);
-	get spellingCorrection(): boolean | undefined;
-	set spellingCorrection(value: boolean | undefined);
-	get normalize(): boolean | undefined;
-	set normalize(value: boolean | undefined);
+	get spellingCorrection(): boolean;
+	set spellingCorrection(value: boolean);
+	get normalize(): boolean;
+	set normalize(value: boolean);
 	get config(): PostProcessing | undefined;
 	set config(value: PostProcessing | undefined);
 	/**
@@ -385,101 +406,17 @@ export declare module PostProcessingOptions {
 	 * Standard JavaScript object representation for PostProcessingOptions
 	 */
 	interface AsObject {
-		spellingCorrection?: boolean;
-		normalize?: boolean;
+		spellingCorrection: boolean;
+		normalize: boolean;
 		config?: PostProcessing.AsObject;
 	}
 	/**
 	 * Protobuf JSON representation for PostProcessingOptions
 	 */
 	interface AsProtobufJSON {
-		spellingCorrection?: boolean;
-		normalize?: boolean;
-		config?: PostProcessing.AsProtobufJSON | null;
-	}
-}
-/**
- * Message implementation for ondewo.s2t.TranscribeStreamRequest
- */
-export declare class TranscribeStreamRequest implements GrpcMessage {
-	static id: string;
-	/**
-	 * Deserialize binary data to message
-	 * @param instance message instance
-	 */
-	static deserializeBinary(bytes: ByteSource): TranscribeStreamRequest;
-	/**
-	 * Check all the properties and set default protobuf values if necessary
-	 * @param _instance message instance
-	 */
-	static refineValues(_instance: TranscribeStreamRequest): void;
-	/**
-	 * Deserializes / reads binary message into message instance using provided binary reader
-	 * @param _instance message instance
-	 * @param _reader binary reader instance
-	 */
-	static deserializeBinaryFromReader(_instance: TranscribeStreamRequest, _reader: BinaryReader): void;
-	/**
-	 * Serializes a message to binary format using provided binary reader
-	 * @param _instance message instance
-	 * @param _writer binary writer instance
-	 */
-	static serializeBinaryToWriter(_instance: TranscribeStreamRequest, _writer: BinaryWriter): void;
-	private _audioChunk?;
-	private _endOfStream?;
-	private _config?;
-	private _muteAudio?;
-	/**
-	 * Message constructor. Initializes the properties and applies default Protobuf values if necessary
-	 * @param _value initial values object or instance of TranscribeStreamRequest to deeply clone from
-	 */
-	constructor(_value?: RecursivePartial<TranscribeStreamRequest.AsObject>);
-	get audioChunk(): Uint8Array | undefined;
-	set audioChunk(value: Uint8Array | undefined);
-	get endOfStream(): boolean | undefined;
-	set endOfStream(value: boolean | undefined);
-	get config(): TranscribeRequestConfig | undefined;
-	set config(value: TranscribeRequestConfig | undefined);
-	get muteAudio(): boolean | undefined;
-	set muteAudio(value: boolean | undefined);
-	/**
-	 * Serialize message to binary data
-	 * @param instance message instance
-	 */
-	serializeBinary(): any;
-	/**
-	 * Cast message to standard JavaScript object (all non-primitive values are deeply cloned)
-	 */
-	toObject(): TranscribeStreamRequest.AsObject;
-	/**
-	 * Convenience method to support JSON.stringify(message), replicates the structure of toObject()
-	 */
-	toJSON(): TranscribeStreamRequest.AsObject;
-	/**
-	 * Cast message to JSON using protobuf JSON notation: https://developers.google.com/protocol-buffers/docs/proto3#json
-	 * Attention: output differs from toObject() e.g. enums are represented as names and not as numbers, Timestamp is an ISO Date string format etc.
-	 * If the message itself or some of descendant messages is google.protobuf.Any, you MUST provide a message pool as options. If not, the messagePool is not required
-	 */
-	toProtobufJSON(options?: ToProtobufJSONOptions): TranscribeStreamRequest.AsProtobufJSON;
-}
-export declare module TranscribeStreamRequest {
-	/**
-	 * Standard JavaScript object representation for TranscribeStreamRequest
-	 */
-	interface AsObject {
-		audioChunk?: Uint8Array;
-		endOfStream?: boolean;
-		config?: TranscribeRequestConfig.AsObject;
-		muteAudio?: boolean;
-	}
-	/**
-	 * Protobuf JSON representation for TranscribeStreamRequest
-	 */
-	interface AsProtobufJSON {
-		audioChunk?: string;
-		endOfStream?: boolean;
-		config?: TranscribeRequestConfig.AsProtobufJSON | null;
-		muteAudio?: boolean;
+		spellingCorrection: boolean;
+		normalize: boolean;
+		config: PostProcessing.AsProtobufJSON | null;
 	}
 }
 /**
@@ -509,17 +446,23 @@ export declare class Transcription implements GrpcMessage {
 	 * @param _writer binary writer instance
 	 */
 	static serializeBinaryToWriter(_instance: Transcription, _writer: BinaryWriter): void;
-	private _transcription?;
-	private _confidenceScore?;
+	private _transcription;
+	private _confidenceScore;
+	private _words?;
+	private _alternatives?;
 	/**
 	 * Message constructor. Initializes the properties and applies default Protobuf values if necessary
 	 * @param _value initial values object or instance of Transcription to deeply clone from
 	 */
 	constructor(_value?: RecursivePartial<Transcription.AsObject>);
-	get transcription(): string | undefined;
-	set transcription(value: string | undefined);
-	get confidenceScore(): number | undefined;
-	set confidenceScore(value: number | undefined);
+	get transcription(): string;
+	set transcription(value: string);
+	get confidenceScore(): number;
+	set confidenceScore(value: number);
+	get words(): WordDetail[] | undefined;
+	set words(value: WordDetail[] | undefined);
+	get alternatives(): TranscriptionAlternative[] | undefined;
+	set alternatives(value: TranscriptionAlternative[] | undefined);
 	/**
 	 * Serialize message to binary data
 	 * @param instance message instance
@@ -545,15 +488,345 @@ export declare module Transcription {
 	 * Standard JavaScript object representation for Transcription
 	 */
 	interface AsObject {
-		transcription?: string;
-		confidenceScore?: number;
+		transcription: string;
+		confidenceScore: number;
+		words?: WordDetail.AsObject[];
+		alternatives?: TranscriptionAlternative.AsObject[];
 	}
 	/**
 	 * Protobuf JSON representation for Transcription
 	 */
 	interface AsProtobufJSON {
-		transcription?: string;
-		confidenceScore?: number;
+		transcription: string;
+		confidenceScore: number;
+		words: WordDetail.AsProtobufJSON[] | null;
+		alternatives: TranscriptionAlternative.AsProtobufJSON[] | null;
+	}
+}
+/**
+ * Message implementation for ondewo.s2t.TranscriptionAlternative
+ */
+export declare class TranscriptionAlternative implements GrpcMessage {
+	static id: string;
+	/**
+	 * Deserialize binary data to message
+	 * @param instance message instance
+	 */
+	static deserializeBinary(bytes: ByteSource): TranscriptionAlternative;
+	/**
+	 * Check all the properties and set default protobuf values if necessary
+	 * @param _instance message instance
+	 */
+	static refineValues(_instance: TranscriptionAlternative): void;
+	/**
+	 * Deserializes / reads binary message into message instance using provided binary reader
+	 * @param _instance message instance
+	 * @param _reader binary reader instance
+	 */
+	static deserializeBinaryFromReader(_instance: TranscriptionAlternative, _reader: BinaryReader): void;
+	/**
+	 * Serializes a message to binary format using provided binary reader
+	 * @param _instance message instance
+	 * @param _writer binary writer instance
+	 */
+	static serializeBinaryToWriter(_instance: TranscriptionAlternative, _writer: BinaryWriter): void;
+	private _transcript;
+	private _confidence;
+	private _words?;
+	/**
+	 * Message constructor. Initializes the properties and applies default Protobuf values if necessary
+	 * @param _value initial values object or instance of TranscriptionAlternative to deeply clone from
+	 */
+	constructor(_value?: RecursivePartial<TranscriptionAlternative.AsObject>);
+	get transcript(): string;
+	set transcript(value: string);
+	get confidence(): number;
+	set confidence(value: number);
+	get words(): WordDetail[] | undefined;
+	set words(value: WordDetail[] | undefined);
+	/**
+	 * Serialize message to binary data
+	 * @param instance message instance
+	 */
+	serializeBinary(): any;
+	/**
+	 * Cast message to standard JavaScript object (all non-primitive values are deeply cloned)
+	 */
+	toObject(): TranscriptionAlternative.AsObject;
+	/**
+	 * Convenience method to support JSON.stringify(message), replicates the structure of toObject()
+	 */
+	toJSON(): TranscriptionAlternative.AsObject;
+	/**
+	 * Cast message to JSON using protobuf JSON notation: https://developers.google.com/protocol-buffers/docs/proto3#json
+	 * Attention: output differs from toObject() e.g. enums are represented as names and not as numbers, Timestamp is an ISO Date string format etc.
+	 * If the message itself or some of descendant messages is google.protobuf.Any, you MUST provide a message pool as options. If not, the messagePool is not required
+	 */
+	toProtobufJSON(options?: ToProtobufJSONOptions): TranscriptionAlternative.AsProtobufJSON;
+}
+export declare module TranscriptionAlternative {
+	/**
+	 * Standard JavaScript object representation for TranscriptionAlternative
+	 */
+	interface AsObject {
+		transcript: string;
+		confidence: number;
+		words?: WordDetail.AsObject[];
+	}
+	/**
+	 * Protobuf JSON representation for TranscriptionAlternative
+	 */
+	interface AsProtobufJSON {
+		transcript: string;
+		confidence: number;
+		words: WordDetail.AsProtobufJSON[] | null;
+	}
+}
+/**
+ * Message implementation for ondewo.s2t.WordDetail
+ */
+export declare class WordDetail implements GrpcMessage {
+	static id: string;
+	/**
+	 * Deserialize binary data to message
+	 * @param instance message instance
+	 */
+	static deserializeBinary(bytes: ByteSource): WordDetail;
+	/**
+	 * Check all the properties and set default protobuf values if necessary
+	 * @param _instance message instance
+	 */
+	static refineValues(_instance: WordDetail): void;
+	/**
+	 * Deserializes / reads binary message into message instance using provided binary reader
+	 * @param _instance message instance
+	 * @param _reader binary reader instance
+	 */
+	static deserializeBinaryFromReader(_instance: WordDetail, _reader: BinaryReader): void;
+	/**
+	 * Serializes a message to binary format using provided binary reader
+	 * @param _instance message instance
+	 * @param _writer binary writer instance
+	 */
+	static serializeBinaryToWriter(_instance: WordDetail, _writer: BinaryWriter): void;
+	private _startTime;
+	private _endTime;
+	private _word;
+	private _confidence;
+	private _wordAlternatives?;
+	/**
+	 * Message constructor. Initializes the properties and applies default Protobuf values if necessary
+	 * @param _value initial values object or instance of WordDetail to deeply clone from
+	 */
+	constructor(_value?: RecursivePartial<WordDetail.AsObject>);
+	get startTime(): number;
+	set startTime(value: number);
+	get endTime(): number;
+	set endTime(value: number);
+	get word(): string;
+	set word(value: string);
+	get confidence(): number;
+	set confidence(value: number);
+	get wordAlternatives(): WordAlternative[] | undefined;
+	set wordAlternatives(value: WordAlternative[] | undefined);
+	/**
+	 * Serialize message to binary data
+	 * @param instance message instance
+	 */
+	serializeBinary(): any;
+	/**
+	 * Cast message to standard JavaScript object (all non-primitive values are deeply cloned)
+	 */
+	toObject(): WordDetail.AsObject;
+	/**
+	 * Convenience method to support JSON.stringify(message), replicates the structure of toObject()
+	 */
+	toJSON(): WordDetail.AsObject;
+	/**
+	 * Cast message to JSON using protobuf JSON notation: https://developers.google.com/protocol-buffers/docs/proto3#json
+	 * Attention: output differs from toObject() e.g. enums are represented as names and not as numbers, Timestamp is an ISO Date string format etc.
+	 * If the message itself or some of descendant messages is google.protobuf.Any, you MUST provide a message pool as options. If not, the messagePool is not required
+	 */
+	toProtobufJSON(options?: ToProtobufJSONOptions): WordDetail.AsProtobufJSON;
+}
+export declare module WordDetail {
+	/**
+	 * Standard JavaScript object representation for WordDetail
+	 */
+	interface AsObject {
+		startTime: number;
+		endTime: number;
+		word: string;
+		confidence: number;
+		wordAlternatives?: WordAlternative.AsObject[];
+	}
+	/**
+	 * Protobuf JSON representation for WordDetail
+	 */
+	interface AsProtobufJSON {
+		startTime: number;
+		endTime: number;
+		word: string;
+		confidence: number;
+		wordAlternatives: WordAlternative.AsProtobufJSON[] | null;
+	}
+}
+/**
+ * Message implementation for ondewo.s2t.WordAlternative
+ */
+export declare class WordAlternative implements GrpcMessage {
+	static id: string;
+	/**
+	 * Deserialize binary data to message
+	 * @param instance message instance
+	 */
+	static deserializeBinary(bytes: ByteSource): WordAlternative;
+	/**
+	 * Check all the properties and set default protobuf values if necessary
+	 * @param _instance message instance
+	 */
+	static refineValues(_instance: WordAlternative): void;
+	/**
+	 * Deserializes / reads binary message into message instance using provided binary reader
+	 * @param _instance message instance
+	 * @param _reader binary reader instance
+	 */
+	static deserializeBinaryFromReader(_instance: WordAlternative, _reader: BinaryReader): void;
+	/**
+	 * Serializes a message to binary format using provided binary reader
+	 * @param _instance message instance
+	 * @param _writer binary writer instance
+	 */
+	static serializeBinaryToWriter(_instance: WordAlternative, _writer: BinaryWriter): void;
+	private _word;
+	private _confidence;
+	/**
+	 * Message constructor. Initializes the properties and applies default Protobuf values if necessary
+	 * @param _value initial values object or instance of WordAlternative to deeply clone from
+	 */
+	constructor(_value?: RecursivePartial<WordAlternative.AsObject>);
+	get word(): string;
+	set word(value: string);
+	get confidence(): number;
+	set confidence(value: number);
+	/**
+	 * Serialize message to binary data
+	 * @param instance message instance
+	 */
+	serializeBinary(): any;
+	/**
+	 * Cast message to standard JavaScript object (all non-primitive values are deeply cloned)
+	 */
+	toObject(): WordAlternative.AsObject;
+	/**
+	 * Convenience method to support JSON.stringify(message), replicates the structure of toObject()
+	 */
+	toJSON(): WordAlternative.AsObject;
+	/**
+	 * Cast message to JSON using protobuf JSON notation: https://developers.google.com/protocol-buffers/docs/proto3#json
+	 * Attention: output differs from toObject() e.g. enums are represented as names and not as numbers, Timestamp is an ISO Date string format etc.
+	 * If the message itself or some of descendant messages is google.protobuf.Any, you MUST provide a message pool as options. If not, the messagePool is not required
+	 */
+	toProtobufJSON(options?: ToProtobufJSONOptions): WordAlternative.AsProtobufJSON;
+}
+export declare module WordAlternative {
+	/**
+	 * Standard JavaScript object representation for WordAlternative
+	 */
+	interface AsObject {
+		word: string;
+		confidence: number;
+	}
+	/**
+	 * Protobuf JSON representation for WordAlternative
+	 */
+	interface AsProtobufJSON {
+		word: string;
+		confidence: number;
+	}
+}
+/**
+ * Message implementation for ondewo.s2t.TranscribeStreamRequest
+ */
+export declare class TranscribeStreamRequest implements GrpcMessage {
+	static id: string;
+	/**
+	 * Deserialize binary data to message
+	 * @param instance message instance
+	 */
+	static deserializeBinary(bytes: ByteSource): TranscribeStreamRequest;
+	/**
+	 * Check all the properties and set default protobuf values if necessary
+	 * @param _instance message instance
+	 */
+	static refineValues(_instance: TranscribeStreamRequest): void;
+	/**
+	 * Deserializes / reads binary message into message instance using provided binary reader
+	 * @param _instance message instance
+	 * @param _reader binary reader instance
+	 */
+	static deserializeBinaryFromReader(_instance: TranscribeStreamRequest, _reader: BinaryReader): void;
+	/**
+	 * Serializes a message to binary format using provided binary reader
+	 * @param _instance message instance
+	 * @param _writer binary writer instance
+	 */
+	static serializeBinaryToWriter(_instance: TranscribeStreamRequest, _writer: BinaryWriter): void;
+	private _audioChunk;
+	private _endOfStream;
+	private _config?;
+	private _muteAudio;
+	/**
+	 * Message constructor. Initializes the properties and applies default Protobuf values if necessary
+	 * @param _value initial values object or instance of TranscribeStreamRequest to deeply clone from
+	 */
+	constructor(_value?: RecursivePartial<TranscribeStreamRequest.AsObject>);
+	get audioChunk(): Uint8Array;
+	set audioChunk(value: Uint8Array);
+	get endOfStream(): boolean;
+	set endOfStream(value: boolean);
+	get config(): TranscribeRequestConfig | undefined;
+	set config(value: TranscribeRequestConfig | undefined);
+	get muteAudio(): boolean;
+	set muteAudio(value: boolean);
+	/**
+	 * Serialize message to binary data
+	 * @param instance message instance
+	 */
+	serializeBinary(): any;
+	/**
+	 * Cast message to standard JavaScript object (all non-primitive values are deeply cloned)
+	 */
+	toObject(): TranscribeStreamRequest.AsObject;
+	/**
+	 * Convenience method to support JSON.stringify(message), replicates the structure of toObject()
+	 */
+	toJSON(): TranscribeStreamRequest.AsObject;
+	/**
+	 * Cast message to JSON using protobuf JSON notation: https://developers.google.com/protocol-buffers/docs/proto3#json
+	 * Attention: output differs from toObject() e.g. enums are represented as names and not as numbers, Timestamp is an ISO Date string format etc.
+	 * If the message itself or some of descendant messages is google.protobuf.Any, you MUST provide a message pool as options. If not, the messagePool is not required
+	 */
+	toProtobufJSON(options?: ToProtobufJSONOptions): TranscribeStreamRequest.AsProtobufJSON;
+}
+export declare module TranscribeStreamRequest {
+	/**
+	 * Standard JavaScript object representation for TranscribeStreamRequest
+	 */
+	interface AsObject {
+		audioChunk: Uint8Array;
+		endOfStream: boolean;
+		config?: TranscribeRequestConfig.AsObject;
+		muteAudio: boolean;
+	}
+	/**
+	 * Protobuf JSON representation for TranscribeStreamRequest
+	 */
+	interface AsProtobufJSON {
+		audioChunk: string;
+		endOfStream: boolean;
+		config: TranscribeRequestConfig.AsProtobufJSON | null;
+		muteAudio: boolean;
 	}
 }
 /**
@@ -584,12 +857,12 @@ export declare class TranscribeStreamResponse implements GrpcMessage {
 	 */
 	static serializeBinaryToWriter(_instance: TranscribeStreamResponse, _writer: BinaryWriter): void;
 	private _transcriptions?;
-	private _time?;
-	private _final?;
-	private _returnAudio?;
-	private _audio?;
-	private _utteranceStart?;
-	private _audioUuid?;
+	private _time;
+	private _final;
+	private _returnAudio;
+	private _audio;
+	private _utteranceStart;
+	private _audioUuid;
 	private _config?;
 	private _oneofConfig;
 	/**
@@ -599,18 +872,18 @@ export declare class TranscribeStreamResponse implements GrpcMessage {
 	constructor(_value?: RecursivePartial<TranscribeStreamResponse.AsObject>);
 	get transcriptions(): Transcription[] | undefined;
 	set transcriptions(value: Transcription[] | undefined);
-	get time(): number | undefined;
-	set time(value: number | undefined);
-	get final(): boolean | undefined;
-	set final(value: boolean | undefined);
-	get returnAudio(): boolean | undefined;
-	set returnAudio(value: boolean | undefined);
-	get audio(): Uint8Array | undefined;
-	set audio(value: Uint8Array | undefined);
-	get utteranceStart(): boolean | undefined;
-	set utteranceStart(value: boolean | undefined);
-	get audioUuid(): string | undefined;
-	set audioUuid(value: string | undefined);
+	get time(): number;
+	set time(value: number);
+	get final(): boolean;
+	set final(value: boolean);
+	get returnAudio(): boolean;
+	set returnAudio(value: boolean);
+	get audio(): Uint8Array;
+	set audio(value: Uint8Array);
+	get utteranceStart(): boolean;
+	set utteranceStart(value: boolean);
+	get audioUuid(): string;
+	set audioUuid(value: string);
 	get config(): TranscribeRequestConfig | undefined;
 	set config(value: TranscribeRequestConfig | undefined);
 	get oneofConfig(): TranscribeStreamResponse.OneofConfigCase;
@@ -640,26 +913,26 @@ export declare module TranscribeStreamResponse {
 	 */
 	interface AsObject {
 		transcriptions?: Transcription.AsObject[];
-		time?: number;
-		final?: boolean;
-		returnAudio?: boolean;
-		audio?: Uint8Array;
-		utteranceStart?: boolean;
-		audioUuid?: string;
+		time: number;
+		final: boolean;
+		returnAudio: boolean;
+		audio: Uint8Array;
+		utteranceStart: boolean;
+		audioUuid: string;
 		config?: TranscribeRequestConfig.AsObject;
 	}
 	/**
 	 * Protobuf JSON representation for TranscribeStreamResponse
 	 */
 	interface AsProtobufJSON {
-		transcriptions?: Transcription.AsProtobufJSON[] | null;
-		time?: number;
-		final?: boolean;
-		returnAudio?: boolean;
-		audio?: string;
-		utteranceStart?: boolean;
-		audioUuid?: string;
-		config?: TranscribeRequestConfig.AsProtobufJSON | null;
+		transcriptions: Transcription.AsProtobufJSON[] | null;
+		time: number;
+		final: boolean;
+		returnAudio: boolean;
+		audio: string;
+		utteranceStart: boolean;
+		audioUuid: string;
+		config: TranscribeRequestConfig.AsProtobufJSON | null;
 	}
 	enum OneofConfigCase {
 		none = 0,
@@ -693,15 +966,15 @@ export declare class TranscribeFileRequest implements GrpcMessage {
 	 * @param _writer binary writer instance
 	 */
 	static serializeBinaryToWriter(_instance: TranscribeFileRequest, _writer: BinaryWriter): void;
-	private _audioFile?;
+	private _audioFile;
 	private _config?;
 	/**
 	 * Message constructor. Initializes the properties and applies default Protobuf values if necessary
 	 * @param _value initial values object or instance of TranscribeFileRequest to deeply clone from
 	 */
 	constructor(_value?: RecursivePartial<TranscribeFileRequest.AsObject>);
-	get audioFile(): Uint8Array | undefined;
-	set audioFile(value: Uint8Array | undefined);
+	get audioFile(): Uint8Array;
+	set audioFile(value: Uint8Array);
 	get config(): TranscribeRequestConfig | undefined;
 	set config(value: TranscribeRequestConfig | undefined);
 	/**
@@ -729,15 +1002,15 @@ export declare module TranscribeFileRequest {
 	 * Standard JavaScript object representation for TranscribeFileRequest
 	 */
 	interface AsObject {
-		audioFile?: Uint8Array;
+		audioFile: Uint8Array;
 		config?: TranscribeRequestConfig.AsObject;
 	}
 	/**
 	 * Protobuf JSON representation for TranscribeFileRequest
 	 */
 	interface AsProtobufJSON {
-		audioFile?: string;
-		config?: TranscribeRequestConfig.AsProtobufJSON | null;
+		audioFile: string;
+		config: TranscribeRequestConfig.AsProtobufJSON | null;
 	}
 }
 /**
@@ -768,9 +1041,8 @@ export declare class TranscribeFileResponse implements GrpcMessage {
 	 */
 	static serializeBinaryToWriter(_instance: TranscribeFileResponse, _writer: BinaryWriter): void;
 	private _transcriptions?;
-	private _time?;
-	private _wordTiming?;
-	private _audioUuid?;
+	private _time;
+	private _audioUuid;
 	/**
 	 * Message constructor. Initializes the properties and applies default Protobuf values if necessary
 	 * @param _value initial values object or instance of TranscribeFileResponse to deeply clone from
@@ -778,12 +1050,10 @@ export declare class TranscribeFileResponse implements GrpcMessage {
 	constructor(_value?: RecursivePartial<TranscribeFileResponse.AsObject>);
 	get transcriptions(): Transcription[] | undefined;
 	set transcriptions(value: Transcription[] | undefined);
-	get time(): number | undefined;
-	set time(value: number | undefined);
-	get wordTiming(): WordTiming[] | undefined;
-	set wordTiming(value: WordTiming[] | undefined);
-	get audioUuid(): string | undefined;
-	set audioUuid(value: string | undefined);
+	get time(): number;
+	set time(value: number);
+	get audioUuid(): string;
+	set audioUuid(value: string);
 	/**
 	 * Serialize message to binary data
 	 * @param instance message instance
@@ -810,97 +1080,16 @@ export declare module TranscribeFileResponse {
 	 */
 	interface AsObject {
 		transcriptions?: Transcription.AsObject[];
-		time?: number;
-		wordTiming?: WordTiming.AsObject[];
-		audioUuid?: string;
+		time: number;
+		audioUuid: string;
 	}
 	/**
 	 * Protobuf JSON representation for TranscribeFileResponse
 	 */
 	interface AsProtobufJSON {
-		transcriptions?: Transcription.AsProtobufJSON[] | null;
-		time?: number;
-		wordTiming?: WordTiming.AsProtobufJSON[] | null;
-		audioUuid?: string;
-	}
-}
-/**
- * Message implementation for ondewo.s2t.WordTiming
- */
-export declare class WordTiming implements GrpcMessage {
-	static id: string;
-	/**
-	 * Deserialize binary data to message
-	 * @param instance message instance
-	 */
-	static deserializeBinary(bytes: ByteSource): WordTiming;
-	/**
-	 * Check all the properties and set default protobuf values if necessary
-	 * @param _instance message instance
-	 */
-	static refineValues(_instance: WordTiming): void;
-	/**
-	 * Deserializes / reads binary message into message instance using provided binary reader
-	 * @param _instance message instance
-	 * @param _reader binary reader instance
-	 */
-	static deserializeBinaryFromReader(_instance: WordTiming, _reader: BinaryReader): void;
-	/**
-	 * Serializes a message to binary format using provided binary reader
-	 * @param _instance message instance
-	 * @param _writer binary writer instance
-	 */
-	static serializeBinaryToWriter(_instance: WordTiming, _writer: BinaryWriter): void;
-	private _word?;
-	private _begin?;
-	private _end?;
-	/**
-	 * Message constructor. Initializes the properties and applies default Protobuf values if necessary
-	 * @param _value initial values object or instance of WordTiming to deeply clone from
-	 */
-	constructor(_value?: RecursivePartial<WordTiming.AsObject>);
-	get word(): string | undefined;
-	set word(value: string | undefined);
-	get begin(): number | undefined;
-	set begin(value: number | undefined);
-	get end(): number | undefined;
-	set end(value: number | undefined);
-	/**
-	 * Serialize message to binary data
-	 * @param instance message instance
-	 */
-	serializeBinary(): any;
-	/**
-	 * Cast message to standard JavaScript object (all non-primitive values are deeply cloned)
-	 */
-	toObject(): WordTiming.AsObject;
-	/**
-	 * Convenience method to support JSON.stringify(message), replicates the structure of toObject()
-	 */
-	toJSON(): WordTiming.AsObject;
-	/**
-	 * Cast message to JSON using protobuf JSON notation: https://developers.google.com/protocol-buffers/docs/proto3#json
-	 * Attention: output differs from toObject() e.g. enums are represented as names and not as numbers, Timestamp is an ISO Date string format etc.
-	 * If the message itself or some of descendant messages is google.protobuf.Any, you MUST provide a message pool as options. If not, the messagePool is not required
-	 */
-	toProtobufJSON(options?: ToProtobufJSONOptions): WordTiming.AsProtobufJSON;
-}
-export declare module WordTiming {
-	/**
-	 * Standard JavaScript object representation for WordTiming
-	 */
-	interface AsObject {
-		word?: string;
-		begin?: number;
-		end?: number;
-	}
-	/**
-	 * Protobuf JSON representation for WordTiming
-	 */
-	interface AsProtobufJSON {
-		word?: string;
-		begin?: number;
-		end?: number;
+		transcriptions: Transcription.AsProtobufJSON[] | null;
+		time: number;
+		audioUuid: string;
 	}
 }
 /**
@@ -930,14 +1119,14 @@ export declare class S2tPipelineId implements GrpcMessage {
 	 * @param _writer binary writer instance
 	 */
 	static serializeBinaryToWriter(_instance: S2tPipelineId, _writer: BinaryWriter): void;
-	private _id?;
+	private _id;
 	/**
 	 * Message constructor. Initializes the properties and applies default Protobuf values if necessary
 	 * @param _value initial values object or instance of S2tPipelineId to deeply clone from
 	 */
 	constructor(_value?: RecursivePartial<S2tPipelineId.AsObject>);
-	get id(): string | undefined;
-	set id(value: string | undefined);
+	get id(): string;
+	set id(value: string);
 	/**
 	 * Serialize message to binary data
 	 * @param instance message instance
@@ -963,13 +1152,13 @@ export declare module S2tPipelineId {
 	 * Standard JavaScript object representation for S2tPipelineId
 	 */
 	interface AsObject {
-		id?: string;
+		id: string;
 	}
 	/**
 	 * Protobuf JSON representation for S2tPipelineId
 	 */
 	interface AsProtobufJSON {
-		id?: string;
+		id: string;
 	}
 }
 /**
@@ -999,23 +1188,23 @@ export declare class ListS2tPipelinesRequest implements GrpcMessage {
 	 * @param _writer binary writer instance
 	 */
 	static serializeBinaryToWriter(_instance: ListS2tPipelinesRequest, _writer: BinaryWriter): void;
-	private _languages?;
-	private _pipelineOwners?;
-	private _domains?;
-	private _registeredOnly?;
+	private _languages;
+	private _pipelineOwners;
+	private _domains;
+	private _registeredOnly;
 	/**
 	 * Message constructor. Initializes the properties and applies default Protobuf values if necessary
 	 * @param _value initial values object or instance of ListS2tPipelinesRequest to deeply clone from
 	 */
 	constructor(_value?: RecursivePartial<ListS2tPipelinesRequest.AsObject>);
-	get languages(): string[] | undefined;
-	set languages(value: string[] | undefined);
-	get pipelineOwners(): string[] | undefined;
-	set pipelineOwners(value: string[] | undefined);
-	get domains(): string[] | undefined;
-	set domains(value: string[] | undefined);
-	get registeredOnly(): boolean | undefined;
-	set registeredOnly(value: boolean | undefined);
+	get languages(): string[];
+	set languages(value: string[]);
+	get pipelineOwners(): string[];
+	set pipelineOwners(value: string[]);
+	get domains(): string[];
+	set domains(value: string[]);
+	get registeredOnly(): boolean;
+	set registeredOnly(value: boolean);
 	/**
 	 * Serialize message to binary data
 	 * @param instance message instance
@@ -1041,19 +1230,19 @@ export declare module ListS2tPipelinesRequest {
 	 * Standard JavaScript object representation for ListS2tPipelinesRequest
 	 */
 	interface AsObject {
-		languages?: string[];
-		pipelineOwners?: string[];
-		domains?: string[];
-		registeredOnly?: boolean;
+		languages: string[];
+		pipelineOwners: string[];
+		domains: string[];
+		registeredOnly: boolean;
 	}
 	/**
 	 * Protobuf JSON representation for ListS2tPipelinesRequest
 	 */
 	interface AsProtobufJSON {
-		languages?: string[];
-		pipelineOwners?: string[];
-		domains?: string[];
-		registeredOnly?: boolean;
+		languages: string[];
+		pipelineOwners: string[];
+		domains: string[];
+		registeredOnly: boolean;
 	}
 }
 /**
@@ -1122,7 +1311,7 @@ export declare module ListS2tPipelinesResponse {
 	 * Protobuf JSON representation for ListS2tPipelinesResponse
 	 */
 	interface AsProtobufJSON {
-		pipelineConfigs?: Speech2TextConfig.AsProtobufJSON[] | null;
+		pipelineConfigs: Speech2TextConfig.AsProtobufJSON[] | null;
 	}
 }
 /**
@@ -1152,17 +1341,17 @@ export declare class ListS2tLanguagesRequest implements GrpcMessage {
 	 * @param _writer binary writer instance
 	 */
 	static serializeBinaryToWriter(_instance: ListS2tLanguagesRequest, _writer: BinaryWriter): void;
-	private _domains?;
-	private _pipelineOwners?;
+	private _domains;
+	private _pipelineOwners;
 	/**
 	 * Message constructor. Initializes the properties and applies default Protobuf values if necessary
 	 * @param _value initial values object or instance of ListS2tLanguagesRequest to deeply clone from
 	 */
 	constructor(_value?: RecursivePartial<ListS2tLanguagesRequest.AsObject>);
-	get domains(): string[] | undefined;
-	set domains(value: string[] | undefined);
-	get pipelineOwners(): string[] | undefined;
-	set pipelineOwners(value: string[] | undefined);
+	get domains(): string[];
+	set domains(value: string[]);
+	get pipelineOwners(): string[];
+	set pipelineOwners(value: string[]);
 	/**
 	 * Serialize message to binary data
 	 * @param instance message instance
@@ -1188,15 +1377,15 @@ export declare module ListS2tLanguagesRequest {
 	 * Standard JavaScript object representation for ListS2tLanguagesRequest
 	 */
 	interface AsObject {
-		domains?: string[];
-		pipelineOwners?: string[];
+		domains: string[];
+		pipelineOwners: string[];
 	}
 	/**
 	 * Protobuf JSON representation for ListS2tLanguagesRequest
 	 */
 	interface AsProtobufJSON {
-		domains?: string[];
-		pipelineOwners?: string[];
+		domains: string[];
+		pipelineOwners: string[];
 	}
 }
 /**
@@ -1226,14 +1415,14 @@ export declare class ListS2tLanguagesResponse implements GrpcMessage {
 	 * @param _writer binary writer instance
 	 */
 	static serializeBinaryToWriter(_instance: ListS2tLanguagesResponse, _writer: BinaryWriter): void;
-	private _languages?;
+	private _languages;
 	/**
 	 * Message constructor. Initializes the properties and applies default Protobuf values if necessary
 	 * @param _value initial values object or instance of ListS2tLanguagesResponse to deeply clone from
 	 */
 	constructor(_value?: RecursivePartial<ListS2tLanguagesResponse.AsObject>);
-	get languages(): string[] | undefined;
-	set languages(value: string[] | undefined);
+	get languages(): string[];
+	set languages(value: string[]);
 	/**
 	 * Serialize message to binary data
 	 * @param instance message instance
@@ -1259,13 +1448,13 @@ export declare module ListS2tLanguagesResponse {
 	 * Standard JavaScript object representation for ListS2tLanguagesResponse
 	 */
 	interface AsObject {
-		languages?: string[];
+		languages: string[];
 	}
 	/**
 	 * Protobuf JSON representation for ListS2tLanguagesResponse
 	 */
 	interface AsProtobufJSON {
-		languages?: string[];
+		languages: string[];
 	}
 }
 /**
@@ -1295,17 +1484,17 @@ export declare class ListS2tDomainsRequest implements GrpcMessage {
 	 * @param _writer binary writer instance
 	 */
 	static serializeBinaryToWriter(_instance: ListS2tDomainsRequest, _writer: BinaryWriter): void;
-	private _languages?;
-	private _pipelineOwners?;
+	private _languages;
+	private _pipelineOwners;
 	/**
 	 * Message constructor. Initializes the properties and applies default Protobuf values if necessary
 	 * @param _value initial values object or instance of ListS2tDomainsRequest to deeply clone from
 	 */
 	constructor(_value?: RecursivePartial<ListS2tDomainsRequest.AsObject>);
-	get languages(): string[] | undefined;
-	set languages(value: string[] | undefined);
-	get pipelineOwners(): string[] | undefined;
-	set pipelineOwners(value: string[] | undefined);
+	get languages(): string[];
+	set languages(value: string[]);
+	get pipelineOwners(): string[];
+	set pipelineOwners(value: string[]);
 	/**
 	 * Serialize message to binary data
 	 * @param instance message instance
@@ -1331,15 +1520,15 @@ export declare module ListS2tDomainsRequest {
 	 * Standard JavaScript object representation for ListS2tDomainsRequest
 	 */
 	interface AsObject {
-		languages?: string[];
-		pipelineOwners?: string[];
+		languages: string[];
+		pipelineOwners: string[];
 	}
 	/**
 	 * Protobuf JSON representation for ListS2tDomainsRequest
 	 */
 	interface AsProtobufJSON {
-		languages?: string[];
-		pipelineOwners?: string[];
+		languages: string[];
+		pipelineOwners: string[];
 	}
 }
 /**
@@ -1369,14 +1558,14 @@ export declare class ListS2tDomainsResponse implements GrpcMessage {
 	 * @param _writer binary writer instance
 	 */
 	static serializeBinaryToWriter(_instance: ListS2tDomainsResponse, _writer: BinaryWriter): void;
-	private _domains?;
+	private _domains;
 	/**
 	 * Message constructor. Initializes the properties and applies default Protobuf values if necessary
 	 * @param _value initial values object or instance of ListS2tDomainsResponse to deeply clone from
 	 */
 	constructor(_value?: RecursivePartial<ListS2tDomainsResponse.AsObject>);
-	get domains(): string[] | undefined;
-	set domains(value: string[] | undefined);
+	get domains(): string[];
+	set domains(value: string[]);
 	/**
 	 * Serialize message to binary data
 	 * @param instance message instance
@@ -1402,13 +1591,13 @@ export declare module ListS2tDomainsResponse {
 	 * Standard JavaScript object representation for ListS2tDomainsResponse
 	 */
 	interface AsObject {
-		domains?: string[];
+		domains: string[];
 	}
 	/**
 	 * Protobuf JSON representation for ListS2tDomainsResponse
 	 */
 	interface AsProtobufJSON {
-		domains?: string[];
+		domains: string[];
 	}
 }
 /**
@@ -1438,14 +1627,14 @@ export declare class S2TGetServiceInfoResponse implements GrpcMessage {
 	 * @param _writer binary writer instance
 	 */
 	static serializeBinaryToWriter(_instance: S2TGetServiceInfoResponse, _writer: BinaryWriter): void;
-	private _version?;
+	private _version;
 	/**
 	 * Message constructor. Initializes the properties and applies default Protobuf values if necessary
 	 * @param _value initial values object or instance of S2TGetServiceInfoResponse to deeply clone from
 	 */
 	constructor(_value?: RecursivePartial<S2TGetServiceInfoResponse.AsObject>);
-	get version(): string | undefined;
-	set version(value: string | undefined);
+	get version(): string;
+	set version(value: string);
 	/**
 	 * Serialize message to binary data
 	 * @param instance message instance
@@ -1471,13 +1660,13 @@ export declare module S2TGetServiceInfoResponse {
 	 * Standard JavaScript object representation for S2TGetServiceInfoResponse
 	 */
 	interface AsObject {
-		version?: string;
+		version: string;
 	}
 	/**
 	 * Protobuf JSON representation for S2TGetServiceInfoResponse
 	 */
 	interface AsProtobufJSON {
-		version?: string;
+		version: string;
 	}
 }
 /**
@@ -1507,9 +1696,9 @@ export declare class Speech2TextConfig implements GrpcMessage {
 	 * @param _writer binary writer instance
 	 */
 	static serializeBinaryToWriter(_instance: Speech2TextConfig, _writer: BinaryWriter): void;
-	private _id?;
+	private _id;
 	private _description?;
-	private _active?;
+	private _active;
 	private _inference?;
 	private _streamingServer?;
 	private _voiceActivityDetection?;
@@ -1520,12 +1709,12 @@ export declare class Speech2TextConfig implements GrpcMessage {
 	 * @param _value initial values object or instance of Speech2TextConfig to deeply clone from
 	 */
 	constructor(_value?: RecursivePartial<Speech2TextConfig.AsObject>);
-	get id(): string | undefined;
-	set id(value: string | undefined);
+	get id(): string;
+	set id(value: string);
 	get description(): S2TDescription | undefined;
 	set description(value: S2TDescription | undefined);
-	get active(): boolean | undefined;
-	set active(value: boolean | undefined);
+	get active(): boolean;
+	set active(value: boolean);
 	get inference(): S2TInference | undefined;
 	set inference(value: S2TInference | undefined);
 	get streamingServer(): StreamingServer | undefined;
@@ -1561,9 +1750,9 @@ export declare module Speech2TextConfig {
 	 * Standard JavaScript object representation for Speech2TextConfig
 	 */
 	interface AsObject {
-		id?: string;
+		id: string;
 		description?: S2TDescription.AsObject;
-		active?: boolean;
+		active: boolean;
 		inference?: S2TInference.AsObject;
 		streamingServer?: StreamingServer.AsObject;
 		voiceActivityDetection?: VoiceActivityDetection.AsObject;
@@ -1574,14 +1763,14 @@ export declare module Speech2TextConfig {
 	 * Protobuf JSON representation for Speech2TextConfig
 	 */
 	interface AsProtobufJSON {
-		id?: string;
-		description?: S2TDescription.AsProtobufJSON | null;
-		active?: boolean;
-		inference?: S2TInference.AsProtobufJSON | null;
-		streamingServer?: StreamingServer.AsProtobufJSON | null;
-		voiceActivityDetection?: VoiceActivityDetection.AsProtobufJSON | null;
-		postProcessing?: PostProcessing.AsProtobufJSON | null;
-		logging?: Logging.AsProtobufJSON | null;
+		id: string;
+		description: S2TDescription.AsProtobufJSON | null;
+		active: boolean;
+		inference: S2TInference.AsProtobufJSON | null;
+		streamingServer: StreamingServer.AsProtobufJSON | null;
+		voiceActivityDetection: VoiceActivityDetection.AsProtobufJSON | null;
+		postProcessing: PostProcessing.AsProtobufJSON | null;
+		logging: Logging.AsProtobufJSON | null;
 	}
 }
 /**
@@ -1611,23 +1800,23 @@ export declare class S2TDescription implements GrpcMessage {
 	 * @param _writer binary writer instance
 	 */
 	static serializeBinaryToWriter(_instance: S2TDescription, _writer: BinaryWriter): void;
-	private _language?;
-	private _pipelineOwner?;
-	private _domain?;
-	private _comments?;
+	private _language;
+	private _pipelineOwner;
+	private _domain;
+	private _comments;
 	/**
 	 * Message constructor. Initializes the properties and applies default Protobuf values if necessary
 	 * @param _value initial values object or instance of S2TDescription to deeply clone from
 	 */
 	constructor(_value?: RecursivePartial<S2TDescription.AsObject>);
-	get language(): string | undefined;
-	set language(value: string | undefined);
-	get pipelineOwner(): string | undefined;
-	set pipelineOwner(value: string | undefined);
-	get domain(): string | undefined;
-	set domain(value: string | undefined);
-	get comments(): string | undefined;
-	set comments(value: string | undefined);
+	get language(): string;
+	set language(value: string);
+	get pipelineOwner(): string;
+	set pipelineOwner(value: string);
+	get domain(): string;
+	set domain(value: string);
+	get comments(): string;
+	set comments(value: string);
 	/**
 	 * Serialize message to binary data
 	 * @param instance message instance
@@ -1653,19 +1842,19 @@ export declare module S2TDescription {
 	 * Standard JavaScript object representation for S2TDescription
 	 */
 	interface AsObject {
-		language?: string;
-		pipelineOwner?: string;
-		domain?: string;
-		comments?: string;
+		language: string;
+		pipelineOwner: string;
+		domain: string;
+		comments: string;
 	}
 	/**
 	 * Protobuf JSON representation for S2TDescription
 	 */
 	interface AsProtobufJSON {
-		language?: string;
-		pipelineOwner?: string;
-		domain?: string;
-		comments?: string;
+		language: string;
+		pipelineOwner: string;
+		domain: string;
+		comments: string;
 	}
 }
 /**
@@ -1695,17 +1884,20 @@ export declare class S2TInference implements GrpcMessage {
 	 * @param _writer binary writer instance
 	 */
 	static serializeBinaryToWriter(_instance: S2TInference, _writer: BinaryWriter): void;
-	private _ctcAcousticModels?;
+	private _acousticModels?;
 	private _languageModels?;
+	private _inferenceBackend;
 	/**
 	 * Message constructor. Initializes the properties and applies default Protobuf values if necessary
 	 * @param _value initial values object or instance of S2TInference to deeply clone from
 	 */
 	constructor(_value?: RecursivePartial<S2TInference.AsObject>);
-	get ctcAcousticModels(): CtcAcousticModels | undefined;
-	set ctcAcousticModels(value: CtcAcousticModels | undefined);
+	get acousticModels(): AcousticModels | undefined;
+	set acousticModels(value: AcousticModels | undefined);
 	get languageModels(): LanguageModels | undefined;
 	set languageModels(value: LanguageModels | undefined);
+	get inferenceBackend(): InferenceBackend;
+	set inferenceBackend(value: InferenceBackend);
 	/**
 	 * Serialize message to binary data
 	 * @param instance message instance
@@ -1731,56 +1923,60 @@ export declare module S2TInference {
 	 * Standard JavaScript object representation for S2TInference
 	 */
 	interface AsObject {
-		ctcAcousticModels?: CtcAcousticModels.AsObject;
+		acousticModels?: AcousticModels.AsObject;
 		languageModels?: LanguageModels.AsObject;
+		inferenceBackend: InferenceBackend;
 	}
 	/**
 	 * Protobuf JSON representation for S2TInference
 	 */
 	interface AsProtobufJSON {
-		ctcAcousticModels?: CtcAcousticModels.AsProtobufJSON | null;
-		languageModels?: LanguageModels.AsProtobufJSON | null;
+		acousticModels: AcousticModels.AsProtobufJSON | null;
+		languageModels: LanguageModels.AsProtobufJSON | null;
+		inferenceBackend: string;
 	}
 }
 /**
- * Message implementation for ondewo.s2t.CtcAcousticModels
+ * Message implementation for ondewo.s2t.AcousticModels
  */
-export declare class CtcAcousticModels implements GrpcMessage {
+export declare class AcousticModels implements GrpcMessage {
 	static id: string;
 	/**
 	 * Deserialize binary data to message
 	 * @param instance message instance
 	 */
-	static deserializeBinary(bytes: ByteSource): CtcAcousticModels;
+	static deserializeBinary(bytes: ByteSource): AcousticModels;
 	/**
 	 * Check all the properties and set default protobuf values if necessary
 	 * @param _instance message instance
 	 */
-	static refineValues(_instance: CtcAcousticModels): void;
+	static refineValues(_instance: AcousticModels): void;
 	/**
 	 * Deserializes / reads binary message into message instance using provided binary reader
 	 * @param _instance message instance
 	 * @param _reader binary reader instance
 	 */
-	static deserializeBinaryFromReader(_instance: CtcAcousticModels, _reader: BinaryReader): void;
+	static deserializeBinaryFromReader(_instance: AcousticModels, _reader: BinaryReader): void;
 	/**
 	 * Serializes a message to binary format using provided binary reader
 	 * @param _instance message instance
 	 * @param _writer binary writer instance
 	 */
-	static serializeBinaryToWriter(_instance: CtcAcousticModels, _writer: BinaryWriter): void;
-	private _type?;
+	static serializeBinaryToWriter(_instance: AcousticModels, _writer: BinaryWriter): void;
+	private _type;
 	private _quartznet?;
 	private _quartznetTriton?;
 	private _wav2vec?;
 	private _wav2vecTriton?;
+	private _whisper?;
+	private _whisperTriton?;
 	/**
 	 * Message constructor. Initializes the properties and applies default Protobuf values if necessary
-	 * @param _value initial values object or instance of CtcAcousticModels to deeply clone from
+	 * @param _value initial values object or instance of AcousticModels to deeply clone from
 	 */
-	constructor(_value?: RecursivePartial<CtcAcousticModels.AsObject>);
-	get type(): string | undefined;
-	set type(value: string | undefined);
+	constructor(_value?: RecursivePartial<AcousticModels.AsObject>);
+	get type(): string;
+	set type(value: string);
 	get quartznet(): Quartznet | undefined;
 	set quartznet(value: Quartznet | undefined);
 	get quartznetTriton(): QuartznetTriton | undefined;
@@ -1789,6 +1985,10 @@ export declare class CtcAcousticModels implements GrpcMessage {
 	set wav2vec(value: Wav2Vec | undefined);
 	get wav2vecTriton(): Wav2VecTriton | undefined;
 	set wav2vecTriton(value: Wav2VecTriton | undefined);
+	get whisper(): Whisper | undefined;
+	set whisper(value: Whisper | undefined);
+	get whisperTriton(): WhisperTriton | undefined;
+	set whisperTriton(value: WhisperTriton | undefined);
 	/**
 	 * Serialize message to binary data
 	 * @param instance message instance
@@ -1797,38 +1997,205 @@ export declare class CtcAcousticModels implements GrpcMessage {
 	/**
 	 * Cast message to standard JavaScript object (all non-primitive values are deeply cloned)
 	 */
-	toObject(): CtcAcousticModels.AsObject;
+	toObject(): AcousticModels.AsObject;
 	/**
 	 * Convenience method to support JSON.stringify(message), replicates the structure of toObject()
 	 */
-	toJSON(): CtcAcousticModels.AsObject;
+	toJSON(): AcousticModels.AsObject;
 	/**
 	 * Cast message to JSON using protobuf JSON notation: https://developers.google.com/protocol-buffers/docs/proto3#json
 	 * Attention: output differs from toObject() e.g. enums are represented as names and not as numbers, Timestamp is an ISO Date string format etc.
 	 * If the message itself or some of descendant messages is google.protobuf.Any, you MUST provide a message pool as options. If not, the messagePool is not required
 	 */
-	toProtobufJSON(options?: ToProtobufJSONOptions): CtcAcousticModels.AsProtobufJSON;
+	toProtobufJSON(options?: ToProtobufJSONOptions): AcousticModels.AsProtobufJSON;
 }
-export declare module CtcAcousticModels {
+export declare module AcousticModels {
 	/**
-	 * Standard JavaScript object representation for CtcAcousticModels
+	 * Standard JavaScript object representation for AcousticModels
 	 */
 	interface AsObject {
-		type?: string;
+		type: string;
 		quartznet?: Quartznet.AsObject;
 		quartznetTriton?: QuartznetTriton.AsObject;
 		wav2vec?: Wav2Vec.AsObject;
 		wav2vecTriton?: Wav2VecTriton.AsObject;
+		whisper?: Whisper.AsObject;
+		whisperTriton?: WhisperTriton.AsObject;
 	}
 	/**
-	 * Protobuf JSON representation for CtcAcousticModels
+	 * Protobuf JSON representation for AcousticModels
 	 */
 	interface AsProtobufJSON {
-		type?: string;
-		quartznet?: Quartznet.AsProtobufJSON | null;
-		quartznetTriton?: QuartznetTriton.AsProtobufJSON | null;
-		wav2vec?: Wav2Vec.AsProtobufJSON | null;
-		wav2vecTriton?: Wav2VecTriton.AsProtobufJSON | null;
+		type: string;
+		quartznet: Quartznet.AsProtobufJSON | null;
+		quartznetTriton: QuartznetTriton.AsProtobufJSON | null;
+		wav2vec: Wav2Vec.AsProtobufJSON | null;
+		wav2vecTriton: Wav2VecTriton.AsProtobufJSON | null;
+		whisper: Whisper.AsProtobufJSON | null;
+		whisperTriton: WhisperTriton.AsProtobufJSON | null;
+	}
+}
+/**
+ * Message implementation for ondewo.s2t.Whisper
+ */
+export declare class Whisper implements GrpcMessage {
+	static id: string;
+	/**
+	 * Deserialize binary data to message
+	 * @param instance message instance
+	 */
+	static deserializeBinary(bytes: ByteSource): Whisper;
+	/**
+	 * Check all the properties and set default protobuf values if necessary
+	 * @param _instance message instance
+	 */
+	static refineValues(_instance: Whisper): void;
+	/**
+	 * Deserializes / reads binary message into message instance using provided binary reader
+	 * @param _instance message instance
+	 * @param _reader binary reader instance
+	 */
+	static deserializeBinaryFromReader(_instance: Whisper, _reader: BinaryReader): void;
+	/**
+	 * Serializes a message to binary format using provided binary reader
+	 * @param _instance message instance
+	 * @param _writer binary writer instance
+	 */
+	static serializeBinaryToWriter(_instance: Whisper, _writer: BinaryWriter): void;
+	private _modelPath;
+	private _useGpu;
+	private _language;
+	/**
+	 * Message constructor. Initializes the properties and applies default Protobuf values if necessary
+	 * @param _value initial values object or instance of Whisper to deeply clone from
+	 */
+	constructor(_value?: RecursivePartial<Whisper.AsObject>);
+	get modelPath(): string;
+	set modelPath(value: string);
+	get useGpu(): boolean;
+	set useGpu(value: boolean);
+	get language(): string;
+	set language(value: string);
+	/**
+	 * Serialize message to binary data
+	 * @param instance message instance
+	 */
+	serializeBinary(): any;
+	/**
+	 * Cast message to standard JavaScript object (all non-primitive values are deeply cloned)
+	 */
+	toObject(): Whisper.AsObject;
+	/**
+	 * Convenience method to support JSON.stringify(message), replicates the structure of toObject()
+	 */
+	toJSON(): Whisper.AsObject;
+	/**
+	 * Cast message to JSON using protobuf JSON notation: https://developers.google.com/protocol-buffers/docs/proto3#json
+	 * Attention: output differs from toObject() e.g. enums are represented as names and not as numbers, Timestamp is an ISO Date string format etc.
+	 * If the message itself or some of descendant messages is google.protobuf.Any, you MUST provide a message pool as options. If not, the messagePool is not required
+	 */
+	toProtobufJSON(options?: ToProtobufJSONOptions): Whisper.AsProtobufJSON;
+}
+export declare module Whisper {
+	/**
+	 * Standard JavaScript object representation for Whisper
+	 */
+	interface AsObject {
+		modelPath: string;
+		useGpu: boolean;
+		language: string;
+	}
+	/**
+	 * Protobuf JSON representation for Whisper
+	 */
+	interface AsProtobufJSON {
+		modelPath: string;
+		useGpu: boolean;
+		language: string;
+	}
+}
+/**
+ * Message implementation for ondewo.s2t.WhisperTriton
+ */
+export declare class WhisperTriton implements GrpcMessage {
+	static id: string;
+	/**
+	 * Deserialize binary data to message
+	 * @param instance message instance
+	 */
+	static deserializeBinary(bytes: ByteSource): WhisperTriton;
+	/**
+	 * Check all the properties and set default protobuf values if necessary
+	 * @param _instance message instance
+	 */
+	static refineValues(_instance: WhisperTriton): void;
+	/**
+	 * Deserializes / reads binary message into message instance using provided binary reader
+	 * @param _instance message instance
+	 * @param _reader binary reader instance
+	 */
+	static deserializeBinaryFromReader(_instance: WhisperTriton, _reader: BinaryReader): void;
+	/**
+	 * Serializes a message to binary format using provided binary reader
+	 * @param _instance message instance
+	 * @param _writer binary writer instance
+	 */
+	static serializeBinaryToWriter(_instance: WhisperTriton, _writer: BinaryWriter): void;
+	private _processorPath;
+	private _tritonModelName;
+	private _tritonModelVersion;
+	private _checkStatusTimeout;
+	/**
+	 * Message constructor. Initializes the properties and applies default Protobuf values if necessary
+	 * @param _value initial values object or instance of WhisperTriton to deeply clone from
+	 */
+	constructor(_value?: RecursivePartial<WhisperTriton.AsObject>);
+	get processorPath(): string;
+	set processorPath(value: string);
+	get tritonModelName(): string;
+	set tritonModelName(value: string);
+	get tritonModelVersion(): string;
+	set tritonModelVersion(value: string);
+	get checkStatusTimeout(): string;
+	set checkStatusTimeout(value: string);
+	/**
+	 * Serialize message to binary data
+	 * @param instance message instance
+	 */
+	serializeBinary(): any;
+	/**
+	 * Cast message to standard JavaScript object (all non-primitive values are deeply cloned)
+	 */
+	toObject(): WhisperTriton.AsObject;
+	/**
+	 * Convenience method to support JSON.stringify(message), replicates the structure of toObject()
+	 */
+	toJSON(): WhisperTriton.AsObject;
+	/**
+	 * Cast message to JSON using protobuf JSON notation: https://developers.google.com/protocol-buffers/docs/proto3#json
+	 * Attention: output differs from toObject() e.g. enums are represented as names and not as numbers, Timestamp is an ISO Date string format etc.
+	 * If the message itself or some of descendant messages is google.protobuf.Any, you MUST provide a message pool as options. If not, the messagePool is not required
+	 */
+	toProtobufJSON(options?: ToProtobufJSONOptions): WhisperTriton.AsProtobufJSON;
+}
+export declare module WhisperTriton {
+	/**
+	 * Standard JavaScript object representation for WhisperTriton
+	 */
+	interface AsObject {
+		processorPath: string;
+		tritonModelName: string;
+		tritonModelVersion: string;
+		checkStatusTimeout: string;
+	}
+	/**
+	 * Protobuf JSON representation for WhisperTriton
+	 */
+	interface AsProtobufJSON {
+		processorPath: string;
+		tritonModelName: string;
+		tritonModelVersion: string;
+		checkStatusTimeout: string;
 	}
 }
 /**
@@ -1858,17 +2225,17 @@ export declare class Wav2Vec implements GrpcMessage {
 	 * @param _writer binary writer instance
 	 */
 	static serializeBinaryToWriter(_instance: Wav2Vec, _writer: BinaryWriter): void;
-	private _modelPath?;
-	private _useGpu?;
+	private _modelPath;
+	private _useGpu;
 	/**
 	 * Message constructor. Initializes the properties and applies default Protobuf values if necessary
 	 * @param _value initial values object or instance of Wav2Vec to deeply clone from
 	 */
 	constructor(_value?: RecursivePartial<Wav2Vec.AsObject>);
-	get modelPath(): string | undefined;
-	set modelPath(value: string | undefined);
-	get useGpu(): boolean | undefined;
-	set useGpu(value: boolean | undefined);
+	get modelPath(): string;
+	set modelPath(value: string);
+	get useGpu(): boolean;
+	set useGpu(value: boolean);
 	/**
 	 * Serialize message to binary data
 	 * @param instance message instance
@@ -1894,15 +2261,15 @@ export declare module Wav2Vec {
 	 * Standard JavaScript object representation for Wav2Vec
 	 */
 	interface AsObject {
-		modelPath?: string;
-		useGpu?: boolean;
+		modelPath: string;
+		useGpu: boolean;
 	}
 	/**
 	 * Protobuf JSON representation for Wav2Vec
 	 */
 	interface AsProtobufJSON {
-		modelPath?: string;
-		useGpu?: boolean;
+		modelPath: string;
+		useGpu: boolean;
 	}
 }
 /**
@@ -1932,23 +2299,23 @@ export declare class Wav2VecTriton implements GrpcMessage {
 	 * @param _writer binary writer instance
 	 */
 	static serializeBinaryToWriter(_instance: Wav2VecTriton, _writer: BinaryWriter): void;
-	private _processorPath?;
-	private _tritonModelName?;
-	private _tritonModelVersion?;
-	private _checkStatusTimeout?;
+	private _processorPath;
+	private _tritonModelName;
+	private _tritonModelVersion;
+	private _checkStatusTimeout;
 	/**
 	 * Message constructor. Initializes the properties and applies default Protobuf values if necessary
 	 * @param _value initial values object or instance of Wav2VecTriton to deeply clone from
 	 */
 	constructor(_value?: RecursivePartial<Wav2VecTriton.AsObject>);
-	get processorPath(): string | undefined;
-	set processorPath(value: string | undefined);
-	get tritonModelName(): string | undefined;
-	set tritonModelName(value: string | undefined);
-	get tritonModelVersion(): string | undefined;
-	set tritonModelVersion(value: string | undefined);
-	get checkStatusTimeout(): string | undefined;
-	set checkStatusTimeout(value: string | undefined);
+	get processorPath(): string;
+	set processorPath(value: string);
+	get tritonModelName(): string;
+	set tritonModelName(value: string);
+	get tritonModelVersion(): string;
+	set tritonModelVersion(value: string);
+	get checkStatusTimeout(): string;
+	set checkStatusTimeout(value: string);
 	/**
 	 * Serialize message to binary data
 	 * @param instance message instance
@@ -1974,19 +2341,19 @@ export declare module Wav2VecTriton {
 	 * Standard JavaScript object representation for Wav2VecTriton
 	 */
 	interface AsObject {
-		processorPath?: string;
-		tritonModelName?: string;
-		tritonModelVersion?: string;
-		checkStatusTimeout?: string;
+		processorPath: string;
+		tritonModelName: string;
+		tritonModelVersion: string;
+		checkStatusTimeout: string;
 	}
 	/**
 	 * Protobuf JSON representation for Wav2VecTriton
 	 */
 	interface AsProtobufJSON {
-		processorPath?: string;
-		tritonModelName?: string;
-		tritonModelVersion?: string;
-		checkStatusTimeout?: string;
+		processorPath: string;
+		tritonModelName: string;
+		tritonModelVersion: string;
+		checkStatusTimeout: string;
 	}
 }
 /**
@@ -2016,26 +2383,26 @@ export declare class Quartznet implements GrpcMessage {
 	 * @param _writer binary writer instance
 	 */
 	static serializeBinaryToWriter(_instance: Quartznet, _writer: BinaryWriter): void;
-	private _configPath?;
-	private _loadType?;
+	private _configPath;
+	private _loadType;
 	private _ptFiles?;
 	private _ckptFile?;
-	private _useGpu?;
+	private _useGpu;
 	/**
 	 * Message constructor. Initializes the properties and applies default Protobuf values if necessary
 	 * @param _value initial values object or instance of Quartznet to deeply clone from
 	 */
 	constructor(_value?: RecursivePartial<Quartznet.AsObject>);
-	get configPath(): string | undefined;
-	set configPath(value: string | undefined);
-	get loadType(): string | undefined;
-	set loadType(value: string | undefined);
+	get configPath(): string;
+	set configPath(value: string);
+	get loadType(): string;
+	set loadType(value: string);
 	get ptFiles(): PtFiles | undefined;
 	set ptFiles(value: PtFiles | undefined);
 	get ckptFile(): CkptFile | undefined;
 	set ckptFile(value: CkptFile | undefined);
-	get useGpu(): boolean | undefined;
-	set useGpu(value: boolean | undefined);
+	get useGpu(): boolean;
+	set useGpu(value: boolean);
 	/**
 	 * Serialize message to binary data
 	 * @param instance message instance
@@ -2061,21 +2428,21 @@ export declare module Quartznet {
 	 * Standard JavaScript object representation for Quartznet
 	 */
 	interface AsObject {
-		configPath?: string;
-		loadType?: string;
+		configPath: string;
+		loadType: string;
 		ptFiles?: PtFiles.AsObject;
 		ckptFile?: CkptFile.AsObject;
-		useGpu?: boolean;
+		useGpu: boolean;
 	}
 	/**
 	 * Protobuf JSON representation for Quartznet
 	 */
 	interface AsProtobufJSON {
-		configPath?: string;
-		loadType?: string;
-		ptFiles?: PtFiles.AsProtobufJSON | null;
-		ckptFile?: CkptFile.AsProtobufJSON | null;
-		useGpu?: boolean;
+		configPath: string;
+		loadType: string;
+		ptFiles: PtFiles.AsProtobufJSON | null;
+		ckptFile: CkptFile.AsProtobufJSON | null;
+		useGpu: boolean;
 	}
 }
 /**
@@ -2105,17 +2472,17 @@ export declare class PtFiles implements GrpcMessage {
 	 * @param _writer binary writer instance
 	 */
 	static serializeBinaryToWriter(_instance: PtFiles, _writer: BinaryWriter): void;
-	private _path?;
-	private _step?;
+	private _path;
+	private _step;
 	/**
 	 * Message constructor. Initializes the properties and applies default Protobuf values if necessary
 	 * @param _value initial values object or instance of PtFiles to deeply clone from
 	 */
 	constructor(_value?: RecursivePartial<PtFiles.AsObject>);
-	get path(): string | undefined;
-	set path(value: string | undefined);
-	get step(): string | undefined;
-	set step(value: string | undefined);
+	get path(): string;
+	set path(value: string);
+	get step(): string;
+	set step(value: string);
 	/**
 	 * Serialize message to binary data
 	 * @param instance message instance
@@ -2141,15 +2508,15 @@ export declare module PtFiles {
 	 * Standard JavaScript object representation for PtFiles
 	 */
 	interface AsObject {
-		path?: string;
-		step?: string;
+		path: string;
+		step: string;
 	}
 	/**
 	 * Protobuf JSON representation for PtFiles
 	 */
 	interface AsProtobufJSON {
-		path?: string;
-		step?: string;
+		path: string;
+		step: string;
 	}
 }
 /**
@@ -2179,14 +2546,14 @@ export declare class CkptFile implements GrpcMessage {
 	 * @param _writer binary writer instance
 	 */
 	static serializeBinaryToWriter(_instance: CkptFile, _writer: BinaryWriter): void;
-	private _path?;
+	private _path;
 	/**
 	 * Message constructor. Initializes the properties and applies default Protobuf values if necessary
 	 * @param _value initial values object or instance of CkptFile to deeply clone from
 	 */
 	constructor(_value?: RecursivePartial<CkptFile.AsObject>);
-	get path(): string | undefined;
-	set path(value: string | undefined);
+	get path(): string;
+	set path(value: string);
 	/**
 	 * Serialize message to binary data
 	 * @param instance message instance
@@ -2212,13 +2579,13 @@ export declare module CkptFile {
 	 * Standard JavaScript object representation for CkptFile
 	 */
 	interface AsObject {
-		path?: string;
+		path: string;
 	}
 	/**
 	 * Protobuf JSON representation for CkptFile
 	 */
 	interface AsProtobufJSON {
-		path?: string;
+		path: string;
 	}
 }
 /**
@@ -2248,20 +2615,20 @@ export declare class QuartznetTriton implements GrpcMessage {
 	 * @param _writer binary writer instance
 	 */
 	static serializeBinaryToWriter(_instance: QuartznetTriton, _writer: BinaryWriter): void;
-	private _configPath?;
-	private _tritonUrl?;
-	private _tritonModel?;
+	private _configPath;
+	private _tritonUrl;
+	private _tritonModel;
 	/**
 	 * Message constructor. Initializes the properties and applies default Protobuf values if necessary
 	 * @param _value initial values object or instance of QuartznetTriton to deeply clone from
 	 */
 	constructor(_value?: RecursivePartial<QuartznetTriton.AsObject>);
-	get configPath(): string | undefined;
-	set configPath(value: string | undefined);
-	get tritonUrl(): string | undefined;
-	set tritonUrl(value: string | undefined);
-	get tritonModel(): string | undefined;
-	set tritonModel(value: string | undefined);
+	get configPath(): string;
+	set configPath(value: string);
+	get tritonUrl(): string;
+	set tritonUrl(value: string);
+	get tritonModel(): string;
+	set tritonModel(value: string);
 	/**
 	 * Serialize message to binary data
 	 * @param instance message instance
@@ -2287,17 +2654,17 @@ export declare module QuartznetTriton {
 	 * Standard JavaScript object representation for QuartznetTriton
 	 */
 	interface AsObject {
-		configPath?: string;
-		tritonUrl?: string;
-		tritonModel?: string;
+		configPath: string;
+		tritonUrl: string;
+		tritonModel: string;
 	}
 	/**
 	 * Protobuf JSON representation for QuartznetTriton
 	 */
 	interface AsProtobufJSON {
-		configPath?: string;
-		tritonUrl?: string;
-		tritonModel?: string;
+		configPath: string;
+		tritonUrl: string;
+		tritonModel: string;
 	}
 }
 /**
@@ -2327,26 +2694,26 @@ export declare class LanguageModels implements GrpcMessage {
 	 * @param _writer binary writer instance
 	 */
 	static serializeBinaryToWriter(_instance: LanguageModels, _writer: BinaryWriter): void;
-	private _path?;
-	private _beamSize?;
-	private _defaultLm?;
-	private _beamSearchScorerAlpha?;
-	private _beamSearchScorerBeta?;
+	private _path;
+	private _beamSize;
+	private _defaultLm;
+	private _beamSearchScorerAlpha;
+	private _beamSearchScorerBeta;
 	/**
 	 * Message constructor. Initializes the properties and applies default Protobuf values if necessary
 	 * @param _value initial values object or instance of LanguageModels to deeply clone from
 	 */
 	constructor(_value?: RecursivePartial<LanguageModels.AsObject>);
-	get path(): string | undefined;
-	set path(value: string | undefined);
-	get beamSize(): string | undefined;
-	set beamSize(value: string | undefined);
-	get defaultLm(): string | undefined;
-	set defaultLm(value: string | undefined);
-	get beamSearchScorerAlpha(): number | undefined;
-	set beamSearchScorerAlpha(value: number | undefined);
-	get beamSearchScorerBeta(): number | undefined;
-	set beamSearchScorerBeta(value: number | undefined);
+	get path(): string;
+	set path(value: string);
+	get beamSize(): string;
+	set beamSize(value: string);
+	get defaultLm(): string;
+	set defaultLm(value: string);
+	get beamSearchScorerAlpha(): number;
+	set beamSearchScorerAlpha(value: number);
+	get beamSearchScorerBeta(): number;
+	set beamSearchScorerBeta(value: number);
 	/**
 	 * Serialize message to binary data
 	 * @param instance message instance
@@ -2372,21 +2739,21 @@ export declare module LanguageModels {
 	 * Standard JavaScript object representation for LanguageModels
 	 */
 	interface AsObject {
-		path?: string;
-		beamSize?: string;
-		defaultLm?: string;
-		beamSearchScorerAlpha?: number;
-		beamSearchScorerBeta?: number;
+		path: string;
+		beamSize: string;
+		defaultLm: string;
+		beamSearchScorerAlpha: number;
+		beamSearchScorerBeta: number;
 	}
 	/**
 	 * Protobuf JSON representation for LanguageModels
 	 */
 	interface AsProtobufJSON {
-		path?: string;
-		beamSize?: string;
-		defaultLm?: string;
-		beamSearchScorerAlpha?: number;
-		beamSearchScorerBeta?: number;
+		path: string;
+		beamSize: string;
+		defaultLm: string;
+		beamSearchScorerAlpha: number;
+		beamSearchScorerBeta: number;
 	}
 }
 /**
@@ -2416,21 +2783,21 @@ export declare class StreamingServer implements GrpcMessage {
 	 * @param _writer binary writer instance
 	 */
 	static serializeBinaryToWriter(_instance: StreamingServer, _writer: BinaryWriter): void;
-	private _host?;
-	private _port?;
-	private _outputStyle?;
+	private _host;
+	private _port;
+	private _outputStyle;
 	private _streamingSpeechRecognition?;
 	/**
 	 * Message constructor. Initializes the properties and applies default Protobuf values if necessary
 	 * @param _value initial values object or instance of StreamingServer to deeply clone from
 	 */
 	constructor(_value?: RecursivePartial<StreamingServer.AsObject>);
-	get host(): string | undefined;
-	set host(value: string | undefined);
-	get port(): string | undefined;
-	set port(value: string | undefined);
-	get outputStyle(): string | undefined;
-	set outputStyle(value: string | undefined);
+	get host(): string;
+	set host(value: string);
+	get port(): string;
+	set port(value: string);
+	get outputStyle(): string;
+	set outputStyle(value: string);
 	get streamingSpeechRecognition(): StreamingSpeechRecognition | undefined;
 	set streamingSpeechRecognition(value: StreamingSpeechRecognition | undefined);
 	/**
@@ -2458,19 +2825,19 @@ export declare module StreamingServer {
 	 * Standard JavaScript object representation for StreamingServer
 	 */
 	interface AsObject {
-		host?: string;
-		port?: string;
-		outputStyle?: string;
+		host: string;
+		port: string;
+		outputStyle: string;
 		streamingSpeechRecognition?: StreamingSpeechRecognition.AsObject;
 	}
 	/**
 	 * Protobuf JSON representation for StreamingServer
 	 */
 	interface AsProtobufJSON {
-		host?: string;
-		port?: string;
-		outputStyle?: string;
-		streamingSpeechRecognition?: StreamingSpeechRecognition.AsProtobufJSON | null;
+		host: string;
+		port: string;
+		outputStyle: string;
+		streamingSpeechRecognition: StreamingSpeechRecognition.AsProtobufJSON | null;
 	}
 }
 /**
@@ -2500,32 +2867,32 @@ export declare class StreamingSpeechRecognition implements GrpcMessage {
 	 * @param _writer binary writer instance
 	 */
 	static serializeBinaryToWriter(_instance: StreamingSpeechRecognition, _writer: BinaryWriter): void;
-	private _transcribeNotFinal?;
-	private _ctcDecodingMethod?;
-	private _samplingRate?;
-	private _minAudioChunkSize?;
-	private _startOfUtteranceThreshold?;
-	private _endOfUtteranceThreshold?;
-	private _nextChunkTimeout?;
+	private _transcribeNotFinal;
+	private _decodingMethod;
+	private _samplingRate;
+	private _minAudioChunkSize;
+	private _startOfUtteranceThreshold;
+	private _endOfUtteranceThreshold;
+	private _nextChunkTimeout;
 	/**
 	 * Message constructor. Initializes the properties and applies default Protobuf values if necessary
 	 * @param _value initial values object or instance of StreamingSpeechRecognition to deeply clone from
 	 */
 	constructor(_value?: RecursivePartial<StreamingSpeechRecognition.AsObject>);
-	get transcribeNotFinal(): boolean | undefined;
-	set transcribeNotFinal(value: boolean | undefined);
-	get ctcDecodingMethod(): string | undefined;
-	set ctcDecodingMethod(value: string | undefined);
-	get samplingRate(): string | undefined;
-	set samplingRate(value: string | undefined);
-	get minAudioChunkSize(): string | undefined;
-	set minAudioChunkSize(value: string | undefined);
-	get startOfUtteranceThreshold(): number | undefined;
-	set startOfUtteranceThreshold(value: number | undefined);
-	get endOfUtteranceThreshold(): number | undefined;
-	set endOfUtteranceThreshold(value: number | undefined);
-	get nextChunkTimeout(): number | undefined;
-	set nextChunkTimeout(value: number | undefined);
+	get transcribeNotFinal(): boolean;
+	set transcribeNotFinal(value: boolean);
+	get decodingMethod(): string;
+	set decodingMethod(value: string);
+	get samplingRate(): string;
+	set samplingRate(value: string);
+	get minAudioChunkSize(): string;
+	set minAudioChunkSize(value: string);
+	get startOfUtteranceThreshold(): number;
+	set startOfUtteranceThreshold(value: number);
+	get endOfUtteranceThreshold(): number;
+	set endOfUtteranceThreshold(value: number);
+	get nextChunkTimeout(): number;
+	set nextChunkTimeout(value: number);
 	/**
 	 * Serialize message to binary data
 	 * @param instance message instance
@@ -2551,25 +2918,25 @@ export declare module StreamingSpeechRecognition {
 	 * Standard JavaScript object representation for StreamingSpeechRecognition
 	 */
 	interface AsObject {
-		transcribeNotFinal?: boolean;
-		ctcDecodingMethod?: string;
-		samplingRate?: string;
-		minAudioChunkSize?: string;
-		startOfUtteranceThreshold?: number;
-		endOfUtteranceThreshold?: number;
-		nextChunkTimeout?: number;
+		transcribeNotFinal: boolean;
+		decodingMethod: string;
+		samplingRate: string;
+		minAudioChunkSize: string;
+		startOfUtteranceThreshold: number;
+		endOfUtteranceThreshold: number;
+		nextChunkTimeout: number;
 	}
 	/**
 	 * Protobuf JSON representation for StreamingSpeechRecognition
 	 */
 	interface AsProtobufJSON {
-		transcribeNotFinal?: boolean;
-		ctcDecodingMethod?: string;
-		samplingRate?: string;
-		minAudioChunkSize?: string;
-		startOfUtteranceThreshold?: number;
-		endOfUtteranceThreshold?: number;
-		nextChunkTimeout?: number;
+		transcribeNotFinal: boolean;
+		decodingMethod: string;
+		samplingRate: string;
+		minAudioChunkSize: string;
+		startOfUtteranceThreshold: number;
+		endOfUtteranceThreshold: number;
+		nextChunkTimeout: number;
 	}
 }
 /**
@@ -2599,8 +2966,8 @@ export declare class VoiceActivityDetection implements GrpcMessage {
 	 * @param _writer binary writer instance
 	 */
 	static serializeBinaryToWriter(_instance: VoiceActivityDetection, _writer: BinaryWriter): void;
-	private _active?;
-	private _samplingRate?;
+	private _active;
+	private _samplingRate;
 	private _pyannote?;
 	private _matchbox?;
 	/**
@@ -2608,10 +2975,10 @@ export declare class VoiceActivityDetection implements GrpcMessage {
 	 * @param _value initial values object or instance of VoiceActivityDetection to deeply clone from
 	 */
 	constructor(_value?: RecursivePartial<VoiceActivityDetection.AsObject>);
-	get active(): string | undefined;
-	set active(value: string | undefined);
-	get samplingRate(): string | undefined;
-	set samplingRate(value: string | undefined);
+	get active(): string;
+	set active(value: string);
+	get samplingRate(): string;
+	set samplingRate(value: string);
 	get pyannote(): Pyannote | undefined;
 	set pyannote(value: Pyannote | undefined);
 	get matchbox(): Matchbox | undefined;
@@ -2641,8 +3008,8 @@ export declare module VoiceActivityDetection {
 	 * Standard JavaScript object representation for VoiceActivityDetection
 	 */
 	interface AsObject {
-		active?: string;
-		samplingRate?: string;
+		active: string;
+		samplingRate: string;
 		pyannote?: Pyannote.AsObject;
 		matchbox?: Matchbox.AsObject;
 	}
@@ -2650,10 +3017,10 @@ export declare module VoiceActivityDetection {
 	 * Protobuf JSON representation for VoiceActivityDetection
 	 */
 	interface AsProtobufJSON {
-		active?: string;
-		samplingRate?: string;
-		pyannote?: Pyannote.AsProtobufJSON | null;
-		matchbox?: Matchbox.AsProtobufJSON | null;
+		active: string;
+		samplingRate: string;
+		pyannote: Pyannote.AsProtobufJSON | null;
+		matchbox: Matchbox.AsProtobufJSON | null;
 	}
 }
 /**
@@ -2683,33 +3050,33 @@ export declare class Pyannote implements GrpcMessage {
 	 * @param _writer binary writer instance
 	 */
 	static serializeBinaryToWriter(_instance: Pyannote, _writer: BinaryWriter): void;
-	private _modelPath?;
-	private _minAudioSize?;
-	private _offset?;
-	private _onset?;
-	private _logScale?;
-	private _minDurationOff?;
-	private _minDurationOn?;
+	private _modelPath;
+	private _minAudioSize;
+	private _offset;
+	private _onset;
+	private _logScale;
+	private _minDurationOff;
+	private _minDurationOn;
 	private _oneofLogScale;
 	/**
 	 * Message constructor. Initializes the properties and applies default Protobuf values if necessary
 	 * @param _value initial values object or instance of Pyannote to deeply clone from
 	 */
 	constructor(_value?: RecursivePartial<Pyannote.AsObject>);
-	get modelPath(): string | undefined;
-	set modelPath(value: string | undefined);
-	get minAudioSize(): string | undefined;
-	set minAudioSize(value: string | undefined);
-	get offset(): number | undefined;
-	set offset(value: number | undefined);
-	get onset(): number | undefined;
-	set onset(value: number | undefined);
-	get logScale(): boolean | undefined;
-	set logScale(value: boolean | undefined);
-	get minDurationOff(): number | undefined;
-	set minDurationOff(value: number | undefined);
-	get minDurationOn(): number | undefined;
-	set minDurationOn(value: number | undefined);
+	get modelPath(): string;
+	set modelPath(value: string);
+	get minAudioSize(): string;
+	set minAudioSize(value: string);
+	get offset(): number;
+	set offset(value: number);
+	get onset(): number;
+	set onset(value: number);
+	get logScale(): boolean;
+	set logScale(value: boolean);
+	get minDurationOff(): number;
+	set minDurationOff(value: number);
+	get minDurationOn(): number;
+	set minDurationOn(value: number);
 	get oneofLogScale(): Pyannote.OneofLogScaleCase;
 	/**
 	 * Serialize message to binary data
@@ -2736,25 +3103,25 @@ export declare module Pyannote {
 	 * Standard JavaScript object representation for Pyannote
 	 */
 	interface AsObject {
-		modelPath?: string;
-		minAudioSize?: string;
-		offset?: number;
-		onset?: number;
-		logScale?: boolean;
-		minDurationOff?: number;
-		minDurationOn?: number;
+		modelPath: string;
+		minAudioSize: string;
+		offset: number;
+		onset: number;
+		logScale: boolean;
+		minDurationOff: number;
+		minDurationOn: number;
 	}
 	/**
 	 * Protobuf JSON representation for Pyannote
 	 */
 	interface AsProtobufJSON {
-		modelPath?: string;
-		minAudioSize?: string;
-		offset?: number;
-		onset?: number;
-		logScale?: boolean;
-		minDurationOff?: number;
-		minDurationOn?: number;
+		modelPath: string;
+		minAudioSize: string;
+		offset: number;
+		onset: number;
+		logScale: boolean;
+		minDurationOff: number;
+		minDurationOn: number;
 	}
 	enum OneofLogScaleCase {
 		none = 0,
@@ -2788,20 +3155,20 @@ export declare class Matchbox implements GrpcMessage {
 	 * @param _writer binary writer instance
 	 */
 	static serializeBinaryToWriter(_instance: Matchbox, _writer: BinaryWriter): void;
-	private _modelConfig?;
-	private _encoderPath?;
-	private _decoderPath?;
+	private _modelConfig;
+	private _encoderPath;
+	private _decoderPath;
 	/**
 	 * Message constructor. Initializes the properties and applies default Protobuf values if necessary
 	 * @param _value initial values object or instance of Matchbox to deeply clone from
 	 */
 	constructor(_value?: RecursivePartial<Matchbox.AsObject>);
-	get modelConfig(): string | undefined;
-	set modelConfig(value: string | undefined);
-	get encoderPath(): string | undefined;
-	set encoderPath(value: string | undefined);
-	get decoderPath(): string | undefined;
-	set decoderPath(value: string | undefined);
+	get modelConfig(): string;
+	set modelConfig(value: string);
+	get encoderPath(): string;
+	set encoderPath(value: string);
+	get decoderPath(): string;
+	set decoderPath(value: string);
 	/**
 	 * Serialize message to binary data
 	 * @param instance message instance
@@ -2827,17 +3194,17 @@ export declare module Matchbox {
 	 * Standard JavaScript object representation for Matchbox
 	 */
 	interface AsObject {
-		modelConfig?: string;
-		encoderPath?: string;
-		decoderPath?: string;
+		modelConfig: string;
+		encoderPath: string;
+		decoderPath: string;
 	}
 	/**
 	 * Protobuf JSON representation for Matchbox
 	 */
 	interface AsProtobufJSON {
-		modelConfig?: string;
-		encoderPath?: string;
-		decoderPath?: string;
+		modelConfig: string;
+		encoderPath: string;
+		decoderPath: string;
 	}
 }
 /**
@@ -2867,15 +3234,15 @@ export declare class PostProcessing implements GrpcMessage {
 	 * @param _writer binary writer instance
 	 */
 	static serializeBinaryToWriter(_instance: PostProcessing, _writer: BinaryWriter): void;
-	private _pipeline?;
+	private _pipeline;
 	private _postProcessors?;
 	/**
 	 * Message constructor. Initializes the properties and applies default Protobuf values if necessary
 	 * @param _value initial values object or instance of PostProcessing to deeply clone from
 	 */
 	constructor(_value?: RecursivePartial<PostProcessing.AsObject>);
-	get pipeline(): string[] | undefined;
-	set pipeline(value: string[] | undefined);
+	get pipeline(): string[];
+	set pipeline(value: string[]);
 	get postProcessors(): PostProcessors | undefined;
 	set postProcessors(value: PostProcessors | undefined);
 	/**
@@ -2903,15 +3270,15 @@ export declare module PostProcessing {
 	 * Standard JavaScript object representation for PostProcessing
 	 */
 	interface AsObject {
-		pipeline?: string[];
+		pipeline: string[];
 		postProcessors?: PostProcessors.AsObject;
 	}
 	/**
 	 * Protobuf JSON representation for PostProcessing
 	 */
 	interface AsProtobufJSON {
-		pipeline?: string[];
-		postProcessors?: PostProcessors.AsProtobufJSON | null;
+		pipeline: string[];
+		postProcessors: PostProcessors.AsProtobufJSON | null;
 	}
 }
 /**
@@ -2984,8 +3351,8 @@ export declare module PostProcessors {
 	 * Protobuf JSON representation for PostProcessors
 	 */
 	interface AsProtobufJSON {
-		symSpell?: SymSpell.AsProtobufJSON | null;
-		normalization?: S2TNormalization.AsProtobufJSON | null;
+		symSpell: SymSpell.AsProtobufJSON | null;
+		normalization: S2TNormalization.AsProtobufJSON | null;
 	}
 }
 /**
@@ -3015,20 +3382,20 @@ export declare class SymSpell implements GrpcMessage {
 	 * @param _writer binary writer instance
 	 */
 	static serializeBinaryToWriter(_instance: SymSpell, _writer: BinaryWriter): void;
-	private _dictPath?;
-	private _maxDictionaryEditDistance?;
-	private _prefixLength?;
+	private _dictPath;
+	private _maxDictionaryEditDistance;
+	private _prefixLength;
 	/**
 	 * Message constructor. Initializes the properties and applies default Protobuf values if necessary
 	 * @param _value initial values object or instance of SymSpell to deeply clone from
 	 */
 	constructor(_value?: RecursivePartial<SymSpell.AsObject>);
-	get dictPath(): string | undefined;
-	set dictPath(value: string | undefined);
-	get maxDictionaryEditDistance(): string | undefined;
-	set maxDictionaryEditDistance(value: string | undefined);
-	get prefixLength(): string | undefined;
-	set prefixLength(value: string | undefined);
+	get dictPath(): string;
+	set dictPath(value: string);
+	get maxDictionaryEditDistance(): string;
+	set maxDictionaryEditDistance(value: string);
+	get prefixLength(): string;
+	set prefixLength(value: string);
 	/**
 	 * Serialize message to binary data
 	 * @param instance message instance
@@ -3054,17 +3421,17 @@ export declare module SymSpell {
 	 * Standard JavaScript object representation for SymSpell
 	 */
 	interface AsObject {
-		dictPath?: string;
-		maxDictionaryEditDistance?: string;
-		prefixLength?: string;
+		dictPath: string;
+		maxDictionaryEditDistance: string;
+		prefixLength: string;
 	}
 	/**
 	 * Protobuf JSON representation for SymSpell
 	 */
 	interface AsProtobufJSON {
-		dictPath?: string;
-		maxDictionaryEditDistance?: string;
-		prefixLength?: string;
+		dictPath: string;
+		maxDictionaryEditDistance: string;
+		prefixLength: string;
 	}
 }
 /**
@@ -3094,14 +3461,14 @@ export declare class S2TNormalization implements GrpcMessage {
 	 * @param _writer binary writer instance
 	 */
 	static serializeBinaryToWriter(_instance: S2TNormalization, _writer: BinaryWriter): void;
-	private _language?;
+	private _language;
 	/**
 	 * Message constructor. Initializes the properties and applies default Protobuf values if necessary
 	 * @param _value initial values object or instance of S2TNormalization to deeply clone from
 	 */
 	constructor(_value?: RecursivePartial<S2TNormalization.AsObject>);
-	get language(): string | undefined;
-	set language(value: string | undefined);
+	get language(): string;
+	set language(value: string);
 	/**
 	 * Serialize message to binary data
 	 * @param instance message instance
@@ -3127,13 +3494,13 @@ export declare module S2TNormalization {
 	 * Standard JavaScript object representation for S2TNormalization
 	 */
 	interface AsObject {
-		language?: string;
+		language: string;
 	}
 	/**
 	 * Protobuf JSON representation for S2TNormalization
 	 */
 	interface AsProtobufJSON {
-		language?: string;
+		language: string;
 	}
 }
 /**
@@ -3163,17 +3530,17 @@ export declare class Logging implements GrpcMessage {
 	 * @param _writer binary writer instance
 	 */
 	static serializeBinaryToWriter(_instance: Logging, _writer: BinaryWriter): void;
-	private _type?;
-	private _path?;
+	private _type;
+	private _path;
 	/**
 	 * Message constructor. Initializes the properties and applies default Protobuf values if necessary
 	 * @param _value initial values object or instance of Logging to deeply clone from
 	 */
 	constructor(_value?: RecursivePartial<Logging.AsObject>);
-	get type(): string | undefined;
-	set type(value: string | undefined);
-	get path(): string | undefined;
-	set path(value: string | undefined);
+	get type(): string;
+	set type(value: string);
+	get path(): string;
+	set path(value: string);
 	/**
 	 * Serialize message to binary data
 	 * @param instance message instance
@@ -3199,15 +3566,15 @@ export declare module Logging {
 	 * Standard JavaScript object representation for Logging
 	 */
 	interface AsObject {
-		type?: string;
-		path?: string;
+		type: string;
+		path: string;
 	}
 	/**
 	 * Protobuf JSON representation for Logging
 	 */
 	interface AsProtobufJSON {
-		type?: string;
-		path?: string;
+		type: string;
+		path: string;
 	}
 }
 /**
@@ -3237,14 +3604,14 @@ export declare class ListS2tLanguageModelsRequest implements GrpcMessage {
 	 * @param _writer binary writer instance
 	 */
 	static serializeBinaryToWriter(_instance: ListS2tLanguageModelsRequest, _writer: BinaryWriter): void;
-	private _ids?;
+	private _ids;
 	/**
 	 * Message constructor. Initializes the properties and applies default Protobuf values if necessary
 	 * @param _value initial values object or instance of ListS2tLanguageModelsRequest to deeply clone from
 	 */
 	constructor(_value?: RecursivePartial<ListS2tLanguageModelsRequest.AsObject>);
-	get ids(): string[] | undefined;
-	set ids(value: string[] | undefined);
+	get ids(): string[];
+	set ids(value: string[]);
 	/**
 	 * Serialize message to binary data
 	 * @param instance message instance
@@ -3270,13 +3637,13 @@ export declare module ListS2tLanguageModelsRequest {
 	 * Standard JavaScript object representation for ListS2tLanguageModelsRequest
 	 */
 	interface AsObject {
-		ids?: string[];
+		ids: string[];
 	}
 	/**
 	 * Protobuf JSON representation for ListS2tLanguageModelsRequest
 	 */
 	interface AsProtobufJSON {
-		ids?: string[];
+		ids: string[];
 	}
 }
 /**
@@ -3306,17 +3673,17 @@ export declare class LanguageModelPipelineId implements GrpcMessage {
 	 * @param _writer binary writer instance
 	 */
 	static serializeBinaryToWriter(_instance: LanguageModelPipelineId, _writer: BinaryWriter): void;
-	private _pipelineId?;
-	private _modelNames?;
+	private _pipelineId;
+	private _modelNames;
 	/**
 	 * Message constructor. Initializes the properties and applies default Protobuf values if necessary
 	 * @param _value initial values object or instance of LanguageModelPipelineId to deeply clone from
 	 */
 	constructor(_value?: RecursivePartial<LanguageModelPipelineId.AsObject>);
-	get pipelineId(): string | undefined;
-	set pipelineId(value: string | undefined);
-	get modelNames(): string[] | undefined;
-	set modelNames(value: string[] | undefined);
+	get pipelineId(): string;
+	set pipelineId(value: string);
+	get modelNames(): string[];
+	set modelNames(value: string[]);
 	/**
 	 * Serialize message to binary data
 	 * @param instance message instance
@@ -3342,15 +3709,15 @@ export declare module LanguageModelPipelineId {
 	 * Standard JavaScript object representation for LanguageModelPipelineId
 	 */
 	interface AsObject {
-		pipelineId?: string;
-		modelNames?: string[];
+		pipelineId: string;
+		modelNames: string[];
 	}
 	/**
 	 * Protobuf JSON representation for LanguageModelPipelineId
 	 */
 	interface AsProtobufJSON {
-		pipelineId?: string;
-		modelNames?: string[];
+		pipelineId: string;
+		modelNames: string[];
 	}
 }
 /**
@@ -3419,7 +3786,7 @@ export declare module ListS2tLanguageModelsResponse {
 	 * Protobuf JSON representation for ListS2tLanguageModelsResponse
 	 */
 	interface AsProtobufJSON {
-		lmPipelineIds?: LanguageModelPipelineId.AsProtobufJSON[] | null;
+		lmPipelineIds: LanguageModelPipelineId.AsProtobufJSON[] | null;
 	}
 }
 /**
@@ -3449,14 +3816,14 @@ export declare class CreateUserLanguageModelRequest implements GrpcMessage {
 	 * @param _writer binary writer instance
 	 */
 	static serializeBinaryToWriter(_instance: CreateUserLanguageModelRequest, _writer: BinaryWriter): void;
-	private _languageModelName?;
+	private _languageModelName;
 	/**
 	 * Message constructor. Initializes the properties and applies default Protobuf values if necessary
 	 * @param _value initial values object or instance of CreateUserLanguageModelRequest to deeply clone from
 	 */
 	constructor(_value?: RecursivePartial<CreateUserLanguageModelRequest.AsObject>);
-	get languageModelName(): string | undefined;
-	set languageModelName(value: string | undefined);
+	get languageModelName(): string;
+	set languageModelName(value: string);
 	/**
 	 * Serialize message to binary data
 	 * @param instance message instance
@@ -3482,13 +3849,13 @@ export declare module CreateUserLanguageModelRequest {
 	 * Standard JavaScript object representation for CreateUserLanguageModelRequest
 	 */
 	interface AsObject {
-		languageModelName?: string;
+		languageModelName: string;
 	}
 	/**
 	 * Protobuf JSON representation for CreateUserLanguageModelRequest
 	 */
 	interface AsProtobufJSON {
-		languageModelName?: string;
+		languageModelName: string;
 	}
 }
 /**
@@ -3518,14 +3885,14 @@ export declare class DeleteUserLanguageModelRequest implements GrpcMessage {
 	 * @param _writer binary writer instance
 	 */
 	static serializeBinaryToWriter(_instance: DeleteUserLanguageModelRequest, _writer: BinaryWriter): void;
-	private _languageModelName?;
+	private _languageModelName;
 	/**
 	 * Message constructor. Initializes the properties and applies default Protobuf values if necessary
 	 * @param _value initial values object or instance of DeleteUserLanguageModelRequest to deeply clone from
 	 */
 	constructor(_value?: RecursivePartial<DeleteUserLanguageModelRequest.AsObject>);
-	get languageModelName(): string | undefined;
-	set languageModelName(value: string | undefined);
+	get languageModelName(): string;
+	set languageModelName(value: string);
 	/**
 	 * Serialize message to binary data
 	 * @param instance message instance
@@ -3551,13 +3918,13 @@ export declare module DeleteUserLanguageModelRequest {
 	 * Standard JavaScript object representation for DeleteUserLanguageModelRequest
 	 */
 	interface AsObject {
-		languageModelName?: string;
+		languageModelName: string;
 	}
 	/**
 	 * Protobuf JSON representation for DeleteUserLanguageModelRequest
 	 */
 	interface AsProtobufJSON {
-		languageModelName?: string;
+		languageModelName: string;
 	}
 }
 /**
@@ -3587,17 +3954,17 @@ export declare class AddDataToUserLanguageModelRequest implements GrpcMessage {
 	 * @param _writer binary writer instance
 	 */
 	static serializeBinaryToWriter(_instance: AddDataToUserLanguageModelRequest, _writer: BinaryWriter): void;
-	private _languageModelName?;
-	private _zippedData?;
+	private _languageModelName;
+	private _zippedData;
 	/**
 	 * Message constructor. Initializes the properties and applies default Protobuf values if necessary
 	 * @param _value initial values object or instance of AddDataToUserLanguageModelRequest to deeply clone from
 	 */
 	constructor(_value?: RecursivePartial<AddDataToUserLanguageModelRequest.AsObject>);
-	get languageModelName(): string | undefined;
-	set languageModelName(value: string | undefined);
-	get zippedData(): Uint8Array | undefined;
-	set zippedData(value: Uint8Array | undefined);
+	get languageModelName(): string;
+	set languageModelName(value: string);
+	get zippedData(): Uint8Array;
+	set zippedData(value: Uint8Array);
 	/**
 	 * Serialize message to binary data
 	 * @param instance message instance
@@ -3623,15 +3990,15 @@ export declare module AddDataToUserLanguageModelRequest {
 	 * Standard JavaScript object representation for AddDataToUserLanguageModelRequest
 	 */
 	interface AsObject {
-		languageModelName?: string;
-		zippedData?: Uint8Array;
+		languageModelName: string;
+		zippedData: Uint8Array;
 	}
 	/**
 	 * Protobuf JSON representation for AddDataToUserLanguageModelRequest
 	 */
 	interface AsProtobufJSON {
-		languageModelName?: string;
-		zippedData?: string;
+		languageModelName: string;
+		zippedData: string;
 	}
 }
 /**
@@ -3661,17 +4028,17 @@ export declare class TrainUserLanguageModelRequest implements GrpcMessage {
 	 * @param _writer binary writer instance
 	 */
 	static serializeBinaryToWriter(_instance: TrainUserLanguageModelRequest, _writer: BinaryWriter): void;
-	private _languageModelName?;
-	private _order?;
+	private _languageModelName;
+	private _order;
 	/**
 	 * Message constructor. Initializes the properties and applies default Protobuf values if necessary
 	 * @param _value initial values object or instance of TrainUserLanguageModelRequest to deeply clone from
 	 */
 	constructor(_value?: RecursivePartial<TrainUserLanguageModelRequest.AsObject>);
-	get languageModelName(): string | undefined;
-	set languageModelName(value: string | undefined);
-	get order(): string | undefined;
-	set order(value: string | undefined);
+	get languageModelName(): string;
+	set languageModelName(value: string);
+	get order(): string;
+	set order(value: string);
 	/**
 	 * Serialize message to binary data
 	 * @param instance message instance
@@ -3697,14 +4064,14 @@ export declare module TrainUserLanguageModelRequest {
 	 * Standard JavaScript object representation for TrainUserLanguageModelRequest
 	 */
 	interface AsObject {
-		languageModelName?: string;
-		order?: string;
+		languageModelName: string;
+		order: string;
 	}
 	/**
 	 * Protobuf JSON representation for TrainUserLanguageModelRequest
 	 */
 	interface AsProtobufJSON {
-		languageModelName?: string;
-		order?: string;
+		languageModelName: string;
+		order: string;
 	}
 }

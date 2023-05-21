@@ -31,14 +31,14 @@ export declare class StatResponse implements GrpcMessage {
 	 * @param _writer binary writer instance
 	 */
 	static serializeBinaryToWriter(_instance: StatResponse, _writer: BinaryWriter): void;
-	private _value?;
+	private _value;
 	/**
 	 * Message constructor. Initializes the properties and applies default Protobuf values if necessary
 	 * @param _value initial values object or instance of StatResponse to deeply clone from
 	 */
 	constructor(_value?: RecursivePartial<StatResponse.AsObject>);
-	get value(): number | undefined;
-	set value(value: number | undefined);
+	get value(): number;
+	set value(value: number);
 	/**
 	 * Serialize message to binary data
 	 * @param instance message instance
@@ -64,12 +64,12 @@ export declare module StatResponse {
 	 * Standard JavaScript object representation for StatResponse
 	 */
 	interface AsObject {
-		value?: number;
+		value: number;
 	}
 	/**
 	 * Protobuf JSON representation for StatResponse
 	 */
 	interface AsProtobufJSON {
-		value?: number;
+		value: number;
 	}
 }

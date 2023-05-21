@@ -28,7 +28,7 @@ export declare class Http implements GrpcMessage {
 	 */
 	static serializeBinaryToWriter(_instance: Http, _writer: BinaryWriter): void;
 	private _rules?;
-	private _fullyDecodeReservedExpansion?;
+	private _fullyDecodeReservedExpansion;
 	/**
 	 * Message constructor. Initializes the properties and applies default Protobuf values if necessary
 	 * @param _value initial values object or instance of Http to deeply clone from
@@ -36,8 +36,8 @@ export declare class Http implements GrpcMessage {
 	constructor(_value?: RecursivePartial<Http.AsObject>);
 	get rules(): HttpRule[] | undefined;
 	set rules(value: HttpRule[] | undefined);
-	get fullyDecodeReservedExpansion(): boolean | undefined;
-	set fullyDecodeReservedExpansion(value: boolean | undefined);
+	get fullyDecodeReservedExpansion(): boolean;
+	set fullyDecodeReservedExpansion(value: boolean);
 	/**
 	 * Serialize message to binary data
 	 * @param instance message instance
@@ -64,14 +64,14 @@ export declare module Http {
 	 */
 	interface AsObject {
 		rules?: HttpRule.AsObject[];
-		fullyDecodeReservedExpansion?: boolean;
+		fullyDecodeReservedExpansion: boolean;
 	}
 	/**
 	 * Protobuf JSON representation for Http
 	 */
 	interface AsProtobufJSON {
-		rules?: HttpRule.AsProtobufJSON[] | null;
-		fullyDecodeReservedExpansion?: boolean;
+		rules: HttpRule.AsProtobufJSON[] | null;
+		fullyDecodeReservedExpansion: boolean;
 	}
 }
 /**
@@ -101,15 +101,15 @@ export declare class HttpRule implements GrpcMessage {
 	 * @param _writer binary writer instance
 	 */
 	static serializeBinaryToWriter(_instance: HttpRule, _writer: BinaryWriter): void;
-	private _selector?;
-	private _get?;
-	private _put?;
-	private _post?;
-	private _delete?;
-	private _patch?;
+	private _selector;
+	private _get;
+	private _put;
+	private _post;
+	private _delete;
+	private _patch;
 	private _custom?;
-	private _body?;
-	private _responseBody?;
+	private _body;
+	private _responseBody;
 	private _additionalBindings?;
 	private _pattern;
 	/**
@@ -117,24 +117,24 @@ export declare class HttpRule implements GrpcMessage {
 	 * @param _value initial values object or instance of HttpRule to deeply clone from
 	 */
 	constructor(_value?: RecursivePartial<HttpRule.AsObject>);
-	get selector(): string | undefined;
-	set selector(value: string | undefined);
-	get get(): string | undefined;
-	set get(value: string | undefined);
-	get put(): string | undefined;
-	set put(value: string | undefined);
-	get post(): string | undefined;
-	set post(value: string | undefined);
-	get delete(): string | undefined;
-	set delete(value: string | undefined);
-	get patch(): string | undefined;
-	set patch(value: string | undefined);
+	get selector(): string;
+	set selector(value: string);
+	get get(): string;
+	set get(value: string);
+	get put(): string;
+	set put(value: string);
+	get post(): string;
+	set post(value: string);
+	get delete(): string;
+	set delete(value: string);
+	get patch(): string;
+	set patch(value: string);
 	get custom(): CustomHttpPattern | undefined;
 	set custom(value: CustomHttpPattern | undefined);
-	get body(): string | undefined;
-	set body(value: string | undefined);
-	get responseBody(): string | undefined;
-	set responseBody(value: string | undefined);
+	get body(): string;
+	set body(value: string);
+	get responseBody(): string;
+	set responseBody(value: string);
 	get additionalBindings(): HttpRule[] | undefined;
 	set additionalBindings(value: HttpRule[] | undefined);
 	get pattern(): HttpRule.PatternCase;
@@ -163,31 +163,31 @@ export declare module HttpRule {
 	 * Standard JavaScript object representation for HttpRule
 	 */
 	interface AsObject {
-		selector?: string;
-		get?: string;
-		put?: string;
-		post?: string;
-		delete?: string;
-		patch?: string;
+		selector: string;
+		get: string;
+		put: string;
+		post: string;
+		delete: string;
+		patch: string;
 		custom?: CustomHttpPattern.AsObject;
-		body?: string;
-		responseBody?: string;
+		body: string;
+		responseBody: string;
 		additionalBindings?: HttpRule.AsObject[];
 	}
 	/**
 	 * Protobuf JSON representation for HttpRule
 	 */
 	interface AsProtobufJSON {
-		selector?: string;
-		get?: string | null;
-		put?: string | null;
-		post?: string | null;
-		delete?: string | null;
-		patch?: string | null;
-		custom?: CustomHttpPattern.AsProtobufJSON | null;
-		body?: string;
-		responseBody?: string;
-		additionalBindings?: HttpRule.AsProtobufJSON[] | null;
+		selector: string;
+		get: string | null;
+		put: string | null;
+		post: string | null;
+		delete: string | null;
+		patch: string | null;
+		custom: CustomHttpPattern.AsProtobufJSON | null;
+		body: string;
+		responseBody: string;
+		additionalBindings: HttpRule.AsProtobufJSON[] | null;
 	}
 	enum PatternCase {
 		none = 0,
@@ -226,17 +226,17 @@ export declare class CustomHttpPattern implements GrpcMessage {
 	 * @param _writer binary writer instance
 	 */
 	static serializeBinaryToWriter(_instance: CustomHttpPattern, _writer: BinaryWriter): void;
-	private _kind?;
-	private _path?;
+	private _kind;
+	private _path;
 	/**
 	 * Message constructor. Initializes the properties and applies default Protobuf values if necessary
 	 * @param _value initial values object or instance of CustomHttpPattern to deeply clone from
 	 */
 	constructor(_value?: RecursivePartial<CustomHttpPattern.AsObject>);
-	get kind(): string | undefined;
-	set kind(value: string | undefined);
-	get path(): string | undefined;
-	set path(value: string | undefined);
+	get kind(): string;
+	set kind(value: string);
+	get path(): string;
+	set path(value: string);
 	/**
 	 * Serialize message to binary data
 	 * @param instance message instance
@@ -262,14 +262,14 @@ export declare module CustomHttpPattern {
 	 * Standard JavaScript object representation for CustomHttpPattern
 	 */
 	interface AsObject {
-		kind?: string;
-		path?: string;
+		kind: string;
+		path: string;
 	}
 	/**
 	 * Protobuf JSON representation for CustomHttpPattern
 	 */
 	interface AsProtobufJSON {
-		kind?: string;
-		path?: string;
+		kind: string;
+		path: string;
 	}
 }
