@@ -18,7 +18,7 @@ export
 ONDEWO_CSI_VERSION = 3.2.0
 
 CSI_API_GIT_BRANCH=tags/3.2.0
-ONDEWO_PROTO_COMPILER_GIT_BRANCH=tags/4.2.0
+ONDEWO_PROTO_COMPILER_GIT_BRANCH=tags/4.6.0
 ONDEWO_PROTO_COMPILER_DIR=ondewo-proto-compiler
 CSI_APIS_DIR=src/ondewo-csi-api
 CSI_PROTOS_DIR=${CSI_APIS_DIR}/ondewo
@@ -229,10 +229,11 @@ check_out_correct_submodule_versions: ## Fetches all Submodules and checksout sp
 	git submodule update --init --recursive
 	git -C ${CSI_APIS_DIR} fetch --all
 	git -C ${CSI_APIS_DIR} checkout ${CSI_API_GIT_BRANCH}
+	git -C ${CSI_APIS_DIR} pull
 	git -C ${ONDEWO_PROTO_COMPILER_DIR} fetch --all
 	git -C ${ONDEWO_PROTO_COMPILER_DIR} checkout ${ONDEWO_PROTO_COMPILER_GIT_BRANCH}
+	git -C ${ONDEWO_PROTO_COMPILER_DIR} pull
 	make -C ${CSI_APIS_DIR} build
-	#cp -R ${CSI_APIS_DIR}/googleapis/google ${CSI_APIS_DIR}/google
 	@echo "DONE checking out correct submodule versions."
 
 npm_run_build: ## Runs the build command in package.json
