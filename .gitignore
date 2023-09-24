@@ -4,3 +4,5 @@ ondewo-csi-api/*
 .idea/
 .vscode/
 node_modules
+build_check.txt
+build_check_temp.txt

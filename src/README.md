@@ -79,7 +79,7 @@ npm
 │           ├── text-to-speech.pbconf.d.ts
 │           ├── text-to-speech.pb.d.ts
 │           └── text-to-speech.pbsc.d.ts
-├── esm2020
+├── esm2022
 │   ├── api
 │   │   ├── google
 │   │   │   ├── api
@@ -112,10 +112,7 @@ npm
 │   │           └── text-to-speech.pbsc.mjs
 │   ├── ondewo-csi-client-angular.mjs
 │   └── public-api.mjs
-├── fesm2015
-│   ├── ondewo-csi-client-angular.mjs
-│   └── ondewo-csi-client-angular.mjs.map
-├── fesm2020
+├── fesm2022
 │   ├── ondewo-csi-client-angular.mjs
 │   └── ondewo-csi-client-angular.mjs.map
 ├── index.d.ts

@@ -15,10 +15,10 @@ export
 # 		Variables
 ########################################################
 
-ONDEWO_CSI_VERSION = 3.2.0
+ONDEWO_CSI_VERSION=3.2.1
 
 CSI_API_GIT_BRANCH=tags/3.2.0
-ONDEWO_PROTO_COMPILER_GIT_BRANCH=tags/4.6.0
+ONDEWO_PROTO_COMPILER_GIT_BRANCH=tags/4.7.0
 ONDEWO_PROTO_COMPILER_DIR=ondewo-proto-compiler
 CSI_APIS_DIR=src/ondewo-csi-api
 CSI_PROTOS_DIR=${CSI_APIS_DIR}/ondewo
@@ -87,12 +87,10 @@ check_build: #Checks if all built proto-code is there
 	do \
 		find api -iname "*pb*" | grep -q $${file}; \
 		if test $$? != 0; then  echo "No Proto-Code for $${file} in api" & exit 1;fi; \
-		find esm2020 -iname "*pb*" | grep -q $${file}; \
-		if test $$? != 0; then  echo "No Proto-Code for $${file} in esm2020" & exit 1;fi; \
-#		find fesm2015 -iname "*ondewo-csi-client-angular*" | wc -l | grep -q "2"; \
-#		if test $$? != 0; then  echo "No Proto-Code for $${file} in fesm2015" & exit 1;fi; \
-		find fesm2020 -iname "*ondewo-csi-client-angular*" | wc -l | grep -q "2"; \
-		if test $$? != 0; then  echo "No Proto-Code for $${file} in fesm2020" & exit 1;fi; \
+		find esm2022 -iname "*pb*" | grep -q $${file}; \
+		if test $$? != 0; then  echo "No Proto-Code for $${file} in esm2022" & exit 1;fi; \
+		find fesm2022 -iname "*ondewo-csi-client-angular*" | wc -l | grep -q "2"; \
+		if test $$? != 0; then  echo "No Proto-Code for $${file} in fesm2022" & exit 1;fi; \
 	done
 	@rm -rf build_check.txt
 	@rm -rf build_check_temp.txt
@@ -112,9 +110,8 @@ release: ## Create Github and NPM Release
 	make run_precommit_hooks
 	git status
 	git add api
-	git add esm2020
-	git add fesm2020
-	-git add fesm2015
+	git add esm2022
+	git add fesm2022
 	git add src
 	git add README.md
 	git add RELEASE.md
@@ -124,7 +121,7 @@ release: ## Create Github and NPM Release
 	git add ${ONDEWO_PROTO_COMPILER_DIR}
 	git add ${CSI_APIS_DIR}
 	git status
-	git commit -m "Preparing for Release ${ONDEWO_CSI_VERSION}"
+	-git commit -m "Preparing for Release ${ONDEWO_CSI_VERSION}"
 	git push
 	make publish_npm_via_docker
 	make create_release_branch
@@ -202,7 +199,6 @@ spc: ## Checks if the Release Branch, Tag and Pypi version already exist
 	@if test "$(filtered_branches)" != ""; then echo "-- Test 1: Branch exists!!" & exit 1; else echo "-- Test 1: Branch is fine";fi
 	@if test "$(filtered_tags)" != ""; then echo "-- Test 2: Tag exists!!" & exit 1; else echo "-- Test 2: Tag is fine";fi
 
-
 ########################################################
 # Build
 
@@ -229,10 +225,10 @@ check_out_correct_submodule_versions: ## Fetches all Submodules and checksout sp
 	git submodule update --init --recursive
 	git -C ${CSI_APIS_DIR} fetch --all
 	git -C ${CSI_APIS_DIR} checkout ${CSI_API_GIT_BRANCH}
-	git -C ${CSI_APIS_DIR} pull
+	-git -C ${CSI_APIS_DIR} pull
 	git -C ${ONDEWO_PROTO_COMPILER_DIR} fetch --all
 	git -C ${ONDEWO_PROTO_COMPILER_DIR} checkout ${ONDEWO_PROTO_COMPILER_GIT_BRANCH}
-	git -C ${ONDEWO_PROTO_COMPILER_DIR} pull
+	-git -C ${ONDEWO_PROTO_COMPILER_DIR} pull
 	make -C ${CSI_APIS_DIR} build
 	@echo "DONE checking out correct submodule versions."
 
