@@ -77,12 +77,12 @@ export declare class IntentsClient {
 		 *
 		 * @param requestMessage Request message
 		 * @param requestMetadata Request metadata
-		 * @returns Observable<GrpcEvent<ondewoNlu011.Operation>>
+		 * @returns Observable<GrpcEvent<thisProto.BatchUpdateIntentsResponse>>
 		 */
 		batchUpdateIntents: (
 			requestData: thisProto.BatchUpdateIntentsRequest,
 			requestMetadata?: GrpcMetadata
-		) => Observable<GrpcEvent<ondewoNlu011.Operation>>;
+		) => Observable<GrpcEvent<thisProto.BatchUpdateIntentsResponse>>;
 		/**
 		 * Unary call: /ondewo.nlu.Intents/BatchDeleteIntents
 		 *
@@ -373,12 +373,12 @@ export declare class IntentsClient {
 	 *
 	 * @param requestMessage Request message
 	 * @param requestMetadata Request metadata
-	 * @returns Observable<ondewoNlu011.Operation>
+	 * @returns Observable<thisProto.BatchUpdateIntentsResponse>
 	 */
 	batchUpdateIntents(
 		requestData: thisProto.BatchUpdateIntentsRequest,
 		requestMetadata?: GrpcMetadata
-	): Observable<ondewoNlu011.Operation>;
+	): Observable<thisProto.BatchUpdateIntentsResponse>;
 	/**
 	 * Unary call @/ondewo.nlu.Intents/BatchDeleteIntents
 	 *

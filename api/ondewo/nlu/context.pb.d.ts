@@ -1,6 +1,7 @@
 import { GrpcMessage, RecursivePartial, ToProtobufJSONOptions } from '@ngx-grpc/common';
 import { BinaryReader, BinaryWriter, ByteSource } from 'google-protobuf';
 import * as googleProtobuf004 from '@ngx-grpc/well-known-types';
+import * as googleProtobuf005 from '@ngx-grpc/well-known-types';
 /**
  * Message implementation for ondewo.nlu.Context
  */
@@ -32,6 +33,10 @@ export declare class Context implements GrpcMessage {
 	private _lifespanCount;
 	private _parameters;
 	private _lifespanTime;
+	private _createdAt?;
+	private _modifiedAt?;
+	private _createdBy;
+	private _modifiedBy;
 	/**
 	 * Message constructor. Initializes the properties and applies default Protobuf values if necessary
 	 * @param _value initial values object or instance of Context to deeply clone from
@@ -47,6 +52,14 @@ export declare class Context implements GrpcMessage {
 	set parameters(value: { [prop: string]: Context.Parameter });
 	get lifespanTime(): number;
 	set lifespanTime(value: number);
+	get createdAt(): googleProtobuf005.Timestamp | undefined;
+	set createdAt(value: googleProtobuf005.Timestamp | undefined);
+	get modifiedAt(): googleProtobuf005.Timestamp | undefined;
+	set modifiedAt(value: googleProtobuf005.Timestamp | undefined);
+	get createdBy(): string;
+	set createdBy(value: string);
+	get modifiedBy(): string;
+	set modifiedBy(value: string);
 	/**
 	 * Serialize message to binary data
 	 * @param instance message instance
@@ -78,6 +91,10 @@ export declare module Context {
 			[prop: string]: Context.Parameter;
 		};
 		lifespanTime: number;
+		createdAt?: googleProtobuf005.Timestamp.AsObject;
+		modifiedAt?: googleProtobuf005.Timestamp.AsObject;
+		createdBy: string;
+		modifiedBy: string;
 	}
 	/**
 	 * Protobuf JSON representation for Context
@@ -89,6 +106,10 @@ export declare module Context {
 			[prop: string]: Context.Parameter;
 		};
 		lifespanTime: number;
+		createdAt: googleProtobuf005.Timestamp.AsProtobufJSON | null;
+		modifiedAt: googleProtobuf005.Timestamp.AsProtobufJSON | null;
+		createdBy: string;
+		modifiedBy: string;
 	}
 	/**
 	 * Message implementation for ondewo.nlu.Context.Parameter
@@ -121,6 +142,10 @@ export declare module Context {
 		private _displayName;
 		private _value;
 		private _valueOriginal;
+		private _createdAt?;
+		private _modifiedAt?;
+		private _createdBy;
+		private _modifiedBy;
 		/**
 		 * Message constructor. Initializes the properties and applies default Protobuf values if necessary
 		 * @param _value initial values object or instance of Parameter to deeply clone from
@@ -134,6 +159,14 @@ export declare module Context {
 		set value(value: string);
 		get valueOriginal(): string;
 		set valueOriginal(value: string);
+		get createdAt(): googleProtobuf005.Timestamp | undefined;
+		set createdAt(value: googleProtobuf005.Timestamp | undefined);
+		get modifiedAt(): googleProtobuf005.Timestamp | undefined;
+		set modifiedAt(value: googleProtobuf005.Timestamp | undefined);
+		get createdBy(): string;
+		set createdBy(value: string);
+		get modifiedBy(): string;
+		set modifiedBy(value: string);
 		/**
 		 * Serialize message to binary data
 		 * @param instance message instance
@@ -163,6 +196,10 @@ export declare module Context {
 			displayName: string;
 			value: string;
 			valueOriginal: string;
+			createdAt?: googleProtobuf005.Timestamp.AsObject;
+			modifiedAt?: googleProtobuf005.Timestamp.AsObject;
+			createdBy: string;
+			modifiedBy: string;
 		}
 		/**
 		 * Protobuf JSON representation for Parameter
@@ -172,6 +209,10 @@ export declare module Context {
 			displayName: string;
 			value: string;
 			valueOriginal: string;
+			createdAt: googleProtobuf005.Timestamp.AsProtobufJSON | null;
+			modifiedAt: googleProtobuf005.Timestamp.AsProtobufJSON | null;
+			createdBy: string;
+			modifiedBy: string;
 		}
 	}
 	/**

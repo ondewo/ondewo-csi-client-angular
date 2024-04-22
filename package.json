@@ -1,6 +1,6 @@
 {
 	"name": "@ondewo/csi-client-angular",
-	"version": "3.2.1",
+	"version": "4.0.0",
 	"description": "ONDEWO Conversation System Integration (CSI) Platfrom client library for Angular",
 	"author": "ONDEWO GmbH <office@ondewo.com>",
 	"homepage": "https://ondewo.com/",
@@ -41,9 +41,9 @@
 		"tslib": "^2.3.0"
 	},
 	"devDependencies": {
-		"@typescript-eslint/eslint-plugin": "^6.7.2",
-		"eslint": "^8.50.0",
-		"husky": "^8.0.3",
-		"prettier": "^3.0.3"
+		"@typescript-eslint/eslint-plugin": "^7.7.0",
+		"eslint": "^8.57.0",
+		"husky": "^9.0.11",
+		"prettier": "^3.2.5"
 	}
 }

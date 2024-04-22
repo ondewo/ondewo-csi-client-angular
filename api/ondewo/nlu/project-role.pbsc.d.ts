@@ -2,7 +2,7 @@ import { GrpcClientFactory, GrpcEvent, GrpcMetadata } from '@ngx-grpc/common';
 import { GrpcHandler } from '@ngx-grpc/core';
 import { Observable } from 'rxjs';
 import * as thisProto from './project-role.pb';
-import * as googleProtobuf004 from '@ngx-grpc/well-known-types';
+import * as googleProtobuf003 from '@ngx-grpc/well-known-types';
 import * as i0 from '@angular/core';
 /**
  * Service client implementation for ondewo.nlu.ProjectRoles
@@ -43,12 +43,12 @@ export declare class ProjectRolesClient {
 		 *
 		 * @param requestMessage Request message
 		 * @param requestMetadata Request metadata
-		 * @returns Observable<GrpcEvent<googleProtobuf004.Empty>>
+		 * @returns Observable<GrpcEvent<googleProtobuf003.Empty>>
 		 */
 		deleteProjectRole: (
 			requestData: thisProto.DeleteProjectRoleRequest,
 			requestMetadata?: GrpcMetadata
-		) => Observable<GrpcEvent<googleProtobuf004.Empty>>;
+		) => Observable<GrpcEvent<googleProtobuf003.Empty>>;
 		/**
 		 * Unary call: /ondewo.nlu.ProjectRoles/UpdateProjectRole
 		 *
@@ -100,12 +100,12 @@ export declare class ProjectRolesClient {
 	 *
 	 * @param requestMessage Request message
 	 * @param requestMetadata Request metadata
-	 * @returns Observable<googleProtobuf004.Empty>
+	 * @returns Observable<googleProtobuf003.Empty>
 	 */
 	deleteProjectRole(
 		requestData: thisProto.DeleteProjectRoleRequest,
 		requestMetadata?: GrpcMetadata
-	): Observable<googleProtobuf004.Empty>;
+	): Observable<googleProtobuf003.Empty>;
 	/**
 	 * Unary call @/ondewo.nlu.ProjectRoles/UpdateProjectRole
 	 *

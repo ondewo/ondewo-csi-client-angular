@@ -2,7 +2,7 @@ import { GrpcMessage, RecursivePartial, ToProtobufJSONOptions } from '@ngx-grpc/
 import { BinaryReader, BinaryWriter, ByteSource } from 'google-protobuf';
 import * as googleProtobuf003 from '@ngx-grpc/well-known-types';
 import * as googleProtobuf004 from '@ngx-grpc/well-known-types';
-import * as googleProtobuf007 from '@ngx-grpc/well-known-types';
+import * as googleProtobuf005 from '@ngx-grpc/well-known-types';
 import * as ondewoNlu009 from '../../ondewo/nlu/context.pb';
 import * as ondewoNlu010 from '../../ondewo/nlu/common.pb';
 import * as googleProtobuf012 from '@ngx-grpc/well-known-types';
@@ -75,6 +75,10 @@ export declare class Intent implements GrpcMessage {
 	private _startDate?;
 	private _endDate?;
 	private _tags;
+	private _createdAt?;
+	private _modifiedAt?;
+	private _createdBy;
+	private _modifiedBy;
 	/**
 	 * Message constructor. Initializes the properties and applies default Protobuf values if necessary
 	 * @param _value initial values object or instance of Intent to deeply clone from
@@ -128,12 +132,20 @@ export declare class Intent implements GrpcMessage {
 	set trainingPhraseCount(value: number);
 	get status(): Intent.IntentStatus;
 	set status(value: Intent.IntentStatus);
-	get startDate(): googleProtobuf007.Timestamp | undefined;
-	set startDate(value: googleProtobuf007.Timestamp | undefined);
-	get endDate(): googleProtobuf007.Timestamp | undefined;
-	set endDate(value: googleProtobuf007.Timestamp | undefined);
+	get startDate(): googleProtobuf005.Timestamp | undefined;
+	set startDate(value: googleProtobuf005.Timestamp | undefined);
+	get endDate(): googleProtobuf005.Timestamp | undefined;
+	set endDate(value: googleProtobuf005.Timestamp | undefined);
 	get tags(): string[];
 	set tags(value: string[]);
+	get createdAt(): googleProtobuf005.Timestamp | undefined;
+	set createdAt(value: googleProtobuf005.Timestamp | undefined);
+	get modifiedAt(): googleProtobuf005.Timestamp | undefined;
+	set modifiedAt(value: googleProtobuf005.Timestamp | undefined);
+	get createdBy(): string;
+	set createdBy(value: string);
+	get modifiedBy(): string;
+	set modifiedBy(value: string);
 	/**
 	 * Serialize message to binary data
 	 * @param instance message instance
@@ -183,9 +195,13 @@ export declare module Intent {
 		isEndOfDeviation: boolean;
 		trainingPhraseCount: number;
 		status: Intent.IntentStatus;
-		startDate?: googleProtobuf007.Timestamp.AsObject;
-		endDate?: googleProtobuf007.Timestamp.AsObject;
+		startDate?: googleProtobuf005.Timestamp.AsObject;
+		endDate?: googleProtobuf005.Timestamp.AsObject;
 		tags: string[];
+		createdAt?: googleProtobuf005.Timestamp.AsObject;
+		modifiedAt?: googleProtobuf005.Timestamp.AsObject;
+		createdBy: string;
+		modifiedBy: string;
 	}
 	/**
 	 * Protobuf JSON representation for Intent
@@ -215,9 +231,13 @@ export declare module Intent {
 		isEndOfDeviation: boolean;
 		trainingPhraseCount: number;
 		status: string;
-		startDate: googleProtobuf007.Timestamp.AsProtobufJSON | null;
-		endDate: googleProtobuf007.Timestamp.AsProtobufJSON | null;
+		startDate: googleProtobuf005.Timestamp.AsProtobufJSON | null;
+		endDate: googleProtobuf005.Timestamp.AsProtobufJSON | null;
 		tags: string[];
+		createdAt: googleProtobuf005.Timestamp.AsProtobufJSON | null;
+		modifiedAt: googleProtobuf005.Timestamp.AsProtobufJSON | null;
+		createdBy: string;
+		modifiedBy: string;
 	}
 	enum IntentStatus {
 		ACTIVE = 0,
@@ -261,6 +281,10 @@ export declare module Intent {
 		private _entities?;
 		private _timesAddedCount;
 		private _languageCode;
+		private _createdAt?;
+		private _modifiedAt?;
+		private _createdBy;
+		private _modifiedBy;
 		/**
 		 * Message constructor. Initializes the properties and applies default Protobuf values if necessary
 		 * @param _value initial values object or instance of TrainingPhrase to deeply clone from
@@ -278,6 +302,14 @@ export declare module Intent {
 		set timesAddedCount(value: number);
 		get languageCode(): string;
 		set languageCode(value: string);
+		get createdAt(): googleProtobuf005.Timestamp | undefined;
+		set createdAt(value: googleProtobuf005.Timestamp | undefined);
+		get modifiedAt(): googleProtobuf005.Timestamp | undefined;
+		set modifiedAt(value: googleProtobuf005.Timestamp | undefined);
+		get createdBy(): string;
+		set createdBy(value: string);
+		get modifiedBy(): string;
+		set modifiedBy(value: string);
 		/**
 		 * Serialize message to binary data
 		 * @param instance message instance
@@ -309,6 +341,10 @@ export declare module Intent {
 			entities?: Intent.TrainingPhrase.Entity.AsObject[];
 			timesAddedCount: number;
 			languageCode: string;
+			createdAt?: googleProtobuf005.Timestamp.AsObject;
+			modifiedAt?: googleProtobuf005.Timestamp.AsObject;
+			createdBy: string;
+			modifiedBy: string;
 		}
 		/**
 		 * Protobuf JSON representation for TrainingPhrase
@@ -320,6 +356,10 @@ export declare module Intent {
 			entities: Intent.TrainingPhrase.Entity.AsProtobufJSON[] | null;
 			timesAddedCount: number;
 			languageCode: string;
+			createdAt: googleProtobuf005.Timestamp.AsProtobufJSON | null;
+			modifiedAt: googleProtobuf005.Timestamp.AsProtobufJSON | null;
+			createdBy: string;
+			modifiedBy: string;
 		}
 		enum Type {
 			TYPE_UNSPECIFIED = 0,
@@ -361,6 +401,10 @@ export declare module Intent {
 			private _end;
 			private _parameterName;
 			private _parameterDisplayName;
+			private _createdAt?;
+			private _modifiedAt?;
+			private _createdBy;
+			private _modifiedBy;
 			/**
 			 * Message constructor. Initializes the properties and applies default Protobuf values if necessary
 			 * @param _value initial values object or instance of Entity to deeply clone from
@@ -382,6 +426,14 @@ export declare module Intent {
 			set parameterName(value: string);
 			get parameterDisplayName(): string;
 			set parameterDisplayName(value: string);
+			get createdAt(): googleProtobuf005.Timestamp | undefined;
+			set createdAt(value: googleProtobuf005.Timestamp | undefined);
+			get modifiedAt(): googleProtobuf005.Timestamp | undefined;
+			set modifiedAt(value: googleProtobuf005.Timestamp | undefined);
+			get createdBy(): string;
+			set createdBy(value: string);
+			get modifiedBy(): string;
+			set modifiedBy(value: string);
 			/**
 			 * Serialize message to binary data
 			 * @param instance message instance
@@ -415,6 +467,10 @@ export declare module Intent {
 				end: number;
 				parameterName: string;
 				parameterDisplayName: string;
+				createdAt?: googleProtobuf005.Timestamp.AsObject;
+				modifiedAt?: googleProtobuf005.Timestamp.AsObject;
+				createdBy: string;
+				modifiedBy: string;
 			}
 			/**
 			 * Protobuf JSON representation for Entity
@@ -428,6 +484,10 @@ export declare module Intent {
 				end: number;
 				parameterName: string;
 				parameterDisplayName: string;
+				createdAt: googleProtobuf005.Timestamp.AsProtobufJSON | null;
+				modifiedAt: googleProtobuf005.Timestamp.AsProtobufJSON | null;
+				createdBy: string;
+				modifiedBy: string;
 			}
 		}
 	}
@@ -467,6 +527,10 @@ export declare module Intent {
 		private _mandatory;
 		private _prompts?;
 		private _isList;
+		private _createdAt?;
+		private _modifiedAt?;
+		private _createdBy;
+		private _modifiedBy;
 		/**
 		 * Message constructor. Initializes the properties and applies default Protobuf values if necessary
 		 * @param _value initial values object or instance of Parameter to deeply clone from
@@ -490,6 +554,14 @@ export declare module Intent {
 		set prompts(value: Intent.Parameter.Prompt[] | undefined);
 		get isList(): boolean;
 		set isList(value: boolean);
+		get createdAt(): googleProtobuf005.Timestamp | undefined;
+		set createdAt(value: googleProtobuf005.Timestamp | undefined);
+		get modifiedAt(): googleProtobuf005.Timestamp | undefined;
+		set modifiedAt(value: googleProtobuf005.Timestamp | undefined);
+		get createdBy(): string;
+		set createdBy(value: string);
+		get modifiedBy(): string;
+		set modifiedBy(value: string);
 		/**
 		 * Serialize message to binary data
 		 * @param instance message instance
@@ -524,6 +596,10 @@ export declare module Intent {
 			mandatory: boolean;
 			prompts?: Intent.Parameter.Prompt.AsObject[];
 			isList: boolean;
+			createdAt?: googleProtobuf005.Timestamp.AsObject;
+			modifiedAt?: googleProtobuf005.Timestamp.AsObject;
+			createdBy: string;
+			modifiedBy: string;
 		}
 		/**
 		 * Protobuf JSON representation for Parameter
@@ -538,6 +614,10 @@ export declare module Intent {
 			mandatory: boolean;
 			prompts: Intent.Parameter.Prompt.AsProtobufJSON[] | null;
 			isList: boolean;
+			createdAt: googleProtobuf005.Timestamp.AsProtobufJSON | null;
+			modifiedAt: googleProtobuf005.Timestamp.AsProtobufJSON | null;
+			createdBy: string;
+			modifiedBy: string;
 		}
 		/**
 		 * Message implementation for ondewo.nlu.Intent.Parameter.Prompt
@@ -569,6 +649,10 @@ export declare module Intent {
 			private _name;
 			private _text;
 			private _languageCode;
+			private _createdAt?;
+			private _modifiedAt?;
+			private _createdBy;
+			private _modifiedBy;
 			/**
 			 * Message constructor. Initializes the properties and applies default Protobuf values if necessary
 			 * @param _value initial values object or instance of Prompt to deeply clone from
@@ -580,6 +664,14 @@ export declare module Intent {
 			set text(value: string);
 			get languageCode(): string;
 			set languageCode(value: string);
+			get createdAt(): googleProtobuf005.Timestamp | undefined;
+			set createdAt(value: googleProtobuf005.Timestamp | undefined);
+			get modifiedAt(): googleProtobuf005.Timestamp | undefined;
+			set modifiedAt(value: googleProtobuf005.Timestamp | undefined);
+			get createdBy(): string;
+			set createdBy(value: string);
+			get modifiedBy(): string;
+			set modifiedBy(value: string);
 			/**
 			 * Serialize message to binary data
 			 * @param instance message instance
@@ -608,6 +700,10 @@ export declare module Intent {
 				name: string;
 				text: string;
 				languageCode: string;
+				createdAt?: googleProtobuf005.Timestamp.AsObject;
+				modifiedAt?: googleProtobuf005.Timestamp.AsObject;
+				createdBy: string;
+				modifiedBy: string;
 			}
 			/**
 			 * Protobuf JSON representation for Prompt
@@ -616,6 +712,10 @@ export declare module Intent {
 				name: string;
 				text: string;
 				languageCode: string;
+				createdAt: googleProtobuf005.Timestamp.AsProtobufJSON | null;
+				modifiedAt: googleProtobuf005.Timestamp.AsProtobufJSON | null;
+				createdBy: string;
+				modifiedBy: string;
 			}
 		}
 	}
@@ -664,6 +764,10 @@ export declare module Intent {
 		private _audio?;
 		private _platform;
 		private _isPrompt;
+		private _createdAt?;
+		private _modifiedAt?;
+		private _createdBy;
+		private _modifiedBy;
 		private _message;
 		/**
 		 * Message constructor. Initializes the properties and applies default Protobuf values if necessary
@@ -706,6 +810,14 @@ export declare module Intent {
 		set platform(value: Intent.Message.Platform);
 		get isPrompt(): boolean;
 		set isPrompt(value: boolean);
+		get createdAt(): googleProtobuf005.Timestamp | undefined;
+		set createdAt(value: googleProtobuf005.Timestamp | undefined);
+		get modifiedAt(): googleProtobuf005.Timestamp | undefined;
+		set modifiedAt(value: googleProtobuf005.Timestamp | undefined);
+		get createdBy(): string;
+		set createdBy(value: string);
+		get modifiedBy(): string;
+		set modifiedBy(value: string);
 		get message(): Message.MessageCase;
 		/**
 		 * Serialize message to binary data
@@ -750,6 +862,10 @@ export declare module Intent {
 			audio?: Intent.Message.Audio.AsObject;
 			platform: Intent.Message.Platform;
 			isPrompt: boolean;
+			createdAt?: googleProtobuf005.Timestamp.AsObject;
+			modifiedAt?: googleProtobuf005.Timestamp.AsObject;
+			createdBy: string;
+			modifiedBy: string;
 		}
 		/**
 		 * Protobuf JSON representation for Message
@@ -773,6 +889,10 @@ export declare module Intent {
 			audio: Intent.Message.Audio.AsProtobufJSON | null;
 			platform: string;
 			isPrompt: boolean;
+			createdAt: googleProtobuf005.Timestamp.AsProtobufJSON | null;
+			modifiedAt: googleProtobuf005.Timestamp.AsProtobufJSON | null;
+			createdBy: string;
+			modifiedBy: string;
 		}
 		enum MessageCase {
 			none = 0,

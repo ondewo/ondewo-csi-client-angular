@@ -46,6 +46,10 @@ export declare class OperationMetadata implements GrpcMessage {
 	private _description;
 	private _log;
 	private _logLimit;
+	private _createdAt?;
+	private _modifiedAt?;
+	private _createdBy;
+	private _modifiedBy;
 	/**
 	 * Message constructor. Initializes the properties and applies default Protobuf values if necessary
 	 * @param _value initial values object or instance of OperationMetadata to deeply clone from
@@ -87,6 +91,14 @@ export declare class OperationMetadata implements GrpcMessage {
 	set log(value: string[]);
 	get logLimit(): number;
 	set logLimit(value: number);
+	get createdAt(): googleProtobuf000.Timestamp | undefined;
+	set createdAt(value: googleProtobuf000.Timestamp | undefined);
+	get modifiedAt(): googleProtobuf000.Timestamp | undefined;
+	set modifiedAt(value: googleProtobuf000.Timestamp | undefined);
+	get createdBy(): string;
+	set createdBy(value: string);
+	get modifiedBy(): string;
+	set modifiedBy(value: string);
 	/**
 	 * Serialize message to binary data
 	 * @param instance message instance
@@ -130,6 +142,10 @@ export declare module OperationMetadata {
 		description: string;
 		log: string[];
 		logLimit: number;
+		createdAt?: googleProtobuf000.Timestamp.AsObject;
+		modifiedAt?: googleProtobuf000.Timestamp.AsObject;
+		createdBy: string;
+		modifiedBy: string;
 	}
 	/**
 	 * Protobuf JSON representation for OperationMetadata
@@ -153,6 +169,10 @@ export declare module OperationMetadata {
 		description: string;
 		log: string[];
 		logLimit: number;
+		createdAt: googleProtobuf000.Timestamp.AsProtobufJSON | null;
+		modifiedAt: googleProtobuf000.Timestamp.AsProtobufJSON | null;
+		createdBy: string;
+		modifiedBy: string;
 	}
 	enum Status {
 		STATUS_UNSPECIFIED = 0,
@@ -171,6 +191,7 @@ export declare module OperationMetadata {
 		RESTORE_AGENT = 5,
 		BUILD_AGENT_CACHE = 6,
 		TRAIN_AGENT = 7,
-		EXPORT_BENCHMARK_AGENT = 8
+		EXPORT_BENCHMARK_AGENT = 8,
+		INDEX_AGENT = 9
 	}
 }

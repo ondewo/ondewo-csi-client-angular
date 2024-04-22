@@ -1,13 +1,19 @@
 import { GrpcMessage, RecursivePartial, ToProtobufJSONOptions } from '@ngx-grpc/common';
 import { BinaryReader, BinaryWriter, ByteSource } from 'google-protobuf';
-import * as googleProtobuf005 from '@ngx-grpc/well-known-types';
-import * as ondewoNlu006 from '../../ondewo/nlu/context.pb';
-import * as googleProtobuf009 from '@ngx-grpc/well-known-types';
+import * as googleProtobuf003 from '@ngx-grpc/well-known-types';
+import * as googleProtobuf004 from '@ngx-grpc/well-known-types';
+import * as ondewoNlu007 from '../../ondewo/nlu/context.pb';
+import * as ondewoNlu008 from '../../ondewo/nlu/common.pb';
 import * as googleProtobuf010 from '@ngx-grpc/well-known-types';
 import * as googleRpc011 from '../../google/rpc/status.pb';
 import * as googleType012 from '../../google/type/latlng.pb';
 import * as ondewoNlu013 from '../../ondewo/nlu/intent.pb';
 import * as ondewoNlu014 from '../../ondewo/nlu/entity-type.pb';
+export declare enum TranscriptionType {
+	TRANSCRIPTION_TYPE_UNSPECIFIED = 0,
+	TRANSCRIPTION_TYPE_S2T = 1,
+	TRANSCRIPTION_TYPE_HUMAN = 2
+}
 export declare enum AudioEncoding {
 	AUDIO_ENCODING_UNSPECIFIED = 0,
 	AUDIO_ENCODING_LINEAR_16 = 1,
@@ -26,6 +32,18 @@ export declare enum ComparisonOperator {
 	CONTAINS = 4,
 	STARTS_WITH = 5,
 	ENDS_WITH = 6
+}
+export declare enum ResourceView {
+	RESOURCE_VIEW_UNSPECIFIED = 0,
+	RESOURCE_VIEW_FULL = 1,
+	RESOURCE_VIEW_PARTIAL = 2,
+	RESOURCE_VIEW_MINIMUM = 3
+}
+export declare enum AudioFileResourceType {
+	AUDIO_FILE_RESOURCE_TYPE_UNSPECIFIED = 0,
+	AUDIO_FILE_RESOURCE_TYPE_T2S = 1,
+	AUDIO_FILE_RESOURCE_TYPE_S2T = 2,
+	AUDIO_FILE_RESOURCE_TYPE_S2T_AND_T2S = 3
 }
 /**
  * Message implementation for ondewo.nlu.DetectIntentRequest
@@ -229,6 +247,7 @@ export declare class QueryParameters implements GrpcMessage {
 	private _datastreamId;
 	private _originId;
 	private _identifiedUserId;
+	private _transcriptions?;
 	/**
 	 * Message constructor. Initializes the properties and applies default Protobuf values if necessary
 	 * @param _value initial values object or instance of QueryParameters to deeply clone from
@@ -238,8 +257,8 @@ export declare class QueryParameters implements GrpcMessage {
 	set timeZone(value: string);
 	get geoLocation(): googleType012.LatLng | undefined;
 	set geoLocation(value: googleType012.LatLng | undefined);
-	get contexts(): ondewoNlu006.Context[] | undefined;
-	set contexts(value: ondewoNlu006.Context[] | undefined);
+	get contexts(): ondewoNlu007.Context[] | undefined;
+	set contexts(value: ondewoNlu007.Context[] | undefined);
 	get resetContexts(): boolean;
 	set resetContexts(value: boolean);
 	get payload(): googleProtobuf010.Struct | undefined;
@@ -258,6 +277,8 @@ export declare class QueryParameters implements GrpcMessage {
 	set originId(value: string);
 	get identifiedUserId(): string;
 	set identifiedUserId(value: string);
+	get transcriptions(): S2tTranscription[] | undefined;
+	set transcriptions(value: S2tTranscription[] | undefined);
 	/**
 	 * Serialize message to binary data
 	 * @param instance message instance
@@ -285,7 +306,7 @@ export declare module QueryParameters {
 	interface AsObject {
 		timeZone: string;
 		geoLocation?: googleType012.LatLng.AsObject;
-		contexts?: ondewoNlu006.Context.AsObject[];
+		contexts?: ondewoNlu007.Context.AsObject[];
 		resetContexts: boolean;
 		payload?: googleProtobuf010.Struct.AsObject;
 		labels: string[];
@@ -295,6 +316,7 @@ export declare module QueryParameters {
 		datastreamId: string;
 		originId: string;
 		identifiedUserId: string;
+		transcriptions?: S2tTranscription.AsObject[];
 	}
 	/**
 	 * Protobuf JSON representation for QueryParameters
@@ -302,7 +324,7 @@ export declare module QueryParameters {
 	interface AsProtobufJSON {
 		timeZone: string;
 		geoLocation: googleType012.LatLng.AsProtobufJSON | null;
-		contexts: ondewoNlu006.Context.AsProtobufJSON[] | null;
+		contexts: ondewoNlu007.Context.AsProtobufJSON[] | null;
 		resetContexts: boolean;
 		payload: googleProtobuf010.Struct.AsProtobufJSON | null;
 		labels: string[];
@@ -312,6 +334,131 @@ export declare module QueryParameters {
 		datastreamId: string;
 		originId: string;
 		identifiedUserId: string;
+		transcriptions: S2tTranscription.AsProtobufJSON[] | null;
+	}
+}
+/**
+ * Message implementation for ondewo.nlu.S2tTranscription
+ */
+export declare class S2tTranscription implements GrpcMessage {
+	static id: string;
+	/**
+	 * Deserialize binary data to message
+	 * @param instance message instance
+	 */
+	static deserializeBinary(bytes: ByteSource): S2tTranscription;
+	/**
+	 * Check all the properties and set default protobuf values if necessary
+	 * @param _instance message instance
+	 */
+	static refineValues(_instance: S2tTranscription): void;
+	/**
+	 * Deserializes / reads binary message into message instance using provided binary reader
+	 * @param _instance message instance
+	 * @param _reader binary reader instance
+	 */
+	static deserializeBinaryFromReader(_instance: S2tTranscription, _reader: BinaryReader): void;
+	/**
+	 * Serializes a message to binary format using provided binary reader
+	 * @param _instance message instance
+	 * @param _writer binary writer instance
+	 */
+	static serializeBinaryToWriter(_instance: S2tTranscription, _writer: BinaryWriter): void;
+	private _name;
+	private _text;
+	private _score;
+	private _languageCode;
+	private _audioResourceName;
+	private _pipelineId;
+	private _durationInS;
+	private _transcriptionType;
+	private _createdAt?;
+	private _modifiedAt?;
+	private _createdBy;
+	private _modifiedBy;
+	/**
+	 * Message constructor. Initializes the properties and applies default Protobuf values if necessary
+	 * @param _value initial values object or instance of S2tTranscription to deeply clone from
+	 */
+	constructor(_value?: RecursivePartial<S2tTranscription.AsObject>);
+	get name(): string;
+	set name(value: string);
+	get text(): string;
+	set text(value: string);
+	get score(): number;
+	set score(value: number);
+	get languageCode(): string;
+	set languageCode(value: string);
+	get audioResourceName(): string;
+	set audioResourceName(value: string);
+	get pipelineId(): string;
+	set pipelineId(value: string);
+	get durationInS(): number;
+	set durationInS(value: number);
+	get transcriptionType(): TranscriptionType;
+	set transcriptionType(value: TranscriptionType);
+	get createdAt(): googleProtobuf004.Timestamp | undefined;
+	set createdAt(value: googleProtobuf004.Timestamp | undefined);
+	get modifiedAt(): googleProtobuf004.Timestamp | undefined;
+	set modifiedAt(value: googleProtobuf004.Timestamp | undefined);
+	get createdBy(): string;
+	set createdBy(value: string);
+	get modifiedBy(): string;
+	set modifiedBy(value: string);
+	/**
+	 * Serialize message to binary data
+	 * @param instance message instance
+	 */
+	serializeBinary(): any;
+	/**
+	 * Cast message to standard JavaScript object (all non-primitive values are deeply cloned)
+	 */
+	toObject(): S2tTranscription.AsObject;
+	/**
+	 * Convenience method to support JSON.stringify(message), replicates the structure of toObject()
+	 */
+	toJSON(): S2tTranscription.AsObject;
+	/**
+	 * Cast message to JSON using protobuf JSON notation: https://developers.google.com/protocol-buffers/docs/proto3#json
+	 * Attention: output differs from toObject() e.g. enums are represented as names and not as numbers, Timestamp is an ISO Date string format etc.
+	 * If the message itself or some of descendant messages is google.protobuf.Any, you MUST provide a message pool as options. If not, the messagePool is not required
+	 */
+	toProtobufJSON(options?: ToProtobufJSONOptions): S2tTranscription.AsProtobufJSON;
+}
+export declare module S2tTranscription {
+	/**
+	 * Standard JavaScript object representation for S2tTranscription
+	 */
+	interface AsObject {
+		name: string;
+		text: string;
+		score: number;
+		languageCode: string;
+		audioResourceName: string;
+		pipelineId: string;
+		durationInS: number;
+		transcriptionType: TranscriptionType;
+		createdAt?: googleProtobuf004.Timestamp.AsObject;
+		modifiedAt?: googleProtobuf004.Timestamp.AsObject;
+		createdBy: string;
+		modifiedBy: string;
+	}
+	/**
+	 * Protobuf JSON representation for S2tTranscription
+	 */
+	interface AsProtobufJSON {
+		name: string;
+		text: string;
+		score: number;
+		languageCode: string;
+		audioResourceName: string;
+		pipelineId: string;
+		durationInS: number;
+		transcriptionType: string;
+		createdAt: googleProtobuf004.Timestamp.AsProtobufJSON | null;
+		modifiedAt: googleProtobuf004.Timestamp.AsProtobufJSON | null;
+		createdBy: string;
+		modifiedBy: string;
 	}
 }
 /**
@@ -466,8 +613,8 @@ export declare class QueryResult implements GrpcMessage {
 	set webhookSource(value: string);
 	get webhookPayload(): googleProtobuf010.Struct | undefined;
 	set webhookPayload(value: googleProtobuf010.Struct | undefined);
-	get outputContexts(): ondewoNlu006.Context[] | undefined;
-	set outputContexts(value: ondewoNlu006.Context[] | undefined);
+	get outputContexts(): ondewoNlu007.Context[] | undefined;
+	set outputContexts(value: ondewoNlu007.Context[] | undefined);
 	get intent(): ondewoNlu013.Intent | undefined;
 	set intent(value: ondewoNlu013.Intent | undefined);
 	get intentDetectionConfidence(): number;
@@ -512,7 +659,7 @@ export declare module QueryResult {
 		fulfillmentMessages?: ondewoNlu013.Intent.Message.AsObject[];
 		webhookSource: string;
 		webhookPayload?: googleProtobuf010.Struct.AsObject;
-		outputContexts?: ondewoNlu006.Context.AsObject[];
+		outputContexts?: ondewoNlu007.Context.AsObject[];
 		intent?: ondewoNlu013.Intent.AsObject;
 		intentDetectionConfidence: number;
 		queryTextOriginal: string;
@@ -532,7 +679,7 @@ export declare module QueryResult {
 		fulfillmentMessages: ondewoNlu013.Intent.Message.AsProtobufJSON[] | null;
 		webhookSource: string;
 		webhookPayload: googleProtobuf010.Struct.AsProtobufJSON | null;
-		outputContexts: ondewoNlu006.Context.AsProtobufJSON[] | null;
+		outputContexts: ondewoNlu007.Context.AsProtobufJSON[] | null;
 		intent: ondewoNlu013.Intent.AsProtobufJSON | null;
 		intentDetectionConfidence: number;
 		queryTextOriginal: string;
@@ -1069,6 +1216,10 @@ export declare class Session implements GrpcMessage {
 	private _name;
 	private _sessionSteps?;
 	private _sessionInfo?;
+	private _createdAt?;
+	private _modifiedAt?;
+	private _createdBy;
+	private _modifiedBy;
 	/**
 	 * Message constructor. Initializes the properties and applies default Protobuf values if necessary
 	 * @param _value initial values object or instance of Session to deeply clone from
@@ -1080,6 +1231,14 @@ export declare class Session implements GrpcMessage {
 	set sessionSteps(value: SessionStep[] | undefined);
 	get sessionInfo(): SessionInfo | undefined;
 	set sessionInfo(value: SessionInfo | undefined);
+	get createdAt(): googleProtobuf004.Timestamp | undefined;
+	set createdAt(value: googleProtobuf004.Timestamp | undefined);
+	get modifiedAt(): googleProtobuf004.Timestamp | undefined;
+	set modifiedAt(value: googleProtobuf004.Timestamp | undefined);
+	get createdBy(): string;
+	set createdBy(value: string);
+	get modifiedBy(): string;
+	set modifiedBy(value: string);
 	/**
 	 * Serialize message to binary data
 	 * @param instance message instance
@@ -1108,6 +1267,10 @@ export declare module Session {
 		name: string;
 		sessionSteps?: SessionStep.AsObject[];
 		sessionInfo?: SessionInfo.AsObject;
+		createdAt?: googleProtobuf004.Timestamp.AsObject;
+		modifiedAt?: googleProtobuf004.Timestamp.AsObject;
+		createdBy: string;
+		modifiedBy: string;
 	}
 	/**
 	 * Protobuf JSON representation for Session
@@ -1116,6 +1279,10 @@ export declare module Session {
 		name: string;
 		sessionSteps: SessionStep.AsProtobufJSON[] | null;
 		sessionInfo: SessionInfo.AsProtobufJSON | null;
+		createdAt: googleProtobuf004.Timestamp.AsProtobufJSON | null;
+		modifiedAt: googleProtobuf004.Timestamp.AsProtobufJSON | null;
+		createdBy: string;
+		modifiedBy: string;
 	}
 	enum View {
 		VIEW_UNSPECIFIED = 0,
@@ -1155,6 +1322,11 @@ export declare class SessionStep implements GrpcMessage {
 	private _detectIntentResponse?;
 	private _contexts?;
 	private _timestamp?;
+	private _createdAt?;
+	private _modifiedAt?;
+	private _createdBy;
+	private _modifiedBy;
+	private _audioFileResources?;
 	/**
 	 * Message constructor. Initializes the properties and applies default Protobuf values if necessary
 	 * @param _value initial values object or instance of SessionStep to deeply clone from
@@ -1166,10 +1338,20 @@ export declare class SessionStep implements GrpcMessage {
 	set detectIntentRequest(value: DetectIntentRequest | undefined);
 	get detectIntentResponse(): DetectIntentResponse | undefined;
 	set detectIntentResponse(value: DetectIntentResponse | undefined);
-	get contexts(): ondewoNlu006.Context[] | undefined;
-	set contexts(value: ondewoNlu006.Context[] | undefined);
-	get timestamp(): googleProtobuf009.Timestamp | undefined;
-	set timestamp(value: googleProtobuf009.Timestamp | undefined);
+	get contexts(): ondewoNlu007.Context[] | undefined;
+	set contexts(value: ondewoNlu007.Context[] | undefined);
+	get timestamp(): googleProtobuf004.Timestamp | undefined;
+	set timestamp(value: googleProtobuf004.Timestamp | undefined);
+	get createdAt(): googleProtobuf004.Timestamp | undefined;
+	set createdAt(value: googleProtobuf004.Timestamp | undefined);
+	get modifiedAt(): googleProtobuf004.Timestamp | undefined;
+	set modifiedAt(value: googleProtobuf004.Timestamp | undefined);
+	get createdBy(): string;
+	set createdBy(value: string);
+	get modifiedBy(): string;
+	set modifiedBy(value: string);
+	get audioFileResources(): AudioFileResource[] | undefined;
+	set audioFileResources(value: AudioFileResource[] | undefined);
 	/**
 	 * Serialize message to binary data
 	 * @param instance message instance
@@ -1198,8 +1380,13 @@ export declare module SessionStep {
 		name: string;
 		detectIntentRequest?: DetectIntentRequest.AsObject;
 		detectIntentResponse?: DetectIntentResponse.AsObject;
-		contexts?: ondewoNlu006.Context.AsObject[];
-		timestamp?: googleProtobuf009.Timestamp.AsObject;
+		contexts?: ondewoNlu007.Context.AsObject[];
+		timestamp?: googleProtobuf004.Timestamp.AsObject;
+		createdAt?: googleProtobuf004.Timestamp.AsObject;
+		modifiedAt?: googleProtobuf004.Timestamp.AsObject;
+		createdBy: string;
+		modifiedBy: string;
+		audioFileResources?: AudioFileResource.AsObject[];
 	}
 	/**
 	 * Protobuf JSON representation for SessionStep
@@ -1208,8 +1395,13 @@ export declare module SessionStep {
 		name: string;
 		detectIntentRequest: DetectIntentRequest.AsProtobufJSON | null;
 		detectIntentResponse: DetectIntentResponse.AsProtobufJSON | null;
-		contexts: ondewoNlu006.Context.AsProtobufJSON[] | null;
-		timestamp: googleProtobuf009.Timestamp.AsProtobufJSON | null;
+		contexts: ondewoNlu007.Context.AsProtobufJSON[] | null;
+		timestamp: googleProtobuf004.Timestamp.AsProtobufJSON | null;
+		createdAt: googleProtobuf004.Timestamp.AsProtobufJSON | null;
+		modifiedAt: googleProtobuf004.Timestamp.AsProtobufJSON | null;
+		createdBy: string;
+		modifiedBy: string;
+		audioFileResources: AudioFileResource.AsProtobufJSON[] | null;
 	}
 }
 /**
@@ -1336,8 +1528,8 @@ export declare class ListSessionsRequest implements GrpcMessage {
 	set pageToken(value: string);
 	get sessionFilter(): SessionFilter | undefined;
 	set sessionFilter(value: SessionFilter | undefined);
-	get fieldMask(): googleProtobuf005.FieldMask | undefined;
-	set fieldMask(value: googleProtobuf005.FieldMask | undefined);
+	get fieldMask(): googleProtobuf003.FieldMask | undefined;
+	set fieldMask(value: googleProtobuf003.FieldMask | undefined);
 	/**
 	 * Serialize message to binary data
 	 * @param instance message instance
@@ -1367,7 +1559,7 @@ export declare module ListSessionsRequest {
 		sessionView: Session.View;
 		pageToken: string;
 		sessionFilter?: SessionFilter.AsObject;
-		fieldMask?: googleProtobuf005.FieldMask.AsObject;
+		fieldMask?: googleProtobuf003.FieldMask.AsObject;
 	}
 	/**
 	 * Protobuf JSON representation for ListSessionsRequest
@@ -1377,7 +1569,7 @@ export declare module ListSessionsRequest {
 		sessionView: string;
 		pageToken: string;
 		sessionFilter: SessionFilter.AsProtobufJSON | null;
-		fieldMask: googleProtobuf005.FieldMask.AsProtobufJSON | null;
+		fieldMask: googleProtobuf003.FieldMask.AsProtobufJSON | null;
 	}
 }
 /**
@@ -1575,10 +1767,10 @@ export declare class SessionFilter implements GrpcMessage {
 	set intentTags(value: string[]);
 	get sessionIds(): string[];
 	set sessionIds(value: string[]);
-	get inputContexts(): ondewoNlu006.Context[] | undefined;
-	set inputContexts(value: ondewoNlu006.Context[] | undefined);
-	get outputContexts(): ondewoNlu006.Context[] | undefined;
-	set outputContexts(value: ondewoNlu006.Context[] | undefined);
+	get inputContexts(): ondewoNlu007.Context[] | undefined;
+	set inputContexts(value: ondewoNlu007.Context[] | undefined);
+	get outputContexts(): ondewoNlu007.Context[] | undefined;
+	set outputContexts(value: ondewoNlu007.Context[] | undefined);
 	get durationInSMin(): number;
 	set durationInSMin(value: number);
 	get durationInSMax(): number;
@@ -1683,8 +1875,8 @@ export declare module SessionFilter {
 		userIds: string[];
 		intentTags: string[];
 		sessionIds: string[];
-		inputContexts?: ondewoNlu006.Context.AsObject[];
-		outputContexts?: ondewoNlu006.Context.AsObject[];
+		inputContexts?: ondewoNlu007.Context.AsObject[];
+		outputContexts?: ondewoNlu007.Context.AsObject[];
 		durationInSMin: number;
 		durationInSMax: number;
 		durationInMMin: number;
@@ -1737,8 +1929,8 @@ export declare module SessionFilter {
 		userIds: string[];
 		intentTags: string[];
 		sessionIds: string[];
-		inputContexts: ondewoNlu006.Context.AsProtobufJSON[] | null;
-		outputContexts: ondewoNlu006.Context.AsProtobufJSON[] | null;
+		inputContexts: ondewoNlu007.Context.AsProtobufJSON[] | null;
+		outputContexts: ondewoNlu007.Context.AsProtobufJSON[] | null;
 		durationInSMin: number;
 		durationInSMax: number;
 		durationInMMin: number;
@@ -1832,6 +2024,7 @@ export declare class SessionInfo implements GrpcMessage {
 	private _originIds;
 	private _identifiedUserIds;
 	private _durationInterval60sRounded;
+	private _parentComment?;
 	/**
 	 * Message constructor. Initializes the properties and applies default Protobuf values if necessary
 	 * @param _value initial values object or instance of SessionInfo to deeply clone from
@@ -1901,6 +2094,8 @@ export declare class SessionInfo implements GrpcMessage {
 	set identifiedUserIds(value: string[]);
 	get durationInterval60sRounded(): number;
 	set durationInterval60sRounded(value: number);
+	get parentComment(): ondewoNlu008.Comment[] | undefined;
+	set parentComment(value: ondewoNlu008.Comment[] | undefined);
 	/**
 	 * Serialize message to binary data
 	 * @param instance message instance
@@ -1958,6 +2153,7 @@ export declare module SessionInfo {
 		originIds: string[];
 		identifiedUserIds: string[];
 		durationInterval60sRounded: number;
+		parentComment?: ondewoNlu008.Comment.AsObject[];
 	}
 	/**
 	 * Protobuf JSON representation for SessionInfo
@@ -1995,6 +2191,7 @@ export declare module SessionInfo {
 		originIds: string[];
 		identifiedUserIds: string[];
 		durationInterval60sRounded: number;
+		parentComment: ondewoNlu008.Comment.AsProtobufJSON[] | null;
 	}
 	/**
 	 * Message implementation for ondewo.nlu.SessionInfo.ContextSteps
@@ -2029,8 +2226,8 @@ export declare module SessionInfo {
 		 * @param _value initial values object or instance of ContextSteps to deeply clone from
 		 */
 		constructor(_value?: RecursivePartial<ContextSteps.AsObject>);
-		get contexts(): ondewoNlu006.Context[] | undefined;
-		set contexts(value: ondewoNlu006.Context[] | undefined);
+		get contexts(): ondewoNlu007.Context[] | undefined;
+		set contexts(value: ondewoNlu007.Context[] | undefined);
 		/**
 		 * Serialize message to binary data
 		 * @param instance message instance
@@ -2056,13 +2253,13 @@ export declare module SessionInfo {
 		 * Standard JavaScript object representation for ContextSteps
 		 */
 		interface AsObject {
-			contexts?: ondewoNlu006.Context.AsObject[];
+			contexts?: ondewoNlu007.Context.AsObject[];
 		}
 		/**
 		 * Protobuf JSON representation for ContextSteps
 		 */
 		interface AsProtobufJSON {
-			contexts: ondewoNlu006.Context.AsProtobufJSON[] | null;
+			contexts: ondewoNlu007.Context.AsProtobufJSON[] | null;
 		}
 	}
 }
@@ -2179,8 +2376,8 @@ export declare class GetSessionRequest implements GrpcMessage {
 	set sessionId(value: string);
 	get sessionView(): Session.View;
 	set sessionView(value: Session.View);
-	get fieldMask(): googleProtobuf005.FieldMask | undefined;
-	set fieldMask(value: googleProtobuf005.FieldMask | undefined);
+	get fieldMask(): googleProtobuf003.FieldMask | undefined;
+	set fieldMask(value: googleProtobuf003.FieldMask | undefined);
 	/**
 	 * Serialize message to binary data
 	 * @param instance message instance
@@ -2208,7 +2405,7 @@ export declare module GetSessionRequest {
 	interface AsObject {
 		sessionId: string;
 		sessionView: Session.View;
-		fieldMask?: googleProtobuf005.FieldMask.AsObject;
+		fieldMask?: googleProtobuf003.FieldMask.AsObject;
 	}
 	/**
 	 * Protobuf JSON representation for GetSessionRequest
@@ -2216,7 +2413,7 @@ export declare module GetSessionRequest {
 	interface AsProtobufJSON {
 		sessionId: string;
 		sessionView: string;
-		fieldMask: googleProtobuf005.FieldMask.AsProtobufJSON | null;
+		fieldMask: googleProtobuf003.FieldMask.AsProtobufJSON | null;
 	}
 }
 /**
@@ -2261,8 +2458,8 @@ export declare class CreateSessionRequest implements GrpcMessage {
 	set sessionUuid(value: string);
 	get labels(): string[];
 	set labels(value: string[]);
-	get contexts(): ondewoNlu006.Context[] | undefined;
-	set contexts(value: ondewoNlu006.Context[] | undefined);
+	get contexts(): ondewoNlu007.Context[] | undefined;
+	set contexts(value: ondewoNlu007.Context[] | undefined);
 	/**
 	 * Serialize message to binary data
 	 * @param instance message instance
@@ -2291,7 +2488,7 @@ export declare module CreateSessionRequest {
 		parent: string;
 		sessionUuid: string;
 		labels: string[];
-		contexts?: ondewoNlu006.Context.AsObject[];
+		contexts?: ondewoNlu007.Context.AsObject[];
 	}
 	/**
 	 * Protobuf JSON representation for CreateSessionRequest
@@ -2300,7 +2497,7 @@ export declare module CreateSessionRequest {
 		parent: string;
 		sessionUuid: string;
 		labels: string[];
-		contexts: ondewoNlu006.Context.AsProtobufJSON[] | null;
+		contexts: ondewoNlu007.Context.AsProtobufJSON[] | null;
 	}
 }
 /**
@@ -2485,6 +2682,10 @@ export declare class SessionReview implements GrpcMessage {
 	static serializeBinaryToWriter(_instance: SessionReview, _writer: BinaryWriter): void;
 	private _name;
 	private _sessionReviewSteps?;
+	private _createdAt?;
+	private _modifiedAt?;
+	private _createdBy;
+	private _modifiedBy;
 	/**
 	 * Message constructor. Initializes the properties and applies default Protobuf values if necessary
 	 * @param _value initial values object or instance of SessionReview to deeply clone from
@@ -2494,6 +2695,14 @@ export declare class SessionReview implements GrpcMessage {
 	set name(value: string);
 	get sessionReviewSteps(): SessionReviewStep[] | undefined;
 	set sessionReviewSteps(value: SessionReviewStep[] | undefined);
+	get createdAt(): googleProtobuf004.Timestamp | undefined;
+	set createdAt(value: googleProtobuf004.Timestamp | undefined);
+	get modifiedAt(): googleProtobuf004.Timestamp | undefined;
+	set modifiedAt(value: googleProtobuf004.Timestamp | undefined);
+	get createdBy(): string;
+	set createdBy(value: string);
+	get modifiedBy(): string;
+	set modifiedBy(value: string);
 	/**
 	 * Serialize message to binary data
 	 * @param instance message instance
@@ -2521,6 +2730,10 @@ export declare module SessionReview {
 	interface AsObject {
 		name: string;
 		sessionReviewSteps?: SessionReviewStep.AsObject[];
+		createdAt?: googleProtobuf004.Timestamp.AsObject;
+		modifiedAt?: googleProtobuf004.Timestamp.AsObject;
+		createdBy: string;
+		modifiedBy: string;
 	}
 	/**
 	 * Protobuf JSON representation for SessionReview
@@ -2528,6 +2741,10 @@ export declare module SessionReview {
 	interface AsProtobufJSON {
 		name: string;
 		sessionReviewSteps: SessionReviewStep.AsProtobufJSON[] | null;
+		createdAt: googleProtobuf004.Timestamp.AsProtobufJSON | null;
+		modifiedAt: googleProtobuf004.Timestamp.AsProtobufJSON | null;
+		createdBy: string;
+		modifiedBy: string;
 	}
 	enum View {
 		VIEW_UNSPECIFIED = 0,
@@ -2571,6 +2788,11 @@ export declare class SessionReviewStep implements GrpcMessage {
 	private _queryTextOriginal;
 	private _platforms;
 	private _timestamp?;
+	private _createdAt?;
+	private _modifiedAt?;
+	private _createdBy;
+	private _modifiedBy;
+	private _audioFileResources?;
 	/**
 	 * Message constructor. Initializes the properties and applies default Protobuf values if necessary
 	 * @param _value initial values object or instance of SessionReviewStep to deeply clone from
@@ -2584,16 +2806,26 @@ export declare class SessionReviewStep implements GrpcMessage {
 	set languageCode(value: string);
 	get detectedIntents(): DetectedIntent[] | undefined;
 	set detectedIntents(value: DetectedIntent[] | undefined);
-	get contexts(): ondewoNlu006.Context[] | undefined;
-	set contexts(value: ondewoNlu006.Context[] | undefined);
-	get contextsOut(): ondewoNlu006.Context[] | undefined;
-	set contextsOut(value: ondewoNlu006.Context[] | undefined);
+	get contexts(): ondewoNlu007.Context[] | undefined;
+	set contexts(value: ondewoNlu007.Context[] | undefined);
+	get contextsOut(): ondewoNlu007.Context[] | undefined;
+	set contextsOut(value: ondewoNlu007.Context[] | undefined);
 	get queryTextOriginal(): string;
 	set queryTextOriginal(value: string);
 	get platforms(): ondewoNlu013.Intent.Message.Platform[];
 	set platforms(value: ondewoNlu013.Intent.Message.Platform[]);
-	get timestamp(): googleProtobuf009.Timestamp | undefined;
-	set timestamp(value: googleProtobuf009.Timestamp | undefined);
+	get timestamp(): googleProtobuf004.Timestamp | undefined;
+	set timestamp(value: googleProtobuf004.Timestamp | undefined);
+	get createdAt(): googleProtobuf004.Timestamp | undefined;
+	set createdAt(value: googleProtobuf004.Timestamp | undefined);
+	get modifiedAt(): googleProtobuf004.Timestamp | undefined;
+	set modifiedAt(value: googleProtobuf004.Timestamp | undefined);
+	get createdBy(): string;
+	set createdBy(value: string);
+	get modifiedBy(): string;
+	set modifiedBy(value: string);
+	get audioFileResources(): AudioFileResource[] | undefined;
+	set audioFileResources(value: AudioFileResource[] | undefined);
 	/**
 	 * Serialize message to binary data
 	 * @param instance message instance
@@ -2623,11 +2855,16 @@ export declare module SessionReviewStep {
 		annotatedUsersays?: ondewoNlu013.Intent.TrainingPhrase.AsObject;
 		languageCode: string;
 		detectedIntents?: DetectedIntent.AsObject[];
-		contexts?: ondewoNlu006.Context.AsObject[];
-		contextsOut?: ondewoNlu006.Context.AsObject[];
+		contexts?: ondewoNlu007.Context.AsObject[];
+		contextsOut?: ondewoNlu007.Context.AsObject[];
 		queryTextOriginal: string;
 		platforms: ondewoNlu013.Intent.Message.Platform[];
-		timestamp?: googleProtobuf009.Timestamp.AsObject;
+		timestamp?: googleProtobuf004.Timestamp.AsObject;
+		createdAt?: googleProtobuf004.Timestamp.AsObject;
+		modifiedAt?: googleProtobuf004.Timestamp.AsObject;
+		createdBy: string;
+		modifiedBy: string;
+		audioFileResources?: AudioFileResource.AsObject[];
 	}
 	/**
 	 * Protobuf JSON representation for SessionReviewStep
@@ -2637,11 +2874,16 @@ export declare module SessionReviewStep {
 		annotatedUsersays: ondewoNlu013.Intent.TrainingPhrase.AsProtobufJSON | null;
 		languageCode: string;
 		detectedIntents: DetectedIntent.AsProtobufJSON[] | null;
-		contexts: ondewoNlu006.Context.AsProtobufJSON[] | null;
-		contextsOut: ondewoNlu006.Context.AsProtobufJSON[] | null;
+		contexts: ondewoNlu007.Context.AsProtobufJSON[] | null;
+		contextsOut: ondewoNlu007.Context.AsProtobufJSON[] | null;
 		queryTextOriginal: string;
 		platforms: string[];
-		timestamp: googleProtobuf009.Timestamp.AsProtobufJSON | null;
+		timestamp: googleProtobuf004.Timestamp.AsProtobufJSON | null;
+		createdAt: googleProtobuf004.Timestamp.AsProtobufJSON | null;
+		modifiedAt: googleProtobuf004.Timestamp.AsProtobufJSON | null;
+		createdBy: string;
+		modifiedBy: string;
+		audioFileResources: AudioFileResource.AsProtobufJSON[] | null;
 	}
 }
 /**
@@ -4956,6 +5198,376 @@ export declare module DeleteSessionLabelsRequest {
 	}
 }
 /**
+ * Message implementation for ondewo.nlu.AddSessionCommentRequest
+ */
+export declare class AddSessionCommentRequest implements GrpcMessage {
+	static id: string;
+	/**
+	 * Deserialize binary data to message
+	 * @param instance message instance
+	 */
+	static deserializeBinary(bytes: ByteSource): AddSessionCommentRequest;
+	/**
+	 * Check all the properties and set default protobuf values if necessary
+	 * @param _instance message instance
+	 */
+	static refineValues(_instance: AddSessionCommentRequest): void;
+	/**
+	 * Deserializes / reads binary message into message instance using provided binary reader
+	 * @param _instance message instance
+	 * @param _reader binary reader instance
+	 */
+	static deserializeBinaryFromReader(_instance: AddSessionCommentRequest, _reader: BinaryReader): void;
+	/**
+	 * Serializes a message to binary format using provided binary reader
+	 * @param _instance message instance
+	 * @param _writer binary writer instance
+	 */
+	static serializeBinaryToWriter(_instance: AddSessionCommentRequest, _writer: BinaryWriter): void;
+	private _sessionId;
+	private _comment?;
+	/**
+	 * Message constructor. Initializes the properties and applies default Protobuf values if necessary
+	 * @param _value initial values object or instance of AddSessionCommentRequest to deeply clone from
+	 */
+	constructor(_value?: RecursivePartial<AddSessionCommentRequest.AsObject>);
+	get sessionId(): string;
+	set sessionId(value: string);
+	get comment(): ondewoNlu008.Comment | undefined;
+	set comment(value: ondewoNlu008.Comment | undefined);
+	/**
+	 * Serialize message to binary data
+	 * @param instance message instance
+	 */
+	serializeBinary(): any;
+	/**
+	 * Cast message to standard JavaScript object (all non-primitive values are deeply cloned)
+	 */
+	toObject(): AddSessionCommentRequest.AsObject;
+	/**
+	 * Convenience method to support JSON.stringify(message), replicates the structure of toObject()
+	 */
+	toJSON(): AddSessionCommentRequest.AsObject;
+	/**
+	 * Cast message to JSON using protobuf JSON notation: https://developers.google.com/protocol-buffers/docs/proto3#json
+	 * Attention: output differs from toObject() e.g. enums are represented as names and not as numbers, Timestamp is an ISO Date string format etc.
+	 * If the message itself or some of descendant messages is google.protobuf.Any, you MUST provide a message pool as options. If not, the messagePool is not required
+	 */
+	toProtobufJSON(options?: ToProtobufJSONOptions): AddSessionCommentRequest.AsProtobufJSON;
+}
+export declare module AddSessionCommentRequest {
+	/**
+	 * Standard JavaScript object representation for AddSessionCommentRequest
+	 */
+	interface AsObject {
+		sessionId: string;
+		comment?: ondewoNlu008.Comment.AsObject;
+	}
+	/**
+	 * Protobuf JSON representation for AddSessionCommentRequest
+	 */
+	interface AsProtobufJSON {
+		sessionId: string;
+		comment: ondewoNlu008.Comment.AsProtobufJSON | null;
+	}
+}
+/**
+ * Message implementation for ondewo.nlu.DeleteSessionCommentsRequest
+ */
+export declare class DeleteSessionCommentsRequest implements GrpcMessage {
+	static id: string;
+	/**
+	 * Deserialize binary data to message
+	 * @param instance message instance
+	 */
+	static deserializeBinary(bytes: ByteSource): DeleteSessionCommentsRequest;
+	/**
+	 * Check all the properties and set default protobuf values if necessary
+	 * @param _instance message instance
+	 */
+	static refineValues(_instance: DeleteSessionCommentsRequest): void;
+	/**
+	 * Deserializes / reads binary message into message instance using provided binary reader
+	 * @param _instance message instance
+	 * @param _reader binary reader instance
+	 */
+	static deserializeBinaryFromReader(_instance: DeleteSessionCommentsRequest, _reader: BinaryReader): void;
+	/**
+	 * Serializes a message to binary format using provided binary reader
+	 * @param _instance message instance
+	 * @param _writer binary writer instance
+	 */
+	static serializeBinaryToWriter(_instance: DeleteSessionCommentsRequest, _writer: BinaryWriter): void;
+	private _sessionId;
+	private _commentNames;
+	/**
+	 * Message constructor. Initializes the properties and applies default Protobuf values if necessary
+	 * @param _value initial values object or instance of DeleteSessionCommentsRequest to deeply clone from
+	 */
+	constructor(_value?: RecursivePartial<DeleteSessionCommentsRequest.AsObject>);
+	get sessionId(): string;
+	set sessionId(value: string);
+	get commentNames(): string[];
+	set commentNames(value: string[]);
+	/**
+	 * Serialize message to binary data
+	 * @param instance message instance
+	 */
+	serializeBinary(): any;
+	/**
+	 * Cast message to standard JavaScript object (all non-primitive values are deeply cloned)
+	 */
+	toObject(): DeleteSessionCommentsRequest.AsObject;
+	/**
+	 * Convenience method to support JSON.stringify(message), replicates the structure of toObject()
+	 */
+	toJSON(): DeleteSessionCommentsRequest.AsObject;
+	/**
+	 * Cast message to JSON using protobuf JSON notation: https://developers.google.com/protocol-buffers/docs/proto3#json
+	 * Attention: output differs from toObject() e.g. enums are represented as names and not as numbers, Timestamp is an ISO Date string format etc.
+	 * If the message itself or some of descendant messages is google.protobuf.Any, you MUST provide a message pool as options. If not, the messagePool is not required
+	 */
+	toProtobufJSON(options?: ToProtobufJSONOptions): DeleteSessionCommentsRequest.AsProtobufJSON;
+}
+export declare module DeleteSessionCommentsRequest {
+	/**
+	 * Standard JavaScript object representation for DeleteSessionCommentsRequest
+	 */
+	interface AsObject {
+		sessionId: string;
+		commentNames: string[];
+	}
+	/**
+	 * Protobuf JSON representation for DeleteSessionCommentsRequest
+	 */
+	interface AsProtobufJSON {
+		sessionId: string;
+		commentNames: string[];
+	}
+}
+/**
+ * Message implementation for ondewo.nlu.UpdateSessionCommentsRequest
+ */
+export declare class UpdateSessionCommentsRequest implements GrpcMessage {
+	static id: string;
+	/**
+	 * Deserialize binary data to message
+	 * @param instance message instance
+	 */
+	static deserializeBinary(bytes: ByteSource): UpdateSessionCommentsRequest;
+	/**
+	 * Check all the properties and set default protobuf values if necessary
+	 * @param _instance message instance
+	 */
+	static refineValues(_instance: UpdateSessionCommentsRequest): void;
+	/**
+	 * Deserializes / reads binary message into message instance using provided binary reader
+	 * @param _instance message instance
+	 * @param _reader binary reader instance
+	 */
+	static deserializeBinaryFromReader(_instance: UpdateSessionCommentsRequest, _reader: BinaryReader): void;
+	/**
+	 * Serializes a message to binary format using provided binary reader
+	 * @param _instance message instance
+	 * @param _writer binary writer instance
+	 */
+	static serializeBinaryToWriter(_instance: UpdateSessionCommentsRequest, _writer: BinaryWriter): void;
+	private _sessionId;
+	private _comment?;
+	/**
+	 * Message constructor. Initializes the properties and applies default Protobuf values if necessary
+	 * @param _value initial values object or instance of UpdateSessionCommentsRequest to deeply clone from
+	 */
+	constructor(_value?: RecursivePartial<UpdateSessionCommentsRequest.AsObject>);
+	get sessionId(): string;
+	set sessionId(value: string);
+	get comment(): ondewoNlu008.Comment | undefined;
+	set comment(value: ondewoNlu008.Comment | undefined);
+	/**
+	 * Serialize message to binary data
+	 * @param instance message instance
+	 */
+	serializeBinary(): any;
+	/**
+	 * Cast message to standard JavaScript object (all non-primitive values are deeply cloned)
+	 */
+	toObject(): UpdateSessionCommentsRequest.AsObject;
+	/**
+	 * Convenience method to support JSON.stringify(message), replicates the structure of toObject()
+	 */
+	toJSON(): UpdateSessionCommentsRequest.AsObject;
+	/**
+	 * Cast message to JSON using protobuf JSON notation: https://developers.google.com/protocol-buffers/docs/proto3#json
+	 * Attention: output differs from toObject() e.g. enums are represented as names and not as numbers, Timestamp is an ISO Date string format etc.
+	 * If the message itself or some of descendant messages is google.protobuf.Any, you MUST provide a message pool as options. If not, the messagePool is not required
+	 */
+	toProtobufJSON(options?: ToProtobufJSONOptions): UpdateSessionCommentsRequest.AsProtobufJSON;
+}
+export declare module UpdateSessionCommentsRequest {
+	/**
+	 * Standard JavaScript object representation for UpdateSessionCommentsRequest
+	 */
+	interface AsObject {
+		sessionId: string;
+		comment?: ondewoNlu008.Comment.AsObject;
+	}
+	/**
+	 * Protobuf JSON representation for UpdateSessionCommentsRequest
+	 */
+	interface AsProtobufJSON {
+		sessionId: string;
+		comment: ondewoNlu008.Comment.AsProtobufJSON | null;
+	}
+}
+/**
+ * Message implementation for ondewo.nlu.ListSessionCommentsRequest
+ */
+export declare class ListSessionCommentsRequest implements GrpcMessage {
+	static id: string;
+	/**
+	 * Deserialize binary data to message
+	 * @param instance message instance
+	 */
+	static deserializeBinary(bytes: ByteSource): ListSessionCommentsRequest;
+	/**
+	 * Check all the properties and set default protobuf values if necessary
+	 * @param _instance message instance
+	 */
+	static refineValues(_instance: ListSessionCommentsRequest): void;
+	/**
+	 * Deserializes / reads binary message into message instance using provided binary reader
+	 * @param _instance message instance
+	 * @param _reader binary reader instance
+	 */
+	static deserializeBinaryFromReader(_instance: ListSessionCommentsRequest, _reader: BinaryReader): void;
+	/**
+	 * Serializes a message to binary format using provided binary reader
+	 * @param _instance message instance
+	 * @param _writer binary writer instance
+	 */
+	static serializeBinaryToWriter(_instance: ListSessionCommentsRequest, _writer: BinaryWriter): void;
+	private _sessionId;
+	private _pageToken;
+	/**
+	 * Message constructor. Initializes the properties and applies default Protobuf values if necessary
+	 * @param _value initial values object or instance of ListSessionCommentsRequest to deeply clone from
+	 */
+	constructor(_value?: RecursivePartial<ListSessionCommentsRequest.AsObject>);
+	get sessionId(): string;
+	set sessionId(value: string);
+	get pageToken(): string;
+	set pageToken(value: string);
+	/**
+	 * Serialize message to binary data
+	 * @param instance message instance
+	 */
+	serializeBinary(): any;
+	/**
+	 * Cast message to standard JavaScript object (all non-primitive values are deeply cloned)
+	 */
+	toObject(): ListSessionCommentsRequest.AsObject;
+	/**
+	 * Convenience method to support JSON.stringify(message), replicates the structure of toObject()
+	 */
+	toJSON(): ListSessionCommentsRequest.AsObject;
+	/**
+	 * Cast message to JSON using protobuf JSON notation: https://developers.google.com/protocol-buffers/docs/proto3#json
+	 * Attention: output differs from toObject() e.g. enums are represented as names and not as numbers, Timestamp is an ISO Date string format etc.
+	 * If the message itself or some of descendant messages is google.protobuf.Any, you MUST provide a message pool as options. If not, the messagePool is not required
+	 */
+	toProtobufJSON(options?: ToProtobufJSONOptions): ListSessionCommentsRequest.AsProtobufJSON;
+}
+export declare module ListSessionCommentsRequest {
+	/**
+	 * Standard JavaScript object representation for ListSessionCommentsRequest
+	 */
+	interface AsObject {
+		sessionId: string;
+		pageToken: string;
+	}
+	/**
+	 * Protobuf JSON representation for ListSessionCommentsRequest
+	 */
+	interface AsProtobufJSON {
+		sessionId: string;
+		pageToken: string;
+	}
+}
+/**
+ * Message implementation for ondewo.nlu.ListSessionCommentsResponse
+ */
+export declare class ListSessionCommentsResponse implements GrpcMessage {
+	static id: string;
+	/**
+	 * Deserialize binary data to message
+	 * @param instance message instance
+	 */
+	static deserializeBinary(bytes: ByteSource): ListSessionCommentsResponse;
+	/**
+	 * Check all the properties and set default protobuf values if necessary
+	 * @param _instance message instance
+	 */
+	static refineValues(_instance: ListSessionCommentsResponse): void;
+	/**
+	 * Deserializes / reads binary message into message instance using provided binary reader
+	 * @param _instance message instance
+	 * @param _reader binary reader instance
+	 */
+	static deserializeBinaryFromReader(_instance: ListSessionCommentsResponse, _reader: BinaryReader): void;
+	/**
+	 * Serializes a message to binary format using provided binary reader
+	 * @param _instance message instance
+	 * @param _writer binary writer instance
+	 */
+	static serializeBinaryToWriter(_instance: ListSessionCommentsResponse, _writer: BinaryWriter): void;
+	private _comment?;
+	private _pageToken;
+	/**
+	 * Message constructor. Initializes the properties and applies default Protobuf values if necessary
+	 * @param _value initial values object or instance of ListSessionCommentsResponse to deeply clone from
+	 */
+	constructor(_value?: RecursivePartial<ListSessionCommentsResponse.AsObject>);
+	get comment(): ondewoNlu008.Comment[] | undefined;
+	set comment(value: ondewoNlu008.Comment[] | undefined);
+	get pageToken(): string;
+	set pageToken(value: string);
+	/**
+	 * Serialize message to binary data
+	 * @param instance message instance
+	 */
+	serializeBinary(): any;
+	/**
+	 * Cast message to standard JavaScript object (all non-primitive values are deeply cloned)
+	 */
+	toObject(): ListSessionCommentsResponse.AsObject;
+	/**
+	 * Convenience method to support JSON.stringify(message), replicates the structure of toObject()
+	 */
+	toJSON(): ListSessionCommentsResponse.AsObject;
+	/**
+	 * Cast message to JSON using protobuf JSON notation: https://developers.google.com/protocol-buffers/docs/proto3#json
+	 * Attention: output differs from toObject() e.g. enums are represented as names and not as numbers, Timestamp is an ISO Date string format etc.
+	 * If the message itself or some of descendant messages is google.protobuf.Any, you MUST provide a message pool as options. If not, the messagePool is not required
+	 */
+	toProtobufJSON(options?: ToProtobufJSONOptions): ListSessionCommentsResponse.AsProtobufJSON;
+}
+export declare module ListSessionCommentsResponse {
+	/**
+	 * Standard JavaScript object representation for ListSessionCommentsResponse
+	 */
+	interface AsObject {
+		comment?: ondewoNlu008.Comment.AsObject[];
+		pageToken: string;
+	}
+	/**
+	 * Protobuf JSON representation for ListSessionCommentsResponse
+	 */
+	interface AsProtobufJSON {
+		comment: ondewoNlu008.Comment.AsProtobufJSON[] | null;
+		pageToken: string;
+	}
+}
+/**
  * Message implementation for ondewo.nlu.ListSessionReviewsRequest
  */
 export declare class ListSessionReviewsRequest implements GrpcMessage {
@@ -5254,5 +5866,840 @@ export declare module GetLatestSessionReviewRequest {
 	interface AsProtobufJSON {
 		sessionId: string;
 		sessionReviewView: string;
+	}
+}
+/**
+ * Message implementation for ondewo.nlu.AudioFileResource
+ */
+export declare class AudioFileResource implements GrpcMessage {
+	static id: string;
+	/**
+	 * Deserialize binary data to message
+	 * @param instance message instance
+	 */
+	static deserializeBinary(bytes: ByteSource): AudioFileResource;
+	/**
+	 * Check all the properties and set default protobuf values if necessary
+	 * @param _instance message instance
+	 */
+	static refineValues(_instance: AudioFileResource): void;
+	/**
+	 * Deserializes / reads binary message into message instance using provided binary reader
+	 * @param _instance message instance
+	 * @param _reader binary reader instance
+	 */
+	static deserializeBinaryFromReader(_instance: AudioFileResource, _reader: BinaryReader): void;
+	/**
+	 * Serializes a message to binary format using provided binary reader
+	 * @param _instance message instance
+	 * @param _writer binary writer instance
+	 */
+	static serializeBinaryToWriter(_instance: AudioFileResource, _writer: BinaryWriter): void;
+	private _name;
+	private _bytes;
+	private _language;
+	private _durationInS;
+	private _sampleRate;
+	private _audioFileResourceType;
+	private _transcriptions?;
+	private _createdAt?;
+	private _modifiedAt?;
+	private _createdBy;
+	private _modifiedBy;
+	/**
+	 * Message constructor. Initializes the properties and applies default Protobuf values if necessary
+	 * @param _value initial values object or instance of AudioFileResource to deeply clone from
+	 */
+	constructor(_value?: RecursivePartial<AudioFileResource.AsObject>);
+	get name(): string;
+	set name(value: string);
+	get bytes(): Uint8Array;
+	set bytes(value: Uint8Array);
+	get language(): string;
+	set language(value: string);
+	get durationInS(): number;
+	set durationInS(value: number);
+	get sampleRate(): number;
+	set sampleRate(value: number);
+	get audioFileResourceType(): AudioFileResourceType;
+	set audioFileResourceType(value: AudioFileResourceType);
+	get transcriptions(): S2tTranscription[] | undefined;
+	set transcriptions(value: S2tTranscription[] | undefined);
+	get createdAt(): googleProtobuf004.Timestamp | undefined;
+	set createdAt(value: googleProtobuf004.Timestamp | undefined);
+	get modifiedAt(): googleProtobuf004.Timestamp | undefined;
+	set modifiedAt(value: googleProtobuf004.Timestamp | undefined);
+	get createdBy(): string;
+	set createdBy(value: string);
+	get modifiedBy(): string;
+	set modifiedBy(value: string);
+	/**
+	 * Serialize message to binary data
+	 * @param instance message instance
+	 */
+	serializeBinary(): any;
+	/**
+	 * Cast message to standard JavaScript object (all non-primitive values are deeply cloned)
+	 */
+	toObject(): AudioFileResource.AsObject;
+	/**
+	 * Convenience method to support JSON.stringify(message), replicates the structure of toObject()
+	 */
+	toJSON(): AudioFileResource.AsObject;
+	/**
+	 * Cast message to JSON using protobuf JSON notation: https://developers.google.com/protocol-buffers/docs/proto3#json
+	 * Attention: output differs from toObject() e.g. enums are represented as names and not as numbers, Timestamp is an ISO Date string format etc.
+	 * If the message itself or some of descendant messages is google.protobuf.Any, you MUST provide a message pool as options. If not, the messagePool is not required
+	 */
+	toProtobufJSON(options?: ToProtobufJSONOptions): AudioFileResource.AsProtobufJSON;
+}
+export declare module AudioFileResource {
+	/**
+	 * Standard JavaScript object representation for AudioFileResource
+	 */
+	interface AsObject {
+		name: string;
+		bytes: Uint8Array;
+		language: string;
+		durationInS: number;
+		sampleRate: number;
+		audioFileResourceType: AudioFileResourceType;
+		transcriptions?: S2tTranscription.AsObject[];
+		createdAt?: googleProtobuf004.Timestamp.AsObject;
+		modifiedAt?: googleProtobuf004.Timestamp.AsObject;
+		createdBy: string;
+		modifiedBy: string;
+	}
+	/**
+	 * Protobuf JSON representation for AudioFileResource
+	 */
+	interface AsProtobufJSON {
+		name: string;
+		bytes: string;
+		language: string;
+		durationInS: number;
+		sampleRate: number;
+		audioFileResourceType: string;
+		transcriptions: S2tTranscription.AsProtobufJSON[] | null;
+		createdAt: googleProtobuf004.Timestamp.AsProtobufJSON | null;
+		modifiedAt: googleProtobuf004.Timestamp.AsProtobufJSON | null;
+		createdBy: string;
+		modifiedBy: string;
+	}
+}
+/**
+ * Message implementation for ondewo.nlu.GetAudioFilesRequest
+ */
+export declare class GetAudioFilesRequest implements GrpcMessage {
+	static id: string;
+	/**
+	 * Deserialize binary data to message
+	 * @param instance message instance
+	 */
+	static deserializeBinary(bytes: ByteSource): GetAudioFilesRequest;
+	/**
+	 * Check all the properties and set default protobuf values if necessary
+	 * @param _instance message instance
+	 */
+	static refineValues(_instance: GetAudioFilesRequest): void;
+	/**
+	 * Deserializes / reads binary message into message instance using provided binary reader
+	 * @param _instance message instance
+	 * @param _reader binary reader instance
+	 */
+	static deserializeBinaryFromReader(_instance: GetAudioFilesRequest, _reader: BinaryReader): void;
+	/**
+	 * Serializes a message to binary format using provided binary reader
+	 * @param _instance message instance
+	 * @param _writer binary writer instance
+	 */
+	static serializeBinaryToWriter(_instance: GetAudioFilesRequest, _writer: BinaryWriter): void;
+	private _parent;
+	private _names;
+	private _resourceView;
+	private _pageToken;
+	private _sortingMode;
+	/**
+	 * Message constructor. Initializes the properties and applies default Protobuf values if necessary
+	 * @param _value initial values object or instance of GetAudioFilesRequest to deeply clone from
+	 */
+	constructor(_value?: RecursivePartial<GetAudioFilesRequest.AsObject>);
+	get parent(): string;
+	set parent(value: string);
+	get names(): string[];
+	set names(value: string[]);
+	get resourceView(): ResourceView;
+	set resourceView(value: ResourceView);
+	get pageToken(): string;
+	set pageToken(value: string);
+	get sortingMode(): ondewoNlu008.SortingMode;
+	set sortingMode(value: ondewoNlu008.SortingMode);
+	/**
+	 * Serialize message to binary data
+	 * @param instance message instance
+	 */
+	serializeBinary(): any;
+	/**
+	 * Cast message to standard JavaScript object (all non-primitive values are deeply cloned)
+	 */
+	toObject(): GetAudioFilesRequest.AsObject;
+	/**
+	 * Convenience method to support JSON.stringify(message), replicates the structure of toObject()
+	 */
+	toJSON(): GetAudioFilesRequest.AsObject;
+	/**
+	 * Cast message to JSON using protobuf JSON notation: https://developers.google.com/protocol-buffers/docs/proto3#json
+	 * Attention: output differs from toObject() e.g. enums are represented as names and not as numbers, Timestamp is an ISO Date string format etc.
+	 * If the message itself or some of descendant messages is google.protobuf.Any, you MUST provide a message pool as options. If not, the messagePool is not required
+	 */
+	toProtobufJSON(options?: ToProtobufJSONOptions): GetAudioFilesRequest.AsProtobufJSON;
+}
+export declare module GetAudioFilesRequest {
+	/**
+	 * Standard JavaScript object representation for GetAudioFilesRequest
+	 */
+	interface AsObject {
+		parent: string;
+		names: string[];
+		resourceView: ResourceView;
+		pageToken: string;
+		sortingMode: ondewoNlu008.SortingMode;
+	}
+	/**
+	 * Protobuf JSON representation for GetAudioFilesRequest
+	 */
+	interface AsProtobufJSON {
+		parent: string;
+		names: string[];
+		resourceView: string;
+		pageToken: string;
+		sortingMode: string;
+	}
+}
+/**
+ * Message implementation for ondewo.nlu.GetAudioFilesResponse
+ */
+export declare class GetAudioFilesResponse implements GrpcMessage {
+	static id: string;
+	/**
+	 * Deserialize binary data to message
+	 * @param instance message instance
+	 */
+	static deserializeBinary(bytes: ByteSource): GetAudioFilesResponse;
+	/**
+	 * Check all the properties and set default protobuf values if necessary
+	 * @param _instance message instance
+	 */
+	static refineValues(_instance: GetAudioFilesResponse): void;
+	/**
+	 * Deserializes / reads binary message into message instance using provided binary reader
+	 * @param _instance message instance
+	 * @param _reader binary reader instance
+	 */
+	static deserializeBinaryFromReader(_instance: GetAudioFilesResponse, _reader: BinaryReader): void;
+	/**
+	 * Serializes a message to binary format using provided binary reader
+	 * @param _instance message instance
+	 * @param _writer binary writer instance
+	 */
+	static serializeBinaryToWriter(_instance: GetAudioFilesResponse, _writer: BinaryWriter): void;
+	private _audioFiles?;
+	private _errorMessage;
+	private _nextPageToken;
+	/**
+	 * Message constructor. Initializes the properties and applies default Protobuf values if necessary
+	 * @param _value initial values object or instance of GetAudioFilesResponse to deeply clone from
+	 */
+	constructor(_value?: RecursivePartial<GetAudioFilesResponse.AsObject>);
+	get audioFiles(): AudioFileResource[] | undefined;
+	set audioFiles(value: AudioFileResource[] | undefined);
+	get errorMessage(): string;
+	set errorMessage(value: string);
+	get nextPageToken(): string;
+	set nextPageToken(value: string);
+	/**
+	 * Serialize message to binary data
+	 * @param instance message instance
+	 */
+	serializeBinary(): any;
+	/**
+	 * Cast message to standard JavaScript object (all non-primitive values are deeply cloned)
+	 */
+	toObject(): GetAudioFilesResponse.AsObject;
+	/**
+	 * Convenience method to support JSON.stringify(message), replicates the structure of toObject()
+	 */
+	toJSON(): GetAudioFilesResponse.AsObject;
+	/**
+	 * Cast message to JSON using protobuf JSON notation: https://developers.google.com/protocol-buffers/docs/proto3#json
+	 * Attention: output differs from toObject() e.g. enums are represented as names and not as numbers, Timestamp is an ISO Date string format etc.
+	 * If the message itself or some of descendant messages is google.protobuf.Any, you MUST provide a message pool as options. If not, the messagePool is not required
+	 */
+	toProtobufJSON(options?: ToProtobufJSONOptions): GetAudioFilesResponse.AsProtobufJSON;
+}
+export declare module GetAudioFilesResponse {
+	/**
+	 * Standard JavaScript object representation for GetAudioFilesResponse
+	 */
+	interface AsObject {
+		audioFiles?: AudioFileResource.AsObject[];
+		errorMessage: string;
+		nextPageToken: string;
+	}
+	/**
+	 * Protobuf JSON representation for GetAudioFilesResponse
+	 */
+	interface AsProtobufJSON {
+		audioFiles: AudioFileResource.AsProtobufJSON[] | null;
+		errorMessage: string;
+		nextPageToken: string;
+	}
+}
+/**
+ * Message implementation for ondewo.nlu.AddAudioFilesRequest
+ */
+export declare class AddAudioFilesRequest implements GrpcMessage {
+	static id: string;
+	/**
+	 * Deserialize binary data to message
+	 * @param instance message instance
+	 */
+	static deserializeBinary(bytes: ByteSource): AddAudioFilesRequest;
+	/**
+	 * Check all the properties and set default protobuf values if necessary
+	 * @param _instance message instance
+	 */
+	static refineValues(_instance: AddAudioFilesRequest): void;
+	/**
+	 * Deserializes / reads binary message into message instance using provided binary reader
+	 * @param _instance message instance
+	 * @param _reader binary reader instance
+	 */
+	static deserializeBinaryFromReader(_instance: AddAudioFilesRequest, _reader: BinaryReader): void;
+	/**
+	 * Serializes a message to binary format using provided binary reader
+	 * @param _instance message instance
+	 * @param _writer binary writer instance
+	 */
+	static serializeBinaryToWriter(_instance: AddAudioFilesRequest, _writer: BinaryWriter): void;
+	private _parent;
+	private _sessionId;
+	private _audioFileResources?;
+	/**
+	 * Message constructor. Initializes the properties and applies default Protobuf values if necessary
+	 * @param _value initial values object or instance of AddAudioFilesRequest to deeply clone from
+	 */
+	constructor(_value?: RecursivePartial<AddAudioFilesRequest.AsObject>);
+	get parent(): string;
+	set parent(value: string);
+	get sessionId(): string;
+	set sessionId(value: string);
+	get audioFileResources(): AudioFileResource[] | undefined;
+	set audioFileResources(value: AudioFileResource[] | undefined);
+	/**
+	 * Serialize message to binary data
+	 * @param instance message instance
+	 */
+	serializeBinary(): any;
+	/**
+	 * Cast message to standard JavaScript object (all non-primitive values are deeply cloned)
+	 */
+	toObject(): AddAudioFilesRequest.AsObject;
+	/**
+	 * Convenience method to support JSON.stringify(message), replicates the structure of toObject()
+	 */
+	toJSON(): AddAudioFilesRequest.AsObject;
+	/**
+	 * Cast message to JSON using protobuf JSON notation: https://developers.google.com/protocol-buffers/docs/proto3#json
+	 * Attention: output differs from toObject() e.g. enums are represented as names and not as numbers, Timestamp is an ISO Date string format etc.
+	 * If the message itself or some of descendant messages is google.protobuf.Any, you MUST provide a message pool as options. If not, the messagePool is not required
+	 */
+	toProtobufJSON(options?: ToProtobufJSONOptions): AddAudioFilesRequest.AsProtobufJSON;
+}
+export declare module AddAudioFilesRequest {
+	/**
+	 * Standard JavaScript object representation for AddAudioFilesRequest
+	 */
+	interface AsObject {
+		parent: string;
+		sessionId: string;
+		audioFileResources?: AudioFileResource.AsObject[];
+	}
+	/**
+	 * Protobuf JSON representation for AddAudioFilesRequest
+	 */
+	interface AsProtobufJSON {
+		parent: string;
+		sessionId: string;
+		audioFileResources: AudioFileResource.AsProtobufJSON[] | null;
+	}
+}
+/**
+ * Message implementation for ondewo.nlu.AddAudioFilesResponse
+ */
+export declare class AddAudioFilesResponse implements GrpcMessage {
+	static id: string;
+	/**
+	 * Deserialize binary data to message
+	 * @param instance message instance
+	 */
+	static deserializeBinary(bytes: ByteSource): AddAudioFilesResponse;
+	/**
+	 * Check all the properties and set default protobuf values if necessary
+	 * @param _instance message instance
+	 */
+	static refineValues(_instance: AddAudioFilesResponse): void;
+	/**
+	 * Deserializes / reads binary message into message instance using provided binary reader
+	 * @param _instance message instance
+	 * @param _reader binary reader instance
+	 */
+	static deserializeBinaryFromReader(_instance: AddAudioFilesResponse, _reader: BinaryReader): void;
+	/**
+	 * Serializes a message to binary format using provided binary reader
+	 * @param _instance message instance
+	 * @param _writer binary writer instance
+	 */
+	static serializeBinaryToWriter(_instance: AddAudioFilesResponse, _writer: BinaryWriter): void;
+	private _audioFileResources?;
+	private _errorMessage;
+	/**
+	 * Message constructor. Initializes the properties and applies default Protobuf values if necessary
+	 * @param _value initial values object or instance of AddAudioFilesResponse to deeply clone from
+	 */
+	constructor(_value?: RecursivePartial<AddAudioFilesResponse.AsObject>);
+	get audioFileResources(): AudioFileResource[] | undefined;
+	set audioFileResources(value: AudioFileResource[] | undefined);
+	get errorMessage(): string;
+	set errorMessage(value: string);
+	/**
+	 * Serialize message to binary data
+	 * @param instance message instance
+	 */
+	serializeBinary(): any;
+	/**
+	 * Cast message to standard JavaScript object (all non-primitive values are deeply cloned)
+	 */
+	toObject(): AddAudioFilesResponse.AsObject;
+	/**
+	 * Convenience method to support JSON.stringify(message), replicates the structure of toObject()
+	 */
+	toJSON(): AddAudioFilesResponse.AsObject;
+	/**
+	 * Cast message to JSON using protobuf JSON notation: https://developers.google.com/protocol-buffers/docs/proto3#json
+	 * Attention: output differs from toObject() e.g. enums are represented as names and not as numbers, Timestamp is an ISO Date string format etc.
+	 * If the message itself or some of descendant messages is google.protobuf.Any, you MUST provide a message pool as options. If not, the messagePool is not required
+	 */
+	toProtobufJSON(options?: ToProtobufJSONOptions): AddAudioFilesResponse.AsProtobufJSON;
+}
+export declare module AddAudioFilesResponse {
+	/**
+	 * Standard JavaScript object representation for AddAudioFilesResponse
+	 */
+	interface AsObject {
+		audioFileResources?: AudioFileResource.AsObject[];
+		errorMessage: string;
+	}
+	/**
+	 * Protobuf JSON representation for AddAudioFilesResponse
+	 */
+	interface AsProtobufJSON {
+		audioFileResources: AudioFileResource.AsProtobufJSON[] | null;
+		errorMessage: string;
+	}
+}
+/**
+ * Message implementation for ondewo.nlu.DeleteAudioFilesRequest
+ */
+export declare class DeleteAudioFilesRequest implements GrpcMessage {
+	static id: string;
+	/**
+	 * Deserialize binary data to message
+	 * @param instance message instance
+	 */
+	static deserializeBinary(bytes: ByteSource): DeleteAudioFilesRequest;
+	/**
+	 * Check all the properties and set default protobuf values if necessary
+	 * @param _instance message instance
+	 */
+	static refineValues(_instance: DeleteAudioFilesRequest): void;
+	/**
+	 * Deserializes / reads binary message into message instance using provided binary reader
+	 * @param _instance message instance
+	 * @param _reader binary reader instance
+	 */
+	static deserializeBinaryFromReader(_instance: DeleteAudioFilesRequest, _reader: BinaryReader): void;
+	/**
+	 * Serializes a message to binary format using provided binary reader
+	 * @param _instance message instance
+	 * @param _writer binary writer instance
+	 */
+	static serializeBinaryToWriter(_instance: DeleteAudioFilesRequest, _writer: BinaryWriter): void;
+	private _parent;
+	private _names;
+	/**
+	 * Message constructor. Initializes the properties and applies default Protobuf values if necessary
+	 * @param _value initial values object or instance of DeleteAudioFilesRequest to deeply clone from
+	 */
+	constructor(_value?: RecursivePartial<DeleteAudioFilesRequest.AsObject>);
+	get parent(): string;
+	set parent(value: string);
+	get names(): string[];
+	set names(value: string[]);
+	/**
+	 * Serialize message to binary data
+	 * @param instance message instance
+	 */
+	serializeBinary(): any;
+	/**
+	 * Cast message to standard JavaScript object (all non-primitive values are deeply cloned)
+	 */
+	toObject(): DeleteAudioFilesRequest.AsObject;
+	/**
+	 * Convenience method to support JSON.stringify(message), replicates the structure of toObject()
+	 */
+	toJSON(): DeleteAudioFilesRequest.AsObject;
+	/**
+	 * Cast message to JSON using protobuf JSON notation: https://developers.google.com/protocol-buffers/docs/proto3#json
+	 * Attention: output differs from toObject() e.g. enums are represented as names and not as numbers, Timestamp is an ISO Date string format etc.
+	 * If the message itself or some of descendant messages is google.protobuf.Any, you MUST provide a message pool as options. If not, the messagePool is not required
+	 */
+	toProtobufJSON(options?: ToProtobufJSONOptions): DeleteAudioFilesRequest.AsProtobufJSON;
+}
+export declare module DeleteAudioFilesRequest {
+	/**
+	 * Standard JavaScript object representation for DeleteAudioFilesRequest
+	 */
+	interface AsObject {
+		parent: string;
+		names: string[];
+	}
+	/**
+	 * Protobuf JSON representation for DeleteAudioFilesRequest
+	 */
+	interface AsProtobufJSON {
+		parent: string;
+		names: string[];
+	}
+}
+/**
+ * Message implementation for ondewo.nlu.DeleteAudioFilesResponse
+ */
+export declare class DeleteAudioFilesResponse implements GrpcMessage {
+	static id: string;
+	/**
+	 * Deserialize binary data to message
+	 * @param instance message instance
+	 */
+	static deserializeBinary(bytes: ByteSource): DeleteAudioFilesResponse;
+	/**
+	 * Check all the properties and set default protobuf values if necessary
+	 * @param _instance message instance
+	 */
+	static refineValues(_instance: DeleteAudioFilesResponse): void;
+	/**
+	 * Deserializes / reads binary message into message instance using provided binary reader
+	 * @param _instance message instance
+	 * @param _reader binary reader instance
+	 */
+	static deserializeBinaryFromReader(_instance: DeleteAudioFilesResponse, _reader: BinaryReader): void;
+	/**
+	 * Serializes a message to binary format using provided binary reader
+	 * @param _instance message instance
+	 * @param _writer binary writer instance
+	 */
+	static serializeBinaryToWriter(_instance: DeleteAudioFilesResponse, _writer: BinaryWriter): void;
+	private _names;
+	private _errorMessage;
+	/**
+	 * Message constructor. Initializes the properties and applies default Protobuf values if necessary
+	 * @param _value initial values object or instance of DeleteAudioFilesResponse to deeply clone from
+	 */
+	constructor(_value?: RecursivePartial<DeleteAudioFilesResponse.AsObject>);
+	get names(): string[];
+	set names(value: string[]);
+	get errorMessage(): string;
+	set errorMessage(value: string);
+	/**
+	 * Serialize message to binary data
+	 * @param instance message instance
+	 */
+	serializeBinary(): any;
+	/**
+	 * Cast message to standard JavaScript object (all non-primitive values are deeply cloned)
+	 */
+	toObject(): DeleteAudioFilesResponse.AsObject;
+	/**
+	 * Convenience method to support JSON.stringify(message), replicates the structure of toObject()
+	 */
+	toJSON(): DeleteAudioFilesResponse.AsObject;
+	/**
+	 * Cast message to JSON using protobuf JSON notation: https://developers.google.com/protocol-buffers/docs/proto3#json
+	 * Attention: output differs from toObject() e.g. enums are represented as names and not as numbers, Timestamp is an ISO Date string format etc.
+	 * If the message itself or some of descendant messages is google.protobuf.Any, you MUST provide a message pool as options. If not, the messagePool is not required
+	 */
+	toProtobufJSON(options?: ToProtobufJSONOptions): DeleteAudioFilesResponse.AsProtobufJSON;
+}
+export declare module DeleteAudioFilesResponse {
+	/**
+	 * Standard JavaScript object representation for DeleteAudioFilesResponse
+	 */
+	interface AsObject {
+		names: string[];
+		errorMessage: string;
+	}
+	/**
+	 * Protobuf JSON representation for DeleteAudioFilesResponse
+	 */
+	interface AsProtobufJSON {
+		names: string[];
+		errorMessage: string;
+	}
+}
+/**
+ * Message implementation for ondewo.nlu.ListAudioFilesRequest
+ */
+export declare class ListAudioFilesRequest implements GrpcMessage {
+	static id: string;
+	/**
+	 * Deserialize binary data to message
+	 * @param instance message instance
+	 */
+	static deserializeBinary(bytes: ByteSource): ListAudioFilesRequest;
+	/**
+	 * Check all the properties and set default protobuf values if necessary
+	 * @param _instance message instance
+	 */
+	static refineValues(_instance: ListAudioFilesRequest): void;
+	/**
+	 * Deserializes / reads binary message into message instance using provided binary reader
+	 * @param _instance message instance
+	 * @param _reader binary reader instance
+	 */
+	static deserializeBinaryFromReader(_instance: ListAudioFilesRequest, _reader: BinaryReader): void;
+	/**
+	 * Serializes a message to binary format using provided binary reader
+	 * @param _instance message instance
+	 * @param _writer binary writer instance
+	 */
+	static serializeBinaryToWriter(_instance: ListAudioFilesRequest, _writer: BinaryWriter): void;
+	private _parent;
+	private _sessionId;
+	private _resourceView;
+	private _pageToken;
+	private _sortingMode;
+	/**
+	 * Message constructor. Initializes the properties and applies default Protobuf values if necessary
+	 * @param _value initial values object or instance of ListAudioFilesRequest to deeply clone from
+	 */
+	constructor(_value?: RecursivePartial<ListAudioFilesRequest.AsObject>);
+	get parent(): string;
+	set parent(value: string);
+	get sessionId(): string;
+	set sessionId(value: string);
+	get resourceView(): ResourceView;
+	set resourceView(value: ResourceView);
+	get pageToken(): string;
+	set pageToken(value: string);
+	get sortingMode(): ondewoNlu008.SortingMode;
+	set sortingMode(value: ondewoNlu008.SortingMode);
+	/**
+	 * Serialize message to binary data
+	 * @param instance message instance
+	 */
+	serializeBinary(): any;
+	/**
+	 * Cast message to standard JavaScript object (all non-primitive values are deeply cloned)
+	 */
+	toObject(): ListAudioFilesRequest.AsObject;
+	/**
+	 * Convenience method to support JSON.stringify(message), replicates the structure of toObject()
+	 */
+	toJSON(): ListAudioFilesRequest.AsObject;
+	/**
+	 * Cast message to JSON using protobuf JSON notation: https://developers.google.com/protocol-buffers/docs/proto3#json
+	 * Attention: output differs from toObject() e.g. enums are represented as names and not as numbers, Timestamp is an ISO Date string format etc.
+	 * If the message itself or some of descendant messages is google.protobuf.Any, you MUST provide a message pool as options. If not, the messagePool is not required
+	 */
+	toProtobufJSON(options?: ToProtobufJSONOptions): ListAudioFilesRequest.AsProtobufJSON;
+}
+export declare module ListAudioFilesRequest {
+	/**
+	 * Standard JavaScript object representation for ListAudioFilesRequest
+	 */
+	interface AsObject {
+		parent: string;
+		sessionId: string;
+		resourceView: ResourceView;
+		pageToken: string;
+		sortingMode: ondewoNlu008.SortingMode;
+	}
+	/**
+	 * Protobuf JSON representation for ListAudioFilesRequest
+	 */
+	interface AsProtobufJSON {
+		parent: string;
+		sessionId: string;
+		resourceView: string;
+		pageToken: string;
+		sortingMode: string;
+	}
+}
+/**
+ * Message implementation for ondewo.nlu.ListAudioFilesResponse
+ */
+export declare class ListAudioFilesResponse implements GrpcMessage {
+	static id: string;
+	/**
+	 * Deserialize binary data to message
+	 * @param instance message instance
+	 */
+	static deserializeBinary(bytes: ByteSource): ListAudioFilesResponse;
+	/**
+	 * Check all the properties and set default protobuf values if necessary
+	 * @param _instance message instance
+	 */
+	static refineValues(_instance: ListAudioFilesResponse): void;
+	/**
+	 * Deserializes / reads binary message into message instance using provided binary reader
+	 * @param _instance message instance
+	 * @param _reader binary reader instance
+	 */
+	static deserializeBinaryFromReader(_instance: ListAudioFilesResponse, _reader: BinaryReader): void;
+	/**
+	 * Serializes a message to binary format using provided binary reader
+	 * @param _instance message instance
+	 * @param _writer binary writer instance
+	 */
+	static serializeBinaryToWriter(_instance: ListAudioFilesResponse, _writer: BinaryWriter): void;
+	private _audioFiles?;
+	private _nextPageToken;
+	private _errorMessage;
+	/**
+	 * Message constructor. Initializes the properties and applies default Protobuf values if necessary
+	 * @param _value initial values object or instance of ListAudioFilesResponse to deeply clone from
+	 */
+	constructor(_value?: RecursivePartial<ListAudioFilesResponse.AsObject>);
+	get audioFiles(): AudioFileResource[] | undefined;
+	set audioFiles(value: AudioFileResource[] | undefined);
+	get nextPageToken(): string;
+	set nextPageToken(value: string);
+	get errorMessage(): string;
+	set errorMessage(value: string);
+	/**
+	 * Serialize message to binary data
+	 * @param instance message instance
+	 */
+	serializeBinary(): any;
+	/**
+	 * Cast message to standard JavaScript object (all non-primitive values are deeply cloned)
+	 */
+	toObject(): ListAudioFilesResponse.AsObject;
+	/**
+	 * Convenience method to support JSON.stringify(message), replicates the structure of toObject()
+	 */
+	toJSON(): ListAudioFilesResponse.AsObject;
+	/**
+	 * Cast message to JSON using protobuf JSON notation: https://developers.google.com/protocol-buffers/docs/proto3#json
+	 * Attention: output differs from toObject() e.g. enums are represented as names and not as numbers, Timestamp is an ISO Date string format etc.
+	 * If the message itself or some of descendant messages is google.protobuf.Any, you MUST provide a message pool as options. If not, the messagePool is not required
+	 */
+	toProtobufJSON(options?: ToProtobufJSONOptions): ListAudioFilesResponse.AsProtobufJSON;
+}
+export declare module ListAudioFilesResponse {
+	/**
+	 * Standard JavaScript object representation for ListAudioFilesResponse
+	 */
+	interface AsObject {
+		audioFiles?: AudioFileResource.AsObject[];
+		nextPageToken: string;
+		errorMessage: string;
+	}
+	/**
+	 * Protobuf JSON representation for ListAudioFilesResponse
+	 */
+	interface AsProtobufJSON {
+		audioFiles: AudioFileResource.AsProtobufJSON[] | null;
+		nextPageToken: string;
+		errorMessage: string;
+	}
+}
+/**
+ * Message implementation for ondewo.nlu.GetAudioFileOfSessionRequest
+ */
+export declare class GetAudioFileOfSessionRequest implements GrpcMessage {
+	static id: string;
+	/**
+	 * Deserialize binary data to message
+	 * @param instance message instance
+	 */
+	static deserializeBinary(bytes: ByteSource): GetAudioFileOfSessionRequest;
+	/**
+	 * Check all the properties and set default protobuf values if necessary
+	 * @param _instance message instance
+	 */
+	static refineValues(_instance: GetAudioFileOfSessionRequest): void;
+	/**
+	 * Deserializes / reads binary message into message instance using provided binary reader
+	 * @param _instance message instance
+	 * @param _reader binary reader instance
+	 */
+	static deserializeBinaryFromReader(_instance: GetAudioFileOfSessionRequest, _reader: BinaryReader): void;
+	/**
+	 * Serializes a message to binary format using provided binary reader
+	 * @param _instance message instance
+	 * @param _writer binary writer instance
+	 */
+	static serializeBinaryToWriter(_instance: GetAudioFileOfSessionRequest, _writer: BinaryWriter): void;
+	private _parent;
+	private _sessionId;
+	private _resourceView;
+	/**
+	 * Message constructor. Initializes the properties and applies default Protobuf values if necessary
+	 * @param _value initial values object or instance of GetAudioFileOfSessionRequest to deeply clone from
+	 */
+	constructor(_value?: RecursivePartial<GetAudioFileOfSessionRequest.AsObject>);
+	get parent(): string;
+	set parent(value: string);
+	get sessionId(): string;
+	set sessionId(value: string);
+	get resourceView(): ResourceView;
+	set resourceView(value: ResourceView);
+	/**
+	 * Serialize message to binary data
+	 * @param instance message instance
+	 */
+	serializeBinary(): any;
+	/**
+	 * Cast message to standard JavaScript object (all non-primitive values are deeply cloned)
+	 */
+	toObject(): GetAudioFileOfSessionRequest.AsObject;
+	/**
+	 * Convenience method to support JSON.stringify(message), replicates the structure of toObject()
+	 */
+	toJSON(): GetAudioFileOfSessionRequest.AsObject;
+	/**
+	 * Cast message to JSON using protobuf JSON notation: https://developers.google.com/protocol-buffers/docs/proto3#json
+	 * Attention: output differs from toObject() e.g. enums are represented as names and not as numbers, Timestamp is an ISO Date string format etc.
+	 * If the message itself or some of descendant messages is google.protobuf.Any, you MUST provide a message pool as options. If not, the messagePool is not required
+	 */
+	toProtobufJSON(options?: ToProtobufJSONOptions): GetAudioFileOfSessionRequest.AsProtobufJSON;
+}
+export declare module GetAudioFileOfSessionRequest {
+	/**
+	 * Standard JavaScript object representation for GetAudioFileOfSessionRequest
+	 */
+	interface AsObject {
+		parent: string;
+		sessionId: string;
+		resourceView: ResourceView;
+	}
+	/**
+	 * Protobuf JSON representation for GetAudioFileOfSessionRequest
+	 */
+	interface AsProtobufJSON {
+		parent: string;
+		sessionId: string;
+		resourceView: string;
 	}
 }

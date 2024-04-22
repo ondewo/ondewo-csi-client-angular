@@ -2,7 +2,7 @@ import { GrpcClientFactory, GrpcEvent, GrpcMetadata } from '@ngx-grpc/common';
 import { GrpcHandler } from '@ngx-grpc/core';
 import { Observable } from 'rxjs';
 import * as thisProto from './entity-type.pb';
-import * as googleProtobuf004 from '@ngx-grpc/well-known-types';
+import * as googleProtobuf006 from '@ngx-grpc/well-known-types';
 import * as ondewoNlu010 from '../../ondewo/nlu/operations.pb';
 import * as i0 from '@angular/core';
 /**
@@ -66,12 +66,12 @@ export declare class EntityTypesClient {
 		 *
 		 * @param requestMessage Request message
 		 * @param requestMetadata Request metadata
-		 * @returns Observable<GrpcEvent<googleProtobuf004.Empty>>
+		 * @returns Observable<GrpcEvent<googleProtobuf006.Empty>>
 		 */
 		deleteEntityType: (
 			requestData: thisProto.DeleteEntityTypeRequest,
 			requestMetadata?: GrpcMetadata
-		) => Observable<GrpcEvent<googleProtobuf004.Empty>>;
+		) => Observable<GrpcEvent<googleProtobuf006.Empty>>;
 		/**
 		 * Unary call: /ondewo.nlu.EntityTypes/BatchUpdateEntityTypes
 		 *
@@ -244,12 +244,12 @@ export declare class EntityTypesClient {
 	 *
 	 * @param requestMessage Request message
 	 * @param requestMetadata Request metadata
-	 * @returns Observable<googleProtobuf004.Empty>
+	 * @returns Observable<googleProtobuf006.Empty>
 	 */
 	deleteEntityType(
 		requestData: thisProto.DeleteEntityTypeRequest,
 		requestMetadata?: GrpcMetadata
-	): Observable<googleProtobuf004.Empty>;
+	): Observable<googleProtobuf006.Empty>;
 	/**
 	 * Unary call @/ondewo.nlu.EntityTypes/BatchUpdateEntityTypes
 	 *

@@ -2,6 +2,7 @@ import { GrpcClientFactory, GrpcEvent, GrpcMetadata } from '@ngx-grpc/common';
 import { GrpcHandler } from '@ngx-grpc/core';
 import { Observable } from 'rxjs';
 import * as thisProto from './webhook.pb';
+import * as googleProtobuf003 from '@ngx-grpc/well-known-types';
 import * as i0 from '@angular/core';
 /**
  * Service client implementation for ondewo.nlu.Webhook
@@ -48,6 +49,39 @@ export declare class WebhookClient {
 			requestData: thisProto.PingRequest,
 			requestMetadata?: GrpcMetadata
 		) => Observable<GrpcEvent<thisProto.PingResponse>>;
+		/**
+		 * Unary call: /ondewo.nlu.Webhook/CreateSessionEntityType
+		 *
+		 * @param requestMessage Request message
+		 * @param requestMetadata Request metadata
+		 * @returns Observable<GrpcEvent<thisProto.SessionEntityType>>
+		 */
+		createSessionEntityType: (
+			requestData: thisProto.CreateSessionEntityTypeRequest,
+			requestMetadata?: GrpcMetadata
+		) => Observable<GrpcEvent<thisProto.SessionEntityType>>;
+		/**
+		 * Unary call: /ondewo.nlu.Webhook/UpdateSessionEntityType
+		 *
+		 * @param requestMessage Request message
+		 * @param requestMetadata Request metadata
+		 * @returns Observable<GrpcEvent<thisProto.SessionEntityType>>
+		 */
+		updateSessionEntityType: (
+			requestData: thisProto.UpdateSessionEntityTypeRequest,
+			requestMetadata?: GrpcMetadata
+		) => Observable<GrpcEvent<thisProto.SessionEntityType>>;
+		/**
+		 * Unary call: /ondewo.nlu.Webhook/DeleteSessionEntityType
+		 *
+		 * @param requestMessage Request message
+		 * @param requestMetadata Request metadata
+		 * @returns Observable<GrpcEvent<googleProtobuf003.Empty>>
+		 */
+		deleteSessionEntityType: (
+			requestData: thisProto.DeleteSessionEntityTypeRequest,
+			requestMetadata?: GrpcMetadata
+		) => Observable<GrpcEvent<googleProtobuf003.Empty>>;
 	};
 	constructor(settings: any, clientFactory: GrpcClientFactory<any>, handler: GrpcHandler);
 	/**
@@ -80,6 +114,39 @@ export declare class WebhookClient {
 	 * @returns Observable<thisProto.PingResponse>
 	 */
 	ping(requestData: thisProto.PingRequest, requestMetadata?: GrpcMetadata): Observable<thisProto.PingResponse>;
+	/**
+	 * Unary call @/ondewo.nlu.Webhook/CreateSessionEntityType
+	 *
+	 * @param requestMessage Request message
+	 * @param requestMetadata Request metadata
+	 * @returns Observable<thisProto.SessionEntityType>
+	 */
+	createSessionEntityType(
+		requestData: thisProto.CreateSessionEntityTypeRequest,
+		requestMetadata?: GrpcMetadata
+	): Observable<thisProto.SessionEntityType>;
+	/**
+	 * Unary call @/ondewo.nlu.Webhook/UpdateSessionEntityType
+	 *
+	 * @param requestMessage Request message
+	 * @param requestMetadata Request metadata
+	 * @returns Observable<thisProto.SessionEntityType>
+	 */
+	updateSessionEntityType(
+		requestData: thisProto.UpdateSessionEntityTypeRequest,
+		requestMetadata?: GrpcMetadata
+	): Observable<thisProto.SessionEntityType>;
+	/**
+	 * Unary call @/ondewo.nlu.Webhook/DeleteSessionEntityType
+	 *
+	 * @param requestMessage Request message
+	 * @param requestMetadata Request metadata
+	 * @returns Observable<googleProtobuf003.Empty>
+	 */
+	deleteSessionEntityType(
+		requestData: thisProto.DeleteSessionEntityTypeRequest,
+		requestMetadata?: GrpcMetadata
+	): Observable<googleProtobuf003.Empty>;
 	static ɵfac: i0.ɵɵFactoryDeclaration<WebhookClient, [{ optional: true }, null, null]>;
 	static ɵprov: i0.ɵɵInjectableDeclaration<WebhookClient>;
 }

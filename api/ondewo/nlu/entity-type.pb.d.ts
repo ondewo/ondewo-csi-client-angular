@@ -1,7 +1,8 @@
 import { GrpcMessage, RecursivePartial, ToProtobufJSONOptions } from '@ngx-grpc/common';
 import { BinaryReader, BinaryWriter, ByteSource } from 'google-protobuf';
-import * as googleProtobuf004 from '@ngx-grpc/well-known-types';
-import * as googleProtobuf008 from '@ngx-grpc/well-known-types';
+import * as googleProtobuf002 from '@ngx-grpc/well-known-types';
+import * as googleProtobuf003 from '@ngx-grpc/well-known-types';
+import * as googleProtobuf006 from '@ngx-grpc/well-known-types';
 import * as ondewoNlu009 from '../../ondewo/nlu/common.pb';
 export declare enum EntityTypeView {
 	ENTITY_TYPE_VIEW_UNSPECIFIED = 0,
@@ -51,6 +52,10 @@ export declare class EntityType implements GrpcMessage {
 	private _entityCount;
 	private _status;
 	private _synonymCount;
+	private _createdAt?;
+	private _modifiedAt?;
+	private _createdBy;
+	private _modifiedBy;
 	/**
 	 * Message constructor. Initializes the properties and applies default Protobuf values if necessary
 	 * @param _value initial values object or instance of EntityType to deeply clone from
@@ -74,6 +79,14 @@ export declare class EntityType implements GrpcMessage {
 	set status(value: EntityType.EntityTypeStatus);
 	get synonymCount(): number;
 	set synonymCount(value: number);
+	get createdAt(): googleProtobuf003.Timestamp | undefined;
+	set createdAt(value: googleProtobuf003.Timestamp | undefined);
+	get modifiedAt(): googleProtobuf003.Timestamp | undefined;
+	set modifiedAt(value: googleProtobuf003.Timestamp | undefined);
+	get createdBy(): string;
+	set createdBy(value: string);
+	get modifiedBy(): string;
+	set modifiedBy(value: string);
 	/**
 	 * Serialize message to binary data
 	 * @param instance message instance
@@ -108,6 +121,10 @@ export declare module EntityType {
 		entityCount: number;
 		status: EntityType.EntityTypeStatus;
 		synonymCount: number;
+		createdAt?: googleProtobuf003.Timestamp.AsObject;
+		modifiedAt?: googleProtobuf003.Timestamp.AsObject;
+		createdBy: string;
+		modifiedBy: string;
 	}
 	/**
 	 * Protobuf JSON representation for EntityType
@@ -122,6 +139,10 @@ export declare module EntityType {
 		entityCount: number;
 		status: string;
 		synonymCount: number;
+		createdAt: googleProtobuf003.Timestamp.AsProtobufJSON | null;
+		modifiedAt: googleProtobuf003.Timestamp.AsProtobufJSON | null;
+		createdBy: string;
+		modifiedBy: string;
 	}
 	enum Kind {
 		KIND_UNSPECIFIED = 0,
@@ -169,6 +190,10 @@ export declare module EntityType {
 		private _displayName;
 		private _synonymCount;
 		private _languageCode;
+		private _createdAt?;
+		private _modifiedAt?;
+		private _createdBy;
+		private _modifiedBy;
 		/**
 		 * Message constructor. Initializes the properties and applies default Protobuf values if necessary
 		 * @param _value initial values object or instance of Entity to deeply clone from
@@ -186,6 +211,14 @@ export declare module EntityType {
 		set synonymCount(value: number);
 		get languageCode(): string;
 		set languageCode(value: string);
+		get createdAt(): googleProtobuf003.Timestamp | undefined;
+		set createdAt(value: googleProtobuf003.Timestamp | undefined);
+		get modifiedAt(): googleProtobuf003.Timestamp | undefined;
+		set modifiedAt(value: googleProtobuf003.Timestamp | undefined);
+		get createdBy(): string;
+		set createdBy(value: string);
+		get modifiedBy(): string;
+		set modifiedBy(value: string);
 		/**
 		 * Serialize message to binary data
 		 * @param instance message instance
@@ -217,6 +250,10 @@ export declare module EntityType {
 			displayName: string;
 			synonymCount: number;
 			languageCode: string;
+			createdAt?: googleProtobuf003.Timestamp.AsObject;
+			modifiedAt?: googleProtobuf003.Timestamp.AsObject;
+			createdBy: string;
+			modifiedBy: string;
 		}
 		/**
 		 * Protobuf JSON representation for Entity
@@ -228,6 +265,10 @@ export declare module EntityType {
 			displayName: string;
 			synonymCount: number;
 			languageCode: string;
+			createdAt: googleProtobuf003.Timestamp.AsProtobufJSON | null;
+			modifiedAt: googleProtobuf003.Timestamp.AsProtobufJSON | null;
+			createdBy: string;
+			modifiedBy: string;
 		}
 	}
 }
@@ -607,8 +648,8 @@ export declare class UpdateEntityTypeRequest implements GrpcMessage {
 	set entityType(value: EntityType | undefined);
 	get languageCode(): string;
 	set languageCode(value: string);
-	get updateMask(): googleProtobuf008.FieldMask | undefined;
-	set updateMask(value: googleProtobuf008.FieldMask | undefined);
+	get updateMask(): googleProtobuf002.FieldMask | undefined;
+	set updateMask(value: googleProtobuf002.FieldMask | undefined);
 	get entityTypeView(): EntityTypeView;
 	set entityTypeView(value: EntityTypeView);
 	/**
@@ -638,7 +679,7 @@ export declare module UpdateEntityTypeRequest {
 	interface AsObject {
 		entityType?: EntityType.AsObject;
 		languageCode: string;
-		updateMask?: googleProtobuf008.FieldMask.AsObject;
+		updateMask?: googleProtobuf002.FieldMask.AsObject;
 		entityTypeView: EntityTypeView;
 	}
 	/**
@@ -647,7 +688,7 @@ export declare module UpdateEntityTypeRequest {
 	interface AsProtobufJSON {
 		entityType: EntityType.AsProtobufJSON | null;
 		languageCode: string;
-		updateMask: googleProtobuf008.FieldMask.AsProtobufJSON | null;
+		updateMask: googleProtobuf002.FieldMask.AsProtobufJSON | null;
 		entityTypeView: string;
 	}
 }
@@ -766,8 +807,8 @@ export declare class BatchUpdateEntityTypesRequest implements GrpcMessage {
 	set entityTypeBatchInline(value: EntityTypeBatch | undefined);
 	get languageCode(): string;
 	set languageCode(value: string);
-	get updateMask(): googleProtobuf008.FieldMask | undefined;
-	set updateMask(value: googleProtobuf008.FieldMask | undefined);
+	get updateMask(): googleProtobuf002.FieldMask | undefined;
+	set updateMask(value: googleProtobuf002.FieldMask | undefined);
 	get entityTypeBatch(): BatchUpdateEntityTypesRequest.EntityTypeBatchCase;
 	/**
 	 * Serialize message to binary data
@@ -798,7 +839,7 @@ export declare module BatchUpdateEntityTypesRequest {
 		entityTypeBatchUri: string;
 		entityTypeBatchInline?: EntityTypeBatch.AsObject;
 		languageCode: string;
-		updateMask?: googleProtobuf008.FieldMask.AsObject;
+		updateMask?: googleProtobuf002.FieldMask.AsObject;
 	}
 	/**
 	 * Protobuf JSON representation for BatchUpdateEntityTypesRequest
@@ -808,7 +849,7 @@ export declare module BatchUpdateEntityTypesRequest {
 		entityTypeBatchUri: string | null;
 		entityTypeBatchInline: EntityTypeBatch.AsProtobufJSON | null;
 		languageCode: string;
-		updateMask: googleProtobuf008.FieldMask.AsProtobufJSON | null;
+		updateMask: googleProtobuf002.FieldMask.AsProtobufJSON | null;
 	}
 	enum EntityTypeBatchCase {
 		none = 0,
@@ -1857,8 +1898,8 @@ export declare class DeleteEntityStatus implements GrpcMessage {
 	 * @param _value initial values object or instance of DeleteEntityStatus to deeply clone from
 	 */
 	constructor(_value?: RecursivePartial<DeleteEntityStatus.AsObject>);
-	get successfullyDeleted(): googleProtobuf004.Empty | undefined;
-	set successfullyDeleted(value: googleProtobuf004.Empty | undefined);
+	get successfullyDeleted(): googleProtobuf006.Empty | undefined;
+	set successfullyDeleted(value: googleProtobuf006.Empty | undefined);
 	get errorMessage(): string;
 	set errorMessage(value: string);
 	get deleteStatus(): DeleteEntityStatus.DeleteStatusCase;
@@ -1887,14 +1928,14 @@ export declare module DeleteEntityStatus {
 	 * Standard JavaScript object representation for DeleteEntityStatus
 	 */
 	interface AsObject {
-		successfullyDeleted?: googleProtobuf004.Empty.AsObject;
+		successfullyDeleted?: googleProtobuf006.Empty.AsObject;
 		errorMessage: string;
 	}
 	/**
 	 * Protobuf JSON representation for DeleteEntityStatus
 	 */
 	interface AsProtobufJSON {
-		successfullyDeleted: googleProtobuf004.Empty.AsProtobufJSON | null;
+		successfullyDeleted: googleProtobuf006.Empty.AsProtobufJSON | null;
 		errorMessage: string | null;
 	}
 	enum DeleteStatusCase {

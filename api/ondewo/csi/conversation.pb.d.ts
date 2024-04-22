@@ -2,10 +2,10 @@ import { GrpcMessage, RecursivePartial, ToProtobufJSONOptions } from '@ngx-grpc/
 import { BinaryReader, BinaryWriter, ByteSource } from 'google-protobuf';
 import * as googleProtobuf004 from '@ngx-grpc/well-known-types';
 import * as googleRpc006 from '../../google/rpc/status.pb';
-import * as ondewoNlu008 from '../../ondewo/nlu/context.pb';
-import * as ondewoNlu011 from '../../ondewo/nlu/session.pb';
-import * as ondewoT2s012 from '../../ondewo/t2s/text-to-speech.pb';
-import * as ondewoS2t013 from '../../ondewo/s2t/speech-to-text.pb';
+import * as ondewoNlu009 from '../../ondewo/nlu/context.pb';
+import * as ondewoNlu012 from '../../ondewo/nlu/session.pb';
+import * as ondewoT2s013 from '../../ondewo/t2s/text-to-speech.pb';
+import * as ondewoS2t014 from '../../ondewo/s2t/speech-to-text.pb';
 export declare enum ControlStatus {
 	OK = 0,
 	EMERGENCY_STOP = 1
@@ -459,10 +459,10 @@ export declare class S2sStreamResponse implements GrpcMessage {
 	 * @param _value initial values object or instance of S2sStreamResponse to deeply clone from
 	 */
 	constructor(_value?: RecursivePartial<S2sStreamResponse.AsObject>);
-	get detectIntentResponse(): ondewoNlu011.DetectIntentResponse | undefined;
-	set detectIntentResponse(value: ondewoNlu011.DetectIntentResponse | undefined);
-	get synthesizeResponse(): ondewoT2s012.SynthesizeResponse | undefined;
-	set synthesizeResponse(value: ondewoT2s012.SynthesizeResponse | undefined);
+	get detectIntentResponse(): ondewoNlu012.DetectIntentResponse | undefined;
+	set detectIntentResponse(value: ondewoNlu012.DetectIntentResponse | undefined);
+	get synthesizeResponse(): ondewoT2s013.SynthesizeResponse | undefined;
+	set synthesizeResponse(value: ondewoT2s013.SynthesizeResponse | undefined);
 	get sipTrigger(): SipTrigger | undefined;
 	set sipTrigger(value: SipTrigger | undefined);
 	get response(): S2sStreamResponse.ResponseCase;
@@ -491,16 +491,16 @@ export declare module S2sStreamResponse {
 	 * Standard JavaScript object representation for S2sStreamResponse
 	 */
 	interface AsObject {
-		detectIntentResponse?: ondewoNlu011.DetectIntentResponse.AsObject;
-		synthesizeResponse?: ondewoT2s012.SynthesizeResponse.AsObject;
+		detectIntentResponse?: ondewoNlu012.DetectIntentResponse.AsObject;
+		synthesizeResponse?: ondewoT2s013.SynthesizeResponse.AsObject;
 		sipTrigger?: SipTrigger.AsObject;
 	}
 	/**
 	 * Protobuf JSON representation for S2sStreamResponse
 	 */
 	interface AsProtobufJSON {
-		detectIntentResponse: ondewoNlu011.DetectIntentResponse.AsProtobufJSON | null;
-		synthesizeResponse: ondewoT2s012.SynthesizeResponse.AsProtobufJSON | null;
+		detectIntentResponse: ondewoNlu012.DetectIntentResponse.AsProtobufJSON | null;
+		synthesizeResponse: ondewoT2s013.SynthesizeResponse.AsProtobufJSON | null;
 		sipTrigger: SipTrigger.AsProtobufJSON | null;
 	}
 	enum ResponseCase {
@@ -1061,18 +1061,18 @@ export declare class ControlMessageServiceParameters implements GrpcMessage {
 	 * @param _value initial values object or instance of ControlMessageServiceParameters to deeply clone from
 	 */
 	constructor(_value?: RecursivePartial<ControlMessageServiceParameters.AsObject>);
-	get t2sConfig(): ondewoT2s012.RequestConfig | undefined;
-	set t2sConfig(value: ondewoT2s012.RequestConfig | undefined);
-	get s2tConfig(): ondewoS2t013.TranscribeRequestConfig | undefined;
-	set s2tConfig(value: ondewoS2t013.TranscribeRequestConfig | undefined);
+	get t2sConfig(): ondewoT2s013.RequestConfig | undefined;
+	set t2sConfig(value: ondewoT2s013.RequestConfig | undefined);
+	get s2tConfig(): ondewoS2t014.TranscribeRequestConfig | undefined;
+	set s2tConfig(value: ondewoS2t014.TranscribeRequestConfig | undefined);
 	get transferId(): string;
 	set transferId(value: string);
 	get wavFiles(): Uint8Array[];
 	set wavFiles(value: Uint8Array[]);
 	get text(): string;
 	set text(value: string);
-	get context(): ondewoNlu008.Context | undefined;
-	set context(value: ondewoNlu008.Context | undefined);
+	get context(): ondewoNlu009.Context | undefined;
+	set context(value: ondewoNlu009.Context | undefined);
 	get sessionId(): string;
 	set sessionId(value: string);
 	get contextName(): string;
@@ -1107,12 +1107,12 @@ export declare module ControlMessageServiceParameters {
 	 * Standard JavaScript object representation for ControlMessageServiceParameters
 	 */
 	interface AsObject {
-		t2sConfig?: ondewoT2s012.RequestConfig.AsObject;
-		s2tConfig?: ondewoS2t013.TranscribeRequestConfig.AsObject;
+		t2sConfig?: ondewoT2s013.RequestConfig.AsObject;
+		s2tConfig?: ondewoS2t014.TranscribeRequestConfig.AsObject;
 		transferId: string;
 		wavFiles: Uint8Array[];
 		text: string;
-		context?: ondewoNlu008.Context.AsObject;
+		context?: ondewoNlu009.Context.AsObject;
 		sessionId: string;
 		contextName: string;
 		conditionStart?: Condition.AsObject;
@@ -1122,12 +1122,12 @@ export declare module ControlMessageServiceParameters {
 	 * Protobuf JSON representation for ControlMessageServiceParameters
 	 */
 	interface AsProtobufJSON {
-		t2sConfig: ondewoT2s012.RequestConfig.AsProtobufJSON | null;
-		s2tConfig: ondewoS2t013.TranscribeRequestConfig.AsProtobufJSON | null;
+		t2sConfig: ondewoT2s013.RequestConfig.AsProtobufJSON | null;
+		s2tConfig: ondewoS2t014.TranscribeRequestConfig.AsProtobufJSON | null;
 		transferId: string;
 		wavFiles: string[];
 		text: string;
-		context: ondewoNlu008.Context.AsProtobufJSON | null;
+		context: ondewoNlu009.Context.AsProtobufJSON | null;
 		sessionId: string;
 		contextName: string;
 		conditionStart: Condition.AsProtobufJSON | null;

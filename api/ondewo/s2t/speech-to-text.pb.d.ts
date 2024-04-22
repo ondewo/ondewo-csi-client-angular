@@ -44,8 +44,9 @@ export declare class TranscribeRequestConfig implements GrpcMessage {
 	private _postProcessing?;
 	private _utteranceDetection?;
 	private _pyannote?;
-	private _matchbox?;
 	private _returnOptions?;
+	private _language;
+	private _task;
 	private _oneofLanguageModelName;
 	private _oneofPostProcessing;
 	private _oneofUtteranceDetection;
@@ -68,10 +69,12 @@ export declare class TranscribeRequestConfig implements GrpcMessage {
 	set utteranceDetection(value: UtteranceDetectionOptions | undefined);
 	get pyannote(): Pyannote | undefined;
 	set pyannote(value: Pyannote | undefined);
-	get matchbox(): Matchbox | undefined;
-	set matchbox(value: Matchbox | undefined);
 	get returnOptions(): TranscriptionReturnOptions | undefined;
 	set returnOptions(value: TranscriptionReturnOptions | undefined);
+	get language(): string;
+	set language(value: string);
+	get task(): string;
+	set task(value: string);
 	get oneofLanguageModelName(): TranscribeRequestConfig.OneofLanguageModelNameCase;
 	get oneofPostProcessing(): TranscribeRequestConfig.OneofPostProcessingCase;
 	get oneofUtteranceDetection(): TranscribeRequestConfig.OneofUtteranceDetectionCase;
@@ -108,8 +111,9 @@ export declare module TranscribeRequestConfig {
 		postProcessing?: PostProcessingOptions.AsObject;
 		utteranceDetection?: UtteranceDetectionOptions.AsObject;
 		pyannote?: Pyannote.AsObject;
-		matchbox?: Matchbox.AsObject;
 		returnOptions?: TranscriptionReturnOptions.AsObject;
+		language: string;
+		task: string;
 	}
 	/**
 	 * Protobuf JSON representation for TranscribeRequestConfig
@@ -121,8 +125,9 @@ export declare module TranscribeRequestConfig {
 		postProcessing: PostProcessingOptions.AsProtobufJSON | null;
 		utteranceDetection: UtteranceDetectionOptions.AsProtobufJSON | null;
 		pyannote: Pyannote.AsProtobufJSON | null;
-		matchbox: Matchbox.AsProtobufJSON | null;
 		returnOptions: TranscriptionReturnOptions.AsProtobufJSON | null;
+		language: string;
+		task: string;
 	}
 	enum OneofLanguageModelNameCase {
 		none = 0,
@@ -138,8 +143,7 @@ export declare module TranscribeRequestConfig {
 	}
 	enum VoiceActivityDetectionCase {
 		none = 0,
-		pyannote = 1,
-		matchbox = 2
+		pyannote = 1
 	}
 	enum OneofReturnOptionsCase {
 		none = 0,
@@ -278,8 +282,6 @@ export declare class UtteranceDetectionOptions implements GrpcMessage {
 	 */
 	static serializeBinaryToWriter(_instance: UtteranceDetectionOptions, _writer: BinaryWriter): void;
 	private _transcribeNotFinal;
-	private _startOfUtteranceThreshold;
-	private _endOfUtteranceThreshold;
 	private _nextChunkTimeout;
 	private _oneofTranscribeNotFinal;
 	/**
@@ -289,10 +291,6 @@ export declare class UtteranceDetectionOptions implements GrpcMessage {
 	constructor(_value?: RecursivePartial<UtteranceDetectionOptions.AsObject>);
 	get transcribeNotFinal(): boolean;
 	set transcribeNotFinal(value: boolean);
-	get startOfUtteranceThreshold(): number;
-	set startOfUtteranceThreshold(value: number);
-	get endOfUtteranceThreshold(): number;
-	set endOfUtteranceThreshold(value: number);
 	get nextChunkTimeout(): number;
 	set nextChunkTimeout(value: number);
 	get oneofTranscribeNotFinal(): UtteranceDetectionOptions.OneofTranscribeNotFinalCase;
@@ -322,8 +320,6 @@ export declare module UtteranceDetectionOptions {
 	 */
 	interface AsObject {
 		transcribeNotFinal: boolean;
-		startOfUtteranceThreshold: number;
-		endOfUtteranceThreshold: number;
 		nextChunkTimeout: number;
 	}
 	/**
@@ -331,8 +327,6 @@ export declare module UtteranceDetectionOptions {
 	 */
 	interface AsProtobufJSON {
 		transcribeNotFinal: boolean;
-		startOfUtteranceThreshold: number;
-		endOfUtteranceThreshold: number;
 		nextChunkTimeout: number;
 	}
 	enum OneofTranscribeNotFinalCase {
@@ -1964,8 +1958,6 @@ export declare class AcousticModels implements GrpcMessage {
 	 */
 	static serializeBinaryToWriter(_instance: AcousticModels, _writer: BinaryWriter): void;
 	private _type;
-	private _quartznet?;
-	private _quartznetTriton?;
 	private _wav2vec?;
 	private _wav2vecTriton?;
 	private _whisper?;
@@ -1977,10 +1969,6 @@ export declare class AcousticModels implements GrpcMessage {
 	constructor(_value?: RecursivePartial<AcousticModels.AsObject>);
 	get type(): string;
 	set type(value: string);
-	get quartznet(): Quartznet | undefined;
-	set quartznet(value: Quartznet | undefined);
-	get quartznetTriton(): QuartznetTriton | undefined;
-	set quartznetTriton(value: QuartznetTriton | undefined);
 	get wav2vec(): Wav2Vec | undefined;
 	set wav2vec(value: Wav2Vec | undefined);
 	get wav2vecTriton(): Wav2VecTriton | undefined;
@@ -2015,8 +2003,6 @@ export declare module AcousticModels {
 	 */
 	interface AsObject {
 		type: string;
-		quartznet?: Quartznet.AsObject;
-		quartznetTriton?: QuartznetTriton.AsObject;
 		wav2vec?: Wav2Vec.AsObject;
 		wav2vecTriton?: Wav2VecTriton.AsObject;
 		whisper?: Whisper.AsObject;
@@ -2027,8 +2013,6 @@ export declare module AcousticModels {
 	 */
 	interface AsProtobufJSON {
 		type: string;
-		quartznet: Quartznet.AsProtobufJSON | null;
-		quartznetTriton: QuartznetTriton.AsProtobufJSON | null;
 		wav2vec: Wav2Vec.AsProtobufJSON | null;
 		wav2vecTriton: Wav2VecTriton.AsProtobufJSON | null;
 		whisper: Whisper.AsProtobufJSON | null;
@@ -2065,6 +2049,7 @@ export declare class Whisper implements GrpcMessage {
 	private _modelPath;
 	private _useGpu;
 	private _language;
+	private _task;
 	/**
 	 * Message constructor. Initializes the properties and applies default Protobuf values if necessary
 	 * @param _value initial values object or instance of Whisper to deeply clone from
@@ -2076,6 +2061,8 @@ export declare class Whisper implements GrpcMessage {
 	set useGpu(value: boolean);
 	get language(): string;
 	set language(value: string);
+	get task(): string;
+	set task(value: string);
 	/**
 	 * Serialize message to binary data
 	 * @param instance message instance
@@ -2104,6 +2091,7 @@ export declare module Whisper {
 		modelPath: string;
 		useGpu: boolean;
 		language: string;
+		task: string;
 	}
 	/**
 	 * Protobuf JSON representation for Whisper
@@ -2112,6 +2100,7 @@ export declare module Whisper {
 		modelPath: string;
 		useGpu: boolean;
 		language: string;
+		task: string;
 	}
 }
 /**
@@ -2145,6 +2134,10 @@ export declare class WhisperTriton implements GrpcMessage {
 	private _tritonModelName;
 	private _tritonModelVersion;
 	private _checkStatusTimeout;
+	private _language;
+	private _task;
+	private _tritonServerHost;
+	private _tritonServerPort;
 	/**
 	 * Message constructor. Initializes the properties and applies default Protobuf values if necessary
 	 * @param _value initial values object or instance of WhisperTriton to deeply clone from
@@ -2158,6 +2151,14 @@ export declare class WhisperTriton implements GrpcMessage {
 	set tritonModelVersion(value: string);
 	get checkStatusTimeout(): string;
 	set checkStatusTimeout(value: string);
+	get language(): string;
+	set language(value: string);
+	get task(): string;
+	set task(value: string);
+	get tritonServerHost(): string;
+	set tritonServerHost(value: string);
+	get tritonServerPort(): string;
+	set tritonServerPort(value: string);
 	/**
 	 * Serialize message to binary data
 	 * @param instance message instance
@@ -2187,6 +2188,10 @@ export declare module WhisperTriton {
 		tritonModelName: string;
 		tritonModelVersion: string;
 		checkStatusTimeout: string;
+		language: string;
+		task: string;
+		tritonServerHost: string;
+		tritonServerPort: string;
 	}
 	/**
 	 * Protobuf JSON representation for WhisperTriton
@@ -2196,6 +2201,10 @@ export declare module WhisperTriton {
 		tritonModelName: string;
 		tritonModelVersion: string;
 		checkStatusTimeout: string;
+		language: string;
+		task: string;
+		tritonServerHost: string;
+		tritonServerPort: string;
 	}
 }
 /**
@@ -2303,6 +2312,8 @@ export declare class Wav2VecTriton implements GrpcMessage {
 	private _tritonModelName;
 	private _tritonModelVersion;
 	private _checkStatusTimeout;
+	private _tritonServerHost;
+	private _tritonServerPort;
 	/**
 	 * Message constructor. Initializes the properties and applies default Protobuf values if necessary
 	 * @param _value initial values object or instance of Wav2VecTriton to deeply clone from
@@ -2316,6 +2327,10 @@ export declare class Wav2VecTriton implements GrpcMessage {
 	set tritonModelVersion(value: string);
 	get checkStatusTimeout(): string;
 	set checkStatusTimeout(value: string);
+	get tritonServerHost(): string;
+	set tritonServerHost(value: string);
+	get tritonServerPort(): string;
+	set tritonServerPort(value: string);
 	/**
 	 * Serialize message to binary data
 	 * @param instance message instance
@@ -2345,6 +2360,8 @@ export declare module Wav2VecTriton {
 		tritonModelName: string;
 		tritonModelVersion: string;
 		checkStatusTimeout: string;
+		tritonServerHost: string;
+		tritonServerPort: string;
 	}
 	/**
 	 * Protobuf JSON representation for Wav2VecTriton
@@ -2354,95 +2371,8 @@ export declare module Wav2VecTriton {
 		tritonModelName: string;
 		tritonModelVersion: string;
 		checkStatusTimeout: string;
-	}
-}
-/**
- * Message implementation for ondewo.s2t.Quartznet
- */
-export declare class Quartznet implements GrpcMessage {
-	static id: string;
-	/**
-	 * Deserialize binary data to message
-	 * @param instance message instance
-	 */
-	static deserializeBinary(bytes: ByteSource): Quartznet;
-	/**
-	 * Check all the properties and set default protobuf values if necessary
-	 * @param _instance message instance
-	 */
-	static refineValues(_instance: Quartznet): void;
-	/**
-	 * Deserializes / reads binary message into message instance using provided binary reader
-	 * @param _instance message instance
-	 * @param _reader binary reader instance
-	 */
-	static deserializeBinaryFromReader(_instance: Quartznet, _reader: BinaryReader): void;
-	/**
-	 * Serializes a message to binary format using provided binary reader
-	 * @param _instance message instance
-	 * @param _writer binary writer instance
-	 */
-	static serializeBinaryToWriter(_instance: Quartznet, _writer: BinaryWriter): void;
-	private _configPath;
-	private _loadType;
-	private _ptFiles?;
-	private _ckptFile?;
-	private _useGpu;
-	/**
-	 * Message constructor. Initializes the properties and applies default Protobuf values if necessary
-	 * @param _value initial values object or instance of Quartznet to deeply clone from
-	 */
-	constructor(_value?: RecursivePartial<Quartznet.AsObject>);
-	get configPath(): string;
-	set configPath(value: string);
-	get loadType(): string;
-	set loadType(value: string);
-	get ptFiles(): PtFiles | undefined;
-	set ptFiles(value: PtFiles | undefined);
-	get ckptFile(): CkptFile | undefined;
-	set ckptFile(value: CkptFile | undefined);
-	get useGpu(): boolean;
-	set useGpu(value: boolean);
-	/**
-	 * Serialize message to binary data
-	 * @param instance message instance
-	 */
-	serializeBinary(): any;
-	/**
-	 * Cast message to standard JavaScript object (all non-primitive values are deeply cloned)
-	 */
-	toObject(): Quartznet.AsObject;
-	/**
-	 * Convenience method to support JSON.stringify(message), replicates the structure of toObject()
-	 */
-	toJSON(): Quartznet.AsObject;
-	/**
-	 * Cast message to JSON using protobuf JSON notation: https://developers.google.com/protocol-buffers/docs/proto3#json
-	 * Attention: output differs from toObject() e.g. enums are represented as names and not as numbers, Timestamp is an ISO Date string format etc.
-	 * If the message itself or some of descendant messages is google.protobuf.Any, you MUST provide a message pool as options. If not, the messagePool is not required
-	 */
-	toProtobufJSON(options?: ToProtobufJSONOptions): Quartznet.AsProtobufJSON;
-}
-export declare module Quartznet {
-	/**
-	 * Standard JavaScript object representation for Quartznet
-	 */
-	interface AsObject {
-		configPath: string;
-		loadType: string;
-		ptFiles?: PtFiles.AsObject;
-		ckptFile?: CkptFile.AsObject;
-		useGpu: boolean;
-	}
-	/**
-	 * Protobuf JSON representation for Quartznet
-	 */
-	interface AsProtobufJSON {
-		configPath: string;
-		loadType: string;
-		ptFiles: PtFiles.AsProtobufJSON | null;
-		ckptFile: CkptFile.AsProtobufJSON | null;
-		useGpu: boolean;
+		tritonServerHost: string;
+		tritonServerPort: string;
 	}
 }
 /**
@@ -2586,85 +2516,6 @@ export declare module CkptFile {
 	 */
 	interface AsProtobufJSON {
 		path: string;
-	}
-}
-/**
- * Message implementation for ondewo.s2t.QuartznetTriton
- */
-export declare class QuartznetTriton implements GrpcMessage {
-	static id: string;
-	/**
-	 * Deserialize binary data to message
-	 * @param instance message instance
-	 */
-	static deserializeBinary(bytes: ByteSource): QuartznetTriton;
-	/**
-	 * Check all the properties and set default protobuf values if necessary
-	 * @param _instance message instance
-	 */
-	static refineValues(_instance: QuartznetTriton): void;
-	/**
-	 * Deserializes / reads binary message into message instance using provided binary reader
-	 * @param _instance message instance
-	 * @param _reader binary reader instance
-	 */
-	static deserializeBinaryFromReader(_instance: QuartznetTriton, _reader: BinaryReader): void;
-	/**
-	 * Serializes a message to binary format using provided binary reader
-	 * @param _instance message instance
-	 * @param _writer binary writer instance
-	 */
-	static serializeBinaryToWriter(_instance: QuartznetTriton, _writer: BinaryWriter): void;
-	private _configPath;
-	private _tritonUrl;
-	private _tritonModel;
-	/**
-	 * Message constructor. Initializes the properties and applies default Protobuf values if necessary
-	 * @param _value initial values object or instance of QuartznetTriton to deeply clone from
-	 */
-	constructor(_value?: RecursivePartial<QuartznetTriton.AsObject>);
-	get configPath(): string;
-	set configPath(value: string);
-	get tritonUrl(): string;
-	set tritonUrl(value: string);
-	get tritonModel(): string;
-	set tritonModel(value: string);
-	/**
-	 * Serialize message to binary data
-	 * @param instance message instance
-	 */
-	serializeBinary(): any;
-	/**
-	 * Cast message to standard JavaScript object (all non-primitive values are deeply cloned)
-	 */
-	toObject(): QuartznetTriton.AsObject;
-	/**
-	 * Convenience method to support JSON.stringify(message), replicates the structure of toObject()
-	 */
-	toJSON(): QuartznetTriton.AsObject;
-	/**
-	 * Cast message to JSON using protobuf JSON notation: https://developers.google.com/protocol-buffers/docs/proto3#json
-	 * Attention: output differs from toObject() e.g. enums are represented as names and not as numbers, Timestamp is an ISO Date string format etc.
-	 * If the message itself or some of descendant messages is google.protobuf.Any, you MUST provide a message pool as options. If not, the messagePool is not required
-	 */
-	toProtobufJSON(options?: ToProtobufJSONOptions): QuartznetTriton.AsProtobufJSON;
-}
-export declare module QuartznetTriton {
-	/**
-	 * Standard JavaScript object representation for QuartznetTriton
-	 */
-	interface AsObject {
-		configPath: string;
-		tritonUrl: string;
-		tritonModel: string;
-	}
-	/**
-	 * Protobuf JSON representation for QuartznetTriton
-	 */
-	interface AsProtobufJSON {
-		configPath: string;
-		tritonUrl: string;
-		tritonModel: string;
 	}
 }
 /**
@@ -2871,8 +2722,6 @@ export declare class StreamingSpeechRecognition implements GrpcMessage {
 	private _decodingMethod;
 	private _samplingRate;
 	private _minAudioChunkSize;
-	private _startOfUtteranceThreshold;
-	private _endOfUtteranceThreshold;
 	private _nextChunkTimeout;
 	/**
 	 * Message constructor. Initializes the properties and applies default Protobuf values if necessary
@@ -2887,10 +2736,6 @@ export declare class StreamingSpeechRecognition implements GrpcMessage {
 	set samplingRate(value: string);
 	get minAudioChunkSize(): string;
 	set minAudioChunkSize(value: string);
-	get startOfUtteranceThreshold(): number;
-	set startOfUtteranceThreshold(value: number);
-	get endOfUtteranceThreshold(): number;
-	set endOfUtteranceThreshold(value: number);
 	get nextChunkTimeout(): number;
 	set nextChunkTimeout(value: number);
 	/**
@@ -2922,8 +2767,6 @@ export declare module StreamingSpeechRecognition {
 		decodingMethod: string;
 		samplingRate: string;
 		minAudioChunkSize: string;
-		startOfUtteranceThreshold: number;
-		endOfUtteranceThreshold: number;
 		nextChunkTimeout: number;
 	}
 	/**
@@ -2934,8 +2777,6 @@ export declare module StreamingSpeechRecognition {
 		decodingMethod: string;
 		samplingRate: string;
 		minAudioChunkSize: string;
-		startOfUtteranceThreshold: number;
-		endOfUtteranceThreshold: number;
 		nextChunkTimeout: number;
 	}
 }
@@ -2969,7 +2810,6 @@ export declare class VoiceActivityDetection implements GrpcMessage {
 	private _active;
 	private _samplingRate;
 	private _pyannote?;
-	private _matchbox?;
 	/**
 	 * Message constructor. Initializes the properties and applies default Protobuf values if necessary
 	 * @param _value initial values object or instance of VoiceActivityDetection to deeply clone from
@@ -2981,8 +2821,6 @@ export declare class VoiceActivityDetection implements GrpcMessage {
 	set samplingRate(value: string);
 	get pyannote(): Pyannote | undefined;
 	set pyannote(value: Pyannote | undefined);
-	get matchbox(): Matchbox | undefined;
-	set matchbox(value: Matchbox | undefined);
 	/**
 	 * Serialize message to binary data
 	 * @param instance message instance
@@ -3011,7 +2849,6 @@ export declare module VoiceActivityDetection {
 		active: string;
 		samplingRate: string;
 		pyannote?: Pyannote.AsObject;
-		matchbox?: Matchbox.AsObject;
 	}
 	/**
 	 * Protobuf JSON representation for VoiceActivityDetection
@@ -3020,7 +2857,6 @@ export declare module VoiceActivityDetection {
 		active: string;
 		samplingRate: string;
 		pyannote: Pyannote.AsProtobufJSON | null;
-		matchbox: Matchbox.AsProtobufJSON | null;
 	}
 }
 /**
@@ -3050,34 +2886,29 @@ export declare class Pyannote implements GrpcMessage {
 	 * @param _writer binary writer instance
 	 */
 	static serializeBinaryToWriter(_instance: Pyannote, _writer: BinaryWriter): void;
-	private _modelPath;
+	private _modelName;
 	private _minAudioSize;
-	private _offset;
-	private _onset;
-	private _logScale;
 	private _minDurationOff;
 	private _minDurationOn;
-	private _oneofLogScale;
+	private _tritonServerHost;
+	private _tritonServerPort;
 	/**
 	 * Message constructor. Initializes the properties and applies default Protobuf values if necessary
 	 * @param _value initial values object or instance of Pyannote to deeply clone from
 	 */
 	constructor(_value?: RecursivePartial<Pyannote.AsObject>);
-	get modelPath(): string;
-	set modelPath(value: string);
+	get modelName(): string;
+	set modelName(value: string);
 	get minAudioSize(): string;
 	set minAudioSize(value: string);
-	get offset(): number;
-	set offset(value: number);
-	get onset(): number;
-	set onset(value: number);
-	get logScale(): boolean;
-	set logScale(value: boolean);
 	get minDurationOff(): number;
 	set minDurationOff(value: number);
 	get minDurationOn(): number;
 	set minDurationOn(value: number);
-	get oneofLogScale(): Pyannote.OneofLogScaleCase;
+	get tritonServerHost(): string;
+	set tritonServerHost(value: string);
+	get tritonServerPort(): string;
+	set tritonServerPort(value: string);
 	/**
 	 * Serialize message to binary data
 	 * @param instance message instance
@@ -3103,108 +2934,23 @@ export declare module Pyannote {
 	 * Standard JavaScript object representation for Pyannote
 	 */
 	interface AsObject {
-		modelPath: string;
+		modelName: string;
 		minAudioSize: string;
-		offset: number;
-		onset: number;
-		logScale: boolean;
 		minDurationOff: number;
 		minDurationOn: number;
+		tritonServerHost: string;
+		tritonServerPort: string;
 	}
 	/**
 	 * Protobuf JSON representation for Pyannote
 	 */
 	interface AsProtobufJSON {
-		modelPath: string;
+		modelName: string;
 		minAudioSize: string;
-		offset: number;
-		onset: number;
-		logScale: boolean;
 		minDurationOff: number;
 		minDurationOn: number;
-	}
-	enum OneofLogScaleCase {
-		none = 0,
-		logScale = 1
-	}
-}
-/**
- * Message implementation for ondewo.s2t.Matchbox
- */
-export declare class Matchbox implements GrpcMessage {
-	static id: string;
-	/**
-	 * Deserialize binary data to message
-	 * @param instance message instance
-	 */
-	static deserializeBinary(bytes: ByteSource): Matchbox;
-	/**
-	 * Check all the properties and set default protobuf values if necessary
-	 * @param _instance message instance
-	 */
-	static refineValues(_instance: Matchbox): void;
-	/**
-	 * Deserializes / reads binary message into message instance using provided binary reader
-	 * @param _instance message instance
-	 * @param _reader binary reader instance
-	 */
-	static deserializeBinaryFromReader(_instance: Matchbox, _reader: BinaryReader): void;
-	/**
-	 * Serializes a message to binary format using provided binary reader
-	 * @param _instance message instance
-	 * @param _writer binary writer instance
-	 */
-	static serializeBinaryToWriter(_instance: Matchbox, _writer: BinaryWriter): void;
-	private _modelConfig;
-	private _encoderPath;
-	private _decoderPath;
-	/**
-	 * Message constructor. Initializes the properties and applies default Protobuf values if necessary
-	 * @param _value initial values object or instance of Matchbox to deeply clone from
-	 */
-	constructor(_value?: RecursivePartial<Matchbox.AsObject>);
-	get modelConfig(): string;
-	set modelConfig(value: string);
-	get encoderPath(): string;
-	set encoderPath(value: string);
-	get decoderPath(): string;
-	set decoderPath(value: string);
-	/**
-	 * Serialize message to binary data
-	 * @param instance message instance
-	 */
-	serializeBinary(): any;
-	/**
-	 * Cast message to standard JavaScript object (all non-primitive values are deeply cloned)
-	 */
-	toObject(): Matchbox.AsObject;
-	/**
-	 * Convenience method to support JSON.stringify(message), replicates the structure of toObject()
-	 */
-	toJSON(): Matchbox.AsObject;
-	/**
-	 * Cast message to JSON using protobuf JSON notation: https://developers.google.com/protocol-buffers/docs/proto3#json
-	 * Attention: output differs from toObject() e.g. enums are represented as names and not as numbers, Timestamp is an ISO Date string format etc.
-	 * If the message itself or some of descendant messages is google.protobuf.Any, you MUST provide a message pool as options. If not, the messagePool is not required
-	 */
-	toProtobufJSON(options?: ToProtobufJSONOptions): Matchbox.AsProtobufJSON;
-}
-export declare module Matchbox {
-	/**
-	 * Standard JavaScript object representation for Matchbox
-	 */
-	interface AsObject {
-		modelConfig: string;
-		encoderPath: string;
-		decoderPath: string;
-	}
-	/**
-	 * Protobuf JSON representation for Matchbox
-	 */
-	interface AsProtobufJSON {
-		modelConfig: string;
-		encoderPath: string;
-		decoderPath: string;
+		tritonServerHost: string;
+		tritonServerPort: string;
 	}
 }
 /**
@@ -3462,6 +3208,7 @@ export declare class S2TNormalization implements GrpcMessage {
 	 */
 	static serializeBinaryToWriter(_instance: S2TNormalization, _writer: BinaryWriter): void;
 	private _language;
+	private _pipeline;
 	/**
 	 * Message constructor. Initializes the properties and applies default Protobuf values if necessary
 	 * @param _value initial values object or instance of S2TNormalization to deeply clone from
@@ -3469,6 +3216,8 @@ export declare class S2TNormalization implements GrpcMessage {
 	constructor(_value?: RecursivePartial<S2TNormalization.AsObject>);
 	get language(): string;
 	set language(value: string);
+	get pipeline(): string[];
+	set pipeline(value: string[]);
 	/**
 	 * Serialize message to binary data
 	 * @param instance message instance
@@ -3495,12 +3244,14 @@ export declare module S2TNormalization {
 	 */
 	interface AsObject {
 		language: string;
+		pipeline: string[];
 	}
 	/**
 	 * Protobuf JSON representation for S2TNormalization
 	 */
 	interface AsProtobufJSON {
 		language: string;
+		pipeline: string[];
 	}
 }
 /**

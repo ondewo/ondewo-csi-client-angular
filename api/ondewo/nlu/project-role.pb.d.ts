@@ -1,6 +1,7 @@
 import { GrpcMessage, RecursivePartial, ToProtobufJSONOptions } from '@ngx-grpc/common';
 import { BinaryReader, BinaryWriter, ByteSource } from 'google-protobuf';
-import * as googleProtobuf003 from '@ngx-grpc/well-known-types';
+import * as googleProtobuf004 from '@ngx-grpc/well-known-types';
+import * as googleProtobuf005 from '@ngx-grpc/well-known-types';
 export declare enum DefaultProjectRole {
 	PROJECT_UNSPECIFIED = 0,
 	PROJECT_USER = 1,
@@ -44,6 +45,10 @@ export declare class ProjectRole implements GrpcMessage {
 	private _roleId;
 	private _name;
 	private _permissions;
+	private _createdAt?;
+	private _modifiedAt?;
+	private _createdBy;
+	private _modifiedBy;
 	/**
 	 * Message constructor. Initializes the properties and applies default Protobuf values if necessary
 	 * @param _value initial values object or instance of ProjectRole to deeply clone from
@@ -55,6 +60,14 @@ export declare class ProjectRole implements GrpcMessage {
 	set name(value: string);
 	get permissions(): string[];
 	set permissions(value: string[]);
+	get createdAt(): googleProtobuf005.Timestamp | undefined;
+	set createdAt(value: googleProtobuf005.Timestamp | undefined);
+	get modifiedAt(): googleProtobuf005.Timestamp | undefined;
+	set modifiedAt(value: googleProtobuf005.Timestamp | undefined);
+	get createdBy(): string;
+	set createdBy(value: string);
+	get modifiedBy(): string;
+	set modifiedBy(value: string);
 	/**
 	 * Serialize message to binary data
 	 * @param instance message instance
@@ -83,6 +96,10 @@ export declare module ProjectRole {
 		roleId: number;
 		name: string;
 		permissions: string[];
+		createdAt?: googleProtobuf005.Timestamp.AsObject;
+		modifiedAt?: googleProtobuf005.Timestamp.AsObject;
+		createdBy: string;
+		modifiedBy: string;
 	}
 	/**
 	 * Protobuf JSON representation for ProjectRole
@@ -91,6 +108,10 @@ export declare module ProjectRole {
 		roleId: number;
 		name: string;
 		permissions: string[];
+		createdAt: googleProtobuf005.Timestamp.AsProtobufJSON | null;
+		modifiedAt: googleProtobuf005.Timestamp.AsProtobufJSON | null;
+		createdBy: string;
+		modifiedBy: string;
 	}
 }
 /**
@@ -212,8 +233,8 @@ export declare class UpdateProjectRoleRequest implements GrpcMessage {
 	set parent(value: string);
 	get role(): ProjectRole | undefined;
 	set role(value: ProjectRole | undefined);
-	get updateMask(): googleProtobuf003.FieldMask | undefined;
-	set updateMask(value: googleProtobuf003.FieldMask | undefined);
+	get updateMask(): googleProtobuf004.FieldMask | undefined;
+	set updateMask(value: googleProtobuf004.FieldMask | undefined);
 	get projectRoleView(): ProjectRoleView;
 	set projectRoleView(value: ProjectRoleView);
 	/**
@@ -243,7 +264,7 @@ export declare module UpdateProjectRoleRequest {
 	interface AsObject {
 		parent: string;
 		role?: ProjectRole.AsObject;
-		updateMask?: googleProtobuf003.FieldMask.AsObject;
+		updateMask?: googleProtobuf004.FieldMask.AsObject;
 		projectRoleView: ProjectRoleView;
 	}
 	/**
@@ -252,7 +273,7 @@ export declare module UpdateProjectRoleRequest {
 	interface AsProtobufJSON {
 		parent: string;
 		role: ProjectRole.AsProtobufJSON | null;
-		updateMask: googleProtobuf003.FieldMask.AsProtobufJSON | null;
+		updateMask: googleProtobuf004.FieldMask.AsProtobufJSON | null;
 		projectRoleView: string;
 	}
 }

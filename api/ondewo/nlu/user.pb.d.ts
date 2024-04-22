@@ -1,7 +1,9 @@
 import { GrpcMessage, RecursivePartial, ToProtobufJSONOptions } from '@ngx-grpc/common';
 import { BinaryReader, BinaryWriter, ByteSource } from 'google-protobuf';
-import * as googleProtobuf003 from '@ngx-grpc/well-known-types';
-import * as ondewoNlu005 from '../../ondewo/nlu/project-role.pb';
+import * as googleProtobuf004 from '@ngx-grpc/well-known-types';
+import * as googleProtobuf005 from '@ngx-grpc/well-known-types';
+import * as ondewoNlu006 from '../../ondewo/nlu/project-role.pb';
+import * as ondewoNlu007 from '../../ondewo/nlu/common.pb';
 export declare enum DefaultServerRole {
 	SERVER_UNSPECIFIED = 0,
 	SERVER_USER = 1,
@@ -40,6 +42,11 @@ export declare class User implements GrpcMessage {
 	private _displayName;
 	private _serverRoleId;
 	private _userEmail;
+	private _userProfilePicture;
+	private _createdAt?;
+	private _modifiedAt?;
+	private _createdBy;
+	private _modifiedBy;
 	/**
 	 * Message constructor. Initializes the properties and applies default Protobuf values if necessary
 	 * @param _value initial values object or instance of User to deeply clone from
@@ -53,6 +60,16 @@ export declare class User implements GrpcMessage {
 	set serverRoleId(value: number);
 	get userEmail(): string;
 	set userEmail(value: string);
+	get userProfilePicture(): Uint8Array;
+	set userProfilePicture(value: Uint8Array);
+	get createdAt(): googleProtobuf005.Timestamp | undefined;
+	set createdAt(value: googleProtobuf005.Timestamp | undefined);
+	get modifiedAt(): googleProtobuf005.Timestamp | undefined;
+	set modifiedAt(value: googleProtobuf005.Timestamp | undefined);
+	get createdBy(): string;
+	set createdBy(value: string);
+	get modifiedBy(): string;
+	set modifiedBy(value: string);
 	/**
 	 * Serialize message to binary data
 	 * @param instance message instance
@@ -82,6 +99,11 @@ export declare module User {
 		displayName: string;
 		serverRoleId: number;
 		userEmail: string;
+		userProfilePicture: Uint8Array;
+		createdAt?: googleProtobuf005.Timestamp.AsObject;
+		modifiedAt?: googleProtobuf005.Timestamp.AsObject;
+		createdBy: string;
+		modifiedBy: string;
 	}
 	/**
 	 * Protobuf JSON representation for User
@@ -91,6 +113,11 @@ export declare module User {
 		displayName: string;
 		serverRoleId: number;
 		userEmail: string;
+		userProfilePicture: string;
+		createdAt: googleProtobuf005.Timestamp.AsProtobufJSON | null;
+		modifiedAt: googleProtobuf005.Timestamp.AsProtobufJSON | null;
+		createdBy: string;
+		modifiedBy: string;
 	}
 }
 /**
@@ -130,9 +157,9 @@ export declare class UserInfo implements GrpcMessage {
 	get user(): User | undefined;
 	set user(value: User | undefined);
 	get projectRoles(): {
-		[prop: string]: ondewoNlu005.ProjectRole;
+		[prop: string]: ondewoNlu006.ProjectRole;
 	};
-	set projectRoles(value: { [prop: string]: ondewoNlu005.ProjectRole });
+	set projectRoles(value: { [prop: string]: ondewoNlu006.ProjectRole });
 	/**
 	 * Serialize message to binary data
 	 * @param instance message instance
@@ -160,7 +187,7 @@ export declare module UserInfo {
 	interface AsObject {
 		user?: User.AsObject;
 		projectRoles: {
-			[prop: string]: ondewoNlu005.ProjectRole;
+			[prop: string]: ondewoNlu006.ProjectRole;
 		};
 	}
 	/**
@@ -169,7 +196,7 @@ export declare module UserInfo {
 	interface AsProtobufJSON {
 		user: User.AsProtobufJSON | null;
 		projectRoles: {
-			[prop: string]: ondewoNlu005.ProjectRole;
+			[prop: string]: ondewoNlu006.ProjectRole;
 		};
 	}
 	/**
@@ -208,8 +235,8 @@ export declare module UserInfo {
 		constructor(_value?: RecursivePartial<ProjectRolesEntry.AsObject>);
 		get key(): string;
 		set key(value: string);
-		get value(): ondewoNlu005.ProjectRole | undefined;
-		set value(value: ondewoNlu005.ProjectRole | undefined);
+		get value(): ondewoNlu006.ProjectRole | undefined;
+		set value(value: ondewoNlu006.ProjectRole | undefined);
 		/**
 		 * Serialize message to binary data
 		 * @param instance message instance
@@ -236,14 +263,14 @@ export declare module UserInfo {
 		 */
 		interface AsObject {
 			key: string;
-			value?: ondewoNlu005.ProjectRole.AsObject;
+			value?: ondewoNlu006.ProjectRole.AsObject;
 		}
 		/**
 		 * Protobuf JSON representation for ProjectRolesEntry
 		 */
 		interface AsProtobufJSON {
 			key: string;
-			value: ondewoNlu005.ProjectRole.AsProtobufJSON | null;
+			value: ondewoNlu006.ProjectRole.AsProtobufJSON | null;
 		}
 	}
 }
@@ -360,8 +387,8 @@ export declare class UpdateUserRequest implements GrpcMessage {
 	set user(value: User | undefined);
 	get password(): string;
 	set password(value: string);
-	get updateMask(): googleProtobuf003.FieldMask | undefined;
-	set updateMask(value: googleProtobuf003.FieldMask | undefined);
+	get updateMask(): googleProtobuf004.FieldMask | undefined;
+	set updateMask(value: googleProtobuf004.FieldMask | undefined);
 	/**
 	 * Serialize message to binary data
 	 * @param instance message instance
@@ -389,7 +416,7 @@ export declare module UpdateUserRequest {
 	interface AsObject {
 		user?: User.AsObject;
 		password: string;
-		updateMask?: googleProtobuf003.FieldMask.AsObject;
+		updateMask?: googleProtobuf004.FieldMask.AsObject;
 	}
 	/**
 	 * Protobuf JSON representation for UpdateUserRequest
@@ -397,7 +424,7 @@ export declare module UpdateUserRequest {
 	interface AsProtobufJSON {
 		user: User.AsProtobufJSON | null;
 		password: string;
-		updateMask: googleProtobuf003.FieldMask.AsProtobufJSON | null;
+		updateMask: googleProtobuf004.FieldMask.AsProtobufJSON | null;
 	}
 }
 /**
@@ -797,6 +824,10 @@ export declare class ServerRole implements GrpcMessage {
 	private _roleId;
 	private _name;
 	private _permissions;
+	private _createdAt?;
+	private _modifiedAt?;
+	private _createdBy;
+	private _modifiedBy;
 	/**
 	 * Message constructor. Initializes the properties and applies default Protobuf values if necessary
 	 * @param _value initial values object or instance of ServerRole to deeply clone from
@@ -808,6 +839,14 @@ export declare class ServerRole implements GrpcMessage {
 	set name(value: string);
 	get permissions(): string[];
 	set permissions(value: string[]);
+	get createdAt(): googleProtobuf005.Timestamp | undefined;
+	set createdAt(value: googleProtobuf005.Timestamp | undefined);
+	get modifiedAt(): googleProtobuf005.Timestamp | undefined;
+	set modifiedAt(value: googleProtobuf005.Timestamp | undefined);
+	get createdBy(): string;
+	set createdBy(value: string);
+	get modifiedBy(): string;
+	set modifiedBy(value: string);
 	/**
 	 * Serialize message to binary data
 	 * @param instance message instance
@@ -836,6 +875,10 @@ export declare module ServerRole {
 		roleId: number;
 		name: string;
 		permissions: string[];
+		createdAt?: googleProtobuf005.Timestamp.AsObject;
+		modifiedAt?: googleProtobuf005.Timestamp.AsObject;
+		createdBy: string;
+		modifiedBy: string;
 	}
 	/**
 	 * Protobuf JSON representation for ServerRole
@@ -844,6 +887,10 @@ export declare module ServerRole {
 		roleId: number;
 		name: string;
 		permissions: string[];
+		createdAt: googleProtobuf005.Timestamp.AsProtobufJSON | null;
+		modifiedAt: googleProtobuf005.Timestamp.AsProtobufJSON | null;
+		createdBy: string;
+		modifiedBy: string;
 	}
 }
 /**
@@ -951,8 +998,8 @@ export declare class UpdateServerRoleRequest implements GrpcMessage {
 	constructor(_value?: RecursivePartial<UpdateServerRoleRequest.AsObject>);
 	get role(): ServerRole | undefined;
 	set role(value: ServerRole | undefined);
-	get updateMask(): googleProtobuf003.FieldMask | undefined;
-	set updateMask(value: googleProtobuf003.FieldMask | undefined);
+	get updateMask(): googleProtobuf004.FieldMask | undefined;
+	set updateMask(value: googleProtobuf004.FieldMask | undefined);
 	/**
 	 * Serialize message to binary data
 	 * @param instance message instance
@@ -979,14 +1026,14 @@ export declare module UpdateServerRoleRequest {
 	 */
 	interface AsObject {
 		role?: ServerRole.AsObject;
-		updateMask?: googleProtobuf003.FieldMask.AsObject;
+		updateMask?: googleProtobuf004.FieldMask.AsObject;
 	}
 	/**
 	 * Protobuf JSON representation for UpdateServerRoleRequest
 	 */
 	interface AsProtobufJSON {
 		role: ServerRole.AsProtobufJSON | null;
-		updateMask: googleProtobuf003.FieldMask.AsProtobufJSON | null;
+		updateMask: googleProtobuf004.FieldMask.AsProtobufJSON | null;
 	}
 }
 /**
@@ -1571,5 +1618,701 @@ export declare module LoginResponse {
 	interface AsProtobufJSON {
 		user: User.AsProtobufJSON | null;
 		authToken: string;
+	}
+}
+/**
+ * Message implementation for ondewo.nlu.GetUserPreferencesRequest
+ */
+export declare class GetUserPreferencesRequest implements GrpcMessage {
+	static id: string;
+	/**
+	 * Deserialize binary data to message
+	 * @param instance message instance
+	 */
+	static deserializeBinary(bytes: ByteSource): GetUserPreferencesRequest;
+	/**
+	 * Check all the properties and set default protobuf values if necessary
+	 * @param _instance message instance
+	 */
+	static refineValues(_instance: GetUserPreferencesRequest): void;
+	/**
+	 * Deserializes / reads binary message into message instance using provided binary reader
+	 * @param _instance message instance
+	 * @param _reader binary reader instance
+	 */
+	static deserializeBinaryFromReader(_instance: GetUserPreferencesRequest, _reader: BinaryReader): void;
+	/**
+	 * Serializes a message to binary format using provided binary reader
+	 * @param _instance message instance
+	 * @param _writer binary writer instance
+	 */
+	static serializeBinaryToWriter(_instance: GetUserPreferencesRequest, _writer: BinaryWriter): void;
+	private _userName;
+	private _keys;
+	private _regexInclude;
+	/**
+	 * Message constructor. Initializes the properties and applies default Protobuf values if necessary
+	 * @param _value initial values object or instance of GetUserPreferencesRequest to deeply clone from
+	 */
+	constructor(_value?: RecursivePartial<GetUserPreferencesRequest.AsObject>);
+	get userName(): string;
+	set userName(value: string);
+	get keys(): string[];
+	set keys(value: string[]);
+	get regexInclude(): string;
+	set regexInclude(value: string);
+	/**
+	 * Serialize message to binary data
+	 * @param instance message instance
+	 */
+	serializeBinary(): any;
+	/**
+	 * Cast message to standard JavaScript object (all non-primitive values are deeply cloned)
+	 */
+	toObject(): GetUserPreferencesRequest.AsObject;
+	/**
+	 * Convenience method to support JSON.stringify(message), replicates the structure of toObject()
+	 */
+	toJSON(): GetUserPreferencesRequest.AsObject;
+	/**
+	 * Cast message to JSON using protobuf JSON notation: https://developers.google.com/protocol-buffers/docs/proto3#json
+	 * Attention: output differs from toObject() e.g. enums are represented as names and not as numbers, Timestamp is an ISO Date string format etc.
+	 * If the message itself or some of descendant messages is google.protobuf.Any, you MUST provide a message pool as options. If not, the messagePool is not required
+	 */
+	toProtobufJSON(options?: ToProtobufJSONOptions): GetUserPreferencesRequest.AsProtobufJSON;
+}
+export declare module GetUserPreferencesRequest {
+	/**
+	 * Standard JavaScript object representation for GetUserPreferencesRequest
+	 */
+	interface AsObject {
+		userName: string;
+		keys: string[];
+		regexInclude: string;
+	}
+	/**
+	 * Protobuf JSON representation for GetUserPreferencesRequest
+	 */
+	interface AsProtobufJSON {
+		userName: string;
+		keys: string[];
+		regexInclude: string;
+	}
+}
+/**
+ * Message implementation for ondewo.nlu.GetUserPreferencesResponse
+ */
+export declare class GetUserPreferencesResponse implements GrpcMessage {
+	static id: string;
+	/**
+	 * Deserialize binary data to message
+	 * @param instance message instance
+	 */
+	static deserializeBinary(bytes: ByteSource): GetUserPreferencesResponse;
+	/**
+	 * Check all the properties and set default protobuf values if necessary
+	 * @param _instance message instance
+	 */
+	static refineValues(_instance: GetUserPreferencesResponse): void;
+	/**
+	 * Deserializes / reads binary message into message instance using provided binary reader
+	 * @param _instance message instance
+	 * @param _reader binary reader instance
+	 */
+	static deserializeBinaryFromReader(_instance: GetUserPreferencesResponse, _reader: BinaryReader): void;
+	/**
+	 * Serializes a message to binary format using provided binary reader
+	 * @param _instance message instance
+	 * @param _writer binary writer instance
+	 */
+	static serializeBinaryToWriter(_instance: GetUserPreferencesResponse, _writer: BinaryWriter): void;
+	private _userName;
+	private _keyValuePairs?;
+	private _errorMessage;
+	/**
+	 * Message constructor. Initializes the properties and applies default Protobuf values if necessary
+	 * @param _value initial values object or instance of GetUserPreferencesResponse to deeply clone from
+	 */
+	constructor(_value?: RecursivePartial<GetUserPreferencesResponse.AsObject>);
+	get userName(): string;
+	set userName(value: string);
+	get keyValuePairs(): ondewoNlu007.KeyValuePair[] | undefined;
+	set keyValuePairs(value: ondewoNlu007.KeyValuePair[] | undefined);
+	get errorMessage(): string;
+	set errorMessage(value: string);
+	/**
+	 * Serialize message to binary data
+	 * @param instance message instance
+	 */
+	serializeBinary(): any;
+	/**
+	 * Cast message to standard JavaScript object (all non-primitive values are deeply cloned)
+	 */
+	toObject(): GetUserPreferencesResponse.AsObject;
+	/**
+	 * Convenience method to support JSON.stringify(message), replicates the structure of toObject()
+	 */
+	toJSON(): GetUserPreferencesResponse.AsObject;
+	/**
+	 * Cast message to JSON using protobuf JSON notation: https://developers.google.com/protocol-buffers/docs/proto3#json
+	 * Attention: output differs from toObject() e.g. enums are represented as names and not as numbers, Timestamp is an ISO Date string format etc.
+	 * If the message itself or some of descendant messages is google.protobuf.Any, you MUST provide a message pool as options. If not, the messagePool is not required
+	 */
+	toProtobufJSON(options?: ToProtobufJSONOptions): GetUserPreferencesResponse.AsProtobufJSON;
+}
+export declare module GetUserPreferencesResponse {
+	/**
+	 * Standard JavaScript object representation for GetUserPreferencesResponse
+	 */
+	interface AsObject {
+		userName: string;
+		keyValuePairs?: ondewoNlu007.KeyValuePair.AsObject[];
+		errorMessage: string;
+	}
+	/**
+	 * Protobuf JSON representation for GetUserPreferencesResponse
+	 */
+	interface AsProtobufJSON {
+		userName: string;
+		keyValuePairs: ondewoNlu007.KeyValuePair.AsProtobufJSON[] | null;
+		errorMessage: string;
+	}
+}
+/**
+ * Message implementation for ondewo.nlu.SetUserPreferencesRequest
+ */
+export declare class SetUserPreferencesRequest implements GrpcMessage {
+	static id: string;
+	/**
+	 * Deserialize binary data to message
+	 * @param instance message instance
+	 */
+	static deserializeBinary(bytes: ByteSource): SetUserPreferencesRequest;
+	/**
+	 * Check all the properties and set default protobuf values if necessary
+	 * @param _instance message instance
+	 */
+	static refineValues(_instance: SetUserPreferencesRequest): void;
+	/**
+	 * Deserializes / reads binary message into message instance using provided binary reader
+	 * @param _instance message instance
+	 * @param _reader binary reader instance
+	 */
+	static deserializeBinaryFromReader(_instance: SetUserPreferencesRequest, _reader: BinaryReader): void;
+	/**
+	 * Serializes a message to binary format using provided binary reader
+	 * @param _instance message instance
+	 * @param _writer binary writer instance
+	 */
+	static serializeBinaryToWriter(_instance: SetUserPreferencesRequest, _writer: BinaryWriter): void;
+	private _userName;
+	private _keyValuePairs?;
+	/**
+	 * Message constructor. Initializes the properties and applies default Protobuf values if necessary
+	 * @param _value initial values object or instance of SetUserPreferencesRequest to deeply clone from
+	 */
+	constructor(_value?: RecursivePartial<SetUserPreferencesRequest.AsObject>);
+	get userName(): string;
+	set userName(value: string);
+	get keyValuePairs(): ondewoNlu007.KeyValuePair[] | undefined;
+	set keyValuePairs(value: ondewoNlu007.KeyValuePair[] | undefined);
+	/**
+	 * Serialize message to binary data
+	 * @param instance message instance
+	 */
+	serializeBinary(): any;
+	/**
+	 * Cast message to standard JavaScript object (all non-primitive values are deeply cloned)
+	 */
+	toObject(): SetUserPreferencesRequest.AsObject;
+	/**
+	 * Convenience method to support JSON.stringify(message), replicates the structure of toObject()
+	 */
+	toJSON(): SetUserPreferencesRequest.AsObject;
+	/**
+	 * Cast message to JSON using protobuf JSON notation: https://developers.google.com/protocol-buffers/docs/proto3#json
+	 * Attention: output differs from toObject() e.g. enums are represented as names and not as numbers, Timestamp is an ISO Date string format etc.
+	 * If the message itself or some of descendant messages is google.protobuf.Any, you MUST provide a message pool as options. If not, the messagePool is not required
+	 */
+	toProtobufJSON(options?: ToProtobufJSONOptions): SetUserPreferencesRequest.AsProtobufJSON;
+}
+export declare module SetUserPreferencesRequest {
+	/**
+	 * Standard JavaScript object representation for SetUserPreferencesRequest
+	 */
+	interface AsObject {
+		userName: string;
+		keyValuePairs?: ondewoNlu007.KeyValuePair.AsObject[];
+	}
+	/**
+	 * Protobuf JSON representation for SetUserPreferencesRequest
+	 */
+	interface AsProtobufJSON {
+		userName: string;
+		keyValuePairs: ondewoNlu007.KeyValuePair.AsProtobufJSON[] | null;
+	}
+}
+/**
+ * Message implementation for ondewo.nlu.SetUserPreferencesResponse
+ */
+export declare class SetUserPreferencesResponse implements GrpcMessage {
+	static id: string;
+	/**
+	 * Deserialize binary data to message
+	 * @param instance message instance
+	 */
+	static deserializeBinary(bytes: ByteSource): SetUserPreferencesResponse;
+	/**
+	 * Check all the properties and set default protobuf values if necessary
+	 * @param _instance message instance
+	 */
+	static refineValues(_instance: SetUserPreferencesResponse): void;
+	/**
+	 * Deserializes / reads binary message into message instance using provided binary reader
+	 * @param _instance message instance
+	 * @param _reader binary reader instance
+	 */
+	static deserializeBinaryFromReader(_instance: SetUserPreferencesResponse, _reader: BinaryReader): void;
+	/**
+	 * Serializes a message to binary format using provided binary reader
+	 * @param _instance message instance
+	 * @param _writer binary writer instance
+	 */
+	static serializeBinaryToWriter(_instance: SetUserPreferencesResponse, _writer: BinaryWriter): void;
+	private _userName;
+	private _keys;
+	private _errorMessage;
+	/**
+	 * Message constructor. Initializes the properties and applies default Protobuf values if necessary
+	 * @param _value initial values object or instance of SetUserPreferencesResponse to deeply clone from
+	 */
+	constructor(_value?: RecursivePartial<SetUserPreferencesResponse.AsObject>);
+	get userName(): string;
+	set userName(value: string);
+	get keys(): string[];
+	set keys(value: string[]);
+	get errorMessage(): string;
+	set errorMessage(value: string);
+	/**
+	 * Serialize message to binary data
+	 * @param instance message instance
+	 */
+	serializeBinary(): any;
+	/**
+	 * Cast message to standard JavaScript object (all non-primitive values are deeply cloned)
+	 */
+	toObject(): SetUserPreferencesResponse.AsObject;
+	/**
+	 * Convenience method to support JSON.stringify(message), replicates the structure of toObject()
+	 */
+	toJSON(): SetUserPreferencesResponse.AsObject;
+	/**
+	 * Cast message to JSON using protobuf JSON notation: https://developers.google.com/protocol-buffers/docs/proto3#json
+	 * Attention: output differs from toObject() e.g. enums are represented as names and not as numbers, Timestamp is an ISO Date string format etc.
+	 * If the message itself or some of descendant messages is google.protobuf.Any, you MUST provide a message pool as options. If not, the messagePool is not required
+	 */
+	toProtobufJSON(options?: ToProtobufJSONOptions): SetUserPreferencesResponse.AsProtobufJSON;
+}
+export declare module SetUserPreferencesResponse {
+	/**
+	 * Standard JavaScript object representation for SetUserPreferencesResponse
+	 */
+	interface AsObject {
+		userName: string;
+		keys: string[];
+		errorMessage: string;
+	}
+	/**
+	 * Protobuf JSON representation for SetUserPreferencesResponse
+	 */
+	interface AsProtobufJSON {
+		userName: string;
+		keys: string[];
+		errorMessage: string;
+	}
+}
+/**
+ * Message implementation for ondewo.nlu.DeleteUserPreferencesRequest
+ */
+export declare class DeleteUserPreferencesRequest implements GrpcMessage {
+	static id: string;
+	/**
+	 * Deserialize binary data to message
+	 * @param instance message instance
+	 */
+	static deserializeBinary(bytes: ByteSource): DeleteUserPreferencesRequest;
+	/**
+	 * Check all the properties and set default protobuf values if necessary
+	 * @param _instance message instance
+	 */
+	static refineValues(_instance: DeleteUserPreferencesRequest): void;
+	/**
+	 * Deserializes / reads binary message into message instance using provided binary reader
+	 * @param _instance message instance
+	 * @param _reader binary reader instance
+	 */
+	static deserializeBinaryFromReader(_instance: DeleteUserPreferencesRequest, _reader: BinaryReader): void;
+	/**
+	 * Serializes a message to binary format using provided binary reader
+	 * @param _instance message instance
+	 * @param _writer binary writer instance
+	 */
+	static serializeBinaryToWriter(_instance: DeleteUserPreferencesRequest, _writer: BinaryWriter): void;
+	private _userName;
+	private _keys;
+	private _regexInclude;
+	/**
+	 * Message constructor. Initializes the properties and applies default Protobuf values if necessary
+	 * @param _value initial values object or instance of DeleteUserPreferencesRequest to deeply clone from
+	 */
+	constructor(_value?: RecursivePartial<DeleteUserPreferencesRequest.AsObject>);
+	get userName(): string;
+	set userName(value: string);
+	get keys(): string[];
+	set keys(value: string[]);
+	get regexInclude(): string;
+	set regexInclude(value: string);
+	/**
+	 * Serialize message to binary data
+	 * @param instance message instance
+	 */
+	serializeBinary(): any;
+	/**
+	 * Cast message to standard JavaScript object (all non-primitive values are deeply cloned)
+	 */
+	toObject(): DeleteUserPreferencesRequest.AsObject;
+	/**
+	 * Convenience method to support JSON.stringify(message), replicates the structure of toObject()
+	 */
+	toJSON(): DeleteUserPreferencesRequest.AsObject;
+	/**
+	 * Cast message to JSON using protobuf JSON notation: https://developers.google.com/protocol-buffers/docs/proto3#json
+	 * Attention: output differs from toObject() e.g. enums are represented as names and not as numbers, Timestamp is an ISO Date string format etc.
+	 * If the message itself or some of descendant messages is google.protobuf.Any, you MUST provide a message pool as options. If not, the messagePool is not required
+	 */
+	toProtobufJSON(options?: ToProtobufJSONOptions): DeleteUserPreferencesRequest.AsProtobufJSON;
+}
+export declare module DeleteUserPreferencesRequest {
+	/**
+	 * Standard JavaScript object representation for DeleteUserPreferencesRequest
+	 */
+	interface AsObject {
+		userName: string;
+		keys: string[];
+		regexInclude: string;
+	}
+	/**
+	 * Protobuf JSON representation for DeleteUserPreferencesRequest
+	 */
+	interface AsProtobufJSON {
+		userName: string;
+		keys: string[];
+		regexInclude: string;
+	}
+}
+/**
+ * Message implementation for ondewo.nlu.DeleteUserPreferencesResponse
+ */
+export declare class DeleteUserPreferencesResponse implements GrpcMessage {
+	static id: string;
+	/**
+	 * Deserialize binary data to message
+	 * @param instance message instance
+	 */
+	static deserializeBinary(bytes: ByteSource): DeleteUserPreferencesResponse;
+	/**
+	 * Check all the properties and set default protobuf values if necessary
+	 * @param _instance message instance
+	 */
+	static refineValues(_instance: DeleteUserPreferencesResponse): void;
+	/**
+	 * Deserializes / reads binary message into message instance using provided binary reader
+	 * @param _instance message instance
+	 * @param _reader binary reader instance
+	 */
+	static deserializeBinaryFromReader(_instance: DeleteUserPreferencesResponse, _reader: BinaryReader): void;
+	/**
+	 * Serializes a message to binary format using provided binary reader
+	 * @param _instance message instance
+	 * @param _writer binary writer instance
+	 */
+	static serializeBinaryToWriter(_instance: DeleteUserPreferencesResponse, _writer: BinaryWriter): void;
+	private _userName;
+	private _keys;
+	private _errorMessage;
+	/**
+	 * Message constructor. Initializes the properties and applies default Protobuf values if necessary
+	 * @param _value initial values object or instance of DeleteUserPreferencesResponse to deeply clone from
+	 */
+	constructor(_value?: RecursivePartial<DeleteUserPreferencesResponse.AsObject>);
+	get userName(): string;
+	set userName(value: string);
+	get keys(): string[];
+	set keys(value: string[]);
+	get errorMessage(): string;
+	set errorMessage(value: string);
+	/**
+	 * Serialize message to binary data
+	 * @param instance message instance
+	 */
+	serializeBinary(): any;
+	/**
+	 * Cast message to standard JavaScript object (all non-primitive values are deeply cloned)
+	 */
+	toObject(): DeleteUserPreferencesResponse.AsObject;
+	/**
+	 * Convenience method to support JSON.stringify(message), replicates the structure of toObject()
+	 */
+	toJSON(): DeleteUserPreferencesResponse.AsObject;
+	/**
+	 * Cast message to JSON using protobuf JSON notation: https://developers.google.com/protocol-buffers/docs/proto3#json
+	 * Attention: output differs from toObject() e.g. enums are represented as names and not as numbers, Timestamp is an ISO Date string format etc.
+	 * If the message itself or some of descendant messages is google.protobuf.Any, you MUST provide a message pool as options. If not, the messagePool is not required
+	 */
+	toProtobufJSON(options?: ToProtobufJSONOptions): DeleteUserPreferencesResponse.AsProtobufJSON;
+}
+export declare module DeleteUserPreferencesResponse {
+	/**
+	 * Standard JavaScript object representation for DeleteUserPreferencesResponse
+	 */
+	interface AsObject {
+		userName: string;
+		keys: string[];
+		errorMessage: string;
+	}
+	/**
+	 * Protobuf JSON representation for DeleteUserPreferencesResponse
+	 */
+	interface AsProtobufJSON {
+		userName: string;
+		keys: string[];
+		errorMessage: string;
+	}
+}
+/**
+ * Message implementation for ondewo.nlu.DeleteAllUserPreferencesRequest
+ */
+export declare class DeleteAllUserPreferencesRequest implements GrpcMessage {
+	static id: string;
+	/**
+	 * Deserialize binary data to message
+	 * @param instance message instance
+	 */
+	static deserializeBinary(bytes: ByteSource): DeleteAllUserPreferencesRequest;
+	/**
+	 * Check all the properties and set default protobuf values if necessary
+	 * @param _instance message instance
+	 */
+	static refineValues(_instance: DeleteAllUserPreferencesRequest): void;
+	/**
+	 * Deserializes / reads binary message into message instance using provided binary reader
+	 * @param _instance message instance
+	 * @param _reader binary reader instance
+	 */
+	static deserializeBinaryFromReader(_instance: DeleteAllUserPreferencesRequest, _reader: BinaryReader): void;
+	/**
+	 * Serializes a message to binary format using provided binary reader
+	 * @param _instance message instance
+	 * @param _writer binary writer instance
+	 */
+	static serializeBinaryToWriter(_instance: DeleteAllUserPreferencesRequest, _writer: BinaryWriter): void;
+	private _userName;
+	private _regexFilter;
+	/**
+	 * Message constructor. Initializes the properties and applies default Protobuf values if necessary
+	 * @param _value initial values object or instance of DeleteAllUserPreferencesRequest to deeply clone from
+	 */
+	constructor(_value?: RecursivePartial<DeleteAllUserPreferencesRequest.AsObject>);
+	get userName(): string;
+	set userName(value: string);
+	get regexFilter(): string;
+	set regexFilter(value: string);
+	/**
+	 * Serialize message to binary data
+	 * @param instance message instance
+	 */
+	serializeBinary(): any;
+	/**
+	 * Cast message to standard JavaScript object (all non-primitive values are deeply cloned)
+	 */
+	toObject(): DeleteAllUserPreferencesRequest.AsObject;
+	/**
+	 * Convenience method to support JSON.stringify(message), replicates the structure of toObject()
+	 */
+	toJSON(): DeleteAllUserPreferencesRequest.AsObject;
+	/**
+	 * Cast message to JSON using protobuf JSON notation: https://developers.google.com/protocol-buffers/docs/proto3#json
+	 * Attention: output differs from toObject() e.g. enums are represented as names and not as numbers, Timestamp is an ISO Date string format etc.
+	 * If the message itself or some of descendant messages is google.protobuf.Any, you MUST provide a message pool as options. If not, the messagePool is not required
+	 */
+	toProtobufJSON(options?: ToProtobufJSONOptions): DeleteAllUserPreferencesRequest.AsProtobufJSON;
+}
+export declare module DeleteAllUserPreferencesRequest {
+	/**
+	 * Standard JavaScript object representation for DeleteAllUserPreferencesRequest
+	 */
+	interface AsObject {
+		userName: string;
+		regexFilter: string;
+	}
+	/**
+	 * Protobuf JSON representation for DeleteAllUserPreferencesRequest
+	 */
+	interface AsProtobufJSON {
+		userName: string;
+		regexFilter: string;
+	}
+}
+/**
+ * Message implementation for ondewo.nlu.ListUserPreferencesRequest
+ */
+export declare class ListUserPreferencesRequest implements GrpcMessage {
+	static id: string;
+	/**
+	 * Deserialize binary data to message
+	 * @param instance message instance
+	 */
+	static deserializeBinary(bytes: ByteSource): ListUserPreferencesRequest;
+	/**
+	 * Check all the properties and set default protobuf values if necessary
+	 * @param _instance message instance
+	 */
+	static refineValues(_instance: ListUserPreferencesRequest): void;
+	/**
+	 * Deserializes / reads binary message into message instance using provided binary reader
+	 * @param _instance message instance
+	 * @param _reader binary reader instance
+	 */
+	static deserializeBinaryFromReader(_instance: ListUserPreferencesRequest, _reader: BinaryReader): void;
+	/**
+	 * Serializes a message to binary format using provided binary reader
+	 * @param _instance message instance
+	 * @param _writer binary writer instance
+	 */
+	static serializeBinaryToWriter(_instance: ListUserPreferencesRequest, _writer: BinaryWriter): void;
+	private _userName;
+	private _regexFilter;
+	/**
+	 * Message constructor. Initializes the properties and applies default Protobuf values if necessary
+	 * @param _value initial values object or instance of ListUserPreferencesRequest to deeply clone from
+	 */
+	constructor(_value?: RecursivePartial<ListUserPreferencesRequest.AsObject>);
+	get userName(): string;
+	set userName(value: string);
+	get regexFilter(): string;
+	set regexFilter(value: string);
+	/**
+	 * Serialize message to binary data
+	 * @param instance message instance
+	 */
+	serializeBinary(): any;
+	/**
+	 * Cast message to standard JavaScript object (all non-primitive values are deeply cloned)
+	 */
+	toObject(): ListUserPreferencesRequest.AsObject;
+	/**
+	 * Convenience method to support JSON.stringify(message), replicates the structure of toObject()
+	 */
+	toJSON(): ListUserPreferencesRequest.AsObject;
+	/**
+	 * Cast message to JSON using protobuf JSON notation: https://developers.google.com/protocol-buffers/docs/proto3#json
+	 * Attention: output differs from toObject() e.g. enums are represented as names and not as numbers, Timestamp is an ISO Date string format etc.
+	 * If the message itself or some of descendant messages is google.protobuf.Any, you MUST provide a message pool as options. If not, the messagePool is not required
+	 */
+	toProtobufJSON(options?: ToProtobufJSONOptions): ListUserPreferencesRequest.AsProtobufJSON;
+}
+export declare module ListUserPreferencesRequest {
+	/**
+	 * Standard JavaScript object representation for ListUserPreferencesRequest
+	 */
+	interface AsObject {
+		userName: string;
+		regexFilter: string;
+	}
+	/**
+	 * Protobuf JSON representation for ListUserPreferencesRequest
+	 */
+	interface AsProtobufJSON {
+		userName: string;
+		regexFilter: string;
+	}
+}
+/**
+ * Message implementation for ondewo.nlu.ListUserPreferencesResponse
+ */
+export declare class ListUserPreferencesResponse implements GrpcMessage {
+	static id: string;
+	/**
+	 * Deserialize binary data to message
+	 * @param instance message instance
+	 */
+	static deserializeBinary(bytes: ByteSource): ListUserPreferencesResponse;
+	/**
+	 * Check all the properties and set default protobuf values if necessary
+	 * @param _instance message instance
+	 */
+	static refineValues(_instance: ListUserPreferencesResponse): void;
+	/**
+	 * Deserializes / reads binary message into message instance using provided binary reader
+	 * @param _instance message instance
+	 * @param _reader binary reader instance
+	 */
+	static deserializeBinaryFromReader(_instance: ListUserPreferencesResponse, _reader: BinaryReader): void;
+	/**
+	 * Serializes a message to binary format using provided binary reader
+	 * @param _instance message instance
+	 * @param _writer binary writer instance
+	 */
+	static serializeBinaryToWriter(_instance: ListUserPreferencesResponse, _writer: BinaryWriter): void;
+	private _userName;
+	private _keyValuePairs?;
+	private _errorMessage;
+	/**
+	 * Message constructor. Initializes the properties and applies default Protobuf values if necessary
+	 * @param _value initial values object or instance of ListUserPreferencesResponse to deeply clone from
+	 */
+	constructor(_value?: RecursivePartial<ListUserPreferencesResponse.AsObject>);
+	get userName(): string;
+	set userName(value: string);
+	get keyValuePairs(): ondewoNlu007.KeyValuePair[] | undefined;
+	set keyValuePairs(value: ondewoNlu007.KeyValuePair[] | undefined);
+	get errorMessage(): string;
+	set errorMessage(value: string);
+	/**
+	 * Serialize message to binary data
+	 * @param instance message instance
+	 */
+	serializeBinary(): any;
+	/**
+	 * Cast message to standard JavaScript object (all non-primitive values are deeply cloned)
+	 */
+	toObject(): ListUserPreferencesResponse.AsObject;
+	/**
+	 * Convenience method to support JSON.stringify(message), replicates the structure of toObject()
+	 */
+	toJSON(): ListUserPreferencesResponse.AsObject;
+	/**
+	 * Cast message to JSON using protobuf JSON notation: https://developers.google.com/protocol-buffers/docs/proto3#json
+	 * Attention: output differs from toObject() e.g. enums are represented as names and not as numbers, Timestamp is an ISO Date string format etc.
+	 * If the message itself or some of descendant messages is google.protobuf.Any, you MUST provide a message pool as options. If not, the messagePool is not required
+	 */
+	toProtobufJSON(options?: ToProtobufJSONOptions): ListUserPreferencesResponse.AsProtobufJSON;
+}
+export declare module ListUserPreferencesResponse {
+	/**
+	 * Standard JavaScript object representation for ListUserPreferencesResponse
+	 */
+	interface AsObject {
+		userName: string;
+		keyValuePairs?: ondewoNlu007.KeyValuePair.AsObject[];
+		errorMessage: string;
+	}
+	/**
+	 * Protobuf JSON representation for ListUserPreferencesResponse
+	 */
+	interface AsProtobufJSON {
+		userName: string;
+		keyValuePairs: ondewoNlu007.KeyValuePair.AsProtobufJSON[] | null;
+		errorMessage: string;
 	}
 }

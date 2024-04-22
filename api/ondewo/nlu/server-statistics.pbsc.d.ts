@@ -2,8 +2,8 @@ import { GrpcClientFactory, GrpcEvent, GrpcMetadata } from '@ngx-grpc/common';
 import { GrpcHandler } from '@ngx-grpc/core';
 import { Observable } from 'rxjs';
 import * as thisProto from './server-statistics.pb';
-import * as googleProtobuf003 from '@ngx-grpc/well-known-types';
-import * as ondewoNlu004 from '../../ondewo/nlu/common.pb';
+import * as googleProtobuf005 from '@ngx-grpc/well-known-types';
+import * as ondewoNlu006 from '../../ondewo/nlu/common.pb';
 import * as i0 from '@angular/core';
 /**
  * Service client implementation for ondewo.nlu.ServerStatistics
@@ -22,34 +22,34 @@ export declare class ServerStatisticsClient {
 		 *
 		 * @param requestMessage Request message
 		 * @param requestMetadata Request metadata
-		 * @returns Observable<GrpcEvent<ondewoNlu004.StatResponse>>
+		 * @returns Observable<GrpcEvent<ondewoNlu006.StatResponse>>
 		 */
 		getProjectCount: (
-			requestData: googleProtobuf003.Empty,
+			requestData: googleProtobuf005.Empty,
 			requestMetadata?: GrpcMetadata
-		) => Observable<GrpcEvent<ondewoNlu004.StatResponse>>;
+		) => Observable<GrpcEvent<ondewoNlu006.StatResponse>>;
 		/**
 		 * Unary call: /ondewo.nlu.ServerStatistics/GetUserProjectCount
 		 *
 		 * @param requestMessage Request message
 		 * @param requestMetadata Request metadata
-		 * @returns Observable<GrpcEvent<ondewoNlu004.StatResponse>>
+		 * @returns Observable<GrpcEvent<ondewoNlu006.StatResponse>>
 		 */
 		getUserProjectCount: (
 			requestData: thisProto.GetUserProjectCountRequest,
 			requestMetadata?: GrpcMetadata
-		) => Observable<GrpcEvent<ondewoNlu004.StatResponse>>;
+		) => Observable<GrpcEvent<ondewoNlu006.StatResponse>>;
 		/**
 		 * Unary call: /ondewo.nlu.ServerStatistics/GetUserCount
 		 *
 		 * @param requestMessage Request message
 		 * @param requestMetadata Request metadata
-		 * @returns Observable<GrpcEvent<ondewoNlu004.StatResponse>>
+		 * @returns Observable<GrpcEvent<ondewoNlu006.StatResponse>>
 		 */
 		getUserCount: (
-			requestData: googleProtobuf003.Empty,
+			requestData: googleProtobuf005.Empty,
 			requestMetadata?: GrpcMetadata
-		) => Observable<GrpcEvent<ondewoNlu004.StatResponse>>;
+		) => Observable<GrpcEvent<ondewoNlu006.StatResponse>>;
 	};
 	constructor(settings: any, clientFactory: GrpcClientFactory<any>, handler: GrpcHandler);
 	/**
@@ -57,34 +57,34 @@ export declare class ServerStatisticsClient {
 	 *
 	 * @param requestMessage Request message
 	 * @param requestMetadata Request metadata
-	 * @returns Observable<ondewoNlu004.StatResponse>
+	 * @returns Observable<ondewoNlu006.StatResponse>
 	 */
 	getProjectCount(
-		requestData: googleProtobuf003.Empty,
+		requestData: googleProtobuf005.Empty,
 		requestMetadata?: GrpcMetadata
-	): Observable<ondewoNlu004.StatResponse>;
+	): Observable<ondewoNlu006.StatResponse>;
 	/**
 	 * Unary call @/ondewo.nlu.ServerStatistics/GetUserProjectCount
 	 *
 	 * @param requestMessage Request message
 	 * @param requestMetadata Request metadata
-	 * @returns Observable<ondewoNlu004.StatResponse>
+	 * @returns Observable<ondewoNlu006.StatResponse>
 	 */
 	getUserProjectCount(
 		requestData: thisProto.GetUserProjectCountRequest,
 		requestMetadata?: GrpcMetadata
-	): Observable<ondewoNlu004.StatResponse>;
+	): Observable<ondewoNlu006.StatResponse>;
 	/**
 	 * Unary call @/ondewo.nlu.ServerStatistics/GetUserCount
 	 *
 	 * @param requestMessage Request message
 	 * @param requestMetadata Request metadata
-	 * @returns Observable<ondewoNlu004.StatResponse>
+	 * @returns Observable<ondewoNlu006.StatResponse>
 	 */
 	getUserCount(
-		requestData: googleProtobuf003.Empty,
+		requestData: googleProtobuf005.Empty,
 		requestMetadata?: GrpcMetadata
-	): Observable<ondewoNlu004.StatResponse>;
+	): Observable<ondewoNlu006.StatResponse>;
 	static ɵfac: i0.ɵɵFactoryDeclaration<ServerStatisticsClient, [{ optional: true }, null, null]>;
 	static ɵprov: i0.ɵɵInjectableDeclaration<ServerStatisticsClient>;
 }

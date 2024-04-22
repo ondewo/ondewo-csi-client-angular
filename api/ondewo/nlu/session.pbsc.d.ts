@@ -2,7 +2,8 @@ import { GrpcClientFactory, GrpcEvent, GrpcMetadata } from '@ngx-grpc/common';
 import { GrpcHandler } from '@ngx-grpc/core';
 import { Observable } from 'rxjs';
 import * as thisProto from './session.pb';
-import * as googleProtobuf004 from '@ngx-grpc/well-known-types';
+import * as googleProtobuf006 from '@ngx-grpc/well-known-types';
+import * as ondewoNlu008 from '../../ondewo/nlu/common.pb';
 import * as i0 from '@angular/core';
 /**
  * Service client implementation for ondewo.nlu.Sessions
@@ -87,12 +88,12 @@ export declare class SessionsClient {
 		 *
 		 * @param requestMessage Request message
 		 * @param requestMetadata Request metadata
-		 * @returns Observable<GrpcEvent<googleProtobuf004.Empty>>
+		 * @returns Observable<GrpcEvent<googleProtobuf006.Empty>>
 		 */
 		deleteSession: (
 			requestData: thisProto.DeleteSessionRequest,
 			requestMetadata?: GrpcMetadata
-		) => Observable<GrpcEvent<googleProtobuf004.Empty>>;
+		) => Observable<GrpcEvent<googleProtobuf006.Empty>>;
 		/**
 		 * Unary call: /ondewo.nlu.Sessions/ListSessionLabels
 		 *
@@ -281,6 +282,50 @@ export declare class SessionsClient {
 			requestMetadata?: GrpcMetadata
 		) => Observable<GrpcEvent<thisProto.Session>>;
 		/**
+		 * Unary call: /ondewo.nlu.Sessions/AddSessionComment
+		 *
+		 * @param requestMessage Request message
+		 * @param requestMetadata Request metadata
+		 * @returns Observable<GrpcEvent<ondewoNlu008.Comment>>
+		 */
+		addSessionComment: (
+			requestData: thisProto.AddSessionCommentRequest,
+			requestMetadata?: GrpcMetadata
+		) => Observable<GrpcEvent<ondewoNlu008.Comment>>;
+		/**
+		 * Unary call: /ondewo.nlu.Sessions/DeleteSessionComments
+		 *
+		 * @param requestMessage Request message
+		 * @param requestMetadata Request metadata
+		 * @returns Observable<GrpcEvent<thisProto.Session>>
+		 */
+		deleteSessionComments: (
+			requestData: thisProto.DeleteSessionCommentsRequest,
+			requestMetadata?: GrpcMetadata
+		) => Observable<GrpcEvent<thisProto.Session>>;
+		/**
+		 * Unary call: /ondewo.nlu.Sessions/UpdateSessionComments
+		 *
+		 * @param requestMessage Request message
+		 * @param requestMetadata Request metadata
+		 * @returns Observable<GrpcEvent<thisProto.Session>>
+		 */
+		updateSessionComments: (
+			requestData: thisProto.UpdateSessionCommentsRequest,
+			requestMetadata?: GrpcMetadata
+		) => Observable<GrpcEvent<thisProto.Session>>;
+		/**
+		 * Unary call: /ondewo.nlu.Sessions/ListSessionComments
+		 *
+		 * @param requestMessage Request message
+		 * @param requestMetadata Request metadata
+		 * @returns Observable<GrpcEvent<thisProto.ListSessionCommentsResponse>>
+		 */
+		listSessionComments: (
+			requestData: thisProto.ListSessionCommentsRequest,
+			requestMetadata?: GrpcMetadata
+		) => Observable<GrpcEvent<thisProto.ListSessionCommentsResponse>>;
+		/**
 		 * Unary call: /ondewo.nlu.Sessions/ListSessionReviews
 		 *
 		 * @param requestMessage Request message
@@ -324,6 +369,61 @@ export declare class SessionsClient {
 			requestData: thisProto.CreateSessionReviewRequest,
 			requestMetadata?: GrpcMetadata
 		) => Observable<GrpcEvent<thisProto.SessionReview>>;
+		/**
+		 * Unary call: /ondewo.nlu.Sessions/GetAudioFiles
+		 *
+		 * @param requestMessage Request message
+		 * @param requestMetadata Request metadata
+		 * @returns Observable<GrpcEvent<thisProto.GetAudioFilesResponse>>
+		 */
+		getAudioFiles: (
+			requestData: thisProto.GetAudioFilesRequest,
+			requestMetadata?: GrpcMetadata
+		) => Observable<GrpcEvent<thisProto.GetAudioFilesResponse>>;
+		/**
+		 * Unary call: /ondewo.nlu.Sessions/AddAudioFiles
+		 *
+		 * @param requestMessage Request message
+		 * @param requestMetadata Request metadata
+		 * @returns Observable<GrpcEvent<thisProto.AddAudioFilesResponse>>
+		 */
+		addAudioFiles: (
+			requestData: thisProto.AddAudioFilesRequest,
+			requestMetadata?: GrpcMetadata
+		) => Observable<GrpcEvent<thisProto.AddAudioFilesResponse>>;
+		/**
+		 * Unary call: /ondewo.nlu.Sessions/DeleteAudioFiles
+		 *
+		 * @param requestMessage Request message
+		 * @param requestMetadata Request metadata
+		 * @returns Observable<GrpcEvent<thisProto.DeleteAudioFilesResponse>>
+		 */
+		deleteAudioFiles: (
+			requestData: thisProto.DeleteAudioFilesRequest,
+			requestMetadata?: GrpcMetadata
+		) => Observable<GrpcEvent<thisProto.DeleteAudioFilesResponse>>;
+		/**
+		 * Unary call: /ondewo.nlu.Sessions/GetAudioFileOfSession
+		 *
+		 * @param requestMessage Request message
+		 * @param requestMetadata Request metadata
+		 * @returns Observable<GrpcEvent<thisProto.AudioFileResource>>
+		 */
+		getAudioFileOfSession: (
+			requestData: thisProto.GetAudioFileOfSessionRequest,
+			requestMetadata?: GrpcMetadata
+		) => Observable<GrpcEvent<thisProto.AudioFileResource>>;
+		/**
+		 * Unary call: /ondewo.nlu.Sessions/ListAudioFiles
+		 *
+		 * @param requestMessage Request message
+		 * @param requestMetadata Request metadata
+		 * @returns Observable<GrpcEvent<thisProto.ListAudioFilesResponse>>
+		 */
+		listAudioFiles: (
+			requestData: thisProto.ListAudioFilesRequest,
+			requestMetadata?: GrpcMetadata
+		) => Observable<GrpcEvent<thisProto.ListAudioFilesResponse>>;
 	};
 	constructor(settings: any, clientFactory: GrpcClientFactory<any>, handler: GrpcHandler);
 	/**
@@ -394,12 +494,12 @@ export declare class SessionsClient {
 	 *
 	 * @param requestMessage Request message
 	 * @param requestMetadata Request metadata
-	 * @returns Observable<googleProtobuf004.Empty>
+	 * @returns Observable<googleProtobuf006.Empty>
 	 */
 	deleteSession(
 		requestData: thisProto.DeleteSessionRequest,
 		requestMetadata?: GrpcMetadata
-	): Observable<googleProtobuf004.Empty>;
+	): Observable<googleProtobuf006.Empty>;
 	/**
 	 * Unary call @/ondewo.nlu.Sessions/ListSessionLabels
 	 *
@@ -588,6 +688,50 @@ export declare class SessionsClient {
 		requestMetadata?: GrpcMetadata
 	): Observable<thisProto.Session>;
 	/**
+	 * Unary call @/ondewo.nlu.Sessions/AddSessionComment
+	 *
+	 * @param requestMessage Request message
+	 * @param requestMetadata Request metadata
+	 * @returns Observable<ondewoNlu008.Comment>
+	 */
+	addSessionComment(
+		requestData: thisProto.AddSessionCommentRequest,
+		requestMetadata?: GrpcMetadata
+	): Observable<ondewoNlu008.Comment>;
+	/**
+	 * Unary call @/ondewo.nlu.Sessions/DeleteSessionComments
+	 *
+	 * @param requestMessage Request message
+	 * @param requestMetadata Request metadata
+	 * @returns Observable<thisProto.Session>
+	 */
+	deleteSessionComments(
+		requestData: thisProto.DeleteSessionCommentsRequest,
+		requestMetadata?: GrpcMetadata
+	): Observable<thisProto.Session>;
+	/**
+	 * Unary call @/ondewo.nlu.Sessions/UpdateSessionComments
+	 *
+	 * @param requestMessage Request message
+	 * @param requestMetadata Request metadata
+	 * @returns Observable<thisProto.Session>
+	 */
+	updateSessionComments(
+		requestData: thisProto.UpdateSessionCommentsRequest,
+		requestMetadata?: GrpcMetadata
+	): Observable<thisProto.Session>;
+	/**
+	 * Unary call @/ondewo.nlu.Sessions/ListSessionComments
+	 *
+	 * @param requestMessage Request message
+	 * @param requestMetadata Request metadata
+	 * @returns Observable<thisProto.ListSessionCommentsResponse>
+	 */
+	listSessionComments(
+		requestData: thisProto.ListSessionCommentsRequest,
+		requestMetadata?: GrpcMetadata
+	): Observable<thisProto.ListSessionCommentsResponse>;
+	/**
 	 * Unary call @/ondewo.nlu.Sessions/ListSessionReviews
 	 *
 	 * @param requestMessage Request message
@@ -631,6 +775,61 @@ export declare class SessionsClient {
 		requestData: thisProto.CreateSessionReviewRequest,
 		requestMetadata?: GrpcMetadata
 	): Observable<thisProto.SessionReview>;
+	/**
+	 * Unary call @/ondewo.nlu.Sessions/GetAudioFiles
+	 *
+	 * @param requestMessage Request message
+	 * @param requestMetadata Request metadata
+	 * @returns Observable<thisProto.GetAudioFilesResponse>
+	 */
+	getAudioFiles(
+		requestData: thisProto.GetAudioFilesRequest,
+		requestMetadata?: GrpcMetadata
+	): Observable<thisProto.GetAudioFilesResponse>;
+	/**
+	 * Unary call @/ondewo.nlu.Sessions/AddAudioFiles
+	 *
+	 * @param requestMessage Request message
+	 * @param requestMetadata Request metadata
+	 * @returns Observable<thisProto.AddAudioFilesResponse>
+	 */
+	addAudioFiles(
+		requestData: thisProto.AddAudioFilesRequest,
+		requestMetadata?: GrpcMetadata
+	): Observable<thisProto.AddAudioFilesResponse>;
+	/**
+	 * Unary call @/ondewo.nlu.Sessions/DeleteAudioFiles
+	 *
+	 * @param requestMessage Request message
+	 * @param requestMetadata Request metadata
+	 * @returns Observable<thisProto.DeleteAudioFilesResponse>
+	 */
+	deleteAudioFiles(
+		requestData: thisProto.DeleteAudioFilesRequest,
+		requestMetadata?: GrpcMetadata
+	): Observable<thisProto.DeleteAudioFilesResponse>;
+	/**
+	 * Unary call @/ondewo.nlu.Sessions/GetAudioFileOfSession
+	 *
+	 * @param requestMessage Request message
+	 * @param requestMetadata Request metadata
+	 * @returns Observable<thisProto.AudioFileResource>
+	 */
+	getAudioFileOfSession(
+		requestData: thisProto.GetAudioFileOfSessionRequest,
+		requestMetadata?: GrpcMetadata
+	): Observable<thisProto.AudioFileResource>;
+	/**
+	 * Unary call @/ondewo.nlu.Sessions/ListAudioFiles
+	 *
+	 * @param requestMessage Request message
+	 * @param requestMetadata Request metadata
+	 * @returns Observable<thisProto.ListAudioFilesResponse>
+	 */
+	listAudioFiles(
+		requestData: thisProto.ListAudioFilesRequest,
+		requestMetadata?: GrpcMetadata
+	): Observable<thisProto.ListAudioFilesResponse>;
 	static ɵfac: i0.ɵɵFactoryDeclaration<SessionsClient, [{ optional: true }, null, null]>;
 	static ɵprov: i0.ɵɵInjectableDeclaration<SessionsClient>;
 }
