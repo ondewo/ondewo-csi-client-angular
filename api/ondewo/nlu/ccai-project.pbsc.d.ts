@@ -55,6 +55,14 @@ export declare class CcaiProjectsClient {
          * @returns Observable<GrpcEvent<thisProto.UpdateCcaiProjectResponse>>
          */
         updateCcaiProject: (requestData: thisProto.UpdateCcaiProjectRequest, requestMetadata?: GrpcMetadata) => Observable<GrpcEvent<thisProto.UpdateCcaiProjectResponse>>;
+        /**
+         * Unary call: /ondewo.nlu.CcaiProjects/GetCcaiService
+         *
+         * @param requestMessage Request message
+         * @param requestMetadata Request metadata
+         * @returns Observable<GrpcEvent<thisProto.CcaiService>>
+         */
+        getCcaiService: (requestData: thisProto.GetCcaiServiceRequest, requestMetadata?: GrpcMetadata) => Observable<GrpcEvent<thisProto.CcaiService>>;
     };
     constructor(settings: any, clientFactory: GrpcClientFactory<any>, handler: GrpcHandler);
     /**
@@ -97,6 +105,14 @@ export declare class CcaiProjectsClient {
      * @returns Observable<thisProto.UpdateCcaiProjectResponse>
      */
     updateCcaiProject(requestData: thisProto.UpdateCcaiProjectRequest, requestMetadata?: GrpcMetadata): Observable<thisProto.UpdateCcaiProjectResponse>;
+    /**
+     * Unary call @/ondewo.nlu.CcaiProjects/GetCcaiService
+     *
+     * @param requestMessage Request message
+     * @param requestMetadata Request metadata
+     * @returns Observable<thisProto.CcaiService>
+     */
+    getCcaiService(requestData: thisProto.GetCcaiServiceRequest, requestMetadata?: GrpcMetadata): Observable<thisProto.CcaiService>;
     static ɵfac: i0.ɵɵFactoryDeclaration<CcaiProjectsClient, [{ optional: true; }, null, null]>;
     static ɵprov: i0.ɵɵInjectableDeclaration<CcaiProjectsClient>;
 }

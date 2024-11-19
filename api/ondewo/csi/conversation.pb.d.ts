@@ -8,14 +8,18 @@ import * as ondewoT2s013 from '../../ondewo/t2s/text-to-speech.pb';
 import * as ondewoS2t014 from '../../ondewo/s2t/speech-to-text.pb';
 export declare enum ControlStatus {
     OK = 0,
-    EMERGENCY_STOP = 1
+    EMERGENCY_STOP = 1,
+    VAD_START_OF_SPEECH = 2
 }
 export declare enum ControlMessageServiceName {
     UNKNOWNNAME = 0,
     ondewo_s2t = 1,
     ondewo_t2s = 2,
     ondewo_nlu = 3,
-    ondewo_sip = 4
+    ondewo_sip = 4,
+    ondewo_vtsi = 5,
+    ondewo_csi = 6,
+    ondewo_survey = 7
 }
 export declare enum ControlMessageServiceMethod {
     UNKNOWNMETHOD = 0,

@@ -58,13 +58,37 @@ export declare class SessionsClient {
          */
         createSession: (requestData: thisProto.CreateSessionRequest, requestMetadata?: GrpcMetadata) => Observable<GrpcEvent<thisProto.Session>>;
         /**
-         * Unary call: /ondewo.nlu.Sessions/TrackSessionStep
+         * Unary call: /ondewo.nlu.Sessions/CreateSessionStep
          *
          * @param requestMessage Request message
          * @param requestMetadata Request metadata
-         * @returns Observable<GrpcEvent<thisProto.Session>>
+         * @returns Observable<GrpcEvent<thisProto.SessionStep>>
          */
-        trackSessionStep: (requestData: thisProto.TrackSessionStepRequest, requestMetadata?: GrpcMetadata) => Observable<GrpcEvent<thisProto.Session>>;
+        createSessionStep: (requestData: thisProto.CreateSessionStepRequest, requestMetadata?: GrpcMetadata) => Observable<GrpcEvent<thisProto.SessionStep>>;
+        /**
+         * Unary call: /ondewo.nlu.Sessions/GetSessionStep
+         *
+         * @param requestMessage Request message
+         * @param requestMetadata Request metadata
+         * @returns Observable<GrpcEvent<thisProto.SessionStep>>
+         */
+        getSessionStep: (requestData: thisProto.GetSessionStepRequest, requestMetadata?: GrpcMetadata) => Observable<GrpcEvent<thisProto.SessionStep>>;
+        /**
+         * Unary call: /ondewo.nlu.Sessions/UpdateSessionStep
+         *
+         * @param requestMessage Request message
+         * @param requestMetadata Request metadata
+         * @returns Observable<GrpcEvent<thisProto.SessionStep>>
+         */
+        updateSessionStep: (requestData: thisProto.UpdateSessionStepRequest, requestMetadata?: GrpcMetadata) => Observable<GrpcEvent<thisProto.SessionStep>>;
+        /**
+         * Unary call: /ondewo.nlu.Sessions/DeleteSessionStep
+         *
+         * @param requestMessage Request message
+         * @param requestMetadata Request metadata
+         * @returns Observable<GrpcEvent<googleProtobuf006.Empty>>
+         */
+        deleteSessionStep: (requestData: thisProto.DeleteSessionStepRequest, requestMetadata?: GrpcMetadata) => Observable<GrpcEvent<googleProtobuf006.Empty>>;
         /**
          * Unary call: /ondewo.nlu.Sessions/DeleteSession
          *
@@ -356,13 +380,37 @@ export declare class SessionsClient {
      */
     createSession(requestData: thisProto.CreateSessionRequest, requestMetadata?: GrpcMetadata): Observable<thisProto.Session>;
     /**
-     * Unary call @/ondewo.nlu.Sessions/TrackSessionStep
+     * Unary call @/ondewo.nlu.Sessions/CreateSessionStep
      *
      * @param requestMessage Request message
      * @param requestMetadata Request metadata
-     * @returns Observable<thisProto.Session>
+     * @returns Observable<thisProto.SessionStep>
      */
-    trackSessionStep(requestData: thisProto.TrackSessionStepRequest, requestMetadata?: GrpcMetadata): Observable<thisProto.Session>;
+    createSessionStep(requestData: thisProto.CreateSessionStepRequest, requestMetadata?: GrpcMetadata): Observable<thisProto.SessionStep>;
+    /**
+     * Unary call @/ondewo.nlu.Sessions/GetSessionStep
+     *
+     * @param requestMessage Request message
+     * @param requestMetadata Request metadata
+     * @returns Observable<thisProto.SessionStep>
+     */
+    getSessionStep(requestData: thisProto.GetSessionStepRequest, requestMetadata?: GrpcMetadata): Observable<thisProto.SessionStep>;
+    /**
+     * Unary call @/ondewo.nlu.Sessions/UpdateSessionStep
+     *
+     * @param requestMessage Request message
+     * @param requestMetadata Request metadata
+     * @returns Observable<thisProto.SessionStep>
+     */
+    updateSessionStep(requestData: thisProto.UpdateSessionStepRequest, requestMetadata?: GrpcMetadata): Observable<thisProto.SessionStep>;
+    /**
+     * Unary call @/ondewo.nlu.Sessions/DeleteSessionStep
+     *
+     * @param requestMessage Request message
+     * @param requestMetadata Request metadata
+     * @returns Observable<googleProtobuf006.Empty>
+     */
+    deleteSessionStep(requestData: thisProto.DeleteSessionStepRequest, requestMetadata?: GrpcMetadata): Observable<googleProtobuf006.Empty>;
     /**
      * Unary call @/ondewo.nlu.Sessions/DeleteSession
      *

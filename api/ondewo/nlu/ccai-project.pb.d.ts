@@ -24,10 +24,39 @@ export declare enum CcaiServiceType {
     CCAI_SERVICE_TYPE_ONDEWO_SIP = 6,
     CCAI_SERVICE_TYPE_ONDEWO_T2S = 7,
     CCAI_SERVICE_TYPE_ONDEWO_VTSI = 8,
-    CCAI_SERVICE_TYPE_VTSI_RABBITMQ = 9,
+    CCAI_SERVICE_TYPE_ONDEWO_VTSI_RABBITMQ = 9,
     CCAI_SERVICE_TYPE_ONDEWO_NLU_QA = 10,
     CCAI_SERVICE_TYPE_ONDEWO_NLU_WEBHOOK = 11,
-    CCAI_SERVICE_TYPE_ONDEWO_SURVEY = 12
+    CCAI_SERVICE_TYPE_ONDEWO_SURVEY = 12,
+    CCAI_SERVICE_TYPE_ONDEWO_NLU_LLM = 13,
+    CCAI_SERVICE_TYPE_ONDEWO_NLU_WEBSEARCH = 14,
+    CCAI_SERVICE_TYPE_ONDEWO_AIM_WEBCHAT = 15,
+    CCAI_SERVICE_TYPE_ONDEWO_AIM_WEBPHONE = 16,
+    CCAI_SERVICE_TYPE_ONDEWO_NLU_VECTORSTORE = 17
+}
+export declare enum CcaiServiceProvider {
+    NO_CCAI_SERVICE_PROVIDER = 0,
+    CCAI_SERVICE_PROVIDER_ONDEWO = 1,
+    CCAI_SERVICE_PROVIDER_GOOGLE_GEMINI = 2,
+    CCAI_SERVICE_PROVIDER_MICROSOFT_AZURE_OPENAI = 3,
+    CCAI_SERVICE_PROVIDER_MICROSOFT_AUTOGEN = 4,
+    CCAI_SERVICE_PROVIDER_OLLAMA = 5,
+    CCAI_SERVICE_PROVIDER_OPENAI = 6,
+    CCAI_SERVICE_PROVIDER_ANTHROPIC = 7,
+    CCAI_SERVICE_PROVIDER_HUGGINGFACE = 8,
+    CCAI_SERVICE_PROVIDER_IBM = 9,
+    CCAI_SERVICE_PROVIDER_HAYSTACK = 10,
+    CCAI_SERVICE_PROVIDER_LANGCHAIN = 11,
+    CCAI_SERVICE_PROVIDER_AMAZON = 12,
+    CCAI_SERVICE_PROVIDER_MISTRAL = 13,
+    CCAI_SERVICE_PROVIDER_DUCKDUCKGO = 14,
+    CCAI_SERVICE_PROVIDER_GOOGLE_PSE = 15,
+    CCAI_SERVICE_PROVIDER_JINA = 16,
+    CCAI_SERVICE_PROVIDER_TAVILY = 17,
+    CCAI_SERVICE_PROVIDER_ELASTICSEARCH = 18,
+    CCAI_SERVICE_PROVIDER_MILVUS = 19,
+    CCAI_SERVICE_PROVIDER_QDRANT = 20,
+    CCAI_SERVICE_PROVIDER_CHROMA = 21
 }
 export declare enum CcaiProjectView {
     CCAI_PROJECT_VIEW_UNSPECIFIED = 0,
@@ -349,6 +378,9 @@ export declare class CcaiService implements GrpcMessage {
     private _modifiedAt?;
     private _createdBy;
     private _modifiedBy;
+    private _headers?;
+    private _ccaiServiceProvider;
+    private _serviceHierarchy;
     /**
      * Message constructor. Initializes the properties and applies default Protobuf values if necessary
      * @param _value initial values object or instance of CcaiService to deeply clone from
@@ -398,6 +430,12 @@ export declare class CcaiService implements GrpcMessage {
     set createdBy(value: string);
     get modifiedBy(): string;
     set modifiedBy(value: string);
+    get headers(): googleProtobuf002.Struct | undefined;
+    set headers(value: googleProtobuf002.Struct | undefined);
+    get ccaiServiceProvider(): CcaiServiceProvider;
+    set ccaiServiceProvider(value: CcaiServiceProvider);
+    get serviceHierarchy(): string;
+    set serviceHierarchy(value: string);
     /**
      * Serialize message to binary data
      * @param instance message instance
@@ -445,6 +483,9 @@ export declare namespace CcaiService {
         modifiedAt?: googleProtobuf001.Timestamp.AsObject;
         createdBy: string;
         modifiedBy: string;
+        headers?: googleProtobuf002.Struct.AsObject;
+        ccaiServiceProvider: CcaiServiceProvider;
+        serviceHierarchy: string;
     }
     /**
      * Protobuf JSON representation for CcaiService
@@ -472,6 +513,9 @@ export declare namespace CcaiService {
         modifiedAt: googleProtobuf001.Timestamp.AsProtobufJSON | null;
         createdBy: string;
         modifiedBy: string;
+        headers: googleProtobuf002.Struct.AsProtobufJSON | null;
+        ccaiServiceProvider: string;
+        serviceHierarchy: string;
     }
 }
 /**
@@ -703,6 +747,80 @@ export declare namespace GetCcaiProjectRequest {
         name: string;
         ccaiProjectView: string;
         ccaiServiceFilter: CcaiServiceFilter.AsProtobufJSON | null;
+        nluProjectName: string;
+    }
+}
+/**
+ * Message implementation for ondewo.nlu.GetCcaiServiceRequest
+ */
+export declare class GetCcaiServiceRequest implements GrpcMessage {
+    static id: string;
+    /**
+     * Deserialize binary data to message
+     * @param instance message instance
+     */
+    static deserializeBinary(bytes: ByteSource): GetCcaiServiceRequest;
+    /**
+     * Check all the properties and set default protobuf values if necessary
+     * @param _instance message instance
+     */
+    static refineValues(_instance: GetCcaiServiceRequest): void;
+    /**
+     * Deserializes / reads binary message into message instance using provided binary reader
+     * @param _instance message instance
+     * @param _reader binary reader instance
+     */
+    static deserializeBinaryFromReader(_instance: GetCcaiServiceRequest, _reader: BinaryReader): void;
+    /**
+     * Serializes a message to binary format using provided binary reader
+     * @param _instance message instance
+     * @param _writer binary writer instance
+     */
+    static serializeBinaryToWriter(_instance: GetCcaiServiceRequest, _writer: BinaryWriter): void;
+    private _name;
+    private _nluProjectName;
+    /**
+     * Message constructor. Initializes the properties and applies default Protobuf values if necessary
+     * @param _value initial values object or instance of GetCcaiServiceRequest to deeply clone from
+     */
+    constructor(_value?: RecursivePartial<GetCcaiServiceRequest.AsObject>);
+    get name(): string;
+    set name(value: string);
+    get nluProjectName(): string;
+    set nluProjectName(value: string);
+    /**
+     * Serialize message to binary data
+     * @param instance message instance
+     */
+    serializeBinary(): any;
+    /**
+     * Cast message to standard JavaScript object (all non-primitive values are deeply cloned)
+     */
+    toObject(): GetCcaiServiceRequest.AsObject;
+    /**
+     * Convenience method to support JSON.stringify(message), replicates the structure of toObject()
+     */
+    toJSON(): GetCcaiServiceRequest.AsObject;
+    /**
+     * Cast message to JSON using protobuf JSON notation: https://developers.google.com/protocol-buffers/docs/proto3#json
+     * Attention: output differs from toObject() e.g. enums are represented as names and not as numbers, Timestamp is an ISO Date string format etc.
+     * If the message itself or some of descendant messages is google.protobuf.Any, you MUST provide a message pool as options. If not, the messagePool is not required
+     */
+    toProtobufJSON(options?: ToProtobufJSONOptions): GetCcaiServiceRequest.AsProtobufJSON;
+}
+export declare namespace GetCcaiServiceRequest {
+    /**
+     * Standard JavaScript object representation for GetCcaiServiceRequest
+     */
+    interface AsObject {
+        name: string;
+        nluProjectName: string;
+    }
+    /**
+     * Protobuf JSON representation for GetCcaiServiceRequest
+     */
+    interface AsProtobufJSON {
+        name: string;
         nluProjectName: string;
     }
 }

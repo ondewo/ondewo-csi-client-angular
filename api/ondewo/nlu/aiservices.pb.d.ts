@@ -1,7 +1,10 @@
 import { GrpcMessage, RecursivePartial, ToProtobufJSONOptions } from '@ngx-grpc/common';
 import { BinaryReader, BinaryWriter, ByteSource } from 'google-protobuf';
-import * as ondewoNlu010 from '../../ondewo/nlu/intent.pb';
-import * as ondewoNlu011 from '../../ondewo/nlu/entity-type.pb';
+import * as googleProtobuf003 from '@ngx-grpc/well-known-types';
+import * as ondewoNlu012 from '../../ondewo/nlu/intent.pb';
+import * as ondewoNlu013 from '../../ondewo/nlu/entity-type.pb';
+import * as ondewoNlu014 from '../../ondewo/nlu/ccai-project.pb';
+import * as ondewoNlu015 from '../../ondewo/nlu/session.pb';
 export declare enum Mode {
     UNSPECIFIED = 0,
     EXCLUSIVE = 1,
@@ -20,6 +23,455 @@ export declare enum IntentAlgorithms {
     OndewoWeightedEnsemble = 13,
     OndewoIntentExitDetector = 14,
     OndewoIntentParameterMatch = 15
+}
+/**
+ * Message implementation for ondewo.nlu.ListLlmModelsRequest
+ */
+export declare class ListLlmModelsRequest implements GrpcMessage {
+    static id: string;
+    /**
+     * Deserialize binary data to message
+     * @param instance message instance
+     */
+    static deserializeBinary(bytes: ByteSource): ListLlmModelsRequest;
+    /**
+     * Check all the properties and set default protobuf values if necessary
+     * @param _instance message instance
+     */
+    static refineValues(_instance: ListLlmModelsRequest): void;
+    /**
+     * Deserializes / reads binary message into message instance using provided binary reader
+     * @param _instance message instance
+     * @param _reader binary reader instance
+     */
+    static deserializeBinaryFromReader(_instance: ListLlmModelsRequest, _reader: BinaryReader): void;
+    /**
+     * Serializes a message to binary format using provided binary reader
+     * @param _instance message instance
+     * @param _writer binary writer instance
+     */
+    static serializeBinaryToWriter(_instance: ListLlmModelsRequest, _writer: BinaryWriter): void;
+    private _ccaiServiceName;
+    /**
+     * Message constructor. Initializes the properties and applies default Protobuf values if necessary
+     * @param _value initial values object or instance of ListLlmModelsRequest to deeply clone from
+     */
+    constructor(_value?: RecursivePartial<ListLlmModelsRequest.AsObject>);
+    get ccaiServiceName(): string;
+    set ccaiServiceName(value: string);
+    /**
+     * Serialize message to binary data
+     * @param instance message instance
+     */
+    serializeBinary(): any;
+    /**
+     * Cast message to standard JavaScript object (all non-primitive values are deeply cloned)
+     */
+    toObject(): ListLlmModelsRequest.AsObject;
+    /**
+     * Convenience method to support JSON.stringify(message), replicates the structure of toObject()
+     */
+    toJSON(): ListLlmModelsRequest.AsObject;
+    /**
+     * Cast message to JSON using protobuf JSON notation: https://developers.google.com/protocol-buffers/docs/proto3#json
+     * Attention: output differs from toObject() e.g. enums are represented as names and not as numbers, Timestamp is an ISO Date string format etc.
+     * If the message itself or some of descendant messages is google.protobuf.Any, you MUST provide a message pool as options. If not, the messagePool is not required
+     */
+    toProtobufJSON(options?: ToProtobufJSONOptions): ListLlmModelsRequest.AsProtobufJSON;
+}
+export declare namespace ListLlmModelsRequest {
+    /**
+     * Standard JavaScript object representation for ListLlmModelsRequest
+     */
+    interface AsObject {
+        ccaiServiceName: string;
+    }
+    /**
+     * Protobuf JSON representation for ListLlmModelsRequest
+     */
+    interface AsProtobufJSON {
+        ccaiServiceName: string;
+    }
+}
+/**
+ * Message implementation for ondewo.nlu.ListLlmModelsResponse
+ */
+export declare class ListLlmModelsResponse implements GrpcMessage {
+    static id: string;
+    /**
+     * Deserialize binary data to message
+     * @param instance message instance
+     */
+    static deserializeBinary(bytes: ByteSource): ListLlmModelsResponse;
+    /**
+     * Check all the properties and set default protobuf values if necessary
+     * @param _instance message instance
+     */
+    static refineValues(_instance: ListLlmModelsResponse): void;
+    /**
+     * Deserializes / reads binary message into message instance using provided binary reader
+     * @param _instance message instance
+     * @param _reader binary reader instance
+     */
+    static deserializeBinaryFromReader(_instance: ListLlmModelsResponse, _reader: BinaryReader): void;
+    /**
+     * Serializes a message to binary format using provided binary reader
+     * @param _instance message instance
+     * @param _writer binary writer instance
+     */
+    static serializeBinaryToWriter(_instance: ListLlmModelsResponse, _writer: BinaryWriter): void;
+    private _llmModels?;
+    /**
+     * Message constructor. Initializes the properties and applies default Protobuf values if necessary
+     * @param _value initial values object or instance of ListLlmModelsResponse to deeply clone from
+     */
+    constructor(_value?: RecursivePartial<ListLlmModelsResponse.AsObject>);
+    get llmModels(): LlmModel[] | undefined;
+    set llmModels(value: LlmModel[] | undefined);
+    /**
+     * Serialize message to binary data
+     * @param instance message instance
+     */
+    serializeBinary(): any;
+    /**
+     * Cast message to standard JavaScript object (all non-primitive values are deeply cloned)
+     */
+    toObject(): ListLlmModelsResponse.AsObject;
+    /**
+     * Convenience method to support JSON.stringify(message), replicates the structure of toObject()
+     */
+    toJSON(): ListLlmModelsResponse.AsObject;
+    /**
+     * Cast message to JSON using protobuf JSON notation: https://developers.google.com/protocol-buffers/docs/proto3#json
+     * Attention: output differs from toObject() e.g. enums are represented as names and not as numbers, Timestamp is an ISO Date string format etc.
+     * If the message itself or some of descendant messages is google.protobuf.Any, you MUST provide a message pool as options. If not, the messagePool is not required
+     */
+    toProtobufJSON(options?: ToProtobufJSONOptions): ListLlmModelsResponse.AsProtobufJSON;
+}
+export declare namespace ListLlmModelsResponse {
+    /**
+     * Standard JavaScript object representation for ListLlmModelsResponse
+     */
+    interface AsObject {
+        llmModels?: LlmModel.AsObject[];
+    }
+    /**
+     * Protobuf JSON representation for ListLlmModelsResponse
+     */
+    interface AsProtobufJSON {
+        llmModels: LlmModel.AsProtobufJSON[] | null;
+    }
+}
+/**
+ * Message implementation for ondewo.nlu.LlmModel
+ */
+export declare class LlmModel implements GrpcMessage {
+    static id: string;
+    /**
+     * Deserialize binary data to message
+     * @param instance message instance
+     */
+    static deserializeBinary(bytes: ByteSource): LlmModel;
+    /**
+     * Check all the properties and set default protobuf values if necessary
+     * @param _instance message instance
+     */
+    static refineValues(_instance: LlmModel): void;
+    /**
+     * Deserializes / reads binary message into message instance using provided binary reader
+     * @param _instance message instance
+     * @param _reader binary reader instance
+     */
+    static deserializeBinaryFromReader(_instance: LlmModel, _reader: BinaryReader): void;
+    /**
+     * Serializes a message to binary format using provided binary reader
+     * @param _instance message instance
+     * @param _writer binary writer instance
+     */
+    static serializeBinaryToWriter(_instance: LlmModel, _writer: BinaryWriter): void;
+    private _name;
+    private _displayName;
+    private _description;
+    private _ccaiServiceName;
+    private _ccaiServiceProvider;
+    /**
+     * Message constructor. Initializes the properties and applies default Protobuf values if necessary
+     * @param _value initial values object or instance of LlmModel to deeply clone from
+     */
+    constructor(_value?: RecursivePartial<LlmModel.AsObject>);
+    get name(): string;
+    set name(value: string);
+    get displayName(): string;
+    set displayName(value: string);
+    get description(): string;
+    set description(value: string);
+    get ccaiServiceName(): string;
+    set ccaiServiceName(value: string);
+    get ccaiServiceProvider(): ondewoNlu014.CcaiServiceProvider;
+    set ccaiServiceProvider(value: ondewoNlu014.CcaiServiceProvider);
+    /**
+     * Serialize message to binary data
+     * @param instance message instance
+     */
+    serializeBinary(): any;
+    /**
+     * Cast message to standard JavaScript object (all non-primitive values are deeply cloned)
+     */
+    toObject(): LlmModel.AsObject;
+    /**
+     * Convenience method to support JSON.stringify(message), replicates the structure of toObject()
+     */
+    toJSON(): LlmModel.AsObject;
+    /**
+     * Cast message to JSON using protobuf JSON notation: https://developers.google.com/protocol-buffers/docs/proto3#json
+     * Attention: output differs from toObject() e.g. enums are represented as names and not as numbers, Timestamp is an ISO Date string format etc.
+     * If the message itself or some of descendant messages is google.protobuf.Any, you MUST provide a message pool as options. If not, the messagePool is not required
+     */
+    toProtobufJSON(options?: ToProtobufJSONOptions): LlmModel.AsProtobufJSON;
+}
+export declare namespace LlmModel {
+    /**
+     * Standard JavaScript object representation for LlmModel
+     */
+    interface AsObject {
+        name: string;
+        displayName: string;
+        description: string;
+        ccaiServiceName: string;
+        ccaiServiceProvider: ondewoNlu014.CcaiServiceProvider;
+    }
+    /**
+     * Protobuf JSON representation for LlmModel
+     */
+    interface AsProtobufJSON {
+        name: string;
+        displayName: string;
+        description: string;
+        ccaiServiceName: string;
+        ccaiServiceProvider: string;
+    }
+}
+/**
+ * Message implementation for ondewo.nlu.LlmGenerateRequest
+ */
+export declare class LlmGenerateRequest implements GrpcMessage {
+    static id: string;
+    /**
+     * Deserialize binary data to message
+     * @param instance message instance
+     */
+    static deserializeBinary(bytes: ByteSource): LlmGenerateRequest;
+    /**
+     * Check all the properties and set default protobuf values if necessary
+     * @param _instance message instance
+     */
+    static refineValues(_instance: LlmGenerateRequest): void;
+    /**
+     * Deserializes / reads binary message into message instance using provided binary reader
+     * @param _instance message instance
+     * @param _reader binary reader instance
+     */
+    static deserializeBinaryFromReader(_instance: LlmGenerateRequest, _reader: BinaryReader): void;
+    /**
+     * Serializes a message to binary format using provided binary reader
+     * @param _instance message instance
+     * @param _writer binary writer instance
+     */
+    static serializeBinaryToWriter(_instance: LlmGenerateRequest, _writer: BinaryWriter): void;
+    private _llmGenerationRequest?;
+    private _ccaiServiceName;
+    private _fileResources?;
+    /**
+     * Message constructor. Initializes the properties and applies default Protobuf values if necessary
+     * @param _value initial values object or instance of LlmGenerateRequest to deeply clone from
+     */
+    constructor(_value?: RecursivePartial<LlmGenerateRequest.AsObject>);
+    get llmGenerationRequest(): googleProtobuf003.Struct | undefined;
+    set llmGenerationRequest(value: googleProtobuf003.Struct | undefined);
+    get ccaiServiceName(): string;
+    set ccaiServiceName(value: string);
+    get fileResources(): ondewoNlu015.FileResource[] | undefined;
+    set fileResources(value: ondewoNlu015.FileResource[] | undefined);
+    /**
+     * Serialize message to binary data
+     * @param instance message instance
+     */
+    serializeBinary(): any;
+    /**
+     * Cast message to standard JavaScript object (all non-primitive values are deeply cloned)
+     */
+    toObject(): LlmGenerateRequest.AsObject;
+    /**
+     * Convenience method to support JSON.stringify(message), replicates the structure of toObject()
+     */
+    toJSON(): LlmGenerateRequest.AsObject;
+    /**
+     * Cast message to JSON using protobuf JSON notation: https://developers.google.com/protocol-buffers/docs/proto3#json
+     * Attention: output differs from toObject() e.g. enums are represented as names and not as numbers, Timestamp is an ISO Date string format etc.
+     * If the message itself or some of descendant messages is google.protobuf.Any, you MUST provide a message pool as options. If not, the messagePool is not required
+     */
+    toProtobufJSON(options?: ToProtobufJSONOptions): LlmGenerateRequest.AsProtobufJSON;
+}
+export declare namespace LlmGenerateRequest {
+    /**
+     * Standard JavaScript object representation for LlmGenerateRequest
+     */
+    interface AsObject {
+        llmGenerationRequest?: googleProtobuf003.Struct.AsObject;
+        ccaiServiceName: string;
+        fileResources?: ondewoNlu015.FileResource.AsObject[];
+    }
+    /**
+     * Protobuf JSON representation for LlmGenerateRequest
+     */
+    interface AsProtobufJSON {
+        llmGenerationRequest: googleProtobuf003.Struct.AsProtobufJSON | null;
+        ccaiServiceName: string;
+        fileResources: ondewoNlu015.FileResource.AsProtobufJSON[] | null;
+    }
+}
+/**
+ * Message implementation for ondewo.nlu.LlmGenerateResponse
+ */
+export declare class LlmGenerateResponse implements GrpcMessage {
+    static id: string;
+    /**
+     * Deserialize binary data to message
+     * @param instance message instance
+     */
+    static deserializeBinary(bytes: ByteSource): LlmGenerateResponse;
+    /**
+     * Check all the properties and set default protobuf values if necessary
+     * @param _instance message instance
+     */
+    static refineValues(_instance: LlmGenerateResponse): void;
+    /**
+     * Deserializes / reads binary message into message instance using provided binary reader
+     * @param _instance message instance
+     * @param _reader binary reader instance
+     */
+    static deserializeBinaryFromReader(_instance: LlmGenerateResponse, _reader: BinaryReader): void;
+    /**
+     * Serializes a message to binary format using provided binary reader
+     * @param _instance message instance
+     * @param _writer binary writer instance
+     */
+    static serializeBinaryToWriter(_instance: LlmGenerateResponse, _writer: BinaryWriter): void;
+    private _llmGenerationResponse?;
+    private _fileResources?;
+    /**
+     * Message constructor. Initializes the properties and applies default Protobuf values if necessary
+     * @param _value initial values object or instance of LlmGenerateResponse to deeply clone from
+     */
+    constructor(_value?: RecursivePartial<LlmGenerateResponse.AsObject>);
+    get llmGenerationResponse(): googleProtobuf003.Struct | undefined;
+    set llmGenerationResponse(value: googleProtobuf003.Struct | undefined);
+    get fileResources(): ondewoNlu015.FileResource[] | undefined;
+    set fileResources(value: ondewoNlu015.FileResource[] | undefined);
+    /**
+     * Serialize message to binary data
+     * @param instance message instance
+     */
+    serializeBinary(): any;
+    /**
+     * Cast message to standard JavaScript object (all non-primitive values are deeply cloned)
+     */
+    toObject(): LlmGenerateResponse.AsObject;
+    /**
+     * Convenience method to support JSON.stringify(message), replicates the structure of toObject()
+     */
+    toJSON(): LlmGenerateResponse.AsObject;
+    /**
+     * Cast message to JSON using protobuf JSON notation: https://developers.google.com/protocol-buffers/docs/proto3#json
+     * Attention: output differs from toObject() e.g. enums are represented as names and not as numbers, Timestamp is an ISO Date string format etc.
+     * If the message itself or some of descendant messages is google.protobuf.Any, you MUST provide a message pool as options. If not, the messagePool is not required
+     */
+    toProtobufJSON(options?: ToProtobufJSONOptions): LlmGenerateResponse.AsProtobufJSON;
+}
+export declare namespace LlmGenerateResponse {
+    /**
+     * Standard JavaScript object representation for LlmGenerateResponse
+     */
+    interface AsObject {
+        llmGenerationResponse?: googleProtobuf003.Struct.AsObject;
+        fileResources?: ondewoNlu015.FileResource.AsObject[];
+    }
+    /**
+     * Protobuf JSON representation for LlmGenerateResponse
+     */
+    interface AsProtobufJSON {
+        llmGenerationResponse: googleProtobuf003.Struct.AsProtobufJSON | null;
+        fileResources: ondewoNlu015.FileResource.AsProtobufJSON[] | null;
+    }
+}
+/**
+ * Message implementation for ondewo.nlu.StreamingLlmGenerateResponse
+ */
+export declare class StreamingLlmGenerateResponse implements GrpcMessage {
+    static id: string;
+    /**
+     * Deserialize binary data to message
+     * @param instance message instance
+     */
+    static deserializeBinary(bytes: ByteSource): StreamingLlmGenerateResponse;
+    /**
+     * Check all the properties and set default protobuf values if necessary
+     * @param _instance message instance
+     */
+    static refineValues(_instance: StreamingLlmGenerateResponse): void;
+    /**
+     * Deserializes / reads binary message into message instance using provided binary reader
+     * @param _instance message instance
+     * @param _reader binary reader instance
+     */
+    static deserializeBinaryFromReader(_instance: StreamingLlmGenerateResponse, _reader: BinaryReader): void;
+    /**
+     * Serializes a message to binary format using provided binary reader
+     * @param _instance message instance
+     * @param _writer binary writer instance
+     */
+    static serializeBinaryToWriter(_instance: StreamingLlmGenerateResponse, _writer: BinaryWriter): void;
+    private _llmGenerationStreamResponse?;
+    /**
+     * Message constructor. Initializes the properties and applies default Protobuf values if necessary
+     * @param _value initial values object or instance of StreamingLlmGenerateResponse to deeply clone from
+     */
+    constructor(_value?: RecursivePartial<StreamingLlmGenerateResponse.AsObject>);
+    get llmGenerationStreamResponse(): googleProtobuf003.Struct | undefined;
+    set llmGenerationStreamResponse(value: googleProtobuf003.Struct | undefined);
+    /**
+     * Serialize message to binary data
+     * @param instance message instance
+     */
+    serializeBinary(): any;
+    /**
+     * Cast message to standard JavaScript object (all non-primitive values are deeply cloned)
+     */
+    toObject(): StreamingLlmGenerateResponse.AsObject;
+    /**
+     * Convenience method to support JSON.stringify(message), replicates the structure of toObject()
+     */
+    toJSON(): StreamingLlmGenerateResponse.AsObject;
+    /**
+     * Cast message to JSON using protobuf JSON notation: https://developers.google.com/protocol-buffers/docs/proto3#json
+     * Attention: output differs from toObject() e.g. enums are represented as names and not as numbers, Timestamp is an ISO Date string format etc.
+     * If the message itself or some of descendant messages is google.protobuf.Any, you MUST provide a message pool as options. If not, the messagePool is not required
+     */
+    toProtobufJSON(options?: ToProtobufJSONOptions): StreamingLlmGenerateResponse.AsProtobufJSON;
+}
+export declare namespace StreamingLlmGenerateResponse {
+    /**
+     * Standard JavaScript object representation for StreamingLlmGenerateResponse
+     */
+    interface AsObject {
+        llmGenerationStreamResponse?: googleProtobuf003.Struct.AsObject;
+    }
+    /**
+     * Protobuf JSON representation for StreamingLlmGenerateResponse
+     */
+    interface AsProtobufJSON {
+        llmGenerationStreamResponse: googleProtobuf003.Struct.AsProtobufJSON | null;
+    }
 }
 /**
  * Message implementation for ondewo.nlu.ExtractEntitiesRequest
@@ -231,8 +683,8 @@ export declare class EntityTypeFuzzyNerConfig implements GrpcMessage {
      * @param _value initial values object or instance of EntityTypeFuzzyNerConfig to deeply clone from
      */
     constructor(_value?: RecursivePartial<EntityTypeFuzzyNerConfig.AsObject>);
-    get entityType(): ondewoNlu011.EntityType | undefined;
-    set entityType(value: ondewoNlu011.EntityType | undefined);
+    get entityType(): ondewoNlu013.EntityType | undefined;
+    set entityType(value: ondewoNlu013.EntityType | undefined);
     get minimalScore(): number;
     set minimalScore(value: number);
     get entityValues(): string[];
@@ -266,7 +718,7 @@ export declare namespace EntityTypeFuzzyNerConfig {
      * Standard JavaScript object representation for EntityTypeFuzzyNerConfig
      */
     interface AsObject {
-        entityType?: ondewoNlu011.EntityType.AsObject;
+        entityType?: ondewoNlu013.EntityType.AsObject;
         minimalScore: number;
         entityValues: string[];
         algorithm: EntityTypeFuzzyNerConfig.FuzzyNerAlgorithm;
@@ -276,7 +728,7 @@ export declare namespace EntityTypeFuzzyNerConfig {
      * Protobuf JSON representation for EntityTypeFuzzyNerConfig
      */
     interface AsProtobufJSON {
-        entityType: ondewoNlu011.EntityType.AsProtobufJSON | null;
+        entityType: ondewoNlu013.EntityType.AsProtobufJSON | null;
         minimalScore: number;
         entityValues: string[];
         algorithm: string;
@@ -322,8 +774,8 @@ export declare class EntityDetected implements GrpcMessage {
      * @param _value initial values object or instance of EntityDetected to deeply clone from
      */
     constructor(_value?: RecursivePartial<EntityDetected.AsObject>);
-    get entity(): ondewoNlu010.Intent.TrainingPhrase.Entity | undefined;
-    set entity(value: ondewoNlu010.Intent.TrainingPhrase.Entity | undefined);
+    get entity(): ondewoNlu012.Intent.TrainingPhrase.Entity | undefined;
+    set entity(value: ondewoNlu012.Intent.TrainingPhrase.Entity | undefined);
     get extractionMethod(): string;
     set extractionMethod(value: string);
     get score(): number;
@@ -353,7 +805,7 @@ export declare namespace EntityDetected {
      * Standard JavaScript object representation for EntityDetected
      */
     interface AsObject {
-        entity?: ondewoNlu010.Intent.TrainingPhrase.Entity.AsObject;
+        entity?: ondewoNlu012.Intent.TrainingPhrase.Entity.AsObject;
         extractionMethod: string;
         score: number;
     }
@@ -361,7 +813,7 @@ export declare namespace EntityDetected {
      * Protobuf JSON representation for EntityDetected
      */
     interface AsProtobufJSON {
-        entity: ondewoNlu010.Intent.TrainingPhrase.Entity.AsProtobufJSON | null;
+        entity: ondewoNlu012.Intent.TrainingPhrase.Entity.AsProtobufJSON | null;
         extractionMethod: string;
         score: number;
     }
@@ -751,8 +1203,8 @@ export declare class GetAlternativeTrainingPhrasesRequest implements GrpcMessage
     constructor(_value?: RecursivePartial<GetAlternativeTrainingPhrasesRequest.AsObject>);
     get config(): DataEnrichmentConfig | undefined;
     set config(value: DataEnrichmentConfig | undefined);
-    get trainingPhrase(): ondewoNlu010.Intent.TrainingPhrase | undefined;
-    set trainingPhrase(value: ondewoNlu010.Intent.TrainingPhrase | undefined);
+    get trainingPhrase(): ondewoNlu012.Intent.TrainingPhrase | undefined;
+    set trainingPhrase(value: ondewoNlu012.Intent.TrainingPhrase | undefined);
     get intentName(): string;
     set intentName(value: string);
     get languageCode(): string;
@@ -795,7 +1247,7 @@ export declare namespace GetAlternativeTrainingPhrasesRequest {
      */
     interface AsObject {
         config?: DataEnrichmentConfig.AsObject;
-        trainingPhrase?: ondewoNlu010.Intent.TrainingPhrase.AsObject;
+        trainingPhrase?: ondewoNlu012.Intent.TrainingPhrase.AsObject;
         intentName: string;
         languageCode: string;
         parent: string;
@@ -810,7 +1262,7 @@ export declare namespace GetAlternativeTrainingPhrasesRequest {
      */
     interface AsProtobufJSON {
         config: DataEnrichmentConfig.AsProtobufJSON | null;
-        trainingPhrase: ondewoNlu010.Intent.TrainingPhrase.AsProtobufJSON | null;
+        trainingPhrase: ondewoNlu012.Intent.TrainingPhrase.AsProtobufJSON | null;
         intentName: string;
         languageCode: string;
         parent: string;
@@ -1432,8 +1884,8 @@ export declare class AltTrainingPhrase implements GrpcMessage {
      * @param _value initial values object or instance of AltTrainingPhrase to deeply clone from
      */
     constructor(_value?: RecursivePartial<AltTrainingPhrase.AsObject>);
-    get trainingPhrase(): ondewoNlu010.Intent.TrainingPhrase | undefined;
-    set trainingPhrase(value: ondewoNlu010.Intent.TrainingPhrase | undefined);
+    get trainingPhrase(): ondewoNlu012.Intent.TrainingPhrase | undefined;
+    set trainingPhrase(value: ondewoNlu012.Intent.TrainingPhrase | undefined);
     get score(): number;
     set score(value: number);
     /**
@@ -1461,14 +1913,14 @@ export declare namespace AltTrainingPhrase {
      * Standard JavaScript object representation for AltTrainingPhrase
      */
     interface AsObject {
-        trainingPhrase?: ondewoNlu010.Intent.TrainingPhrase.AsObject;
+        trainingPhrase?: ondewoNlu012.Intent.TrainingPhrase.AsObject;
         score: number;
     }
     /**
      * Protobuf JSON representation for AltTrainingPhrase
      */
     interface AsProtobufJSON {
-        trainingPhrase: ondewoNlu010.Intent.TrainingPhrase.AsProtobufJSON | null;
+        trainingPhrase: ondewoNlu012.Intent.TrainingPhrase.AsProtobufJSON | null;
         score: number;
     }
 }
@@ -1507,6 +1959,7 @@ export declare class DataEnrichmentConfig implements GrpcMessage {
     private _gloveEnrichment?;
     private _bertEnrichment?;
     private _xlnetEnrichment?;
+    private _llmEnrichment?;
     /**
      * Message constructor. Initializes the properties and applies default Protobuf values if necessary
      * @param _value initial values object or instance of DataEnrichmentConfig to deeply clone from
@@ -1528,6 +1981,8 @@ export declare class DataEnrichmentConfig implements GrpcMessage {
     set bertEnrichment(value: BertAugEnrichmentConfig | undefined);
     get xlnetEnrichment(): XLNetAugEnrichmentConfig | undefined;
     set xlnetEnrichment(value: XLNetAugEnrichmentConfig | undefined);
+    get llmEnrichment(): LlmEnrichmentConfig | undefined;
+    set llmEnrichment(value: LlmEnrichmentConfig | undefined);
     /**
      * Serialize message to binary data
      * @param instance message instance
@@ -1561,6 +2016,7 @@ export declare namespace DataEnrichmentConfig {
         gloveEnrichment?: GloVeEnrichmentConfig.AsObject;
         bertEnrichment?: BertAugEnrichmentConfig.AsObject;
         xlnetEnrichment?: XLNetAugEnrichmentConfig.AsObject;
+        llmEnrichment?: LlmEnrichmentConfig.AsObject;
     }
     /**
      * Protobuf JSON representation for DataEnrichmentConfig
@@ -1574,6 +2030,7 @@ export declare namespace DataEnrichmentConfig {
         gloveEnrichment: GloVeEnrichmentConfig.AsProtobufJSON | null;
         bertEnrichment: BertAugEnrichmentConfig.AsProtobufJSON | null;
         xlnetEnrichment: XLNetAugEnrichmentConfig.AsProtobufJSON | null;
+        llmEnrichment: LlmEnrichmentConfig.AsProtobufJSON | null;
     }
 }
 /**
@@ -2206,6 +2663,90 @@ export declare namespace XLNetAugEnrichmentConfig {
         isActive: boolean;
         enrichmentFactor: number;
         executionOrder: number;
+    }
+}
+/**
+ * Message implementation for ondewo.nlu.LlmEnrichmentConfig
+ */
+export declare class LlmEnrichmentConfig implements GrpcMessage {
+    static id: string;
+    /**
+     * Deserialize binary data to message
+     * @param instance message instance
+     */
+    static deserializeBinary(bytes: ByteSource): LlmEnrichmentConfig;
+    /**
+     * Check all the properties and set default protobuf values if necessary
+     * @param _instance message instance
+     */
+    static refineValues(_instance: LlmEnrichmentConfig): void;
+    /**
+     * Deserializes / reads binary message into message instance using provided binary reader
+     * @param _instance message instance
+     * @param _reader binary reader instance
+     */
+    static deserializeBinaryFromReader(_instance: LlmEnrichmentConfig, _reader: BinaryReader): void;
+    /**
+     * Serializes a message to binary format using provided binary reader
+     * @param _instance message instance
+     * @param _writer binary writer instance
+     */
+    static serializeBinaryToWriter(_instance: LlmEnrichmentConfig, _writer: BinaryWriter): void;
+    private _isActive;
+    private _enrichmentFactor;
+    private _executionOrder;
+    private _ccaiServiceName;
+    /**
+     * Message constructor. Initializes the properties and applies default Protobuf values if necessary
+     * @param _value initial values object or instance of LlmEnrichmentConfig to deeply clone from
+     */
+    constructor(_value?: RecursivePartial<LlmEnrichmentConfig.AsObject>);
+    get isActive(): boolean;
+    set isActive(value: boolean);
+    get enrichmentFactor(): number;
+    set enrichmentFactor(value: number);
+    get executionOrder(): number;
+    set executionOrder(value: number);
+    get ccaiServiceName(): string;
+    set ccaiServiceName(value: string);
+    /**
+     * Serialize message to binary data
+     * @param instance message instance
+     */
+    serializeBinary(): any;
+    /**
+     * Cast message to standard JavaScript object (all non-primitive values are deeply cloned)
+     */
+    toObject(): LlmEnrichmentConfig.AsObject;
+    /**
+     * Convenience method to support JSON.stringify(message), replicates the structure of toObject()
+     */
+    toJSON(): LlmEnrichmentConfig.AsObject;
+    /**
+     * Cast message to JSON using protobuf JSON notation: https://developers.google.com/protocol-buffers/docs/proto3#json
+     * Attention: output differs from toObject() e.g. enums are represented as names and not as numbers, Timestamp is an ISO Date string format etc.
+     * If the message itself or some of descendant messages is google.protobuf.Any, you MUST provide a message pool as options. If not, the messagePool is not required
+     */
+    toProtobufJSON(options?: ToProtobufJSONOptions): LlmEnrichmentConfig.AsProtobufJSON;
+}
+export declare namespace LlmEnrichmentConfig {
+    /**
+     * Standard JavaScript object representation for LlmEnrichmentConfig
+     */
+    interface AsObject {
+        isActive: boolean;
+        enrichmentFactor: number;
+        executionOrder: number;
+        ccaiServiceName: string;
+    }
+    /**
+     * Protobuf JSON representation for LlmEnrichmentConfig
+     */
+    interface AsProtobufJSON {
+        isActive: boolean;
+        enrichmentFactor: number;
+        executionOrder: number;
+        ccaiServiceName: string;
     }
 }
 /**

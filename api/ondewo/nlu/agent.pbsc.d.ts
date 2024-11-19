@@ -4,7 +4,6 @@ import { Observable } from 'rxjs';
 import * as thisProto from './agent.pb';
 import * as ondewoNlu007 from '../../ondewo/nlu/operations.pb';
 import * as googleProtobuf008 from '@ngx-grpc/well-known-types';
-import * as ondewoNlu019 from '../../ondewo/nlu/ccai-project.pb';
 import * as i0 from "@angular/core";
 /**
  * Service client implementation for ondewo.nlu.Agents
@@ -338,46 +337,6 @@ export declare class AgentsClient {
          * @returns Observable<GrpcEvent<ondewoNlu007.Operation>>
          */
         reindexAgent: (requestData: thisProto.ReindexAgentRequest, requestMetadata?: GrpcMetadata) => Observable<GrpcEvent<ondewoNlu007.Operation>>;
-        /**
-         * Unary call: /ondewo.nlu.Agents/CreateCcaiProject
-         *
-         * @param requestMessage Request message
-         * @param requestMetadata Request metadata
-         * @returns Observable<GrpcEvent<ondewoNlu019.CreateCcaiProjectResponse>>
-         */
-        createCcaiProject: (requestData: ondewoNlu019.CreateCcaiProjectRequest, requestMetadata?: GrpcMetadata) => Observable<GrpcEvent<ondewoNlu019.CreateCcaiProjectResponse>>;
-        /**
-         * Unary call: /ondewo.nlu.Agents/DeleteCcaiProject
-         *
-         * @param requestMessage Request message
-         * @param requestMetadata Request metadata
-         * @returns Observable<GrpcEvent<ondewoNlu019.DeleteCcaiProjectResponse>>
-         */
-        deleteCcaiProject: (requestData: ondewoNlu019.DeleteCcaiProjectRequest, requestMetadata?: GrpcMetadata) => Observable<GrpcEvent<ondewoNlu019.DeleteCcaiProjectResponse>>;
-        /**
-         * Unary call: /ondewo.nlu.Agents/GetCcaiProject
-         *
-         * @param requestMessage Request message
-         * @param requestMetadata Request metadata
-         * @returns Observable<GrpcEvent<ondewoNlu019.CcaiProject>>
-         */
-        getCcaiProject: (requestData: ondewoNlu019.GetCcaiProjectRequest, requestMetadata?: GrpcMetadata) => Observable<GrpcEvent<ondewoNlu019.CcaiProject>>;
-        /**
-         * Unary call: /ondewo.nlu.Agents/ListCcaiProjects
-         *
-         * @param requestMessage Request message
-         * @param requestMetadata Request metadata
-         * @returns Observable<GrpcEvent<ondewoNlu019.ListCcaiProjectsResponse>>
-         */
-        listCcaiProjects: (requestData: ondewoNlu019.ListCcaiProjectsRequest, requestMetadata?: GrpcMetadata) => Observable<GrpcEvent<ondewoNlu019.ListCcaiProjectsResponse>>;
-        /**
-         * Unary call: /ondewo.nlu.Agents/UpdateCcaiProject
-         *
-         * @param requestMessage Request message
-         * @param requestMetadata Request metadata
-         * @returns Observable<GrpcEvent<ondewoNlu019.UpdateCcaiProjectResponse>>
-         */
-        updateCcaiProject: (requestData: ondewoNlu019.UpdateCcaiProjectRequest, requestMetadata?: GrpcMetadata) => Observable<GrpcEvent<ondewoNlu019.UpdateCcaiProjectResponse>>;
     };
     constructor(settings: any, clientFactory: GrpcClientFactory<any>, handler: GrpcHandler);
     /**
@@ -700,46 +659,6 @@ export declare class AgentsClient {
      * @returns Observable<ondewoNlu007.Operation>
      */
     reindexAgent(requestData: thisProto.ReindexAgentRequest, requestMetadata?: GrpcMetadata): Observable<ondewoNlu007.Operation>;
-    /**
-     * Unary call @/ondewo.nlu.Agents/CreateCcaiProject
-     *
-     * @param requestMessage Request message
-     * @param requestMetadata Request metadata
-     * @returns Observable<ondewoNlu019.CreateCcaiProjectResponse>
-     */
-    createCcaiProject(requestData: ondewoNlu019.CreateCcaiProjectRequest, requestMetadata?: GrpcMetadata): Observable<ondewoNlu019.CreateCcaiProjectResponse>;
-    /**
-     * Unary call @/ondewo.nlu.Agents/DeleteCcaiProject
-     *
-     * @param requestMessage Request message
-     * @param requestMetadata Request metadata
-     * @returns Observable<ondewoNlu019.DeleteCcaiProjectResponse>
-     */
-    deleteCcaiProject(requestData: ondewoNlu019.DeleteCcaiProjectRequest, requestMetadata?: GrpcMetadata): Observable<ondewoNlu019.DeleteCcaiProjectResponse>;
-    /**
-     * Unary call @/ondewo.nlu.Agents/GetCcaiProject
-     *
-     * @param requestMessage Request message
-     * @param requestMetadata Request metadata
-     * @returns Observable<ondewoNlu019.CcaiProject>
-     */
-    getCcaiProject(requestData: ondewoNlu019.GetCcaiProjectRequest, requestMetadata?: GrpcMetadata): Observable<ondewoNlu019.CcaiProject>;
-    /**
-     * Unary call @/ondewo.nlu.Agents/ListCcaiProjects
-     *
-     * @param requestMessage Request message
-     * @param requestMetadata Request metadata
-     * @returns Observable<ondewoNlu019.ListCcaiProjectsResponse>
-     */
-    listCcaiProjects(requestData: ondewoNlu019.ListCcaiProjectsRequest, requestMetadata?: GrpcMetadata): Observable<ondewoNlu019.ListCcaiProjectsResponse>;
-    /**
-     * Unary call @/ondewo.nlu.Agents/UpdateCcaiProject
-     *
-     * @param requestMessage Request message
-     * @param requestMetadata Request metadata
-     * @returns Observable<ondewoNlu019.UpdateCcaiProjectResponse>
-     */
-    updateCcaiProject(requestData: ondewoNlu019.UpdateCcaiProjectRequest, requestMetadata?: GrpcMetadata): Observable<ondewoNlu019.UpdateCcaiProjectResponse>;
     static ɵfac: i0.ɵɵFactoryDeclaration<AgentsClient, [{ optional: true; }, null, null]>;
     static ɵprov: i0.ɵɵInjectableDeclaration<AgentsClient>;
 }

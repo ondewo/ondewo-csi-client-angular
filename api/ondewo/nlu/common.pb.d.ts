@@ -410,14 +410,14 @@ export declare class AddNotificationsRequest implements GrpcMessage {
      * @param _writer binary writer instance
      */
     static serializeBinaryToWriter(_instance: AddNotificationsRequest, _writer: BinaryWriter): void;
-    private _notification?;
+    private _notifications?;
     /**
      * Message constructor. Initializes the properties and applies default Protobuf values if necessary
      * @param _value initial values object or instance of AddNotificationsRequest to deeply clone from
      */
     constructor(_value?: RecursivePartial<AddNotificationsRequest.AsObject>);
-    get notification(): Notification[] | undefined;
-    set notification(value: Notification[] | undefined);
+    get notifications(): Notification[] | undefined;
+    set notifications(value: Notification[] | undefined);
     /**
      * Serialize message to binary data
      * @param instance message instance
@@ -443,13 +443,13 @@ export declare namespace AddNotificationsRequest {
      * Standard JavaScript object representation for AddNotificationsRequest
      */
     interface AsObject {
-        notification?: Notification.AsObject[];
+        notifications?: Notification.AsObject[];
     }
     /**
      * Protobuf JSON representation for AddNotificationsRequest
      */
     interface AsProtobufJSON {
-        notification: Notification.AsProtobufJSON[] | null;
+        notifications: Notification.AsProtobufJSON[] | null;
     }
 }
 /**
@@ -479,14 +479,14 @@ export declare class AddNotificationsResponse implements GrpcMessage {
      * @param _writer binary writer instance
      */
     static serializeBinaryToWriter(_instance: AddNotificationsResponse, _writer: BinaryWriter): void;
-    private _notification?;
+    private _notifications?;
     /**
      * Message constructor. Initializes the properties and applies default Protobuf values if necessary
      * @param _value initial values object or instance of AddNotificationsResponse to deeply clone from
      */
     constructor(_value?: RecursivePartial<AddNotificationsResponse.AsObject>);
-    get notification(): Notification[] | undefined;
-    set notification(value: Notification[] | undefined);
+    get notifications(): Notification[] | undefined;
+    set notifications(value: Notification[] | undefined);
     /**
      * Serialize message to binary data
      * @param instance message instance
@@ -512,13 +512,13 @@ export declare namespace AddNotificationsResponse {
      * Standard JavaScript object representation for AddNotificationsResponse
      */
     interface AsObject {
-        notification?: Notification.AsObject[];
+        notifications?: Notification.AsObject[];
     }
     /**
      * Protobuf JSON representation for AddNotificationsResponse
      */
     interface AsProtobufJSON {
-        notification: Notification.AsProtobufJSON[] | null;
+        notifications: Notification.AsProtobufJSON[] | null;
     }
 }
 /**
@@ -736,14 +736,14 @@ export declare class ListNotificationsResponse implements GrpcMessage {
      * @param _writer binary writer instance
      */
     static serializeBinaryToWriter(_instance: ListNotificationsResponse, _writer: BinaryWriter): void;
-    private _notification?;
+    private _notifications?;
     /**
      * Message constructor. Initializes the properties and applies default Protobuf values if necessary
      * @param _value initial values object or instance of ListNotificationsResponse to deeply clone from
      */
     constructor(_value?: RecursivePartial<ListNotificationsResponse.AsObject>);
-    get notification(): Notification[] | undefined;
-    set notification(value: Notification[] | undefined);
+    get notifications(): Notification[] | undefined;
+    set notifications(value: Notification[] | undefined);
     /**
      * Serialize message to binary data
      * @param instance message instance
@@ -769,13 +769,13 @@ export declare namespace ListNotificationsResponse {
      * Standard JavaScript object representation for ListNotificationsResponse
      */
     interface AsObject {
-        notification?: Notification.AsObject[];
+        notifications?: Notification.AsObject[];
     }
     /**
      * Protobuf JSON representation for ListNotificationsResponse
      */
     interface AsProtobufJSON {
-        notification: Notification.AsProtobufJSON[] | null;
+        notifications: Notification.AsProtobufJSON[] | null;
     }
 }
 /**
@@ -805,15 +805,15 @@ export declare class SetNotificationsFlaggedStatusRequest implements GrpcMessage
      * @param _writer binary writer instance
      */
     static serializeBinaryToWriter(_instance: SetNotificationsFlaggedStatusRequest, _writer: BinaryWriter): void;
-    private _notificationName;
+    private _notificationNames;
     private _flagged;
     /**
      * Message constructor. Initializes the properties and applies default Protobuf values if necessary
      * @param _value initial values object or instance of SetNotificationsFlaggedStatusRequest to deeply clone from
      */
     constructor(_value?: RecursivePartial<SetNotificationsFlaggedStatusRequest.AsObject>);
-    get notificationName(): string[];
-    set notificationName(value: string[]);
+    get notificationNames(): string[];
+    set notificationNames(value: string[]);
     get flagged(): boolean[];
     set flagged(value: boolean[]);
     /**
@@ -841,14 +841,14 @@ export declare namespace SetNotificationsFlaggedStatusRequest {
      * Standard JavaScript object representation for SetNotificationsFlaggedStatusRequest
      */
     interface AsObject {
-        notificationName: string[];
+        notificationNames: string[];
         flagged: boolean[];
     }
     /**
      * Protobuf JSON representation for SetNotificationsFlaggedStatusRequest
      */
     interface AsProtobufJSON {
-        notificationName: string[];
+        notificationNames: string[];
         flagged: boolean[];
     }
 }
@@ -879,15 +879,15 @@ export declare class SetNotificationsReadStatusRequest implements GrpcMessage {
      * @param _writer binary writer instance
      */
     static serializeBinaryToWriter(_instance: SetNotificationsReadStatusRequest, _writer: BinaryWriter): void;
-    private _notificationName;
+    private _notificationNames;
     private _flagged;
     /**
      * Message constructor. Initializes the properties and applies default Protobuf values if necessary
      * @param _value initial values object or instance of SetNotificationsReadStatusRequest to deeply clone from
      */
     constructor(_value?: RecursivePartial<SetNotificationsReadStatusRequest.AsObject>);
-    get notificationName(): string[];
-    set notificationName(value: string[]);
+    get notificationNames(): string[];
+    set notificationNames(value: string[]);
     get flagged(): boolean[];
     set flagged(value: boolean[]);
     /**
@@ -915,14 +915,14 @@ export declare namespace SetNotificationsReadStatusRequest {
      * Standard JavaScript object representation for SetNotificationsReadStatusRequest
      */
     interface AsObject {
-        notificationName: string[];
+        notificationNames: string[];
         flagged: boolean[];
     }
     /**
      * Protobuf JSON representation for SetNotificationsReadStatusRequest
      */
     interface AsProtobufJSON {
-        notificationName: string[];
+        notificationNames: string[];
         flagged: boolean[];
     }
 }

@@ -79,6 +79,30 @@ export declare class AiServicesClient {
          * @returns Observable<GrpcEvent<thisProto.ExtractEntitiesResponse>>
          */
         extractEntitiesFuzzy: (requestData: thisProto.ExtractEntitiesFuzzyRequest, requestMetadata?: GrpcMetadata) => Observable<GrpcEvent<thisProto.ExtractEntitiesResponse>>;
+        /**
+         * Unary call: /ondewo.nlu.AiServices/LlmGenerate
+         *
+         * @param requestMessage Request message
+         * @param requestMetadata Request metadata
+         * @returns Observable<GrpcEvent<thisProto.LlmGenerateResponse>>
+         */
+        llmGenerate: (requestData: thisProto.LlmGenerateRequest, requestMetadata?: GrpcMetadata) => Observable<GrpcEvent<thisProto.LlmGenerateResponse>>;
+        /**
+         * Server streaming: /ondewo.nlu.AiServices/StreamingLlmGenerate
+         *
+         * @param requestMessage Request message
+         * @param requestMetadata Request metadata
+         * @returns Observable<GrpcEvent<thisProto.StreamingLlmGenerateResponse>>
+         */
+        streamingLlmGenerate: (requestData: thisProto.LlmGenerateRequest, requestMetadata?: GrpcMetadata) => Observable<GrpcEvent<thisProto.StreamingLlmGenerateResponse>>;
+        /**
+         * Unary call: /ondewo.nlu.AiServices/ListLlmModels
+         *
+         * @param requestMessage Request message
+         * @param requestMetadata Request metadata
+         * @returns Observable<GrpcEvent<thisProto.ListLlmModelsResponse>>
+         */
+        listLlmModels: (requestData: thisProto.ListLlmModelsRequest, requestMetadata?: GrpcMetadata) => Observable<GrpcEvent<thisProto.ListLlmModelsResponse>>;
     };
     constructor(settings: any, clientFactory: GrpcClientFactory<any>, handler: GrpcHandler);
     /**
@@ -145,6 +169,30 @@ export declare class AiServicesClient {
      * @returns Observable<thisProto.ExtractEntitiesResponse>
      */
     extractEntitiesFuzzy(requestData: thisProto.ExtractEntitiesFuzzyRequest, requestMetadata?: GrpcMetadata): Observable<thisProto.ExtractEntitiesResponse>;
+    /**
+     * Unary call @/ondewo.nlu.AiServices/LlmGenerate
+     *
+     * @param requestMessage Request message
+     * @param requestMetadata Request metadata
+     * @returns Observable<thisProto.LlmGenerateResponse>
+     */
+    llmGenerate(requestData: thisProto.LlmGenerateRequest, requestMetadata?: GrpcMetadata): Observable<thisProto.LlmGenerateResponse>;
+    /**
+     * Server streaming @/ondewo.nlu.AiServices/StreamingLlmGenerate
+     *
+     * @param requestMessage Request message
+     * @param requestMetadata Request metadata
+     * @returns Observable<thisProto.StreamingLlmGenerateResponse>
+     */
+    streamingLlmGenerate(requestData: thisProto.LlmGenerateRequest, requestMetadata?: GrpcMetadata): Observable<thisProto.StreamingLlmGenerateResponse>;
+    /**
+     * Unary call @/ondewo.nlu.AiServices/ListLlmModels
+     *
+     * @param requestMessage Request message
+     * @param requestMetadata Request metadata
+     * @returns Observable<thisProto.ListLlmModelsResponse>
+     */
+    listLlmModels(requestData: thisProto.ListLlmModelsRequest, requestMetadata?: GrpcMetadata): Observable<thisProto.ListLlmModelsResponse>;
     static ɵfac: i0.ɵɵFactoryDeclaration<AiServicesClient, [{ optional: true; }, null, null]>;
     static ɵprov: i0.ɵɵInjectableDeclaration<AiServicesClient>;
 }

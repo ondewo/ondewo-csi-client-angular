@@ -1,5 +1,6 @@
 import { GrpcMessage, RecursivePartial, ToProtobufJSONOptions } from '@ngx-grpc/common';
 import { BinaryReader, BinaryWriter, ByteSource } from 'google-protobuf';
+import * as googleProtobuf001 from '@ngx-grpc/well-known-types';
 export declare enum Decoding {
     DEFAULT = 0,
     GREEDY = 1,
@@ -47,6 +48,8 @@ export declare class TranscribeRequestConfig implements GrpcMessage {
     private _returnOptions?;
     private _language;
     private _task;
+    private _s2tServiceConfig?;
+    private _s2tCloudProviderConfig?;
     private _oneofLanguageModelName;
     private _oneofPostProcessing;
     private _oneofUtteranceDetection;
@@ -75,6 +78,10 @@ export declare class TranscribeRequestConfig implements GrpcMessage {
     set language(value: string);
     get task(): string;
     set task(value: string);
+    get s2tServiceConfig(): googleProtobuf001.Struct | undefined;
+    set s2tServiceConfig(value: googleProtobuf001.Struct | undefined);
+    get s2tCloudProviderConfig(): S2tCloudProviderConfig | undefined;
+    set s2tCloudProviderConfig(value: S2tCloudProviderConfig | undefined);
     get oneofLanguageModelName(): TranscribeRequestConfig.OneofLanguageModelNameCase;
     get oneofPostProcessing(): TranscribeRequestConfig.OneofPostProcessingCase;
     get oneofUtteranceDetection(): TranscribeRequestConfig.OneofUtteranceDetectionCase;
@@ -114,6 +121,8 @@ export declare namespace TranscribeRequestConfig {
         returnOptions?: TranscriptionReturnOptions.AsObject;
         language: string;
         task: string;
+        s2tServiceConfig?: googleProtobuf001.Struct.AsObject;
+        s2tCloudProviderConfig?: S2tCloudProviderConfig.AsObject;
     }
     /**
      * Protobuf JSON representation for TranscribeRequestConfig
@@ -128,6 +137,8 @@ export declare namespace TranscribeRequestConfig {
         returnOptions: TranscriptionReturnOptions.AsProtobufJSON | null;
         language: string;
         task: string;
+        s2tServiceConfig: googleProtobuf001.Struct.AsProtobufJSON | null;
+        s2tCloudProviderConfig: S2tCloudProviderConfig.AsProtobufJSON | null;
     }
     enum OneofLanguageModelNameCase {
         none = 0,
@@ -148,6 +159,426 @@ export declare namespace TranscribeRequestConfig {
     enum OneofReturnOptionsCase {
         none = 0,
         returnOptions = 1
+    }
+}
+/**
+ * Message implementation for ondewo.s2t.S2tCloudProviderConfig
+ */
+export declare class S2tCloudProviderConfig implements GrpcMessage {
+    static id: string;
+    /**
+     * Deserialize binary data to message
+     * @param instance message instance
+     */
+    static deserializeBinary(bytes: ByteSource): S2tCloudProviderConfig;
+    /**
+     * Check all the properties and set default protobuf values if necessary
+     * @param _instance message instance
+     */
+    static refineValues(_instance: S2tCloudProviderConfig): void;
+    /**
+     * Deserializes / reads binary message into message instance using provided binary reader
+     * @param _instance message instance
+     * @param _reader binary reader instance
+     */
+    static deserializeBinaryFromReader(_instance: S2tCloudProviderConfig, _reader: BinaryReader): void;
+    /**
+     * Serializes a message to binary format using provided binary reader
+     * @param _instance message instance
+     * @param _writer binary writer instance
+     */
+    static serializeBinaryToWriter(_instance: S2tCloudProviderConfig, _writer: BinaryWriter): void;
+    private _s2tCloudProviderConfigAmazon?;
+    private _s2tCloudProviderConfigDeepgram?;
+    private _s2tCloudProviderConfigGoogle?;
+    private _s2tCloudProviderConfigMicrosoft?;
+    /**
+     * Message constructor. Initializes the properties and applies default Protobuf values if necessary
+     * @param _value initial values object or instance of S2tCloudProviderConfig to deeply clone from
+     */
+    constructor(_value?: RecursivePartial<S2tCloudProviderConfig.AsObject>);
+    get s2tCloudProviderConfigAmazon(): S2tCloudProviderConfigAmazon | undefined;
+    set s2tCloudProviderConfigAmazon(value: S2tCloudProviderConfigAmazon | undefined);
+    get s2tCloudProviderConfigDeepgram(): S2tCloudProviderConfigDeepgram | undefined;
+    set s2tCloudProviderConfigDeepgram(value: S2tCloudProviderConfigDeepgram | undefined);
+    get s2tCloudProviderConfigGoogle(): S2tCloudProviderConfigGoogle | undefined;
+    set s2tCloudProviderConfigGoogle(value: S2tCloudProviderConfigGoogle | undefined);
+    get s2tCloudProviderConfigMicrosoft(): S2tCloudProviderConfigMicrosoft | undefined;
+    set s2tCloudProviderConfigMicrosoft(value: S2tCloudProviderConfigMicrosoft | undefined);
+    /**
+     * Serialize message to binary data
+     * @param instance message instance
+     */
+    serializeBinary(): any;
+    /**
+     * Cast message to standard JavaScript object (all non-primitive values are deeply cloned)
+     */
+    toObject(): S2tCloudProviderConfig.AsObject;
+    /**
+     * Convenience method to support JSON.stringify(message), replicates the structure of toObject()
+     */
+    toJSON(): S2tCloudProviderConfig.AsObject;
+    /**
+     * Cast message to JSON using protobuf JSON notation: https://developers.google.com/protocol-buffers/docs/proto3#json
+     * Attention: output differs from toObject() e.g. enums are represented as names and not as numbers, Timestamp is an ISO Date string format etc.
+     * If the message itself or some of descendant messages is google.protobuf.Any, you MUST provide a message pool as options. If not, the messagePool is not required
+     */
+    toProtobufJSON(options?: ToProtobufJSONOptions): S2tCloudProviderConfig.AsProtobufJSON;
+}
+export declare namespace S2tCloudProviderConfig {
+    /**
+     * Standard JavaScript object representation for S2tCloudProviderConfig
+     */
+    interface AsObject {
+        s2tCloudProviderConfigAmazon?: S2tCloudProviderConfigAmazon.AsObject;
+        s2tCloudProviderConfigDeepgram?: S2tCloudProviderConfigDeepgram.AsObject;
+        s2tCloudProviderConfigGoogle?: S2tCloudProviderConfigGoogle.AsObject;
+        s2tCloudProviderConfigMicrosoft?: S2tCloudProviderConfigMicrosoft.AsObject;
+    }
+    /**
+     * Protobuf JSON representation for S2tCloudProviderConfig
+     */
+    interface AsProtobufJSON {
+        s2tCloudProviderConfigAmazon: S2tCloudProviderConfigAmazon.AsProtobufJSON | null;
+        s2tCloudProviderConfigDeepgram: S2tCloudProviderConfigDeepgram.AsProtobufJSON | null;
+        s2tCloudProviderConfigGoogle: S2tCloudProviderConfigGoogle.AsProtobufJSON | null;
+        s2tCloudProviderConfigMicrosoft: S2tCloudProviderConfigMicrosoft.AsProtobufJSON | null;
+    }
+}
+/**
+ * Message implementation for ondewo.s2t.S2tCloudProviderConfigAmazon
+ */
+export declare class S2tCloudProviderConfigAmazon implements GrpcMessage {
+    static id: string;
+    /**
+     * Deserialize binary data to message
+     * @param instance message instance
+     */
+    static deserializeBinary(bytes: ByteSource): S2tCloudProviderConfigAmazon;
+    /**
+     * Check all the properties and set default protobuf values if necessary
+     * @param _instance message instance
+     */
+    static refineValues(_instance: S2tCloudProviderConfigAmazon): void;
+    /**
+     * Deserializes / reads binary message into message instance using provided binary reader
+     * @param _instance message instance
+     * @param _reader binary reader instance
+     */
+    static deserializeBinaryFromReader(_instance: S2tCloudProviderConfigAmazon, _reader: BinaryReader): void;
+    /**
+     * Serializes a message to binary format using provided binary reader
+     * @param _instance message instance
+     * @param _writer binary writer instance
+     */
+    static serializeBinaryToWriter(_instance: S2tCloudProviderConfigAmazon, _writer: BinaryWriter): void;
+    private _enablePartialResultsStabilization;
+    private _partialResultsStability;
+    private _languageModelName;
+    private _vocabularyName;
+    /**
+     * Message constructor. Initializes the properties and applies default Protobuf values if necessary
+     * @param _value initial values object or instance of S2tCloudProviderConfigAmazon to deeply clone from
+     */
+    constructor(_value?: RecursivePartial<S2tCloudProviderConfigAmazon.AsObject>);
+    get enablePartialResultsStabilization(): boolean;
+    set enablePartialResultsStabilization(value: boolean);
+    get partialResultsStability(): string;
+    set partialResultsStability(value: string);
+    get languageModelName(): string;
+    set languageModelName(value: string);
+    get vocabularyName(): string;
+    set vocabularyName(value: string);
+    /**
+     * Serialize message to binary data
+     * @param instance message instance
+     */
+    serializeBinary(): any;
+    /**
+     * Cast message to standard JavaScript object (all non-primitive values are deeply cloned)
+     */
+    toObject(): S2tCloudProviderConfigAmazon.AsObject;
+    /**
+     * Convenience method to support JSON.stringify(message), replicates the structure of toObject()
+     */
+    toJSON(): S2tCloudProviderConfigAmazon.AsObject;
+    /**
+     * Cast message to JSON using protobuf JSON notation: https://developers.google.com/protocol-buffers/docs/proto3#json
+     * Attention: output differs from toObject() e.g. enums are represented as names and not as numbers, Timestamp is an ISO Date string format etc.
+     * If the message itself or some of descendant messages is google.protobuf.Any, you MUST provide a message pool as options. If not, the messagePool is not required
+     */
+    toProtobufJSON(options?: ToProtobufJSONOptions): S2tCloudProviderConfigAmazon.AsProtobufJSON;
+}
+export declare namespace S2tCloudProviderConfigAmazon {
+    /**
+     * Standard JavaScript object representation for S2tCloudProviderConfigAmazon
+     */
+    interface AsObject {
+        enablePartialResultsStabilization: boolean;
+        partialResultsStability: string;
+        languageModelName: string;
+        vocabularyName: string;
+    }
+    /**
+     * Protobuf JSON representation for S2tCloudProviderConfigAmazon
+     */
+    interface AsProtobufJSON {
+        enablePartialResultsStabilization: boolean;
+        partialResultsStability: string;
+        languageModelName: string;
+        vocabularyName: string;
+    }
+}
+/**
+ * Message implementation for ondewo.s2t.S2tCloudProviderConfigDeepgram
+ */
+export declare class S2tCloudProviderConfigDeepgram implements GrpcMessage {
+    static id: string;
+    /**
+     * Deserialize binary data to message
+     * @param instance message instance
+     */
+    static deserializeBinary(bytes: ByteSource): S2tCloudProviderConfigDeepgram;
+    /**
+     * Check all the properties and set default protobuf values if necessary
+     * @param _instance message instance
+     */
+    static refineValues(_instance: S2tCloudProviderConfigDeepgram): void;
+    /**
+     * Deserializes / reads binary message into message instance using provided binary reader
+     * @param _instance message instance
+     * @param _reader binary reader instance
+     */
+    static deserializeBinaryFromReader(_instance: S2tCloudProviderConfigDeepgram, _reader: BinaryReader): void;
+    /**
+     * Serializes a message to binary format using provided binary reader
+     * @param _instance message instance
+     * @param _writer binary writer instance
+     */
+    static serializeBinaryToWriter(_instance: S2tCloudProviderConfigDeepgram, _writer: BinaryWriter): void;
+    private _punctuate;
+    private _smartFormat;
+    private _numerals;
+    private _measurements;
+    private _dictation;
+    /**
+     * Message constructor. Initializes the properties and applies default Protobuf values if necessary
+     * @param _value initial values object or instance of S2tCloudProviderConfigDeepgram to deeply clone from
+     */
+    constructor(_value?: RecursivePartial<S2tCloudProviderConfigDeepgram.AsObject>);
+    get punctuate(): boolean;
+    set punctuate(value: boolean);
+    get smartFormat(): boolean;
+    set smartFormat(value: boolean);
+    get numerals(): boolean;
+    set numerals(value: boolean);
+    get measurements(): boolean;
+    set measurements(value: boolean);
+    get dictation(): boolean;
+    set dictation(value: boolean);
+    /**
+     * Serialize message to binary data
+     * @param instance message instance
+     */
+    serializeBinary(): any;
+    /**
+     * Cast message to standard JavaScript object (all non-primitive values are deeply cloned)
+     */
+    toObject(): S2tCloudProviderConfigDeepgram.AsObject;
+    /**
+     * Convenience method to support JSON.stringify(message), replicates the structure of toObject()
+     */
+    toJSON(): S2tCloudProviderConfigDeepgram.AsObject;
+    /**
+     * Cast message to JSON using protobuf JSON notation: https://developers.google.com/protocol-buffers/docs/proto3#json
+     * Attention: output differs from toObject() e.g. enums are represented as names and not as numbers, Timestamp is an ISO Date string format etc.
+     * If the message itself or some of descendant messages is google.protobuf.Any, you MUST provide a message pool as options. If not, the messagePool is not required
+     */
+    toProtobufJSON(options?: ToProtobufJSONOptions): S2tCloudProviderConfigDeepgram.AsProtobufJSON;
+}
+export declare namespace S2tCloudProviderConfigDeepgram {
+    /**
+     * Standard JavaScript object representation for S2tCloudProviderConfigDeepgram
+     */
+    interface AsObject {
+        punctuate: boolean;
+        smartFormat: boolean;
+        numerals: boolean;
+        measurements: boolean;
+        dictation: boolean;
+    }
+    /**
+     * Protobuf JSON representation for S2tCloudProviderConfigDeepgram
+     */
+    interface AsProtobufJSON {
+        punctuate: boolean;
+        smartFormat: boolean;
+        numerals: boolean;
+        measurements: boolean;
+        dictation: boolean;
+    }
+}
+/**
+ * Message implementation for ondewo.s2t.S2tCloudProviderConfigGoogle
+ */
+export declare class S2tCloudProviderConfigGoogle implements GrpcMessage {
+    static id: string;
+    /**
+     * Deserialize binary data to message
+     * @param instance message instance
+     */
+    static deserializeBinary(bytes: ByteSource): S2tCloudProviderConfigGoogle;
+    /**
+     * Check all the properties and set default protobuf values if necessary
+     * @param _instance message instance
+     */
+    static refineValues(_instance: S2tCloudProviderConfigGoogle): void;
+    /**
+     * Deserializes / reads binary message into message instance using provided binary reader
+     * @param _instance message instance
+     * @param _reader binary reader instance
+     */
+    static deserializeBinaryFromReader(_instance: S2tCloudProviderConfigGoogle, _reader: BinaryReader): void;
+    /**
+     * Serializes a message to binary format using provided binary reader
+     * @param _instance message instance
+     * @param _writer binary writer instance
+     */
+    static serializeBinaryToWriter(_instance: S2tCloudProviderConfigGoogle, _writer: BinaryWriter): void;
+    private _enableAutomaticPunctuation;
+    private _enableWordTimeOffsets;
+    private _enableWordConfidence;
+    private _transcriptNormalization;
+    private _maxAlternatives;
+    /**
+     * Message constructor. Initializes the properties and applies default Protobuf values if necessary
+     * @param _value initial values object or instance of S2tCloudProviderConfigGoogle to deeply clone from
+     */
+    constructor(_value?: RecursivePartial<S2tCloudProviderConfigGoogle.AsObject>);
+    get enableAutomaticPunctuation(): boolean;
+    set enableAutomaticPunctuation(value: boolean);
+    get enableWordTimeOffsets(): boolean;
+    set enableWordTimeOffsets(value: boolean);
+    get enableWordConfidence(): boolean;
+    set enableWordConfidence(value: boolean);
+    get transcriptNormalization(): boolean;
+    set transcriptNormalization(value: boolean);
+    get maxAlternatives(): number;
+    set maxAlternatives(value: number);
+    /**
+     * Serialize message to binary data
+     * @param instance message instance
+     */
+    serializeBinary(): any;
+    /**
+     * Cast message to standard JavaScript object (all non-primitive values are deeply cloned)
+     */
+    toObject(): S2tCloudProviderConfigGoogle.AsObject;
+    /**
+     * Convenience method to support JSON.stringify(message), replicates the structure of toObject()
+     */
+    toJSON(): S2tCloudProviderConfigGoogle.AsObject;
+    /**
+     * Cast message to JSON using protobuf JSON notation: https://developers.google.com/protocol-buffers/docs/proto3#json
+     * Attention: output differs from toObject() e.g. enums are represented as names and not as numbers, Timestamp is an ISO Date string format etc.
+     * If the message itself or some of descendant messages is google.protobuf.Any, you MUST provide a message pool as options. If not, the messagePool is not required
+     */
+    toProtobufJSON(options?: ToProtobufJSONOptions): S2tCloudProviderConfigGoogle.AsProtobufJSON;
+}
+export declare namespace S2tCloudProviderConfigGoogle {
+    /**
+     * Standard JavaScript object representation for S2tCloudProviderConfigGoogle
+     */
+    interface AsObject {
+        enableAutomaticPunctuation: boolean;
+        enableWordTimeOffsets: boolean;
+        enableWordConfidence: boolean;
+        transcriptNormalization: boolean;
+        maxAlternatives: number;
+    }
+    /**
+     * Protobuf JSON representation for S2tCloudProviderConfigGoogle
+     */
+    interface AsProtobufJSON {
+        enableAutomaticPunctuation: boolean;
+        enableWordTimeOffsets: boolean;
+        enableWordConfidence: boolean;
+        transcriptNormalization: boolean;
+        maxAlternatives: number;
+    }
+}
+/**
+ * Message implementation for ondewo.s2t.S2tCloudProviderConfigMicrosoft
+ */
+export declare class S2tCloudProviderConfigMicrosoft implements GrpcMessage {
+    static id: string;
+    /**
+     * Deserialize binary data to message
+     * @param instance message instance
+     */
+    static deserializeBinary(bytes: ByteSource): S2tCloudProviderConfigMicrosoft;
+    /**
+     * Check all the properties and set default protobuf values if necessary
+     * @param _instance message instance
+     */
+    static refineValues(_instance: S2tCloudProviderConfigMicrosoft): void;
+    /**
+     * Deserializes / reads binary message into message instance using provided binary reader
+     * @param _instance message instance
+     * @param _reader binary reader instance
+     */
+    static deserializeBinaryFromReader(_instance: S2tCloudProviderConfigMicrosoft, _reader: BinaryReader): void;
+    /**
+     * Serializes a message to binary format using provided binary reader
+     * @param _instance message instance
+     * @param _writer binary writer instance
+     */
+    static serializeBinaryToWriter(_instance: S2tCloudProviderConfigMicrosoft, _writer: BinaryWriter): void;
+    private _useFastTranscriptionApi;
+    private _useDetailedOutputFormat;
+    /**
+     * Message constructor. Initializes the properties and applies default Protobuf values if necessary
+     * @param _value initial values object or instance of S2tCloudProviderConfigMicrosoft to deeply clone from
+     */
+    constructor(_value?: RecursivePartial<S2tCloudProviderConfigMicrosoft.AsObject>);
+    get useFastTranscriptionApi(): boolean;
+    set useFastTranscriptionApi(value: boolean);
+    get useDetailedOutputFormat(): boolean;
+    set useDetailedOutputFormat(value: boolean);
+    /**
+     * Serialize message to binary data
+     * @param instance message instance
+     */
+    serializeBinary(): any;
+    /**
+     * Cast message to standard JavaScript object (all non-primitive values are deeply cloned)
+     */
+    toObject(): S2tCloudProviderConfigMicrosoft.AsObject;
+    /**
+     * Convenience method to support JSON.stringify(message), replicates the structure of toObject()
+     */
+    toJSON(): S2tCloudProviderConfigMicrosoft.AsObject;
+    /**
+     * Cast message to JSON using protobuf JSON notation: https://developers.google.com/protocol-buffers/docs/proto3#json
+     * Attention: output differs from toObject() e.g. enums are represented as names and not as numbers, Timestamp is an ISO Date string format etc.
+     * If the message itself or some of descendant messages is google.protobuf.Any, you MUST provide a message pool as options. If not, the messagePool is not required
+     */
+    toProtobufJSON(options?: ToProtobufJSONOptions): S2tCloudProviderConfigMicrosoft.AsProtobufJSON;
+}
+export declare namespace S2tCloudProviderConfigMicrosoft {
+    /**
+     * Standard JavaScript object representation for S2tCloudProviderConfigMicrosoft
+     */
+    interface AsObject {
+        useFastTranscriptionApi: boolean;
+        useDetailedOutputFormat: boolean;
+    }
+    /**
+     * Protobuf JSON representation for S2tCloudProviderConfigMicrosoft
+     */
+    interface AsProtobufJSON {
+        useFastTranscriptionApi: boolean;
+        useDetailedOutputFormat: boolean;
     }
 }
 /**
@@ -1962,6 +2393,10 @@ export declare class AcousticModels implements GrpcMessage {
     private _wav2vecTriton?;
     private _whisper?;
     private _whisperTriton?;
+    private _s2tCloudServiceAmazon?;
+    private _s2tCloudServiceDeepgram?;
+    private _s2tCloudServiceGoogle?;
+    private _s2tCloudServiceMicrosoft?;
     /**
      * Message constructor. Initializes the properties and applies default Protobuf values if necessary
      * @param _value initial values object or instance of AcousticModels to deeply clone from
@@ -1977,6 +2412,14 @@ export declare class AcousticModels implements GrpcMessage {
     set whisper(value: Whisper | undefined);
     get whisperTriton(): WhisperTriton | undefined;
     set whisperTriton(value: WhisperTriton | undefined);
+    get s2tCloudServiceAmazon(): S2tCloudServiceAmazon | undefined;
+    set s2tCloudServiceAmazon(value: S2tCloudServiceAmazon | undefined);
+    get s2tCloudServiceDeepgram(): S2tCloudServiceDeepgram | undefined;
+    set s2tCloudServiceDeepgram(value: S2tCloudServiceDeepgram | undefined);
+    get s2tCloudServiceGoogle(): S2tCloudServiceGoogle | undefined;
+    set s2tCloudServiceGoogle(value: S2tCloudServiceGoogle | undefined);
+    get s2tCloudServiceMicrosoft(): S2tCloudServiceMicrosoft | undefined;
+    set s2tCloudServiceMicrosoft(value: S2tCloudServiceMicrosoft | undefined);
     /**
      * Serialize message to binary data
      * @param instance message instance
@@ -2007,6 +2450,10 @@ export declare namespace AcousticModels {
         wav2vecTriton?: Wav2VecTriton.AsObject;
         whisper?: Whisper.AsObject;
         whisperTriton?: WhisperTriton.AsObject;
+        s2tCloudServiceAmazon?: S2tCloudServiceAmazon.AsObject;
+        s2tCloudServiceDeepgram?: S2tCloudServiceDeepgram.AsObject;
+        s2tCloudServiceGoogle?: S2tCloudServiceGoogle.AsObject;
+        s2tCloudServiceMicrosoft?: S2tCloudServiceMicrosoft.AsObject;
     }
     /**
      * Protobuf JSON representation for AcousticModels
@@ -2017,6 +2464,381 @@ export declare namespace AcousticModels {
         wav2vecTriton: Wav2VecTriton.AsProtobufJSON | null;
         whisper: Whisper.AsProtobufJSON | null;
         whisperTriton: WhisperTriton.AsProtobufJSON | null;
+        s2tCloudServiceAmazon: S2tCloudServiceAmazon.AsProtobufJSON | null;
+        s2tCloudServiceDeepgram: S2tCloudServiceDeepgram.AsProtobufJSON | null;
+        s2tCloudServiceGoogle: S2tCloudServiceGoogle.AsProtobufJSON | null;
+        s2tCloudServiceMicrosoft: S2tCloudServiceMicrosoft.AsProtobufJSON | null;
+    }
+}
+/**
+ * Message implementation for ondewo.s2t.S2tCloudServiceAmazon
+ */
+export declare class S2tCloudServiceAmazon implements GrpcMessage {
+    static id: string;
+    /**
+     * Deserialize binary data to message
+     * @param instance message instance
+     */
+    static deserializeBinary(bytes: ByteSource): S2tCloudServiceAmazon;
+    /**
+     * Check all the properties and set default protobuf values if necessary
+     * @param _instance message instance
+     */
+    static refineValues(_instance: S2tCloudServiceAmazon): void;
+    /**
+     * Deserializes / reads binary message into message instance using provided binary reader
+     * @param _instance message instance
+     * @param _reader binary reader instance
+     */
+    static deserializeBinaryFromReader(_instance: S2tCloudServiceAmazon, _reader: BinaryReader): void;
+    /**
+     * Serializes a message to binary format using provided binary reader
+     * @param _instance message instance
+     * @param _writer binary writer instance
+     */
+    static serializeBinaryToWriter(_instance: S2tCloudServiceAmazon, _writer: BinaryWriter): void;
+    private _language;
+    private _streamingAvailable;
+    private _enablePartialResultsStabilization;
+    private _partialResultsStability;
+    private _languageModelName;
+    private _vocabularyName;
+    /**
+     * Message constructor. Initializes the properties and applies default Protobuf values if necessary
+     * @param _value initial values object or instance of S2tCloudServiceAmazon to deeply clone from
+     */
+    constructor(_value?: RecursivePartial<S2tCloudServiceAmazon.AsObject>);
+    get language(): string;
+    set language(value: string);
+    get streamingAvailable(): boolean;
+    set streamingAvailable(value: boolean);
+    get enablePartialResultsStabilization(): boolean;
+    set enablePartialResultsStabilization(value: boolean);
+    get partialResultsStability(): string;
+    set partialResultsStability(value: string);
+    get languageModelName(): string;
+    set languageModelName(value: string);
+    get vocabularyName(): string;
+    set vocabularyName(value: string);
+    /**
+     * Serialize message to binary data
+     * @param instance message instance
+     */
+    serializeBinary(): any;
+    /**
+     * Cast message to standard JavaScript object (all non-primitive values are deeply cloned)
+     */
+    toObject(): S2tCloudServiceAmazon.AsObject;
+    /**
+     * Convenience method to support JSON.stringify(message), replicates the structure of toObject()
+     */
+    toJSON(): S2tCloudServiceAmazon.AsObject;
+    /**
+     * Cast message to JSON using protobuf JSON notation: https://developers.google.com/protocol-buffers/docs/proto3#json
+     * Attention: output differs from toObject() e.g. enums are represented as names and not as numbers, Timestamp is an ISO Date string format etc.
+     * If the message itself or some of descendant messages is google.protobuf.Any, you MUST provide a message pool as options. If not, the messagePool is not required
+     */
+    toProtobufJSON(options?: ToProtobufJSONOptions): S2tCloudServiceAmazon.AsProtobufJSON;
+}
+export declare namespace S2tCloudServiceAmazon {
+    /**
+     * Standard JavaScript object representation for S2tCloudServiceAmazon
+     */
+    interface AsObject {
+        language: string;
+        streamingAvailable: boolean;
+        enablePartialResultsStabilization: boolean;
+        partialResultsStability: string;
+        languageModelName: string;
+        vocabularyName: string;
+    }
+    /**
+     * Protobuf JSON representation for S2tCloudServiceAmazon
+     */
+    interface AsProtobufJSON {
+        language: string;
+        streamingAvailable: boolean;
+        enablePartialResultsStabilization: boolean;
+        partialResultsStability: string;
+        languageModelName: string;
+        vocabularyName: string;
+    }
+}
+/**
+ * Message implementation for ondewo.s2t.S2tCloudServiceDeepgram
+ */
+export declare class S2tCloudServiceDeepgram implements GrpcMessage {
+    static id: string;
+    /**
+     * Deserialize binary data to message
+     * @param instance message instance
+     */
+    static deserializeBinary(bytes: ByteSource): S2tCloudServiceDeepgram;
+    /**
+     * Check all the properties and set default protobuf values if necessary
+     * @param _instance message instance
+     */
+    static refineValues(_instance: S2tCloudServiceDeepgram): void;
+    /**
+     * Deserializes / reads binary message into message instance using provided binary reader
+     * @param _instance message instance
+     * @param _reader binary reader instance
+     */
+    static deserializeBinaryFromReader(_instance: S2tCloudServiceDeepgram, _reader: BinaryReader): void;
+    /**
+     * Serializes a message to binary format using provided binary reader
+     * @param _instance message instance
+     * @param _writer binary writer instance
+     */
+    static serializeBinaryToWriter(_instance: S2tCloudServiceDeepgram, _writer: BinaryWriter): void;
+    private _modelName;
+    private _language;
+    private _punctuate;
+    private _smartFormat;
+    private _numerals;
+    private _measurements;
+    private _dictation;
+    /**
+     * Message constructor. Initializes the properties and applies default Protobuf values if necessary
+     * @param _value initial values object or instance of S2tCloudServiceDeepgram to deeply clone from
+     */
+    constructor(_value?: RecursivePartial<S2tCloudServiceDeepgram.AsObject>);
+    get modelName(): string;
+    set modelName(value: string);
+    get language(): string;
+    set language(value: string);
+    get punctuate(): boolean;
+    set punctuate(value: boolean);
+    get smartFormat(): boolean;
+    set smartFormat(value: boolean);
+    get numerals(): boolean;
+    set numerals(value: boolean);
+    get measurements(): boolean;
+    set measurements(value: boolean);
+    get dictation(): boolean;
+    set dictation(value: boolean);
+    /**
+     * Serialize message to binary data
+     * @param instance message instance
+     */
+    serializeBinary(): any;
+    /**
+     * Cast message to standard JavaScript object (all non-primitive values are deeply cloned)
+     */
+    toObject(): S2tCloudServiceDeepgram.AsObject;
+    /**
+     * Convenience method to support JSON.stringify(message), replicates the structure of toObject()
+     */
+    toJSON(): S2tCloudServiceDeepgram.AsObject;
+    /**
+     * Cast message to JSON using protobuf JSON notation: https://developers.google.com/protocol-buffers/docs/proto3#json
+     * Attention: output differs from toObject() e.g. enums are represented as names and not as numbers, Timestamp is an ISO Date string format etc.
+     * If the message itself or some of descendant messages is google.protobuf.Any, you MUST provide a message pool as options. If not, the messagePool is not required
+     */
+    toProtobufJSON(options?: ToProtobufJSONOptions): S2tCloudServiceDeepgram.AsProtobufJSON;
+}
+export declare namespace S2tCloudServiceDeepgram {
+    /**
+     * Standard JavaScript object representation for S2tCloudServiceDeepgram
+     */
+    interface AsObject {
+        modelName: string;
+        language: string;
+        punctuate: boolean;
+        smartFormat: boolean;
+        numerals: boolean;
+        measurements: boolean;
+        dictation: boolean;
+    }
+    /**
+     * Protobuf JSON representation for S2tCloudServiceDeepgram
+     */
+    interface AsProtobufJSON {
+        modelName: string;
+        language: string;
+        punctuate: boolean;
+        smartFormat: boolean;
+        numerals: boolean;
+        measurements: boolean;
+        dictation: boolean;
+    }
+}
+/**
+ * Message implementation for ondewo.s2t.S2tCloudServiceGoogle
+ */
+export declare class S2tCloudServiceGoogle implements GrpcMessage {
+    static id: string;
+    /**
+     * Deserialize binary data to message
+     * @param instance message instance
+     */
+    static deserializeBinary(bytes: ByteSource): S2tCloudServiceGoogle;
+    /**
+     * Check all the properties and set default protobuf values if necessary
+     * @param _instance message instance
+     */
+    static refineValues(_instance: S2tCloudServiceGoogle): void;
+    /**
+     * Deserializes / reads binary message into message instance using provided binary reader
+     * @param _instance message instance
+     * @param _reader binary reader instance
+     */
+    static deserializeBinaryFromReader(_instance: S2tCloudServiceGoogle, _reader: BinaryReader): void;
+    /**
+     * Serializes a message to binary format using provided binary reader
+     * @param _instance message instance
+     * @param _writer binary writer instance
+     */
+    static serializeBinaryToWriter(_instance: S2tCloudServiceGoogle, _writer: BinaryWriter): void;
+    private _modelName;
+    private _language;
+    private _enableAutomaticPunctuation;
+    private _enableWordTimeOffsets;
+    private _enableWordConfidence;
+    private _transcriptNormalization;
+    private _maxAlternatives;
+    /**
+     * Message constructor. Initializes the properties and applies default Protobuf values if necessary
+     * @param _value initial values object or instance of S2tCloudServiceGoogle to deeply clone from
+     */
+    constructor(_value?: RecursivePartial<S2tCloudServiceGoogle.AsObject>);
+    get modelName(): string;
+    set modelName(value: string);
+    get language(): string;
+    set language(value: string);
+    get enableAutomaticPunctuation(): boolean;
+    set enableAutomaticPunctuation(value: boolean);
+    get enableWordTimeOffsets(): boolean;
+    set enableWordTimeOffsets(value: boolean);
+    get enableWordConfidence(): boolean;
+    set enableWordConfidence(value: boolean);
+    get transcriptNormalization(): boolean;
+    set transcriptNormalization(value: boolean);
+    get maxAlternatives(): number;
+    set maxAlternatives(value: number);
+    /**
+     * Serialize message to binary data
+     * @param instance message instance
+     */
+    serializeBinary(): any;
+    /**
+     * Cast message to standard JavaScript object (all non-primitive values are deeply cloned)
+     */
+    toObject(): S2tCloudServiceGoogle.AsObject;
+    /**
+     * Convenience method to support JSON.stringify(message), replicates the structure of toObject()
+     */
+    toJSON(): S2tCloudServiceGoogle.AsObject;
+    /**
+     * Cast message to JSON using protobuf JSON notation: https://developers.google.com/protocol-buffers/docs/proto3#json
+     * Attention: output differs from toObject() e.g. enums are represented as names and not as numbers, Timestamp is an ISO Date string format etc.
+     * If the message itself or some of descendant messages is google.protobuf.Any, you MUST provide a message pool as options. If not, the messagePool is not required
+     */
+    toProtobufJSON(options?: ToProtobufJSONOptions): S2tCloudServiceGoogle.AsProtobufJSON;
+}
+export declare namespace S2tCloudServiceGoogle {
+    /**
+     * Standard JavaScript object representation for S2tCloudServiceGoogle
+     */
+    interface AsObject {
+        modelName: string;
+        language: string;
+        enableAutomaticPunctuation: boolean;
+        enableWordTimeOffsets: boolean;
+        enableWordConfidence: boolean;
+        transcriptNormalization: boolean;
+        maxAlternatives: number;
+    }
+    /**
+     * Protobuf JSON representation for S2tCloudServiceGoogle
+     */
+    interface AsProtobufJSON {
+        modelName: string;
+        language: string;
+        enableAutomaticPunctuation: boolean;
+        enableWordTimeOffsets: boolean;
+        enableWordConfidence: boolean;
+        transcriptNormalization: boolean;
+        maxAlternatives: number;
+    }
+}
+/**
+ * Message implementation for ondewo.s2t.S2tCloudServiceMicrosoft
+ */
+export declare class S2tCloudServiceMicrosoft implements GrpcMessage {
+    static id: string;
+    /**
+     * Deserialize binary data to message
+     * @param instance message instance
+     */
+    static deserializeBinary(bytes: ByteSource): S2tCloudServiceMicrosoft;
+    /**
+     * Check all the properties and set default protobuf values if necessary
+     * @param _instance message instance
+     */
+    static refineValues(_instance: S2tCloudServiceMicrosoft): void;
+    /**
+     * Deserializes / reads binary message into message instance using provided binary reader
+     * @param _instance message instance
+     * @param _reader binary reader instance
+     */
+    static deserializeBinaryFromReader(_instance: S2tCloudServiceMicrosoft, _reader: BinaryReader): void;
+    /**
+     * Serializes a message to binary format using provided binary reader
+     * @param _instance message instance
+     * @param _writer binary writer instance
+     */
+    static serializeBinaryToWriter(_instance: S2tCloudServiceMicrosoft, _writer: BinaryWriter): void;
+    private _language;
+    private _useFastTranscriptionApi;
+    private _useDetailedOutputFormat;
+    /**
+     * Message constructor. Initializes the properties and applies default Protobuf values if necessary
+     * @param _value initial values object or instance of S2tCloudServiceMicrosoft to deeply clone from
+     */
+    constructor(_value?: RecursivePartial<S2tCloudServiceMicrosoft.AsObject>);
+    get language(): string;
+    set language(value: string);
+    get useFastTranscriptionApi(): boolean;
+    set useFastTranscriptionApi(value: boolean);
+    get useDetailedOutputFormat(): boolean;
+    set useDetailedOutputFormat(value: boolean);
+    /**
+     * Serialize message to binary data
+     * @param instance message instance
+     */
+    serializeBinary(): any;
+    /**
+     * Cast message to standard JavaScript object (all non-primitive values are deeply cloned)
+     */
+    toObject(): S2tCloudServiceMicrosoft.AsObject;
+    /**
+     * Convenience method to support JSON.stringify(message), replicates the structure of toObject()
+     */
+    toJSON(): S2tCloudServiceMicrosoft.AsObject;
+    /**
+     * Cast message to JSON using protobuf JSON notation: https://developers.google.com/protocol-buffers/docs/proto3#json
+     * Attention: output differs from toObject() e.g. enums are represented as names and not as numbers, Timestamp is an ISO Date string format etc.
+     * If the message itself or some of descendant messages is google.protobuf.Any, you MUST provide a message pool as options. If not, the messagePool is not required
+     */
+    toProtobufJSON(options?: ToProtobufJSONOptions): S2tCloudServiceMicrosoft.AsProtobufJSON;
+}
+export declare namespace S2tCloudServiceMicrosoft {
+    /**
+     * Standard JavaScript object representation for S2tCloudServiceMicrosoft
+     */
+    interface AsObject {
+        language: string;
+        useFastTranscriptionApi: boolean;
+        useDetailedOutputFormat: boolean;
+    }
+    /**
+     * Protobuf JSON representation for S2tCloudServiceMicrosoft
+     */
+    interface AsProtobufJSON {
+        language: string;
+        useFastTranscriptionApi: boolean;
+        useDetailedOutputFormat: boolean;
     }
 }
 /**
