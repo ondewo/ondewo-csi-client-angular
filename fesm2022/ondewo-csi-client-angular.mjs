@@ -40474,6 +40474,10 @@ var InferenceBackend;
     InferenceBackend[InferenceBackend["INFERENCE_BACKEND_UNKNOWN"] = 0] = "INFERENCE_BACKEND_UNKNOWN";
     InferenceBackend[InferenceBackend["INFERENCE_BACKEND_PYTORCH"] = 1] = "INFERENCE_BACKEND_PYTORCH";
     InferenceBackend[InferenceBackend["INFERENCE_BACKEND_FLAX"] = 2] = "INFERENCE_BACKEND_FLAX";
+    InferenceBackend[InferenceBackend["INFERENCE_BACKEND_CLOUD_SERVICE_AMAZON"] = 3] = "INFERENCE_BACKEND_CLOUD_SERVICE_AMAZON";
+    InferenceBackend[InferenceBackend["INFERENCE_BACKEND_CLOUD_SERVICE_DEEPGRAM"] = 4] = "INFERENCE_BACKEND_CLOUD_SERVICE_DEEPGRAM";
+    InferenceBackend[InferenceBackend["INFERENCE_BACKEND_CLOUD_SERVICE_GOOGLE"] = 5] = "INFERENCE_BACKEND_CLOUD_SERVICE_GOOGLE";
+    InferenceBackend[InferenceBackend["INFERENCE_BACKEND_CLOUD_SERVICE_MICROSOFT"] = 6] = "INFERENCE_BACKEND_CLOUD_SERVICE_MICROSOFT";
 })(InferenceBackend || (InferenceBackend = {}));
 /**
  * Message implementation for ondewo.s2t.TranscribeRequestConfig
