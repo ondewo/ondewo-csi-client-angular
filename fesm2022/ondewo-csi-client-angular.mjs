@@ -49773,6 +49773,9 @@ class SipTrigger {
         SipTriggerType[SipTriggerType["HUMAN_HANDOVER"] = 2] = "HUMAN_HANDOVER";
         SipTriggerType[SipTriggerType["SEND_NOW"] = 3] = "SEND_NOW";
         SipTriggerType[SipTriggerType["PAUSE"] = 4] = "PAUSE";
+        SipTriggerType[SipTriggerType["TRANSFER"] = 5] = "TRANSFER";
+        SipTriggerType[SipTriggerType["INVITE"] = 6] = "INVITE";
+        SipTriggerType[SipTriggerType["PLAY_AUDIO"] = 7] = "PLAY_AUDIO";
     })(SipTriggerType = SipTrigger.SipTriggerType || (SipTrigger.SipTriggerType = {}));
 })(SipTrigger || (SipTrigger = {}));
 /**
