@@ -1,6 +1,8 @@
 import * as authApi from "./index";
 
+/** Specs for the `index.ts` public-API barrel that re-exports the auth surface. */
 describe("auth public API barrel", () => {
+  /** Every interceptor, provider, helper, constant and DI token is re-exported. */
   it("re-exports the full hand-written auth surface", () => {
     expect(typeof authApi.authHttpInterceptor).toBe("function");
     expect(typeof authApi.AuthGrpcInterceptor).toBe("function");
