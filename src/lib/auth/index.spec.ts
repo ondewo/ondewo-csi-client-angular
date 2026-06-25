@@ -13,5 +13,10 @@ describe("auth public API barrel", () => {
     expect(authApi.AUTHORIZATION_HEADER).toBe("authorization");
     expect(authApi.BEARER_PREFIX).toBe("Bearer ");
     expect(authApi.TOKEN_PROVIDER).toBeDefined();
+    expect(typeof authApi.KeycloakTokenProvider).toBe("function");
+    expect(typeof authApi.KeycloakAuthenticationError).toBe("function");
+    expect(authApi.KEYCLOAK_TOKEN_PROVIDER_CONFIG).toBeDefined();
+    expect(authApi.REFRESH_SKEW_SECONDS).toBe(30);
+    expect(authApi.MIN_REFRESH_DELAY_SECONDS).toBe(1);
   });
 });
