@@ -54,7 +54,7 @@ export interface PipelineSummary {
  * It shows the representative flow for this SDK: inject the generated
  * `ConversationsClient` (via {@link CSI_CONVERSATIONS_CLIENT}), call a unary RPC,
  * and map the streamed gRPC response into a plain domain object. Authorization is
- * transparent — the `authorization: Bearer <token>` header is attached by the
+ * transparent — the `Authorization: Bearer <token>` header is attached by the
  * library's `AuthGrpcInterceptor`, so this code never touches tokens.
  *
  * The request messages are constructed by the caller with the generated message

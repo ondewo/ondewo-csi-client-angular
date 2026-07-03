@@ -13,9 +13,9 @@ const TOKEN: string = "eyJhbGciOi.payload.signature";
 
 /** Specs covering the exported header-name and bearer-scheme string constants. */
 describe("constants", () => {
-  /** The header name must be the lower-case `authorization` form HTTP/2 requires. */
-  it("uses a lower-case authorization header name", () => {
-    expect(AUTHORIZATION_HEADER).toBe("authorization");
+  /** The header name must be the canonical `Authorization` form. */
+  it("uses the canonical Authorization header name", () => {
+    expect(AUTHORIZATION_HEADER).toBe("Authorization");
   });
 
   /** The scheme prefix must be the standard `"Bearer "` (with trailing space). */

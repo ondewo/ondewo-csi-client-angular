@@ -7,7 +7,7 @@ import { TOKEN_PROVIDER, TokenProvider } from "./token-provider";
 
 /**
  * `@ngx-grpc` interceptor that attaches the current Keycloak access token as an
- * `authorization: Bearer <token>` entry on the gRPC-web request metadata. This
+ * `Authorization: Bearer <token>` entry on the gRPC-web request metadata. This
  * is the gRPC-web counterpart of {@link authHttpInterceptor} and matches the
  * `@ngx-grpc` client style used by every generated `*.pbsc.ts` service client in
  * this library (e.g. `ConversationsClient`).
