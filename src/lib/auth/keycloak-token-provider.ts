@@ -306,7 +306,11 @@ export class KeycloakTokenProvider implements TokenProvider, OnDestroy {
       typeof expiresInRaw === "number" && expiresInRaw > 0 ? expiresInRaw : MIN_REFRESH_DELAY_SECONDS;
     const delaySeconds: number = Math.max(expiresInSeconds - REFRESH_SKEW_SECONDS, MIN_REFRESH_DELAY_SECONDS);
     this.timer = setTimeout((): void => {
-      void this.refresh();
+      void this.refresh().catch((): void => {
+        // Swallow a transient background-refresh failure: the next interceptor read
+        // gets the stale (possibly expired) token and the server replies
+        // UNAUTHENTICATED, prompting the consumer to re-login.
+      });
     }, delaySeconds * 1000);
   }
 

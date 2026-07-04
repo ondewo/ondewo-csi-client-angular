@@ -266,6 +266,24 @@ describe("KeycloakTokenProvider", () => {
       httpMock.verify();
     });
 
+    /** A background-refresh HTTP failure is swallowed; the previous token stays served. */
+    it("swallows a failed background refresh and keeps the previous token", async () => {
+      const expiresIn: number = 300;
+      const { provider, httpMock } = await loggedIn(expiresIn);
+
+      await jest.advanceTimersByTimeAsync((expiresIn - REFRESH_SKEW_SECONDS) * 1000);
+      const refreshRequest: TestRequest = httpMock.expectOne(TOKEN_ENDPOINT);
+      refreshRequest.flush("nope", { status: 401, statusText: "Unauthorized" });
+      // Drain the rejected refresh promise plus its swallowing catch handler.
+      await Promise.resolve();
+      await Promise.resolve();
+
+      // The failed refresh is swallowed and the previous access token stays served.
+      expect(provider.getToken()).toBe("access-0");
+      provider.stop();
+      httpMock.verify();
+    });
+
     /** A response without a rotated refresh_token keeps the previous one. */
     it("keeps the previous refresh token when the response omits a new one", async () => {
       const expiresIn: number = 300;
