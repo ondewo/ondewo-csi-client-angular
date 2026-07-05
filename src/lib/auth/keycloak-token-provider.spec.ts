@@ -112,7 +112,9 @@ describe("KeycloakTokenProvider", () => {
   });
 
   describe("login", () => {
-    afterEach(() => jest.useRealTimers());
+    afterEach(() => {
+      jest.useRealTimers();
+    });
 
     /** The offline-token path posts a refresh_token grant and caches the token. */
     it("logs in via the refresh_token grant when an offlineToken is configured", async () => {
@@ -221,9 +223,67 @@ describe("KeycloakTokenProvider", () => {
     });
   });
 
+  describe("keycloakVerifySsl (browser no-op, config -> provider parity)", () => {
+    afterEach(() => {
+      jest.useRealTimers();
+    });
+
+    /** Omitting the field defaults the stored flag to verification-ON (secure). */
+    it("defaults the stored flag to true when keycloakVerifySsl is omitted", () => {
+      const { provider, httpMock } = build(offlineConfig());
+      expect(provider.keycloakVerifySsl).toBe(true);
+      httpMock.verify();
+    });
+
+    /** An explicit true is stored as true. */
+    it("stores an explicit keycloakVerifySsl: true as true", () => {
+      const { provider, httpMock } = build({ ...offlineConfig(), keycloakVerifySsl: true });
+      expect(provider.keycloakVerifySsl).toBe(true);
+      httpMock.verify();
+    });
+
+    /** An explicit false is threaded from config through to the provider field. */
+    it("stores keycloakVerifySsl: false as false (threaded config -> provider)", () => {
+      const { provider, httpMock } = build({ ...offlineConfig(), keycloakVerifySsl: false });
+      expect(provider.keycloakVerifySsl).toBe(false);
+      httpMock.verify();
+    });
+
+    /**
+     * The flag is inert at the transport layer: with keycloakVerifySsl: false the
+     * provider issues the SAME single POST (same URL, method, headers, body) and
+     * logs in exactly as with the field omitted — proving it is a no-op, not wired
+     * to TLS.
+     */
+    it("does not alter or break the token request when keycloakVerifySsl is false", async () => {
+      const { provider, httpMock } = build({ ...offlineConfig(), keycloakVerifySsl: false });
+      const pending: Promise<void> = provider.login();
+      const request: TestRequest = httpMock.expectOne(TOKEN_ENDPOINT);
+
+      expect(request.request.method).toBe("POST");
+      expect(request.request.headers.get("Content-Type")).toBe("application/x-www-form-urlencoded");
+      expect(formFields(request)).toEqual({
+        grant_type: "refresh_token",
+        client_id: CLIENT_ID,
+        refresh_token: OFFLINE_TOKEN
+      });
+
+      request.flush({ access_token: "access-0", refresh_token: "offline-token-1", expires_in: 300 });
+      await pending;
+
+      expect(provider.getToken()).toBe("access-0");
+      provider.stop();
+      httpMock.verify();
+    });
+  });
+
   describe("background refresh", () => {
-    beforeEach(() => jest.useFakeTimers());
-    afterEach(() => jest.useRealTimers());
+    beforeEach(() => {
+      jest.useFakeTimers();
+    });
+    afterEach(() => {
+      jest.useRealTimers();
+    });
 
     /**
      * Drive a login + initial flush so the provider is authenticated and a

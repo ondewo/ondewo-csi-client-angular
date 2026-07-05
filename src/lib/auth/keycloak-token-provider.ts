@@ -58,6 +58,22 @@ export interface KeycloakTokenProviderConfig {
    * `offlineToken` is supplied.
    */
   password?: string;
+  /**
+   * Whether to verify the Keycloak server's TLS certificate on the
+   * token-endpoint call. Defaults to `true` (secure).
+   *
+   * NO-OP IN THIS ANGULAR/BROWSER CLIENT. The token request is made with
+   * Angular's `HttpClient` (an XHR/fetch call), and in a browser the TLS
+   * handshake is owned by the user agent — there is no `https.Agent`, undici
+   * dispatcher, or `rejectUnauthorized` hook that app code can reach, and
+   * `HttpClient`'s request options expose no certificate-verification slot. The
+   * value is therefore stored on the provider for cross-SDK config parity with
+   * the Python/Node.js clients (where it does disable TLS verification) but has
+   * no effect on the outgoing request here. For a self-signed local Envoy at
+   * `https://localhost:12001/auth`, the certificate must be trusted at the
+   * browser/OS level instead.
+   */
+  keycloakVerifySsl?: boolean;
 }
 
 /**
@@ -165,6 +181,15 @@ export class KeycloakTokenProvider implements TokenProvider, OnDestroy {
   private readonly clientId: string;
 
   /**
+   * Whether TLS-certificate verification is requested for the token-endpoint
+   * call. Defaults to `true`. Stored for cross-SDK config parity only — it is a
+   * NO-OP in this browser client (the browser owns the TLS handshake), so the
+   * outgoing {@link postTokenRequest} call is unaffected by its value. See
+   * {@link KeycloakTokenProviderConfig.keycloakVerifySsl}.
+   */
+  private readonly verifySsl: boolean;
+
+  /**
    * The form fields for the one-time {@link login} grant: a `refresh_token`
    * grant when an `offlineToken` is configured, otherwise a `password` grant.
    * Built once in the constructor so {@link login} carries no assertions.
@@ -203,6 +228,8 @@ export class KeycloakTokenProvider implements TokenProvider, OnDestroy {
     }
 
     this.clientId = injectedConfig.clientId;
+    // Stored for cross-SDK config parity; a no-op on the browser transport (see field doc).
+    this.verifySsl = injectedConfig.keycloakVerifySsl ?? true;
     const base: string = injectedConfig.keycloakUrl.replace(/\/+$/, "");
     this.tokenEndpoint = `${base}/realms/${encodeURIComponent(injectedConfig.realm)}/protocol/openid-connect/token`;
 
@@ -239,6 +266,21 @@ export class KeycloakTokenProvider implements TokenProvider, OnDestroy {
    */
   public getToken(): TokenResult {
     return this.accessToken;
+  }
+
+  /**
+   * The resolved TLS-verification setting from
+   * {@link KeycloakTokenProviderConfig.keycloakVerifySsl} (defaults to `true`).
+   *
+   * Exposed for cross-SDK config parity and introspection only. It is a NO-OP in
+   * this browser client — the browser owns the TLS handshake, so the value never
+   * reaches {@link postTokenRequest} and does not change the outgoing request.
+   *
+   * @returns `true` when TLS verification is requested (the default), `false`
+   *   when the config explicitly opted out (still inert here).
+   */
+  public get keycloakVerifySsl(): boolean {
+    return this.verifySsl;
   }
 
   /**
