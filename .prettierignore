@@ -14,3 +14,9 @@ ondewo-csi-api
 ondewo-csi-client-angular.d.ts
 ondewo-csi-client-angular.d.ts.map
 ondewo-csi-client-angular.metadata.json
+package-lock.json
+package.json
+npm/
+dist/
+.test-build/
+.test-build-examples/
