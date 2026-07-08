@@ -1,0 +1,71 @@
+#############################################################################################
+# pre-commit — language-agnostic hooks for this non-python repo (angular/ts client).        #
+# Language-specific linting/formatting stays with the repo's own toolchain (eslint/prettier #
+# via husky, buf, etc.). Ruff/mypy/uv are python-only and NOT included here.                 #
+#############################################################################################
+
+# Never touch generated / vendored code. Excluded paths (relative to repo root):
+#   node_modules/                     npm deps
+#   api/                              generated proto TS stubs (*.pb.ts/*.pbconf.ts/*.pbsc.ts)
+#   fesm2022/                         generated angular fesm bundle
+#   coverage/ dist/ build/ .venv/     build / tooling output
+#   ondewo-proto-compiler/            git submodule
+#   src/ondewo-csi-api/               git submodule (the ondewo-*-api proto sources)
+#   public-api.ts index.d.ts          generated bundle entry points
+#   ondewo-csi-client-angular.*       generated bundle index (d.ts / d.ts.map / metadata.json)
+#   package-lock.json                 machine-generated lockfile
+# Generic generated-stub name patterns (_pb / _grpc_pb / _pb2) kept for portability.
+exclude: |
+  (?x)^(
+    node_modules/|
+    api/|
+    fesm2022/|
+    coverage/|
+    dist/|
+    build/|
+    \.venv/|
+    ondewo-proto-compiler/|
+    src/ondewo-csi-api/|
+    public-api\.ts$|
+    index\.d\.ts$|
+    ondewo-csi-client-angular\.|
+    package-lock\.json$
+  )|(_pb\.(js|d\.ts)$|_pb2\.pyi?$|_pb2_grpc\.py$|_grpc_pb\.(js|d\.ts)$)
+
+fail_fast: false
+
+repos:
+
+  - repo: https://github.com/DavidAnson/markdownlint-cli2
+    rev: v0.23.0
+    hooks:
+      - id: markdownlint-cli2
+
+  - repo: https://github.com/pre-commit/pre-commit-hooks
+    rev: v6.0.0
+    hooks:
+      - id: check-added-large-files
+        args: [ maxkb=1024 ]
+      - id: check-json          # validate (does NOT reformat) json/package.json
+      - id: check-yaml
+      - id: check-xml
+      - id: check-merge-conflict
+      - id: check-symlinks
+      - id: detect-private-key
+      - id: check-executables-have-shebangs
+      - id: trailing-whitespace
+      - id: end-of-file-fixer
+
+  - repo: https://github.com/milin/giticket
+    rev: '1.92'
+    hooks:
+      - id: giticket
+        args: [ '--regex=(?:(?:feature|bugfix|support|hotfix)/)?(OND[0-9]{3}-[0-9]{1,5})[_-][\w-]+',
+                '--format=[{ticket}] {commit_msg}',
+                '--mode=regex_match' ]
+
+  - repo: https://github.com/compilerla/conventional-pre-commit
+    rev: v4.4.0
+    hooks:
+      - id: conventional-pre-commit
+        stages: [ commit-msg ]

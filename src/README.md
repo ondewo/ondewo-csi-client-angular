@@ -22,7 +22,6 @@
   </h1>
 </div>
 
-
 ## Overview
 
 `@ondewo/csi-client-angular` is a compiled version of the [ONDEWO CSI API](https://github.com/ondewo/ondewo-csi-api) using the [ONDEWO PROTO COMPILER](https://github.com/ondewo/ondewo-proto-compiler). Here you can find the CSI API [documentation](https://ondewo.github.io).
@@ -140,13 +139,17 @@ The repository is published to GitHub and NPM by the Automated Release Process o
 TODO after PR merge:
 
 - Checkout master
+
   ```shell
   git checkout master
   ```
+
 - Pull newest state
+
   ```shell
   git pull
   ```
+
 - Adjust `ONDEWO_CSI_VERSION` in the `Makefile` <br><br>
 - Add new Release Notes to `src/RELEASE.md` in following format:
 
@@ -159,9 +162,11 @@ TODO after PR merge:
   ```
 
 - Release
+
   ```shell
   make ondewo_release
   ```
+
   <br>
   The release process can be divided into 6 Steps:
 
