@@ -17,8 +17,9 @@ import * as googleApi002 from '../../google/api/annotations.pb';
 import * as googleProtobuf003 from '@ngx-grpc/well-known-types';
 import * as googleProtobuf004 from '@ngx-grpc/well-known-types';
 import * as googleProtobuf005 from '@ngx-grpc/well-known-types';
-import * as ondewoNlu006 from '../../ondewo/nlu/project-role.pb';
-import * as ondewoNlu007 from '../../ondewo/nlu/common.pb';
+import * as googleProtobuf006 from '@ngx-grpc/well-known-types';
+import * as ondewoNlu007 from '../../ondewo/nlu/project-role.pb';
+import * as ondewoNlu008 from '../../ondewo/nlu/common.pb';
 export enum DefaultServerRole {
   SERVER_UNSPECIFIED = 0,
   SERVER_USER = 1,
@@ -428,7 +429,7 @@ export class UserInfo implements GrpcMessage {
   }
 
   private _user?: User;
-  private _projectRoles: { [prop: string]: ondewoNlu006.ProjectRole };
+  private _projectRoles: { [prop: string]: ondewoNlu007.ProjectRole };
 
   /**
    * Message constructor. Initializes the properties and applies default Protobuf values if necessary
@@ -442,7 +443,7 @@ export class UserInfo implements GrpcMessage {
           (r, k) => ({
             ...r,
             [k]: _value!.projectRoles![k]
-              ? new ondewoNlu006.ProjectRole(_value!.projectRoles![k])
+              ? new ondewoNlu007.ProjectRole(_value!.projectRoles![k])
               : undefined
           }),
           {}
@@ -456,10 +457,10 @@ export class UserInfo implements GrpcMessage {
   set user(value: User | undefined) {
     this._user = value;
   }
-  get projectRoles(): { [prop: string]: ondewoNlu006.ProjectRole } {
+  get projectRoles(): { [prop: string]: ondewoNlu007.ProjectRole } {
     return this._projectRoles;
   }
-  set projectRoles(value: { [prop: string]: ondewoNlu006.ProjectRole }) {
+  set projectRoles(value: { [prop: string]: ondewoNlu007.ProjectRole }) {
     this._projectRoles = value;
   }
 
@@ -529,7 +530,7 @@ export module UserInfo {
    */
   export interface AsObject {
     user?: User.AsObject;
-    projectRoles: { [prop: string]: ondewoNlu006.ProjectRole };
+    projectRoles: { [prop: string]: ondewoNlu007.ProjectRole };
   }
 
   /**
@@ -537,7 +538,7 @@ export module UserInfo {
    */
   export interface AsProtobufJSON {
     user: User.AsProtobufJSON | null;
-    projectRoles: { [prop: string]: ondewoNlu006.ProjectRole };
+    projectRoles: { [prop: string]: ondewoNlu007.ProjectRole };
   }
 
   /**
@@ -585,10 +586,10 @@ export module UserInfo {
             _instance.key = _reader.readString();
             break;
           case 2:
-            _instance.value = new ondewoNlu006.ProjectRole();
+            _instance.value = new ondewoNlu007.ProjectRole();
             _reader.readMessage(
               _instance.value,
-              ondewoNlu006.ProjectRole.deserializeBinaryFromReader
+              ondewoNlu007.ProjectRole.deserializeBinaryFromReader
             );
             break;
           default:
@@ -615,13 +616,13 @@ export module UserInfo {
         _writer.writeMessage(
           2,
           _instance.value as any,
-          ondewoNlu006.ProjectRole.serializeBinaryToWriter
+          ondewoNlu007.ProjectRole.serializeBinaryToWriter
         );
       }
     }
 
     private _key: string;
-    private _value?: ondewoNlu006.ProjectRole;
+    private _value?: ondewoNlu007.ProjectRole;
 
     /**
      * Message constructor. Initializes the properties and applies default Protobuf values if necessary
@@ -631,7 +632,7 @@ export module UserInfo {
       _value = _value || {};
       this.key = _value.key;
       this.value = _value.value
-        ? new ondewoNlu006.ProjectRole(_value.value)
+        ? new ondewoNlu007.ProjectRole(_value.value)
         : undefined;
       ProjectRolesEntry.refineValues(this);
     }
@@ -641,10 +642,10 @@ export module UserInfo {
     set key(value: string) {
       this._key = value;
     }
-    get value(): ondewoNlu006.ProjectRole | undefined {
+    get value(): ondewoNlu007.ProjectRole | undefined {
       return this._value;
     }
-    set value(value: ondewoNlu006.ProjectRole | undefined) {
+    set value(value: ondewoNlu007.ProjectRole | undefined) {
       this._value = value;
     }
 
@@ -696,7 +697,7 @@ export module UserInfo {
      */
     export interface AsObject {
       key: string;
-      value?: ondewoNlu006.ProjectRole.AsObject;
+      value?: ondewoNlu007.ProjectRole.AsObject;
     }
 
     /**
@@ -704,7 +705,7 @@ export module UserInfo {
      */
     export interface AsProtobufJSON {
       key: string;
-      value: ondewoNlu006.ProjectRole.AsProtobufJSON | null;
+      value: ondewoNlu007.ProjectRole.AsProtobufJSON | null;
     }
   }
 }
@@ -1089,7 +1090,9 @@ export class GetUserRequest implements GrpcMessage {
    * Check all the properties and set default protobuf values if necessary
    * @param _instance message instance
    */
-  static refineValues(_instance: GetUserRequest) {}
+  static refineValues(_instance: GetUserRequest) {
+    _instance.fieldMask = _instance.fieldMask || undefined;
+  }
 
   /**
    * Deserializes / reads binary message into message instance using provided binary reader
@@ -1109,6 +1112,13 @@ export class GetUserRequest implements GrpcMessage {
           break;
         case 3:
           _instance.userEmail = _reader.readString();
+          break;
+        case 4:
+          _instance.fieldMask = new googleProtobuf004.FieldMask();
+          _reader.readMessage(
+            _instance.fieldMask,
+            googleProtobuf004.FieldMask.deserializeBinaryFromReader
+          );
           break;
         default:
           _reader.skipField();
@@ -1133,10 +1143,18 @@ export class GetUserRequest implements GrpcMessage {
     if (_instance.userEmail || _instance.userEmail === '') {
       _writer.writeString(3, _instance.userEmail);
     }
+    if (_instance.fieldMask) {
+      _writer.writeMessage(
+        4,
+        _instance.fieldMask as any,
+        googleProtobuf004.FieldMask.serializeBinaryToWriter
+      );
+    }
   }
 
   private _userId: string;
   private _userEmail: string;
+  private _fieldMask?: googleProtobuf004.FieldMask;
 
   private _userIdentifier: GetUserRequest.UserIdentifierCase =
     GetUserRequest.UserIdentifierCase.none;
@@ -1149,6 +1167,9 @@ export class GetUserRequest implements GrpcMessage {
     _value = _value || {};
     this.userId = _value.userId;
     this.userEmail = _value.userEmail;
+    this.fieldMask = _value.fieldMask
+      ? new googleProtobuf004.FieldMask(_value.fieldMask)
+      : undefined;
     GetUserRequest.refineValues(this);
   }
   get userId(): string {
@@ -1171,6 +1192,12 @@ export class GetUserRequest implements GrpcMessage {
     }
     this._userEmail = value;
   }
+  get fieldMask(): googleProtobuf004.FieldMask | undefined {
+    return this._fieldMask;
+  }
+  set fieldMask(value: googleProtobuf004.FieldMask | undefined) {
+    this._fieldMask = value;
+  }
   get userIdentifier() {
     return this._userIdentifier;
   }
@@ -1191,7 +1218,8 @@ export class GetUserRequest implements GrpcMessage {
   toObject(): GetUserRequest.AsObject {
     return {
       userId: this.userId,
-      userEmail: this.userEmail
+      userEmail: this.userEmail,
+      fieldMask: this.fieldMask ? this.fieldMask.toObject() : undefined
     };
   }
 
@@ -1217,7 +1245,8 @@ export class GetUserRequest implements GrpcMessage {
       userEmail:
         this.userEmail === null || this.userEmail === undefined
           ? null
-          : this.userEmail
+          : this.userEmail,
+      fieldMask: this.fieldMask ? this.fieldMask.toProtobufJSON(options) : null
     };
   }
 }
@@ -1228,6 +1257,7 @@ export module GetUserRequest {
   export interface AsObject {
     userId: string;
     userEmail: string;
+    fieldMask?: googleProtobuf004.FieldMask.AsObject;
   }
 
   /**
@@ -1236,6 +1266,7 @@ export module GetUserRequest {
   export interface AsProtobufJSON {
     userId: string | null;
     userEmail: string | null;
+    fieldMask: googleProtobuf004.FieldMask.AsProtobufJSON | null;
   }
   export enum UserIdentifierCase {
     none = 0,
@@ -1408,6 +1439,7 @@ export class ListUsersRequest implements GrpcMessage {
    */
   static refineValues(_instance: ListUsersRequest) {
     _instance.pageToken = _instance.pageToken || '';
+    _instance.fieldMask = _instance.fieldMask || undefined;
   }
 
   /**
@@ -1425,6 +1457,13 @@ export class ListUsersRequest implements GrpcMessage {
       switch (_reader.getFieldNumber()) {
         case 1:
           _instance.pageToken = _reader.readString();
+          break;
+        case 2:
+          _instance.fieldMask = new googleProtobuf004.FieldMask();
+          _reader.readMessage(
+            _instance.fieldMask,
+            googleProtobuf004.FieldMask.deserializeBinaryFromReader
+          );
           break;
         default:
           _reader.skipField();
@@ -1446,9 +1485,17 @@ export class ListUsersRequest implements GrpcMessage {
     if (_instance.pageToken) {
       _writer.writeString(1, _instance.pageToken);
     }
+    if (_instance.fieldMask) {
+      _writer.writeMessage(
+        2,
+        _instance.fieldMask as any,
+        googleProtobuf004.FieldMask.serializeBinaryToWriter
+      );
+    }
   }
 
   private _pageToken: string;
+  private _fieldMask?: googleProtobuf004.FieldMask;
 
   /**
    * Message constructor. Initializes the properties and applies default Protobuf values if necessary
@@ -1457,6 +1504,9 @@ export class ListUsersRequest implements GrpcMessage {
   constructor(_value?: RecursivePartial<ListUsersRequest.AsObject>) {
     _value = _value || {};
     this.pageToken = _value.pageToken;
+    this.fieldMask = _value.fieldMask
+      ? new googleProtobuf004.FieldMask(_value.fieldMask)
+      : undefined;
     ListUsersRequest.refineValues(this);
   }
   get pageToken(): string {
@@ -1464,6 +1514,12 @@ export class ListUsersRequest implements GrpcMessage {
   }
   set pageToken(value: string) {
     this._pageToken = value;
+  }
+  get fieldMask(): googleProtobuf004.FieldMask | undefined {
+    return this._fieldMask;
+  }
+  set fieldMask(value: googleProtobuf004.FieldMask | undefined) {
+    this._fieldMask = value;
   }
 
   /**
@@ -1481,7 +1537,8 @@ export class ListUsersRequest implements GrpcMessage {
    */
   toObject(): ListUsersRequest.AsObject {
     return {
-      pageToken: this.pageToken
+      pageToken: this.pageToken,
+      fieldMask: this.fieldMask ? this.fieldMask.toObject() : undefined
     };
   }
 
@@ -1502,7 +1559,8 @@ export class ListUsersRequest implements GrpcMessage {
     options?: ToProtobufJSONOptions
   ): ListUsersRequest.AsProtobufJSON {
     return {
-      pageToken: this.pageToken
+      pageToken: this.pageToken,
+      fieldMask: this.fieldMask ? this.fieldMask.toProtobufJSON(options) : null
     };
   }
 }
@@ -1512,6 +1570,7 @@ export module ListUsersRequest {
    */
   export interface AsObject {
     pageToken: string;
+    fieldMask?: googleProtobuf004.FieldMask.AsObject;
   }
 
   /**
@@ -1519,6 +1578,7 @@ export module ListUsersRequest {
    */
   export interface AsProtobufJSON {
     pageToken: string;
+    fieldMask: googleProtobuf004.FieldMask.AsProtobufJSON | null;
   }
 }
 
@@ -2614,7 +2674,9 @@ export class GetServerRoleRequest implements GrpcMessage {
    * Check all the properties and set default protobuf values if necessary
    * @param _instance message instance
    */
-  static refineValues(_instance: GetServerRoleRequest) {}
+  static refineValues(_instance: GetServerRoleRequest) {
+    _instance.fieldMask = _instance.fieldMask || undefined;
+  }
 
   /**
    * Deserializes / reads binary message into message instance using provided binary reader
@@ -2634,6 +2696,13 @@ export class GetServerRoleRequest implements GrpcMessage {
           break;
         case 2:
           _instance.roleName = _reader.readString();
+          break;
+        case 3:
+          _instance.fieldMask = new googleProtobuf004.FieldMask();
+          _reader.readMessage(
+            _instance.fieldMask,
+            googleProtobuf004.FieldMask.deserializeBinaryFromReader
+          );
           break;
         default:
           _reader.skipField();
@@ -2658,10 +2727,18 @@ export class GetServerRoleRequest implements GrpcMessage {
     if (_instance.roleName || _instance.roleName === '') {
       _writer.writeString(2, _instance.roleName);
     }
+    if (_instance.fieldMask) {
+      _writer.writeMessage(
+        3,
+        _instance.fieldMask as any,
+        googleProtobuf004.FieldMask.serializeBinaryToWriter
+      );
+    }
   }
 
   private _roleId: number;
   private _roleName: string;
+  private _fieldMask?: googleProtobuf004.FieldMask;
 
   private _serverRoleIdentifier: GetServerRoleRequest.ServerRoleIdentifierCase =
     GetServerRoleRequest.ServerRoleIdentifierCase.none;
@@ -2674,6 +2751,9 @@ export class GetServerRoleRequest implements GrpcMessage {
     _value = _value || {};
     this.roleId = _value.roleId;
     this.roleName = _value.roleName;
+    this.fieldMask = _value.fieldMask
+      ? new googleProtobuf004.FieldMask(_value.fieldMask)
+      : undefined;
     GetServerRoleRequest.refineValues(this);
   }
   get roleId(): number {
@@ -2698,6 +2778,12 @@ export class GetServerRoleRequest implements GrpcMessage {
     }
     this._roleName = value;
   }
+  get fieldMask(): googleProtobuf004.FieldMask | undefined {
+    return this._fieldMask;
+  }
+  set fieldMask(value: googleProtobuf004.FieldMask | undefined) {
+    this._fieldMask = value;
+  }
   get serverRoleIdentifier() {
     return this._serverRoleIdentifier;
   }
@@ -2718,7 +2804,8 @@ export class GetServerRoleRequest implements GrpcMessage {
   toObject(): GetServerRoleRequest.AsObject {
     return {
       roleId: this.roleId,
-      roleName: this.roleName
+      roleName: this.roleName,
+      fieldMask: this.fieldMask ? this.fieldMask.toObject() : undefined
     };
   }
 
@@ -2744,7 +2831,8 @@ export class GetServerRoleRequest implements GrpcMessage {
       roleName:
         this.roleName === null || this.roleName === undefined
           ? null
-          : this.roleName
+          : this.roleName,
+      fieldMask: this.fieldMask ? this.fieldMask.toProtobufJSON(options) : null
     };
   }
 }
@@ -2755,6 +2843,7 @@ export module GetServerRoleRequest {
   export interface AsObject {
     roleId: number;
     roleName: string;
+    fieldMask?: googleProtobuf004.FieldMask.AsObject;
   }
 
   /**
@@ -2763,6 +2852,7 @@ export module GetServerRoleRequest {
   export interface AsProtobufJSON {
     roleId: number | null;
     roleName: string | null;
+    fieldMask: googleProtobuf004.FieldMask.AsProtobufJSON | null;
   }
   export enum ServerRoleIdentifierCase {
     none = 0,
@@ -2796,6 +2886,7 @@ export class ListServerRolesRequest implements GrpcMessage {
    */
   static refineValues(_instance: ListServerRolesRequest) {
     _instance.pageToken = _instance.pageToken || '';
+    _instance.fieldMask = _instance.fieldMask || undefined;
   }
 
   /**
@@ -2813,6 +2904,13 @@ export class ListServerRolesRequest implements GrpcMessage {
       switch (_reader.getFieldNumber()) {
         case 1:
           _instance.pageToken = _reader.readString();
+          break;
+        case 2:
+          _instance.fieldMask = new googleProtobuf004.FieldMask();
+          _reader.readMessage(
+            _instance.fieldMask,
+            googleProtobuf004.FieldMask.deserializeBinaryFromReader
+          );
           break;
         default:
           _reader.skipField();
@@ -2834,9 +2932,17 @@ export class ListServerRolesRequest implements GrpcMessage {
     if (_instance.pageToken) {
       _writer.writeString(1, _instance.pageToken);
     }
+    if (_instance.fieldMask) {
+      _writer.writeMessage(
+        2,
+        _instance.fieldMask as any,
+        googleProtobuf004.FieldMask.serializeBinaryToWriter
+      );
+    }
   }
 
   private _pageToken: string;
+  private _fieldMask?: googleProtobuf004.FieldMask;
 
   /**
    * Message constructor. Initializes the properties and applies default Protobuf values if necessary
@@ -2845,6 +2951,9 @@ export class ListServerRolesRequest implements GrpcMessage {
   constructor(_value?: RecursivePartial<ListServerRolesRequest.AsObject>) {
     _value = _value || {};
     this.pageToken = _value.pageToken;
+    this.fieldMask = _value.fieldMask
+      ? new googleProtobuf004.FieldMask(_value.fieldMask)
+      : undefined;
     ListServerRolesRequest.refineValues(this);
   }
   get pageToken(): string {
@@ -2852,6 +2961,12 @@ export class ListServerRolesRequest implements GrpcMessage {
   }
   set pageToken(value: string) {
     this._pageToken = value;
+  }
+  get fieldMask(): googleProtobuf004.FieldMask | undefined {
+    return this._fieldMask;
+  }
+  set fieldMask(value: googleProtobuf004.FieldMask | undefined) {
+    this._fieldMask = value;
   }
 
   /**
@@ -2869,7 +2984,8 @@ export class ListServerRolesRequest implements GrpcMessage {
    */
   toObject(): ListServerRolesRequest.AsObject {
     return {
-      pageToken: this.pageToken
+      pageToken: this.pageToken,
+      fieldMask: this.fieldMask ? this.fieldMask.toObject() : undefined
     };
   }
 
@@ -2890,7 +3006,8 @@ export class ListServerRolesRequest implements GrpcMessage {
     options?: ToProtobufJSONOptions
   ): ListServerRolesRequest.AsProtobufJSON {
     return {
-      pageToken: this.pageToken
+      pageToken: this.pageToken,
+      fieldMask: this.fieldMask ? this.fieldMask.toProtobufJSON(options) : null
     };
   }
 }
@@ -2900,6 +3017,7 @@ export module ListServerRolesRequest {
    */
   export interface AsObject {
     pageToken: string;
+    fieldMask?: googleProtobuf004.FieldMask.AsObject;
   }
 
   /**
@@ -2907,6 +3025,7 @@ export module ListServerRolesRequest {
    */
   export interface AsProtobufJSON {
     pageToken: string;
+    fieldMask: googleProtobuf004.FieldMask.AsProtobufJSON | null;
   }
 }
 
@@ -3104,6 +3223,7 @@ export class ListServerPermissionsRequest implements GrpcMessage {
    */
   static refineValues(_instance: ListServerPermissionsRequest) {
     _instance.pageToken = _instance.pageToken || '';
+    _instance.fieldMask = _instance.fieldMask || undefined;
   }
 
   /**
@@ -3121,6 +3241,13 @@ export class ListServerPermissionsRequest implements GrpcMessage {
       switch (_reader.getFieldNumber()) {
         case 1:
           _instance.pageToken = _reader.readString();
+          break;
+        case 2:
+          _instance.fieldMask = new googleProtobuf004.FieldMask();
+          _reader.readMessage(
+            _instance.fieldMask,
+            googleProtobuf004.FieldMask.deserializeBinaryFromReader
+          );
           break;
         default:
           _reader.skipField();
@@ -3142,9 +3269,17 @@ export class ListServerPermissionsRequest implements GrpcMessage {
     if (_instance.pageToken) {
       _writer.writeString(1, _instance.pageToken);
     }
+    if (_instance.fieldMask) {
+      _writer.writeMessage(
+        2,
+        _instance.fieldMask as any,
+        googleProtobuf004.FieldMask.serializeBinaryToWriter
+      );
+    }
   }
 
   private _pageToken: string;
+  private _fieldMask?: googleProtobuf004.FieldMask;
 
   /**
    * Message constructor. Initializes the properties and applies default Protobuf values if necessary
@@ -3155,6 +3290,9 @@ export class ListServerPermissionsRequest implements GrpcMessage {
   ) {
     _value = _value || {};
     this.pageToken = _value.pageToken;
+    this.fieldMask = _value.fieldMask
+      ? new googleProtobuf004.FieldMask(_value.fieldMask)
+      : undefined;
     ListServerPermissionsRequest.refineValues(this);
   }
   get pageToken(): string {
@@ -3162,6 +3300,12 @@ export class ListServerPermissionsRequest implements GrpcMessage {
   }
   set pageToken(value: string) {
     this._pageToken = value;
+  }
+  get fieldMask(): googleProtobuf004.FieldMask | undefined {
+    return this._fieldMask;
+  }
+  set fieldMask(value: googleProtobuf004.FieldMask | undefined) {
+    this._fieldMask = value;
   }
 
   /**
@@ -3179,7 +3323,8 @@ export class ListServerPermissionsRequest implements GrpcMessage {
    */
   toObject(): ListServerPermissionsRequest.AsObject {
     return {
-      pageToken: this.pageToken
+      pageToken: this.pageToken,
+      fieldMask: this.fieldMask ? this.fieldMask.toObject() : undefined
     };
   }
 
@@ -3200,7 +3345,8 @@ export class ListServerPermissionsRequest implements GrpcMessage {
     options?: ToProtobufJSONOptions
   ): ListServerPermissionsRequest.AsProtobufJSON {
     return {
-      pageToken: this.pageToken
+      pageToken: this.pageToken,
+      fieldMask: this.fieldMask ? this.fieldMask.toProtobufJSON(options) : null
     };
   }
 }
@@ -3210,6 +3356,7 @@ export module ListServerPermissionsRequest {
    */
   export interface AsObject {
     pageToken: string;
+    fieldMask?: googleProtobuf004.FieldMask.AsObject;
   }
 
   /**
@@ -3217,6 +3364,7 @@ export module ListServerPermissionsRequest {
    */
   export interface AsProtobufJSON {
     pageToken: string;
+    fieldMask: googleProtobuf004.FieldMask.AsProtobufJSON | null;
   }
 }
 
@@ -3383,324 +3531,6 @@ export module ListServerPermissionsResponse {
 }
 
 /**
- * Message implementation for ondewo.nlu.LoginRequest
- */
-export class LoginRequest implements GrpcMessage {
-  static id = 'ondewo.nlu.LoginRequest';
-
-  /**
-   * Deserialize binary data to message
-   * @param instance message instance
-   */
-  static deserializeBinary(bytes: ByteSource) {
-    const instance = new LoginRequest();
-    LoginRequest.deserializeBinaryFromReader(instance, new BinaryReader(bytes));
-    return instance;
-  }
-
-  /**
-   * Check all the properties and set default protobuf values if necessary
-   * @param _instance message instance
-   */
-  static refineValues(_instance: LoginRequest) {
-    _instance.userEmail = _instance.userEmail || '';
-    _instance.password = _instance.password || '';
-  }
-
-  /**
-   * Deserializes / reads binary message into message instance using provided binary reader
-   * @param _instance message instance
-   * @param _reader binary reader instance
-   */
-  static deserializeBinaryFromReader(
-    _instance: LoginRequest,
-    _reader: BinaryReader
-  ) {
-    while (_reader.nextField()) {
-      if (_reader.isEndGroup()) break;
-
-      switch (_reader.getFieldNumber()) {
-        case 1:
-          _instance.userEmail = _reader.readString();
-          break;
-        case 2:
-          _instance.password = _reader.readString();
-          break;
-        default:
-          _reader.skipField();
-      }
-    }
-
-    LoginRequest.refineValues(_instance);
-  }
-
-  /**
-   * Serializes a message to binary format using provided binary reader
-   * @param _instance message instance
-   * @param _writer binary writer instance
-   */
-  static serializeBinaryToWriter(
-    _instance: LoginRequest,
-    _writer: BinaryWriter
-  ) {
-    if (_instance.userEmail) {
-      _writer.writeString(1, _instance.userEmail);
-    }
-    if (_instance.password) {
-      _writer.writeString(2, _instance.password);
-    }
-  }
-
-  private _userEmail: string;
-  private _password: string;
-
-  /**
-   * Message constructor. Initializes the properties and applies default Protobuf values if necessary
-   * @param _value initial values object or instance of LoginRequest to deeply clone from
-   */
-  constructor(_value?: RecursivePartial<LoginRequest.AsObject>) {
-    _value = _value || {};
-    this.userEmail = _value.userEmail;
-    this.password = _value.password;
-    LoginRequest.refineValues(this);
-  }
-  get userEmail(): string {
-    return this._userEmail;
-  }
-  set userEmail(value: string) {
-    this._userEmail = value;
-  }
-  get password(): string {
-    return this._password;
-  }
-  set password(value: string) {
-    this._password = value;
-  }
-
-  /**
-   * Serialize message to binary data
-   * @param instance message instance
-   */
-  serializeBinary() {
-    const writer = new BinaryWriter();
-    LoginRequest.serializeBinaryToWriter(this, writer);
-    return writer.getResultBuffer();
-  }
-
-  /**
-   * Cast message to standard JavaScript object (all non-primitive values are deeply cloned)
-   */
-  toObject(): LoginRequest.AsObject {
-    return {
-      userEmail: this.userEmail,
-      password: this.password
-    };
-  }
-
-  /**
-   * Convenience method to support JSON.stringify(message), replicates the structure of toObject()
-   */
-  toJSON() {
-    return this.toObject();
-  }
-
-  /**
-   * Cast message to JSON using protobuf JSON notation: https://developers.google.com/protocol-buffers/docs/proto3#json
-   * Attention: output differs from toObject() e.g. enums are represented as names and not as numbers, Timestamp is an ISO Date string format etc.
-   * If the message itself or some of descendant messages is google.protobuf.Any, you MUST provide a message pool as options. If not, the messagePool is not required
-   */
-  toProtobufJSON(
-    // @ts-ignore
-    options?: ToProtobufJSONOptions
-  ): LoginRequest.AsProtobufJSON {
-    return {
-      userEmail: this.userEmail,
-      password: this.password
-    };
-  }
-}
-export module LoginRequest {
-  /**
-   * Standard JavaScript object representation for LoginRequest
-   */
-  export interface AsObject {
-    userEmail: string;
-    password: string;
-  }
-
-  /**
-   * Protobuf JSON representation for LoginRequest
-   */
-  export interface AsProtobufJSON {
-    userEmail: string;
-    password: string;
-  }
-}
-
-/**
- * Message implementation for ondewo.nlu.LoginResponse
- */
-export class LoginResponse implements GrpcMessage {
-  static id = 'ondewo.nlu.LoginResponse';
-
-  /**
-   * Deserialize binary data to message
-   * @param instance message instance
-   */
-  static deserializeBinary(bytes: ByteSource) {
-    const instance = new LoginResponse();
-    LoginResponse.deserializeBinaryFromReader(
-      instance,
-      new BinaryReader(bytes)
-    );
-    return instance;
-  }
-
-  /**
-   * Check all the properties and set default protobuf values if necessary
-   * @param _instance message instance
-   */
-  static refineValues(_instance: LoginResponse) {
-    _instance.user = _instance.user || undefined;
-    _instance.authToken = _instance.authToken || '';
-  }
-
-  /**
-   * Deserializes / reads binary message into message instance using provided binary reader
-   * @param _instance message instance
-   * @param _reader binary reader instance
-   */
-  static deserializeBinaryFromReader(
-    _instance: LoginResponse,
-    _reader: BinaryReader
-  ) {
-    while (_reader.nextField()) {
-      if (_reader.isEndGroup()) break;
-
-      switch (_reader.getFieldNumber()) {
-        case 1:
-          _instance.user = new User();
-          _reader.readMessage(_instance.user, User.deserializeBinaryFromReader);
-          break;
-        case 2:
-          _instance.authToken = _reader.readString();
-          break;
-        default:
-          _reader.skipField();
-      }
-    }
-
-    LoginResponse.refineValues(_instance);
-  }
-
-  /**
-   * Serializes a message to binary format using provided binary reader
-   * @param _instance message instance
-   * @param _writer binary writer instance
-   */
-  static serializeBinaryToWriter(
-    _instance: LoginResponse,
-    _writer: BinaryWriter
-  ) {
-    if (_instance.user) {
-      _writer.writeMessage(
-        1,
-        _instance.user as any,
-        User.serializeBinaryToWriter
-      );
-    }
-    if (_instance.authToken) {
-      _writer.writeString(2, _instance.authToken);
-    }
-  }
-
-  private _user?: User;
-  private _authToken: string;
-
-  /**
-   * Message constructor. Initializes the properties and applies default Protobuf values if necessary
-   * @param _value initial values object or instance of LoginResponse to deeply clone from
-   */
-  constructor(_value?: RecursivePartial<LoginResponse.AsObject>) {
-    _value = _value || {};
-    this.user = _value.user ? new User(_value.user) : undefined;
-    this.authToken = _value.authToken;
-    LoginResponse.refineValues(this);
-  }
-  get user(): User | undefined {
-    return this._user;
-  }
-  set user(value: User | undefined) {
-    this._user = value;
-  }
-  get authToken(): string {
-    return this._authToken;
-  }
-  set authToken(value: string) {
-    this._authToken = value;
-  }
-
-  /**
-   * Serialize message to binary data
-   * @param instance message instance
-   */
-  serializeBinary() {
-    const writer = new BinaryWriter();
-    LoginResponse.serializeBinaryToWriter(this, writer);
-    return writer.getResultBuffer();
-  }
-
-  /**
-   * Cast message to standard JavaScript object (all non-primitive values are deeply cloned)
-   */
-  toObject(): LoginResponse.AsObject {
-    return {
-      user: this.user ? this.user.toObject() : undefined,
-      authToken: this.authToken
-    };
-  }
-
-  /**
-   * Convenience method to support JSON.stringify(message), replicates the structure of toObject()
-   */
-  toJSON() {
-    return this.toObject();
-  }
-
-  /**
-   * Cast message to JSON using protobuf JSON notation: https://developers.google.com/protocol-buffers/docs/proto3#json
-   * Attention: output differs from toObject() e.g. enums are represented as names and not as numbers, Timestamp is an ISO Date string format etc.
-   * If the message itself or some of descendant messages is google.protobuf.Any, you MUST provide a message pool as options. If not, the messagePool is not required
-   */
-  toProtobufJSON(
-    // @ts-ignore
-    options?: ToProtobufJSONOptions
-  ): LoginResponse.AsProtobufJSON {
-    return {
-      user: this.user ? this.user.toProtobufJSON(options) : null,
-      authToken: this.authToken
-    };
-  }
-}
-export module LoginResponse {
-  /**
-   * Standard JavaScript object representation for LoginResponse
-   */
-  export interface AsObject {
-    user?: User.AsObject;
-    authToken: string;
-  }
-
-  /**
-   * Protobuf JSON representation for LoginResponse
-   */
-  export interface AsProtobufJSON {
-    user: User.AsProtobufJSON | null;
-    authToken: string;
-  }
-}
-
-/**
  * Message implementation for ondewo.nlu.GetUserPreferencesRequest
  */
 export class GetUserPreferencesRequest implements GrpcMessage {
@@ -3727,6 +3557,7 @@ export class GetUserPreferencesRequest implements GrpcMessage {
     _instance.userName = _instance.userName || '';
     _instance.keys = _instance.keys || [];
     _instance.regexInclude = _instance.regexInclude || '';
+    _instance.fieldMask = _instance.fieldMask || undefined;
   }
 
   /**
@@ -3750,6 +3581,13 @@ export class GetUserPreferencesRequest implements GrpcMessage {
           break;
         case 3:
           _instance.regexInclude = _reader.readString();
+          break;
+        case 4:
+          _instance.fieldMask = new googleProtobuf004.FieldMask();
+          _reader.readMessage(
+            _instance.fieldMask,
+            googleProtobuf004.FieldMask.deserializeBinaryFromReader
+          );
           break;
         default:
           _reader.skipField();
@@ -3777,11 +3615,19 @@ export class GetUserPreferencesRequest implements GrpcMessage {
     if (_instance.regexInclude) {
       _writer.writeString(3, _instance.regexInclude);
     }
+    if (_instance.fieldMask) {
+      _writer.writeMessage(
+        4,
+        _instance.fieldMask as any,
+        googleProtobuf004.FieldMask.serializeBinaryToWriter
+      );
+    }
   }
 
   private _userName: string;
   private _keys: string[];
   private _regexInclude: string;
+  private _fieldMask?: googleProtobuf004.FieldMask;
 
   /**
    * Message constructor. Initializes the properties and applies default Protobuf values if necessary
@@ -3792,6 +3638,9 @@ export class GetUserPreferencesRequest implements GrpcMessage {
     this.userName = _value.userName;
     this.keys = (_value.keys || []).slice();
     this.regexInclude = _value.regexInclude;
+    this.fieldMask = _value.fieldMask
+      ? new googleProtobuf004.FieldMask(_value.fieldMask)
+      : undefined;
     GetUserPreferencesRequest.refineValues(this);
   }
   get userName(): string {
@@ -3812,6 +3661,12 @@ export class GetUserPreferencesRequest implements GrpcMessage {
   set regexInclude(value: string) {
     this._regexInclude = value;
   }
+  get fieldMask(): googleProtobuf004.FieldMask | undefined {
+    return this._fieldMask;
+  }
+  set fieldMask(value: googleProtobuf004.FieldMask | undefined) {
+    this._fieldMask = value;
+  }
 
   /**
    * Serialize message to binary data
@@ -3830,7 +3685,8 @@ export class GetUserPreferencesRequest implements GrpcMessage {
     return {
       userName: this.userName,
       keys: (this.keys || []).slice(),
-      regexInclude: this.regexInclude
+      regexInclude: this.regexInclude,
+      fieldMask: this.fieldMask ? this.fieldMask.toObject() : undefined
     };
   }
 
@@ -3853,7 +3709,8 @@ export class GetUserPreferencesRequest implements GrpcMessage {
     return {
       userName: this.userName,
       keys: (this.keys || []).slice(),
-      regexInclude: this.regexInclude
+      regexInclude: this.regexInclude,
+      fieldMask: this.fieldMask ? this.fieldMask.toProtobufJSON(options) : null
     };
   }
 }
@@ -3865,6 +3722,7 @@ export module GetUserPreferencesRequest {
     userName: string;
     keys: string[];
     regexInclude: string;
+    fieldMask?: googleProtobuf004.FieldMask.AsObject;
   }
 
   /**
@@ -3874,6 +3732,7 @@ export module GetUserPreferencesRequest {
     userName: string;
     keys: string[];
     regexInclude: string;
+    fieldMask: googleProtobuf004.FieldMask.AsProtobufJSON | null;
   }
 }
 
@@ -3923,10 +3782,10 @@ export class GetUserPreferencesResponse implements GrpcMessage {
           _instance.userName = _reader.readString();
           break;
         case 2:
-          const messageInitializer2 = new ondewoNlu007.KeyValuePair();
+          const messageInitializer2 = new ondewoNlu008.KeyValuePair();
           _reader.readMessage(
             messageInitializer2,
-            ondewoNlu007.KeyValuePair.deserializeBinaryFromReader
+            ondewoNlu008.KeyValuePair.deserializeBinaryFromReader
           );
           (_instance.keyValuePairs = _instance.keyValuePairs || []).push(
             messageInitializer2
@@ -3959,7 +3818,7 @@ export class GetUserPreferencesResponse implements GrpcMessage {
       _writer.writeRepeatedMessage(
         2,
         _instance.keyValuePairs as any,
-        ondewoNlu007.KeyValuePair.serializeBinaryToWriter
+        ondewoNlu008.KeyValuePair.serializeBinaryToWriter
       );
     }
     if (_instance.errorMessage) {
@@ -3968,7 +3827,7 @@ export class GetUserPreferencesResponse implements GrpcMessage {
   }
 
   private _userName: string;
-  private _keyValuePairs?: ondewoNlu007.KeyValuePair[];
+  private _keyValuePairs?: ondewoNlu008.KeyValuePair[];
   private _errorMessage: string;
 
   /**
@@ -3979,7 +3838,7 @@ export class GetUserPreferencesResponse implements GrpcMessage {
     _value = _value || {};
     this.userName = _value.userName;
     this.keyValuePairs = (_value.keyValuePairs || []).map(
-      m => new ondewoNlu007.KeyValuePair(m)
+      m => new ondewoNlu008.KeyValuePair(m)
     );
     this.errorMessage = _value.errorMessage;
     GetUserPreferencesResponse.refineValues(this);
@@ -3990,10 +3849,10 @@ export class GetUserPreferencesResponse implements GrpcMessage {
   set userName(value: string) {
     this._userName = value;
   }
-  get keyValuePairs(): ondewoNlu007.KeyValuePair[] | undefined {
+  get keyValuePairs(): ondewoNlu008.KeyValuePair[] | undefined {
     return this._keyValuePairs;
   }
-  set keyValuePairs(value: ondewoNlu007.KeyValuePair[] | undefined) {
+  set keyValuePairs(value: ondewoNlu008.KeyValuePair[] | undefined) {
     this._keyValuePairs = value;
   }
   get errorMessage(): string {
@@ -4055,7 +3914,7 @@ export module GetUserPreferencesResponse {
    */
   export interface AsObject {
     userName: string;
-    keyValuePairs?: ondewoNlu007.KeyValuePair.AsObject[];
+    keyValuePairs?: ondewoNlu008.KeyValuePair.AsObject[];
     errorMessage: string;
   }
 
@@ -4064,7 +3923,7 @@ export module GetUserPreferencesResponse {
    */
   export interface AsProtobufJSON {
     userName: string;
-    keyValuePairs: ondewoNlu007.KeyValuePair.AsProtobufJSON[] | null;
+    keyValuePairs: ondewoNlu008.KeyValuePair.AsProtobufJSON[] | null;
     errorMessage: string;
   }
 }
@@ -4114,10 +3973,10 @@ export class SetUserPreferencesRequest implements GrpcMessage {
           _instance.userName = _reader.readString();
           break;
         case 2:
-          const messageInitializer2 = new ondewoNlu007.KeyValuePair();
+          const messageInitializer2 = new ondewoNlu008.KeyValuePair();
           _reader.readMessage(
             messageInitializer2,
-            ondewoNlu007.KeyValuePair.deserializeBinaryFromReader
+            ondewoNlu008.KeyValuePair.deserializeBinaryFromReader
           );
           (_instance.keyValuePairs = _instance.keyValuePairs || []).push(
             messageInitializer2
@@ -4147,13 +4006,13 @@ export class SetUserPreferencesRequest implements GrpcMessage {
       _writer.writeRepeatedMessage(
         2,
         _instance.keyValuePairs as any,
-        ondewoNlu007.KeyValuePair.serializeBinaryToWriter
+        ondewoNlu008.KeyValuePair.serializeBinaryToWriter
       );
     }
   }
 
   private _userName: string;
-  private _keyValuePairs?: ondewoNlu007.KeyValuePair[];
+  private _keyValuePairs?: ondewoNlu008.KeyValuePair[];
 
   /**
    * Message constructor. Initializes the properties and applies default Protobuf values if necessary
@@ -4163,7 +4022,7 @@ export class SetUserPreferencesRequest implements GrpcMessage {
     _value = _value || {};
     this.userName = _value.userName;
     this.keyValuePairs = (_value.keyValuePairs || []).map(
-      m => new ondewoNlu007.KeyValuePair(m)
+      m => new ondewoNlu008.KeyValuePair(m)
     );
     SetUserPreferencesRequest.refineValues(this);
   }
@@ -4173,10 +4032,10 @@ export class SetUserPreferencesRequest implements GrpcMessage {
   set userName(value: string) {
     this._userName = value;
   }
-  get keyValuePairs(): ondewoNlu007.KeyValuePair[] | undefined {
+  get keyValuePairs(): ondewoNlu008.KeyValuePair[] | undefined {
     return this._keyValuePairs;
   }
-  set keyValuePairs(value: ondewoNlu007.KeyValuePair[] | undefined) {
+  set keyValuePairs(value: ondewoNlu008.KeyValuePair[] | undefined) {
     this._keyValuePairs = value;
   }
 
@@ -4230,7 +4089,7 @@ export module SetUserPreferencesRequest {
    */
   export interface AsObject {
     userName: string;
-    keyValuePairs?: ondewoNlu007.KeyValuePair.AsObject[];
+    keyValuePairs?: ondewoNlu008.KeyValuePair.AsObject[];
   }
 
   /**
@@ -4238,7 +4097,7 @@ export module SetUserPreferencesRequest {
    */
   export interface AsProtobufJSON {
     userName: string;
-    keyValuePairs: ondewoNlu007.KeyValuePair.AsProtobufJSON[] | null;
+    keyValuePairs: ondewoNlu008.KeyValuePair.AsProtobufJSON[] | null;
   }
 }
 
@@ -4963,6 +4822,7 @@ export class ListUserPreferencesRequest implements GrpcMessage {
   static refineValues(_instance: ListUserPreferencesRequest) {
     _instance.userName = _instance.userName || '';
     _instance.regexFilter = _instance.regexFilter || '';
+    _instance.fieldMask = _instance.fieldMask || undefined;
   }
 
   /**
@@ -4983,6 +4843,13 @@ export class ListUserPreferencesRequest implements GrpcMessage {
           break;
         case 2:
           _instance.regexFilter = _reader.readString();
+          break;
+        case 3:
+          _instance.fieldMask = new googleProtobuf004.FieldMask();
+          _reader.readMessage(
+            _instance.fieldMask,
+            googleProtobuf004.FieldMask.deserializeBinaryFromReader
+          );
           break;
         default:
           _reader.skipField();
@@ -5007,10 +4874,18 @@ export class ListUserPreferencesRequest implements GrpcMessage {
     if (_instance.regexFilter) {
       _writer.writeString(2, _instance.regexFilter);
     }
+    if (_instance.fieldMask) {
+      _writer.writeMessage(
+        3,
+        _instance.fieldMask as any,
+        googleProtobuf004.FieldMask.serializeBinaryToWriter
+      );
+    }
   }
 
   private _userName: string;
   private _regexFilter: string;
+  private _fieldMask?: googleProtobuf004.FieldMask;
 
   /**
    * Message constructor. Initializes the properties and applies default Protobuf values if necessary
@@ -5020,6 +4895,9 @@ export class ListUserPreferencesRequest implements GrpcMessage {
     _value = _value || {};
     this.userName = _value.userName;
     this.regexFilter = _value.regexFilter;
+    this.fieldMask = _value.fieldMask
+      ? new googleProtobuf004.FieldMask(_value.fieldMask)
+      : undefined;
     ListUserPreferencesRequest.refineValues(this);
   }
   get userName(): string {
@@ -5033,6 +4911,12 @@ export class ListUserPreferencesRequest implements GrpcMessage {
   }
   set regexFilter(value: string) {
     this._regexFilter = value;
+  }
+  get fieldMask(): googleProtobuf004.FieldMask | undefined {
+    return this._fieldMask;
+  }
+  set fieldMask(value: googleProtobuf004.FieldMask | undefined) {
+    this._fieldMask = value;
   }
 
   /**
@@ -5051,7 +4935,8 @@ export class ListUserPreferencesRequest implements GrpcMessage {
   toObject(): ListUserPreferencesRequest.AsObject {
     return {
       userName: this.userName,
-      regexFilter: this.regexFilter
+      regexFilter: this.regexFilter,
+      fieldMask: this.fieldMask ? this.fieldMask.toObject() : undefined
     };
   }
 
@@ -5073,7 +4958,8 @@ export class ListUserPreferencesRequest implements GrpcMessage {
   ): ListUserPreferencesRequest.AsProtobufJSON {
     return {
       userName: this.userName,
-      regexFilter: this.regexFilter
+      regexFilter: this.regexFilter,
+      fieldMask: this.fieldMask ? this.fieldMask.toProtobufJSON(options) : null
     };
   }
 }
@@ -5084,6 +4970,7 @@ export module ListUserPreferencesRequest {
   export interface AsObject {
     userName: string;
     regexFilter: string;
+    fieldMask?: googleProtobuf004.FieldMask.AsObject;
   }
 
   /**
@@ -5092,6 +4979,7 @@ export module ListUserPreferencesRequest {
   export interface AsProtobufJSON {
     userName: string;
     regexFilter: string;
+    fieldMask: googleProtobuf004.FieldMask.AsProtobufJSON | null;
   }
 }
 
@@ -5141,10 +5029,10 @@ export class ListUserPreferencesResponse implements GrpcMessage {
           _instance.userName = _reader.readString();
           break;
         case 2:
-          const messageInitializer2 = new ondewoNlu007.KeyValuePair();
+          const messageInitializer2 = new ondewoNlu008.KeyValuePair();
           _reader.readMessage(
             messageInitializer2,
-            ondewoNlu007.KeyValuePair.deserializeBinaryFromReader
+            ondewoNlu008.KeyValuePair.deserializeBinaryFromReader
           );
           (_instance.keyValuePairs = _instance.keyValuePairs || []).push(
             messageInitializer2
@@ -5177,7 +5065,7 @@ export class ListUserPreferencesResponse implements GrpcMessage {
       _writer.writeRepeatedMessage(
         2,
         _instance.keyValuePairs as any,
-        ondewoNlu007.KeyValuePair.serializeBinaryToWriter
+        ondewoNlu008.KeyValuePair.serializeBinaryToWriter
       );
     }
     if (_instance.errorMessage) {
@@ -5186,7 +5074,7 @@ export class ListUserPreferencesResponse implements GrpcMessage {
   }
 
   private _userName: string;
-  private _keyValuePairs?: ondewoNlu007.KeyValuePair[];
+  private _keyValuePairs?: ondewoNlu008.KeyValuePair[];
   private _errorMessage: string;
 
   /**
@@ -5197,7 +5085,7 @@ export class ListUserPreferencesResponse implements GrpcMessage {
     _value = _value || {};
     this.userName = _value.userName;
     this.keyValuePairs = (_value.keyValuePairs || []).map(
-      m => new ondewoNlu007.KeyValuePair(m)
+      m => new ondewoNlu008.KeyValuePair(m)
     );
     this.errorMessage = _value.errorMessage;
     ListUserPreferencesResponse.refineValues(this);
@@ -5208,10 +5096,10 @@ export class ListUserPreferencesResponse implements GrpcMessage {
   set userName(value: string) {
     this._userName = value;
   }
-  get keyValuePairs(): ondewoNlu007.KeyValuePair[] | undefined {
+  get keyValuePairs(): ondewoNlu008.KeyValuePair[] | undefined {
     return this._keyValuePairs;
   }
-  set keyValuePairs(value: ondewoNlu007.KeyValuePair[] | undefined) {
+  set keyValuePairs(value: ondewoNlu008.KeyValuePair[] | undefined) {
     this._keyValuePairs = value;
   }
   get errorMessage(): string {
@@ -5273,7 +5161,7 @@ export module ListUserPreferencesResponse {
    */
   export interface AsObject {
     userName: string;
-    keyValuePairs?: ondewoNlu007.KeyValuePair.AsObject[];
+    keyValuePairs?: ondewoNlu008.KeyValuePair.AsObject[];
     errorMessage: string;
   }
 
@@ -5282,7 +5170,7 @@ export module ListUserPreferencesResponse {
    */
   export interface AsProtobufJSON {
     userName: string;
-    keyValuePairs: ondewoNlu007.KeyValuePair.AsProtobufJSON[] | null;
+    keyValuePairs: ondewoNlu008.KeyValuePair.AsProtobufJSON[] | null;
     errorMessage: string;
   }
 }

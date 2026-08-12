@@ -24,13 +24,14 @@ import * as googleApi000 from '../../google/api/http.pb';
 import * as googleProtobuf001 from '@ngx-grpc/well-known-types';
 import * as googleProtobuf002 from '@ngx-grpc/well-known-types';
 import * as googleProtobuf003 from '@ngx-grpc/well-known-types';
-import * as googleApi004 from '../../google/api/annotations.pb';
-import * as googleProtobuf005 from '@ngx-grpc/well-known-types';
+import * as googleProtobuf004 from '@ngx-grpc/well-known-types';
+import * as googleApi005 from '../../google/api/annotations.pb';
 import * as googleProtobuf006 from '@ngx-grpc/well-known-types';
-import * as googleRpc007 from '../../google/rpc/status.pb';
-import * as ondewoNlu008 from '../../ondewo/nlu/operation-metadata.pb';
-import * as ondewoNlu009 from '../../ondewo/nlu/common.pb';
-import * as ondewoNlu010 from '../../ondewo/nlu/operations.pb';
+import * as googleProtobuf007 from '@ngx-grpc/well-known-types';
+import * as googleRpc008 from '../../google/rpc/status.pb';
+import * as ondewoNlu009 from '../../ondewo/nlu/operation-metadata.pb';
+import * as ondewoNlu010 from '../../ondewo/nlu/common.pb';
+import * as ondewoNlu011 from '../../ondewo/nlu/operations.pb';
 import { GRPC_ENTITY_TYPES_CLIENT_SETTINGS } from './entity-type.pbconf';
 /**
  * Service client implementation for ondewo.nlu.EntityTypes
@@ -134,12 +135,12 @@ export class EntityTypesClient {
      *
      * @param requestMessage Request message
      * @param requestMetadata Request metadata
-     * @returns Observable<GrpcEvent<googleProtobuf006.Empty>>
+     * @returns Observable<GrpcEvent<googleProtobuf007.Empty>>
      */
     deleteEntityType: (
       requestData: thisProto.DeleteEntityTypeRequest,
       requestMetadata = new GrpcMetadata()
-    ): Observable<GrpcEvent<googleProtobuf006.Empty>> => {
+    ): Observable<GrpcEvent<googleProtobuf007.Empty>> => {
       return this.handler.handle({
         type: GrpcCallType.unary,
         client: this.client,
@@ -147,7 +148,7 @@ export class EntityTypesClient {
         requestData,
         requestMetadata,
         requestClass: thisProto.DeleteEntityTypeRequest,
-        responseClass: googleProtobuf006.Empty
+        responseClass: googleProtobuf007.Empty
       });
     },
     /**
@@ -155,12 +156,12 @@ export class EntityTypesClient {
      *
      * @param requestMessage Request message
      * @param requestMetadata Request metadata
-     * @returns Observable<GrpcEvent<ondewoNlu010.Operation>>
+     * @returns Observable<GrpcEvent<ondewoNlu011.Operation>>
      */
     batchUpdateEntityTypes: (
       requestData: thisProto.BatchUpdateEntityTypesRequest,
       requestMetadata = new GrpcMetadata()
-    ): Observable<GrpcEvent<ondewoNlu010.Operation>> => {
+    ): Observable<GrpcEvent<ondewoNlu011.Operation>> => {
       return this.handler.handle({
         type: GrpcCallType.unary,
         client: this.client,
@@ -168,7 +169,7 @@ export class EntityTypesClient {
         requestData,
         requestMetadata,
         requestClass: thisProto.BatchUpdateEntityTypesRequest,
-        responseClass: ondewoNlu010.Operation
+        responseClass: ondewoNlu011.Operation
       });
     },
     /**
@@ -176,12 +177,12 @@ export class EntityTypesClient {
      *
      * @param requestMessage Request message
      * @param requestMetadata Request metadata
-     * @returns Observable<GrpcEvent<ondewoNlu010.Operation>>
+     * @returns Observable<GrpcEvent<ondewoNlu011.Operation>>
      */
     batchDeleteEntityTypes: (
       requestData: thisProto.BatchDeleteEntityTypesRequest,
       requestMetadata = new GrpcMetadata()
-    ): Observable<GrpcEvent<ondewoNlu010.Operation>> => {
+    ): Observable<GrpcEvent<ondewoNlu011.Operation>> => {
       return this.handler.handle({
         type: GrpcCallType.unary,
         client: this.client,
@@ -189,7 +190,7 @@ export class EntityTypesClient {
         requestData,
         requestMetadata,
         requestClass: thisProto.BatchDeleteEntityTypesRequest,
-        responseClass: ondewoNlu010.Operation
+        responseClass: ondewoNlu011.Operation
       });
     },
     /**
@@ -463,12 +464,12 @@ export class EntityTypesClient {
    *
    * @param requestMessage Request message
    * @param requestMetadata Request metadata
-   * @returns Observable<googleProtobuf006.Empty>
+   * @returns Observable<googleProtobuf007.Empty>
    */
   deleteEntityType(
     requestData: thisProto.DeleteEntityTypeRequest,
     requestMetadata = new GrpcMetadata()
-  ): Observable<googleProtobuf006.Empty> {
+  ): Observable<googleProtobuf007.Empty> {
     return this.$raw
       .deleteEntityType(requestData, requestMetadata)
       .pipe(throwStatusErrors(), takeMessages());
@@ -479,12 +480,12 @@ export class EntityTypesClient {
    *
    * @param requestMessage Request message
    * @param requestMetadata Request metadata
-   * @returns Observable<ondewoNlu010.Operation>
+   * @returns Observable<ondewoNlu011.Operation>
    */
   batchUpdateEntityTypes(
     requestData: thisProto.BatchUpdateEntityTypesRequest,
     requestMetadata = new GrpcMetadata()
-  ): Observable<ondewoNlu010.Operation> {
+  ): Observable<ondewoNlu011.Operation> {
     return this.$raw
       .batchUpdateEntityTypes(requestData, requestMetadata)
       .pipe(throwStatusErrors(), takeMessages());
@@ -495,12 +496,12 @@ export class EntityTypesClient {
    *
    * @param requestMessage Request message
    * @param requestMetadata Request metadata
-   * @returns Observable<ondewoNlu010.Operation>
+   * @returns Observable<ondewoNlu011.Operation>
    */
   batchDeleteEntityTypes(
     requestData: thisProto.BatchDeleteEntityTypesRequest,
     requestMetadata = new GrpcMetadata()
-  ): Observable<ondewoNlu010.Operation> {
+  ): Observable<ondewoNlu011.Operation> {
     return this.$raw
       .batchDeleteEntityTypes(requestData, requestMetadata)
       .pipe(throwStatusErrors(), takeMessages());

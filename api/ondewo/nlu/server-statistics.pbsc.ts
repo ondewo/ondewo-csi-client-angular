@@ -24,9 +24,10 @@ import * as googleApi000 from '../../google/api/http.pb';
 import * as googleProtobuf001 from '@ngx-grpc/well-known-types';
 import * as googleProtobuf002 from '@ngx-grpc/well-known-types';
 import * as googleProtobuf003 from '@ngx-grpc/well-known-types';
-import * as googleApi004 from '../../google/api/annotations.pb';
-import * as googleProtobuf005 from '@ngx-grpc/well-known-types';
-import * as ondewoNlu006 from '../../ondewo/nlu/common.pb';
+import * as googleProtobuf004 from '@ngx-grpc/well-known-types';
+import * as googleApi005 from '../../google/api/annotations.pb';
+import * as googleProtobuf006 from '@ngx-grpc/well-known-types';
+import * as ondewoNlu007 from '../../ondewo/nlu/common.pb';
 import { GRPC_SERVER_STATISTICS_CLIENT_SETTINGS } from './server-statistics.pbconf';
 /**
  * Service client implementation for ondewo.nlu.ServerStatistics
@@ -46,20 +47,20 @@ export class ServerStatisticsClient {
      *
      * @param requestMessage Request message
      * @param requestMetadata Request metadata
-     * @returns Observable<GrpcEvent<ondewoNlu006.StatResponse>>
+     * @returns Observable<GrpcEvent<ondewoNlu007.StatResponse>>
      */
     getProjectCount: (
-      requestData: googleProtobuf005.Empty,
+      requestData: googleProtobuf006.Empty,
       requestMetadata = new GrpcMetadata()
-    ): Observable<GrpcEvent<ondewoNlu006.StatResponse>> => {
+    ): Observable<GrpcEvent<ondewoNlu007.StatResponse>> => {
       return this.handler.handle({
         type: GrpcCallType.unary,
         client: this.client,
         path: '/ondewo.nlu.ServerStatistics/GetProjectCount',
         requestData,
         requestMetadata,
-        requestClass: googleProtobuf005.Empty,
-        responseClass: ondewoNlu006.StatResponse
+        requestClass: googleProtobuf006.Empty,
+        responseClass: ondewoNlu007.StatResponse
       });
     },
     /**
@@ -67,12 +68,12 @@ export class ServerStatisticsClient {
      *
      * @param requestMessage Request message
      * @param requestMetadata Request metadata
-     * @returns Observable<GrpcEvent<ondewoNlu006.StatResponse>>
+     * @returns Observable<GrpcEvent<ondewoNlu007.StatResponse>>
      */
     getUserProjectCount: (
       requestData: thisProto.GetUserProjectCountRequest,
       requestMetadata = new GrpcMetadata()
-    ): Observable<GrpcEvent<ondewoNlu006.StatResponse>> => {
+    ): Observable<GrpcEvent<ondewoNlu007.StatResponse>> => {
       return this.handler.handle({
         type: GrpcCallType.unary,
         client: this.client,
@@ -80,7 +81,7 @@ export class ServerStatisticsClient {
         requestData,
         requestMetadata,
         requestClass: thisProto.GetUserProjectCountRequest,
-        responseClass: ondewoNlu006.StatResponse
+        responseClass: ondewoNlu007.StatResponse
       });
     },
     /**
@@ -88,20 +89,20 @@ export class ServerStatisticsClient {
      *
      * @param requestMessage Request message
      * @param requestMetadata Request metadata
-     * @returns Observable<GrpcEvent<ondewoNlu006.StatResponse>>
+     * @returns Observable<GrpcEvent<ondewoNlu007.StatResponse>>
      */
     getUserCount: (
-      requestData: googleProtobuf005.Empty,
+      requestData: googleProtobuf006.Empty,
       requestMetadata = new GrpcMetadata()
-    ): Observable<GrpcEvent<ondewoNlu006.StatResponse>> => {
+    ): Observable<GrpcEvent<ondewoNlu007.StatResponse>> => {
       return this.handler.handle({
         type: GrpcCallType.unary,
         client: this.client,
         path: '/ondewo.nlu.ServerStatistics/GetUserCount',
         requestData,
         requestMetadata,
-        requestClass: googleProtobuf005.Empty,
-        responseClass: ondewoNlu006.StatResponse
+        requestClass: googleProtobuf006.Empty,
+        responseClass: ondewoNlu007.StatResponse
       });
     }
   };
@@ -122,12 +123,12 @@ export class ServerStatisticsClient {
    *
    * @param requestMessage Request message
    * @param requestMetadata Request metadata
-   * @returns Observable<ondewoNlu006.StatResponse>
+   * @returns Observable<ondewoNlu007.StatResponse>
    */
   getProjectCount(
-    requestData: googleProtobuf005.Empty,
+    requestData: googleProtobuf006.Empty,
     requestMetadata = new GrpcMetadata()
-  ): Observable<ondewoNlu006.StatResponse> {
+  ): Observable<ondewoNlu007.StatResponse> {
     return this.$raw
       .getProjectCount(requestData, requestMetadata)
       .pipe(throwStatusErrors(), takeMessages());
@@ -138,12 +139,12 @@ export class ServerStatisticsClient {
    *
    * @param requestMessage Request message
    * @param requestMetadata Request metadata
-   * @returns Observable<ondewoNlu006.StatResponse>
+   * @returns Observable<ondewoNlu007.StatResponse>
    */
   getUserProjectCount(
     requestData: thisProto.GetUserProjectCountRequest,
     requestMetadata = new GrpcMetadata()
-  ): Observable<ondewoNlu006.StatResponse> {
+  ): Observable<ondewoNlu007.StatResponse> {
     return this.$raw
       .getUserProjectCount(requestData, requestMetadata)
       .pipe(throwStatusErrors(), takeMessages());
@@ -154,12 +155,12 @@ export class ServerStatisticsClient {
    *
    * @param requestMessage Request message
    * @param requestMetadata Request metadata
-   * @returns Observable<ondewoNlu006.StatResponse>
+   * @returns Observable<ondewoNlu007.StatResponse>
    */
   getUserCount(
-    requestData: googleProtobuf005.Empty,
+    requestData: googleProtobuf006.Empty,
     requestMetadata = new GrpcMetadata()
-  ): Observable<ondewoNlu006.StatResponse> {
+  ): Observable<ondewoNlu007.StatResponse> {
     return this.$raw
       .getUserCount(requestData, requestMetadata)
       .pipe(throwStatusErrors(), takeMessages());

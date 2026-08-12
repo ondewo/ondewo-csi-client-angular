@@ -230,12 +230,12 @@ export class Speech2TextClient {
      *
      * @param requestMessage Request message
      * @param requestMetadata Request metadata
-     * @returns Observable<GrpcEvent<thisProto.S2TGetServiceInfoResponse>>
+     * @returns Observable<GrpcEvent<thisProto.S2tGetServiceInfoResponse>>
      */
     getServiceInfo: (
       requestData: googleProtobuf000.Empty,
       requestMetadata = new GrpcMetadata()
-    ): Observable<GrpcEvent<thisProto.S2TGetServiceInfoResponse>> => {
+    ): Observable<GrpcEvent<thisProto.S2tGetServiceInfoResponse>> => {
       return this.handler.handle({
         type: GrpcCallType.unary,
         client: this.client,
@@ -243,7 +243,7 @@ export class Speech2TextClient {
         requestData,
         requestMetadata,
         requestClass: googleProtobuf000.Empty,
-        responseClass: thisProto.S2TGetServiceInfoResponse
+        responseClass: thisProto.S2tGetServiceInfoResponse
       });
     },
     /**
@@ -349,6 +349,29 @@ export class Speech2TextClient {
         requestMetadata,
         requestClass: thisProto.TrainUserLanguageModelRequest,
         responseClass: googleProtobuf000.Empty
+      });
+    },
+    /**
+     * Unary call: /ondewo.s2t.Speech2Text/ListS2tNormalizationPipelines
+     *
+     * @param requestMessage Request message
+     * @param requestMetadata Request metadata
+     * @returns Observable<GrpcEvent<thisProto.ListS2tNormalizationPipelinesResponse>>
+     */
+    listS2tNormalizationPipelines: (
+      requestData: thisProto.ListS2tNormalizationPipelinesRequest,
+      requestMetadata = new GrpcMetadata()
+    ): Observable<
+      GrpcEvent<thisProto.ListS2tNormalizationPipelinesResponse>
+    > => {
+      return this.handler.handle({
+        type: GrpcCallType.unary,
+        client: this.client,
+        path: '/ondewo.s2t.Speech2Text/ListS2tNormalizationPipelines',
+        requestData,
+        requestMetadata,
+        requestClass: thisProto.ListS2tNormalizationPipelinesRequest,
+        responseClass: thisProto.ListS2tNormalizationPipelinesResponse
       });
     }
   };
@@ -513,12 +536,12 @@ export class Speech2TextClient {
    *
    * @param requestMessage Request message
    * @param requestMetadata Request metadata
-   * @returns Observable<thisProto.S2TGetServiceInfoResponse>
+   * @returns Observable<thisProto.S2tGetServiceInfoResponse>
    */
   getServiceInfo(
     requestData: googleProtobuf000.Empty,
     requestMetadata = new GrpcMetadata()
-  ): Observable<thisProto.S2TGetServiceInfoResponse> {
+  ): Observable<thisProto.S2tGetServiceInfoResponse> {
     return this.$raw
       .getServiceInfo(requestData, requestMetadata)
       .pipe(throwStatusErrors(), takeMessages());
@@ -601,6 +624,22 @@ export class Speech2TextClient {
   ): Observable<googleProtobuf000.Empty> {
     return this.$raw
       .trainUserLanguageModel(requestData, requestMetadata)
+      .pipe(throwStatusErrors(), takeMessages());
+  }
+
+  /**
+   * Unary call @/ondewo.s2t.Speech2Text/ListS2tNormalizationPipelines
+   *
+   * @param requestMessage Request message
+   * @param requestMetadata Request metadata
+   * @returns Observable<thisProto.ListS2tNormalizationPipelinesResponse>
+   */
+  listS2tNormalizationPipelines(
+    requestData: thisProto.ListS2tNormalizationPipelinesRequest,
+    requestMetadata = new GrpcMetadata()
+  ): Observable<thisProto.ListS2tNormalizationPipelinesResponse> {
+    return this.$raw
+      .listS2tNormalizationPipelines(requestData, requestMetadata)
       .pipe(throwStatusErrors(), takeMessages());
   }
 }

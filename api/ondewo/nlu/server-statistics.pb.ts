@@ -14,9 +14,10 @@ import * as googleApi000 from '../../google/api/http.pb';
 import * as googleProtobuf001 from '@ngx-grpc/well-known-types';
 import * as googleProtobuf002 from '@ngx-grpc/well-known-types';
 import * as googleProtobuf003 from '@ngx-grpc/well-known-types';
-import * as googleApi004 from '../../google/api/annotations.pb';
-import * as googleProtobuf005 from '@ngx-grpc/well-known-types';
-import * as ondewoNlu006 from '../../ondewo/nlu/common.pb';
+import * as googleProtobuf004 from '@ngx-grpc/well-known-types';
+import * as googleApi005 from '../../google/api/annotations.pb';
+import * as googleProtobuf006 from '@ngx-grpc/well-known-types';
+import * as ondewoNlu007 from '../../ondewo/nlu/common.pb';
 /**
  * Message implementation for ondewo.nlu.GetUserProjectCountRequest
  */

@@ -22,9 +22,11 @@ import * as ondewoNlu008 from '../../ondewo/nlu/context.pb';
 import * as googleProtobuf009 from '@ngx-grpc/well-known-types';
 import * as googleRpc010 from '../../google/rpc/status.pb';
 import * as googleType011 from '../../google/type/latlng.pb';
-import * as ondewoNlu012 from '../../ondewo/nlu/intent.pb';
+import * as ondewoNlu012 from '../../ondewo/nlu/ccai-project.pb';
 import * as ondewoNlu013 from '../../ondewo/nlu/entity-type.pb';
-import * as ondewoNlu014 from '../../ondewo/nlu/session.pb';
+import * as ondewoNlu014 from '../../ondewo/nlu/intent.pb';
+import * as ondewoNlu015 from '../../ondewo/nlu/llm-evaluation.pb';
+import * as ondewoNlu016 from '../../ondewo/nlu/session.pb';
 /**
  * Message implementation for ondewo.nlu.PingRequest
  */
@@ -210,10 +212,10 @@ export class WebhookRequest implements GrpcMessage {
           _instance.responseId = _reader.readString();
           break;
         case 2:
-          _instance.queryResult = new ondewoNlu014.QueryResult();
+          _instance.queryResult = new ondewoNlu016.QueryResult();
           _reader.readMessage(
             _instance.queryResult,
-            ondewoNlu014.QueryResult.deserializeBinaryFromReader
+            ondewoNlu016.QueryResult.deserializeBinaryFromReader
           );
           break;
         case 3:
@@ -257,7 +259,7 @@ export class WebhookRequest implements GrpcMessage {
       _writer.writeMessage(
         2,
         _instance.queryResult as any,
-        ondewoNlu014.QueryResult.serializeBinaryToWriter
+        ondewoNlu016.QueryResult.serializeBinaryToWriter
       );
     }
     if (_instance.originalDetectIntentRequest) {
@@ -280,7 +282,7 @@ export class WebhookRequest implements GrpcMessage {
   }
 
   private _responseId: string;
-  private _queryResult?: ondewoNlu014.QueryResult;
+  private _queryResult?: ondewoNlu016.QueryResult;
   private _originalDetectIntentRequest?: OriginalDetectIntentRequest;
   private _session: string;
   private _headers?: googleProtobuf009.Struct;
@@ -293,7 +295,7 @@ export class WebhookRequest implements GrpcMessage {
     _value = _value || {};
     this.responseId = _value.responseId;
     this.queryResult = _value.queryResult
-      ? new ondewoNlu014.QueryResult(_value.queryResult)
+      ? new ondewoNlu016.QueryResult(_value.queryResult)
       : undefined;
     this.originalDetectIntentRequest = _value.originalDetectIntentRequest
       ? new OriginalDetectIntentRequest(_value.originalDetectIntentRequest)
@@ -310,10 +312,10 @@ export class WebhookRequest implements GrpcMessage {
   set responseId(value: string) {
     this._responseId = value;
   }
-  get queryResult(): ondewoNlu014.QueryResult | undefined {
+  get queryResult(): ondewoNlu016.QueryResult | undefined {
     return this._queryResult;
   }
-  set queryResult(value: ondewoNlu014.QueryResult | undefined) {
+  set queryResult(value: ondewoNlu016.QueryResult | undefined) {
     this._queryResult = value;
   }
   get originalDetectIntentRequest(): OriginalDetectIntentRequest | undefined {
@@ -397,7 +399,7 @@ export module WebhookRequest {
    */
   export interface AsObject {
     responseId: string;
-    queryResult?: ondewoNlu014.QueryResult.AsObject;
+    queryResult?: ondewoNlu016.QueryResult.AsObject;
     originalDetectIntentRequest?: OriginalDetectIntentRequest.AsObject;
     session: string;
     headers?: googleProtobuf009.Struct.AsObject;
@@ -408,7 +410,7 @@ export module WebhookRequest {
    */
   export interface AsProtobufJSON {
     responseId: string;
-    queryResult: ondewoNlu014.QueryResult.AsProtobufJSON | null;
+    queryResult: ondewoNlu016.QueryResult.AsProtobufJSON | null;
     originalDetectIntentRequest: OriginalDetectIntentRequest.AsProtobufJSON | null;
     session: string;
     headers: googleProtobuf009.Struct.AsProtobufJSON | null;
@@ -465,10 +467,10 @@ export class WebhookResponse implements GrpcMessage {
           _instance.fulfillmentText = _reader.readString();
           break;
         case 2:
-          const messageInitializer2 = new ondewoNlu012.Intent.Message();
+          const messageInitializer2 = new ondewoNlu014.Intent.Message();
           _reader.readMessage(
             messageInitializer2,
-            ondewoNlu012.Intent.Message.deserializeBinaryFromReader
+            ondewoNlu014.Intent.Message.deserializeBinaryFromReader
           );
           (_instance.fulfillmentMessages =
             _instance.fulfillmentMessages || []).push(messageInitializer2);
@@ -494,10 +496,10 @@ export class WebhookResponse implements GrpcMessage {
           );
           break;
         case 6:
-          _instance.followupEventInput = new ondewoNlu014.EventInput();
+          _instance.followupEventInput = new ondewoNlu016.EventInput();
           _reader.readMessage(
             _instance.followupEventInput,
-            ondewoNlu014.EventInput.deserializeBinaryFromReader
+            ondewoNlu016.EventInput.deserializeBinaryFromReader
           );
           break;
         case 10:
@@ -533,7 +535,7 @@ export class WebhookResponse implements GrpcMessage {
       _writer.writeRepeatedMessage(
         2,
         _instance.fulfillmentMessages as any,
-        ondewoNlu012.Intent.Message.serializeBinaryToWriter
+        ondewoNlu014.Intent.Message.serializeBinaryToWriter
       );
     }
     if (_instance.source) {
@@ -557,7 +559,7 @@ export class WebhookResponse implements GrpcMessage {
       _writer.writeMessage(
         6,
         _instance.followupEventInput as any,
-        ondewoNlu014.EventInput.serializeBinaryToWriter
+        ondewoNlu016.EventInput.serializeBinaryToWriter
       );
     }
     if (_instance.sessionEntityTypes && _instance.sessionEntityTypes.length) {
@@ -570,11 +572,11 @@ export class WebhookResponse implements GrpcMessage {
   }
 
   private _fulfillmentText: string;
-  private _fulfillmentMessages?: ondewoNlu012.Intent.Message[];
+  private _fulfillmentMessages?: ondewoNlu014.Intent.Message[];
   private _source: string;
   private _payload?: googleProtobuf009.Struct;
   private _outputContexts?: ondewoNlu008.Context[];
-  private _followupEventInput?: ondewoNlu014.EventInput;
+  private _followupEventInput?: ondewoNlu016.EventInput;
   private _sessionEntityTypes?: SessionEntityType[];
 
   /**
@@ -585,7 +587,7 @@ export class WebhookResponse implements GrpcMessage {
     _value = _value || {};
     this.fulfillmentText = _value.fulfillmentText;
     this.fulfillmentMessages = (_value.fulfillmentMessages || []).map(
-      m => new ondewoNlu012.Intent.Message(m)
+      m => new ondewoNlu014.Intent.Message(m)
     );
     this.source = _value.source;
     this.payload = _value.payload
@@ -595,7 +597,7 @@ export class WebhookResponse implements GrpcMessage {
       m => new ondewoNlu008.Context(m)
     );
     this.followupEventInput = _value.followupEventInput
-      ? new ondewoNlu014.EventInput(_value.followupEventInput)
+      ? new ondewoNlu016.EventInput(_value.followupEventInput)
       : undefined;
     this.sessionEntityTypes = (_value.sessionEntityTypes || []).map(
       m => new SessionEntityType(m)
@@ -608,10 +610,10 @@ export class WebhookResponse implements GrpcMessage {
   set fulfillmentText(value: string) {
     this._fulfillmentText = value;
   }
-  get fulfillmentMessages(): ondewoNlu012.Intent.Message[] | undefined {
+  get fulfillmentMessages(): ondewoNlu014.Intent.Message[] | undefined {
     return this._fulfillmentMessages;
   }
-  set fulfillmentMessages(value: ondewoNlu012.Intent.Message[] | undefined) {
+  set fulfillmentMessages(value: ondewoNlu014.Intent.Message[] | undefined) {
     this._fulfillmentMessages = value;
   }
   get source(): string {
@@ -632,10 +634,10 @@ export class WebhookResponse implements GrpcMessage {
   set outputContexts(value: ondewoNlu008.Context[] | undefined) {
     this._outputContexts = value;
   }
-  get followupEventInput(): ondewoNlu014.EventInput | undefined {
+  get followupEventInput(): ondewoNlu016.EventInput | undefined {
     return this._followupEventInput;
   }
-  set followupEventInput(value: ondewoNlu014.EventInput | undefined) {
+  set followupEventInput(value: ondewoNlu016.EventInput | undefined) {
     this._followupEventInput = value;
   }
   get sessionEntityTypes(): SessionEntityType[] | undefined {
@@ -715,11 +717,11 @@ export module WebhookResponse {
    */
   export interface AsObject {
     fulfillmentText: string;
-    fulfillmentMessages?: ondewoNlu012.Intent.Message.AsObject[];
+    fulfillmentMessages?: ondewoNlu014.Intent.Message.AsObject[];
     source: string;
     payload?: googleProtobuf009.Struct.AsObject;
     outputContexts?: ondewoNlu008.Context.AsObject[];
-    followupEventInput?: ondewoNlu014.EventInput.AsObject;
+    followupEventInput?: ondewoNlu016.EventInput.AsObject;
     sessionEntityTypes?: SessionEntityType.AsObject[];
   }
 
@@ -728,11 +730,11 @@ export module WebhookResponse {
    */
   export interface AsProtobufJSON {
     fulfillmentText: string;
-    fulfillmentMessages: ondewoNlu012.Intent.Message.AsProtobufJSON[] | null;
+    fulfillmentMessages: ondewoNlu014.Intent.Message.AsProtobufJSON[] | null;
     source: string;
     payload: googleProtobuf009.Struct.AsProtobufJSON | null;
     outputContexts: ondewoNlu008.Context.AsProtobufJSON[] | null;
-    followupEventInput: ondewoNlu014.EventInput.AsProtobufJSON | null;
+    followupEventInput: ondewoNlu016.EventInput.AsProtobufJSON | null;
     sessionEntityTypes: SessionEntityType.AsProtobufJSON[] | null;
   }
 }

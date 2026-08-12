@@ -27,12 +27,12 @@ import * as googleProtobuf003 from '@ngx-grpc/well-known-types';
 import * as googleProtobuf004 from '@ngx-grpc/well-known-types';
 import * as googleProtobuf005 from '@ngx-grpc/well-known-types';
 import * as googleProtobuf006 from '@ngx-grpc/well-known-types';
-import * as googleRpc007 from '../../google/rpc/status.pb';
-import * as ondewoNlu008 from '../../ondewo/nlu/operation-metadata.pb';
-import * as ondewoNlu009 from '../../ondewo/nlu/context.pb';
+import * as googleProtobuf007 from '@ngx-grpc/well-known-types';
+import * as googleRpc008 from '../../google/rpc/status.pb';
+import * as ondewoNlu009 from '../../ondewo/nlu/operation-metadata.pb';
 import * as ondewoNlu010 from '../../ondewo/nlu/common.pb';
-import * as ondewoNlu011 from '../../ondewo/nlu/operations.pb';
-import * as googleProtobuf012 from '@ngx-grpc/well-known-types';
+import * as ondewoNlu011 from '../../ondewo/nlu/context.pb';
+import * as ondewoNlu012 from '../../ondewo/nlu/operations.pb';
 import { GRPC_INTENTS_CLIENT_SETTINGS } from './intent.pbconf';
 /**
  * Service client implementation for ondewo.nlu.Intents
@@ -178,12 +178,12 @@ export class IntentsClient {
      *
      * @param requestMessage Request message
      * @param requestMetadata Request metadata
-     * @returns Observable<GrpcEvent<ondewoNlu011.Operation>>
+     * @returns Observable<GrpcEvent<ondewoNlu012.Operation>>
      */
     batchDeleteIntents: (
       requestData: thisProto.BatchDeleteIntentsRequest,
       requestMetadata = new GrpcMetadata()
-    ): Observable<GrpcEvent<ondewoNlu011.Operation>> => {
+    ): Observable<GrpcEvent<ondewoNlu012.Operation>> => {
       return this.handler.handle({
         type: GrpcCallType.unary,
         client: this.client,
@@ -191,7 +191,7 @@ export class IntentsClient {
         requestData,
         requestMetadata,
         requestClass: thisProto.BatchDeleteIntentsRequest,
-        responseClass: ondewoNlu011.Operation
+        responseClass: ondewoNlu012.Operation
       });
     },
     /**
@@ -729,12 +729,12 @@ export class IntentsClient {
    *
    * @param requestMessage Request message
    * @param requestMetadata Request metadata
-   * @returns Observable<ondewoNlu011.Operation>
+   * @returns Observable<ondewoNlu012.Operation>
    */
   batchDeleteIntents(
     requestData: thisProto.BatchDeleteIntentsRequest,
     requestMetadata = new GrpcMetadata()
-  ): Observable<ondewoNlu011.Operation> {
+  ): Observable<ondewoNlu012.Operation> {
     return this.$raw
       .batchDeleteIntents(requestData, requestMetadata)
       .pipe(throwStatusErrors(), takeMessages());

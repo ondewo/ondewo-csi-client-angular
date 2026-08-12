@@ -24,21 +24,23 @@ import * as googleApi000 from '../../google/api/http.pb';
 import * as googleProtobuf001 from '@ngx-grpc/well-known-types';
 import * as googleProtobuf002 from '@ngx-grpc/well-known-types';
 import * as googleProtobuf003 from '@ngx-grpc/well-known-types';
-import * as googleApi004 from '../../google/api/annotations.pb';
-import * as ondewoNlu005 from '../../ondewo/nlu/context.pb';
-import * as ondewoNlu006 from '../../ondewo/nlu/common.pb';
-import * as ondewoNlu007 from '../../ondewo/nlu/operations.pb';
-import * as googleProtobuf008 from '@ngx-grpc/well-known-types';
+import * as googleProtobuf004 from '@ngx-grpc/well-known-types';
+import * as googleApi005 from '../../google/api/annotations.pb';
+import * as ondewoNlu006 from '../../ondewo/nlu/context.pb';
+import * as ondewoNlu007 from '../../ondewo/nlu/common.pb';
+import * as ondewoNlu008 from '../../ondewo/nlu/operations.pb';
 import * as googleProtobuf009 from '@ngx-grpc/well-known-types';
 import * as ondewoNlu010 from '../../ondewo/nlu/project-role.pb';
 import * as googleProtobuf011 from '@ngx-grpc/well-known-types';
 import * as googleRpc012 from '../../google/rpc/status.pb';
 import * as ondewoNlu013 from '../../ondewo/nlu/operation-metadata.pb';
 import * as googleType014 from '../../google/type/latlng.pb';
-import * as ondewoNlu015 from '../../ondewo/nlu/intent.pb';
+import * as ondewoNlu015 from '../../ondewo/nlu/ccai-project.pb';
 import * as ondewoNlu016 from '../../ondewo/nlu/entity-type.pb';
-import * as ondewoNlu017 from '../../ondewo/nlu/user.pb';
-import * as ondewoNlu018 from '../../ondewo/nlu/session.pb';
+import * as ondewoNlu017 from '../../ondewo/nlu/intent.pb';
+import * as ondewoNlu018 from '../../ondewo/nlu/llm-evaluation.pb';
+import * as ondewoNlu019 from '../../ondewo/nlu/user.pb';
+import * as ondewoNlu020 from '../../ondewo/nlu/session.pb';
 import { GRPC_AGENTS_CLIENT_SETTINGS } from './agent.pbconf';
 /**
  * Service client implementation for ondewo.nlu.Agents
@@ -121,12 +123,12 @@ export class AgentsClient {
      *
      * @param requestMessage Request message
      * @param requestMetadata Request metadata
-     * @returns Observable<GrpcEvent<googleProtobuf008.Empty>>
+     * @returns Observable<GrpcEvent<googleProtobuf009.Empty>>
      */
     deleteAgent: (
       requestData: thisProto.DeleteAgentRequest,
       requestMetadata = new GrpcMetadata()
-    ): Observable<GrpcEvent<googleProtobuf008.Empty>> => {
+    ): Observable<GrpcEvent<googleProtobuf009.Empty>> => {
       return this.handler.handle({
         type: GrpcCallType.unary,
         client: this.client,
@@ -134,7 +136,7 @@ export class AgentsClient {
         requestData,
         requestMetadata,
         requestClass: thisProto.DeleteAgentRequest,
-        responseClass: googleProtobuf008.Empty
+        responseClass: googleProtobuf009.Empty
       });
     },
     /**
@@ -142,20 +144,20 @@ export class AgentsClient {
      *
      * @param requestMessage Request message
      * @param requestMetadata Request metadata
-     * @returns Observable<GrpcEvent<googleProtobuf008.Empty>>
+     * @returns Observable<GrpcEvent<googleProtobuf009.Empty>>
      */
     deleteAllAgents: (
-      requestData: googleProtobuf008.Empty,
+      requestData: googleProtobuf009.Empty,
       requestMetadata = new GrpcMetadata()
-    ): Observable<GrpcEvent<googleProtobuf008.Empty>> => {
+    ): Observable<GrpcEvent<googleProtobuf009.Empty>> => {
       return this.handler.handle({
         type: GrpcCallType.unary,
         client: this.client,
         path: '/ondewo.nlu.Agents/DeleteAllAgents',
         requestData,
         requestMetadata,
-        requestClass: googleProtobuf008.Empty,
-        responseClass: googleProtobuf008.Empty
+        requestClass: googleProtobuf009.Empty,
+        responseClass: googleProtobuf009.Empty
       });
     },
     /**
@@ -226,12 +228,12 @@ export class AgentsClient {
      *
      * @param requestMessage Request message
      * @param requestMetadata Request metadata
-     * @returns Observable<GrpcEvent<googleProtobuf008.Empty>>
+     * @returns Observable<GrpcEvent<googleProtobuf009.Empty>>
      */
     addUserToProject: (
       requestData: thisProto.AddUserToProjectRequest,
       requestMetadata = new GrpcMetadata()
-    ): Observable<GrpcEvent<googleProtobuf008.Empty>> => {
+    ): Observable<GrpcEvent<googleProtobuf009.Empty>> => {
       return this.handler.handle({
         type: GrpcCallType.unary,
         client: this.client,
@@ -239,7 +241,7 @@ export class AgentsClient {
         requestData,
         requestMetadata,
         requestClass: thisProto.AddUserToProjectRequest,
-        responseClass: googleProtobuf008.Empty
+        responseClass: googleProtobuf009.Empty
       });
     },
     /**
@@ -247,12 +249,12 @@ export class AgentsClient {
      *
      * @param requestMessage Request message
      * @param requestMetadata Request metadata
-     * @returns Observable<GrpcEvent<googleProtobuf008.Empty>>
+     * @returns Observable<GrpcEvent<googleProtobuf009.Empty>>
      */
     removeUserFromProject: (
       requestData: thisProto.RemoveUserFromProjectRequest,
       requestMetadata = new GrpcMetadata()
-    ): Observable<GrpcEvent<googleProtobuf008.Empty>> => {
+    ): Observable<GrpcEvent<googleProtobuf009.Empty>> => {
       return this.handler.handle({
         type: GrpcCallType.unary,
         client: this.client,
@@ -260,7 +262,7 @@ export class AgentsClient {
         requestData,
         requestMetadata,
         requestClass: thisProto.RemoveUserFromProjectRequest,
-        responseClass: googleProtobuf008.Empty
+        responseClass: googleProtobuf009.Empty
       });
     },
     /**
@@ -292,7 +294,7 @@ export class AgentsClient {
      * @returns Observable<GrpcEvent<thisProto.GetPlatformInfoResponse>>
      */
     getPlatformInfo: (
-      requestData: googleProtobuf008.Empty,
+      requestData: googleProtobuf009.Empty,
       requestMetadata = new GrpcMetadata()
     ): Observable<GrpcEvent<thisProto.GetPlatformInfoResponse>> => {
       return this.handler.handle({
@@ -301,7 +303,7 @@ export class AgentsClient {
         path: '/ondewo.nlu.Agents/GetPlatformInfo',
         requestData,
         requestMetadata,
-        requestClass: googleProtobuf008.Empty,
+        requestClass: googleProtobuf009.Empty,
         responseClass: thisProto.GetPlatformInfoResponse
       });
     },
@@ -331,12 +333,12 @@ export class AgentsClient {
      *
      * @param requestMessage Request message
      * @param requestMetadata Request metadata
-     * @returns Observable<GrpcEvent<ondewoNlu007.Operation>>
+     * @returns Observable<GrpcEvent<ondewoNlu008.Operation>>
      */
     trainAgent: (
       requestData: thisProto.TrainAgentRequest,
       requestMetadata = new GrpcMetadata()
-    ): Observable<GrpcEvent<ondewoNlu007.Operation>> => {
+    ): Observable<GrpcEvent<ondewoNlu008.Operation>> => {
       return this.handler.handle({
         type: GrpcCallType.unary,
         client: this.client,
@@ -344,7 +346,7 @@ export class AgentsClient {
         requestData,
         requestMetadata,
         requestClass: thisProto.TrainAgentRequest,
-        responseClass: ondewoNlu007.Operation
+        responseClass: ondewoNlu008.Operation
       });
     },
     /**
@@ -352,12 +354,12 @@ export class AgentsClient {
      *
      * @param requestMessage Request message
      * @param requestMetadata Request metadata
-     * @returns Observable<GrpcEvent<ondewoNlu007.Operation>>
+     * @returns Observable<GrpcEvent<ondewoNlu008.Operation>>
      */
     buildCache: (
       requestData: thisProto.BuildCacheRequest,
       requestMetadata = new GrpcMetadata()
-    ): Observable<GrpcEvent<ondewoNlu007.Operation>> => {
+    ): Observable<GrpcEvent<ondewoNlu008.Operation>> => {
       return this.handler.handle({
         type: GrpcCallType.unary,
         client: this.client,
@@ -365,7 +367,7 @@ export class AgentsClient {
         requestData,
         requestMetadata,
         requestClass: thisProto.BuildCacheRequest,
-        responseClass: ondewoNlu007.Operation
+        responseClass: ondewoNlu008.Operation
       });
     },
     /**
@@ -373,12 +375,12 @@ export class AgentsClient {
      *
      * @param requestMessage Request message
      * @param requestMetadata Request metadata
-     * @returns Observable<GrpcEvent<ondewoNlu007.Operation>>
+     * @returns Observable<GrpcEvent<ondewoNlu008.Operation>>
      */
     exportAgent: (
       requestData: thisProto.ExportAgentRequest,
       requestMetadata = new GrpcMetadata()
-    ): Observable<GrpcEvent<ondewoNlu007.Operation>> => {
+    ): Observable<GrpcEvent<ondewoNlu008.Operation>> => {
       return this.handler.handle({
         type: GrpcCallType.unary,
         client: this.client,
@@ -386,7 +388,7 @@ export class AgentsClient {
         requestData,
         requestMetadata,
         requestClass: thisProto.ExportAgentRequest,
-        responseClass: ondewoNlu007.Operation
+        responseClass: ondewoNlu008.Operation
       });
     },
     /**
@@ -394,12 +396,12 @@ export class AgentsClient {
      *
      * @param requestMessage Request message
      * @param requestMetadata Request metadata
-     * @returns Observable<GrpcEvent<ondewoNlu007.Operation>>
+     * @returns Observable<GrpcEvent<ondewoNlu008.Operation>>
      */
     exportBenchmarkAgent: (
       requestData: thisProto.ExportBenchmarkAgentRequest,
       requestMetadata = new GrpcMetadata()
-    ): Observable<GrpcEvent<ondewoNlu007.Operation>> => {
+    ): Observable<GrpcEvent<ondewoNlu008.Operation>> => {
       return this.handler.handle({
         type: GrpcCallType.unary,
         client: this.client,
@@ -407,7 +409,7 @@ export class AgentsClient {
         requestData,
         requestMetadata,
         requestClass: thisProto.ExportBenchmarkAgentRequest,
-        responseClass: ondewoNlu007.Operation
+        responseClass: ondewoNlu008.Operation
       });
     },
     /**
@@ -415,12 +417,12 @@ export class AgentsClient {
      *
      * @param requestMessage Request message
      * @param requestMetadata Request metadata
-     * @returns Observable<GrpcEvent<ondewoNlu007.Operation>>
+     * @returns Observable<GrpcEvent<ondewoNlu008.Operation>>
      */
     importAgent: (
       requestData: thisProto.ImportAgentRequest,
       requestMetadata = new GrpcMetadata()
-    ): Observable<GrpcEvent<ondewoNlu007.Operation>> => {
+    ): Observable<GrpcEvent<ondewoNlu008.Operation>> => {
       return this.handler.handle({
         type: GrpcCallType.unary,
         client: this.client,
@@ -428,7 +430,28 @@ export class AgentsClient {
         requestData,
         requestMetadata,
         requestClass: thisProto.ImportAgentRequest,
-        responseClass: ondewoNlu007.Operation
+        responseClass: ondewoNlu008.Operation
+      });
+    },
+    /**
+     * Unary call: /ondewo.nlu.Agents/MigrateAgent
+     *
+     * @param requestMessage Request message
+     * @param requestMetadata Request metadata
+     * @returns Observable<GrpcEvent<ondewoNlu008.Operation>>
+     */
+    migrateAgent: (
+      requestData: thisProto.MigrateAgentRequest,
+      requestMetadata = new GrpcMetadata()
+    ): Observable<GrpcEvent<ondewoNlu008.Operation>> => {
+      return this.handler.handle({
+        type: GrpcCallType.unary,
+        client: this.client,
+        path: '/ondewo.nlu.Agents/MigrateAgent',
+        requestData,
+        requestMetadata,
+        requestClass: thisProto.MigrateAgentRequest,
+        responseClass: ondewoNlu008.Operation
       });
     },
     /**
@@ -436,12 +459,12 @@ export class AgentsClient {
      *
      * @param requestMessage Request message
      * @param requestMetadata Request metadata
-     * @returns Observable<GrpcEvent<ondewoNlu007.Operation>>
+     * @returns Observable<GrpcEvent<ondewoNlu008.Operation>>
      */
     optimizeRankingMatch: (
       requestData: thisProto.OptimizeRankingMatchRequest,
       requestMetadata = new GrpcMetadata()
-    ): Observable<GrpcEvent<ondewoNlu007.Operation>> => {
+    ): Observable<GrpcEvent<ondewoNlu008.Operation>> => {
       return this.handler.handle({
         type: GrpcCallType.unary,
         client: this.client,
@@ -449,7 +472,7 @@ export class AgentsClient {
         requestData,
         requestMetadata,
         requestClass: thisProto.OptimizeRankingMatchRequest,
-        responseClass: ondewoNlu007.Operation
+        responseClass: ondewoNlu008.Operation
       });
     },
     /**
@@ -457,12 +480,12 @@ export class AgentsClient {
      *
      * @param requestMessage Request message
      * @param requestMetadata Request metadata
-     * @returns Observable<GrpcEvent<ondewoNlu007.Operation>>
+     * @returns Observable<GrpcEvent<ondewoNlu008.Operation>>
      */
     restoreAgent: (
       requestData: thisProto.RestoreAgentRequest,
       requestMetadata = new GrpcMetadata()
-    ): Observable<GrpcEvent<ondewoNlu007.Operation>> => {
+    ): Observable<GrpcEvent<ondewoNlu008.Operation>> => {
       return this.handler.handle({
         type: GrpcCallType.unary,
         client: this.client,
@@ -470,7 +493,7 @@ export class AgentsClient {
         requestData,
         requestMetadata,
         requestClass: thisProto.RestoreAgentRequest,
-        responseClass: ondewoNlu007.Operation
+        responseClass: ondewoNlu008.Operation
       });
     },
     /**
@@ -516,6 +539,29 @@ export class AgentsClient {
       });
     },
     /**
+     * Unary call: /ondewo.nlu.Agents/GetSessionsStatisticsTimeSeries
+     *
+     * @param requestMessage Request message
+     * @param requestMetadata Request metadata
+     * @returns Observable<GrpcEvent<thisProto.GetSessionsStatisticsTimeSeriesResponse>>
+     */
+    getSessionsStatisticsTimeSeries: (
+      requestData: thisProto.GetSessionsStatisticsTimeSeriesRequest,
+      requestMetadata = new GrpcMetadata()
+    ): Observable<
+      GrpcEvent<thisProto.GetSessionsStatisticsTimeSeriesResponse>
+    > => {
+      return this.handler.handle({
+        type: GrpcCallType.unary,
+        client: this.client,
+        path: '/ondewo.nlu.Agents/GetSessionsStatisticsTimeSeries',
+        requestData,
+        requestMetadata,
+        requestClass: thisProto.GetSessionsStatisticsTimeSeriesRequest,
+        responseClass: thisProto.GetSessionsStatisticsTimeSeriesResponse
+      });
+    },
+    /**
      * Unary call: /ondewo.nlu.Agents/SetAgentStatus
      *
      * @param requestMessage Request message
@@ -541,12 +587,12 @@ export class AgentsClient {
      *
      * @param requestMessage Request message
      * @param requestMetadata Request metadata
-     * @returns Observable<GrpcEvent<googleProtobuf008.Empty>>
+     * @returns Observable<GrpcEvent<googleProtobuf009.Empty>>
      */
     setResources: (
       requestData: thisProto.SetResourcesRequest,
       requestMetadata = new GrpcMetadata()
-    ): Observable<GrpcEvent<googleProtobuf008.Empty>> => {
+    ): Observable<GrpcEvent<googleProtobuf009.Empty>> => {
       return this.handler.handle({
         type: GrpcCallType.unary,
         client: this.client,
@@ -554,7 +600,7 @@ export class AgentsClient {
         requestData,
         requestMetadata,
         requestClass: thisProto.SetResourcesRequest,
-        responseClass: googleProtobuf008.Empty
+        responseClass: googleProtobuf009.Empty
       });
     },
     /**
@@ -562,12 +608,12 @@ export class AgentsClient {
      *
      * @param requestMessage Request message
      * @param requestMetadata Request metadata
-     * @returns Observable<GrpcEvent<googleProtobuf008.Empty>>
+     * @returns Observable<GrpcEvent<googleProtobuf009.Empty>>
      */
     deleteResources: (
       requestData: thisProto.DeleteResourcesRequest,
       requestMetadata = new GrpcMetadata()
-    ): Observable<GrpcEvent<googleProtobuf008.Empty>> => {
+    ): Observable<GrpcEvent<googleProtobuf009.Empty>> => {
       return this.handler.handle({
         type: GrpcCallType.unary,
         client: this.client,
@@ -575,7 +621,7 @@ export class AgentsClient {
         requestData,
         requestMetadata,
         requestClass: thisProto.DeleteResourcesRequest,
-        responseClass: googleProtobuf008.Empty
+        responseClass: googleProtobuf009.Empty
       });
     },
     /**
@@ -887,12 +933,12 @@ export class AgentsClient {
      *
      * @param requestMessage Request message
      * @param requestMetadata Request metadata
-     * @returns Observable<GrpcEvent<ondewoNlu007.Operation>>
+     * @returns Observable<GrpcEvent<ondewoNlu008.Operation>>
      */
     reindexAgent: (
       requestData: thisProto.ReindexAgentRequest,
       requestMetadata = new GrpcMetadata()
-    ): Observable<GrpcEvent<ondewoNlu007.Operation>> => {
+    ): Observable<GrpcEvent<ondewoNlu008.Operation>> => {
       return this.handler.handle({
         type: GrpcCallType.unary,
         client: this.client,
@@ -900,7 +946,93 @@ export class AgentsClient {
         requestData,
         requestMetadata,
         requestClass: thisProto.ReindexAgentRequest,
-        responseClass: ondewoNlu007.Operation
+        responseClass: ondewoNlu008.Operation
+      });
+    },
+    /**
+     * Unary call: /ondewo.nlu.Agents/CreateProjectTechnicalUser
+     *
+     * @param requestMessage Request message
+     * @param requestMetadata Request metadata
+     * @returns Observable<GrpcEvent<thisProto.CreateProjectTechnicalUserResponse>>
+     */
+    createProjectTechnicalUser: (
+      requestData: thisProto.CreateProjectTechnicalUserRequest,
+      requestMetadata = new GrpcMetadata()
+    ): Observable<GrpcEvent<thisProto.CreateProjectTechnicalUserResponse>> => {
+      return this.handler.handle({
+        type: GrpcCallType.unary,
+        client: this.client,
+        path: '/ondewo.nlu.Agents/CreateProjectTechnicalUser',
+        requestData,
+        requestMetadata,
+        requestClass: thisProto.CreateProjectTechnicalUserRequest,
+        responseClass: thisProto.CreateProjectTechnicalUserResponse
+      });
+    },
+    /**
+     * Unary call: /ondewo.nlu.Agents/ListProjectTechnicalUsers
+     *
+     * @param requestMessage Request message
+     * @param requestMetadata Request metadata
+     * @returns Observable<GrpcEvent<thisProto.ListProjectTechnicalUsersResponse>>
+     */
+    listProjectTechnicalUsers: (
+      requestData: thisProto.ListProjectTechnicalUsersRequest,
+      requestMetadata = new GrpcMetadata()
+    ): Observable<GrpcEvent<thisProto.ListProjectTechnicalUsersResponse>> => {
+      return this.handler.handle({
+        type: GrpcCallType.unary,
+        client: this.client,
+        path: '/ondewo.nlu.Agents/ListProjectTechnicalUsers',
+        requestData,
+        requestMetadata,
+        requestClass: thisProto.ListProjectTechnicalUsersRequest,
+        responseClass: thisProto.ListProjectTechnicalUsersResponse
+      });
+    },
+    /**
+     * Unary call: /ondewo.nlu.Agents/DeleteProjectTechnicalUser
+     *
+     * @param requestMessage Request message
+     * @param requestMetadata Request metadata
+     * @returns Observable<GrpcEvent<googleProtobuf009.Empty>>
+     */
+    deleteProjectTechnicalUser: (
+      requestData: thisProto.DeleteProjectTechnicalUserRequest,
+      requestMetadata = new GrpcMetadata()
+    ): Observable<GrpcEvent<googleProtobuf009.Empty>> => {
+      return this.handler.handle({
+        type: GrpcCallType.unary,
+        client: this.client,
+        path: '/ondewo.nlu.Agents/DeleteProjectTechnicalUser',
+        requestData,
+        requestMetadata,
+        requestClass: thisProto.DeleteProjectTechnicalUserRequest,
+        responseClass: googleProtobuf009.Empty
+      });
+    },
+    /**
+     * Unary call: /ondewo.nlu.Agents/RotateProjectTechnicalUserPassword
+     *
+     * @param requestMessage Request message
+     * @param requestMetadata Request metadata
+     * @returns Observable<GrpcEvent<thisProto.RotateProjectTechnicalUserPasswordResponse>>
+     */
+    rotateProjectTechnicalUserPassword: (
+      requestData: thisProto.RotateProjectTechnicalUserPasswordRequest,
+      requestMetadata = new GrpcMetadata()
+    ): Observable<
+      GrpcEvent<thisProto.RotateProjectTechnicalUserPasswordResponse>
+    > => {
+      return this.handler.handle({
+        type: GrpcCallType.unary,
+        client: this.client,
+        path: '/ondewo.nlu.Agents/RotateProjectTechnicalUserPassword',
+        requestData,
+        requestMetadata,
+        requestClass: thisProto.RotateProjectTechnicalUserPasswordRequest,
+        responseClass: thisProto.RotateProjectTechnicalUserPasswordResponse
       });
     }
   };
@@ -966,12 +1098,12 @@ export class AgentsClient {
    *
    * @param requestMessage Request message
    * @param requestMetadata Request metadata
-   * @returns Observable<googleProtobuf008.Empty>
+   * @returns Observable<googleProtobuf009.Empty>
    */
   deleteAgent(
     requestData: thisProto.DeleteAgentRequest,
     requestMetadata = new GrpcMetadata()
-  ): Observable<googleProtobuf008.Empty> {
+  ): Observable<googleProtobuf009.Empty> {
     return this.$raw
       .deleteAgent(requestData, requestMetadata)
       .pipe(throwStatusErrors(), takeMessages());
@@ -982,12 +1114,12 @@ export class AgentsClient {
    *
    * @param requestMessage Request message
    * @param requestMetadata Request metadata
-   * @returns Observable<googleProtobuf008.Empty>
+   * @returns Observable<googleProtobuf009.Empty>
    */
   deleteAllAgents(
-    requestData: googleProtobuf008.Empty,
+    requestData: googleProtobuf009.Empty,
     requestMetadata = new GrpcMetadata()
-  ): Observable<googleProtobuf008.Empty> {
+  ): Observable<googleProtobuf009.Empty> {
     return this.$raw
       .deleteAllAgents(requestData, requestMetadata)
       .pipe(throwStatusErrors(), takeMessages());
@@ -1046,12 +1178,12 @@ export class AgentsClient {
    *
    * @param requestMessage Request message
    * @param requestMetadata Request metadata
-   * @returns Observable<googleProtobuf008.Empty>
+   * @returns Observable<googleProtobuf009.Empty>
    */
   addUserToProject(
     requestData: thisProto.AddUserToProjectRequest,
     requestMetadata = new GrpcMetadata()
-  ): Observable<googleProtobuf008.Empty> {
+  ): Observable<googleProtobuf009.Empty> {
     return this.$raw
       .addUserToProject(requestData, requestMetadata)
       .pipe(throwStatusErrors(), takeMessages());
@@ -1062,12 +1194,12 @@ export class AgentsClient {
    *
    * @param requestMessage Request message
    * @param requestMetadata Request metadata
-   * @returns Observable<googleProtobuf008.Empty>
+   * @returns Observable<googleProtobuf009.Empty>
    */
   removeUserFromProject(
     requestData: thisProto.RemoveUserFromProjectRequest,
     requestMetadata = new GrpcMetadata()
-  ): Observable<googleProtobuf008.Empty> {
+  ): Observable<googleProtobuf009.Empty> {
     return this.$raw
       .removeUserFromProject(requestData, requestMetadata)
       .pipe(throwStatusErrors(), takeMessages());
@@ -1097,7 +1229,7 @@ export class AgentsClient {
    * @returns Observable<thisProto.GetPlatformInfoResponse>
    */
   getPlatformInfo(
-    requestData: googleProtobuf008.Empty,
+    requestData: googleProtobuf009.Empty,
     requestMetadata = new GrpcMetadata()
   ): Observable<thisProto.GetPlatformInfoResponse> {
     return this.$raw
@@ -1126,12 +1258,12 @@ export class AgentsClient {
    *
    * @param requestMessage Request message
    * @param requestMetadata Request metadata
-   * @returns Observable<ondewoNlu007.Operation>
+   * @returns Observable<ondewoNlu008.Operation>
    */
   trainAgent(
     requestData: thisProto.TrainAgentRequest,
     requestMetadata = new GrpcMetadata()
-  ): Observable<ondewoNlu007.Operation> {
+  ): Observable<ondewoNlu008.Operation> {
     return this.$raw
       .trainAgent(requestData, requestMetadata)
       .pipe(throwStatusErrors(), takeMessages());
@@ -1142,12 +1274,12 @@ export class AgentsClient {
    *
    * @param requestMessage Request message
    * @param requestMetadata Request metadata
-   * @returns Observable<ondewoNlu007.Operation>
+   * @returns Observable<ondewoNlu008.Operation>
    */
   buildCache(
     requestData: thisProto.BuildCacheRequest,
     requestMetadata = new GrpcMetadata()
-  ): Observable<ondewoNlu007.Operation> {
+  ): Observable<ondewoNlu008.Operation> {
     return this.$raw
       .buildCache(requestData, requestMetadata)
       .pipe(throwStatusErrors(), takeMessages());
@@ -1158,12 +1290,12 @@ export class AgentsClient {
    *
    * @param requestMessage Request message
    * @param requestMetadata Request metadata
-   * @returns Observable<ondewoNlu007.Operation>
+   * @returns Observable<ondewoNlu008.Operation>
    */
   exportAgent(
     requestData: thisProto.ExportAgentRequest,
     requestMetadata = new GrpcMetadata()
-  ): Observable<ondewoNlu007.Operation> {
+  ): Observable<ondewoNlu008.Operation> {
     return this.$raw
       .exportAgent(requestData, requestMetadata)
       .pipe(throwStatusErrors(), takeMessages());
@@ -1174,12 +1306,12 @@ export class AgentsClient {
    *
    * @param requestMessage Request message
    * @param requestMetadata Request metadata
-   * @returns Observable<ondewoNlu007.Operation>
+   * @returns Observable<ondewoNlu008.Operation>
    */
   exportBenchmarkAgent(
     requestData: thisProto.ExportBenchmarkAgentRequest,
     requestMetadata = new GrpcMetadata()
-  ): Observable<ondewoNlu007.Operation> {
+  ): Observable<ondewoNlu008.Operation> {
     return this.$raw
       .exportBenchmarkAgent(requestData, requestMetadata)
       .pipe(throwStatusErrors(), takeMessages());
@@ -1190,14 +1322,30 @@ export class AgentsClient {
    *
    * @param requestMessage Request message
    * @param requestMetadata Request metadata
-   * @returns Observable<ondewoNlu007.Operation>
+   * @returns Observable<ondewoNlu008.Operation>
    */
   importAgent(
     requestData: thisProto.ImportAgentRequest,
     requestMetadata = new GrpcMetadata()
-  ): Observable<ondewoNlu007.Operation> {
+  ): Observable<ondewoNlu008.Operation> {
     return this.$raw
       .importAgent(requestData, requestMetadata)
+      .pipe(throwStatusErrors(), takeMessages());
+  }
+
+  /**
+   * Unary call @/ondewo.nlu.Agents/MigrateAgent
+   *
+   * @param requestMessage Request message
+   * @param requestMetadata Request metadata
+   * @returns Observable<ondewoNlu008.Operation>
+   */
+  migrateAgent(
+    requestData: thisProto.MigrateAgentRequest,
+    requestMetadata = new GrpcMetadata()
+  ): Observable<ondewoNlu008.Operation> {
+    return this.$raw
+      .migrateAgent(requestData, requestMetadata)
       .pipe(throwStatusErrors(), takeMessages());
   }
 
@@ -1206,12 +1354,12 @@ export class AgentsClient {
    *
    * @param requestMessage Request message
    * @param requestMetadata Request metadata
-   * @returns Observable<ondewoNlu007.Operation>
+   * @returns Observable<ondewoNlu008.Operation>
    */
   optimizeRankingMatch(
     requestData: thisProto.OptimizeRankingMatchRequest,
     requestMetadata = new GrpcMetadata()
-  ): Observable<ondewoNlu007.Operation> {
+  ): Observable<ondewoNlu008.Operation> {
     return this.$raw
       .optimizeRankingMatch(requestData, requestMetadata)
       .pipe(throwStatusErrors(), takeMessages());
@@ -1222,12 +1370,12 @@ export class AgentsClient {
    *
    * @param requestMessage Request message
    * @param requestMetadata Request metadata
-   * @returns Observable<ondewoNlu007.Operation>
+   * @returns Observable<ondewoNlu008.Operation>
    */
   restoreAgent(
     requestData: thisProto.RestoreAgentRequest,
     requestMetadata = new GrpcMetadata()
-  ): Observable<ondewoNlu007.Operation> {
+  ): Observable<ondewoNlu008.Operation> {
     return this.$raw
       .restoreAgent(requestData, requestMetadata)
       .pipe(throwStatusErrors(), takeMessages());
@@ -1266,6 +1414,22 @@ export class AgentsClient {
   }
 
   /**
+   * Unary call @/ondewo.nlu.Agents/GetSessionsStatisticsTimeSeries
+   *
+   * @param requestMessage Request message
+   * @param requestMetadata Request metadata
+   * @returns Observable<thisProto.GetSessionsStatisticsTimeSeriesResponse>
+   */
+  getSessionsStatisticsTimeSeries(
+    requestData: thisProto.GetSessionsStatisticsTimeSeriesRequest,
+    requestMetadata = new GrpcMetadata()
+  ): Observable<thisProto.GetSessionsStatisticsTimeSeriesResponse> {
+    return this.$raw
+      .getSessionsStatisticsTimeSeries(requestData, requestMetadata)
+      .pipe(throwStatusErrors(), takeMessages());
+  }
+
+  /**
    * Unary call @/ondewo.nlu.Agents/SetAgentStatus
    *
    * @param requestMessage Request message
@@ -1286,12 +1450,12 @@ export class AgentsClient {
    *
    * @param requestMessage Request message
    * @param requestMetadata Request metadata
-   * @returns Observable<googleProtobuf008.Empty>
+   * @returns Observable<googleProtobuf009.Empty>
    */
   setResources(
     requestData: thisProto.SetResourcesRequest,
     requestMetadata = new GrpcMetadata()
-  ): Observable<googleProtobuf008.Empty> {
+  ): Observable<googleProtobuf009.Empty> {
     return this.$raw
       .setResources(requestData, requestMetadata)
       .pipe(throwStatusErrors(), takeMessages());
@@ -1302,12 +1466,12 @@ export class AgentsClient {
    *
    * @param requestMessage Request message
    * @param requestMetadata Request metadata
-   * @returns Observable<googleProtobuf008.Empty>
+   * @returns Observable<googleProtobuf009.Empty>
    */
   deleteResources(
     requestData: thisProto.DeleteResourcesRequest,
     requestMetadata = new GrpcMetadata()
-  ): Observable<googleProtobuf008.Empty> {
+  ): Observable<googleProtobuf009.Empty> {
     return this.$raw
       .deleteResources(requestData, requestMetadata)
       .pipe(throwStatusErrors(), takeMessages());
@@ -1542,14 +1706,78 @@ export class AgentsClient {
    *
    * @param requestMessage Request message
    * @param requestMetadata Request metadata
-   * @returns Observable<ondewoNlu007.Operation>
+   * @returns Observable<ondewoNlu008.Operation>
    */
   reindexAgent(
     requestData: thisProto.ReindexAgentRequest,
     requestMetadata = new GrpcMetadata()
-  ): Observable<ondewoNlu007.Operation> {
+  ): Observable<ondewoNlu008.Operation> {
     return this.$raw
       .reindexAgent(requestData, requestMetadata)
+      .pipe(throwStatusErrors(), takeMessages());
+  }
+
+  /**
+   * Unary call @/ondewo.nlu.Agents/CreateProjectTechnicalUser
+   *
+   * @param requestMessage Request message
+   * @param requestMetadata Request metadata
+   * @returns Observable<thisProto.CreateProjectTechnicalUserResponse>
+   */
+  createProjectTechnicalUser(
+    requestData: thisProto.CreateProjectTechnicalUserRequest,
+    requestMetadata = new GrpcMetadata()
+  ): Observable<thisProto.CreateProjectTechnicalUserResponse> {
+    return this.$raw
+      .createProjectTechnicalUser(requestData, requestMetadata)
+      .pipe(throwStatusErrors(), takeMessages());
+  }
+
+  /**
+   * Unary call @/ondewo.nlu.Agents/ListProjectTechnicalUsers
+   *
+   * @param requestMessage Request message
+   * @param requestMetadata Request metadata
+   * @returns Observable<thisProto.ListProjectTechnicalUsersResponse>
+   */
+  listProjectTechnicalUsers(
+    requestData: thisProto.ListProjectTechnicalUsersRequest,
+    requestMetadata = new GrpcMetadata()
+  ): Observable<thisProto.ListProjectTechnicalUsersResponse> {
+    return this.$raw
+      .listProjectTechnicalUsers(requestData, requestMetadata)
+      .pipe(throwStatusErrors(), takeMessages());
+  }
+
+  /**
+   * Unary call @/ondewo.nlu.Agents/DeleteProjectTechnicalUser
+   *
+   * @param requestMessage Request message
+   * @param requestMetadata Request metadata
+   * @returns Observable<googleProtobuf009.Empty>
+   */
+  deleteProjectTechnicalUser(
+    requestData: thisProto.DeleteProjectTechnicalUserRequest,
+    requestMetadata = new GrpcMetadata()
+  ): Observable<googleProtobuf009.Empty> {
+    return this.$raw
+      .deleteProjectTechnicalUser(requestData, requestMetadata)
+      .pipe(throwStatusErrors(), takeMessages());
+  }
+
+  /**
+   * Unary call @/ondewo.nlu.Agents/RotateProjectTechnicalUserPassword
+   *
+   * @param requestMessage Request message
+   * @param requestMetadata Request metadata
+   * @returns Observable<thisProto.RotateProjectTechnicalUserPasswordResponse>
+   */
+  rotateProjectTechnicalUserPassword(
+    requestData: thisProto.RotateProjectTechnicalUserPasswordRequest,
+    requestMetadata = new GrpcMetadata()
+  ): Observable<thisProto.RotateProjectTechnicalUserPasswordResponse> {
+    return this.$raw
+      .rotateProjectTechnicalUserPassword(requestData, requestMetadata)
       .pipe(throwStatusErrors(), takeMessages());
   }
 }

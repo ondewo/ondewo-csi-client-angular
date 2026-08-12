@@ -22,10 +22,11 @@ import * as ondewoNlu008 from '../../ondewo/nlu/operations.pb';
 import * as googleProtobuf009 from '@ngx-grpc/well-known-types';
 import * as googleRpc010 from '../../google/rpc/status.pb';
 import * as googleType011 from '../../google/type/latlng.pb';
-import * as ondewoNlu012 from '../../ondewo/nlu/intent.pb';
+import * as ondewoNlu012 from '../../ondewo/nlu/ccai-project.pb';
 import * as ondewoNlu013 from '../../ondewo/nlu/entity-type.pb';
-import * as ondewoNlu014 from '../../ondewo/nlu/ccai-project.pb';
-import * as ondewoNlu015 from '../../ondewo/nlu/session.pb';
+import * as ondewoNlu014 from '../../ondewo/nlu/intent.pb';
+import * as ondewoNlu015 from '../../ondewo/nlu/llm-evaluation.pb';
+import * as ondewoNlu016 from '../../ondewo/nlu/session.pb';
 export enum Mode {
   UNSPECIFIED = 0,
   EXCLUSIVE = 1,
@@ -70,6 +71,7 @@ export class ListLlmModelsRequest implements GrpcMessage {
    */
   static refineValues(_instance: ListLlmModelsRequest) {
     _instance.ccaiServiceName = _instance.ccaiServiceName || '';
+    _instance.fieldMask = _instance.fieldMask || undefined;
   }
 
   /**
@@ -87,6 +89,13 @@ export class ListLlmModelsRequest implements GrpcMessage {
       switch (_reader.getFieldNumber()) {
         case 1:
           _instance.ccaiServiceName = _reader.readString();
+          break;
+        case 2:
+          _instance.fieldMask = new googleProtobuf002.FieldMask();
+          _reader.readMessage(
+            _instance.fieldMask,
+            googleProtobuf002.FieldMask.deserializeBinaryFromReader
+          );
           break;
         default:
           _reader.skipField();
@@ -108,9 +117,17 @@ export class ListLlmModelsRequest implements GrpcMessage {
     if (_instance.ccaiServiceName) {
       _writer.writeString(1, _instance.ccaiServiceName);
     }
+    if (_instance.fieldMask) {
+      _writer.writeMessage(
+        2,
+        _instance.fieldMask as any,
+        googleProtobuf002.FieldMask.serializeBinaryToWriter
+      );
+    }
   }
 
   private _ccaiServiceName: string;
+  private _fieldMask?: googleProtobuf002.FieldMask;
 
   /**
    * Message constructor. Initializes the properties and applies default Protobuf values if necessary
@@ -119,6 +136,9 @@ export class ListLlmModelsRequest implements GrpcMessage {
   constructor(_value?: RecursivePartial<ListLlmModelsRequest.AsObject>) {
     _value = _value || {};
     this.ccaiServiceName = _value.ccaiServiceName;
+    this.fieldMask = _value.fieldMask
+      ? new googleProtobuf002.FieldMask(_value.fieldMask)
+      : undefined;
     ListLlmModelsRequest.refineValues(this);
   }
   get ccaiServiceName(): string {
@@ -126,6 +146,12 @@ export class ListLlmModelsRequest implements GrpcMessage {
   }
   set ccaiServiceName(value: string) {
     this._ccaiServiceName = value;
+  }
+  get fieldMask(): googleProtobuf002.FieldMask | undefined {
+    return this._fieldMask;
+  }
+  set fieldMask(value: googleProtobuf002.FieldMask | undefined) {
+    this._fieldMask = value;
   }
 
   /**
@@ -143,7 +169,8 @@ export class ListLlmModelsRequest implements GrpcMessage {
    */
   toObject(): ListLlmModelsRequest.AsObject {
     return {
-      ccaiServiceName: this.ccaiServiceName
+      ccaiServiceName: this.ccaiServiceName,
+      fieldMask: this.fieldMask ? this.fieldMask.toObject() : undefined
     };
   }
 
@@ -164,7 +191,8 @@ export class ListLlmModelsRequest implements GrpcMessage {
     options?: ToProtobufJSONOptions
   ): ListLlmModelsRequest.AsProtobufJSON {
     return {
-      ccaiServiceName: this.ccaiServiceName
+      ccaiServiceName: this.ccaiServiceName,
+      fieldMask: this.fieldMask ? this.fieldMask.toProtobufJSON(options) : null
     };
   }
 }
@@ -174,6 +202,7 @@ export module ListLlmModelsRequest {
    */
   export interface AsObject {
     ccaiServiceName: string;
+    fieldMask?: googleProtobuf002.FieldMask.AsObject;
   }
 
   /**
@@ -181,6 +210,7 @@ export module ListLlmModelsRequest {
    */
   export interface AsProtobufJSON {
     ccaiServiceName: string;
+    fieldMask: googleProtobuf002.FieldMask.AsProtobufJSON | null;
   }
 }
 
@@ -425,7 +455,7 @@ export class LlmModel implements GrpcMessage {
   private _displayName: string;
   private _description: string;
   private _ccaiServiceName: string;
-  private _ccaiServiceProvider: ondewoNlu014.CcaiServiceProvider;
+  private _ccaiServiceProvider: ondewoNlu012.CcaiServiceProvider;
 
   /**
    * Message constructor. Initializes the properties and applies default Protobuf values if necessary
@@ -464,10 +494,10 @@ export class LlmModel implements GrpcMessage {
   set ccaiServiceName(value: string) {
     this._ccaiServiceName = value;
   }
-  get ccaiServiceProvider(): ondewoNlu014.CcaiServiceProvider {
+  get ccaiServiceProvider(): ondewoNlu012.CcaiServiceProvider {
     return this._ccaiServiceProvider;
   }
-  set ccaiServiceProvider(value: ondewoNlu014.CcaiServiceProvider) {
+  set ccaiServiceProvider(value: ondewoNlu012.CcaiServiceProvider) {
     this._ccaiServiceProvider = value;
   }
 
@@ -516,7 +546,7 @@ export class LlmModel implements GrpcMessage {
       description: this.description,
       ccaiServiceName: this.ccaiServiceName,
       ccaiServiceProvider:
-        ondewoNlu014.CcaiServiceProvider[
+        ondewoNlu012.CcaiServiceProvider[
           this.ccaiServiceProvider === null ||
           this.ccaiServiceProvider === undefined
             ? 0
@@ -534,7 +564,7 @@ export module LlmModel {
     displayName: string;
     description: string;
     ccaiServiceName: string;
-    ccaiServiceProvider: ondewoNlu014.CcaiServiceProvider;
+    ccaiServiceProvider: ondewoNlu012.CcaiServiceProvider;
   }
 
   /**
@@ -577,6 +607,7 @@ export class LlmGenerateRequest implements GrpcMessage {
       _instance.llmGenerationRequest || undefined;
     _instance.ccaiServiceName = _instance.ccaiServiceName || '';
     _instance.fileResources = _instance.fileResources || [];
+    _instance.fieldMask = _instance.fieldMask || undefined;
   }
 
   /**
@@ -603,13 +634,20 @@ export class LlmGenerateRequest implements GrpcMessage {
           _instance.ccaiServiceName = _reader.readString();
           break;
         case 3:
-          const messageInitializer3 = new ondewoNlu015.FileResource();
+          const messageInitializer3 = new ondewoNlu016.FileResource();
           _reader.readMessage(
             messageInitializer3,
-            ondewoNlu015.FileResource.deserializeBinaryFromReader
+            ondewoNlu016.FileResource.deserializeBinaryFromReader
           );
           (_instance.fileResources = _instance.fileResources || []).push(
             messageInitializer3
+          );
+          break;
+        case 4:
+          _instance.fieldMask = new googleProtobuf002.FieldMask();
+          _reader.readMessage(
+            _instance.fieldMask,
+            googleProtobuf002.FieldMask.deserializeBinaryFromReader
           );
           break;
         default:
@@ -643,14 +681,22 @@ export class LlmGenerateRequest implements GrpcMessage {
       _writer.writeRepeatedMessage(
         3,
         _instance.fileResources as any,
-        ondewoNlu015.FileResource.serializeBinaryToWriter
+        ondewoNlu016.FileResource.serializeBinaryToWriter
+      );
+    }
+    if (_instance.fieldMask) {
+      _writer.writeMessage(
+        4,
+        _instance.fieldMask as any,
+        googleProtobuf002.FieldMask.serializeBinaryToWriter
       );
     }
   }
 
   private _llmGenerationRequest?: googleProtobuf003.Struct;
   private _ccaiServiceName: string;
-  private _fileResources?: ondewoNlu015.FileResource[];
+  private _fileResources?: ondewoNlu016.FileResource[];
+  private _fieldMask?: googleProtobuf002.FieldMask;
 
   /**
    * Message constructor. Initializes the properties and applies default Protobuf values if necessary
@@ -663,8 +709,11 @@ export class LlmGenerateRequest implements GrpcMessage {
       : undefined;
     this.ccaiServiceName = _value.ccaiServiceName;
     this.fileResources = (_value.fileResources || []).map(
-      m => new ondewoNlu015.FileResource(m)
+      m => new ondewoNlu016.FileResource(m)
     );
+    this.fieldMask = _value.fieldMask
+      ? new googleProtobuf002.FieldMask(_value.fieldMask)
+      : undefined;
     LlmGenerateRequest.refineValues(this);
   }
   get llmGenerationRequest(): googleProtobuf003.Struct | undefined {
@@ -679,11 +728,17 @@ export class LlmGenerateRequest implements GrpcMessage {
   set ccaiServiceName(value: string) {
     this._ccaiServiceName = value;
   }
-  get fileResources(): ondewoNlu015.FileResource[] | undefined {
+  get fileResources(): ondewoNlu016.FileResource[] | undefined {
     return this._fileResources;
   }
-  set fileResources(value: ondewoNlu015.FileResource[] | undefined) {
+  set fileResources(value: ondewoNlu016.FileResource[] | undefined) {
     this._fileResources = value;
+  }
+  get fieldMask(): googleProtobuf002.FieldMask | undefined {
+    return this._fieldMask;
+  }
+  set fieldMask(value: googleProtobuf002.FieldMask | undefined) {
+    this._fieldMask = value;
   }
 
   /**
@@ -705,7 +760,8 @@ export class LlmGenerateRequest implements GrpcMessage {
         ? this.llmGenerationRequest.toObject()
         : undefined,
       ccaiServiceName: this.ccaiServiceName,
-      fileResources: (this.fileResources || []).map(m => m.toObject())
+      fileResources: (this.fileResources || []).map(m => m.toObject()),
+      fieldMask: this.fieldMask ? this.fieldMask.toObject() : undefined
     };
   }
 
@@ -732,7 +788,8 @@ export class LlmGenerateRequest implements GrpcMessage {
       ccaiServiceName: this.ccaiServiceName,
       fileResources: (this.fileResources || []).map(m =>
         m.toProtobufJSON(options)
-      )
+      ),
+      fieldMask: this.fieldMask ? this.fieldMask.toProtobufJSON(options) : null
     };
   }
 }
@@ -743,7 +800,8 @@ export module LlmGenerateRequest {
   export interface AsObject {
     llmGenerationRequest?: googleProtobuf003.Struct.AsObject;
     ccaiServiceName: string;
-    fileResources?: ondewoNlu015.FileResource.AsObject[];
+    fileResources?: ondewoNlu016.FileResource.AsObject[];
+    fieldMask?: googleProtobuf002.FieldMask.AsObject;
   }
 
   /**
@@ -752,7 +810,8 @@ export module LlmGenerateRequest {
   export interface AsProtobufJSON {
     llmGenerationRequest: googleProtobuf003.Struct.AsProtobufJSON | null;
     ccaiServiceName: string;
-    fileResources: ondewoNlu015.FileResource.AsProtobufJSON[] | null;
+    fileResources: ondewoNlu016.FileResource.AsProtobufJSON[] | null;
+    fieldMask: googleProtobuf002.FieldMask.AsProtobufJSON | null;
   }
 }
 
@@ -806,10 +865,10 @@ export class LlmGenerateResponse implements GrpcMessage {
           );
           break;
         case 2:
-          const messageInitializer2 = new ondewoNlu015.FileResource();
+          const messageInitializer2 = new ondewoNlu016.FileResource();
           _reader.readMessage(
             messageInitializer2,
-            ondewoNlu015.FileResource.deserializeBinaryFromReader
+            ondewoNlu016.FileResource.deserializeBinaryFromReader
           );
           (_instance.fileResources = _instance.fileResources || []).push(
             messageInitializer2
@@ -843,13 +902,13 @@ export class LlmGenerateResponse implements GrpcMessage {
       _writer.writeRepeatedMessage(
         2,
         _instance.fileResources as any,
-        ondewoNlu015.FileResource.serializeBinaryToWriter
+        ondewoNlu016.FileResource.serializeBinaryToWriter
       );
     }
   }
 
   private _llmGenerationResponse?: googleProtobuf003.Struct;
-  private _fileResources?: ondewoNlu015.FileResource[];
+  private _fileResources?: ondewoNlu016.FileResource[];
 
   /**
    * Message constructor. Initializes the properties and applies default Protobuf values if necessary
@@ -861,7 +920,7 @@ export class LlmGenerateResponse implements GrpcMessage {
       ? new googleProtobuf003.Struct(_value.llmGenerationResponse)
       : undefined;
     this.fileResources = (_value.fileResources || []).map(
-      m => new ondewoNlu015.FileResource(m)
+      m => new ondewoNlu016.FileResource(m)
     );
     LlmGenerateResponse.refineValues(this);
   }
@@ -871,10 +930,10 @@ export class LlmGenerateResponse implements GrpcMessage {
   set llmGenerationResponse(value: googleProtobuf003.Struct | undefined) {
     this._llmGenerationResponse = value;
   }
-  get fileResources(): ondewoNlu015.FileResource[] | undefined {
+  get fileResources(): ondewoNlu016.FileResource[] | undefined {
     return this._fileResources;
   }
-  set fileResources(value: ondewoNlu015.FileResource[] | undefined) {
+  set fileResources(value: ondewoNlu016.FileResource[] | undefined) {
     this._fileResources = value;
   }
 
@@ -932,7 +991,7 @@ export module LlmGenerateResponse {
    */
   export interface AsObject {
     llmGenerationResponse?: googleProtobuf003.Struct.AsObject;
-    fileResources?: ondewoNlu015.FileResource.AsObject[];
+    fileResources?: ondewoNlu016.FileResource.AsObject[];
   }
 
   /**
@@ -940,7 +999,7 @@ export module LlmGenerateResponse {
    */
   export interface AsProtobufJSON {
     llmGenerationResponse: googleProtobuf003.Struct.AsProtobufJSON | null;
-    fileResources: ondewoNlu015.FileResource.AsProtobufJSON[] | null;
+    fileResources: ondewoNlu016.FileResource.AsProtobufJSON[] | null;
   }
 }
 
@@ -1128,6 +1187,7 @@ export class ExtractEntitiesRequest implements GrpcMessage {
     _instance.text = _instance.text || '';
     _instance.languageCode = _instance.languageCode || '';
     _instance.intentName = _instance.intentName || '';
+    _instance.fieldMask = _instance.fieldMask || undefined;
   }
 
   /**
@@ -1154,6 +1214,13 @@ export class ExtractEntitiesRequest implements GrpcMessage {
           break;
         case 4:
           _instance.intentName = _reader.readString();
+          break;
+        case 5:
+          _instance.fieldMask = new googleProtobuf002.FieldMask();
+          _reader.readMessage(
+            _instance.fieldMask,
+            googleProtobuf002.FieldMask.deserializeBinaryFromReader
+          );
           break;
         default:
           _reader.skipField();
@@ -1184,12 +1251,20 @@ export class ExtractEntitiesRequest implements GrpcMessage {
     if (_instance.intentName) {
       _writer.writeString(4, _instance.intentName);
     }
+    if (_instance.fieldMask) {
+      _writer.writeMessage(
+        5,
+        _instance.fieldMask as any,
+        googleProtobuf002.FieldMask.serializeBinaryToWriter
+      );
+    }
   }
 
   private _parent: string;
   private _text: string;
   private _languageCode: string;
   private _intentName: string;
+  private _fieldMask?: googleProtobuf002.FieldMask;
 
   /**
    * Message constructor. Initializes the properties and applies default Protobuf values if necessary
@@ -1201,6 +1276,9 @@ export class ExtractEntitiesRequest implements GrpcMessage {
     this.text = _value.text;
     this.languageCode = _value.languageCode;
     this.intentName = _value.intentName;
+    this.fieldMask = _value.fieldMask
+      ? new googleProtobuf002.FieldMask(_value.fieldMask)
+      : undefined;
     ExtractEntitiesRequest.refineValues(this);
   }
   get parent(): string {
@@ -1227,6 +1305,12 @@ export class ExtractEntitiesRequest implements GrpcMessage {
   set intentName(value: string) {
     this._intentName = value;
   }
+  get fieldMask(): googleProtobuf002.FieldMask | undefined {
+    return this._fieldMask;
+  }
+  set fieldMask(value: googleProtobuf002.FieldMask | undefined) {
+    this._fieldMask = value;
+  }
 
   /**
    * Serialize message to binary data
@@ -1246,7 +1330,8 @@ export class ExtractEntitiesRequest implements GrpcMessage {
       parent: this.parent,
       text: this.text,
       languageCode: this.languageCode,
-      intentName: this.intentName
+      intentName: this.intentName,
+      fieldMask: this.fieldMask ? this.fieldMask.toObject() : undefined
     };
   }
 
@@ -1270,7 +1355,8 @@ export class ExtractEntitiesRequest implements GrpcMessage {
       parent: this.parent,
       text: this.text,
       languageCode: this.languageCode,
-      intentName: this.intentName
+      intentName: this.intentName,
+      fieldMask: this.fieldMask ? this.fieldMask.toProtobufJSON(options) : null
     };
   }
 }
@@ -1283,6 +1369,7 @@ export module ExtractEntitiesRequest {
     text: string;
     languageCode: string;
     intentName: string;
+    fieldMask?: googleProtobuf002.FieldMask.AsObject;
   }
 
   /**
@@ -1293,6 +1380,7 @@ export module ExtractEntitiesRequest {
     text: string;
     languageCode: string;
     intentName: string;
+    fieldMask: googleProtobuf002.FieldMask.AsProtobufJSON | null;
   }
 }
 
@@ -1325,6 +1413,7 @@ export class ExtractEntitiesFuzzyRequest implements GrpcMessage {
     _instance.potentialEntities = _instance.potentialEntities || [];
     _instance.minimalScore = _instance.minimalScore || 0;
     _instance.allowOverlaps = _instance.allowOverlaps || false;
+    _instance.fieldMask = _instance.fieldMask || undefined;
   }
 
   /**
@@ -1360,6 +1449,13 @@ export class ExtractEntitiesFuzzyRequest implements GrpcMessage {
           break;
         case 5:
           _instance.allowOverlaps = _reader.readBool();
+          break;
+        case 6:
+          _instance.fieldMask = new googleProtobuf002.FieldMask();
+          _reader.readMessage(
+            _instance.fieldMask,
+            googleProtobuf002.FieldMask.deserializeBinaryFromReader
+          );
           break;
         default:
           _reader.skipField();
@@ -1397,6 +1493,13 @@ export class ExtractEntitiesFuzzyRequest implements GrpcMessage {
     if (_instance.allowOverlaps) {
       _writer.writeBool(5, _instance.allowOverlaps);
     }
+    if (_instance.fieldMask) {
+      _writer.writeMessage(
+        6,
+        _instance.fieldMask as any,
+        googleProtobuf002.FieldMask.serializeBinaryToWriter
+      );
+    }
   }
 
   private _parent: string;
@@ -1404,6 +1507,7 @@ export class ExtractEntitiesFuzzyRequest implements GrpcMessage {
   private _potentialEntities?: EntityTypeFuzzyNerConfig[];
   private _minimalScore: number;
   private _allowOverlaps: boolean;
+  private _fieldMask?: googleProtobuf002.FieldMask;
 
   /**
    * Message constructor. Initializes the properties and applies default Protobuf values if necessary
@@ -1418,6 +1522,9 @@ export class ExtractEntitiesFuzzyRequest implements GrpcMessage {
     );
     this.minimalScore = _value.minimalScore;
     this.allowOverlaps = _value.allowOverlaps;
+    this.fieldMask = _value.fieldMask
+      ? new googleProtobuf002.FieldMask(_value.fieldMask)
+      : undefined;
     ExtractEntitiesFuzzyRequest.refineValues(this);
   }
   get parent(): string {
@@ -1450,6 +1557,12 @@ export class ExtractEntitiesFuzzyRequest implements GrpcMessage {
   set allowOverlaps(value: boolean) {
     this._allowOverlaps = value;
   }
+  get fieldMask(): googleProtobuf002.FieldMask | undefined {
+    return this._fieldMask;
+  }
+  set fieldMask(value: googleProtobuf002.FieldMask | undefined) {
+    this._fieldMask = value;
+  }
 
   /**
    * Serialize message to binary data
@@ -1470,7 +1583,8 @@ export class ExtractEntitiesFuzzyRequest implements GrpcMessage {
       text: this.text,
       potentialEntities: (this.potentialEntities || []).map(m => m.toObject()),
       minimalScore: this.minimalScore,
-      allowOverlaps: this.allowOverlaps
+      allowOverlaps: this.allowOverlaps,
+      fieldMask: this.fieldMask ? this.fieldMask.toObject() : undefined
     };
   }
 
@@ -1497,7 +1611,8 @@ export class ExtractEntitiesFuzzyRequest implements GrpcMessage {
         m.toProtobufJSON(options)
       ),
       minimalScore: this.minimalScore,
-      allowOverlaps: this.allowOverlaps
+      allowOverlaps: this.allowOverlaps,
+      fieldMask: this.fieldMask ? this.fieldMask.toProtobufJSON(options) : null
     };
   }
 }
@@ -1511,6 +1626,7 @@ export module ExtractEntitiesFuzzyRequest {
     potentialEntities?: EntityTypeFuzzyNerConfig.AsObject[];
     minimalScore: number;
     allowOverlaps: boolean;
+    fieldMask?: googleProtobuf002.FieldMask.AsObject;
   }
 
   /**
@@ -1522,6 +1638,7 @@ export module ExtractEntitiesFuzzyRequest {
     potentialEntities: EntityTypeFuzzyNerConfig.AsProtobufJSON[] | null;
     minimalScore: number;
     allowOverlaps: boolean;
+    fieldMask: googleProtobuf002.FieldMask.AsProtobufJSON | null;
   }
 }
 
@@ -1806,10 +1923,10 @@ export class EntityDetected implements GrpcMessage {
 
       switch (_reader.getFieldNumber()) {
         case 1:
-          _instance.entity = new ondewoNlu012.Intent.TrainingPhrase.Entity();
+          _instance.entity = new ondewoNlu014.Intent.TrainingPhrase.Entity();
           _reader.readMessage(
             _instance.entity,
-            ondewoNlu012.Intent.TrainingPhrase.Entity
+            ondewoNlu014.Intent.TrainingPhrase.Entity
               .deserializeBinaryFromReader
           );
           break;
@@ -1840,7 +1957,7 @@ export class EntityDetected implements GrpcMessage {
       _writer.writeMessage(
         1,
         _instance.entity as any,
-        ondewoNlu012.Intent.TrainingPhrase.Entity.serializeBinaryToWriter
+        ondewoNlu014.Intent.TrainingPhrase.Entity.serializeBinaryToWriter
       );
     }
     if (_instance.extractionMethod) {
@@ -1851,7 +1968,7 @@ export class EntityDetected implements GrpcMessage {
     }
   }
 
-  private _entity?: ondewoNlu012.Intent.TrainingPhrase.Entity;
+  private _entity?: ondewoNlu014.Intent.TrainingPhrase.Entity;
   private _extractionMethod: string;
   private _score: number;
 
@@ -1862,16 +1979,16 @@ export class EntityDetected implements GrpcMessage {
   constructor(_value?: RecursivePartial<EntityDetected.AsObject>) {
     _value = _value || {};
     this.entity = _value.entity
-      ? new ondewoNlu012.Intent.TrainingPhrase.Entity(_value.entity)
+      ? new ondewoNlu014.Intent.TrainingPhrase.Entity(_value.entity)
       : undefined;
     this.extractionMethod = _value.extractionMethod;
     this.score = _value.score;
     EntityDetected.refineValues(this);
   }
-  get entity(): ondewoNlu012.Intent.TrainingPhrase.Entity | undefined {
+  get entity(): ondewoNlu014.Intent.TrainingPhrase.Entity | undefined {
     return this._entity;
   }
-  set entity(value: ondewoNlu012.Intent.TrainingPhrase.Entity | undefined) {
+  set entity(value: ondewoNlu014.Intent.TrainingPhrase.Entity | undefined) {
     this._entity = value;
   }
   get extractionMethod(): string {
@@ -1936,7 +2053,7 @@ export module EntityDetected {
    * Standard JavaScript object representation for EntityDetected
    */
   export interface AsObject {
-    entity?: ondewoNlu012.Intent.TrainingPhrase.Entity.AsObject;
+    entity?: ondewoNlu014.Intent.TrainingPhrase.Entity.AsObject;
     extractionMethod: string;
     score: number;
   }
@@ -1945,7 +2062,7 @@ export module EntityDetected {
    * Protobuf JSON representation for EntityDetected
    */
   export interface AsProtobufJSON {
-    entity: ondewoNlu012.Intent.TrainingPhrase.Entity.AsProtobufJSON | null;
+    entity: ondewoNlu014.Intent.TrainingPhrase.Entity.AsProtobufJSON | null;
     extractionMethod: string;
     score: number;
   }
@@ -2154,6 +2271,7 @@ export class GetAlternativeSentencesRequest implements GrpcMessage {
     _instance.parent = _instance.parent || '';
     _instance.protectedWords = _instance.protectedWords || [];
     _instance.wordsToChange = _instance.wordsToChange || [];
+    _instance.fieldMask = _instance.fieldMask || undefined;
   }
 
   /**
@@ -2195,6 +2313,13 @@ export class GetAlternativeSentencesRequest implements GrpcMessage {
             _reader.readString()
           );
           break;
+        case 8:
+          _instance.fieldMask = new googleProtobuf002.FieldMask();
+          _reader.readMessage(
+            _instance.fieldMask,
+            googleProtobuf002.FieldMask.deserializeBinaryFromReader
+          );
+          break;
         default:
           _reader.skipField();
       }
@@ -2234,6 +2359,13 @@ export class GetAlternativeSentencesRequest implements GrpcMessage {
     if (_instance.wordsToChange && _instance.wordsToChange.length) {
       _writer.writeRepeatedString(7, _instance.wordsToChange);
     }
+    if (_instance.fieldMask) {
+      _writer.writeMessage(
+        8,
+        _instance.fieldMask as any,
+        googleProtobuf002.FieldMask.serializeBinaryToWriter
+      );
+    }
   }
 
   private _config?: DataEnrichmentConfig;
@@ -2242,6 +2374,7 @@ export class GetAlternativeSentencesRequest implements GrpcMessage {
   private _parent: string;
   private _protectedWords: string[];
   private _wordsToChange: string[];
+  private _fieldMask?: googleProtobuf002.FieldMask;
 
   /**
    * Message constructor. Initializes the properties and applies default Protobuf values if necessary
@@ -2259,6 +2392,9 @@ export class GetAlternativeSentencesRequest implements GrpcMessage {
     this.parent = _value.parent;
     this.protectedWords = (_value.protectedWords || []).slice();
     this.wordsToChange = (_value.wordsToChange || []).slice();
+    this.fieldMask = _value.fieldMask
+      ? new googleProtobuf002.FieldMask(_value.fieldMask)
+      : undefined;
     GetAlternativeSentencesRequest.refineValues(this);
   }
   get config(): DataEnrichmentConfig | undefined {
@@ -2297,6 +2433,12 @@ export class GetAlternativeSentencesRequest implements GrpcMessage {
   set wordsToChange(value: string[]) {
     this._wordsToChange = value;
   }
+  get fieldMask(): googleProtobuf002.FieldMask | undefined {
+    return this._fieldMask;
+  }
+  set fieldMask(value: googleProtobuf002.FieldMask | undefined) {
+    this._fieldMask = value;
+  }
 
   /**
    * Serialize message to binary data
@@ -2318,7 +2460,8 @@ export class GetAlternativeSentencesRequest implements GrpcMessage {
       languageCode: this.languageCode,
       parent: this.parent,
       protectedWords: (this.protectedWords || []).slice(),
-      wordsToChange: (this.wordsToChange || []).slice()
+      wordsToChange: (this.wordsToChange || []).slice(),
+      fieldMask: this.fieldMask ? this.fieldMask.toObject() : undefined
     };
   }
 
@@ -2344,7 +2487,8 @@ export class GetAlternativeSentencesRequest implements GrpcMessage {
       languageCode: this.languageCode,
       parent: this.parent,
       protectedWords: (this.protectedWords || []).slice(),
-      wordsToChange: (this.wordsToChange || []).slice()
+      wordsToChange: (this.wordsToChange || []).slice(),
+      fieldMask: this.fieldMask ? this.fieldMask.toProtobufJSON(options) : null
     };
   }
 }
@@ -2359,6 +2503,7 @@ export module GetAlternativeSentencesRequest {
     parent: string;
     protectedWords: string[];
     wordsToChange: string[];
+    fieldMask?: googleProtobuf002.FieldMask.AsObject;
   }
 
   /**
@@ -2371,6 +2516,7 @@ export module GetAlternativeSentencesRequest {
     parent: string;
     protectedWords: string[];
     wordsToChange: string[];
+    fieldMask: googleProtobuf002.FieldMask.AsProtobufJSON | null;
   }
 }
 
@@ -2402,6 +2548,7 @@ export class GenerateUserSaysRequest implements GrpcMessage {
     _instance.parent = _instance.parent || '';
     _instance.nRepeatSynonym = _instance.nRepeatSynonym || 0;
     _instance.branch = _instance.branch || '';
+    _instance.fieldMask = _instance.fieldMask || undefined;
   }
 
   /**
@@ -2428,6 +2575,13 @@ export class GenerateUserSaysRequest implements GrpcMessage {
           break;
         case 8:
           _instance.branch = _reader.readString();
+          break;
+        case 9:
+          _instance.fieldMask = new googleProtobuf002.FieldMask();
+          _reader.readMessage(
+            _instance.fieldMask,
+            googleProtobuf002.FieldMask.deserializeBinaryFromReader
+          );
           break;
         default:
           _reader.skipField();
@@ -2458,12 +2612,20 @@ export class GenerateUserSaysRequest implements GrpcMessage {
     if (_instance.branch) {
       _writer.writeString(8, _instance.branch);
     }
+    if (_instance.fieldMask) {
+      _writer.writeMessage(
+        9,
+        _instance.fieldMask as any,
+        googleProtobuf002.FieldMask.serializeBinaryToWriter
+      );
+    }
   }
 
   private _languageCode: string;
   private _parent: string;
   private _nRepeatSynonym: number;
   private _branch: string;
+  private _fieldMask?: googleProtobuf002.FieldMask;
 
   /**
    * Message constructor. Initializes the properties and applies default Protobuf values if necessary
@@ -2475,6 +2637,9 @@ export class GenerateUserSaysRequest implements GrpcMessage {
     this.parent = _value.parent;
     this.nRepeatSynonym = _value.nRepeatSynonym;
     this.branch = _value.branch;
+    this.fieldMask = _value.fieldMask
+      ? new googleProtobuf002.FieldMask(_value.fieldMask)
+      : undefined;
     GenerateUserSaysRequest.refineValues(this);
   }
   get languageCode(): string {
@@ -2501,6 +2666,12 @@ export class GenerateUserSaysRequest implements GrpcMessage {
   set branch(value: string) {
     this._branch = value;
   }
+  get fieldMask(): googleProtobuf002.FieldMask | undefined {
+    return this._fieldMask;
+  }
+  set fieldMask(value: googleProtobuf002.FieldMask | undefined) {
+    this._fieldMask = value;
+  }
 
   /**
    * Serialize message to binary data
@@ -2520,7 +2691,8 @@ export class GenerateUserSaysRequest implements GrpcMessage {
       languageCode: this.languageCode,
       parent: this.parent,
       nRepeatSynonym: this.nRepeatSynonym,
-      branch: this.branch
+      branch: this.branch,
+      fieldMask: this.fieldMask ? this.fieldMask.toObject() : undefined
     };
   }
 
@@ -2544,7 +2716,8 @@ export class GenerateUserSaysRequest implements GrpcMessage {
       languageCode: this.languageCode,
       parent: this.parent,
       nRepeatSynonym: this.nRepeatSynonym,
-      branch: this.branch
+      branch: this.branch,
+      fieldMask: this.fieldMask ? this.fieldMask.toProtobufJSON(options) : null
     };
   }
 }
@@ -2557,6 +2730,7 @@ export module GenerateUserSaysRequest {
     parent: string;
     nRepeatSynonym: number;
     branch: string;
+    fieldMask?: googleProtobuf002.FieldMask.AsObject;
   }
 
   /**
@@ -2567,6 +2741,7 @@ export module GenerateUserSaysRequest {
     parent: string;
     nRepeatSynonym: number;
     branch: string;
+    fieldMask: googleProtobuf002.FieldMask.AsProtobufJSON | null;
   }
 }
 
@@ -2599,6 +2774,7 @@ export class GenerateResponsesRequest implements GrpcMessage {
     _instance.nRepeatSynonym = _instance.nRepeatSynonym || 0;
     _instance.branch = _instance.branch || '';
     _instance.dropUnknownParameters = _instance.dropUnknownParameters || false;
+    _instance.fieldMask = _instance.fieldMask || undefined;
   }
 
   /**
@@ -2628,6 +2804,13 @@ export class GenerateResponsesRequest implements GrpcMessage {
           break;
         case 9:
           _instance.dropUnknownParameters = _reader.readBool();
+          break;
+        case 10:
+          _instance.fieldMask = new googleProtobuf002.FieldMask();
+          _reader.readMessage(
+            _instance.fieldMask,
+            googleProtobuf002.FieldMask.deserializeBinaryFromReader
+          );
           break;
         default:
           _reader.skipField();
@@ -2661,6 +2844,13 @@ export class GenerateResponsesRequest implements GrpcMessage {
     if (_instance.dropUnknownParameters) {
       _writer.writeBool(9, _instance.dropUnknownParameters);
     }
+    if (_instance.fieldMask) {
+      _writer.writeMessage(
+        10,
+        _instance.fieldMask as any,
+        googleProtobuf002.FieldMask.serializeBinaryToWriter
+      );
+    }
   }
 
   private _languageCode: string;
@@ -2668,6 +2858,7 @@ export class GenerateResponsesRequest implements GrpcMessage {
   private _nRepeatSynonym: number;
   private _branch: string;
   private _dropUnknownParameters: boolean;
+  private _fieldMask?: googleProtobuf002.FieldMask;
 
   /**
    * Message constructor. Initializes the properties and applies default Protobuf values if necessary
@@ -2680,6 +2871,9 @@ export class GenerateResponsesRequest implements GrpcMessage {
     this.nRepeatSynonym = _value.nRepeatSynonym;
     this.branch = _value.branch;
     this.dropUnknownParameters = _value.dropUnknownParameters;
+    this.fieldMask = _value.fieldMask
+      ? new googleProtobuf002.FieldMask(_value.fieldMask)
+      : undefined;
     GenerateResponsesRequest.refineValues(this);
   }
   get languageCode(): string {
@@ -2712,6 +2906,12 @@ export class GenerateResponsesRequest implements GrpcMessage {
   set dropUnknownParameters(value: boolean) {
     this._dropUnknownParameters = value;
   }
+  get fieldMask(): googleProtobuf002.FieldMask | undefined {
+    return this._fieldMask;
+  }
+  set fieldMask(value: googleProtobuf002.FieldMask | undefined) {
+    this._fieldMask = value;
+  }
 
   /**
    * Serialize message to binary data
@@ -2732,7 +2932,8 @@ export class GenerateResponsesRequest implements GrpcMessage {
       parent: this.parent,
       nRepeatSynonym: this.nRepeatSynonym,
       branch: this.branch,
-      dropUnknownParameters: this.dropUnknownParameters
+      dropUnknownParameters: this.dropUnknownParameters,
+      fieldMask: this.fieldMask ? this.fieldMask.toObject() : undefined
     };
   }
 
@@ -2757,7 +2958,8 @@ export class GenerateResponsesRequest implements GrpcMessage {
       parent: this.parent,
       nRepeatSynonym: this.nRepeatSynonym,
       branch: this.branch,
-      dropUnknownParameters: this.dropUnknownParameters
+      dropUnknownParameters: this.dropUnknownParameters,
+      fieldMask: this.fieldMask ? this.fieldMask.toProtobufJSON(options) : null
     };
   }
 }
@@ -2771,6 +2973,7 @@ export module GenerateResponsesRequest {
     nRepeatSynonym: number;
     branch: string;
     dropUnknownParameters: boolean;
+    fieldMask?: googleProtobuf002.FieldMask.AsObject;
   }
 
   /**
@@ -2782,6 +2985,7 @@ export module GenerateResponsesRequest {
     nRepeatSynonym: number;
     branch: string;
     dropUnknownParameters: boolean;
+    fieldMask: googleProtobuf002.FieldMask.AsProtobufJSON | null;
   }
 }
 
@@ -2819,6 +3023,7 @@ export class GetAlternativeTrainingPhrasesRequest implements GrpcMessage {
     _instance.protectedWords = _instance.protectedWords || [];
     _instance.wordsToChange = _instance.wordsToChange || [];
     _instance.branch = _instance.branch || '';
+    _instance.fieldMask = _instance.fieldMask || undefined;
   }
 
   /**
@@ -2842,10 +3047,10 @@ export class GetAlternativeTrainingPhrasesRequest implements GrpcMessage {
           );
           break;
         case 2:
-          _instance.trainingPhrase = new ondewoNlu012.Intent.TrainingPhrase();
+          _instance.trainingPhrase = new ondewoNlu014.Intent.TrainingPhrase();
           _reader.readMessage(
             _instance.trainingPhrase,
-            ondewoNlu012.Intent.TrainingPhrase.deserializeBinaryFromReader
+            ondewoNlu014.Intent.TrainingPhrase.deserializeBinaryFromReader
           );
           break;
         case 3:
@@ -2876,6 +3081,13 @@ export class GetAlternativeTrainingPhrasesRequest implements GrpcMessage {
         case 10:
           _instance.branch = _reader.readString();
           break;
+        case 11:
+          _instance.fieldMask = new googleProtobuf002.FieldMask();
+          _reader.readMessage(
+            _instance.fieldMask,
+            googleProtobuf002.FieldMask.deserializeBinaryFromReader
+          );
+          break;
         default:
           _reader.skipField();
       }
@@ -2904,7 +3116,7 @@ export class GetAlternativeTrainingPhrasesRequest implements GrpcMessage {
       _writer.writeMessage(
         2,
         _instance.trainingPhrase as any,
-        ondewoNlu012.Intent.TrainingPhrase.serializeBinaryToWriter
+        ondewoNlu014.Intent.TrainingPhrase.serializeBinaryToWriter
       );
     }
     if (_instance.intentName) {
@@ -2931,10 +3143,17 @@ export class GetAlternativeTrainingPhrasesRequest implements GrpcMessage {
     if (_instance.branch) {
       _writer.writeString(10, _instance.branch);
     }
+    if (_instance.fieldMask) {
+      _writer.writeMessage(
+        11,
+        _instance.fieldMask as any,
+        googleProtobuf002.FieldMask.serializeBinaryToWriter
+      );
+    }
   }
 
   private _config?: DataEnrichmentConfig;
-  private _trainingPhrase?: ondewoNlu012.Intent.TrainingPhrase;
+  private _trainingPhrase?: ondewoNlu014.Intent.TrainingPhrase;
   private _intentName: string;
   private _languageCode: string;
   private _parent: string;
@@ -2943,6 +3162,7 @@ export class GetAlternativeTrainingPhrasesRequest implements GrpcMessage {
   private _protectedWords: string[];
   private _wordsToChange: string[];
   private _branch: string;
+  private _fieldMask?: googleProtobuf002.FieldMask;
 
   /**
    * Message constructor. Initializes the properties and applies default Protobuf values if necessary
@@ -2956,7 +3176,7 @@ export class GetAlternativeTrainingPhrasesRequest implements GrpcMessage {
       ? new DataEnrichmentConfig(_value.config)
       : undefined;
     this.trainingPhrase = _value.trainingPhrase
-      ? new ondewoNlu012.Intent.TrainingPhrase(_value.trainingPhrase)
+      ? new ondewoNlu014.Intent.TrainingPhrase(_value.trainingPhrase)
       : undefined;
     this.intentName = _value.intentName;
     this.languageCode = _value.languageCode;
@@ -2966,6 +3186,9 @@ export class GetAlternativeTrainingPhrasesRequest implements GrpcMessage {
     this.protectedWords = (_value.protectedWords || []).slice();
     this.wordsToChange = (_value.wordsToChange || []).slice();
     this.branch = _value.branch;
+    this.fieldMask = _value.fieldMask
+      ? new googleProtobuf002.FieldMask(_value.fieldMask)
+      : undefined;
     GetAlternativeTrainingPhrasesRequest.refineValues(this);
   }
   get config(): DataEnrichmentConfig | undefined {
@@ -2974,10 +3197,10 @@ export class GetAlternativeTrainingPhrasesRequest implements GrpcMessage {
   set config(value: DataEnrichmentConfig | undefined) {
     this._config = value;
   }
-  get trainingPhrase(): ondewoNlu012.Intent.TrainingPhrase | undefined {
+  get trainingPhrase(): ondewoNlu014.Intent.TrainingPhrase | undefined {
     return this._trainingPhrase;
   }
-  set trainingPhrase(value: ondewoNlu012.Intent.TrainingPhrase | undefined) {
+  set trainingPhrase(value: ondewoNlu014.Intent.TrainingPhrase | undefined) {
     this._trainingPhrase = value;
   }
   get intentName(): string {
@@ -3028,6 +3251,12 @@ export class GetAlternativeTrainingPhrasesRequest implements GrpcMessage {
   set branch(value: string) {
     this._branch = value;
   }
+  get fieldMask(): googleProtobuf002.FieldMask | undefined {
+    return this._fieldMask;
+  }
+  set fieldMask(value: googleProtobuf002.FieldMask | undefined) {
+    this._fieldMask = value;
+  }
 
   /**
    * Serialize message to binary data
@@ -3055,7 +3284,8 @@ export class GetAlternativeTrainingPhrasesRequest implements GrpcMessage {
       similarityThreshold: this.similarityThreshold,
       protectedWords: (this.protectedWords || []).slice(),
       wordsToChange: (this.wordsToChange || []).slice(),
-      branch: this.branch
+      branch: this.branch,
+      fieldMask: this.fieldMask ? this.fieldMask.toObject() : undefined
     };
   }
 
@@ -3087,7 +3317,8 @@ export class GetAlternativeTrainingPhrasesRequest implements GrpcMessage {
       similarityThreshold: this.similarityThreshold,
       protectedWords: (this.protectedWords || []).slice(),
       wordsToChange: (this.wordsToChange || []).slice(),
-      branch: this.branch
+      branch: this.branch,
+      fieldMask: this.fieldMask ? this.fieldMask.toProtobufJSON(options) : null
     };
   }
 }
@@ -3097,7 +3328,7 @@ export module GetAlternativeTrainingPhrasesRequest {
    */
   export interface AsObject {
     config?: DataEnrichmentConfig.AsObject;
-    trainingPhrase?: ondewoNlu012.Intent.TrainingPhrase.AsObject;
+    trainingPhrase?: ondewoNlu014.Intent.TrainingPhrase.AsObject;
     intentName: string;
     languageCode: string;
     parent: string;
@@ -3106,6 +3337,7 @@ export module GetAlternativeTrainingPhrasesRequest {
     protectedWords: string[];
     wordsToChange: string[];
     branch: string;
+    fieldMask?: googleProtobuf002.FieldMask.AsObject;
   }
 
   /**
@@ -3113,7 +3345,7 @@ export module GetAlternativeTrainingPhrasesRequest {
    */
   export interface AsProtobufJSON {
     config: DataEnrichmentConfig.AsProtobufJSON | null;
-    trainingPhrase: ondewoNlu012.Intent.TrainingPhrase.AsProtobufJSON | null;
+    trainingPhrase: ondewoNlu014.Intent.TrainingPhrase.AsProtobufJSON | null;
     intentName: string;
     languageCode: string;
     parent: string;
@@ -3122,6 +3354,7 @@ export module GetAlternativeTrainingPhrasesRequest {
     protectedWords: string[];
     wordsToChange: string[];
     branch: string;
+    fieldMask: googleProtobuf002.FieldMask.AsProtobufJSON | null;
   }
 }
 
@@ -3153,6 +3386,7 @@ export class GetSynonymsRequest implements GrpcMessage {
     _instance.word = _instance.word || '';
     _instance.languageCode = _instance.languageCode || '';
     _instance.parent = _instance.parent || '';
+    _instance.fieldMask = _instance.fieldMask || undefined;
   }
 
   /**
@@ -3183,6 +3417,13 @@ export class GetSynonymsRequest implements GrpcMessage {
           break;
         case 5:
           _instance.parent = _reader.readString();
+          break;
+        case 6:
+          _instance.fieldMask = new googleProtobuf002.FieldMask();
+          _reader.readMessage(
+            _instance.fieldMask,
+            googleProtobuf002.FieldMask.deserializeBinaryFromReader
+          );
           break;
         default:
           _reader.skipField();
@@ -3217,12 +3458,20 @@ export class GetSynonymsRequest implements GrpcMessage {
     if (_instance.parent) {
       _writer.writeString(5, _instance.parent);
     }
+    if (_instance.fieldMask) {
+      _writer.writeMessage(
+        6,
+        _instance.fieldMask as any,
+        googleProtobuf002.FieldMask.serializeBinaryToWriter
+      );
+    }
   }
 
   private _config?: DataEnrichmentConfig;
   private _word: string;
   private _languageCode: string;
   private _parent: string;
+  private _fieldMask?: googleProtobuf002.FieldMask;
 
   /**
    * Message constructor. Initializes the properties and applies default Protobuf values if necessary
@@ -3236,6 +3485,9 @@ export class GetSynonymsRequest implements GrpcMessage {
     this.word = _value.word;
     this.languageCode = _value.languageCode;
     this.parent = _value.parent;
+    this.fieldMask = _value.fieldMask
+      ? new googleProtobuf002.FieldMask(_value.fieldMask)
+      : undefined;
     GetSynonymsRequest.refineValues(this);
   }
   get config(): DataEnrichmentConfig | undefined {
@@ -3262,6 +3514,12 @@ export class GetSynonymsRequest implements GrpcMessage {
   set parent(value: string) {
     this._parent = value;
   }
+  get fieldMask(): googleProtobuf002.FieldMask | undefined {
+    return this._fieldMask;
+  }
+  set fieldMask(value: googleProtobuf002.FieldMask | undefined) {
+    this._fieldMask = value;
+  }
 
   /**
    * Serialize message to binary data
@@ -3281,7 +3539,8 @@ export class GetSynonymsRequest implements GrpcMessage {
       config: this.config ? this.config.toObject() : undefined,
       word: this.word,
       languageCode: this.languageCode,
-      parent: this.parent
+      parent: this.parent,
+      fieldMask: this.fieldMask ? this.fieldMask.toObject() : undefined
     };
   }
 
@@ -3305,7 +3564,8 @@ export class GetSynonymsRequest implements GrpcMessage {
       config: this.config ? this.config.toProtobufJSON(options) : null,
       word: this.word,
       languageCode: this.languageCode,
-      parent: this.parent
+      parent: this.parent,
+      fieldMask: this.fieldMask ? this.fieldMask.toProtobufJSON(options) : null
     };
   }
 }
@@ -3318,6 +3578,7 @@ export module GetSynonymsRequest {
     word: string;
     languageCode: string;
     parent: string;
+    fieldMask?: googleProtobuf002.FieldMask.AsObject;
   }
 
   /**
@@ -3328,6 +3589,7 @@ export module GetSynonymsRequest {
     word: string;
     languageCode: string;
     parent: string;
+    fieldMask: googleProtobuf002.FieldMask.AsProtobufJSON | null;
   }
 }
 
@@ -4435,10 +4697,10 @@ export class AltTrainingPhrase implements GrpcMessage {
 
       switch (_reader.getFieldNumber()) {
         case 1:
-          _instance.trainingPhrase = new ondewoNlu012.Intent.TrainingPhrase();
+          _instance.trainingPhrase = new ondewoNlu014.Intent.TrainingPhrase();
           _reader.readMessage(
             _instance.trainingPhrase,
-            ondewoNlu012.Intent.TrainingPhrase.deserializeBinaryFromReader
+            ondewoNlu014.Intent.TrainingPhrase.deserializeBinaryFromReader
           );
           break;
         case 2:
@@ -4465,7 +4727,7 @@ export class AltTrainingPhrase implements GrpcMessage {
       _writer.writeMessage(
         1,
         _instance.trainingPhrase as any,
-        ondewoNlu012.Intent.TrainingPhrase.serializeBinaryToWriter
+        ondewoNlu014.Intent.TrainingPhrase.serializeBinaryToWriter
       );
     }
     if (_instance.score) {
@@ -4473,7 +4735,7 @@ export class AltTrainingPhrase implements GrpcMessage {
     }
   }
 
-  private _trainingPhrase?: ondewoNlu012.Intent.TrainingPhrase;
+  private _trainingPhrase?: ondewoNlu014.Intent.TrainingPhrase;
   private _score: number;
 
   /**
@@ -4483,15 +4745,15 @@ export class AltTrainingPhrase implements GrpcMessage {
   constructor(_value?: RecursivePartial<AltTrainingPhrase.AsObject>) {
     _value = _value || {};
     this.trainingPhrase = _value.trainingPhrase
-      ? new ondewoNlu012.Intent.TrainingPhrase(_value.trainingPhrase)
+      ? new ondewoNlu014.Intent.TrainingPhrase(_value.trainingPhrase)
       : undefined;
     this.score = _value.score;
     AltTrainingPhrase.refineValues(this);
   }
-  get trainingPhrase(): ondewoNlu012.Intent.TrainingPhrase | undefined {
+  get trainingPhrase(): ondewoNlu014.Intent.TrainingPhrase | undefined {
     return this._trainingPhrase;
   }
-  set trainingPhrase(value: ondewoNlu012.Intent.TrainingPhrase | undefined) {
+  set trainingPhrase(value: ondewoNlu014.Intent.TrainingPhrase | undefined) {
     this._trainingPhrase = value;
   }
   get score(): number {
@@ -4552,7 +4814,7 @@ export module AltTrainingPhrase {
    * Standard JavaScript object representation for AltTrainingPhrase
    */
   export interface AsObject {
-    trainingPhrase?: ondewoNlu012.Intent.TrainingPhrase.AsObject;
+    trainingPhrase?: ondewoNlu014.Intent.TrainingPhrase.AsObject;
     score: number;
   }
 
@@ -4560,7 +4822,7 @@ export module AltTrainingPhrase {
    * Protobuf JSON representation for AltTrainingPhrase
    */
   export interface AsProtobufJSON {
-    trainingPhrase: ondewoNlu012.Intent.TrainingPhrase.AsProtobufJSON | null;
+    trainingPhrase: ondewoNlu014.Intent.TrainingPhrase.AsProtobufJSON | null;
     score: number;
   }
 }
@@ -6625,6 +6887,7 @@ export class ClassifyIntentsRequest implements GrpcMessage {
     _instance.contextNames = _instance.contextNames || [];
     _instance.mode = _instance.mode || 0;
     _instance.algorithms = _instance.algorithms || [];
+    _instance.fieldMask = _instance.fieldMask || undefined;
   }
 
   /**
@@ -6665,6 +6928,13 @@ export class ClassifyIntentsRequest implements GrpcMessage {
             (_instance.algorithms = _instance.algorithms || [])
           );
           break;
+        case 8:
+          _instance.fieldMask = new googleProtobuf002.FieldMask();
+          _reader.readMessage(
+            _instance.fieldMask,
+            googleProtobuf002.FieldMask.deserializeBinaryFromReader
+          );
+          break;
         default:
           _reader.skipField();
       }
@@ -6703,6 +6973,13 @@ export class ClassifyIntentsRequest implements GrpcMessage {
     if (_instance.algorithms && _instance.algorithms.length) {
       _writer.writePackedEnum(7, _instance.algorithms);
     }
+    if (_instance.fieldMask) {
+      _writer.writeMessage(
+        8,
+        _instance.fieldMask as any,
+        googleProtobuf002.FieldMask.serializeBinaryToWriter
+      );
+    }
   }
 
   private _parent: string;
@@ -6712,6 +6989,7 @@ export class ClassifyIntentsRequest implements GrpcMessage {
   private _contextNames: string[];
   private _mode: Mode;
   private _algorithms: IntentAlgorithms[];
+  private _fieldMask?: googleProtobuf002.FieldMask;
 
   /**
    * Message constructor. Initializes the properties and applies default Protobuf values if necessary
@@ -6726,6 +7004,9 @@ export class ClassifyIntentsRequest implements GrpcMessage {
     this.contextNames = (_value.contextNames || []).slice();
     this.mode = _value.mode;
     this.algorithms = (_value.algorithms || []).slice();
+    this.fieldMask = _value.fieldMask
+      ? new googleProtobuf002.FieldMask(_value.fieldMask)
+      : undefined;
     ClassifyIntentsRequest.refineValues(this);
   }
   get parent(): string {
@@ -6770,6 +7051,12 @@ export class ClassifyIntentsRequest implements GrpcMessage {
   set algorithms(value: IntentAlgorithms[]) {
     this._algorithms = value;
   }
+  get fieldMask(): googleProtobuf002.FieldMask | undefined {
+    return this._fieldMask;
+  }
+  set fieldMask(value: googleProtobuf002.FieldMask | undefined) {
+    this._fieldMask = value;
+  }
 
   /**
    * Serialize message to binary data
@@ -6792,7 +7079,8 @@ export class ClassifyIntentsRequest implements GrpcMessage {
       activeContexts: this.activeContexts,
       contextNames: (this.contextNames || []).slice(),
       mode: this.mode,
-      algorithms: (this.algorithms || []).slice()
+      algorithms: (this.algorithms || []).slice(),
+      fieldMask: this.fieldMask ? this.fieldMask.toObject() : undefined
     };
   }
 
@@ -6819,7 +7107,8 @@ export class ClassifyIntentsRequest implements GrpcMessage {
       activeContexts: this.activeContexts,
       contextNames: (this.contextNames || []).slice(),
       mode: Mode[this.mode === null || this.mode === undefined ? 0 : this.mode],
-      algorithms: (this.algorithms || []).map(v => IntentAlgorithms[v])
+      algorithms: (this.algorithms || []).map(v => IntentAlgorithms[v]),
+      fieldMask: this.fieldMask ? this.fieldMask.toProtobufJSON(options) : null
     };
   }
 }
@@ -6835,6 +7124,7 @@ export module ClassifyIntentsRequest {
     contextNames: string[];
     mode: Mode;
     algorithms: IntentAlgorithms[];
+    fieldMask?: googleProtobuf002.FieldMask.AsObject;
   }
 
   /**
@@ -6848,6 +7138,7 @@ export module ClassifyIntentsRequest {
     contextNames: string[];
     mode: string;
     algorithms: string[];
+    fieldMask: googleProtobuf002.FieldMask.AsProtobufJSON | null;
   }
 }
 

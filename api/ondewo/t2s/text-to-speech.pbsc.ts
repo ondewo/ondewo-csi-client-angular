@@ -79,6 +79,27 @@ export class Text2SpeechClient {
       });
     },
     /**
+     * Bidirectional streaming: /ondewo.t2s.Text2Speech/StreamingSynthesize
+     *
+     * @param requestMessage Request message
+     * @param requestMetadata Request metadata
+     * @returns Observable<GrpcEvent<thisProto.StreamingSynthesizeResponse>>
+     */
+    streamingSynthesize: (
+      requestData: Observable<thisProto.StreamingSynthesizeRequest>,
+      requestMetadata = new GrpcMetadata()
+    ): Observable<GrpcEvent<thisProto.StreamingSynthesizeResponse>> => {
+      return this.handler.handle({
+        type: GrpcCallType.bidiStream,
+        client: this.client,
+        path: '/ondewo.t2s.Text2Speech/StreamingSynthesize',
+        requestData,
+        requestMetadata,
+        requestClass: thisProto.StreamingSynthesizeRequest,
+        responseClass: thisProto.StreamingSynthesizeResponse
+      });
+    },
+    /**
      * Unary call: /ondewo.t2s.Text2Speech/NormalizeText
      *
      * @param requestMessage Request message
@@ -247,6 +268,29 @@ export class Text2SpeechClient {
       });
     },
     /**
+     * Unary call: /ondewo.t2s.Text2Speech/ListT2sNormalizationPipelines
+     *
+     * @param requestMessage Request message
+     * @param requestMetadata Request metadata
+     * @returns Observable<GrpcEvent<thisProto.ListT2sNormalizationPipelinesResponse>>
+     */
+    listT2sNormalizationPipelines: (
+      requestData: thisProto.ListT2sNormalizationPipelinesRequest,
+      requestMetadata = new GrpcMetadata()
+    ): Observable<
+      GrpcEvent<thisProto.ListT2sNormalizationPipelinesResponse>
+    > => {
+      return this.handler.handle({
+        type: GrpcCallType.unary,
+        client: this.client,
+        path: '/ondewo.t2s.Text2Speech/ListT2sNormalizationPipelines',
+        requestData,
+        requestMetadata,
+        requestClass: thisProto.ListT2sNormalizationPipelinesRequest,
+        responseClass: thisProto.ListT2sNormalizationPipelinesResponse
+      });
+    },
+    /**
      * Unary call: /ondewo.t2s.Text2Speech/GetServiceInfo
      *
      * @param requestMessage Request message
@@ -371,6 +415,27 @@ export class Text2SpeechClient {
         requestClass: thisProto.ListCustomPhonemizerRequest,
         responseClass: thisProto.ListCustomPhonemizerResponse
       });
+    },
+    /**
+     * Unary call: /ondewo.t2s.Text2Speech/VoiceCloning
+     *
+     * @param requestMessage Request message
+     * @param requestMetadata Request metadata
+     * @returns Observable<GrpcEvent<googleProtobuf000.Empty>>
+     */
+    voiceCloning: (
+      requestData: thisProto.VoiceCloningRequest,
+      requestMetadata = new GrpcMetadata()
+    ): Observable<GrpcEvent<googleProtobuf000.Empty>> => {
+      return this.handler.handle({
+        type: GrpcCallType.unary,
+        client: this.client,
+        path: '/ondewo.t2s.Text2Speech/VoiceCloning',
+        requestData,
+        requestMetadata,
+        requestClass: thisProto.VoiceCloningRequest,
+        responseClass: googleProtobuf000.Empty
+      });
     }
   };
 
@@ -414,6 +479,22 @@ export class Text2SpeechClient {
   ): Observable<thisProto.BatchSynthesizeResponse> {
     return this.$raw
       .batchSynthesize(requestData, requestMetadata)
+      .pipe(throwStatusErrors(), takeMessages());
+  }
+
+  /**
+   * Bidirectional streaming @/ondewo.t2s.Text2Speech/StreamingSynthesize
+   *
+   * @param requestMessage Request message
+   * @param requestMetadata Request metadata
+   * @returns Observable<thisProto.StreamingSynthesizeResponse>
+   */
+  streamingSynthesize(
+    requestData: Observable<thisProto.StreamingSynthesizeRequest>,
+    requestMetadata = new GrpcMetadata()
+  ): Observable<thisProto.StreamingSynthesizeResponse> {
+    return this.$raw
+      .streamingSynthesize(requestData, requestMetadata)
       .pipe(throwStatusErrors(), takeMessages());
   }
 
@@ -546,6 +627,22 @@ export class Text2SpeechClient {
   }
 
   /**
+   * Unary call @/ondewo.t2s.Text2Speech/ListT2sNormalizationPipelines
+   *
+   * @param requestMessage Request message
+   * @param requestMetadata Request metadata
+   * @returns Observable<thisProto.ListT2sNormalizationPipelinesResponse>
+   */
+  listT2sNormalizationPipelines(
+    requestData: thisProto.ListT2sNormalizationPipelinesRequest,
+    requestMetadata = new GrpcMetadata()
+  ): Observable<thisProto.ListT2sNormalizationPipelinesResponse> {
+    return this.$raw
+      .listT2sNormalizationPipelines(requestData, requestMetadata)
+      .pipe(throwStatusErrors(), takeMessages());
+  }
+
+  /**
    * Unary call @/ondewo.t2s.Text2Speech/GetServiceInfo
    *
    * @param requestMessage Request message
@@ -638,6 +735,22 @@ export class Text2SpeechClient {
   ): Observable<thisProto.ListCustomPhonemizerResponse> {
     return this.$raw
       .listCustomPhonemizer(requestData, requestMetadata)
+      .pipe(throwStatusErrors(), takeMessages());
+  }
+
+  /**
+   * Unary call @/ondewo.t2s.Text2Speech/VoiceCloning
+   *
+   * @param requestMessage Request message
+   * @param requestMetadata Request metadata
+   * @returns Observable<googleProtobuf000.Empty>
+   */
+  voiceCloning(
+    requestData: thisProto.VoiceCloningRequest,
+    requestMetadata = new GrpcMetadata()
+  ): Observable<googleProtobuf000.Empty> {
+    return this.$raw
+      .voiceCloning(requestData, requestMetadata)
       .pipe(throwStatusErrors(), takeMessages());
   }
 }

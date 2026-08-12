@@ -16,20 +16,34 @@ import * as googleProtobuf001 from '@ngx-grpc/well-known-types';
 import * as googleProtobuf002 from '@ngx-grpc/well-known-types';
 import * as googleProtobuf003 from '@ngx-grpc/well-known-types';
 import * as googleProtobuf004 from '@ngx-grpc/well-known-types';
-import * as googleApi005 from '../../google/api/annotations.pb';
-import * as googleProtobuf006 from '@ngx-grpc/well-known-types';
-import * as ondewoNlu007 from '../../ondewo/nlu/context.pb';
-import * as ondewoNlu008 from '../../ondewo/nlu/common.pb';
+import * as googleProtobuf005 from '@ngx-grpc/well-known-types';
+import * as ondewoNlu006 from '../../ondewo/nlu/common.pb';
+import * as googleApi007 from '../../google/api/annotations.pb';
+import * as googleProtobuf008 from '@ngx-grpc/well-known-types';
 import * as ondewoNlu009 from '../../ondewo/nlu/operations.pb';
-import * as googleProtobuf010 from '@ngx-grpc/well-known-types';
+import * as ondewoNlu010 from '../../ondewo/nlu/context.pb';
 import * as googleRpc011 from '../../google/rpc/status.pb';
 import * as googleType012 from '../../google/type/latlng.pb';
-import * as ondewoNlu013 from '../../ondewo/nlu/intent.pb';
+import * as ondewoNlu013 from '../../ondewo/nlu/ccai-project.pb';
 import * as ondewoNlu014 from '../../ondewo/nlu/entity-type.pb';
+import * as ondewoNlu015 from '../../ondewo/nlu/intent.pb';
+import * as ondewoNlu016 from '../../ondewo/nlu/llm-evaluation.pb';
 export enum TranscriptionType {
   TRANSCRIPTION_TYPE_UNSPECIFIED = 0,
   TRANSCRIPTION_TYPE_S2T = 1,
   TRANSCRIPTION_TYPE_HUMAN = 2
+}
+export enum ReasoningEffort {
+  REASONING_EFFORT_UNSPECIFIED = 0,
+  REASONING_EFFORT_MINIMAL = 1,
+  REASONING_EFFORT_LOW = 2,
+  REASONING_EFFORT_MEDIUM = 3,
+  REASONING_EFFORT_HIGH = 4
+}
+export enum LlmSafetyLocation {
+  LLM_SAFETY_LOCATION_UNSPECIFIED = 0,
+  LLM_SAFETY_LOCATION_INPUT = 1,
+  LLM_SAFETY_LOCATION_OUTPUT = 2
 }
 export enum AudioEncoding {
   AUDIO_ENCODING_UNSPECIFIED = 0,
@@ -49,6 +63,30 @@ export enum ComparisonOperator {
   CONTAINS = 4,
   STARTS_WITH = 5,
   ENDS_WITH = 6
+}
+export enum FeedbackRating {
+  FEEDBACK_RATING_UNSPECIFIED = 0,
+  FEEDBACK_RATING_THUMBS_UP = 1,
+  FEEDBACK_RATING_THUMBS_DOWN = 2
+}
+export enum FeedbackAuthorType {
+  FEEDBACK_AUTHOR_TYPE_UNSPECIFIED = 0,
+  FEEDBACK_AUTHOR_TYPE_HUMAN_REVIEWER = 1,
+  FEEDBACK_AUTHOR_TYPE_TECHNICAL_USER = 2,
+  FEEDBACK_AUTHOR_TYPE_END_USER_ANONYMOUS = 3
+}
+export enum FeedbackScope {
+  FEEDBACK_SCOPE_UNSPECIFIED = 0,
+  FEEDBACK_SCOPE_SESSION_LEVEL = 1,
+  FEEDBACK_SCOPE_STEP_LEVEL = 2
+}
+export enum FeedbackTimeGranularity {
+  FEEDBACK_TIME_GRANULARITY_UNSPECIFIED = 0,
+  FEEDBACK_TIME_GRANULARITY_HOUR = 1,
+  FEEDBACK_TIME_GRANULARITY_DAY = 2,
+  FEEDBACK_TIME_GRANULARITY_WEEK = 3,
+  FEEDBACK_TIME_GRANULARITY_MONTH = 4,
+  FEEDBACK_TIME_GRANULARITY_YEAR = 5
 }
 export enum ResourceView {
   RESOURCE_VIEW_UNSPECIFIED = 0,
@@ -311,6 +349,7 @@ export class DetectIntentResponse implements GrpcMessage {
     _instance.responseId = _instance.responseId || '';
     _instance.queryResult = _instance.queryResult || undefined;
     _instance.webhookStatus = _instance.webhookStatus || undefined;
+    _instance.llmTelemetryReport = _instance.llmTelemetryReport || undefined;
   }
 
   /**
@@ -341,6 +380,13 @@ export class DetectIntentResponse implements GrpcMessage {
           _reader.readMessage(
             _instance.webhookStatus,
             googleRpc011.Status.deserializeBinaryFromReader
+          );
+          break;
+        case 4:
+          _instance.llmTelemetryReport = new LlmTelemetryReport();
+          _reader.readMessage(
+            _instance.llmTelemetryReport,
+            LlmTelemetryReport.deserializeBinaryFromReader
           );
           break;
         default:
@@ -377,11 +423,19 @@ export class DetectIntentResponse implements GrpcMessage {
         googleRpc011.Status.serializeBinaryToWriter
       );
     }
+    if (_instance.llmTelemetryReport) {
+      _writer.writeMessage(
+        4,
+        _instance.llmTelemetryReport as any,
+        LlmTelemetryReport.serializeBinaryToWriter
+      );
+    }
   }
 
   private _responseId: string;
   private _queryResult?: QueryResult;
   private _webhookStatus?: googleRpc011.Status;
+  private _llmTelemetryReport?: LlmTelemetryReport;
 
   /**
    * Message constructor. Initializes the properties and applies default Protobuf values if necessary
@@ -395,6 +449,9 @@ export class DetectIntentResponse implements GrpcMessage {
       : undefined;
     this.webhookStatus = _value.webhookStatus
       ? new googleRpc011.Status(_value.webhookStatus)
+      : undefined;
+    this.llmTelemetryReport = _value.llmTelemetryReport
+      ? new LlmTelemetryReport(_value.llmTelemetryReport)
       : undefined;
     DetectIntentResponse.refineValues(this);
   }
@@ -416,6 +473,12 @@ export class DetectIntentResponse implements GrpcMessage {
   set webhookStatus(value: googleRpc011.Status | undefined) {
     this._webhookStatus = value;
   }
+  get llmTelemetryReport(): LlmTelemetryReport | undefined {
+    return this._llmTelemetryReport;
+  }
+  set llmTelemetryReport(value: LlmTelemetryReport | undefined) {
+    this._llmTelemetryReport = value;
+  }
 
   /**
    * Serialize message to binary data
@@ -436,6 +499,9 @@ export class DetectIntentResponse implements GrpcMessage {
       queryResult: this.queryResult ? this.queryResult.toObject() : undefined,
       webhookStatus: this.webhookStatus
         ? this.webhookStatus.toObject()
+        : undefined,
+      llmTelemetryReport: this.llmTelemetryReport
+        ? this.llmTelemetryReport.toObject()
         : undefined
     };
   }
@@ -463,6 +529,9 @@ export class DetectIntentResponse implements GrpcMessage {
         : null,
       webhookStatus: this.webhookStatus
         ? this.webhookStatus.toProtobufJSON(options)
+        : null,
+      llmTelemetryReport: this.llmTelemetryReport
+        ? this.llmTelemetryReport.toProtobufJSON(options)
         : null
     };
   }
@@ -475,6 +544,7 @@ export module DetectIntentResponse {
     responseId: string;
     queryResult?: QueryResult.AsObject;
     webhookStatus?: googleRpc011.Status.AsObject;
+    llmTelemetryReport?: LlmTelemetryReport.AsObject;
   }
 
   /**
@@ -484,6 +554,7 @@ export module DetectIntentResponse {
     responseId: string;
     queryResult: QueryResult.AsProtobufJSON | null;
     webhookStatus: googleRpc011.Status.AsProtobufJSON | null;
+    llmTelemetryReport: LlmTelemetryReport.AsProtobufJSON | null;
   }
 }
 
@@ -550,10 +621,10 @@ export class QueryParameters implements GrpcMessage {
           );
           break;
         case 3:
-          const messageInitializer3 = new ondewoNlu007.Context();
+          const messageInitializer3 = new ondewoNlu010.Context();
           _reader.readMessage(
             messageInitializer3,
-            ondewoNlu007.Context.deserializeBinaryFromReader
+            ondewoNlu010.Context.deserializeBinaryFromReader
           );
           (_instance.contexts = _instance.contexts || []).push(
             messageInitializer3
@@ -563,10 +634,10 @@ export class QueryParameters implements GrpcMessage {
           _instance.resetContexts = _reader.readBool();
           break;
         case 6:
-          _instance.payload = new googleProtobuf010.Struct();
+          _instance.payload = new googleProtobuf004.Struct();
           _reader.readMessage(
             _instance.payload,
-            googleProtobuf010.Struct.deserializeBinaryFromReader
+            googleProtobuf004.Struct.deserializeBinaryFromReader
           );
           break;
         case 7:
@@ -635,7 +706,7 @@ export class QueryParameters implements GrpcMessage {
       _writer.writeRepeatedMessage(
         3,
         _instance.contexts as any,
-        ondewoNlu007.Context.serializeBinaryToWriter
+        ondewoNlu010.Context.serializeBinaryToWriter
       );
     }
     if (_instance.resetContexts) {
@@ -645,7 +716,7 @@ export class QueryParameters implements GrpcMessage {
       _writer.writeMessage(
         6,
         _instance.payload as any,
-        googleProtobuf010.Struct.serializeBinaryToWriter
+        googleProtobuf004.Struct.serializeBinaryToWriter
       );
     }
     if (_instance.labels && _instance.labels.length) {
@@ -680,11 +751,11 @@ export class QueryParameters implements GrpcMessage {
 
   private _timeZone: string;
   private _geoLocation?: googleType012.LatLng;
-  private _contexts?: ondewoNlu007.Context[];
+  private _contexts?: ondewoNlu010.Context[];
   private _resetContexts: boolean;
-  private _payload?: googleProtobuf010.Struct;
+  private _payload?: googleProtobuf004.Struct;
   private _labels: string[];
-  private _platforms: ondewoNlu013.Intent.Message.Platform[];
+  private _platforms: ondewoNlu015.Intent.Message.Platform[];
   private _accountId: string;
   private _propertyId: string;
   private _datastreamId: string;
@@ -703,11 +774,11 @@ export class QueryParameters implements GrpcMessage {
       ? new googleType012.LatLng(_value.geoLocation)
       : undefined;
     this.contexts = (_value.contexts || []).map(
-      m => new ondewoNlu007.Context(m)
+      m => new ondewoNlu010.Context(m)
     );
     this.resetContexts = _value.resetContexts;
     this.payload = _value.payload
-      ? new googleProtobuf010.Struct(_value.payload)
+      ? new googleProtobuf004.Struct(_value.payload)
       : undefined;
     this.labels = (_value.labels || []).slice();
     this.platforms = (_value.platforms || []).slice();
@@ -733,10 +804,10 @@ export class QueryParameters implements GrpcMessage {
   set geoLocation(value: googleType012.LatLng | undefined) {
     this._geoLocation = value;
   }
-  get contexts(): ondewoNlu007.Context[] | undefined {
+  get contexts(): ondewoNlu010.Context[] | undefined {
     return this._contexts;
   }
-  set contexts(value: ondewoNlu007.Context[] | undefined) {
+  set contexts(value: ondewoNlu010.Context[] | undefined) {
     this._contexts = value;
   }
   get resetContexts(): boolean {
@@ -745,10 +816,10 @@ export class QueryParameters implements GrpcMessage {
   set resetContexts(value: boolean) {
     this._resetContexts = value;
   }
-  get payload(): googleProtobuf010.Struct | undefined {
+  get payload(): googleProtobuf004.Struct | undefined {
     return this._payload;
   }
-  set payload(value: googleProtobuf010.Struct | undefined) {
+  set payload(value: googleProtobuf004.Struct | undefined) {
     this._payload = value;
   }
   get labels(): string[] {
@@ -757,10 +828,10 @@ export class QueryParameters implements GrpcMessage {
   set labels(value: string[]) {
     this._labels = value;
   }
-  get platforms(): ondewoNlu013.Intent.Message.Platform[] {
+  get platforms(): ondewoNlu015.Intent.Message.Platform[] {
     return this._platforms;
   }
-  set platforms(value: ondewoNlu013.Intent.Message.Platform[]) {
+  set platforms(value: ondewoNlu015.Intent.Message.Platform[]) {
     this._platforms = value;
   }
   get accountId(): string {
@@ -857,7 +928,7 @@ export class QueryParameters implements GrpcMessage {
       payload: this.payload ? this.payload.toProtobufJSON(options) : null,
       labels: (this.labels || []).slice(),
       platforms: (this.platforms || []).map(
-        v => ondewoNlu013.Intent.Message.Platform[v]
+        v => ondewoNlu015.Intent.Message.Platform[v]
       ),
       accountId: this.accountId,
       propertyId: this.propertyId,
@@ -877,11 +948,11 @@ export module QueryParameters {
   export interface AsObject {
     timeZone: string;
     geoLocation?: googleType012.LatLng.AsObject;
-    contexts?: ondewoNlu007.Context.AsObject[];
+    contexts?: ondewoNlu010.Context.AsObject[];
     resetContexts: boolean;
-    payload?: googleProtobuf010.Struct.AsObject;
+    payload?: googleProtobuf004.Struct.AsObject;
     labels: string[];
-    platforms: ondewoNlu013.Intent.Message.Platform[];
+    platforms: ondewoNlu015.Intent.Message.Platform[];
     accountId: string;
     propertyId: string;
     datastreamId: string;
@@ -896,9 +967,9 @@ export module QueryParameters {
   export interface AsProtobufJSON {
     timeZone: string;
     geoLocation: googleType012.LatLng.AsProtobufJSON | null;
-    contexts: ondewoNlu007.Context.AsProtobufJSON[] | null;
+    contexts: ondewoNlu010.Context.AsProtobufJSON[] | null;
     resetContexts: boolean;
-    payload: googleProtobuf010.Struct.AsProtobufJSON | null;
+    payload: googleProtobuf004.Struct.AsProtobufJSON | null;
     labels: string[];
     platforms: string[];
     accountId: string;
@@ -986,17 +1057,17 @@ export class S2tTranscription implements GrpcMessage {
           _instance.transcriptionType = _reader.readEnum();
           break;
         case 9:
-          _instance.createdAt = new googleProtobuf004.Timestamp();
+          _instance.createdAt = new googleProtobuf005.Timestamp();
           _reader.readMessage(
             _instance.createdAt,
-            googleProtobuf004.Timestamp.deserializeBinaryFromReader
+            googleProtobuf005.Timestamp.deserializeBinaryFromReader
           );
           break;
         case 10:
-          _instance.modifiedAt = new googleProtobuf004.Timestamp();
+          _instance.modifiedAt = new googleProtobuf005.Timestamp();
           _reader.readMessage(
             _instance.modifiedAt,
-            googleProtobuf004.Timestamp.deserializeBinaryFromReader
+            googleProtobuf005.Timestamp.deserializeBinaryFromReader
           );
           break;
         case 11:
@@ -1050,14 +1121,14 @@ export class S2tTranscription implements GrpcMessage {
       _writer.writeMessage(
         9,
         _instance.createdAt as any,
-        googleProtobuf004.Timestamp.serializeBinaryToWriter
+        googleProtobuf005.Timestamp.serializeBinaryToWriter
       );
     }
     if (_instance.modifiedAt) {
       _writer.writeMessage(
         10,
         _instance.modifiedAt as any,
-        googleProtobuf004.Timestamp.serializeBinaryToWriter
+        googleProtobuf005.Timestamp.serializeBinaryToWriter
       );
     }
     if (_instance.createdBy) {
@@ -1076,8 +1147,8 @@ export class S2tTranscription implements GrpcMessage {
   private _pipelineId: string;
   private _durationInS: number;
   private _transcriptionType: TranscriptionType;
-  private _createdAt?: googleProtobuf004.Timestamp;
-  private _modifiedAt?: googleProtobuf004.Timestamp;
+  private _createdAt?: googleProtobuf005.Timestamp;
+  private _modifiedAt?: googleProtobuf005.Timestamp;
   private _createdBy: string;
   private _modifiedBy: string;
 
@@ -1096,10 +1167,10 @@ export class S2tTranscription implements GrpcMessage {
     this.durationInS = _value.durationInS;
     this.transcriptionType = _value.transcriptionType;
     this.createdAt = _value.createdAt
-      ? new googleProtobuf004.Timestamp(_value.createdAt)
+      ? new googleProtobuf005.Timestamp(_value.createdAt)
       : undefined;
     this.modifiedAt = _value.modifiedAt
-      ? new googleProtobuf004.Timestamp(_value.modifiedAt)
+      ? new googleProtobuf005.Timestamp(_value.modifiedAt)
       : undefined;
     this.createdBy = _value.createdBy;
     this.modifiedBy = _value.modifiedBy;
@@ -1153,16 +1224,16 @@ export class S2tTranscription implements GrpcMessage {
   set transcriptionType(value: TranscriptionType) {
     this._transcriptionType = value;
   }
-  get createdAt(): googleProtobuf004.Timestamp | undefined {
+  get createdAt(): googleProtobuf005.Timestamp | undefined {
     return this._createdAt;
   }
-  set createdAt(value: googleProtobuf004.Timestamp | undefined) {
+  set createdAt(value: googleProtobuf005.Timestamp | undefined) {
     this._createdAt = value;
   }
-  get modifiedAt(): googleProtobuf004.Timestamp | undefined {
+  get modifiedAt(): googleProtobuf005.Timestamp | undefined {
     return this._modifiedAt;
   }
-  set modifiedAt(value: googleProtobuf004.Timestamp | undefined) {
+  set modifiedAt(value: googleProtobuf005.Timestamp | undefined) {
     this._modifiedAt = value;
   }
   get createdBy(): string {
@@ -1261,8 +1332,8 @@ export module S2tTranscription {
     pipelineId: string;
     durationInS: number;
     transcriptionType: TranscriptionType;
-    createdAt?: googleProtobuf004.Timestamp.AsObject;
-    modifiedAt?: googleProtobuf004.Timestamp.AsObject;
+    createdAt?: googleProtobuf005.Timestamp.AsObject;
+    modifiedAt?: googleProtobuf005.Timestamp.AsObject;
     createdBy: string;
     modifiedBy: string;
   }
@@ -1279,8 +1350,8 @@ export module S2tTranscription {
     pipelineId: string;
     durationInS: number;
     transcriptionType: string;
-    createdAt: googleProtobuf004.Timestamp.AsProtobufJSON | null;
-    modifiedAt: googleProtobuf004.Timestamp.AsProtobufJSON | null;
+    createdAt: googleProtobuf005.Timestamp.AsProtobufJSON | null;
+    modifiedAt: googleProtobuf005.Timestamp.AsProtobufJSON | null;
     createdBy: string;
     modifiedBy: string;
   }
@@ -1540,6 +1611,8687 @@ export module QueryInput {
 }
 
 /**
+ * Message implementation for ondewo.nlu.LlmTokenUsage
+ */
+export class LlmTokenUsage implements GrpcMessage {
+  static id = 'ondewo.nlu.LlmTokenUsage';
+
+  /**
+   * Deserialize binary data to message
+   * @param instance message instance
+   */
+  static deserializeBinary(bytes: ByteSource) {
+    const instance = new LlmTokenUsage();
+    LlmTokenUsage.deserializeBinaryFromReader(
+      instance,
+      new BinaryReader(bytes)
+    );
+    return instance;
+  }
+
+  /**
+   * Check all the properties and set default protobuf values if necessary
+   * @param _instance message instance
+   */
+  static refineValues(_instance: LlmTokenUsage) {
+    _instance.totalTokens = _instance.totalTokens || '0';
+    _instance.inputTokens = _instance.inputTokens || '0';
+    _instance.outputTokens = _instance.outputTokens || '0';
+  }
+
+  /**
+   * Deserializes / reads binary message into message instance using provided binary reader
+   * @param _instance message instance
+   * @param _reader binary reader instance
+   */
+  static deserializeBinaryFromReader(
+    _instance: LlmTokenUsage,
+    _reader: BinaryReader
+  ) {
+    while (_reader.nextField()) {
+      if (_reader.isEndGroup()) break;
+
+      switch (_reader.getFieldNumber()) {
+        case 1:
+          _instance.totalTokens = _reader.readInt64String();
+          break;
+        case 2:
+          _instance.inputTokens = _reader.readInt64String();
+          break;
+        case 3:
+          _instance.outputTokens = _reader.readInt64String();
+          break;
+        default:
+          _reader.skipField();
+      }
+    }
+
+    LlmTokenUsage.refineValues(_instance);
+  }
+
+  /**
+   * Serializes a message to binary format using provided binary reader
+   * @param _instance message instance
+   * @param _writer binary writer instance
+   */
+  static serializeBinaryToWriter(
+    _instance: LlmTokenUsage,
+    _writer: BinaryWriter
+  ) {
+    if (_instance.totalTokens) {
+      _writer.writeInt64String(1, _instance.totalTokens);
+    }
+    if (_instance.inputTokens) {
+      _writer.writeInt64String(2, _instance.inputTokens);
+    }
+    if (_instance.outputTokens) {
+      _writer.writeInt64String(3, _instance.outputTokens);
+    }
+  }
+
+  private _totalTokens: string;
+  private _inputTokens: string;
+  private _outputTokens: string;
+
+  /**
+   * Message constructor. Initializes the properties and applies default Protobuf values if necessary
+   * @param _value initial values object or instance of LlmTokenUsage to deeply clone from
+   */
+  constructor(_value?: RecursivePartial<LlmTokenUsage.AsObject>) {
+    _value = _value || {};
+    this.totalTokens = _value.totalTokens;
+    this.inputTokens = _value.inputTokens;
+    this.outputTokens = _value.outputTokens;
+    LlmTokenUsage.refineValues(this);
+  }
+  get totalTokens(): string {
+    return this._totalTokens;
+  }
+  set totalTokens(value: string) {
+    this._totalTokens = value;
+  }
+  get inputTokens(): string {
+    return this._inputTokens;
+  }
+  set inputTokens(value: string) {
+    this._inputTokens = value;
+  }
+  get outputTokens(): string {
+    return this._outputTokens;
+  }
+  set outputTokens(value: string) {
+    this._outputTokens = value;
+  }
+
+  /**
+   * Serialize message to binary data
+   * @param instance message instance
+   */
+  serializeBinary() {
+    const writer = new BinaryWriter();
+    LlmTokenUsage.serializeBinaryToWriter(this, writer);
+    return writer.getResultBuffer();
+  }
+
+  /**
+   * Cast message to standard JavaScript object (all non-primitive values are deeply cloned)
+   */
+  toObject(): LlmTokenUsage.AsObject {
+    return {
+      totalTokens: this.totalTokens,
+      inputTokens: this.inputTokens,
+      outputTokens: this.outputTokens
+    };
+  }
+
+  /**
+   * Convenience method to support JSON.stringify(message), replicates the structure of toObject()
+   */
+  toJSON() {
+    return this.toObject();
+  }
+
+  /**
+   * Cast message to JSON using protobuf JSON notation: https://developers.google.com/protocol-buffers/docs/proto3#json
+   * Attention: output differs from toObject() e.g. enums are represented as names and not as numbers, Timestamp is an ISO Date string format etc.
+   * If the message itself or some of descendant messages is google.protobuf.Any, you MUST provide a message pool as options. If not, the messagePool is not required
+   */
+  toProtobufJSON(
+    // @ts-ignore
+    options?: ToProtobufJSONOptions
+  ): LlmTokenUsage.AsProtobufJSON {
+    return {
+      totalTokens: this.totalTokens,
+      inputTokens: this.inputTokens,
+      outputTokens: this.outputTokens
+    };
+  }
+}
+export module LlmTokenUsage {
+  /**
+   * Standard JavaScript object representation for LlmTokenUsage
+   */
+  export interface AsObject {
+    totalTokens: string;
+    inputTokens: string;
+    outputTokens: string;
+  }
+
+  /**
+   * Protobuf JSON representation for LlmTokenUsage
+   */
+  export interface AsProtobufJSON {
+    totalTokens: string;
+    inputTokens: string;
+    outputTokens: string;
+  }
+}
+
+/**
+ * Message implementation for ondewo.nlu.LlmToolCallMetadata
+ */
+export class LlmToolCallMetadata implements GrpcMessage {
+  static id = 'ondewo.nlu.LlmToolCallMetadata';
+
+  /**
+   * Deserialize binary data to message
+   * @param instance message instance
+   */
+  static deserializeBinary(bytes: ByteSource) {
+    const instance = new LlmToolCallMetadata();
+    LlmToolCallMetadata.deserializeBinaryFromReader(
+      instance,
+      new BinaryReader(bytes)
+    );
+    return instance;
+  }
+
+  /**
+   * Check all the properties and set default protobuf values if necessary
+   * @param _instance message instance
+   */
+  static refineValues(_instance: LlmToolCallMetadata) {
+    _instance.toolCallId = _instance.toolCallId || '';
+    _instance.toolName = _instance.toolName || '';
+    _instance.startTime = _instance.startTime || undefined;
+    _instance.endTime = _instance.endTime || undefined;
+    _instance.durationInS = _instance.durationInS || 0;
+    _instance.llmTokenUsage = _instance.llmTokenUsage || undefined;
+    _instance.arguments = _instance.arguments || undefined;
+    _instance.result = _instance.result || undefined;
+    _instance.errorMessage = _instance.errorMessage || '';
+  }
+
+  /**
+   * Deserializes / reads binary message into message instance using provided binary reader
+   * @param _instance message instance
+   * @param _reader binary reader instance
+   */
+  static deserializeBinaryFromReader(
+    _instance: LlmToolCallMetadata,
+    _reader: BinaryReader
+  ) {
+    while (_reader.nextField()) {
+      if (_reader.isEndGroup()) break;
+
+      switch (_reader.getFieldNumber()) {
+        case 1:
+          _instance.toolCallId = _reader.readString();
+          break;
+        case 2:
+          _instance.toolName = _reader.readString();
+          break;
+        case 3:
+          _instance.startTime = new googleProtobuf005.Timestamp();
+          _reader.readMessage(
+            _instance.startTime,
+            googleProtobuf005.Timestamp.deserializeBinaryFromReader
+          );
+          break;
+        case 4:
+          _instance.endTime = new googleProtobuf005.Timestamp();
+          _reader.readMessage(
+            _instance.endTime,
+            googleProtobuf005.Timestamp.deserializeBinaryFromReader
+          );
+          break;
+        case 5:
+          _instance.durationInS = _reader.readDouble();
+          break;
+        case 6:
+          _instance.llmTokenUsage = new LlmTokenUsage();
+          _reader.readMessage(
+            _instance.llmTokenUsage,
+            LlmTokenUsage.deserializeBinaryFromReader
+          );
+          break;
+        case 7:
+          _instance.arguments = new googleProtobuf004.Struct();
+          _reader.readMessage(
+            _instance.arguments,
+            googleProtobuf004.Struct.deserializeBinaryFromReader
+          );
+          break;
+        case 8:
+          _instance.result = new googleProtobuf004.Struct();
+          _reader.readMessage(
+            _instance.result,
+            googleProtobuf004.Struct.deserializeBinaryFromReader
+          );
+          break;
+        case 9:
+          _instance.errorMessage = _reader.readString();
+          break;
+        default:
+          _reader.skipField();
+      }
+    }
+
+    LlmToolCallMetadata.refineValues(_instance);
+  }
+
+  /**
+   * Serializes a message to binary format using provided binary reader
+   * @param _instance message instance
+   * @param _writer binary writer instance
+   */
+  static serializeBinaryToWriter(
+    _instance: LlmToolCallMetadata,
+    _writer: BinaryWriter
+  ) {
+    if (_instance.toolCallId) {
+      _writer.writeString(1, _instance.toolCallId);
+    }
+    if (_instance.toolName) {
+      _writer.writeString(2, _instance.toolName);
+    }
+    if (_instance.startTime) {
+      _writer.writeMessage(
+        3,
+        _instance.startTime as any,
+        googleProtobuf005.Timestamp.serializeBinaryToWriter
+      );
+    }
+    if (_instance.endTime) {
+      _writer.writeMessage(
+        4,
+        _instance.endTime as any,
+        googleProtobuf005.Timestamp.serializeBinaryToWriter
+      );
+    }
+    if (_instance.durationInS) {
+      _writer.writeDouble(5, _instance.durationInS);
+    }
+    if (_instance.llmTokenUsage) {
+      _writer.writeMessage(
+        6,
+        _instance.llmTokenUsage as any,
+        LlmTokenUsage.serializeBinaryToWriter
+      );
+    }
+    if (_instance.arguments) {
+      _writer.writeMessage(
+        7,
+        _instance.arguments as any,
+        googleProtobuf004.Struct.serializeBinaryToWriter
+      );
+    }
+    if (_instance.result) {
+      _writer.writeMessage(
+        8,
+        _instance.result as any,
+        googleProtobuf004.Struct.serializeBinaryToWriter
+      );
+    }
+    if (_instance.errorMessage) {
+      _writer.writeString(9, _instance.errorMessage);
+    }
+  }
+
+  private _toolCallId: string;
+  private _toolName: string;
+  private _startTime?: googleProtobuf005.Timestamp;
+  private _endTime?: googleProtobuf005.Timestamp;
+  private _durationInS: number;
+  private _llmTokenUsage?: LlmTokenUsage;
+  private _arguments?: googleProtobuf004.Struct;
+  private _result?: googleProtobuf004.Struct;
+  private _errorMessage: string;
+
+  /**
+   * Message constructor. Initializes the properties and applies default Protobuf values if necessary
+   * @param _value initial values object or instance of LlmToolCallMetadata to deeply clone from
+   */
+  constructor(_value?: RecursivePartial<LlmToolCallMetadata.AsObject>) {
+    _value = _value || {};
+    this.toolCallId = _value.toolCallId;
+    this.toolName = _value.toolName;
+    this.startTime = _value.startTime
+      ? new googleProtobuf005.Timestamp(_value.startTime)
+      : undefined;
+    this.endTime = _value.endTime
+      ? new googleProtobuf005.Timestamp(_value.endTime)
+      : undefined;
+    this.durationInS = _value.durationInS;
+    this.llmTokenUsage = _value.llmTokenUsage
+      ? new LlmTokenUsage(_value.llmTokenUsage)
+      : undefined;
+    this.arguments = _value.arguments
+      ? new googleProtobuf004.Struct(_value.arguments)
+      : undefined;
+    this.result = _value.result
+      ? new googleProtobuf004.Struct(_value.result)
+      : undefined;
+    this.errorMessage = _value.errorMessage;
+    LlmToolCallMetadata.refineValues(this);
+  }
+  get toolCallId(): string {
+    return this._toolCallId;
+  }
+  set toolCallId(value: string) {
+    this._toolCallId = value;
+  }
+  get toolName(): string {
+    return this._toolName;
+  }
+  set toolName(value: string) {
+    this._toolName = value;
+  }
+  get startTime(): googleProtobuf005.Timestamp | undefined {
+    return this._startTime;
+  }
+  set startTime(value: googleProtobuf005.Timestamp | undefined) {
+    this._startTime = value;
+  }
+  get endTime(): googleProtobuf005.Timestamp | undefined {
+    return this._endTime;
+  }
+  set endTime(value: googleProtobuf005.Timestamp | undefined) {
+    this._endTime = value;
+  }
+  get durationInS(): number {
+    return this._durationInS;
+  }
+  set durationInS(value: number) {
+    this._durationInS = value;
+  }
+  get llmTokenUsage(): LlmTokenUsage | undefined {
+    return this._llmTokenUsage;
+  }
+  set llmTokenUsage(value: LlmTokenUsage | undefined) {
+    this._llmTokenUsage = value;
+  }
+  get arguments(): googleProtobuf004.Struct | undefined {
+    return this._arguments;
+  }
+  set arguments(value: googleProtobuf004.Struct | undefined) {
+    this._arguments = value;
+  }
+  get result(): googleProtobuf004.Struct | undefined {
+    return this._result;
+  }
+  set result(value: googleProtobuf004.Struct | undefined) {
+    this._result = value;
+  }
+  get errorMessage(): string {
+    return this._errorMessage;
+  }
+  set errorMessage(value: string) {
+    this._errorMessage = value;
+  }
+
+  /**
+   * Serialize message to binary data
+   * @param instance message instance
+   */
+  serializeBinary() {
+    const writer = new BinaryWriter();
+    LlmToolCallMetadata.serializeBinaryToWriter(this, writer);
+    return writer.getResultBuffer();
+  }
+
+  /**
+   * Cast message to standard JavaScript object (all non-primitive values are deeply cloned)
+   */
+  toObject(): LlmToolCallMetadata.AsObject {
+    return {
+      toolCallId: this.toolCallId,
+      toolName: this.toolName,
+      startTime: this.startTime ? this.startTime.toObject() : undefined,
+      endTime: this.endTime ? this.endTime.toObject() : undefined,
+      durationInS: this.durationInS,
+      llmTokenUsage: this.llmTokenUsage
+        ? this.llmTokenUsage.toObject()
+        : undefined,
+      arguments: this.arguments ? this.arguments.toObject() : undefined,
+      result: this.result ? this.result.toObject() : undefined,
+      errorMessage: this.errorMessage
+    };
+  }
+
+  /**
+   * Convenience method to support JSON.stringify(message), replicates the structure of toObject()
+   */
+  toJSON() {
+    return this.toObject();
+  }
+
+  /**
+   * Cast message to JSON using protobuf JSON notation: https://developers.google.com/protocol-buffers/docs/proto3#json
+   * Attention: output differs from toObject() e.g. enums are represented as names and not as numbers, Timestamp is an ISO Date string format etc.
+   * If the message itself or some of descendant messages is google.protobuf.Any, you MUST provide a message pool as options. If not, the messagePool is not required
+   */
+  toProtobufJSON(
+    // @ts-ignore
+    options?: ToProtobufJSONOptions
+  ): LlmToolCallMetadata.AsProtobufJSON {
+    return {
+      toolCallId: this.toolCallId,
+      toolName: this.toolName,
+      startTime: this.startTime ? this.startTime.toProtobufJSON(options) : null,
+      endTime: this.endTime ? this.endTime.toProtobufJSON(options) : null,
+      durationInS: this.durationInS,
+      llmTokenUsage: this.llmTokenUsage
+        ? this.llmTokenUsage.toProtobufJSON(options)
+        : null,
+      arguments: this.arguments ? this.arguments.toProtobufJSON(options) : null,
+      result: this.result ? this.result.toProtobufJSON(options) : null,
+      errorMessage: this.errorMessage
+    };
+  }
+}
+export module LlmToolCallMetadata {
+  /**
+   * Standard JavaScript object representation for LlmToolCallMetadata
+   */
+  export interface AsObject {
+    toolCallId: string;
+    toolName: string;
+    startTime?: googleProtobuf005.Timestamp.AsObject;
+    endTime?: googleProtobuf005.Timestamp.AsObject;
+    durationInS: number;
+    llmTokenUsage?: LlmTokenUsage.AsObject;
+    arguments?: googleProtobuf004.Struct.AsObject;
+    result?: googleProtobuf004.Struct.AsObject;
+    errorMessage: string;
+  }
+
+  /**
+   * Protobuf JSON representation for LlmToolCallMetadata
+   */
+  export interface AsProtobufJSON {
+    toolCallId: string;
+    toolName: string;
+    startTime: googleProtobuf005.Timestamp.AsProtobufJSON | null;
+    endTime: googleProtobuf005.Timestamp.AsProtobufJSON | null;
+    durationInS: number;
+    llmTokenUsage: LlmTokenUsage.AsProtobufJSON | null;
+    arguments: googleProtobuf004.Struct.AsProtobufJSON | null;
+    result: googleProtobuf004.Struct.AsProtobufJSON | null;
+    errorMessage: string;
+  }
+}
+
+/**
+ * Message implementation for ondewo.nlu.LlmThinkingMetadata
+ */
+export class LlmThinkingMetadata implements GrpcMessage {
+  static id = 'ondewo.nlu.LlmThinkingMetadata';
+
+  /**
+   * Deserialize binary data to message
+   * @param instance message instance
+   */
+  static deserializeBinary(bytes: ByteSource) {
+    const instance = new LlmThinkingMetadata();
+    LlmThinkingMetadata.deserializeBinaryFromReader(
+      instance,
+      new BinaryReader(bytes)
+    );
+    return instance;
+  }
+
+  /**
+   * Check all the properties and set default protobuf values if necessary
+   * @param _instance message instance
+   */
+  static refineValues(_instance: LlmThinkingMetadata) {
+    _instance.llmTokenUsage = _instance.llmTokenUsage || undefined;
+    _instance.startTime = _instance.startTime || undefined;
+    _instance.endTime = _instance.endTime || undefined;
+    _instance.durationInS = _instance.durationInS || 0;
+    _instance.thinkingText = _instance.thinkingText || '';
+  }
+
+  /**
+   * Deserializes / reads binary message into message instance using provided binary reader
+   * @param _instance message instance
+   * @param _reader binary reader instance
+   */
+  static deserializeBinaryFromReader(
+    _instance: LlmThinkingMetadata,
+    _reader: BinaryReader
+  ) {
+    while (_reader.nextField()) {
+      if (_reader.isEndGroup()) break;
+
+      switch (_reader.getFieldNumber()) {
+        case 1:
+          _instance.llmTokenUsage = new LlmTokenUsage();
+          _reader.readMessage(
+            _instance.llmTokenUsage,
+            LlmTokenUsage.deserializeBinaryFromReader
+          );
+          break;
+        case 2:
+          _instance.startTime = new googleProtobuf005.Timestamp();
+          _reader.readMessage(
+            _instance.startTime,
+            googleProtobuf005.Timestamp.deserializeBinaryFromReader
+          );
+          break;
+        case 3:
+          _instance.endTime = new googleProtobuf005.Timestamp();
+          _reader.readMessage(
+            _instance.endTime,
+            googleProtobuf005.Timestamp.deserializeBinaryFromReader
+          );
+          break;
+        case 4:
+          _instance.durationInS = _reader.readDouble();
+          break;
+        case 5:
+          _instance.thinkingText = _reader.readString();
+          break;
+        default:
+          _reader.skipField();
+      }
+    }
+
+    LlmThinkingMetadata.refineValues(_instance);
+  }
+
+  /**
+   * Serializes a message to binary format using provided binary reader
+   * @param _instance message instance
+   * @param _writer binary writer instance
+   */
+  static serializeBinaryToWriter(
+    _instance: LlmThinkingMetadata,
+    _writer: BinaryWriter
+  ) {
+    if (_instance.llmTokenUsage) {
+      _writer.writeMessage(
+        1,
+        _instance.llmTokenUsage as any,
+        LlmTokenUsage.serializeBinaryToWriter
+      );
+    }
+    if (_instance.startTime) {
+      _writer.writeMessage(
+        2,
+        _instance.startTime as any,
+        googleProtobuf005.Timestamp.serializeBinaryToWriter
+      );
+    }
+    if (_instance.endTime) {
+      _writer.writeMessage(
+        3,
+        _instance.endTime as any,
+        googleProtobuf005.Timestamp.serializeBinaryToWriter
+      );
+    }
+    if (_instance.durationInS) {
+      _writer.writeDouble(4, _instance.durationInS);
+    }
+    if (_instance.thinkingText) {
+      _writer.writeString(5, _instance.thinkingText);
+    }
+  }
+
+  private _llmTokenUsage?: LlmTokenUsage;
+  private _startTime?: googleProtobuf005.Timestamp;
+  private _endTime?: googleProtobuf005.Timestamp;
+  private _durationInS: number;
+  private _thinkingText: string;
+
+  /**
+   * Message constructor. Initializes the properties and applies default Protobuf values if necessary
+   * @param _value initial values object or instance of LlmThinkingMetadata to deeply clone from
+   */
+  constructor(_value?: RecursivePartial<LlmThinkingMetadata.AsObject>) {
+    _value = _value || {};
+    this.llmTokenUsage = _value.llmTokenUsage
+      ? new LlmTokenUsage(_value.llmTokenUsage)
+      : undefined;
+    this.startTime = _value.startTime
+      ? new googleProtobuf005.Timestamp(_value.startTime)
+      : undefined;
+    this.endTime = _value.endTime
+      ? new googleProtobuf005.Timestamp(_value.endTime)
+      : undefined;
+    this.durationInS = _value.durationInS;
+    this.thinkingText = _value.thinkingText;
+    LlmThinkingMetadata.refineValues(this);
+  }
+  get llmTokenUsage(): LlmTokenUsage | undefined {
+    return this._llmTokenUsage;
+  }
+  set llmTokenUsage(value: LlmTokenUsage | undefined) {
+    this._llmTokenUsage = value;
+  }
+  get startTime(): googleProtobuf005.Timestamp | undefined {
+    return this._startTime;
+  }
+  set startTime(value: googleProtobuf005.Timestamp | undefined) {
+    this._startTime = value;
+  }
+  get endTime(): googleProtobuf005.Timestamp | undefined {
+    return this._endTime;
+  }
+  set endTime(value: googleProtobuf005.Timestamp | undefined) {
+    this._endTime = value;
+  }
+  get durationInS(): number {
+    return this._durationInS;
+  }
+  set durationInS(value: number) {
+    this._durationInS = value;
+  }
+  get thinkingText(): string {
+    return this._thinkingText;
+  }
+  set thinkingText(value: string) {
+    this._thinkingText = value;
+  }
+
+  /**
+   * Serialize message to binary data
+   * @param instance message instance
+   */
+  serializeBinary() {
+    const writer = new BinaryWriter();
+    LlmThinkingMetadata.serializeBinaryToWriter(this, writer);
+    return writer.getResultBuffer();
+  }
+
+  /**
+   * Cast message to standard JavaScript object (all non-primitive values are deeply cloned)
+   */
+  toObject(): LlmThinkingMetadata.AsObject {
+    return {
+      llmTokenUsage: this.llmTokenUsage
+        ? this.llmTokenUsage.toObject()
+        : undefined,
+      startTime: this.startTime ? this.startTime.toObject() : undefined,
+      endTime: this.endTime ? this.endTime.toObject() : undefined,
+      durationInS: this.durationInS,
+      thinkingText: this.thinkingText
+    };
+  }
+
+  /**
+   * Convenience method to support JSON.stringify(message), replicates the structure of toObject()
+   */
+  toJSON() {
+    return this.toObject();
+  }
+
+  /**
+   * Cast message to JSON using protobuf JSON notation: https://developers.google.com/protocol-buffers/docs/proto3#json
+   * Attention: output differs from toObject() e.g. enums are represented as names and not as numbers, Timestamp is an ISO Date string format etc.
+   * If the message itself or some of descendant messages is google.protobuf.Any, you MUST provide a message pool as options. If not, the messagePool is not required
+   */
+  toProtobufJSON(
+    // @ts-ignore
+    options?: ToProtobufJSONOptions
+  ): LlmThinkingMetadata.AsProtobufJSON {
+    return {
+      llmTokenUsage: this.llmTokenUsage
+        ? this.llmTokenUsage.toProtobufJSON(options)
+        : null,
+      startTime: this.startTime ? this.startTime.toProtobufJSON(options) : null,
+      endTime: this.endTime ? this.endTime.toProtobufJSON(options) : null,
+      durationInS: this.durationInS,
+      thinkingText: this.thinkingText
+    };
+  }
+}
+export module LlmThinkingMetadata {
+  /**
+   * Standard JavaScript object representation for LlmThinkingMetadata
+   */
+  export interface AsObject {
+    llmTokenUsage?: LlmTokenUsage.AsObject;
+    startTime?: googleProtobuf005.Timestamp.AsObject;
+    endTime?: googleProtobuf005.Timestamp.AsObject;
+    durationInS: number;
+    thinkingText: string;
+  }
+
+  /**
+   * Protobuf JSON representation for LlmThinkingMetadata
+   */
+  export interface AsProtobufJSON {
+    llmTokenUsage: LlmTokenUsage.AsProtobufJSON | null;
+    startTime: googleProtobuf005.Timestamp.AsProtobufJSON | null;
+    endTime: googleProtobuf005.Timestamp.AsProtobufJSON | null;
+    durationInS: number;
+    thinkingText: string;
+  }
+}
+
+/**
+ * Message implementation for ondewo.nlu.LlmTelemetry
+ */
+export class LlmTelemetry implements GrpcMessage {
+  static id = 'ondewo.nlu.LlmTelemetry';
+
+  /**
+   * Deserialize binary data to message
+   * @param instance message instance
+   */
+  static deserializeBinary(bytes: ByteSource) {
+    const instance = new LlmTelemetry();
+    LlmTelemetry.deserializeBinaryFromReader(instance, new BinaryReader(bytes));
+    return instance;
+  }
+
+  /**
+   * Check all the properties and set default protobuf values if necessary
+   * @param _instance message instance
+   */
+  static refineValues(_instance: LlmTelemetry) {
+    _instance.provider = _instance.provider || '';
+    _instance.modelName = _instance.modelName || '';
+    _instance.agentName = _instance.agentName || '';
+    _instance.llmTokenUsage = _instance.llmTokenUsage || undefined;
+    _instance.llmToolCallMetadatas = _instance.llmToolCallMetadatas || [];
+    _instance.toolCallCount = _instance.toolCallCount || 0;
+    _instance.llmThinkingMetadata = _instance.llmThinkingMetadata || undefined;
+    _instance.startTime = _instance.startTime || undefined;
+    _instance.endTime = _instance.endTime || undefined;
+    _instance.durationInS = _instance.durationInS || 0;
+    _instance.runId = _instance.runId || '';
+    _instance.parentRunId = _instance.parentRunId || '';
+    _instance.runType = _instance.runType || '';
+    _instance.componentName = _instance.componentName || '';
+    _instance.tags = _instance.tags || [];
+    _instance.metadata = _instance.metadata || undefined;
+    _instance.inputs = _instance.inputs || undefined;
+    _instance.outputs = _instance.outputs || undefined;
+    _instance.errorClass = _instance.errorClass || '';
+    _instance.errorMessage = _instance.errorMessage || '';
+    _instance.traceback = _instance.traceback || '';
+    _instance.streamingChunkCount = _instance.streamingChunkCount || 0;
+    _instance.firstTokenLatencySeconds =
+      _instance.firstTokenLatencySeconds || 0;
+    _instance.systemFingerprint = _instance.systemFingerprint || '';
+    _instance.cached = _instance.cached || false;
+    _instance.retryCount = _instance.retryCount || 0;
+    _instance.fallbackDepth = _instance.fallbackDepth || 0;
+    _instance.temperature = _instance.temperature || 0;
+    _instance.topP = _instance.topP || 0;
+    _instance.maxTokens = _instance.maxTokens || 0;
+    _instance.nGenerations = _instance.nGenerations || 0;
+    _instance.finishReasons = _instance.finishReasons || [];
+    _instance.cachedInputTokens = _instance.cachedInputTokens || 0;
+    _instance.cacheCreationInputTokens =
+      _instance.cacheCreationInputTokens || 0;
+    _instance.langsmithRunUrl = _instance.langsmithRunUrl || '';
+    _instance.teamName = _instance.teamName || '';
+    _instance.teamId = _instance.teamId || '';
+    _instance.agentRole = _instance.agentRole || '';
+    _instance.senderAgent = _instance.senderAgent || '';
+    _instance.recipientAgent = _instance.recipientAgent || '';
+    _instance.turnIndex = _instance.turnIndex || 0;
+    _instance.reflectionIterations = _instance.reflectionIterations || 0;
+    _instance.terminationReason = _instance.terminationReason || '';
+    _instance.evaluatorRunsJoinKey = _instance.evaluatorRunsJoinKey || '';
+    _instance.llmEvaluationFeedbacks = _instance.llmEvaluationFeedbacks || [];
+    _instance.ccaiServiceName = _instance.ccaiServiceName || '';
+    _instance.baseUrl = _instance.baseUrl || '';
+    _instance.defaultHeaders = _instance.defaultHeaders || undefined;
+    _instance.defaultQuery = _instance.defaultQuery || undefined;
+    _instance.frequencyPenalty = _instance.frequencyPenalty || 0;
+    _instance.openaiMetadata = _instance.openaiMetadata || undefined;
+    _instance.presencePenalty = _instance.presencePenalty || 0;
+    _instance.reasoningEffort = _instance.reasoningEffort || 0;
+    _instance.user = _instance.user || '';
+    _instance.timeout = _instance.timeout || 0;
+    _instance.strictResponseValidation =
+      _instance.strictResponseValidation || false;
+    _instance.extraHeaders = _instance.extraHeaders || undefined;
+    _instance.extraQuery = _instance.extraQuery || undefined;
+    _instance.extraBody = _instance.extraBody || undefined;
+    _instance.ccaiServiceProvider = _instance.ccaiServiceProvider || 0;
+    _instance.llmSafetyAssessment = _instance.llmSafetyAssessment || undefined;
+    _instance.llmRetrievalMetadata =
+      _instance.llmRetrievalMetadata || undefined;
+    _instance.llmCallId = _instance.llmCallId || '';
+  }
+
+  /**
+   * Deserializes / reads binary message into message instance using provided binary reader
+   * @param _instance message instance
+   * @param _reader binary reader instance
+   */
+  static deserializeBinaryFromReader(
+    _instance: LlmTelemetry,
+    _reader: BinaryReader
+  ) {
+    while (_reader.nextField()) {
+      if (_reader.isEndGroup()) break;
+
+      switch (_reader.getFieldNumber()) {
+        case 1:
+          _instance.provider = _reader.readString();
+          break;
+        case 2:
+          _instance.modelName = _reader.readString();
+          break;
+        case 3:
+          _instance.agentName = _reader.readString();
+          break;
+        case 4:
+          _instance.llmTokenUsage = new LlmTokenUsage();
+          _reader.readMessage(
+            _instance.llmTokenUsage,
+            LlmTokenUsage.deserializeBinaryFromReader
+          );
+          break;
+        case 5:
+          const messageInitializer5 = new LlmToolCallMetadata();
+          _reader.readMessage(
+            messageInitializer5,
+            LlmToolCallMetadata.deserializeBinaryFromReader
+          );
+          (_instance.llmToolCallMetadatas =
+            _instance.llmToolCallMetadatas || []).push(messageInitializer5);
+          break;
+        case 6:
+          _instance.toolCallCount = _reader.readInt32();
+          break;
+        case 7:
+          _instance.llmThinkingMetadata = new LlmThinkingMetadata();
+          _reader.readMessage(
+            _instance.llmThinkingMetadata,
+            LlmThinkingMetadata.deserializeBinaryFromReader
+          );
+          break;
+        case 8:
+          _instance.startTime = new googleProtobuf005.Timestamp();
+          _reader.readMessage(
+            _instance.startTime,
+            googleProtobuf005.Timestamp.deserializeBinaryFromReader
+          );
+          break;
+        case 9:
+          _instance.endTime = new googleProtobuf005.Timestamp();
+          _reader.readMessage(
+            _instance.endTime,
+            googleProtobuf005.Timestamp.deserializeBinaryFromReader
+          );
+          break;
+        case 10:
+          _instance.durationInS = _reader.readDouble();
+          break;
+        case 11:
+          _instance.runId = _reader.readString();
+          break;
+        case 12:
+          _instance.parentRunId = _reader.readString();
+          break;
+        case 13:
+          _instance.runType = _reader.readString();
+          break;
+        case 14:
+          _instance.componentName = _reader.readString();
+          break;
+        case 15:
+          (_instance.tags = _instance.tags || []).push(_reader.readString());
+          break;
+        case 16:
+          _instance.metadata = new googleProtobuf004.Struct();
+          _reader.readMessage(
+            _instance.metadata,
+            googleProtobuf004.Struct.deserializeBinaryFromReader
+          );
+          break;
+        case 17:
+          _instance.inputs = new googleProtobuf004.Struct();
+          _reader.readMessage(
+            _instance.inputs,
+            googleProtobuf004.Struct.deserializeBinaryFromReader
+          );
+          break;
+        case 18:
+          _instance.outputs = new googleProtobuf004.Struct();
+          _reader.readMessage(
+            _instance.outputs,
+            googleProtobuf004.Struct.deserializeBinaryFromReader
+          );
+          break;
+        case 19:
+          _instance.errorClass = _reader.readString();
+          break;
+        case 20:
+          _instance.errorMessage = _reader.readString();
+          break;
+        case 21:
+          _instance.traceback = _reader.readString();
+          break;
+        case 22:
+          _instance.streamingChunkCount = _reader.readInt32();
+          break;
+        case 23:
+          _instance.firstTokenLatencySeconds = _reader.readDouble();
+          break;
+        case 24:
+          _instance.systemFingerprint = _reader.readString();
+          break;
+        case 25:
+          _instance.cached = _reader.readBool();
+          break;
+        case 26:
+          _instance.retryCount = _reader.readInt32();
+          break;
+        case 27:
+          _instance.fallbackDepth = _reader.readInt32();
+          break;
+        case 28:
+          _instance.temperature = _reader.readDouble();
+          break;
+        case 29:
+          _instance.topP = _reader.readDouble();
+          break;
+        case 30:
+          _instance.maxTokens = _reader.readInt32();
+          break;
+        case 31:
+          _instance.nGenerations = _reader.readInt32();
+          break;
+        case 32:
+          (_instance.finishReasons = _instance.finishReasons || []).push(
+            _reader.readString()
+          );
+          break;
+        case 33:
+          _instance.cachedInputTokens = _reader.readInt32();
+          break;
+        case 34:
+          _instance.cacheCreationInputTokens = _reader.readInt32();
+          break;
+        case 35:
+          _instance.langsmithRunUrl = _reader.readString();
+          break;
+        case 36:
+          _instance.teamName = _reader.readString();
+          break;
+        case 37:
+          _instance.teamId = _reader.readString();
+          break;
+        case 38:
+          _instance.agentRole = _reader.readString();
+          break;
+        case 39:
+          _instance.senderAgent = _reader.readString();
+          break;
+        case 40:
+          _instance.recipientAgent = _reader.readString();
+          break;
+        case 41:
+          _instance.turnIndex = _reader.readInt32();
+          break;
+        case 42:
+          _instance.reflectionIterations = _reader.readInt32();
+          break;
+        case 43:
+          _instance.terminationReason = _reader.readString();
+          break;
+        case 44:
+          _instance.evaluatorRunsJoinKey = _reader.readString();
+          break;
+        case 45:
+          const messageInitializer45 = new ondewoNlu016.LlmEvaluationFeedback();
+          _reader.readMessage(
+            messageInitializer45,
+            ondewoNlu016.LlmEvaluationFeedback.deserializeBinaryFromReader
+          );
+          (_instance.llmEvaluationFeedbacks =
+            _instance.llmEvaluationFeedbacks || []).push(messageInitializer45);
+          break;
+        case 46:
+          _instance.ccaiServiceName = _reader.readString();
+          break;
+        case 47:
+          _instance.baseUrl = _reader.readString();
+          break;
+        case 48:
+          _instance.defaultHeaders = new googleProtobuf004.Struct();
+          _reader.readMessage(
+            _instance.defaultHeaders,
+            googleProtobuf004.Struct.deserializeBinaryFromReader
+          );
+          break;
+        case 49:
+          _instance.defaultQuery = new googleProtobuf004.Struct();
+          _reader.readMessage(
+            _instance.defaultQuery,
+            googleProtobuf004.Struct.deserializeBinaryFromReader
+          );
+          break;
+        case 50:
+          _instance.frequencyPenalty = _reader.readFloat();
+          break;
+        case 51:
+          _instance.openaiMetadata = new googleProtobuf004.Struct();
+          _reader.readMessage(
+            _instance.openaiMetadata,
+            googleProtobuf004.Struct.deserializeBinaryFromReader
+          );
+          break;
+        case 52:
+          _instance.presencePenalty = _reader.readFloat();
+          break;
+        case 53:
+          _instance.reasoningEffort = _reader.readEnum();
+          break;
+        case 54:
+          _instance.user = _reader.readString();
+          break;
+        case 55:
+          _instance.timeout = _reader.readFloat();
+          break;
+        case 56:
+          _instance.strictResponseValidation = _reader.readBool();
+          break;
+        case 57:
+          _instance.extraHeaders = new googleProtobuf004.Struct();
+          _reader.readMessage(
+            _instance.extraHeaders,
+            googleProtobuf004.Struct.deserializeBinaryFromReader
+          );
+          break;
+        case 58:
+          _instance.extraQuery = new googleProtobuf004.Struct();
+          _reader.readMessage(
+            _instance.extraQuery,
+            googleProtobuf004.Struct.deserializeBinaryFromReader
+          );
+          break;
+        case 59:
+          _instance.extraBody = new googleProtobuf004.Struct();
+          _reader.readMessage(
+            _instance.extraBody,
+            googleProtobuf004.Struct.deserializeBinaryFromReader
+          );
+          break;
+        case 60:
+          _instance.ccaiServiceProvider = _reader.readEnum();
+          break;
+        case 61:
+          _instance.llmSafetyAssessment = new LlmSafetyAssessment();
+          _reader.readMessage(
+            _instance.llmSafetyAssessment,
+            LlmSafetyAssessment.deserializeBinaryFromReader
+          );
+          break;
+        case 62:
+          _instance.llmRetrievalMetadata = new LlmRetrievalMetadata();
+          _reader.readMessage(
+            _instance.llmRetrievalMetadata,
+            LlmRetrievalMetadata.deserializeBinaryFromReader
+          );
+          break;
+        case 63:
+          _instance.llmCallId = _reader.readString();
+          break;
+        default:
+          _reader.skipField();
+      }
+    }
+
+    LlmTelemetry.refineValues(_instance);
+  }
+
+  /**
+   * Serializes a message to binary format using provided binary reader
+   * @param _instance message instance
+   * @param _writer binary writer instance
+   */
+  static serializeBinaryToWriter(
+    _instance: LlmTelemetry,
+    _writer: BinaryWriter
+  ) {
+    if (_instance.provider) {
+      _writer.writeString(1, _instance.provider);
+    }
+    if (_instance.modelName) {
+      _writer.writeString(2, _instance.modelName);
+    }
+    if (_instance.agentName) {
+      _writer.writeString(3, _instance.agentName);
+    }
+    if (_instance.llmTokenUsage) {
+      _writer.writeMessage(
+        4,
+        _instance.llmTokenUsage as any,
+        LlmTokenUsage.serializeBinaryToWriter
+      );
+    }
+    if (
+      _instance.llmToolCallMetadatas &&
+      _instance.llmToolCallMetadatas.length
+    ) {
+      _writer.writeRepeatedMessage(
+        5,
+        _instance.llmToolCallMetadatas as any,
+        LlmToolCallMetadata.serializeBinaryToWriter
+      );
+    }
+    if (_instance.toolCallCount) {
+      _writer.writeInt32(6, _instance.toolCallCount);
+    }
+    if (_instance.llmThinkingMetadata) {
+      _writer.writeMessage(
+        7,
+        _instance.llmThinkingMetadata as any,
+        LlmThinkingMetadata.serializeBinaryToWriter
+      );
+    }
+    if (_instance.startTime) {
+      _writer.writeMessage(
+        8,
+        _instance.startTime as any,
+        googleProtobuf005.Timestamp.serializeBinaryToWriter
+      );
+    }
+    if (_instance.endTime) {
+      _writer.writeMessage(
+        9,
+        _instance.endTime as any,
+        googleProtobuf005.Timestamp.serializeBinaryToWriter
+      );
+    }
+    if (_instance.durationInS) {
+      _writer.writeDouble(10, _instance.durationInS);
+    }
+    if (_instance.runId) {
+      _writer.writeString(11, _instance.runId);
+    }
+    if (_instance.parentRunId) {
+      _writer.writeString(12, _instance.parentRunId);
+    }
+    if (_instance.runType) {
+      _writer.writeString(13, _instance.runType);
+    }
+    if (_instance.componentName) {
+      _writer.writeString(14, _instance.componentName);
+    }
+    if (_instance.tags && _instance.tags.length) {
+      _writer.writeRepeatedString(15, _instance.tags);
+    }
+    if (_instance.metadata) {
+      _writer.writeMessage(
+        16,
+        _instance.metadata as any,
+        googleProtobuf004.Struct.serializeBinaryToWriter
+      );
+    }
+    if (_instance.inputs) {
+      _writer.writeMessage(
+        17,
+        _instance.inputs as any,
+        googleProtobuf004.Struct.serializeBinaryToWriter
+      );
+    }
+    if (_instance.outputs) {
+      _writer.writeMessage(
+        18,
+        _instance.outputs as any,
+        googleProtobuf004.Struct.serializeBinaryToWriter
+      );
+    }
+    if (_instance.errorClass) {
+      _writer.writeString(19, _instance.errorClass);
+    }
+    if (_instance.errorMessage) {
+      _writer.writeString(20, _instance.errorMessage);
+    }
+    if (_instance.traceback) {
+      _writer.writeString(21, _instance.traceback);
+    }
+    if (_instance.streamingChunkCount) {
+      _writer.writeInt32(22, _instance.streamingChunkCount);
+    }
+    if (_instance.firstTokenLatencySeconds) {
+      _writer.writeDouble(23, _instance.firstTokenLatencySeconds);
+    }
+    if (_instance.systemFingerprint) {
+      _writer.writeString(24, _instance.systemFingerprint);
+    }
+    if (_instance.cached) {
+      _writer.writeBool(25, _instance.cached);
+    }
+    if (_instance.retryCount) {
+      _writer.writeInt32(26, _instance.retryCount);
+    }
+    if (_instance.fallbackDepth) {
+      _writer.writeInt32(27, _instance.fallbackDepth);
+    }
+    if (_instance.temperature) {
+      _writer.writeDouble(28, _instance.temperature);
+    }
+    if (_instance.topP) {
+      _writer.writeDouble(29, _instance.topP);
+    }
+    if (_instance.maxTokens) {
+      _writer.writeInt32(30, _instance.maxTokens);
+    }
+    if (_instance.nGenerations) {
+      _writer.writeInt32(31, _instance.nGenerations);
+    }
+    if (_instance.finishReasons && _instance.finishReasons.length) {
+      _writer.writeRepeatedString(32, _instance.finishReasons);
+    }
+    if (_instance.cachedInputTokens) {
+      _writer.writeInt32(33, _instance.cachedInputTokens);
+    }
+    if (_instance.cacheCreationInputTokens) {
+      _writer.writeInt32(34, _instance.cacheCreationInputTokens);
+    }
+    if (_instance.langsmithRunUrl) {
+      _writer.writeString(35, _instance.langsmithRunUrl);
+    }
+    if (_instance.teamName) {
+      _writer.writeString(36, _instance.teamName);
+    }
+    if (_instance.teamId) {
+      _writer.writeString(37, _instance.teamId);
+    }
+    if (_instance.agentRole) {
+      _writer.writeString(38, _instance.agentRole);
+    }
+    if (_instance.senderAgent) {
+      _writer.writeString(39, _instance.senderAgent);
+    }
+    if (_instance.recipientAgent) {
+      _writer.writeString(40, _instance.recipientAgent);
+    }
+    if (_instance.turnIndex) {
+      _writer.writeInt32(41, _instance.turnIndex);
+    }
+    if (_instance.reflectionIterations) {
+      _writer.writeInt32(42, _instance.reflectionIterations);
+    }
+    if (_instance.terminationReason) {
+      _writer.writeString(43, _instance.terminationReason);
+    }
+    if (_instance.evaluatorRunsJoinKey) {
+      _writer.writeString(44, _instance.evaluatorRunsJoinKey);
+    }
+    if (
+      _instance.llmEvaluationFeedbacks &&
+      _instance.llmEvaluationFeedbacks.length
+    ) {
+      _writer.writeRepeatedMessage(
+        45,
+        _instance.llmEvaluationFeedbacks as any,
+        ondewoNlu016.LlmEvaluationFeedback.serializeBinaryToWriter
+      );
+    }
+    if (_instance.ccaiServiceName) {
+      _writer.writeString(46, _instance.ccaiServiceName);
+    }
+    if (_instance.baseUrl) {
+      _writer.writeString(47, _instance.baseUrl);
+    }
+    if (_instance.defaultHeaders) {
+      _writer.writeMessage(
+        48,
+        _instance.defaultHeaders as any,
+        googleProtobuf004.Struct.serializeBinaryToWriter
+      );
+    }
+    if (_instance.defaultQuery) {
+      _writer.writeMessage(
+        49,
+        _instance.defaultQuery as any,
+        googleProtobuf004.Struct.serializeBinaryToWriter
+      );
+    }
+    if (_instance.frequencyPenalty) {
+      _writer.writeFloat(50, _instance.frequencyPenalty);
+    }
+    if (_instance.openaiMetadata) {
+      _writer.writeMessage(
+        51,
+        _instance.openaiMetadata as any,
+        googleProtobuf004.Struct.serializeBinaryToWriter
+      );
+    }
+    if (_instance.presencePenalty) {
+      _writer.writeFloat(52, _instance.presencePenalty);
+    }
+    if (_instance.reasoningEffort) {
+      _writer.writeEnum(53, _instance.reasoningEffort);
+    }
+    if (_instance.user) {
+      _writer.writeString(54, _instance.user);
+    }
+    if (_instance.timeout) {
+      _writer.writeFloat(55, _instance.timeout);
+    }
+    if (_instance.strictResponseValidation) {
+      _writer.writeBool(56, _instance.strictResponseValidation);
+    }
+    if (_instance.extraHeaders) {
+      _writer.writeMessage(
+        57,
+        _instance.extraHeaders as any,
+        googleProtobuf004.Struct.serializeBinaryToWriter
+      );
+    }
+    if (_instance.extraQuery) {
+      _writer.writeMessage(
+        58,
+        _instance.extraQuery as any,
+        googleProtobuf004.Struct.serializeBinaryToWriter
+      );
+    }
+    if (_instance.extraBody) {
+      _writer.writeMessage(
+        59,
+        _instance.extraBody as any,
+        googleProtobuf004.Struct.serializeBinaryToWriter
+      );
+    }
+    if (_instance.ccaiServiceProvider) {
+      _writer.writeEnum(60, _instance.ccaiServiceProvider);
+    }
+    if (_instance.llmSafetyAssessment) {
+      _writer.writeMessage(
+        61,
+        _instance.llmSafetyAssessment as any,
+        LlmSafetyAssessment.serializeBinaryToWriter
+      );
+    }
+    if (_instance.llmRetrievalMetadata) {
+      _writer.writeMessage(
+        62,
+        _instance.llmRetrievalMetadata as any,
+        LlmRetrievalMetadata.serializeBinaryToWriter
+      );
+    }
+    if (_instance.llmCallId) {
+      _writer.writeString(63, _instance.llmCallId);
+    }
+  }
+
+  private _provider: string;
+  private _modelName: string;
+  private _agentName: string;
+  private _llmTokenUsage?: LlmTokenUsage;
+  private _llmToolCallMetadatas?: LlmToolCallMetadata[];
+  private _toolCallCount: number;
+  private _llmThinkingMetadata?: LlmThinkingMetadata;
+  private _startTime?: googleProtobuf005.Timestamp;
+  private _endTime?: googleProtobuf005.Timestamp;
+  private _durationInS: number;
+  private _runId: string;
+  private _parentRunId: string;
+  private _runType: string;
+  private _componentName: string;
+  private _tags: string[];
+  private _metadata?: googleProtobuf004.Struct;
+  private _inputs?: googleProtobuf004.Struct;
+  private _outputs?: googleProtobuf004.Struct;
+  private _errorClass: string;
+  private _errorMessage: string;
+  private _traceback: string;
+  private _streamingChunkCount: number;
+  private _firstTokenLatencySeconds: number;
+  private _systemFingerprint: string;
+  private _cached: boolean;
+  private _retryCount: number;
+  private _fallbackDepth: number;
+  private _temperature: number;
+  private _topP: number;
+  private _maxTokens: number;
+  private _nGenerations: number;
+  private _finishReasons: string[];
+  private _cachedInputTokens: number;
+  private _cacheCreationInputTokens: number;
+  private _langsmithRunUrl: string;
+  private _teamName: string;
+  private _teamId: string;
+  private _agentRole: string;
+  private _senderAgent: string;
+  private _recipientAgent: string;
+  private _turnIndex: number;
+  private _reflectionIterations: number;
+  private _terminationReason: string;
+  private _evaluatorRunsJoinKey: string;
+  private _llmEvaluationFeedbacks?: ondewoNlu016.LlmEvaluationFeedback[];
+  private _ccaiServiceName: string;
+  private _baseUrl: string;
+  private _defaultHeaders?: googleProtobuf004.Struct;
+  private _defaultQuery?: googleProtobuf004.Struct;
+  private _frequencyPenalty: number;
+  private _openaiMetadata?: googleProtobuf004.Struct;
+  private _presencePenalty: number;
+  private _reasoningEffort: ReasoningEffort;
+  private _user: string;
+  private _timeout: number;
+  private _strictResponseValidation: boolean;
+  private _extraHeaders?: googleProtobuf004.Struct;
+  private _extraQuery?: googleProtobuf004.Struct;
+  private _extraBody?: googleProtobuf004.Struct;
+  private _ccaiServiceProvider: ondewoNlu013.CcaiServiceProvider;
+  private _llmSafetyAssessment?: LlmSafetyAssessment;
+  private _llmRetrievalMetadata?: LlmRetrievalMetadata;
+  private _llmCallId: string;
+
+  /**
+   * Message constructor. Initializes the properties and applies default Protobuf values if necessary
+   * @param _value initial values object or instance of LlmTelemetry to deeply clone from
+   */
+  constructor(_value?: RecursivePartial<LlmTelemetry.AsObject>) {
+    _value = _value || {};
+    this.provider = _value.provider;
+    this.modelName = _value.modelName;
+    this.agentName = _value.agentName;
+    this.llmTokenUsage = _value.llmTokenUsage
+      ? new LlmTokenUsage(_value.llmTokenUsage)
+      : undefined;
+    this.llmToolCallMetadatas = (_value.llmToolCallMetadatas || []).map(
+      m => new LlmToolCallMetadata(m)
+    );
+    this.toolCallCount = _value.toolCallCount;
+    this.llmThinkingMetadata = _value.llmThinkingMetadata
+      ? new LlmThinkingMetadata(_value.llmThinkingMetadata)
+      : undefined;
+    this.startTime = _value.startTime
+      ? new googleProtobuf005.Timestamp(_value.startTime)
+      : undefined;
+    this.endTime = _value.endTime
+      ? new googleProtobuf005.Timestamp(_value.endTime)
+      : undefined;
+    this.durationInS = _value.durationInS;
+    this.runId = _value.runId;
+    this.parentRunId = _value.parentRunId;
+    this.runType = _value.runType;
+    this.componentName = _value.componentName;
+    this.tags = (_value.tags || []).slice();
+    this.metadata = _value.metadata
+      ? new googleProtobuf004.Struct(_value.metadata)
+      : undefined;
+    this.inputs = _value.inputs
+      ? new googleProtobuf004.Struct(_value.inputs)
+      : undefined;
+    this.outputs = _value.outputs
+      ? new googleProtobuf004.Struct(_value.outputs)
+      : undefined;
+    this.errorClass = _value.errorClass;
+    this.errorMessage = _value.errorMessage;
+    this.traceback = _value.traceback;
+    this.streamingChunkCount = _value.streamingChunkCount;
+    this.firstTokenLatencySeconds = _value.firstTokenLatencySeconds;
+    this.systemFingerprint = _value.systemFingerprint;
+    this.cached = _value.cached;
+    this.retryCount = _value.retryCount;
+    this.fallbackDepth = _value.fallbackDepth;
+    this.temperature = _value.temperature;
+    this.topP = _value.topP;
+    this.maxTokens = _value.maxTokens;
+    this.nGenerations = _value.nGenerations;
+    this.finishReasons = (_value.finishReasons || []).slice();
+    this.cachedInputTokens = _value.cachedInputTokens;
+    this.cacheCreationInputTokens = _value.cacheCreationInputTokens;
+    this.langsmithRunUrl = _value.langsmithRunUrl;
+    this.teamName = _value.teamName;
+    this.teamId = _value.teamId;
+    this.agentRole = _value.agentRole;
+    this.senderAgent = _value.senderAgent;
+    this.recipientAgent = _value.recipientAgent;
+    this.turnIndex = _value.turnIndex;
+    this.reflectionIterations = _value.reflectionIterations;
+    this.terminationReason = _value.terminationReason;
+    this.evaluatorRunsJoinKey = _value.evaluatorRunsJoinKey;
+    this.llmEvaluationFeedbacks = (_value.llmEvaluationFeedbacks || []).map(
+      m => new ondewoNlu016.LlmEvaluationFeedback(m)
+    );
+    this.ccaiServiceName = _value.ccaiServiceName;
+    this.baseUrl = _value.baseUrl;
+    this.defaultHeaders = _value.defaultHeaders
+      ? new googleProtobuf004.Struct(_value.defaultHeaders)
+      : undefined;
+    this.defaultQuery = _value.defaultQuery
+      ? new googleProtobuf004.Struct(_value.defaultQuery)
+      : undefined;
+    this.frequencyPenalty = _value.frequencyPenalty;
+    this.openaiMetadata = _value.openaiMetadata
+      ? new googleProtobuf004.Struct(_value.openaiMetadata)
+      : undefined;
+    this.presencePenalty = _value.presencePenalty;
+    this.reasoningEffort = _value.reasoningEffort;
+    this.user = _value.user;
+    this.timeout = _value.timeout;
+    this.strictResponseValidation = _value.strictResponseValidation;
+    this.extraHeaders = _value.extraHeaders
+      ? new googleProtobuf004.Struct(_value.extraHeaders)
+      : undefined;
+    this.extraQuery = _value.extraQuery
+      ? new googleProtobuf004.Struct(_value.extraQuery)
+      : undefined;
+    this.extraBody = _value.extraBody
+      ? new googleProtobuf004.Struct(_value.extraBody)
+      : undefined;
+    this.ccaiServiceProvider = _value.ccaiServiceProvider;
+    this.llmSafetyAssessment = _value.llmSafetyAssessment
+      ? new LlmSafetyAssessment(_value.llmSafetyAssessment)
+      : undefined;
+    this.llmRetrievalMetadata = _value.llmRetrievalMetadata
+      ? new LlmRetrievalMetadata(_value.llmRetrievalMetadata)
+      : undefined;
+    this.llmCallId = _value.llmCallId;
+    LlmTelemetry.refineValues(this);
+  }
+  get provider(): string {
+    return this._provider;
+  }
+  set provider(value: string) {
+    this._provider = value;
+  }
+  get modelName(): string {
+    return this._modelName;
+  }
+  set modelName(value: string) {
+    this._modelName = value;
+  }
+  get agentName(): string {
+    return this._agentName;
+  }
+  set agentName(value: string) {
+    this._agentName = value;
+  }
+  get llmTokenUsage(): LlmTokenUsage | undefined {
+    return this._llmTokenUsage;
+  }
+  set llmTokenUsage(value: LlmTokenUsage | undefined) {
+    this._llmTokenUsage = value;
+  }
+  get llmToolCallMetadatas(): LlmToolCallMetadata[] | undefined {
+    return this._llmToolCallMetadatas;
+  }
+  set llmToolCallMetadatas(value: LlmToolCallMetadata[] | undefined) {
+    this._llmToolCallMetadatas = value;
+  }
+  get toolCallCount(): number {
+    return this._toolCallCount;
+  }
+  set toolCallCount(value: number) {
+    this._toolCallCount = value;
+  }
+  get llmThinkingMetadata(): LlmThinkingMetadata | undefined {
+    return this._llmThinkingMetadata;
+  }
+  set llmThinkingMetadata(value: LlmThinkingMetadata | undefined) {
+    this._llmThinkingMetadata = value;
+  }
+  get startTime(): googleProtobuf005.Timestamp | undefined {
+    return this._startTime;
+  }
+  set startTime(value: googleProtobuf005.Timestamp | undefined) {
+    this._startTime = value;
+  }
+  get endTime(): googleProtobuf005.Timestamp | undefined {
+    return this._endTime;
+  }
+  set endTime(value: googleProtobuf005.Timestamp | undefined) {
+    this._endTime = value;
+  }
+  get durationInS(): number {
+    return this._durationInS;
+  }
+  set durationInS(value: number) {
+    this._durationInS = value;
+  }
+  get runId(): string {
+    return this._runId;
+  }
+  set runId(value: string) {
+    this._runId = value;
+  }
+  get parentRunId(): string {
+    return this._parentRunId;
+  }
+  set parentRunId(value: string) {
+    this._parentRunId = value;
+  }
+  get runType(): string {
+    return this._runType;
+  }
+  set runType(value: string) {
+    this._runType = value;
+  }
+  get componentName(): string {
+    return this._componentName;
+  }
+  set componentName(value: string) {
+    this._componentName = value;
+  }
+  get tags(): string[] {
+    return this._tags;
+  }
+  set tags(value: string[]) {
+    this._tags = value;
+  }
+  get metadata(): googleProtobuf004.Struct | undefined {
+    return this._metadata;
+  }
+  set metadata(value: googleProtobuf004.Struct | undefined) {
+    this._metadata = value;
+  }
+  get inputs(): googleProtobuf004.Struct | undefined {
+    return this._inputs;
+  }
+  set inputs(value: googleProtobuf004.Struct | undefined) {
+    this._inputs = value;
+  }
+  get outputs(): googleProtobuf004.Struct | undefined {
+    return this._outputs;
+  }
+  set outputs(value: googleProtobuf004.Struct | undefined) {
+    this._outputs = value;
+  }
+  get errorClass(): string {
+    return this._errorClass;
+  }
+  set errorClass(value: string) {
+    this._errorClass = value;
+  }
+  get errorMessage(): string {
+    return this._errorMessage;
+  }
+  set errorMessage(value: string) {
+    this._errorMessage = value;
+  }
+  get traceback(): string {
+    return this._traceback;
+  }
+  set traceback(value: string) {
+    this._traceback = value;
+  }
+  get streamingChunkCount(): number {
+    return this._streamingChunkCount;
+  }
+  set streamingChunkCount(value: number) {
+    this._streamingChunkCount = value;
+  }
+  get firstTokenLatencySeconds(): number {
+    return this._firstTokenLatencySeconds;
+  }
+  set firstTokenLatencySeconds(value: number) {
+    this._firstTokenLatencySeconds = value;
+  }
+  get systemFingerprint(): string {
+    return this._systemFingerprint;
+  }
+  set systemFingerprint(value: string) {
+    this._systemFingerprint = value;
+  }
+  get cached(): boolean {
+    return this._cached;
+  }
+  set cached(value: boolean) {
+    this._cached = value;
+  }
+  get retryCount(): number {
+    return this._retryCount;
+  }
+  set retryCount(value: number) {
+    this._retryCount = value;
+  }
+  get fallbackDepth(): number {
+    return this._fallbackDepth;
+  }
+  set fallbackDepth(value: number) {
+    this._fallbackDepth = value;
+  }
+  get temperature(): number {
+    return this._temperature;
+  }
+  set temperature(value: number) {
+    this._temperature = value;
+  }
+  get topP(): number {
+    return this._topP;
+  }
+  set topP(value: number) {
+    this._topP = value;
+  }
+  get maxTokens(): number {
+    return this._maxTokens;
+  }
+  set maxTokens(value: number) {
+    this._maxTokens = value;
+  }
+  get nGenerations(): number {
+    return this._nGenerations;
+  }
+  set nGenerations(value: number) {
+    this._nGenerations = value;
+  }
+  get finishReasons(): string[] {
+    return this._finishReasons;
+  }
+  set finishReasons(value: string[]) {
+    this._finishReasons = value;
+  }
+  get cachedInputTokens(): number {
+    return this._cachedInputTokens;
+  }
+  set cachedInputTokens(value: number) {
+    this._cachedInputTokens = value;
+  }
+  get cacheCreationInputTokens(): number {
+    return this._cacheCreationInputTokens;
+  }
+  set cacheCreationInputTokens(value: number) {
+    this._cacheCreationInputTokens = value;
+  }
+  get langsmithRunUrl(): string {
+    return this._langsmithRunUrl;
+  }
+  set langsmithRunUrl(value: string) {
+    this._langsmithRunUrl = value;
+  }
+  get teamName(): string {
+    return this._teamName;
+  }
+  set teamName(value: string) {
+    this._teamName = value;
+  }
+  get teamId(): string {
+    return this._teamId;
+  }
+  set teamId(value: string) {
+    this._teamId = value;
+  }
+  get agentRole(): string {
+    return this._agentRole;
+  }
+  set agentRole(value: string) {
+    this._agentRole = value;
+  }
+  get senderAgent(): string {
+    return this._senderAgent;
+  }
+  set senderAgent(value: string) {
+    this._senderAgent = value;
+  }
+  get recipientAgent(): string {
+    return this._recipientAgent;
+  }
+  set recipientAgent(value: string) {
+    this._recipientAgent = value;
+  }
+  get turnIndex(): number {
+    return this._turnIndex;
+  }
+  set turnIndex(value: number) {
+    this._turnIndex = value;
+  }
+  get reflectionIterations(): number {
+    return this._reflectionIterations;
+  }
+  set reflectionIterations(value: number) {
+    this._reflectionIterations = value;
+  }
+  get terminationReason(): string {
+    return this._terminationReason;
+  }
+  set terminationReason(value: string) {
+    this._terminationReason = value;
+  }
+  get evaluatorRunsJoinKey(): string {
+    return this._evaluatorRunsJoinKey;
+  }
+  set evaluatorRunsJoinKey(value: string) {
+    this._evaluatorRunsJoinKey = value;
+  }
+  get llmEvaluationFeedbacks():
+    | ondewoNlu016.LlmEvaluationFeedback[]
+    | undefined {
+    return this._llmEvaluationFeedbacks;
+  }
+  set llmEvaluationFeedbacks(
+    value: ondewoNlu016.LlmEvaluationFeedback[] | undefined
+  ) {
+    this._llmEvaluationFeedbacks = value;
+  }
+  get ccaiServiceName(): string {
+    return this._ccaiServiceName;
+  }
+  set ccaiServiceName(value: string) {
+    this._ccaiServiceName = value;
+  }
+  get baseUrl(): string {
+    return this._baseUrl;
+  }
+  set baseUrl(value: string) {
+    this._baseUrl = value;
+  }
+  get defaultHeaders(): googleProtobuf004.Struct | undefined {
+    return this._defaultHeaders;
+  }
+  set defaultHeaders(value: googleProtobuf004.Struct | undefined) {
+    this._defaultHeaders = value;
+  }
+  get defaultQuery(): googleProtobuf004.Struct | undefined {
+    return this._defaultQuery;
+  }
+  set defaultQuery(value: googleProtobuf004.Struct | undefined) {
+    this._defaultQuery = value;
+  }
+  get frequencyPenalty(): number {
+    return this._frequencyPenalty;
+  }
+  set frequencyPenalty(value: number) {
+    this._frequencyPenalty = value;
+  }
+  get openaiMetadata(): googleProtobuf004.Struct | undefined {
+    return this._openaiMetadata;
+  }
+  set openaiMetadata(value: googleProtobuf004.Struct | undefined) {
+    this._openaiMetadata = value;
+  }
+  get presencePenalty(): number {
+    return this._presencePenalty;
+  }
+  set presencePenalty(value: number) {
+    this._presencePenalty = value;
+  }
+  get reasoningEffort(): ReasoningEffort {
+    return this._reasoningEffort;
+  }
+  set reasoningEffort(value: ReasoningEffort) {
+    this._reasoningEffort = value;
+  }
+  get user(): string {
+    return this._user;
+  }
+  set user(value: string) {
+    this._user = value;
+  }
+  get timeout(): number {
+    return this._timeout;
+  }
+  set timeout(value: number) {
+    this._timeout = value;
+  }
+  get strictResponseValidation(): boolean {
+    return this._strictResponseValidation;
+  }
+  set strictResponseValidation(value: boolean) {
+    this._strictResponseValidation = value;
+  }
+  get extraHeaders(): googleProtobuf004.Struct | undefined {
+    return this._extraHeaders;
+  }
+  set extraHeaders(value: googleProtobuf004.Struct | undefined) {
+    this._extraHeaders = value;
+  }
+  get extraQuery(): googleProtobuf004.Struct | undefined {
+    return this._extraQuery;
+  }
+  set extraQuery(value: googleProtobuf004.Struct | undefined) {
+    this._extraQuery = value;
+  }
+  get extraBody(): googleProtobuf004.Struct | undefined {
+    return this._extraBody;
+  }
+  set extraBody(value: googleProtobuf004.Struct | undefined) {
+    this._extraBody = value;
+  }
+  get ccaiServiceProvider(): ondewoNlu013.CcaiServiceProvider {
+    return this._ccaiServiceProvider;
+  }
+  set ccaiServiceProvider(value: ondewoNlu013.CcaiServiceProvider) {
+    this._ccaiServiceProvider = value;
+  }
+  get llmSafetyAssessment(): LlmSafetyAssessment | undefined {
+    return this._llmSafetyAssessment;
+  }
+  set llmSafetyAssessment(value: LlmSafetyAssessment | undefined) {
+    this._llmSafetyAssessment = value;
+  }
+  get llmRetrievalMetadata(): LlmRetrievalMetadata | undefined {
+    return this._llmRetrievalMetadata;
+  }
+  set llmRetrievalMetadata(value: LlmRetrievalMetadata | undefined) {
+    this._llmRetrievalMetadata = value;
+  }
+  get llmCallId(): string {
+    return this._llmCallId;
+  }
+  set llmCallId(value: string) {
+    this._llmCallId = value;
+  }
+
+  /**
+   * Serialize message to binary data
+   * @param instance message instance
+   */
+  serializeBinary() {
+    const writer = new BinaryWriter();
+    LlmTelemetry.serializeBinaryToWriter(this, writer);
+    return writer.getResultBuffer();
+  }
+
+  /**
+   * Cast message to standard JavaScript object (all non-primitive values are deeply cloned)
+   */
+  toObject(): LlmTelemetry.AsObject {
+    return {
+      provider: this.provider,
+      modelName: this.modelName,
+      agentName: this.agentName,
+      llmTokenUsage: this.llmTokenUsage
+        ? this.llmTokenUsage.toObject()
+        : undefined,
+      llmToolCallMetadatas: (this.llmToolCallMetadatas || []).map(m =>
+        m.toObject()
+      ),
+      toolCallCount: this.toolCallCount,
+      llmThinkingMetadata: this.llmThinkingMetadata
+        ? this.llmThinkingMetadata.toObject()
+        : undefined,
+      startTime: this.startTime ? this.startTime.toObject() : undefined,
+      endTime: this.endTime ? this.endTime.toObject() : undefined,
+      durationInS: this.durationInS,
+      runId: this.runId,
+      parentRunId: this.parentRunId,
+      runType: this.runType,
+      componentName: this.componentName,
+      tags: (this.tags || []).slice(),
+      metadata: this.metadata ? this.metadata.toObject() : undefined,
+      inputs: this.inputs ? this.inputs.toObject() : undefined,
+      outputs: this.outputs ? this.outputs.toObject() : undefined,
+      errorClass: this.errorClass,
+      errorMessage: this.errorMessage,
+      traceback: this.traceback,
+      streamingChunkCount: this.streamingChunkCount,
+      firstTokenLatencySeconds: this.firstTokenLatencySeconds,
+      systemFingerprint: this.systemFingerprint,
+      cached: this.cached,
+      retryCount: this.retryCount,
+      fallbackDepth: this.fallbackDepth,
+      temperature: this.temperature,
+      topP: this.topP,
+      maxTokens: this.maxTokens,
+      nGenerations: this.nGenerations,
+      finishReasons: (this.finishReasons || []).slice(),
+      cachedInputTokens: this.cachedInputTokens,
+      cacheCreationInputTokens: this.cacheCreationInputTokens,
+      langsmithRunUrl: this.langsmithRunUrl,
+      teamName: this.teamName,
+      teamId: this.teamId,
+      agentRole: this.agentRole,
+      senderAgent: this.senderAgent,
+      recipientAgent: this.recipientAgent,
+      turnIndex: this.turnIndex,
+      reflectionIterations: this.reflectionIterations,
+      terminationReason: this.terminationReason,
+      evaluatorRunsJoinKey: this.evaluatorRunsJoinKey,
+      llmEvaluationFeedbacks: (this.llmEvaluationFeedbacks || []).map(m =>
+        m.toObject()
+      ),
+      ccaiServiceName: this.ccaiServiceName,
+      baseUrl: this.baseUrl,
+      defaultHeaders: this.defaultHeaders
+        ? this.defaultHeaders.toObject()
+        : undefined,
+      defaultQuery: this.defaultQuery
+        ? this.defaultQuery.toObject()
+        : undefined,
+      frequencyPenalty: this.frequencyPenalty,
+      openaiMetadata: this.openaiMetadata
+        ? this.openaiMetadata.toObject()
+        : undefined,
+      presencePenalty: this.presencePenalty,
+      reasoningEffort: this.reasoningEffort,
+      user: this.user,
+      timeout: this.timeout,
+      strictResponseValidation: this.strictResponseValidation,
+      extraHeaders: this.extraHeaders
+        ? this.extraHeaders.toObject()
+        : undefined,
+      extraQuery: this.extraQuery ? this.extraQuery.toObject() : undefined,
+      extraBody: this.extraBody ? this.extraBody.toObject() : undefined,
+      ccaiServiceProvider: this.ccaiServiceProvider,
+      llmSafetyAssessment: this.llmSafetyAssessment
+        ? this.llmSafetyAssessment.toObject()
+        : undefined,
+      llmRetrievalMetadata: this.llmRetrievalMetadata
+        ? this.llmRetrievalMetadata.toObject()
+        : undefined,
+      llmCallId: this.llmCallId
+    };
+  }
+
+  /**
+   * Convenience method to support JSON.stringify(message), replicates the structure of toObject()
+   */
+  toJSON() {
+    return this.toObject();
+  }
+
+  /**
+   * Cast message to JSON using protobuf JSON notation: https://developers.google.com/protocol-buffers/docs/proto3#json
+   * Attention: output differs from toObject() e.g. enums are represented as names and not as numbers, Timestamp is an ISO Date string format etc.
+   * If the message itself or some of descendant messages is google.protobuf.Any, you MUST provide a message pool as options. If not, the messagePool is not required
+   */
+  toProtobufJSON(
+    // @ts-ignore
+    options?: ToProtobufJSONOptions
+  ): LlmTelemetry.AsProtobufJSON {
+    return {
+      provider: this.provider,
+      modelName: this.modelName,
+      agentName: this.agentName,
+      llmTokenUsage: this.llmTokenUsage
+        ? this.llmTokenUsage.toProtobufJSON(options)
+        : null,
+      llmToolCallMetadatas: (this.llmToolCallMetadatas || []).map(m =>
+        m.toProtobufJSON(options)
+      ),
+      toolCallCount: this.toolCallCount,
+      llmThinkingMetadata: this.llmThinkingMetadata
+        ? this.llmThinkingMetadata.toProtobufJSON(options)
+        : null,
+      startTime: this.startTime ? this.startTime.toProtobufJSON(options) : null,
+      endTime: this.endTime ? this.endTime.toProtobufJSON(options) : null,
+      durationInS: this.durationInS,
+      runId: this.runId,
+      parentRunId: this.parentRunId,
+      runType: this.runType,
+      componentName: this.componentName,
+      tags: (this.tags || []).slice(),
+      metadata: this.metadata ? this.metadata.toProtobufJSON(options) : null,
+      inputs: this.inputs ? this.inputs.toProtobufJSON(options) : null,
+      outputs: this.outputs ? this.outputs.toProtobufJSON(options) : null,
+      errorClass: this.errorClass,
+      errorMessage: this.errorMessage,
+      traceback: this.traceback,
+      streamingChunkCount: this.streamingChunkCount,
+      firstTokenLatencySeconds: this.firstTokenLatencySeconds,
+      systemFingerprint: this.systemFingerprint,
+      cached: this.cached,
+      retryCount: this.retryCount,
+      fallbackDepth: this.fallbackDepth,
+      temperature: this.temperature,
+      topP: this.topP,
+      maxTokens: this.maxTokens,
+      nGenerations: this.nGenerations,
+      finishReasons: (this.finishReasons || []).slice(),
+      cachedInputTokens: this.cachedInputTokens,
+      cacheCreationInputTokens: this.cacheCreationInputTokens,
+      langsmithRunUrl: this.langsmithRunUrl,
+      teamName: this.teamName,
+      teamId: this.teamId,
+      agentRole: this.agentRole,
+      senderAgent: this.senderAgent,
+      recipientAgent: this.recipientAgent,
+      turnIndex: this.turnIndex,
+      reflectionIterations: this.reflectionIterations,
+      terminationReason: this.terminationReason,
+      evaluatorRunsJoinKey: this.evaluatorRunsJoinKey,
+      llmEvaluationFeedbacks: (this.llmEvaluationFeedbacks || []).map(m =>
+        m.toProtobufJSON(options)
+      ),
+      ccaiServiceName: this.ccaiServiceName,
+      baseUrl: this.baseUrl,
+      defaultHeaders: this.defaultHeaders
+        ? this.defaultHeaders.toProtobufJSON(options)
+        : null,
+      defaultQuery: this.defaultQuery
+        ? this.defaultQuery.toProtobufJSON(options)
+        : null,
+      frequencyPenalty: this.frequencyPenalty,
+      openaiMetadata: this.openaiMetadata
+        ? this.openaiMetadata.toProtobufJSON(options)
+        : null,
+      presencePenalty: this.presencePenalty,
+      reasoningEffort:
+        ReasoningEffort[
+          this.reasoningEffort === null || this.reasoningEffort === undefined
+            ? 0
+            : this.reasoningEffort
+        ],
+      user: this.user,
+      timeout: this.timeout,
+      strictResponseValidation: this.strictResponseValidation,
+      extraHeaders: this.extraHeaders
+        ? this.extraHeaders.toProtobufJSON(options)
+        : null,
+      extraQuery: this.extraQuery
+        ? this.extraQuery.toProtobufJSON(options)
+        : null,
+      extraBody: this.extraBody ? this.extraBody.toProtobufJSON(options) : null,
+      ccaiServiceProvider:
+        ondewoNlu013.CcaiServiceProvider[
+          this.ccaiServiceProvider === null ||
+          this.ccaiServiceProvider === undefined
+            ? 0
+            : this.ccaiServiceProvider
+        ],
+      llmSafetyAssessment: this.llmSafetyAssessment
+        ? this.llmSafetyAssessment.toProtobufJSON(options)
+        : null,
+      llmRetrievalMetadata: this.llmRetrievalMetadata
+        ? this.llmRetrievalMetadata.toProtobufJSON(options)
+        : null,
+      llmCallId: this.llmCallId
+    };
+  }
+}
+export module LlmTelemetry {
+  /**
+   * Standard JavaScript object representation for LlmTelemetry
+   */
+  export interface AsObject {
+    provider: string;
+    modelName: string;
+    agentName: string;
+    llmTokenUsage?: LlmTokenUsage.AsObject;
+    llmToolCallMetadatas?: LlmToolCallMetadata.AsObject[];
+    toolCallCount: number;
+    llmThinkingMetadata?: LlmThinkingMetadata.AsObject;
+    startTime?: googleProtobuf005.Timestamp.AsObject;
+    endTime?: googleProtobuf005.Timestamp.AsObject;
+    durationInS: number;
+    runId: string;
+    parentRunId: string;
+    runType: string;
+    componentName: string;
+    tags: string[];
+    metadata?: googleProtobuf004.Struct.AsObject;
+    inputs?: googleProtobuf004.Struct.AsObject;
+    outputs?: googleProtobuf004.Struct.AsObject;
+    errorClass: string;
+    errorMessage: string;
+    traceback: string;
+    streamingChunkCount: number;
+    firstTokenLatencySeconds: number;
+    systemFingerprint: string;
+    cached: boolean;
+    retryCount: number;
+    fallbackDepth: number;
+    temperature: number;
+    topP: number;
+    maxTokens: number;
+    nGenerations: number;
+    finishReasons: string[];
+    cachedInputTokens: number;
+    cacheCreationInputTokens: number;
+    langsmithRunUrl: string;
+    teamName: string;
+    teamId: string;
+    agentRole: string;
+    senderAgent: string;
+    recipientAgent: string;
+    turnIndex: number;
+    reflectionIterations: number;
+    terminationReason: string;
+    evaluatorRunsJoinKey: string;
+    llmEvaluationFeedbacks?: ondewoNlu016.LlmEvaluationFeedback.AsObject[];
+    ccaiServiceName: string;
+    baseUrl: string;
+    defaultHeaders?: googleProtobuf004.Struct.AsObject;
+    defaultQuery?: googleProtobuf004.Struct.AsObject;
+    frequencyPenalty: number;
+    openaiMetadata?: googleProtobuf004.Struct.AsObject;
+    presencePenalty: number;
+    reasoningEffort: ReasoningEffort;
+    user: string;
+    timeout: number;
+    strictResponseValidation: boolean;
+    extraHeaders?: googleProtobuf004.Struct.AsObject;
+    extraQuery?: googleProtobuf004.Struct.AsObject;
+    extraBody?: googleProtobuf004.Struct.AsObject;
+    ccaiServiceProvider: ondewoNlu013.CcaiServiceProvider;
+    llmSafetyAssessment?: LlmSafetyAssessment.AsObject;
+    llmRetrievalMetadata?: LlmRetrievalMetadata.AsObject;
+    llmCallId: string;
+  }
+
+  /**
+   * Protobuf JSON representation for LlmTelemetry
+   */
+  export interface AsProtobufJSON {
+    provider: string;
+    modelName: string;
+    agentName: string;
+    llmTokenUsage: LlmTokenUsage.AsProtobufJSON | null;
+    llmToolCallMetadatas: LlmToolCallMetadata.AsProtobufJSON[] | null;
+    toolCallCount: number;
+    llmThinkingMetadata: LlmThinkingMetadata.AsProtobufJSON | null;
+    startTime: googleProtobuf005.Timestamp.AsProtobufJSON | null;
+    endTime: googleProtobuf005.Timestamp.AsProtobufJSON | null;
+    durationInS: number;
+    runId: string;
+    parentRunId: string;
+    runType: string;
+    componentName: string;
+    tags: string[];
+    metadata: googleProtobuf004.Struct.AsProtobufJSON | null;
+    inputs: googleProtobuf004.Struct.AsProtobufJSON | null;
+    outputs: googleProtobuf004.Struct.AsProtobufJSON | null;
+    errorClass: string;
+    errorMessage: string;
+    traceback: string;
+    streamingChunkCount: number;
+    firstTokenLatencySeconds: number;
+    systemFingerprint: string;
+    cached: boolean;
+    retryCount: number;
+    fallbackDepth: number;
+    temperature: number;
+    topP: number;
+    maxTokens: number;
+    nGenerations: number;
+    finishReasons: string[];
+    cachedInputTokens: number;
+    cacheCreationInputTokens: number;
+    langsmithRunUrl: string;
+    teamName: string;
+    teamId: string;
+    agentRole: string;
+    senderAgent: string;
+    recipientAgent: string;
+    turnIndex: number;
+    reflectionIterations: number;
+    terminationReason: string;
+    evaluatorRunsJoinKey: string;
+    llmEvaluationFeedbacks:
+      | ondewoNlu016.LlmEvaluationFeedback.AsProtobufJSON[]
+      | null;
+    ccaiServiceName: string;
+    baseUrl: string;
+    defaultHeaders: googleProtobuf004.Struct.AsProtobufJSON | null;
+    defaultQuery: googleProtobuf004.Struct.AsProtobufJSON | null;
+    frequencyPenalty: number;
+    openaiMetadata: googleProtobuf004.Struct.AsProtobufJSON | null;
+    presencePenalty: number;
+    reasoningEffort: string;
+    user: string;
+    timeout: number;
+    strictResponseValidation: boolean;
+    extraHeaders: googleProtobuf004.Struct.AsProtobufJSON | null;
+    extraQuery: googleProtobuf004.Struct.AsProtobufJSON | null;
+    extraBody: googleProtobuf004.Struct.AsProtobufJSON | null;
+    ccaiServiceProvider: string;
+    llmSafetyAssessment: LlmSafetyAssessment.AsProtobufJSON | null;
+    llmRetrievalMetadata: LlmRetrievalMetadata.AsProtobufJSON | null;
+    llmCallId: string;
+  }
+}
+
+/**
+ * Message implementation for ondewo.nlu.LlmSafetyFinding
+ */
+export class LlmSafetyFinding implements GrpcMessage {
+  static id = 'ondewo.nlu.LlmSafetyFinding';
+
+  /**
+   * Deserialize binary data to message
+   * @param instance message instance
+   */
+  static deserializeBinary(bytes: ByteSource) {
+    const instance = new LlmSafetyFinding();
+    LlmSafetyFinding.deserializeBinaryFromReader(
+      instance,
+      new BinaryReader(bytes)
+    );
+    return instance;
+  }
+
+  /**
+   * Check all the properties and set default protobuf values if necessary
+   * @param _instance message instance
+   */
+  static refineValues(_instance: LlmSafetyFinding) {
+    _instance.category = _instance.category || '';
+    _instance.severity = _instance.severity || '';
+    _instance.matchedPattern = _instance.matchedPattern || '';
+    _instance.location = _instance.location || 0;
+  }
+
+  /**
+   * Deserializes / reads binary message into message instance using provided binary reader
+   * @param _instance message instance
+   * @param _reader binary reader instance
+   */
+  static deserializeBinaryFromReader(
+    _instance: LlmSafetyFinding,
+    _reader: BinaryReader
+  ) {
+    while (_reader.nextField()) {
+      if (_reader.isEndGroup()) break;
+
+      switch (_reader.getFieldNumber()) {
+        case 1:
+          _instance.category = _reader.readString();
+          break;
+        case 2:
+          _instance.severity = _reader.readString();
+          break;
+        case 3:
+          _instance.matchedPattern = _reader.readString();
+          break;
+        case 4:
+          _instance.location = _reader.readEnum();
+          break;
+        default:
+          _reader.skipField();
+      }
+    }
+
+    LlmSafetyFinding.refineValues(_instance);
+  }
+
+  /**
+   * Serializes a message to binary format using provided binary reader
+   * @param _instance message instance
+   * @param _writer binary writer instance
+   */
+  static serializeBinaryToWriter(
+    _instance: LlmSafetyFinding,
+    _writer: BinaryWriter
+  ) {
+    if (_instance.category) {
+      _writer.writeString(1, _instance.category);
+    }
+    if (_instance.severity) {
+      _writer.writeString(2, _instance.severity);
+    }
+    if (_instance.matchedPattern) {
+      _writer.writeString(3, _instance.matchedPattern);
+    }
+    if (_instance.location) {
+      _writer.writeEnum(4, _instance.location);
+    }
+  }
+
+  private _category: string;
+  private _severity: string;
+  private _matchedPattern: string;
+  private _location: LlmSafetyLocation;
+
+  /**
+   * Message constructor. Initializes the properties and applies default Protobuf values if necessary
+   * @param _value initial values object or instance of LlmSafetyFinding to deeply clone from
+   */
+  constructor(_value?: RecursivePartial<LlmSafetyFinding.AsObject>) {
+    _value = _value || {};
+    this.category = _value.category;
+    this.severity = _value.severity;
+    this.matchedPattern = _value.matchedPattern;
+    this.location = _value.location;
+    LlmSafetyFinding.refineValues(this);
+  }
+  get category(): string {
+    return this._category;
+  }
+  set category(value: string) {
+    this._category = value;
+  }
+  get severity(): string {
+    return this._severity;
+  }
+  set severity(value: string) {
+    this._severity = value;
+  }
+  get matchedPattern(): string {
+    return this._matchedPattern;
+  }
+  set matchedPattern(value: string) {
+    this._matchedPattern = value;
+  }
+  get location(): LlmSafetyLocation {
+    return this._location;
+  }
+  set location(value: LlmSafetyLocation) {
+    this._location = value;
+  }
+
+  /**
+   * Serialize message to binary data
+   * @param instance message instance
+   */
+  serializeBinary() {
+    const writer = new BinaryWriter();
+    LlmSafetyFinding.serializeBinaryToWriter(this, writer);
+    return writer.getResultBuffer();
+  }
+
+  /**
+   * Cast message to standard JavaScript object (all non-primitive values are deeply cloned)
+   */
+  toObject(): LlmSafetyFinding.AsObject {
+    return {
+      category: this.category,
+      severity: this.severity,
+      matchedPattern: this.matchedPattern,
+      location: this.location
+    };
+  }
+
+  /**
+   * Convenience method to support JSON.stringify(message), replicates the structure of toObject()
+   */
+  toJSON() {
+    return this.toObject();
+  }
+
+  /**
+   * Cast message to JSON using protobuf JSON notation: https://developers.google.com/protocol-buffers/docs/proto3#json
+   * Attention: output differs from toObject() e.g. enums are represented as names and not as numbers, Timestamp is an ISO Date string format etc.
+   * If the message itself or some of descendant messages is google.protobuf.Any, you MUST provide a message pool as options. If not, the messagePool is not required
+   */
+  toProtobufJSON(
+    // @ts-ignore
+    options?: ToProtobufJSONOptions
+  ): LlmSafetyFinding.AsProtobufJSON {
+    return {
+      category: this.category,
+      severity: this.severity,
+      matchedPattern: this.matchedPattern,
+      location:
+        LlmSafetyLocation[
+          this.location === null || this.location === undefined
+            ? 0
+            : this.location
+        ]
+    };
+  }
+}
+export module LlmSafetyFinding {
+  /**
+   * Standard JavaScript object representation for LlmSafetyFinding
+   */
+  export interface AsObject {
+    category: string;
+    severity: string;
+    matchedPattern: string;
+    location: LlmSafetyLocation;
+  }
+
+  /**
+   * Protobuf JSON representation for LlmSafetyFinding
+   */
+  export interface AsProtobufJSON {
+    category: string;
+    severity: string;
+    matchedPattern: string;
+    location: string;
+  }
+}
+
+/**
+ * Message implementation for ondewo.nlu.LlmSafetyAssessment
+ */
+export class LlmSafetyAssessment implements GrpcMessage {
+  static id = 'ondewo.nlu.LlmSafetyAssessment';
+
+  /**
+   * Deserialize binary data to message
+   * @param instance message instance
+   */
+  static deserializeBinary(bytes: ByteSource) {
+    const instance = new LlmSafetyAssessment();
+    LlmSafetyAssessment.deserializeBinaryFromReader(
+      instance,
+      new BinaryReader(bytes)
+    );
+    return instance;
+  }
+
+  /**
+   * Check all the properties and set default protobuf values if necessary
+   * @param _instance message instance
+   */
+  static refineValues(_instance: LlmSafetyAssessment) {
+    _instance.flaggedCategories = _instance.flaggedCategories || [];
+    _instance.hasPii = _instance.hasPii || false;
+    _instance.hasInjectionAttempt = _instance.hasInjectionAttempt || false;
+    _instance.hasJailbreakAttempt = _instance.hasJailbreakAttempt || false;
+    _instance.safetyScore = _instance.safetyScore || 0;
+    _instance.findings = _instance.findings || [];
+  }
+
+  /**
+   * Deserializes / reads binary message into message instance using provided binary reader
+   * @param _instance message instance
+   * @param _reader binary reader instance
+   */
+  static deserializeBinaryFromReader(
+    _instance: LlmSafetyAssessment,
+    _reader: BinaryReader
+  ) {
+    while (_reader.nextField()) {
+      if (_reader.isEndGroup()) break;
+
+      switch (_reader.getFieldNumber()) {
+        case 1:
+          (_instance.flaggedCategories =
+            _instance.flaggedCategories || []).push(_reader.readString());
+          break;
+        case 2:
+          _instance.hasPii = _reader.readBool();
+          break;
+        case 3:
+          _instance.hasInjectionAttempt = _reader.readBool();
+          break;
+        case 4:
+          _instance.hasJailbreakAttempt = _reader.readBool();
+          break;
+        case 5:
+          _instance.safetyScore = _reader.readDouble();
+          break;
+        case 6:
+          const messageInitializer6 = new LlmSafetyFinding();
+          _reader.readMessage(
+            messageInitializer6,
+            LlmSafetyFinding.deserializeBinaryFromReader
+          );
+          (_instance.findings = _instance.findings || []).push(
+            messageInitializer6
+          );
+          break;
+        default:
+          _reader.skipField();
+      }
+    }
+
+    LlmSafetyAssessment.refineValues(_instance);
+  }
+
+  /**
+   * Serializes a message to binary format using provided binary reader
+   * @param _instance message instance
+   * @param _writer binary writer instance
+   */
+  static serializeBinaryToWriter(
+    _instance: LlmSafetyAssessment,
+    _writer: BinaryWriter
+  ) {
+    if (_instance.flaggedCategories && _instance.flaggedCategories.length) {
+      _writer.writeRepeatedString(1, _instance.flaggedCategories);
+    }
+    if (_instance.hasPii) {
+      _writer.writeBool(2, _instance.hasPii);
+    }
+    if (_instance.hasInjectionAttempt) {
+      _writer.writeBool(3, _instance.hasInjectionAttempt);
+    }
+    if (_instance.hasJailbreakAttempt) {
+      _writer.writeBool(4, _instance.hasJailbreakAttempt);
+    }
+    if (_instance.safetyScore) {
+      _writer.writeDouble(5, _instance.safetyScore);
+    }
+    if (_instance.findings && _instance.findings.length) {
+      _writer.writeRepeatedMessage(
+        6,
+        _instance.findings as any,
+        LlmSafetyFinding.serializeBinaryToWriter
+      );
+    }
+  }
+
+  private _flaggedCategories: string[];
+  private _hasPii: boolean;
+  private _hasInjectionAttempt: boolean;
+  private _hasJailbreakAttempt: boolean;
+  private _safetyScore: number;
+  private _findings?: LlmSafetyFinding[];
+
+  /**
+   * Message constructor. Initializes the properties and applies default Protobuf values if necessary
+   * @param _value initial values object or instance of LlmSafetyAssessment to deeply clone from
+   */
+  constructor(_value?: RecursivePartial<LlmSafetyAssessment.AsObject>) {
+    _value = _value || {};
+    this.flaggedCategories = (_value.flaggedCategories || []).slice();
+    this.hasPii = _value.hasPii;
+    this.hasInjectionAttempt = _value.hasInjectionAttempt;
+    this.hasJailbreakAttempt = _value.hasJailbreakAttempt;
+    this.safetyScore = _value.safetyScore;
+    this.findings = (_value.findings || []).map(m => new LlmSafetyFinding(m));
+    LlmSafetyAssessment.refineValues(this);
+  }
+  get flaggedCategories(): string[] {
+    return this._flaggedCategories;
+  }
+  set flaggedCategories(value: string[]) {
+    this._flaggedCategories = value;
+  }
+  get hasPii(): boolean {
+    return this._hasPii;
+  }
+  set hasPii(value: boolean) {
+    this._hasPii = value;
+  }
+  get hasInjectionAttempt(): boolean {
+    return this._hasInjectionAttempt;
+  }
+  set hasInjectionAttempt(value: boolean) {
+    this._hasInjectionAttempt = value;
+  }
+  get hasJailbreakAttempt(): boolean {
+    return this._hasJailbreakAttempt;
+  }
+  set hasJailbreakAttempt(value: boolean) {
+    this._hasJailbreakAttempt = value;
+  }
+  get safetyScore(): number {
+    return this._safetyScore;
+  }
+  set safetyScore(value: number) {
+    this._safetyScore = value;
+  }
+  get findings(): LlmSafetyFinding[] | undefined {
+    return this._findings;
+  }
+  set findings(value: LlmSafetyFinding[] | undefined) {
+    this._findings = value;
+  }
+
+  /**
+   * Serialize message to binary data
+   * @param instance message instance
+   */
+  serializeBinary() {
+    const writer = new BinaryWriter();
+    LlmSafetyAssessment.serializeBinaryToWriter(this, writer);
+    return writer.getResultBuffer();
+  }
+
+  /**
+   * Cast message to standard JavaScript object (all non-primitive values are deeply cloned)
+   */
+  toObject(): LlmSafetyAssessment.AsObject {
+    return {
+      flaggedCategories: (this.flaggedCategories || []).slice(),
+      hasPii: this.hasPii,
+      hasInjectionAttempt: this.hasInjectionAttempt,
+      hasJailbreakAttempt: this.hasJailbreakAttempt,
+      safetyScore: this.safetyScore,
+      findings: (this.findings || []).map(m => m.toObject())
+    };
+  }
+
+  /**
+   * Convenience method to support JSON.stringify(message), replicates the structure of toObject()
+   */
+  toJSON() {
+    return this.toObject();
+  }
+
+  /**
+   * Cast message to JSON using protobuf JSON notation: https://developers.google.com/protocol-buffers/docs/proto3#json
+   * Attention: output differs from toObject() e.g. enums are represented as names and not as numbers, Timestamp is an ISO Date string format etc.
+   * If the message itself or some of descendant messages is google.protobuf.Any, you MUST provide a message pool as options. If not, the messagePool is not required
+   */
+  toProtobufJSON(
+    // @ts-ignore
+    options?: ToProtobufJSONOptions
+  ): LlmSafetyAssessment.AsProtobufJSON {
+    return {
+      flaggedCategories: (this.flaggedCategories || []).slice(),
+      hasPii: this.hasPii,
+      hasInjectionAttempt: this.hasInjectionAttempt,
+      hasJailbreakAttempt: this.hasJailbreakAttempt,
+      safetyScore: this.safetyScore,
+      findings: (this.findings || []).map(m => m.toProtobufJSON(options))
+    };
+  }
+}
+export module LlmSafetyAssessment {
+  /**
+   * Standard JavaScript object representation for LlmSafetyAssessment
+   */
+  export interface AsObject {
+    flaggedCategories: string[];
+    hasPii: boolean;
+    hasInjectionAttempt: boolean;
+    hasJailbreakAttempt: boolean;
+    safetyScore: number;
+    findings?: LlmSafetyFinding.AsObject[];
+  }
+
+  /**
+   * Protobuf JSON representation for LlmSafetyAssessment
+   */
+  export interface AsProtobufJSON {
+    flaggedCategories: string[];
+    hasPii: boolean;
+    hasInjectionAttempt: boolean;
+    hasJailbreakAttempt: boolean;
+    safetyScore: number;
+    findings: LlmSafetyFinding.AsProtobufJSON[] | null;
+  }
+}
+
+/**
+ * Message implementation for ondewo.nlu.LlmRetrievedChunk
+ */
+export class LlmRetrievedChunk implements GrpcMessage {
+  static id = 'ondewo.nlu.LlmRetrievedChunk';
+
+  /**
+   * Deserialize binary data to message
+   * @param instance message instance
+   */
+  static deserializeBinary(bytes: ByteSource) {
+    const instance = new LlmRetrievedChunk();
+    LlmRetrievedChunk.deserializeBinaryFromReader(
+      instance,
+      new BinaryReader(bytes)
+    );
+    return instance;
+  }
+
+  /**
+   * Check all the properties and set default protobuf values if necessary
+   * @param _instance message instance
+   */
+  static refineValues(_instance: LlmRetrievedChunk) {
+    _instance.documentId = _instance.documentId || '';
+    _instance.chunkId = _instance.chunkId || '';
+    _instance.score = _instance.score || 0;
+    _instance.text = _instance.text || '';
+    _instance.sourceUri = _instance.sourceUri || '';
+    _instance.rank = _instance.rank || 0;
+  }
+
+  /**
+   * Deserializes / reads binary message into message instance using provided binary reader
+   * @param _instance message instance
+   * @param _reader binary reader instance
+   */
+  static deserializeBinaryFromReader(
+    _instance: LlmRetrievedChunk,
+    _reader: BinaryReader
+  ) {
+    while (_reader.nextField()) {
+      if (_reader.isEndGroup()) break;
+
+      switch (_reader.getFieldNumber()) {
+        case 1:
+          _instance.documentId = _reader.readString();
+          break;
+        case 2:
+          _instance.chunkId = _reader.readString();
+          break;
+        case 3:
+          _instance.score = _reader.readDouble();
+          break;
+        case 4:
+          _instance.text = _reader.readString();
+          break;
+        case 5:
+          _instance.sourceUri = _reader.readString();
+          break;
+        case 6:
+          _instance.rank = _reader.readInt32();
+          break;
+        default:
+          _reader.skipField();
+      }
+    }
+
+    LlmRetrievedChunk.refineValues(_instance);
+  }
+
+  /**
+   * Serializes a message to binary format using provided binary reader
+   * @param _instance message instance
+   * @param _writer binary writer instance
+   */
+  static serializeBinaryToWriter(
+    _instance: LlmRetrievedChunk,
+    _writer: BinaryWriter
+  ) {
+    if (_instance.documentId) {
+      _writer.writeString(1, _instance.documentId);
+    }
+    if (_instance.chunkId) {
+      _writer.writeString(2, _instance.chunkId);
+    }
+    if (_instance.score) {
+      _writer.writeDouble(3, _instance.score);
+    }
+    if (_instance.text) {
+      _writer.writeString(4, _instance.text);
+    }
+    if (_instance.sourceUri) {
+      _writer.writeString(5, _instance.sourceUri);
+    }
+    if (_instance.rank) {
+      _writer.writeInt32(6, _instance.rank);
+    }
+  }
+
+  private _documentId: string;
+  private _chunkId: string;
+  private _score: number;
+  private _text: string;
+  private _sourceUri: string;
+  private _rank: number;
+
+  /**
+   * Message constructor. Initializes the properties and applies default Protobuf values if necessary
+   * @param _value initial values object or instance of LlmRetrievedChunk to deeply clone from
+   */
+  constructor(_value?: RecursivePartial<LlmRetrievedChunk.AsObject>) {
+    _value = _value || {};
+    this.documentId = _value.documentId;
+    this.chunkId = _value.chunkId;
+    this.score = _value.score;
+    this.text = _value.text;
+    this.sourceUri = _value.sourceUri;
+    this.rank = _value.rank;
+    LlmRetrievedChunk.refineValues(this);
+  }
+  get documentId(): string {
+    return this._documentId;
+  }
+  set documentId(value: string) {
+    this._documentId = value;
+  }
+  get chunkId(): string {
+    return this._chunkId;
+  }
+  set chunkId(value: string) {
+    this._chunkId = value;
+  }
+  get score(): number {
+    return this._score;
+  }
+  set score(value: number) {
+    this._score = value;
+  }
+  get text(): string {
+    return this._text;
+  }
+  set text(value: string) {
+    this._text = value;
+  }
+  get sourceUri(): string {
+    return this._sourceUri;
+  }
+  set sourceUri(value: string) {
+    this._sourceUri = value;
+  }
+  get rank(): number {
+    return this._rank;
+  }
+  set rank(value: number) {
+    this._rank = value;
+  }
+
+  /**
+   * Serialize message to binary data
+   * @param instance message instance
+   */
+  serializeBinary() {
+    const writer = new BinaryWriter();
+    LlmRetrievedChunk.serializeBinaryToWriter(this, writer);
+    return writer.getResultBuffer();
+  }
+
+  /**
+   * Cast message to standard JavaScript object (all non-primitive values are deeply cloned)
+   */
+  toObject(): LlmRetrievedChunk.AsObject {
+    return {
+      documentId: this.documentId,
+      chunkId: this.chunkId,
+      score: this.score,
+      text: this.text,
+      sourceUri: this.sourceUri,
+      rank: this.rank
+    };
+  }
+
+  /**
+   * Convenience method to support JSON.stringify(message), replicates the structure of toObject()
+   */
+  toJSON() {
+    return this.toObject();
+  }
+
+  /**
+   * Cast message to JSON using protobuf JSON notation: https://developers.google.com/protocol-buffers/docs/proto3#json
+   * Attention: output differs from toObject() e.g. enums are represented as names and not as numbers, Timestamp is an ISO Date string format etc.
+   * If the message itself or some of descendant messages is google.protobuf.Any, you MUST provide a message pool as options. If not, the messagePool is not required
+   */
+  toProtobufJSON(
+    // @ts-ignore
+    options?: ToProtobufJSONOptions
+  ): LlmRetrievedChunk.AsProtobufJSON {
+    return {
+      documentId: this.documentId,
+      chunkId: this.chunkId,
+      score: this.score,
+      text: this.text,
+      sourceUri: this.sourceUri,
+      rank: this.rank
+    };
+  }
+}
+export module LlmRetrievedChunk {
+  /**
+   * Standard JavaScript object representation for LlmRetrievedChunk
+   */
+  export interface AsObject {
+    documentId: string;
+    chunkId: string;
+    score: number;
+    text: string;
+    sourceUri: string;
+    rank: number;
+  }
+
+  /**
+   * Protobuf JSON representation for LlmRetrievedChunk
+   */
+  export interface AsProtobufJSON {
+    documentId: string;
+    chunkId: string;
+    score: number;
+    text: string;
+    sourceUri: string;
+    rank: number;
+  }
+}
+
+/**
+ * Message implementation for ondewo.nlu.LlmRetrievalMetadata
+ */
+export class LlmRetrievalMetadata implements GrpcMessage {
+  static id = 'ondewo.nlu.LlmRetrievalMetadata';
+
+  /**
+   * Deserialize binary data to message
+   * @param instance message instance
+   */
+  static deserializeBinary(bytes: ByteSource) {
+    const instance = new LlmRetrievalMetadata();
+    LlmRetrievalMetadata.deserializeBinaryFromReader(
+      instance,
+      new BinaryReader(bytes)
+    );
+    return instance;
+  }
+
+  /**
+   * Check all the properties and set default protobuf values if necessary
+   * @param _instance message instance
+   */
+  static refineValues(_instance: LlmRetrievalMetadata) {
+    _instance.chunks = _instance.chunks || [];
+  }
+
+  /**
+   * Deserializes / reads binary message into message instance using provided binary reader
+   * @param _instance message instance
+   * @param _reader binary reader instance
+   */
+  static deserializeBinaryFromReader(
+    _instance: LlmRetrievalMetadata,
+    _reader: BinaryReader
+  ) {
+    while (_reader.nextField()) {
+      if (_reader.isEndGroup()) break;
+
+      switch (_reader.getFieldNumber()) {
+        case 1:
+          const messageInitializer1 = new LlmRetrievedChunk();
+          _reader.readMessage(
+            messageInitializer1,
+            LlmRetrievedChunk.deserializeBinaryFromReader
+          );
+          (_instance.chunks = _instance.chunks || []).push(messageInitializer1);
+          break;
+        default:
+          _reader.skipField();
+      }
+    }
+
+    LlmRetrievalMetadata.refineValues(_instance);
+  }
+
+  /**
+   * Serializes a message to binary format using provided binary reader
+   * @param _instance message instance
+   * @param _writer binary writer instance
+   */
+  static serializeBinaryToWriter(
+    _instance: LlmRetrievalMetadata,
+    _writer: BinaryWriter
+  ) {
+    if (_instance.chunks && _instance.chunks.length) {
+      _writer.writeRepeatedMessage(
+        1,
+        _instance.chunks as any,
+        LlmRetrievedChunk.serializeBinaryToWriter
+      );
+    }
+  }
+
+  private _chunks?: LlmRetrievedChunk[];
+
+  /**
+   * Message constructor. Initializes the properties and applies default Protobuf values if necessary
+   * @param _value initial values object or instance of LlmRetrievalMetadata to deeply clone from
+   */
+  constructor(_value?: RecursivePartial<LlmRetrievalMetadata.AsObject>) {
+    _value = _value || {};
+    this.chunks = (_value.chunks || []).map(m => new LlmRetrievedChunk(m));
+    LlmRetrievalMetadata.refineValues(this);
+  }
+  get chunks(): LlmRetrievedChunk[] | undefined {
+    return this._chunks;
+  }
+  set chunks(value: LlmRetrievedChunk[] | undefined) {
+    this._chunks = value;
+  }
+
+  /**
+   * Serialize message to binary data
+   * @param instance message instance
+   */
+  serializeBinary() {
+    const writer = new BinaryWriter();
+    LlmRetrievalMetadata.serializeBinaryToWriter(this, writer);
+    return writer.getResultBuffer();
+  }
+
+  /**
+   * Cast message to standard JavaScript object (all non-primitive values are deeply cloned)
+   */
+  toObject(): LlmRetrievalMetadata.AsObject {
+    return {
+      chunks: (this.chunks || []).map(m => m.toObject())
+    };
+  }
+
+  /**
+   * Convenience method to support JSON.stringify(message), replicates the structure of toObject()
+   */
+  toJSON() {
+    return this.toObject();
+  }
+
+  /**
+   * Cast message to JSON using protobuf JSON notation: https://developers.google.com/protocol-buffers/docs/proto3#json
+   * Attention: output differs from toObject() e.g. enums are represented as names and not as numbers, Timestamp is an ISO Date string format etc.
+   * If the message itself or some of descendant messages is google.protobuf.Any, you MUST provide a message pool as options. If not, the messagePool is not required
+   */
+  toProtobufJSON(
+    // @ts-ignore
+    options?: ToProtobufJSONOptions
+  ): LlmRetrievalMetadata.AsProtobufJSON {
+    return {
+      chunks: (this.chunks || []).map(m => m.toProtobufJSON(options))
+    };
+  }
+}
+export module LlmRetrievalMetadata {
+  /**
+   * Standard JavaScript object representation for LlmRetrievalMetadata
+   */
+  export interface AsObject {
+    chunks?: LlmRetrievedChunk.AsObject[];
+  }
+
+  /**
+   * Protobuf JSON representation for LlmRetrievalMetadata
+   */
+  export interface AsProtobufJSON {
+    chunks: LlmRetrievedChunk.AsProtobufJSON[] | null;
+  }
+}
+
+/**
+ * Message implementation for ondewo.nlu.LlmLatencyStats
+ */
+export class LlmLatencyStats implements GrpcMessage {
+  static id = 'ondewo.nlu.LlmLatencyStats';
+
+  /**
+   * Deserialize binary data to message
+   * @param instance message instance
+   */
+  static deserializeBinary(bytes: ByteSource) {
+    const instance = new LlmLatencyStats();
+    LlmLatencyStats.deserializeBinaryFromReader(
+      instance,
+      new BinaryReader(bytes)
+    );
+    return instance;
+  }
+
+  /**
+   * Check all the properties and set default protobuf values if necessary
+   * @param _instance message instance
+   */
+  static refineValues(_instance: LlmLatencyStats) {
+    _instance.callCount = _instance.callCount || '0';
+    _instance.meanDurationSeconds = _instance.meanDurationSeconds || 0;
+    _instance.p50DurationSeconds = _instance.p50DurationSeconds || 0;
+    _instance.p95DurationSeconds = _instance.p95DurationSeconds || 0;
+    _instance.p99DurationSeconds = _instance.p99DurationSeconds || 0;
+    _instance.maxDurationSeconds = _instance.maxDurationSeconds || 0;
+    _instance.meanFirstTokenLatencySeconds =
+      _instance.meanFirstTokenLatencySeconds || 0;
+    _instance.p95FirstTokenLatencySeconds =
+      _instance.p95FirstTokenLatencySeconds || 0;
+  }
+
+  /**
+   * Deserializes / reads binary message into message instance using provided binary reader
+   * @param _instance message instance
+   * @param _reader binary reader instance
+   */
+  static deserializeBinaryFromReader(
+    _instance: LlmLatencyStats,
+    _reader: BinaryReader
+  ) {
+    while (_reader.nextField()) {
+      if (_reader.isEndGroup()) break;
+
+      switch (_reader.getFieldNumber()) {
+        case 1:
+          _instance.callCount = _reader.readInt64String();
+          break;
+        case 2:
+          _instance.meanDurationSeconds = _reader.readDouble();
+          break;
+        case 3:
+          _instance.p50DurationSeconds = _reader.readDouble();
+          break;
+        case 4:
+          _instance.p95DurationSeconds = _reader.readDouble();
+          break;
+        case 5:
+          _instance.p99DurationSeconds = _reader.readDouble();
+          break;
+        case 6:
+          _instance.maxDurationSeconds = _reader.readDouble();
+          break;
+        case 7:
+          _instance.meanFirstTokenLatencySeconds = _reader.readDouble();
+          break;
+        case 8:
+          _instance.p95FirstTokenLatencySeconds = _reader.readDouble();
+          break;
+        default:
+          _reader.skipField();
+      }
+    }
+
+    LlmLatencyStats.refineValues(_instance);
+  }
+
+  /**
+   * Serializes a message to binary format using provided binary reader
+   * @param _instance message instance
+   * @param _writer binary writer instance
+   */
+  static serializeBinaryToWriter(
+    _instance: LlmLatencyStats,
+    _writer: BinaryWriter
+  ) {
+    if (_instance.callCount) {
+      _writer.writeInt64String(1, _instance.callCount);
+    }
+    if (_instance.meanDurationSeconds) {
+      _writer.writeDouble(2, _instance.meanDurationSeconds);
+    }
+    if (_instance.p50DurationSeconds) {
+      _writer.writeDouble(3, _instance.p50DurationSeconds);
+    }
+    if (_instance.p95DurationSeconds) {
+      _writer.writeDouble(4, _instance.p95DurationSeconds);
+    }
+    if (_instance.p99DurationSeconds) {
+      _writer.writeDouble(5, _instance.p99DurationSeconds);
+    }
+    if (_instance.maxDurationSeconds) {
+      _writer.writeDouble(6, _instance.maxDurationSeconds);
+    }
+    if (_instance.meanFirstTokenLatencySeconds) {
+      _writer.writeDouble(7, _instance.meanFirstTokenLatencySeconds);
+    }
+    if (_instance.p95FirstTokenLatencySeconds) {
+      _writer.writeDouble(8, _instance.p95FirstTokenLatencySeconds);
+    }
+  }
+
+  private _callCount: string;
+  private _meanDurationSeconds: number;
+  private _p50DurationSeconds: number;
+  private _p95DurationSeconds: number;
+  private _p99DurationSeconds: number;
+  private _maxDurationSeconds: number;
+  private _meanFirstTokenLatencySeconds: number;
+  private _p95FirstTokenLatencySeconds: number;
+
+  /**
+   * Message constructor. Initializes the properties and applies default Protobuf values if necessary
+   * @param _value initial values object or instance of LlmLatencyStats to deeply clone from
+   */
+  constructor(_value?: RecursivePartial<LlmLatencyStats.AsObject>) {
+    _value = _value || {};
+    this.callCount = _value.callCount;
+    this.meanDurationSeconds = _value.meanDurationSeconds;
+    this.p50DurationSeconds = _value.p50DurationSeconds;
+    this.p95DurationSeconds = _value.p95DurationSeconds;
+    this.p99DurationSeconds = _value.p99DurationSeconds;
+    this.maxDurationSeconds = _value.maxDurationSeconds;
+    this.meanFirstTokenLatencySeconds = _value.meanFirstTokenLatencySeconds;
+    this.p95FirstTokenLatencySeconds = _value.p95FirstTokenLatencySeconds;
+    LlmLatencyStats.refineValues(this);
+  }
+  get callCount(): string {
+    return this._callCount;
+  }
+  set callCount(value: string) {
+    this._callCount = value;
+  }
+  get meanDurationSeconds(): number {
+    return this._meanDurationSeconds;
+  }
+  set meanDurationSeconds(value: number) {
+    this._meanDurationSeconds = value;
+  }
+  get p50DurationSeconds(): number {
+    return this._p50DurationSeconds;
+  }
+  set p50DurationSeconds(value: number) {
+    this._p50DurationSeconds = value;
+  }
+  get p95DurationSeconds(): number {
+    return this._p95DurationSeconds;
+  }
+  set p95DurationSeconds(value: number) {
+    this._p95DurationSeconds = value;
+  }
+  get p99DurationSeconds(): number {
+    return this._p99DurationSeconds;
+  }
+  set p99DurationSeconds(value: number) {
+    this._p99DurationSeconds = value;
+  }
+  get maxDurationSeconds(): number {
+    return this._maxDurationSeconds;
+  }
+  set maxDurationSeconds(value: number) {
+    this._maxDurationSeconds = value;
+  }
+  get meanFirstTokenLatencySeconds(): number {
+    return this._meanFirstTokenLatencySeconds;
+  }
+  set meanFirstTokenLatencySeconds(value: number) {
+    this._meanFirstTokenLatencySeconds = value;
+  }
+  get p95FirstTokenLatencySeconds(): number {
+    return this._p95FirstTokenLatencySeconds;
+  }
+  set p95FirstTokenLatencySeconds(value: number) {
+    this._p95FirstTokenLatencySeconds = value;
+  }
+
+  /**
+   * Serialize message to binary data
+   * @param instance message instance
+   */
+  serializeBinary() {
+    const writer = new BinaryWriter();
+    LlmLatencyStats.serializeBinaryToWriter(this, writer);
+    return writer.getResultBuffer();
+  }
+
+  /**
+   * Cast message to standard JavaScript object (all non-primitive values are deeply cloned)
+   */
+  toObject(): LlmLatencyStats.AsObject {
+    return {
+      callCount: this.callCount,
+      meanDurationSeconds: this.meanDurationSeconds,
+      p50DurationSeconds: this.p50DurationSeconds,
+      p95DurationSeconds: this.p95DurationSeconds,
+      p99DurationSeconds: this.p99DurationSeconds,
+      maxDurationSeconds: this.maxDurationSeconds,
+      meanFirstTokenLatencySeconds: this.meanFirstTokenLatencySeconds,
+      p95FirstTokenLatencySeconds: this.p95FirstTokenLatencySeconds
+    };
+  }
+
+  /**
+   * Convenience method to support JSON.stringify(message), replicates the structure of toObject()
+   */
+  toJSON() {
+    return this.toObject();
+  }
+
+  /**
+   * Cast message to JSON using protobuf JSON notation: https://developers.google.com/protocol-buffers/docs/proto3#json
+   * Attention: output differs from toObject() e.g. enums are represented as names and not as numbers, Timestamp is an ISO Date string format etc.
+   * If the message itself or some of descendant messages is google.protobuf.Any, you MUST provide a message pool as options. If not, the messagePool is not required
+   */
+  toProtobufJSON(
+    // @ts-ignore
+    options?: ToProtobufJSONOptions
+  ): LlmLatencyStats.AsProtobufJSON {
+    return {
+      callCount: this.callCount,
+      meanDurationSeconds: this.meanDurationSeconds,
+      p50DurationSeconds: this.p50DurationSeconds,
+      p95DurationSeconds: this.p95DurationSeconds,
+      p99DurationSeconds: this.p99DurationSeconds,
+      maxDurationSeconds: this.maxDurationSeconds,
+      meanFirstTokenLatencySeconds: this.meanFirstTokenLatencySeconds,
+      p95FirstTokenLatencySeconds: this.p95FirstTokenLatencySeconds
+    };
+  }
+}
+export module LlmLatencyStats {
+  /**
+   * Standard JavaScript object representation for LlmLatencyStats
+   */
+  export interface AsObject {
+    callCount: string;
+    meanDurationSeconds: number;
+    p50DurationSeconds: number;
+    p95DurationSeconds: number;
+    p99DurationSeconds: number;
+    maxDurationSeconds: number;
+    meanFirstTokenLatencySeconds: number;
+    p95FirstTokenLatencySeconds: number;
+  }
+
+  /**
+   * Protobuf JSON representation for LlmLatencyStats
+   */
+  export interface AsProtobufJSON {
+    callCount: string;
+    meanDurationSeconds: number;
+    p50DurationSeconds: number;
+    p95DurationSeconds: number;
+    p99DurationSeconds: number;
+    maxDurationSeconds: number;
+    meanFirstTokenLatencySeconds: number;
+    p95FirstTokenLatencySeconds: number;
+  }
+}
+
+/**
+ * Message implementation for ondewo.nlu.LlmCacheStats
+ */
+export class LlmCacheStats implements GrpcMessage {
+  static id = 'ondewo.nlu.LlmCacheStats';
+
+  /**
+   * Deserialize binary data to message
+   * @param instance message instance
+   */
+  static deserializeBinary(bytes: ByteSource) {
+    const instance = new LlmCacheStats();
+    LlmCacheStats.deserializeBinaryFromReader(
+      instance,
+      new BinaryReader(bytes)
+    );
+    return instance;
+  }
+
+  /**
+   * Check all the properties and set default protobuf values if necessary
+   * @param _instance message instance
+   */
+  static refineValues(_instance: LlmCacheStats) {
+    _instance.cachedInputTokens = _instance.cachedInputTokens || '0';
+    _instance.cacheCreationInputTokens =
+      _instance.cacheCreationInputTokens || '0';
+    _instance.uncachedInputTokens = _instance.uncachedInputTokens || '0';
+    _instance.cacheHitRate = _instance.cacheHitRate || 0;
+    _instance.tokenSavings = _instance.tokenSavings || '0';
+  }
+
+  /**
+   * Deserializes / reads binary message into message instance using provided binary reader
+   * @param _instance message instance
+   * @param _reader binary reader instance
+   */
+  static deserializeBinaryFromReader(
+    _instance: LlmCacheStats,
+    _reader: BinaryReader
+  ) {
+    while (_reader.nextField()) {
+      if (_reader.isEndGroup()) break;
+
+      switch (_reader.getFieldNumber()) {
+        case 1:
+          _instance.cachedInputTokens = _reader.readInt64String();
+          break;
+        case 2:
+          _instance.cacheCreationInputTokens = _reader.readInt64String();
+          break;
+        case 3:
+          _instance.uncachedInputTokens = _reader.readInt64String();
+          break;
+        case 4:
+          _instance.cacheHitRate = _reader.readDouble();
+          break;
+        case 5:
+          _instance.tokenSavings = _reader.readInt64String();
+          break;
+        default:
+          _reader.skipField();
+      }
+    }
+
+    LlmCacheStats.refineValues(_instance);
+  }
+
+  /**
+   * Serializes a message to binary format using provided binary reader
+   * @param _instance message instance
+   * @param _writer binary writer instance
+   */
+  static serializeBinaryToWriter(
+    _instance: LlmCacheStats,
+    _writer: BinaryWriter
+  ) {
+    if (_instance.cachedInputTokens) {
+      _writer.writeInt64String(1, _instance.cachedInputTokens);
+    }
+    if (_instance.cacheCreationInputTokens) {
+      _writer.writeInt64String(2, _instance.cacheCreationInputTokens);
+    }
+    if (_instance.uncachedInputTokens) {
+      _writer.writeInt64String(3, _instance.uncachedInputTokens);
+    }
+    if (_instance.cacheHitRate) {
+      _writer.writeDouble(4, _instance.cacheHitRate);
+    }
+    if (_instance.tokenSavings) {
+      _writer.writeInt64String(5, _instance.tokenSavings);
+    }
+  }
+
+  private _cachedInputTokens: string;
+  private _cacheCreationInputTokens: string;
+  private _uncachedInputTokens: string;
+  private _cacheHitRate: number;
+  private _tokenSavings: string;
+
+  /**
+   * Message constructor. Initializes the properties and applies default Protobuf values if necessary
+   * @param _value initial values object or instance of LlmCacheStats to deeply clone from
+   */
+  constructor(_value?: RecursivePartial<LlmCacheStats.AsObject>) {
+    _value = _value || {};
+    this.cachedInputTokens = _value.cachedInputTokens;
+    this.cacheCreationInputTokens = _value.cacheCreationInputTokens;
+    this.uncachedInputTokens = _value.uncachedInputTokens;
+    this.cacheHitRate = _value.cacheHitRate;
+    this.tokenSavings = _value.tokenSavings;
+    LlmCacheStats.refineValues(this);
+  }
+  get cachedInputTokens(): string {
+    return this._cachedInputTokens;
+  }
+  set cachedInputTokens(value: string) {
+    this._cachedInputTokens = value;
+  }
+  get cacheCreationInputTokens(): string {
+    return this._cacheCreationInputTokens;
+  }
+  set cacheCreationInputTokens(value: string) {
+    this._cacheCreationInputTokens = value;
+  }
+  get uncachedInputTokens(): string {
+    return this._uncachedInputTokens;
+  }
+  set uncachedInputTokens(value: string) {
+    this._uncachedInputTokens = value;
+  }
+  get cacheHitRate(): number {
+    return this._cacheHitRate;
+  }
+  set cacheHitRate(value: number) {
+    this._cacheHitRate = value;
+  }
+  get tokenSavings(): string {
+    return this._tokenSavings;
+  }
+  set tokenSavings(value: string) {
+    this._tokenSavings = value;
+  }
+
+  /**
+   * Serialize message to binary data
+   * @param instance message instance
+   */
+  serializeBinary() {
+    const writer = new BinaryWriter();
+    LlmCacheStats.serializeBinaryToWriter(this, writer);
+    return writer.getResultBuffer();
+  }
+
+  /**
+   * Cast message to standard JavaScript object (all non-primitive values are deeply cloned)
+   */
+  toObject(): LlmCacheStats.AsObject {
+    return {
+      cachedInputTokens: this.cachedInputTokens,
+      cacheCreationInputTokens: this.cacheCreationInputTokens,
+      uncachedInputTokens: this.uncachedInputTokens,
+      cacheHitRate: this.cacheHitRate,
+      tokenSavings: this.tokenSavings
+    };
+  }
+
+  /**
+   * Convenience method to support JSON.stringify(message), replicates the structure of toObject()
+   */
+  toJSON() {
+    return this.toObject();
+  }
+
+  /**
+   * Cast message to JSON using protobuf JSON notation: https://developers.google.com/protocol-buffers/docs/proto3#json
+   * Attention: output differs from toObject() e.g. enums are represented as names and not as numbers, Timestamp is an ISO Date string format etc.
+   * If the message itself or some of descendant messages is google.protobuf.Any, you MUST provide a message pool as options. If not, the messagePool is not required
+   */
+  toProtobufJSON(
+    // @ts-ignore
+    options?: ToProtobufJSONOptions
+  ): LlmCacheStats.AsProtobufJSON {
+    return {
+      cachedInputTokens: this.cachedInputTokens,
+      cacheCreationInputTokens: this.cacheCreationInputTokens,
+      uncachedInputTokens: this.uncachedInputTokens,
+      cacheHitRate: this.cacheHitRate,
+      tokenSavings: this.tokenSavings
+    };
+  }
+}
+export module LlmCacheStats {
+  /**
+   * Standard JavaScript object representation for LlmCacheStats
+   */
+  export interface AsObject {
+    cachedInputTokens: string;
+    cacheCreationInputTokens: string;
+    uncachedInputTokens: string;
+    cacheHitRate: number;
+    tokenSavings: string;
+  }
+
+  /**
+   * Protobuf JSON representation for LlmCacheStats
+   */
+  export interface AsProtobufJSON {
+    cachedInputTokens: string;
+    cacheCreationInputTokens: string;
+    uncachedInputTokens: string;
+    cacheHitRate: number;
+    tokenSavings: string;
+  }
+}
+
+/**
+ * Message implementation for ondewo.nlu.LlmModelUsage
+ */
+export class LlmModelUsage implements GrpcMessage {
+  static id = 'ondewo.nlu.LlmModelUsage';
+
+  /**
+   * Deserialize binary data to message
+   * @param instance message instance
+   */
+  static deserializeBinary(bytes: ByteSource) {
+    const instance = new LlmModelUsage();
+    LlmModelUsage.deserializeBinaryFromReader(
+      instance,
+      new BinaryReader(bytes)
+    );
+    return instance;
+  }
+
+  /**
+   * Check all the properties and set default protobuf values if necessary
+   * @param _instance message instance
+   */
+  static refineValues(_instance: LlmModelUsage) {
+    _instance.modelName = _instance.modelName || '';
+    _instance.provider = _instance.provider || '';
+    _instance.callCount = _instance.callCount || '0';
+    _instance.llmTokenUsage = _instance.llmTokenUsage || undefined;
+    _instance.toolCallCount = _instance.toolCallCount || '0';
+    _instance.errorCount = _instance.errorCount || '0';
+    _instance.durationSecondsTotal = _instance.durationSecondsTotal || 0;
+    _instance.cacheStats = _instance.cacheStats || undefined;
+    _instance.ccaiServiceName = _instance.ccaiServiceName || '';
+    _instance.ccaiServiceProvider = _instance.ccaiServiceProvider || 0;
+    _instance.baseUrl = _instance.baseUrl || '';
+    _instance.thinkingTokensTotal = _instance.thinkingTokensTotal || '0';
+    _instance.thinkingDurationSecondsTotal =
+      _instance.thinkingDurationSecondsTotal || 0;
+    _instance.toolCallTokensTotal = _instance.toolCallTokensTotal || '0';
+    _instance.toolCallDurationSecondsTotal =
+      _instance.toolCallDurationSecondsTotal || 0;
+  }
+
+  /**
+   * Deserializes / reads binary message into message instance using provided binary reader
+   * @param _instance message instance
+   * @param _reader binary reader instance
+   */
+  static deserializeBinaryFromReader(
+    _instance: LlmModelUsage,
+    _reader: BinaryReader
+  ) {
+    while (_reader.nextField()) {
+      if (_reader.isEndGroup()) break;
+
+      switch (_reader.getFieldNumber()) {
+        case 1:
+          _instance.modelName = _reader.readString();
+          break;
+        case 2:
+          _instance.provider = _reader.readString();
+          break;
+        case 3:
+          _instance.callCount = _reader.readInt64String();
+          break;
+        case 4:
+          _instance.llmTokenUsage = new LlmTokenUsage();
+          _reader.readMessage(
+            _instance.llmTokenUsage,
+            LlmTokenUsage.deserializeBinaryFromReader
+          );
+          break;
+        case 5:
+          _instance.toolCallCount = _reader.readInt64String();
+          break;
+        case 6:
+          _instance.errorCount = _reader.readInt64String();
+          break;
+        case 7:
+          _instance.durationSecondsTotal = _reader.readDouble();
+          break;
+        case 8:
+          _instance.cacheStats = new LlmCacheStats();
+          _reader.readMessage(
+            _instance.cacheStats,
+            LlmCacheStats.deserializeBinaryFromReader
+          );
+          break;
+        case 9:
+          _instance.ccaiServiceName = _reader.readString();
+          break;
+        case 10:
+          _instance.ccaiServiceProvider = _reader.readEnum();
+          break;
+        case 11:
+          _instance.baseUrl = _reader.readString();
+          break;
+        case 12:
+          _instance.thinkingTokensTotal = _reader.readInt64String();
+          break;
+        case 13:
+          _instance.thinkingDurationSecondsTotal = _reader.readDouble();
+          break;
+        case 14:
+          _instance.toolCallTokensTotal = _reader.readInt64String();
+          break;
+        case 15:
+          _instance.toolCallDurationSecondsTotal = _reader.readDouble();
+          break;
+        default:
+          _reader.skipField();
+      }
+    }
+
+    LlmModelUsage.refineValues(_instance);
+  }
+
+  /**
+   * Serializes a message to binary format using provided binary reader
+   * @param _instance message instance
+   * @param _writer binary writer instance
+   */
+  static serializeBinaryToWriter(
+    _instance: LlmModelUsage,
+    _writer: BinaryWriter
+  ) {
+    if (_instance.modelName) {
+      _writer.writeString(1, _instance.modelName);
+    }
+    if (_instance.provider) {
+      _writer.writeString(2, _instance.provider);
+    }
+    if (_instance.callCount) {
+      _writer.writeInt64String(3, _instance.callCount);
+    }
+    if (_instance.llmTokenUsage) {
+      _writer.writeMessage(
+        4,
+        _instance.llmTokenUsage as any,
+        LlmTokenUsage.serializeBinaryToWriter
+      );
+    }
+    if (_instance.toolCallCount) {
+      _writer.writeInt64String(5, _instance.toolCallCount);
+    }
+    if (_instance.errorCount) {
+      _writer.writeInt64String(6, _instance.errorCount);
+    }
+    if (_instance.durationSecondsTotal) {
+      _writer.writeDouble(7, _instance.durationSecondsTotal);
+    }
+    if (_instance.cacheStats) {
+      _writer.writeMessage(
+        8,
+        _instance.cacheStats as any,
+        LlmCacheStats.serializeBinaryToWriter
+      );
+    }
+    if (_instance.ccaiServiceName) {
+      _writer.writeString(9, _instance.ccaiServiceName);
+    }
+    if (_instance.ccaiServiceProvider) {
+      _writer.writeEnum(10, _instance.ccaiServiceProvider);
+    }
+    if (_instance.baseUrl) {
+      _writer.writeString(11, _instance.baseUrl);
+    }
+    if (_instance.thinkingTokensTotal) {
+      _writer.writeInt64String(12, _instance.thinkingTokensTotal);
+    }
+    if (_instance.thinkingDurationSecondsTotal) {
+      _writer.writeDouble(13, _instance.thinkingDurationSecondsTotal);
+    }
+    if (_instance.toolCallTokensTotal) {
+      _writer.writeInt64String(14, _instance.toolCallTokensTotal);
+    }
+    if (_instance.toolCallDurationSecondsTotal) {
+      _writer.writeDouble(15, _instance.toolCallDurationSecondsTotal);
+    }
+  }
+
+  private _modelName: string;
+  private _provider: string;
+  private _callCount: string;
+  private _llmTokenUsage?: LlmTokenUsage;
+  private _toolCallCount: string;
+  private _errorCount: string;
+  private _durationSecondsTotal: number;
+  private _cacheStats?: LlmCacheStats;
+  private _ccaiServiceName: string;
+  private _ccaiServiceProvider: ondewoNlu013.CcaiServiceProvider;
+  private _baseUrl: string;
+  private _thinkingTokensTotal: string;
+  private _thinkingDurationSecondsTotal: number;
+  private _toolCallTokensTotal: string;
+  private _toolCallDurationSecondsTotal: number;
+
+  /**
+   * Message constructor. Initializes the properties and applies default Protobuf values if necessary
+   * @param _value initial values object or instance of LlmModelUsage to deeply clone from
+   */
+  constructor(_value?: RecursivePartial<LlmModelUsage.AsObject>) {
+    _value = _value || {};
+    this.modelName = _value.modelName;
+    this.provider = _value.provider;
+    this.callCount = _value.callCount;
+    this.llmTokenUsage = _value.llmTokenUsage
+      ? new LlmTokenUsage(_value.llmTokenUsage)
+      : undefined;
+    this.toolCallCount = _value.toolCallCount;
+    this.errorCount = _value.errorCount;
+    this.durationSecondsTotal = _value.durationSecondsTotal;
+    this.cacheStats = _value.cacheStats
+      ? new LlmCacheStats(_value.cacheStats)
+      : undefined;
+    this.ccaiServiceName = _value.ccaiServiceName;
+    this.ccaiServiceProvider = _value.ccaiServiceProvider;
+    this.baseUrl = _value.baseUrl;
+    this.thinkingTokensTotal = _value.thinkingTokensTotal;
+    this.thinkingDurationSecondsTotal = _value.thinkingDurationSecondsTotal;
+    this.toolCallTokensTotal = _value.toolCallTokensTotal;
+    this.toolCallDurationSecondsTotal = _value.toolCallDurationSecondsTotal;
+    LlmModelUsage.refineValues(this);
+  }
+  get modelName(): string {
+    return this._modelName;
+  }
+  set modelName(value: string) {
+    this._modelName = value;
+  }
+  get provider(): string {
+    return this._provider;
+  }
+  set provider(value: string) {
+    this._provider = value;
+  }
+  get callCount(): string {
+    return this._callCount;
+  }
+  set callCount(value: string) {
+    this._callCount = value;
+  }
+  get llmTokenUsage(): LlmTokenUsage | undefined {
+    return this._llmTokenUsage;
+  }
+  set llmTokenUsage(value: LlmTokenUsage | undefined) {
+    this._llmTokenUsage = value;
+  }
+  get toolCallCount(): string {
+    return this._toolCallCount;
+  }
+  set toolCallCount(value: string) {
+    this._toolCallCount = value;
+  }
+  get errorCount(): string {
+    return this._errorCount;
+  }
+  set errorCount(value: string) {
+    this._errorCount = value;
+  }
+  get durationSecondsTotal(): number {
+    return this._durationSecondsTotal;
+  }
+  set durationSecondsTotal(value: number) {
+    this._durationSecondsTotal = value;
+  }
+  get cacheStats(): LlmCacheStats | undefined {
+    return this._cacheStats;
+  }
+  set cacheStats(value: LlmCacheStats | undefined) {
+    this._cacheStats = value;
+  }
+  get ccaiServiceName(): string {
+    return this._ccaiServiceName;
+  }
+  set ccaiServiceName(value: string) {
+    this._ccaiServiceName = value;
+  }
+  get ccaiServiceProvider(): ondewoNlu013.CcaiServiceProvider {
+    return this._ccaiServiceProvider;
+  }
+  set ccaiServiceProvider(value: ondewoNlu013.CcaiServiceProvider) {
+    this._ccaiServiceProvider = value;
+  }
+  get baseUrl(): string {
+    return this._baseUrl;
+  }
+  set baseUrl(value: string) {
+    this._baseUrl = value;
+  }
+  get thinkingTokensTotal(): string {
+    return this._thinkingTokensTotal;
+  }
+  set thinkingTokensTotal(value: string) {
+    this._thinkingTokensTotal = value;
+  }
+  get thinkingDurationSecondsTotal(): number {
+    return this._thinkingDurationSecondsTotal;
+  }
+  set thinkingDurationSecondsTotal(value: number) {
+    this._thinkingDurationSecondsTotal = value;
+  }
+  get toolCallTokensTotal(): string {
+    return this._toolCallTokensTotal;
+  }
+  set toolCallTokensTotal(value: string) {
+    this._toolCallTokensTotal = value;
+  }
+  get toolCallDurationSecondsTotal(): number {
+    return this._toolCallDurationSecondsTotal;
+  }
+  set toolCallDurationSecondsTotal(value: number) {
+    this._toolCallDurationSecondsTotal = value;
+  }
+
+  /**
+   * Serialize message to binary data
+   * @param instance message instance
+   */
+  serializeBinary() {
+    const writer = new BinaryWriter();
+    LlmModelUsage.serializeBinaryToWriter(this, writer);
+    return writer.getResultBuffer();
+  }
+
+  /**
+   * Cast message to standard JavaScript object (all non-primitive values are deeply cloned)
+   */
+  toObject(): LlmModelUsage.AsObject {
+    return {
+      modelName: this.modelName,
+      provider: this.provider,
+      callCount: this.callCount,
+      llmTokenUsage: this.llmTokenUsage
+        ? this.llmTokenUsage.toObject()
+        : undefined,
+      toolCallCount: this.toolCallCount,
+      errorCount: this.errorCount,
+      durationSecondsTotal: this.durationSecondsTotal,
+      cacheStats: this.cacheStats ? this.cacheStats.toObject() : undefined,
+      ccaiServiceName: this.ccaiServiceName,
+      ccaiServiceProvider: this.ccaiServiceProvider,
+      baseUrl: this.baseUrl,
+      thinkingTokensTotal: this.thinkingTokensTotal,
+      thinkingDurationSecondsTotal: this.thinkingDurationSecondsTotal,
+      toolCallTokensTotal: this.toolCallTokensTotal,
+      toolCallDurationSecondsTotal: this.toolCallDurationSecondsTotal
+    };
+  }
+
+  /**
+   * Convenience method to support JSON.stringify(message), replicates the structure of toObject()
+   */
+  toJSON() {
+    return this.toObject();
+  }
+
+  /**
+   * Cast message to JSON using protobuf JSON notation: https://developers.google.com/protocol-buffers/docs/proto3#json
+   * Attention: output differs from toObject() e.g. enums are represented as names and not as numbers, Timestamp is an ISO Date string format etc.
+   * If the message itself or some of descendant messages is google.protobuf.Any, you MUST provide a message pool as options. If not, the messagePool is not required
+   */
+  toProtobufJSON(
+    // @ts-ignore
+    options?: ToProtobufJSONOptions
+  ): LlmModelUsage.AsProtobufJSON {
+    return {
+      modelName: this.modelName,
+      provider: this.provider,
+      callCount: this.callCount,
+      llmTokenUsage: this.llmTokenUsage
+        ? this.llmTokenUsage.toProtobufJSON(options)
+        : null,
+      toolCallCount: this.toolCallCount,
+      errorCount: this.errorCount,
+      durationSecondsTotal: this.durationSecondsTotal,
+      cacheStats: this.cacheStats
+        ? this.cacheStats.toProtobufJSON(options)
+        : null,
+      ccaiServiceName: this.ccaiServiceName,
+      ccaiServiceProvider:
+        ondewoNlu013.CcaiServiceProvider[
+          this.ccaiServiceProvider === null ||
+          this.ccaiServiceProvider === undefined
+            ? 0
+            : this.ccaiServiceProvider
+        ],
+      baseUrl: this.baseUrl,
+      thinkingTokensTotal: this.thinkingTokensTotal,
+      thinkingDurationSecondsTotal: this.thinkingDurationSecondsTotal,
+      toolCallTokensTotal: this.toolCallTokensTotal,
+      toolCallDurationSecondsTotal: this.toolCallDurationSecondsTotal
+    };
+  }
+}
+export module LlmModelUsage {
+  /**
+   * Standard JavaScript object representation for LlmModelUsage
+   */
+  export interface AsObject {
+    modelName: string;
+    provider: string;
+    callCount: string;
+    llmTokenUsage?: LlmTokenUsage.AsObject;
+    toolCallCount: string;
+    errorCount: string;
+    durationSecondsTotal: number;
+    cacheStats?: LlmCacheStats.AsObject;
+    ccaiServiceName: string;
+    ccaiServiceProvider: ondewoNlu013.CcaiServiceProvider;
+    baseUrl: string;
+    thinkingTokensTotal: string;
+    thinkingDurationSecondsTotal: number;
+    toolCallTokensTotal: string;
+    toolCallDurationSecondsTotal: number;
+  }
+
+  /**
+   * Protobuf JSON representation for LlmModelUsage
+   */
+  export interface AsProtobufJSON {
+    modelName: string;
+    provider: string;
+    callCount: string;
+    llmTokenUsage: LlmTokenUsage.AsProtobufJSON | null;
+    toolCallCount: string;
+    errorCount: string;
+    durationSecondsTotal: number;
+    cacheStats: LlmCacheStats.AsProtobufJSON | null;
+    ccaiServiceName: string;
+    ccaiServiceProvider: string;
+    baseUrl: string;
+    thinkingTokensTotal: string;
+    thinkingDurationSecondsTotal: number;
+    toolCallTokensTotal: string;
+    toolCallDurationSecondsTotal: number;
+  }
+}
+
+/**
+ * Message implementation for ondewo.nlu.LlmProviderUsage
+ */
+export class LlmProviderUsage implements GrpcMessage {
+  static id = 'ondewo.nlu.LlmProviderUsage';
+
+  /**
+   * Deserialize binary data to message
+   * @param instance message instance
+   */
+  static deserializeBinary(bytes: ByteSource) {
+    const instance = new LlmProviderUsage();
+    LlmProviderUsage.deserializeBinaryFromReader(
+      instance,
+      new BinaryReader(bytes)
+    );
+    return instance;
+  }
+
+  /**
+   * Check all the properties and set default protobuf values if necessary
+   * @param _instance message instance
+   */
+  static refineValues(_instance: LlmProviderUsage) {
+    _instance.provider = _instance.provider || '';
+    _instance.callCount = _instance.callCount || '0';
+    _instance.llmTokenUsage = _instance.llmTokenUsage || undefined;
+    _instance.errorCount = _instance.errorCount || '0';
+    _instance.durationSecondsTotal = _instance.durationSecondsTotal || 0;
+    _instance.modelNames = _instance.modelNames || [];
+  }
+
+  /**
+   * Deserializes / reads binary message into message instance using provided binary reader
+   * @param _instance message instance
+   * @param _reader binary reader instance
+   */
+  static deserializeBinaryFromReader(
+    _instance: LlmProviderUsage,
+    _reader: BinaryReader
+  ) {
+    while (_reader.nextField()) {
+      if (_reader.isEndGroup()) break;
+
+      switch (_reader.getFieldNumber()) {
+        case 1:
+          _instance.provider = _reader.readString();
+          break;
+        case 2:
+          _instance.callCount = _reader.readInt64String();
+          break;
+        case 3:
+          _instance.llmTokenUsage = new LlmTokenUsage();
+          _reader.readMessage(
+            _instance.llmTokenUsage,
+            LlmTokenUsage.deserializeBinaryFromReader
+          );
+          break;
+        case 4:
+          _instance.errorCount = _reader.readInt64String();
+          break;
+        case 5:
+          _instance.durationSecondsTotal = _reader.readDouble();
+          break;
+        case 6:
+          (_instance.modelNames = _instance.modelNames || []).push(
+            _reader.readString()
+          );
+          break;
+        default:
+          _reader.skipField();
+      }
+    }
+
+    LlmProviderUsage.refineValues(_instance);
+  }
+
+  /**
+   * Serializes a message to binary format using provided binary reader
+   * @param _instance message instance
+   * @param _writer binary writer instance
+   */
+  static serializeBinaryToWriter(
+    _instance: LlmProviderUsage,
+    _writer: BinaryWriter
+  ) {
+    if (_instance.provider) {
+      _writer.writeString(1, _instance.provider);
+    }
+    if (_instance.callCount) {
+      _writer.writeInt64String(2, _instance.callCount);
+    }
+    if (_instance.llmTokenUsage) {
+      _writer.writeMessage(
+        3,
+        _instance.llmTokenUsage as any,
+        LlmTokenUsage.serializeBinaryToWriter
+      );
+    }
+    if (_instance.errorCount) {
+      _writer.writeInt64String(4, _instance.errorCount);
+    }
+    if (_instance.durationSecondsTotal) {
+      _writer.writeDouble(5, _instance.durationSecondsTotal);
+    }
+    if (_instance.modelNames && _instance.modelNames.length) {
+      _writer.writeRepeatedString(6, _instance.modelNames);
+    }
+  }
+
+  private _provider: string;
+  private _callCount: string;
+  private _llmTokenUsage?: LlmTokenUsage;
+  private _errorCount: string;
+  private _durationSecondsTotal: number;
+  private _modelNames: string[];
+
+  /**
+   * Message constructor. Initializes the properties and applies default Protobuf values if necessary
+   * @param _value initial values object or instance of LlmProviderUsage to deeply clone from
+   */
+  constructor(_value?: RecursivePartial<LlmProviderUsage.AsObject>) {
+    _value = _value || {};
+    this.provider = _value.provider;
+    this.callCount = _value.callCount;
+    this.llmTokenUsage = _value.llmTokenUsage
+      ? new LlmTokenUsage(_value.llmTokenUsage)
+      : undefined;
+    this.errorCount = _value.errorCount;
+    this.durationSecondsTotal = _value.durationSecondsTotal;
+    this.modelNames = (_value.modelNames || []).slice();
+    LlmProviderUsage.refineValues(this);
+  }
+  get provider(): string {
+    return this._provider;
+  }
+  set provider(value: string) {
+    this._provider = value;
+  }
+  get callCount(): string {
+    return this._callCount;
+  }
+  set callCount(value: string) {
+    this._callCount = value;
+  }
+  get llmTokenUsage(): LlmTokenUsage | undefined {
+    return this._llmTokenUsage;
+  }
+  set llmTokenUsage(value: LlmTokenUsage | undefined) {
+    this._llmTokenUsage = value;
+  }
+  get errorCount(): string {
+    return this._errorCount;
+  }
+  set errorCount(value: string) {
+    this._errorCount = value;
+  }
+  get durationSecondsTotal(): number {
+    return this._durationSecondsTotal;
+  }
+  set durationSecondsTotal(value: number) {
+    this._durationSecondsTotal = value;
+  }
+  get modelNames(): string[] {
+    return this._modelNames;
+  }
+  set modelNames(value: string[]) {
+    this._modelNames = value;
+  }
+
+  /**
+   * Serialize message to binary data
+   * @param instance message instance
+   */
+  serializeBinary() {
+    const writer = new BinaryWriter();
+    LlmProviderUsage.serializeBinaryToWriter(this, writer);
+    return writer.getResultBuffer();
+  }
+
+  /**
+   * Cast message to standard JavaScript object (all non-primitive values are deeply cloned)
+   */
+  toObject(): LlmProviderUsage.AsObject {
+    return {
+      provider: this.provider,
+      callCount: this.callCount,
+      llmTokenUsage: this.llmTokenUsage
+        ? this.llmTokenUsage.toObject()
+        : undefined,
+      errorCount: this.errorCount,
+      durationSecondsTotal: this.durationSecondsTotal,
+      modelNames: (this.modelNames || []).slice()
+    };
+  }
+
+  /**
+   * Convenience method to support JSON.stringify(message), replicates the structure of toObject()
+   */
+  toJSON() {
+    return this.toObject();
+  }
+
+  /**
+   * Cast message to JSON using protobuf JSON notation: https://developers.google.com/protocol-buffers/docs/proto3#json
+   * Attention: output differs from toObject() e.g. enums are represented as names and not as numbers, Timestamp is an ISO Date string format etc.
+   * If the message itself or some of descendant messages is google.protobuf.Any, you MUST provide a message pool as options. If not, the messagePool is not required
+   */
+  toProtobufJSON(
+    // @ts-ignore
+    options?: ToProtobufJSONOptions
+  ): LlmProviderUsage.AsProtobufJSON {
+    return {
+      provider: this.provider,
+      callCount: this.callCount,
+      llmTokenUsage: this.llmTokenUsage
+        ? this.llmTokenUsage.toProtobufJSON(options)
+        : null,
+      errorCount: this.errorCount,
+      durationSecondsTotal: this.durationSecondsTotal,
+      modelNames: (this.modelNames || []).slice()
+    };
+  }
+}
+export module LlmProviderUsage {
+  /**
+   * Standard JavaScript object representation for LlmProviderUsage
+   */
+  export interface AsObject {
+    provider: string;
+    callCount: string;
+    llmTokenUsage?: LlmTokenUsage.AsObject;
+    errorCount: string;
+    durationSecondsTotal: number;
+    modelNames: string[];
+  }
+
+  /**
+   * Protobuf JSON representation for LlmProviderUsage
+   */
+  export interface AsProtobufJSON {
+    provider: string;
+    callCount: string;
+    llmTokenUsage: LlmTokenUsage.AsProtobufJSON | null;
+    errorCount: string;
+    durationSecondsTotal: number;
+    modelNames: string[];
+  }
+}
+
+/**
+ * Message implementation for ondewo.nlu.LlmCcaiServiceUsage
+ */
+export class LlmCcaiServiceUsage implements GrpcMessage {
+  static id = 'ondewo.nlu.LlmCcaiServiceUsage';
+
+  /**
+   * Deserialize binary data to message
+   * @param instance message instance
+   */
+  static deserializeBinary(bytes: ByteSource) {
+    const instance = new LlmCcaiServiceUsage();
+    LlmCcaiServiceUsage.deserializeBinaryFromReader(
+      instance,
+      new BinaryReader(bytes)
+    );
+    return instance;
+  }
+
+  /**
+   * Check all the properties and set default protobuf values if necessary
+   * @param _instance message instance
+   */
+  static refineValues(_instance: LlmCcaiServiceUsage) {
+    _instance.ccaiServiceProvider = _instance.ccaiServiceProvider || 0;
+    _instance.ccaiServiceName = _instance.ccaiServiceName || '';
+    _instance.callCount = _instance.callCount || '0';
+    _instance.llmTokenUsage = _instance.llmTokenUsage || undefined;
+    _instance.baseUrl = _instance.baseUrl || '';
+    _instance.modelNames = _instance.modelNames || [];
+  }
+
+  /**
+   * Deserializes / reads binary message into message instance using provided binary reader
+   * @param _instance message instance
+   * @param _reader binary reader instance
+   */
+  static deserializeBinaryFromReader(
+    _instance: LlmCcaiServiceUsage,
+    _reader: BinaryReader
+  ) {
+    while (_reader.nextField()) {
+      if (_reader.isEndGroup()) break;
+
+      switch (_reader.getFieldNumber()) {
+        case 1:
+          _instance.ccaiServiceProvider = _reader.readEnum();
+          break;
+        case 2:
+          _instance.ccaiServiceName = _reader.readString();
+          break;
+        case 3:
+          _instance.callCount = _reader.readInt64String();
+          break;
+        case 4:
+          _instance.llmTokenUsage = new LlmTokenUsage();
+          _reader.readMessage(
+            _instance.llmTokenUsage,
+            LlmTokenUsage.deserializeBinaryFromReader
+          );
+          break;
+        case 5:
+          _instance.baseUrl = _reader.readString();
+          break;
+        case 6:
+          (_instance.modelNames = _instance.modelNames || []).push(
+            _reader.readString()
+          );
+          break;
+        default:
+          _reader.skipField();
+      }
+    }
+
+    LlmCcaiServiceUsage.refineValues(_instance);
+  }
+
+  /**
+   * Serializes a message to binary format using provided binary reader
+   * @param _instance message instance
+   * @param _writer binary writer instance
+   */
+  static serializeBinaryToWriter(
+    _instance: LlmCcaiServiceUsage,
+    _writer: BinaryWriter
+  ) {
+    if (_instance.ccaiServiceProvider) {
+      _writer.writeEnum(1, _instance.ccaiServiceProvider);
+    }
+    if (_instance.ccaiServiceName) {
+      _writer.writeString(2, _instance.ccaiServiceName);
+    }
+    if (_instance.callCount) {
+      _writer.writeInt64String(3, _instance.callCount);
+    }
+    if (_instance.llmTokenUsage) {
+      _writer.writeMessage(
+        4,
+        _instance.llmTokenUsage as any,
+        LlmTokenUsage.serializeBinaryToWriter
+      );
+    }
+    if (_instance.baseUrl) {
+      _writer.writeString(5, _instance.baseUrl);
+    }
+    if (_instance.modelNames && _instance.modelNames.length) {
+      _writer.writeRepeatedString(6, _instance.modelNames);
+    }
+  }
+
+  private _ccaiServiceProvider: ondewoNlu013.CcaiServiceProvider;
+  private _ccaiServiceName: string;
+  private _callCount: string;
+  private _llmTokenUsage?: LlmTokenUsage;
+  private _baseUrl: string;
+  private _modelNames: string[];
+
+  /**
+   * Message constructor. Initializes the properties and applies default Protobuf values if necessary
+   * @param _value initial values object or instance of LlmCcaiServiceUsage to deeply clone from
+   */
+  constructor(_value?: RecursivePartial<LlmCcaiServiceUsage.AsObject>) {
+    _value = _value || {};
+    this.ccaiServiceProvider = _value.ccaiServiceProvider;
+    this.ccaiServiceName = _value.ccaiServiceName;
+    this.callCount = _value.callCount;
+    this.llmTokenUsage = _value.llmTokenUsage
+      ? new LlmTokenUsage(_value.llmTokenUsage)
+      : undefined;
+    this.baseUrl = _value.baseUrl;
+    this.modelNames = (_value.modelNames || []).slice();
+    LlmCcaiServiceUsage.refineValues(this);
+  }
+  get ccaiServiceProvider(): ondewoNlu013.CcaiServiceProvider {
+    return this._ccaiServiceProvider;
+  }
+  set ccaiServiceProvider(value: ondewoNlu013.CcaiServiceProvider) {
+    this._ccaiServiceProvider = value;
+  }
+  get ccaiServiceName(): string {
+    return this._ccaiServiceName;
+  }
+  set ccaiServiceName(value: string) {
+    this._ccaiServiceName = value;
+  }
+  get callCount(): string {
+    return this._callCount;
+  }
+  set callCount(value: string) {
+    this._callCount = value;
+  }
+  get llmTokenUsage(): LlmTokenUsage | undefined {
+    return this._llmTokenUsage;
+  }
+  set llmTokenUsage(value: LlmTokenUsage | undefined) {
+    this._llmTokenUsage = value;
+  }
+  get baseUrl(): string {
+    return this._baseUrl;
+  }
+  set baseUrl(value: string) {
+    this._baseUrl = value;
+  }
+  get modelNames(): string[] {
+    return this._modelNames;
+  }
+  set modelNames(value: string[]) {
+    this._modelNames = value;
+  }
+
+  /**
+   * Serialize message to binary data
+   * @param instance message instance
+   */
+  serializeBinary() {
+    const writer = new BinaryWriter();
+    LlmCcaiServiceUsage.serializeBinaryToWriter(this, writer);
+    return writer.getResultBuffer();
+  }
+
+  /**
+   * Cast message to standard JavaScript object (all non-primitive values are deeply cloned)
+   */
+  toObject(): LlmCcaiServiceUsage.AsObject {
+    return {
+      ccaiServiceProvider: this.ccaiServiceProvider,
+      ccaiServiceName: this.ccaiServiceName,
+      callCount: this.callCount,
+      llmTokenUsage: this.llmTokenUsage
+        ? this.llmTokenUsage.toObject()
+        : undefined,
+      baseUrl: this.baseUrl,
+      modelNames: (this.modelNames || []).slice()
+    };
+  }
+
+  /**
+   * Convenience method to support JSON.stringify(message), replicates the structure of toObject()
+   */
+  toJSON() {
+    return this.toObject();
+  }
+
+  /**
+   * Cast message to JSON using protobuf JSON notation: https://developers.google.com/protocol-buffers/docs/proto3#json
+   * Attention: output differs from toObject() e.g. enums are represented as names and not as numbers, Timestamp is an ISO Date string format etc.
+   * If the message itself or some of descendant messages is google.protobuf.Any, you MUST provide a message pool as options. If not, the messagePool is not required
+   */
+  toProtobufJSON(
+    // @ts-ignore
+    options?: ToProtobufJSONOptions
+  ): LlmCcaiServiceUsage.AsProtobufJSON {
+    return {
+      ccaiServiceProvider:
+        ondewoNlu013.CcaiServiceProvider[
+          this.ccaiServiceProvider === null ||
+          this.ccaiServiceProvider === undefined
+            ? 0
+            : this.ccaiServiceProvider
+        ],
+      ccaiServiceName: this.ccaiServiceName,
+      callCount: this.callCount,
+      llmTokenUsage: this.llmTokenUsage
+        ? this.llmTokenUsage.toProtobufJSON(options)
+        : null,
+      baseUrl: this.baseUrl,
+      modelNames: (this.modelNames || []).slice()
+    };
+  }
+}
+export module LlmCcaiServiceUsage {
+  /**
+   * Standard JavaScript object representation for LlmCcaiServiceUsage
+   */
+  export interface AsObject {
+    ccaiServiceProvider: ondewoNlu013.CcaiServiceProvider;
+    ccaiServiceName: string;
+    callCount: string;
+    llmTokenUsage?: LlmTokenUsage.AsObject;
+    baseUrl: string;
+    modelNames: string[];
+  }
+
+  /**
+   * Protobuf JSON representation for LlmCcaiServiceUsage
+   */
+  export interface AsProtobufJSON {
+    ccaiServiceProvider: string;
+    ccaiServiceName: string;
+    callCount: string;
+    llmTokenUsage: LlmTokenUsage.AsProtobufJSON | null;
+    baseUrl: string;
+    modelNames: string[];
+  }
+}
+
+/**
+ * Message implementation for ondewo.nlu.LlmAgentUsage
+ */
+export class LlmAgentUsage implements GrpcMessage {
+  static id = 'ondewo.nlu.LlmAgentUsage';
+
+  /**
+   * Deserialize binary data to message
+   * @param instance message instance
+   */
+  static deserializeBinary(bytes: ByteSource) {
+    const instance = new LlmAgentUsage();
+    LlmAgentUsage.deserializeBinaryFromReader(
+      instance,
+      new BinaryReader(bytes)
+    );
+    return instance;
+  }
+
+  /**
+   * Check all the properties and set default protobuf values if necessary
+   * @param _instance message instance
+   */
+  static refineValues(_instance: LlmAgentUsage) {
+    _instance.agentName = _instance.agentName || '';
+    _instance.agentRole = _instance.agentRole || '';
+    _instance.teamName = _instance.teamName || '';
+    _instance.callCount = _instance.callCount || '0';
+    _instance.llmTokenUsage = _instance.llmTokenUsage || undefined;
+    _instance.toolCallCount = _instance.toolCallCount || '0';
+  }
+
+  /**
+   * Deserializes / reads binary message into message instance using provided binary reader
+   * @param _instance message instance
+   * @param _reader binary reader instance
+   */
+  static deserializeBinaryFromReader(
+    _instance: LlmAgentUsage,
+    _reader: BinaryReader
+  ) {
+    while (_reader.nextField()) {
+      if (_reader.isEndGroup()) break;
+
+      switch (_reader.getFieldNumber()) {
+        case 1:
+          _instance.agentName = _reader.readString();
+          break;
+        case 2:
+          _instance.agentRole = _reader.readString();
+          break;
+        case 3:
+          _instance.teamName = _reader.readString();
+          break;
+        case 4:
+          _instance.callCount = _reader.readInt64String();
+          break;
+        case 5:
+          _instance.llmTokenUsage = new LlmTokenUsage();
+          _reader.readMessage(
+            _instance.llmTokenUsage,
+            LlmTokenUsage.deserializeBinaryFromReader
+          );
+          break;
+        case 6:
+          _instance.toolCallCount = _reader.readInt64String();
+          break;
+        default:
+          _reader.skipField();
+      }
+    }
+
+    LlmAgentUsage.refineValues(_instance);
+  }
+
+  /**
+   * Serializes a message to binary format using provided binary reader
+   * @param _instance message instance
+   * @param _writer binary writer instance
+   */
+  static serializeBinaryToWriter(
+    _instance: LlmAgentUsage,
+    _writer: BinaryWriter
+  ) {
+    if (_instance.agentName) {
+      _writer.writeString(1, _instance.agentName);
+    }
+    if (_instance.agentRole) {
+      _writer.writeString(2, _instance.agentRole);
+    }
+    if (_instance.teamName) {
+      _writer.writeString(3, _instance.teamName);
+    }
+    if (_instance.callCount) {
+      _writer.writeInt64String(4, _instance.callCount);
+    }
+    if (_instance.llmTokenUsage) {
+      _writer.writeMessage(
+        5,
+        _instance.llmTokenUsage as any,
+        LlmTokenUsage.serializeBinaryToWriter
+      );
+    }
+    if (_instance.toolCallCount) {
+      _writer.writeInt64String(6, _instance.toolCallCount);
+    }
+  }
+
+  private _agentName: string;
+  private _agentRole: string;
+  private _teamName: string;
+  private _callCount: string;
+  private _llmTokenUsage?: LlmTokenUsage;
+  private _toolCallCount: string;
+
+  /**
+   * Message constructor. Initializes the properties and applies default Protobuf values if necessary
+   * @param _value initial values object or instance of LlmAgentUsage to deeply clone from
+   */
+  constructor(_value?: RecursivePartial<LlmAgentUsage.AsObject>) {
+    _value = _value || {};
+    this.agentName = _value.agentName;
+    this.agentRole = _value.agentRole;
+    this.teamName = _value.teamName;
+    this.callCount = _value.callCount;
+    this.llmTokenUsage = _value.llmTokenUsage
+      ? new LlmTokenUsage(_value.llmTokenUsage)
+      : undefined;
+    this.toolCallCount = _value.toolCallCount;
+    LlmAgentUsage.refineValues(this);
+  }
+  get agentName(): string {
+    return this._agentName;
+  }
+  set agentName(value: string) {
+    this._agentName = value;
+  }
+  get agentRole(): string {
+    return this._agentRole;
+  }
+  set agentRole(value: string) {
+    this._agentRole = value;
+  }
+  get teamName(): string {
+    return this._teamName;
+  }
+  set teamName(value: string) {
+    this._teamName = value;
+  }
+  get callCount(): string {
+    return this._callCount;
+  }
+  set callCount(value: string) {
+    this._callCount = value;
+  }
+  get llmTokenUsage(): LlmTokenUsage | undefined {
+    return this._llmTokenUsage;
+  }
+  set llmTokenUsage(value: LlmTokenUsage | undefined) {
+    this._llmTokenUsage = value;
+  }
+  get toolCallCount(): string {
+    return this._toolCallCount;
+  }
+  set toolCallCount(value: string) {
+    this._toolCallCount = value;
+  }
+
+  /**
+   * Serialize message to binary data
+   * @param instance message instance
+   */
+  serializeBinary() {
+    const writer = new BinaryWriter();
+    LlmAgentUsage.serializeBinaryToWriter(this, writer);
+    return writer.getResultBuffer();
+  }
+
+  /**
+   * Cast message to standard JavaScript object (all non-primitive values are deeply cloned)
+   */
+  toObject(): LlmAgentUsage.AsObject {
+    return {
+      agentName: this.agentName,
+      agentRole: this.agentRole,
+      teamName: this.teamName,
+      callCount: this.callCount,
+      llmTokenUsage: this.llmTokenUsage
+        ? this.llmTokenUsage.toObject()
+        : undefined,
+      toolCallCount: this.toolCallCount
+    };
+  }
+
+  /**
+   * Convenience method to support JSON.stringify(message), replicates the structure of toObject()
+   */
+  toJSON() {
+    return this.toObject();
+  }
+
+  /**
+   * Cast message to JSON using protobuf JSON notation: https://developers.google.com/protocol-buffers/docs/proto3#json
+   * Attention: output differs from toObject() e.g. enums are represented as names and not as numbers, Timestamp is an ISO Date string format etc.
+   * If the message itself or some of descendant messages is google.protobuf.Any, you MUST provide a message pool as options. If not, the messagePool is not required
+   */
+  toProtobufJSON(
+    // @ts-ignore
+    options?: ToProtobufJSONOptions
+  ): LlmAgentUsage.AsProtobufJSON {
+    return {
+      agentName: this.agentName,
+      agentRole: this.agentRole,
+      teamName: this.teamName,
+      callCount: this.callCount,
+      llmTokenUsage: this.llmTokenUsage
+        ? this.llmTokenUsage.toProtobufJSON(options)
+        : null,
+      toolCallCount: this.toolCallCount
+    };
+  }
+}
+export module LlmAgentUsage {
+  /**
+   * Standard JavaScript object representation for LlmAgentUsage
+   */
+  export interface AsObject {
+    agentName: string;
+    agentRole: string;
+    teamName: string;
+    callCount: string;
+    llmTokenUsage?: LlmTokenUsage.AsObject;
+    toolCallCount: string;
+  }
+
+  /**
+   * Protobuf JSON representation for LlmAgentUsage
+   */
+  export interface AsProtobufJSON {
+    agentName: string;
+    agentRole: string;
+    teamName: string;
+    callCount: string;
+    llmTokenUsage: LlmTokenUsage.AsProtobufJSON | null;
+    toolCallCount: string;
+  }
+}
+
+/**
+ * Message implementation for ondewo.nlu.LlmToolUsage
+ */
+export class LlmToolUsage implements GrpcMessage {
+  static id = 'ondewo.nlu.LlmToolUsage';
+
+  /**
+   * Deserialize binary data to message
+   * @param instance message instance
+   */
+  static deserializeBinary(bytes: ByteSource) {
+    const instance = new LlmToolUsage();
+    LlmToolUsage.deserializeBinaryFromReader(instance, new BinaryReader(bytes));
+    return instance;
+  }
+
+  /**
+   * Check all the properties and set default protobuf values if necessary
+   * @param _instance message instance
+   */
+  static refineValues(_instance: LlmToolUsage) {
+    _instance.toolName = _instance.toolName || '';
+    _instance.callCount = _instance.callCount || '0';
+    _instance.errorCount = _instance.errorCount || '0';
+    _instance.errorRate = _instance.errorRate || 0;
+    _instance.durationSecondsTotal = _instance.durationSecondsTotal || 0;
+    _instance.meanDurationSeconds = _instance.meanDurationSeconds || 0;
+    _instance.llmTokenUsage = _instance.llmTokenUsage || undefined;
+    _instance.arguments = _instance.arguments || undefined;
+    _instance.llmCallId = _instance.llmCallId || '';
+    _instance.toolCallId = _instance.toolCallId || '';
+  }
+
+  /**
+   * Deserializes / reads binary message into message instance using provided binary reader
+   * @param _instance message instance
+   * @param _reader binary reader instance
+   */
+  static deserializeBinaryFromReader(
+    _instance: LlmToolUsage,
+    _reader: BinaryReader
+  ) {
+    while (_reader.nextField()) {
+      if (_reader.isEndGroup()) break;
+
+      switch (_reader.getFieldNumber()) {
+        case 1:
+          _instance.toolName = _reader.readString();
+          break;
+        case 2:
+          _instance.callCount = _reader.readInt64String();
+          break;
+        case 3:
+          _instance.errorCount = _reader.readInt64String();
+          break;
+        case 4:
+          _instance.errorRate = _reader.readDouble();
+          break;
+        case 5:
+          _instance.durationSecondsTotal = _reader.readDouble();
+          break;
+        case 6:
+          _instance.meanDurationSeconds = _reader.readDouble();
+          break;
+        case 7:
+          _instance.llmTokenUsage = new LlmTokenUsage();
+          _reader.readMessage(
+            _instance.llmTokenUsage,
+            LlmTokenUsage.deserializeBinaryFromReader
+          );
+          break;
+        case 8:
+          _instance.arguments = new googleProtobuf004.Struct();
+          _reader.readMessage(
+            _instance.arguments,
+            googleProtobuf004.Struct.deserializeBinaryFromReader
+          );
+          break;
+        case 9:
+          _instance.llmCallId = _reader.readString();
+          break;
+        case 10:
+          _instance.toolCallId = _reader.readString();
+          break;
+        default:
+          _reader.skipField();
+      }
+    }
+
+    LlmToolUsage.refineValues(_instance);
+  }
+
+  /**
+   * Serializes a message to binary format using provided binary reader
+   * @param _instance message instance
+   * @param _writer binary writer instance
+   */
+  static serializeBinaryToWriter(
+    _instance: LlmToolUsage,
+    _writer: BinaryWriter
+  ) {
+    if (_instance.toolName) {
+      _writer.writeString(1, _instance.toolName);
+    }
+    if (_instance.callCount) {
+      _writer.writeInt64String(2, _instance.callCount);
+    }
+    if (_instance.errorCount) {
+      _writer.writeInt64String(3, _instance.errorCount);
+    }
+    if (_instance.errorRate) {
+      _writer.writeDouble(4, _instance.errorRate);
+    }
+    if (_instance.durationSecondsTotal) {
+      _writer.writeDouble(5, _instance.durationSecondsTotal);
+    }
+    if (_instance.meanDurationSeconds) {
+      _writer.writeDouble(6, _instance.meanDurationSeconds);
+    }
+    if (_instance.llmTokenUsage) {
+      _writer.writeMessage(
+        7,
+        _instance.llmTokenUsage as any,
+        LlmTokenUsage.serializeBinaryToWriter
+      );
+    }
+    if (_instance.arguments) {
+      _writer.writeMessage(
+        8,
+        _instance.arguments as any,
+        googleProtobuf004.Struct.serializeBinaryToWriter
+      );
+    }
+    if (_instance.llmCallId) {
+      _writer.writeString(9, _instance.llmCallId);
+    }
+    if (_instance.toolCallId) {
+      _writer.writeString(10, _instance.toolCallId);
+    }
+  }
+
+  private _toolName: string;
+  private _callCount: string;
+  private _errorCount: string;
+  private _errorRate: number;
+  private _durationSecondsTotal: number;
+  private _meanDurationSeconds: number;
+  private _llmTokenUsage?: LlmTokenUsage;
+  private _arguments?: googleProtobuf004.Struct;
+  private _llmCallId: string;
+  private _toolCallId: string;
+
+  /**
+   * Message constructor. Initializes the properties and applies default Protobuf values if necessary
+   * @param _value initial values object or instance of LlmToolUsage to deeply clone from
+   */
+  constructor(_value?: RecursivePartial<LlmToolUsage.AsObject>) {
+    _value = _value || {};
+    this.toolName = _value.toolName;
+    this.callCount = _value.callCount;
+    this.errorCount = _value.errorCount;
+    this.errorRate = _value.errorRate;
+    this.durationSecondsTotal = _value.durationSecondsTotal;
+    this.meanDurationSeconds = _value.meanDurationSeconds;
+    this.llmTokenUsage = _value.llmTokenUsage
+      ? new LlmTokenUsage(_value.llmTokenUsage)
+      : undefined;
+    this.arguments = _value.arguments
+      ? new googleProtobuf004.Struct(_value.arguments)
+      : undefined;
+    this.llmCallId = _value.llmCallId;
+    this.toolCallId = _value.toolCallId;
+    LlmToolUsage.refineValues(this);
+  }
+  get toolName(): string {
+    return this._toolName;
+  }
+  set toolName(value: string) {
+    this._toolName = value;
+  }
+  get callCount(): string {
+    return this._callCount;
+  }
+  set callCount(value: string) {
+    this._callCount = value;
+  }
+  get errorCount(): string {
+    return this._errorCount;
+  }
+  set errorCount(value: string) {
+    this._errorCount = value;
+  }
+  get errorRate(): number {
+    return this._errorRate;
+  }
+  set errorRate(value: number) {
+    this._errorRate = value;
+  }
+  get durationSecondsTotal(): number {
+    return this._durationSecondsTotal;
+  }
+  set durationSecondsTotal(value: number) {
+    this._durationSecondsTotal = value;
+  }
+  get meanDurationSeconds(): number {
+    return this._meanDurationSeconds;
+  }
+  set meanDurationSeconds(value: number) {
+    this._meanDurationSeconds = value;
+  }
+  get llmTokenUsage(): LlmTokenUsage | undefined {
+    return this._llmTokenUsage;
+  }
+  set llmTokenUsage(value: LlmTokenUsage | undefined) {
+    this._llmTokenUsage = value;
+  }
+  get arguments(): googleProtobuf004.Struct | undefined {
+    return this._arguments;
+  }
+  set arguments(value: googleProtobuf004.Struct | undefined) {
+    this._arguments = value;
+  }
+  get llmCallId(): string {
+    return this._llmCallId;
+  }
+  set llmCallId(value: string) {
+    this._llmCallId = value;
+  }
+  get toolCallId(): string {
+    return this._toolCallId;
+  }
+  set toolCallId(value: string) {
+    this._toolCallId = value;
+  }
+
+  /**
+   * Serialize message to binary data
+   * @param instance message instance
+   */
+  serializeBinary() {
+    const writer = new BinaryWriter();
+    LlmToolUsage.serializeBinaryToWriter(this, writer);
+    return writer.getResultBuffer();
+  }
+
+  /**
+   * Cast message to standard JavaScript object (all non-primitive values are deeply cloned)
+   */
+  toObject(): LlmToolUsage.AsObject {
+    return {
+      toolName: this.toolName,
+      callCount: this.callCount,
+      errorCount: this.errorCount,
+      errorRate: this.errorRate,
+      durationSecondsTotal: this.durationSecondsTotal,
+      meanDurationSeconds: this.meanDurationSeconds,
+      llmTokenUsage: this.llmTokenUsage
+        ? this.llmTokenUsage.toObject()
+        : undefined,
+      arguments: this.arguments ? this.arguments.toObject() : undefined,
+      llmCallId: this.llmCallId,
+      toolCallId: this.toolCallId
+    };
+  }
+
+  /**
+   * Convenience method to support JSON.stringify(message), replicates the structure of toObject()
+   */
+  toJSON() {
+    return this.toObject();
+  }
+
+  /**
+   * Cast message to JSON using protobuf JSON notation: https://developers.google.com/protocol-buffers/docs/proto3#json
+   * Attention: output differs from toObject() e.g. enums are represented as names and not as numbers, Timestamp is an ISO Date string format etc.
+   * If the message itself or some of descendant messages is google.protobuf.Any, you MUST provide a message pool as options. If not, the messagePool is not required
+   */
+  toProtobufJSON(
+    // @ts-ignore
+    options?: ToProtobufJSONOptions
+  ): LlmToolUsage.AsProtobufJSON {
+    return {
+      toolName: this.toolName,
+      callCount: this.callCount,
+      errorCount: this.errorCount,
+      errorRate: this.errorRate,
+      durationSecondsTotal: this.durationSecondsTotal,
+      meanDurationSeconds: this.meanDurationSeconds,
+      llmTokenUsage: this.llmTokenUsage
+        ? this.llmTokenUsage.toProtobufJSON(options)
+        : null,
+      arguments: this.arguments ? this.arguments.toProtobufJSON(options) : null,
+      llmCallId: this.llmCallId,
+      toolCallId: this.toolCallId
+    };
+  }
+}
+export module LlmToolUsage {
+  /**
+   * Standard JavaScript object representation for LlmToolUsage
+   */
+  export interface AsObject {
+    toolName: string;
+    callCount: string;
+    errorCount: string;
+    errorRate: number;
+    durationSecondsTotal: number;
+    meanDurationSeconds: number;
+    llmTokenUsage?: LlmTokenUsage.AsObject;
+    arguments?: googleProtobuf004.Struct.AsObject;
+    llmCallId: string;
+    toolCallId: string;
+  }
+
+  /**
+   * Protobuf JSON representation for LlmToolUsage
+   */
+  export interface AsProtobufJSON {
+    toolName: string;
+    callCount: string;
+    errorCount: string;
+    errorRate: number;
+    durationSecondsTotal: number;
+    meanDurationSeconds: number;
+    llmTokenUsage: LlmTokenUsage.AsProtobufJSON | null;
+    arguments: googleProtobuf004.Struct.AsProtobufJSON | null;
+    llmCallId: string;
+    toolCallId: string;
+  }
+}
+
+/**
+ * Message implementation for ondewo.nlu.LlmErrorStat
+ */
+export class LlmErrorStat implements GrpcMessage {
+  static id = 'ondewo.nlu.LlmErrorStat';
+
+  /**
+   * Deserialize binary data to message
+   * @param instance message instance
+   */
+  static deserializeBinary(bytes: ByteSource) {
+    const instance = new LlmErrorStat();
+    LlmErrorStat.deserializeBinaryFromReader(instance, new BinaryReader(bytes));
+    return instance;
+  }
+
+  /**
+   * Check all the properties and set default protobuf values if necessary
+   * @param _instance message instance
+   */
+  static refineValues(_instance: LlmErrorStat) {
+    _instance.errorClass = _instance.errorClass || '';
+    _instance.count = _instance.count || '0';
+    _instance.rate = _instance.rate || 0;
+    _instance.sampleMessage = _instance.sampleMessage || '';
+  }
+
+  /**
+   * Deserializes / reads binary message into message instance using provided binary reader
+   * @param _instance message instance
+   * @param _reader binary reader instance
+   */
+  static deserializeBinaryFromReader(
+    _instance: LlmErrorStat,
+    _reader: BinaryReader
+  ) {
+    while (_reader.nextField()) {
+      if (_reader.isEndGroup()) break;
+
+      switch (_reader.getFieldNumber()) {
+        case 1:
+          _instance.errorClass = _reader.readString();
+          break;
+        case 2:
+          _instance.count = _reader.readInt64String();
+          break;
+        case 3:
+          _instance.rate = _reader.readDouble();
+          break;
+        case 4:
+          _instance.sampleMessage = _reader.readString();
+          break;
+        default:
+          _reader.skipField();
+      }
+    }
+
+    LlmErrorStat.refineValues(_instance);
+  }
+
+  /**
+   * Serializes a message to binary format using provided binary reader
+   * @param _instance message instance
+   * @param _writer binary writer instance
+   */
+  static serializeBinaryToWriter(
+    _instance: LlmErrorStat,
+    _writer: BinaryWriter
+  ) {
+    if (_instance.errorClass) {
+      _writer.writeString(1, _instance.errorClass);
+    }
+    if (_instance.count) {
+      _writer.writeInt64String(2, _instance.count);
+    }
+    if (_instance.rate) {
+      _writer.writeDouble(3, _instance.rate);
+    }
+    if (_instance.sampleMessage) {
+      _writer.writeString(4, _instance.sampleMessage);
+    }
+  }
+
+  private _errorClass: string;
+  private _count: string;
+  private _rate: number;
+  private _sampleMessage: string;
+
+  /**
+   * Message constructor. Initializes the properties and applies default Protobuf values if necessary
+   * @param _value initial values object or instance of LlmErrorStat to deeply clone from
+   */
+  constructor(_value?: RecursivePartial<LlmErrorStat.AsObject>) {
+    _value = _value || {};
+    this.errorClass = _value.errorClass;
+    this.count = _value.count;
+    this.rate = _value.rate;
+    this.sampleMessage = _value.sampleMessage;
+    LlmErrorStat.refineValues(this);
+  }
+  get errorClass(): string {
+    return this._errorClass;
+  }
+  set errorClass(value: string) {
+    this._errorClass = value;
+  }
+  get count(): string {
+    return this._count;
+  }
+  set count(value: string) {
+    this._count = value;
+  }
+  get rate(): number {
+    return this._rate;
+  }
+  set rate(value: number) {
+    this._rate = value;
+  }
+  get sampleMessage(): string {
+    return this._sampleMessage;
+  }
+  set sampleMessage(value: string) {
+    this._sampleMessage = value;
+  }
+
+  /**
+   * Serialize message to binary data
+   * @param instance message instance
+   */
+  serializeBinary() {
+    const writer = new BinaryWriter();
+    LlmErrorStat.serializeBinaryToWriter(this, writer);
+    return writer.getResultBuffer();
+  }
+
+  /**
+   * Cast message to standard JavaScript object (all non-primitive values are deeply cloned)
+   */
+  toObject(): LlmErrorStat.AsObject {
+    return {
+      errorClass: this.errorClass,
+      count: this.count,
+      rate: this.rate,
+      sampleMessage: this.sampleMessage
+    };
+  }
+
+  /**
+   * Convenience method to support JSON.stringify(message), replicates the structure of toObject()
+   */
+  toJSON() {
+    return this.toObject();
+  }
+
+  /**
+   * Cast message to JSON using protobuf JSON notation: https://developers.google.com/protocol-buffers/docs/proto3#json
+   * Attention: output differs from toObject() e.g. enums are represented as names and not as numbers, Timestamp is an ISO Date string format etc.
+   * If the message itself or some of descendant messages is google.protobuf.Any, you MUST provide a message pool as options. If not, the messagePool is not required
+   */
+  toProtobufJSON(
+    // @ts-ignore
+    options?: ToProtobufJSONOptions
+  ): LlmErrorStat.AsProtobufJSON {
+    return {
+      errorClass: this.errorClass,
+      count: this.count,
+      rate: this.rate,
+      sampleMessage: this.sampleMessage
+    };
+  }
+}
+export module LlmErrorStat {
+  /**
+   * Standard JavaScript object representation for LlmErrorStat
+   */
+  export interface AsObject {
+    errorClass: string;
+    count: string;
+    rate: number;
+    sampleMessage: string;
+  }
+
+  /**
+   * Protobuf JSON representation for LlmErrorStat
+   */
+  export interface AsProtobufJSON {
+    errorClass: string;
+    count: string;
+    rate: number;
+    sampleMessage: string;
+  }
+}
+
+/**
+ * Message implementation for ondewo.nlu.LlmErrorStats
+ */
+export class LlmErrorStats implements GrpcMessage {
+  static id = 'ondewo.nlu.LlmErrorStats';
+
+  /**
+   * Deserialize binary data to message
+   * @param instance message instance
+   */
+  static deserializeBinary(bytes: ByteSource) {
+    const instance = new LlmErrorStats();
+    LlmErrorStats.deserializeBinaryFromReader(
+      instance,
+      new BinaryReader(bytes)
+    );
+    return instance;
+  }
+
+  /**
+   * Check all the properties and set default protobuf values if necessary
+   * @param _instance message instance
+   */
+  static refineValues(_instance: LlmErrorStats) {
+    _instance.totalErrorCount = _instance.totalErrorCount || '0';
+    _instance.overallErrorRate = _instance.overallErrorRate || 0;
+    _instance.errorsByClass = _instance.errorsByClass || [];
+    _instance.retryCountTotal = _instance.retryCountTotal || '0';
+    _instance.maxFallbackDepth = _instance.maxFallbackDepth || 0;
+  }
+
+  /**
+   * Deserializes / reads binary message into message instance using provided binary reader
+   * @param _instance message instance
+   * @param _reader binary reader instance
+   */
+  static deserializeBinaryFromReader(
+    _instance: LlmErrorStats,
+    _reader: BinaryReader
+  ) {
+    while (_reader.nextField()) {
+      if (_reader.isEndGroup()) break;
+
+      switch (_reader.getFieldNumber()) {
+        case 1:
+          _instance.totalErrorCount = _reader.readInt64String();
+          break;
+        case 2:
+          _instance.overallErrorRate = _reader.readDouble();
+          break;
+        case 3:
+          const messageInitializer3 = new LlmErrorStat();
+          _reader.readMessage(
+            messageInitializer3,
+            LlmErrorStat.deserializeBinaryFromReader
+          );
+          (_instance.errorsByClass = _instance.errorsByClass || []).push(
+            messageInitializer3
+          );
+          break;
+        case 4:
+          _instance.retryCountTotal = _reader.readInt64String();
+          break;
+        case 5:
+          _instance.maxFallbackDepth = _reader.readInt32();
+          break;
+        default:
+          _reader.skipField();
+      }
+    }
+
+    LlmErrorStats.refineValues(_instance);
+  }
+
+  /**
+   * Serializes a message to binary format using provided binary reader
+   * @param _instance message instance
+   * @param _writer binary writer instance
+   */
+  static serializeBinaryToWriter(
+    _instance: LlmErrorStats,
+    _writer: BinaryWriter
+  ) {
+    if (_instance.totalErrorCount) {
+      _writer.writeInt64String(1, _instance.totalErrorCount);
+    }
+    if (_instance.overallErrorRate) {
+      _writer.writeDouble(2, _instance.overallErrorRate);
+    }
+    if (_instance.errorsByClass && _instance.errorsByClass.length) {
+      _writer.writeRepeatedMessage(
+        3,
+        _instance.errorsByClass as any,
+        LlmErrorStat.serializeBinaryToWriter
+      );
+    }
+    if (_instance.retryCountTotal) {
+      _writer.writeInt64String(4, _instance.retryCountTotal);
+    }
+    if (_instance.maxFallbackDepth) {
+      _writer.writeInt32(5, _instance.maxFallbackDepth);
+    }
+  }
+
+  private _totalErrorCount: string;
+  private _overallErrorRate: number;
+  private _errorsByClass?: LlmErrorStat[];
+  private _retryCountTotal: string;
+  private _maxFallbackDepth: number;
+
+  /**
+   * Message constructor. Initializes the properties and applies default Protobuf values if necessary
+   * @param _value initial values object or instance of LlmErrorStats to deeply clone from
+   */
+  constructor(_value?: RecursivePartial<LlmErrorStats.AsObject>) {
+    _value = _value || {};
+    this.totalErrorCount = _value.totalErrorCount;
+    this.overallErrorRate = _value.overallErrorRate;
+    this.errorsByClass = (_value.errorsByClass || []).map(
+      m => new LlmErrorStat(m)
+    );
+    this.retryCountTotal = _value.retryCountTotal;
+    this.maxFallbackDepth = _value.maxFallbackDepth;
+    LlmErrorStats.refineValues(this);
+  }
+  get totalErrorCount(): string {
+    return this._totalErrorCount;
+  }
+  set totalErrorCount(value: string) {
+    this._totalErrorCount = value;
+  }
+  get overallErrorRate(): number {
+    return this._overallErrorRate;
+  }
+  set overallErrorRate(value: number) {
+    this._overallErrorRate = value;
+  }
+  get errorsByClass(): LlmErrorStat[] | undefined {
+    return this._errorsByClass;
+  }
+  set errorsByClass(value: LlmErrorStat[] | undefined) {
+    this._errorsByClass = value;
+  }
+  get retryCountTotal(): string {
+    return this._retryCountTotal;
+  }
+  set retryCountTotal(value: string) {
+    this._retryCountTotal = value;
+  }
+  get maxFallbackDepth(): number {
+    return this._maxFallbackDepth;
+  }
+  set maxFallbackDepth(value: number) {
+    this._maxFallbackDepth = value;
+  }
+
+  /**
+   * Serialize message to binary data
+   * @param instance message instance
+   */
+  serializeBinary() {
+    const writer = new BinaryWriter();
+    LlmErrorStats.serializeBinaryToWriter(this, writer);
+    return writer.getResultBuffer();
+  }
+
+  /**
+   * Cast message to standard JavaScript object (all non-primitive values are deeply cloned)
+   */
+  toObject(): LlmErrorStats.AsObject {
+    return {
+      totalErrorCount: this.totalErrorCount,
+      overallErrorRate: this.overallErrorRate,
+      errorsByClass: (this.errorsByClass || []).map(m => m.toObject()),
+      retryCountTotal: this.retryCountTotal,
+      maxFallbackDepth: this.maxFallbackDepth
+    };
+  }
+
+  /**
+   * Convenience method to support JSON.stringify(message), replicates the structure of toObject()
+   */
+  toJSON() {
+    return this.toObject();
+  }
+
+  /**
+   * Cast message to JSON using protobuf JSON notation: https://developers.google.com/protocol-buffers/docs/proto3#json
+   * Attention: output differs from toObject() e.g. enums are represented as names and not as numbers, Timestamp is an ISO Date string format etc.
+   * If the message itself or some of descendant messages is google.protobuf.Any, you MUST provide a message pool as options. If not, the messagePool is not required
+   */
+  toProtobufJSON(
+    // @ts-ignore
+    options?: ToProtobufJSONOptions
+  ): LlmErrorStats.AsProtobufJSON {
+    return {
+      totalErrorCount: this.totalErrorCount,
+      overallErrorRate: this.overallErrorRate,
+      errorsByClass: (this.errorsByClass || []).map(m =>
+        m.toProtobufJSON(options)
+      ),
+      retryCountTotal: this.retryCountTotal,
+      maxFallbackDepth: this.maxFallbackDepth
+    };
+  }
+}
+export module LlmErrorStats {
+  /**
+   * Standard JavaScript object representation for LlmErrorStats
+   */
+  export interface AsObject {
+    totalErrorCount: string;
+    overallErrorRate: number;
+    errorsByClass?: LlmErrorStat.AsObject[];
+    retryCountTotal: string;
+    maxFallbackDepth: number;
+  }
+
+  /**
+   * Protobuf JSON representation for LlmErrorStats
+   */
+  export interface AsProtobufJSON {
+    totalErrorCount: string;
+    overallErrorRate: number;
+    errorsByClass: LlmErrorStat.AsProtobufJSON[] | null;
+    retryCountTotal: string;
+    maxFallbackDepth: number;
+  }
+}
+
+/**
+ * Message implementation for ondewo.nlu.LlmFinishReasonStat
+ */
+export class LlmFinishReasonStat implements GrpcMessage {
+  static id = 'ondewo.nlu.LlmFinishReasonStat';
+
+  /**
+   * Deserialize binary data to message
+   * @param instance message instance
+   */
+  static deserializeBinary(bytes: ByteSource) {
+    const instance = new LlmFinishReasonStat();
+    LlmFinishReasonStat.deserializeBinaryFromReader(
+      instance,
+      new BinaryReader(bytes)
+    );
+    return instance;
+  }
+
+  /**
+   * Check all the properties and set default protobuf values if necessary
+   * @param _instance message instance
+   */
+  static refineValues(_instance: LlmFinishReasonStat) {
+    _instance.finishReason = _instance.finishReason || '';
+    _instance.count = _instance.count || '0';
+    _instance.rate = _instance.rate || 0;
+  }
+
+  /**
+   * Deserializes / reads binary message into message instance using provided binary reader
+   * @param _instance message instance
+   * @param _reader binary reader instance
+   */
+  static deserializeBinaryFromReader(
+    _instance: LlmFinishReasonStat,
+    _reader: BinaryReader
+  ) {
+    while (_reader.nextField()) {
+      if (_reader.isEndGroup()) break;
+
+      switch (_reader.getFieldNumber()) {
+        case 1:
+          _instance.finishReason = _reader.readString();
+          break;
+        case 2:
+          _instance.count = _reader.readInt64String();
+          break;
+        case 3:
+          _instance.rate = _reader.readDouble();
+          break;
+        default:
+          _reader.skipField();
+      }
+    }
+
+    LlmFinishReasonStat.refineValues(_instance);
+  }
+
+  /**
+   * Serializes a message to binary format using provided binary reader
+   * @param _instance message instance
+   * @param _writer binary writer instance
+   */
+  static serializeBinaryToWriter(
+    _instance: LlmFinishReasonStat,
+    _writer: BinaryWriter
+  ) {
+    if (_instance.finishReason) {
+      _writer.writeString(1, _instance.finishReason);
+    }
+    if (_instance.count) {
+      _writer.writeInt64String(2, _instance.count);
+    }
+    if (_instance.rate) {
+      _writer.writeDouble(3, _instance.rate);
+    }
+  }
+
+  private _finishReason: string;
+  private _count: string;
+  private _rate: number;
+
+  /**
+   * Message constructor. Initializes the properties and applies default Protobuf values if necessary
+   * @param _value initial values object or instance of LlmFinishReasonStat to deeply clone from
+   */
+  constructor(_value?: RecursivePartial<LlmFinishReasonStat.AsObject>) {
+    _value = _value || {};
+    this.finishReason = _value.finishReason;
+    this.count = _value.count;
+    this.rate = _value.rate;
+    LlmFinishReasonStat.refineValues(this);
+  }
+  get finishReason(): string {
+    return this._finishReason;
+  }
+  set finishReason(value: string) {
+    this._finishReason = value;
+  }
+  get count(): string {
+    return this._count;
+  }
+  set count(value: string) {
+    this._count = value;
+  }
+  get rate(): number {
+    return this._rate;
+  }
+  set rate(value: number) {
+    this._rate = value;
+  }
+
+  /**
+   * Serialize message to binary data
+   * @param instance message instance
+   */
+  serializeBinary() {
+    const writer = new BinaryWriter();
+    LlmFinishReasonStat.serializeBinaryToWriter(this, writer);
+    return writer.getResultBuffer();
+  }
+
+  /**
+   * Cast message to standard JavaScript object (all non-primitive values are deeply cloned)
+   */
+  toObject(): LlmFinishReasonStat.AsObject {
+    return {
+      finishReason: this.finishReason,
+      count: this.count,
+      rate: this.rate
+    };
+  }
+
+  /**
+   * Convenience method to support JSON.stringify(message), replicates the structure of toObject()
+   */
+  toJSON() {
+    return this.toObject();
+  }
+
+  /**
+   * Cast message to JSON using protobuf JSON notation: https://developers.google.com/protocol-buffers/docs/proto3#json
+   * Attention: output differs from toObject() e.g. enums are represented as names and not as numbers, Timestamp is an ISO Date string format etc.
+   * If the message itself or some of descendant messages is google.protobuf.Any, you MUST provide a message pool as options. If not, the messagePool is not required
+   */
+  toProtobufJSON(
+    // @ts-ignore
+    options?: ToProtobufJSONOptions
+  ): LlmFinishReasonStat.AsProtobufJSON {
+    return {
+      finishReason: this.finishReason,
+      count: this.count,
+      rate: this.rate
+    };
+  }
+}
+export module LlmFinishReasonStat {
+  /**
+   * Standard JavaScript object representation for LlmFinishReasonStat
+   */
+  export interface AsObject {
+    finishReason: string;
+    count: string;
+    rate: number;
+  }
+
+  /**
+   * Protobuf JSON representation for LlmFinishReasonStat
+   */
+  export interface AsProtobufJSON {
+    finishReason: string;
+    count: string;
+    rate: number;
+  }
+}
+
+/**
+ * Message implementation for ondewo.nlu.LlmReasoningEffortStat
+ */
+export class LlmReasoningEffortStat implements GrpcMessage {
+  static id = 'ondewo.nlu.LlmReasoningEffortStat';
+
+  /**
+   * Deserialize binary data to message
+   * @param instance message instance
+   */
+  static deserializeBinary(bytes: ByteSource) {
+    const instance = new LlmReasoningEffortStat();
+    LlmReasoningEffortStat.deserializeBinaryFromReader(
+      instance,
+      new BinaryReader(bytes)
+    );
+    return instance;
+  }
+
+  /**
+   * Check all the properties and set default protobuf values if necessary
+   * @param _instance message instance
+   */
+  static refineValues(_instance: LlmReasoningEffortStat) {
+    _instance.reasoningEffort = _instance.reasoningEffort || 0;
+    _instance.count = _instance.count || '0';
+    _instance.rate = _instance.rate || 0;
+    _instance.llmTokenUsage = _instance.llmTokenUsage || undefined;
+  }
+
+  /**
+   * Deserializes / reads binary message into message instance using provided binary reader
+   * @param _instance message instance
+   * @param _reader binary reader instance
+   */
+  static deserializeBinaryFromReader(
+    _instance: LlmReasoningEffortStat,
+    _reader: BinaryReader
+  ) {
+    while (_reader.nextField()) {
+      if (_reader.isEndGroup()) break;
+
+      switch (_reader.getFieldNumber()) {
+        case 1:
+          _instance.reasoningEffort = _reader.readEnum();
+          break;
+        case 2:
+          _instance.count = _reader.readInt64String();
+          break;
+        case 3:
+          _instance.rate = _reader.readDouble();
+          break;
+        case 4:
+          _instance.llmTokenUsage = new LlmTokenUsage();
+          _reader.readMessage(
+            _instance.llmTokenUsage,
+            LlmTokenUsage.deserializeBinaryFromReader
+          );
+          break;
+        default:
+          _reader.skipField();
+      }
+    }
+
+    LlmReasoningEffortStat.refineValues(_instance);
+  }
+
+  /**
+   * Serializes a message to binary format using provided binary reader
+   * @param _instance message instance
+   * @param _writer binary writer instance
+   */
+  static serializeBinaryToWriter(
+    _instance: LlmReasoningEffortStat,
+    _writer: BinaryWriter
+  ) {
+    if (_instance.reasoningEffort) {
+      _writer.writeEnum(1, _instance.reasoningEffort);
+    }
+    if (_instance.count) {
+      _writer.writeInt64String(2, _instance.count);
+    }
+    if (_instance.rate) {
+      _writer.writeDouble(3, _instance.rate);
+    }
+    if (_instance.llmTokenUsage) {
+      _writer.writeMessage(
+        4,
+        _instance.llmTokenUsage as any,
+        LlmTokenUsage.serializeBinaryToWriter
+      );
+    }
+  }
+
+  private _reasoningEffort: ReasoningEffort;
+  private _count: string;
+  private _rate: number;
+  private _llmTokenUsage?: LlmTokenUsage;
+
+  /**
+   * Message constructor. Initializes the properties and applies default Protobuf values if necessary
+   * @param _value initial values object or instance of LlmReasoningEffortStat to deeply clone from
+   */
+  constructor(_value?: RecursivePartial<LlmReasoningEffortStat.AsObject>) {
+    _value = _value || {};
+    this.reasoningEffort = _value.reasoningEffort;
+    this.count = _value.count;
+    this.rate = _value.rate;
+    this.llmTokenUsage = _value.llmTokenUsage
+      ? new LlmTokenUsage(_value.llmTokenUsage)
+      : undefined;
+    LlmReasoningEffortStat.refineValues(this);
+  }
+  get reasoningEffort(): ReasoningEffort {
+    return this._reasoningEffort;
+  }
+  set reasoningEffort(value: ReasoningEffort) {
+    this._reasoningEffort = value;
+  }
+  get count(): string {
+    return this._count;
+  }
+  set count(value: string) {
+    this._count = value;
+  }
+  get rate(): number {
+    return this._rate;
+  }
+  set rate(value: number) {
+    this._rate = value;
+  }
+  get llmTokenUsage(): LlmTokenUsage | undefined {
+    return this._llmTokenUsage;
+  }
+  set llmTokenUsage(value: LlmTokenUsage | undefined) {
+    this._llmTokenUsage = value;
+  }
+
+  /**
+   * Serialize message to binary data
+   * @param instance message instance
+   */
+  serializeBinary() {
+    const writer = new BinaryWriter();
+    LlmReasoningEffortStat.serializeBinaryToWriter(this, writer);
+    return writer.getResultBuffer();
+  }
+
+  /**
+   * Cast message to standard JavaScript object (all non-primitive values are deeply cloned)
+   */
+  toObject(): LlmReasoningEffortStat.AsObject {
+    return {
+      reasoningEffort: this.reasoningEffort,
+      count: this.count,
+      rate: this.rate,
+      llmTokenUsage: this.llmTokenUsage
+        ? this.llmTokenUsage.toObject()
+        : undefined
+    };
+  }
+
+  /**
+   * Convenience method to support JSON.stringify(message), replicates the structure of toObject()
+   */
+  toJSON() {
+    return this.toObject();
+  }
+
+  /**
+   * Cast message to JSON using protobuf JSON notation: https://developers.google.com/protocol-buffers/docs/proto3#json
+   * Attention: output differs from toObject() e.g. enums are represented as names and not as numbers, Timestamp is an ISO Date string format etc.
+   * If the message itself or some of descendant messages is google.protobuf.Any, you MUST provide a message pool as options. If not, the messagePool is not required
+   */
+  toProtobufJSON(
+    // @ts-ignore
+    options?: ToProtobufJSONOptions
+  ): LlmReasoningEffortStat.AsProtobufJSON {
+    return {
+      reasoningEffort:
+        ReasoningEffort[
+          this.reasoningEffort === null || this.reasoningEffort === undefined
+            ? 0
+            : this.reasoningEffort
+        ],
+      count: this.count,
+      rate: this.rate,
+      llmTokenUsage: this.llmTokenUsage
+        ? this.llmTokenUsage.toProtobufJSON(options)
+        : null
+    };
+  }
+}
+export module LlmReasoningEffortStat {
+  /**
+   * Standard JavaScript object representation for LlmReasoningEffortStat
+   */
+  export interface AsObject {
+    reasoningEffort: ReasoningEffort;
+    count: string;
+    rate: number;
+    llmTokenUsage?: LlmTokenUsage.AsObject;
+  }
+
+  /**
+   * Protobuf JSON representation for LlmReasoningEffortStat
+   */
+  export interface AsProtobufJSON {
+    reasoningEffort: string;
+    count: string;
+    rate: number;
+    llmTokenUsage: LlmTokenUsage.AsProtobufJSON | null;
+  }
+}
+
+/**
+ * Message implementation for ondewo.nlu.LlmTelemetryReport
+ */
+export class LlmTelemetryReport implements GrpcMessage {
+  static id = 'ondewo.nlu.LlmTelemetryReport';
+
+  /**
+   * Deserialize binary data to message
+   * @param instance message instance
+   */
+  static deserializeBinary(bytes: ByteSource) {
+    const instance = new LlmTelemetryReport();
+    LlmTelemetryReport.deserializeBinaryFromReader(
+      instance,
+      new BinaryReader(bytes)
+    );
+    return instance;
+  }
+
+  /**
+   * Check all the properties and set default protobuf values if necessary
+   * @param _instance message instance
+   */
+  static refineValues(_instance: LlmTelemetryReport) {
+    _instance.llmTokenUsage = _instance.llmTokenUsage || undefined;
+    _instance.toolCallCountTotal = _instance.toolCallCountTotal || 0;
+    _instance.llmCallCount = _instance.llmCallCount || 0;
+    _instance.llmTelemetries = _instance.llmTelemetries || [];
+    _instance.durationSecondsTotal = _instance.durationSecondsTotal || 0;
+    _instance.modelsUsed = _instance.modelsUsed || [];
+    _instance.providersUsed = _instance.providersUsed || [];
+    _instance.ccaiServicesUsed = _instance.ccaiServicesUsed || [];
+    _instance.agentsUsed = _instance.agentsUsed || [];
+    _instance.toolsUsed = _instance.toolsUsed || [];
+    _instance.latencyStats = _instance.latencyStats || undefined;
+    _instance.cacheStats = _instance.cacheStats || undefined;
+    _instance.errorStats = _instance.errorStats || undefined;
+    _instance.finishReasonDistribution =
+      _instance.finishReasonDistribution || [];
+    _instance.reasoningEffortDistribution =
+      _instance.reasoningEffortDistribution || [];
+    _instance.thinkingTokensTotal = _instance.thinkingTokensTotal || '0';
+    _instance.thinkingDurationSecondsTotal =
+      _instance.thinkingDurationSecondsTotal || 0;
+    _instance.toolCallTokensTotal = _instance.toolCallTokensTotal || '0';
+    _instance.toolCallDurationSecondsTotal =
+      _instance.toolCallDurationSecondsTotal || 0;
+    _instance.safetyStats = _instance.safetyStats || undefined;
+  }
+
+  /**
+   * Deserializes / reads binary message into message instance using provided binary reader
+   * @param _instance message instance
+   * @param _reader binary reader instance
+   */
+  static deserializeBinaryFromReader(
+    _instance: LlmTelemetryReport,
+    _reader: BinaryReader
+  ) {
+    while (_reader.nextField()) {
+      if (_reader.isEndGroup()) break;
+
+      switch (_reader.getFieldNumber()) {
+        case 1:
+          _instance.llmTokenUsage = new LlmTokenUsage();
+          _reader.readMessage(
+            _instance.llmTokenUsage,
+            LlmTokenUsage.deserializeBinaryFromReader
+          );
+          break;
+        case 2:
+          _instance.toolCallCountTotal = _reader.readInt32();
+          break;
+        case 3:
+          _instance.llmCallCount = _reader.readInt32();
+          break;
+        case 4:
+          const messageInitializer4 = new LlmTelemetry();
+          _reader.readMessage(
+            messageInitializer4,
+            LlmTelemetry.deserializeBinaryFromReader
+          );
+          (_instance.llmTelemetries = _instance.llmTelemetries || []).push(
+            messageInitializer4
+          );
+          break;
+        case 5:
+          _instance.durationSecondsTotal = _reader.readDouble();
+          break;
+        case 6:
+          const messageInitializer6 = new LlmModelUsage();
+          _reader.readMessage(
+            messageInitializer6,
+            LlmModelUsage.deserializeBinaryFromReader
+          );
+          (_instance.modelsUsed = _instance.modelsUsed || []).push(
+            messageInitializer6
+          );
+          break;
+        case 7:
+          const messageInitializer7 = new LlmProviderUsage();
+          _reader.readMessage(
+            messageInitializer7,
+            LlmProviderUsage.deserializeBinaryFromReader
+          );
+          (_instance.providersUsed = _instance.providersUsed || []).push(
+            messageInitializer7
+          );
+          break;
+        case 8:
+          const messageInitializer8 = new LlmCcaiServiceUsage();
+          _reader.readMessage(
+            messageInitializer8,
+            LlmCcaiServiceUsage.deserializeBinaryFromReader
+          );
+          (_instance.ccaiServicesUsed = _instance.ccaiServicesUsed || []).push(
+            messageInitializer8
+          );
+          break;
+        case 9:
+          const messageInitializer9 = new LlmAgentUsage();
+          _reader.readMessage(
+            messageInitializer9,
+            LlmAgentUsage.deserializeBinaryFromReader
+          );
+          (_instance.agentsUsed = _instance.agentsUsed || []).push(
+            messageInitializer9
+          );
+          break;
+        case 10:
+          const messageInitializer10 = new LlmToolUsage();
+          _reader.readMessage(
+            messageInitializer10,
+            LlmToolUsage.deserializeBinaryFromReader
+          );
+          (_instance.toolsUsed = _instance.toolsUsed || []).push(
+            messageInitializer10
+          );
+          break;
+        case 11:
+          _instance.latencyStats = new LlmLatencyStats();
+          _reader.readMessage(
+            _instance.latencyStats,
+            LlmLatencyStats.deserializeBinaryFromReader
+          );
+          break;
+        case 12:
+          _instance.cacheStats = new LlmCacheStats();
+          _reader.readMessage(
+            _instance.cacheStats,
+            LlmCacheStats.deserializeBinaryFromReader
+          );
+          break;
+        case 13:
+          _instance.errorStats = new LlmErrorStats();
+          _reader.readMessage(
+            _instance.errorStats,
+            LlmErrorStats.deserializeBinaryFromReader
+          );
+          break;
+        case 14:
+          const messageInitializer14 = new LlmFinishReasonStat();
+          _reader.readMessage(
+            messageInitializer14,
+            LlmFinishReasonStat.deserializeBinaryFromReader
+          );
+          (_instance.finishReasonDistribution =
+            _instance.finishReasonDistribution || []).push(
+            messageInitializer14
+          );
+          break;
+        case 15:
+          const messageInitializer15 = new LlmReasoningEffortStat();
+          _reader.readMessage(
+            messageInitializer15,
+            LlmReasoningEffortStat.deserializeBinaryFromReader
+          );
+          (_instance.reasoningEffortDistribution =
+            _instance.reasoningEffortDistribution || []).push(
+            messageInitializer15
+          );
+          break;
+        case 16:
+          _instance.thinkingTokensTotal = _reader.readInt64String();
+          break;
+        case 17:
+          _instance.thinkingDurationSecondsTotal = _reader.readDouble();
+          break;
+        case 18:
+          _instance.toolCallTokensTotal = _reader.readInt64String();
+          break;
+        case 19:
+          _instance.toolCallDurationSecondsTotal = _reader.readDouble();
+          break;
+        case 20:
+          _instance.safetyStats = new LlmSafetyStats();
+          _reader.readMessage(
+            _instance.safetyStats,
+            LlmSafetyStats.deserializeBinaryFromReader
+          );
+          break;
+        default:
+          _reader.skipField();
+      }
+    }
+
+    LlmTelemetryReport.refineValues(_instance);
+  }
+
+  /**
+   * Serializes a message to binary format using provided binary reader
+   * @param _instance message instance
+   * @param _writer binary writer instance
+   */
+  static serializeBinaryToWriter(
+    _instance: LlmTelemetryReport,
+    _writer: BinaryWriter
+  ) {
+    if (_instance.llmTokenUsage) {
+      _writer.writeMessage(
+        1,
+        _instance.llmTokenUsage as any,
+        LlmTokenUsage.serializeBinaryToWriter
+      );
+    }
+    if (_instance.toolCallCountTotal) {
+      _writer.writeInt32(2, _instance.toolCallCountTotal);
+    }
+    if (_instance.llmCallCount) {
+      _writer.writeInt32(3, _instance.llmCallCount);
+    }
+    if (_instance.llmTelemetries && _instance.llmTelemetries.length) {
+      _writer.writeRepeatedMessage(
+        4,
+        _instance.llmTelemetries as any,
+        LlmTelemetry.serializeBinaryToWriter
+      );
+    }
+    if (_instance.durationSecondsTotal) {
+      _writer.writeDouble(5, _instance.durationSecondsTotal);
+    }
+    if (_instance.modelsUsed && _instance.modelsUsed.length) {
+      _writer.writeRepeatedMessage(
+        6,
+        _instance.modelsUsed as any,
+        LlmModelUsage.serializeBinaryToWriter
+      );
+    }
+    if (_instance.providersUsed && _instance.providersUsed.length) {
+      _writer.writeRepeatedMessage(
+        7,
+        _instance.providersUsed as any,
+        LlmProviderUsage.serializeBinaryToWriter
+      );
+    }
+    if (_instance.ccaiServicesUsed && _instance.ccaiServicesUsed.length) {
+      _writer.writeRepeatedMessage(
+        8,
+        _instance.ccaiServicesUsed as any,
+        LlmCcaiServiceUsage.serializeBinaryToWriter
+      );
+    }
+    if (_instance.agentsUsed && _instance.agentsUsed.length) {
+      _writer.writeRepeatedMessage(
+        9,
+        _instance.agentsUsed as any,
+        LlmAgentUsage.serializeBinaryToWriter
+      );
+    }
+    if (_instance.toolsUsed && _instance.toolsUsed.length) {
+      _writer.writeRepeatedMessage(
+        10,
+        _instance.toolsUsed as any,
+        LlmToolUsage.serializeBinaryToWriter
+      );
+    }
+    if (_instance.latencyStats) {
+      _writer.writeMessage(
+        11,
+        _instance.latencyStats as any,
+        LlmLatencyStats.serializeBinaryToWriter
+      );
+    }
+    if (_instance.cacheStats) {
+      _writer.writeMessage(
+        12,
+        _instance.cacheStats as any,
+        LlmCacheStats.serializeBinaryToWriter
+      );
+    }
+    if (_instance.errorStats) {
+      _writer.writeMessage(
+        13,
+        _instance.errorStats as any,
+        LlmErrorStats.serializeBinaryToWriter
+      );
+    }
+    if (
+      _instance.finishReasonDistribution &&
+      _instance.finishReasonDistribution.length
+    ) {
+      _writer.writeRepeatedMessage(
+        14,
+        _instance.finishReasonDistribution as any,
+        LlmFinishReasonStat.serializeBinaryToWriter
+      );
+    }
+    if (
+      _instance.reasoningEffortDistribution &&
+      _instance.reasoningEffortDistribution.length
+    ) {
+      _writer.writeRepeatedMessage(
+        15,
+        _instance.reasoningEffortDistribution as any,
+        LlmReasoningEffortStat.serializeBinaryToWriter
+      );
+    }
+    if (_instance.thinkingTokensTotal) {
+      _writer.writeInt64String(16, _instance.thinkingTokensTotal);
+    }
+    if (_instance.thinkingDurationSecondsTotal) {
+      _writer.writeDouble(17, _instance.thinkingDurationSecondsTotal);
+    }
+    if (_instance.toolCallTokensTotal) {
+      _writer.writeInt64String(18, _instance.toolCallTokensTotal);
+    }
+    if (_instance.toolCallDurationSecondsTotal) {
+      _writer.writeDouble(19, _instance.toolCallDurationSecondsTotal);
+    }
+    if (_instance.safetyStats) {
+      _writer.writeMessage(
+        20,
+        _instance.safetyStats as any,
+        LlmSafetyStats.serializeBinaryToWriter
+      );
+    }
+  }
+
+  private _llmTokenUsage?: LlmTokenUsage;
+  private _toolCallCountTotal: number;
+  private _llmCallCount: number;
+  private _llmTelemetries?: LlmTelemetry[];
+  private _durationSecondsTotal: number;
+  private _modelsUsed?: LlmModelUsage[];
+  private _providersUsed?: LlmProviderUsage[];
+  private _ccaiServicesUsed?: LlmCcaiServiceUsage[];
+  private _agentsUsed?: LlmAgentUsage[];
+  private _toolsUsed?: LlmToolUsage[];
+  private _latencyStats?: LlmLatencyStats;
+  private _cacheStats?: LlmCacheStats;
+  private _errorStats?: LlmErrorStats;
+  private _finishReasonDistribution?: LlmFinishReasonStat[];
+  private _reasoningEffortDistribution?: LlmReasoningEffortStat[];
+  private _thinkingTokensTotal: string;
+  private _thinkingDurationSecondsTotal: number;
+  private _toolCallTokensTotal: string;
+  private _toolCallDurationSecondsTotal: number;
+  private _safetyStats?: LlmSafetyStats;
+
+  /**
+   * Message constructor. Initializes the properties and applies default Protobuf values if necessary
+   * @param _value initial values object or instance of LlmTelemetryReport to deeply clone from
+   */
+  constructor(_value?: RecursivePartial<LlmTelemetryReport.AsObject>) {
+    _value = _value || {};
+    this.llmTokenUsage = _value.llmTokenUsage
+      ? new LlmTokenUsage(_value.llmTokenUsage)
+      : undefined;
+    this.toolCallCountTotal = _value.toolCallCountTotal;
+    this.llmCallCount = _value.llmCallCount;
+    this.llmTelemetries = (_value.llmTelemetries || []).map(
+      m => new LlmTelemetry(m)
+    );
+    this.durationSecondsTotal = _value.durationSecondsTotal;
+    this.modelsUsed = (_value.modelsUsed || []).map(m => new LlmModelUsage(m));
+    this.providersUsed = (_value.providersUsed || []).map(
+      m => new LlmProviderUsage(m)
+    );
+    this.ccaiServicesUsed = (_value.ccaiServicesUsed || []).map(
+      m => new LlmCcaiServiceUsage(m)
+    );
+    this.agentsUsed = (_value.agentsUsed || []).map(m => new LlmAgentUsage(m));
+    this.toolsUsed = (_value.toolsUsed || []).map(m => new LlmToolUsage(m));
+    this.latencyStats = _value.latencyStats
+      ? new LlmLatencyStats(_value.latencyStats)
+      : undefined;
+    this.cacheStats = _value.cacheStats
+      ? new LlmCacheStats(_value.cacheStats)
+      : undefined;
+    this.errorStats = _value.errorStats
+      ? new LlmErrorStats(_value.errorStats)
+      : undefined;
+    this.finishReasonDistribution = (_value.finishReasonDistribution || []).map(
+      m => new LlmFinishReasonStat(m)
+    );
+    this.reasoningEffortDistribution = (
+      _value.reasoningEffortDistribution || []
+    ).map(m => new LlmReasoningEffortStat(m));
+    this.thinkingTokensTotal = _value.thinkingTokensTotal;
+    this.thinkingDurationSecondsTotal = _value.thinkingDurationSecondsTotal;
+    this.toolCallTokensTotal = _value.toolCallTokensTotal;
+    this.toolCallDurationSecondsTotal = _value.toolCallDurationSecondsTotal;
+    this.safetyStats = _value.safetyStats
+      ? new LlmSafetyStats(_value.safetyStats)
+      : undefined;
+    LlmTelemetryReport.refineValues(this);
+  }
+  get llmTokenUsage(): LlmTokenUsage | undefined {
+    return this._llmTokenUsage;
+  }
+  set llmTokenUsage(value: LlmTokenUsage | undefined) {
+    this._llmTokenUsage = value;
+  }
+  get toolCallCountTotal(): number {
+    return this._toolCallCountTotal;
+  }
+  set toolCallCountTotal(value: number) {
+    this._toolCallCountTotal = value;
+  }
+  get llmCallCount(): number {
+    return this._llmCallCount;
+  }
+  set llmCallCount(value: number) {
+    this._llmCallCount = value;
+  }
+  get llmTelemetries(): LlmTelemetry[] | undefined {
+    return this._llmTelemetries;
+  }
+  set llmTelemetries(value: LlmTelemetry[] | undefined) {
+    this._llmTelemetries = value;
+  }
+  get durationSecondsTotal(): number {
+    return this._durationSecondsTotal;
+  }
+  set durationSecondsTotal(value: number) {
+    this._durationSecondsTotal = value;
+  }
+  get modelsUsed(): LlmModelUsage[] | undefined {
+    return this._modelsUsed;
+  }
+  set modelsUsed(value: LlmModelUsage[] | undefined) {
+    this._modelsUsed = value;
+  }
+  get providersUsed(): LlmProviderUsage[] | undefined {
+    return this._providersUsed;
+  }
+  set providersUsed(value: LlmProviderUsage[] | undefined) {
+    this._providersUsed = value;
+  }
+  get ccaiServicesUsed(): LlmCcaiServiceUsage[] | undefined {
+    return this._ccaiServicesUsed;
+  }
+  set ccaiServicesUsed(value: LlmCcaiServiceUsage[] | undefined) {
+    this._ccaiServicesUsed = value;
+  }
+  get agentsUsed(): LlmAgentUsage[] | undefined {
+    return this._agentsUsed;
+  }
+  set agentsUsed(value: LlmAgentUsage[] | undefined) {
+    this._agentsUsed = value;
+  }
+  get toolsUsed(): LlmToolUsage[] | undefined {
+    return this._toolsUsed;
+  }
+  set toolsUsed(value: LlmToolUsage[] | undefined) {
+    this._toolsUsed = value;
+  }
+  get latencyStats(): LlmLatencyStats | undefined {
+    return this._latencyStats;
+  }
+  set latencyStats(value: LlmLatencyStats | undefined) {
+    this._latencyStats = value;
+  }
+  get cacheStats(): LlmCacheStats | undefined {
+    return this._cacheStats;
+  }
+  set cacheStats(value: LlmCacheStats | undefined) {
+    this._cacheStats = value;
+  }
+  get errorStats(): LlmErrorStats | undefined {
+    return this._errorStats;
+  }
+  set errorStats(value: LlmErrorStats | undefined) {
+    this._errorStats = value;
+  }
+  get finishReasonDistribution(): LlmFinishReasonStat[] | undefined {
+    return this._finishReasonDistribution;
+  }
+  set finishReasonDistribution(value: LlmFinishReasonStat[] | undefined) {
+    this._finishReasonDistribution = value;
+  }
+  get reasoningEffortDistribution(): LlmReasoningEffortStat[] | undefined {
+    return this._reasoningEffortDistribution;
+  }
+  set reasoningEffortDistribution(value: LlmReasoningEffortStat[] | undefined) {
+    this._reasoningEffortDistribution = value;
+  }
+  get thinkingTokensTotal(): string {
+    return this._thinkingTokensTotal;
+  }
+  set thinkingTokensTotal(value: string) {
+    this._thinkingTokensTotal = value;
+  }
+  get thinkingDurationSecondsTotal(): number {
+    return this._thinkingDurationSecondsTotal;
+  }
+  set thinkingDurationSecondsTotal(value: number) {
+    this._thinkingDurationSecondsTotal = value;
+  }
+  get toolCallTokensTotal(): string {
+    return this._toolCallTokensTotal;
+  }
+  set toolCallTokensTotal(value: string) {
+    this._toolCallTokensTotal = value;
+  }
+  get toolCallDurationSecondsTotal(): number {
+    return this._toolCallDurationSecondsTotal;
+  }
+  set toolCallDurationSecondsTotal(value: number) {
+    this._toolCallDurationSecondsTotal = value;
+  }
+  get safetyStats(): LlmSafetyStats | undefined {
+    return this._safetyStats;
+  }
+  set safetyStats(value: LlmSafetyStats | undefined) {
+    this._safetyStats = value;
+  }
+
+  /**
+   * Serialize message to binary data
+   * @param instance message instance
+   */
+  serializeBinary() {
+    const writer = new BinaryWriter();
+    LlmTelemetryReport.serializeBinaryToWriter(this, writer);
+    return writer.getResultBuffer();
+  }
+
+  /**
+   * Cast message to standard JavaScript object (all non-primitive values are deeply cloned)
+   */
+  toObject(): LlmTelemetryReport.AsObject {
+    return {
+      llmTokenUsage: this.llmTokenUsage
+        ? this.llmTokenUsage.toObject()
+        : undefined,
+      toolCallCountTotal: this.toolCallCountTotal,
+      llmCallCount: this.llmCallCount,
+      llmTelemetries: (this.llmTelemetries || []).map(m => m.toObject()),
+      durationSecondsTotal: this.durationSecondsTotal,
+      modelsUsed: (this.modelsUsed || []).map(m => m.toObject()),
+      providersUsed: (this.providersUsed || []).map(m => m.toObject()),
+      ccaiServicesUsed: (this.ccaiServicesUsed || []).map(m => m.toObject()),
+      agentsUsed: (this.agentsUsed || []).map(m => m.toObject()),
+      toolsUsed: (this.toolsUsed || []).map(m => m.toObject()),
+      latencyStats: this.latencyStats
+        ? this.latencyStats.toObject()
+        : undefined,
+      cacheStats: this.cacheStats ? this.cacheStats.toObject() : undefined,
+      errorStats: this.errorStats ? this.errorStats.toObject() : undefined,
+      finishReasonDistribution: (this.finishReasonDistribution || []).map(m =>
+        m.toObject()
+      ),
+      reasoningEffortDistribution: (
+        this.reasoningEffortDistribution || []
+      ).map(m => m.toObject()),
+      thinkingTokensTotal: this.thinkingTokensTotal,
+      thinkingDurationSecondsTotal: this.thinkingDurationSecondsTotal,
+      toolCallTokensTotal: this.toolCallTokensTotal,
+      toolCallDurationSecondsTotal: this.toolCallDurationSecondsTotal,
+      safetyStats: this.safetyStats ? this.safetyStats.toObject() : undefined
+    };
+  }
+
+  /**
+   * Convenience method to support JSON.stringify(message), replicates the structure of toObject()
+   */
+  toJSON() {
+    return this.toObject();
+  }
+
+  /**
+   * Cast message to JSON using protobuf JSON notation: https://developers.google.com/protocol-buffers/docs/proto3#json
+   * Attention: output differs from toObject() e.g. enums are represented as names and not as numbers, Timestamp is an ISO Date string format etc.
+   * If the message itself or some of descendant messages is google.protobuf.Any, you MUST provide a message pool as options. If not, the messagePool is not required
+   */
+  toProtobufJSON(
+    // @ts-ignore
+    options?: ToProtobufJSONOptions
+  ): LlmTelemetryReport.AsProtobufJSON {
+    return {
+      llmTokenUsage: this.llmTokenUsage
+        ? this.llmTokenUsage.toProtobufJSON(options)
+        : null,
+      toolCallCountTotal: this.toolCallCountTotal,
+      llmCallCount: this.llmCallCount,
+      llmTelemetries: (this.llmTelemetries || []).map(m =>
+        m.toProtobufJSON(options)
+      ),
+      durationSecondsTotal: this.durationSecondsTotal,
+      modelsUsed: (this.modelsUsed || []).map(m => m.toProtobufJSON(options)),
+      providersUsed: (this.providersUsed || []).map(m =>
+        m.toProtobufJSON(options)
+      ),
+      ccaiServicesUsed: (this.ccaiServicesUsed || []).map(m =>
+        m.toProtobufJSON(options)
+      ),
+      agentsUsed: (this.agentsUsed || []).map(m => m.toProtobufJSON(options)),
+      toolsUsed: (this.toolsUsed || []).map(m => m.toProtobufJSON(options)),
+      latencyStats: this.latencyStats
+        ? this.latencyStats.toProtobufJSON(options)
+        : null,
+      cacheStats: this.cacheStats
+        ? this.cacheStats.toProtobufJSON(options)
+        : null,
+      errorStats: this.errorStats
+        ? this.errorStats.toProtobufJSON(options)
+        : null,
+      finishReasonDistribution: (this.finishReasonDistribution || []).map(m =>
+        m.toProtobufJSON(options)
+      ),
+      reasoningEffortDistribution: (
+        this.reasoningEffortDistribution || []
+      ).map(m => m.toProtobufJSON(options)),
+      thinkingTokensTotal: this.thinkingTokensTotal,
+      thinkingDurationSecondsTotal: this.thinkingDurationSecondsTotal,
+      toolCallTokensTotal: this.toolCallTokensTotal,
+      toolCallDurationSecondsTotal: this.toolCallDurationSecondsTotal,
+      safetyStats: this.safetyStats
+        ? this.safetyStats.toProtobufJSON(options)
+        : null
+    };
+  }
+}
+export module LlmTelemetryReport {
+  /**
+   * Standard JavaScript object representation for LlmTelemetryReport
+   */
+  export interface AsObject {
+    llmTokenUsage?: LlmTokenUsage.AsObject;
+    toolCallCountTotal: number;
+    llmCallCount: number;
+    llmTelemetries?: LlmTelemetry.AsObject[];
+    durationSecondsTotal: number;
+    modelsUsed?: LlmModelUsage.AsObject[];
+    providersUsed?: LlmProviderUsage.AsObject[];
+    ccaiServicesUsed?: LlmCcaiServiceUsage.AsObject[];
+    agentsUsed?: LlmAgentUsage.AsObject[];
+    toolsUsed?: LlmToolUsage.AsObject[];
+    latencyStats?: LlmLatencyStats.AsObject;
+    cacheStats?: LlmCacheStats.AsObject;
+    errorStats?: LlmErrorStats.AsObject;
+    finishReasonDistribution?: LlmFinishReasonStat.AsObject[];
+    reasoningEffortDistribution?: LlmReasoningEffortStat.AsObject[];
+    thinkingTokensTotal: string;
+    thinkingDurationSecondsTotal: number;
+    toolCallTokensTotal: string;
+    toolCallDurationSecondsTotal: number;
+    safetyStats?: LlmSafetyStats.AsObject;
+  }
+
+  /**
+   * Protobuf JSON representation for LlmTelemetryReport
+   */
+  export interface AsProtobufJSON {
+    llmTokenUsage: LlmTokenUsage.AsProtobufJSON | null;
+    toolCallCountTotal: number;
+    llmCallCount: number;
+    llmTelemetries: LlmTelemetry.AsProtobufJSON[] | null;
+    durationSecondsTotal: number;
+    modelsUsed: LlmModelUsage.AsProtobufJSON[] | null;
+    providersUsed: LlmProviderUsage.AsProtobufJSON[] | null;
+    ccaiServicesUsed: LlmCcaiServiceUsage.AsProtobufJSON[] | null;
+    agentsUsed: LlmAgentUsage.AsProtobufJSON[] | null;
+    toolsUsed: LlmToolUsage.AsProtobufJSON[] | null;
+    latencyStats: LlmLatencyStats.AsProtobufJSON | null;
+    cacheStats: LlmCacheStats.AsProtobufJSON | null;
+    errorStats: LlmErrorStats.AsProtobufJSON | null;
+    finishReasonDistribution: LlmFinishReasonStat.AsProtobufJSON[] | null;
+    reasoningEffortDistribution: LlmReasoningEffortStat.AsProtobufJSON[] | null;
+    thinkingTokensTotal: string;
+    thinkingDurationSecondsTotal: number;
+    toolCallTokensTotal: string;
+    toolCallDurationSecondsTotal: number;
+    safetyStats: LlmSafetyStats.AsProtobufJSON | null;
+  }
+}
+
+/**
+ * Message implementation for ondewo.nlu.LlmSafetyCategoryStat
+ */
+export class LlmSafetyCategoryStat implements GrpcMessage {
+  static id = 'ondewo.nlu.LlmSafetyCategoryStat';
+
+  /**
+   * Deserialize binary data to message
+   * @param instance message instance
+   */
+  static deserializeBinary(bytes: ByteSource) {
+    const instance = new LlmSafetyCategoryStat();
+    LlmSafetyCategoryStat.deserializeBinaryFromReader(
+      instance,
+      new BinaryReader(bytes)
+    );
+    return instance;
+  }
+
+  /**
+   * Check all the properties and set default protobuf values if necessary
+   * @param _instance message instance
+   */
+  static refineValues(_instance: LlmSafetyCategoryStat) {
+    _instance.category = _instance.category || '';
+    _instance.count = _instance.count || '0';
+    _instance.rate = _instance.rate || 0;
+  }
+
+  /**
+   * Deserializes / reads binary message into message instance using provided binary reader
+   * @param _instance message instance
+   * @param _reader binary reader instance
+   */
+  static deserializeBinaryFromReader(
+    _instance: LlmSafetyCategoryStat,
+    _reader: BinaryReader
+  ) {
+    while (_reader.nextField()) {
+      if (_reader.isEndGroup()) break;
+
+      switch (_reader.getFieldNumber()) {
+        case 1:
+          _instance.category = _reader.readString();
+          break;
+        case 2:
+          _instance.count = _reader.readInt64String();
+          break;
+        case 3:
+          _instance.rate = _reader.readDouble();
+          break;
+        default:
+          _reader.skipField();
+      }
+    }
+
+    LlmSafetyCategoryStat.refineValues(_instance);
+  }
+
+  /**
+   * Serializes a message to binary format using provided binary reader
+   * @param _instance message instance
+   * @param _writer binary writer instance
+   */
+  static serializeBinaryToWriter(
+    _instance: LlmSafetyCategoryStat,
+    _writer: BinaryWriter
+  ) {
+    if (_instance.category) {
+      _writer.writeString(1, _instance.category);
+    }
+    if (_instance.count) {
+      _writer.writeInt64String(2, _instance.count);
+    }
+    if (_instance.rate) {
+      _writer.writeDouble(3, _instance.rate);
+    }
+  }
+
+  private _category: string;
+  private _count: string;
+  private _rate: number;
+
+  /**
+   * Message constructor. Initializes the properties and applies default Protobuf values if necessary
+   * @param _value initial values object or instance of LlmSafetyCategoryStat to deeply clone from
+   */
+  constructor(_value?: RecursivePartial<LlmSafetyCategoryStat.AsObject>) {
+    _value = _value || {};
+    this.category = _value.category;
+    this.count = _value.count;
+    this.rate = _value.rate;
+    LlmSafetyCategoryStat.refineValues(this);
+  }
+  get category(): string {
+    return this._category;
+  }
+  set category(value: string) {
+    this._category = value;
+  }
+  get count(): string {
+    return this._count;
+  }
+  set count(value: string) {
+    this._count = value;
+  }
+  get rate(): number {
+    return this._rate;
+  }
+  set rate(value: number) {
+    this._rate = value;
+  }
+
+  /**
+   * Serialize message to binary data
+   * @param instance message instance
+   */
+  serializeBinary() {
+    const writer = new BinaryWriter();
+    LlmSafetyCategoryStat.serializeBinaryToWriter(this, writer);
+    return writer.getResultBuffer();
+  }
+
+  /**
+   * Cast message to standard JavaScript object (all non-primitive values are deeply cloned)
+   */
+  toObject(): LlmSafetyCategoryStat.AsObject {
+    return {
+      category: this.category,
+      count: this.count,
+      rate: this.rate
+    };
+  }
+
+  /**
+   * Convenience method to support JSON.stringify(message), replicates the structure of toObject()
+   */
+  toJSON() {
+    return this.toObject();
+  }
+
+  /**
+   * Cast message to JSON using protobuf JSON notation: https://developers.google.com/protocol-buffers/docs/proto3#json
+   * Attention: output differs from toObject() e.g. enums are represented as names and not as numbers, Timestamp is an ISO Date string format etc.
+   * If the message itself or some of descendant messages is google.protobuf.Any, you MUST provide a message pool as options. If not, the messagePool is not required
+   */
+  toProtobufJSON(
+    // @ts-ignore
+    options?: ToProtobufJSONOptions
+  ): LlmSafetyCategoryStat.AsProtobufJSON {
+    return {
+      category: this.category,
+      count: this.count,
+      rate: this.rate
+    };
+  }
+}
+export module LlmSafetyCategoryStat {
+  /**
+   * Standard JavaScript object representation for LlmSafetyCategoryStat
+   */
+  export interface AsObject {
+    category: string;
+    count: string;
+    rate: number;
+  }
+
+  /**
+   * Protobuf JSON representation for LlmSafetyCategoryStat
+   */
+  export interface AsProtobufJSON {
+    category: string;
+    count: string;
+    rate: number;
+  }
+}
+
+/**
+ * Message implementation for ondewo.nlu.LlmSafetyStats
+ */
+export class LlmSafetyStats implements GrpcMessage {
+  static id = 'ondewo.nlu.LlmSafetyStats';
+
+  /**
+   * Deserialize binary data to message
+   * @param instance message instance
+   */
+  static deserializeBinary(bytes: ByteSource) {
+    const instance = new LlmSafetyStats();
+    LlmSafetyStats.deserializeBinaryFromReader(
+      instance,
+      new BinaryReader(bytes)
+    );
+    return instance;
+  }
+
+  /**
+   * Check all the properties and set default protobuf values if necessary
+   * @param _instance message instance
+   */
+  static refineValues(_instance: LlmSafetyStats) {
+    _instance.totalAssessed = _instance.totalAssessed || '0';
+    _instance.flaggedCount = _instance.flaggedCount || '0';
+    _instance.overallSafetyScore = _instance.overallSafetyScore || 0;
+    _instance.categoryStats = _instance.categoryStats || [];
+  }
+
+  /**
+   * Deserializes / reads binary message into message instance using provided binary reader
+   * @param _instance message instance
+   * @param _reader binary reader instance
+   */
+  static deserializeBinaryFromReader(
+    _instance: LlmSafetyStats,
+    _reader: BinaryReader
+  ) {
+    while (_reader.nextField()) {
+      if (_reader.isEndGroup()) break;
+
+      switch (_reader.getFieldNumber()) {
+        case 1:
+          _instance.totalAssessed = _reader.readInt64String();
+          break;
+        case 2:
+          _instance.flaggedCount = _reader.readInt64String();
+          break;
+        case 3:
+          _instance.overallSafetyScore = _reader.readDouble();
+          break;
+        case 4:
+          const messageInitializer4 = new LlmSafetyCategoryStat();
+          _reader.readMessage(
+            messageInitializer4,
+            LlmSafetyCategoryStat.deserializeBinaryFromReader
+          );
+          (_instance.categoryStats = _instance.categoryStats || []).push(
+            messageInitializer4
+          );
+          break;
+        default:
+          _reader.skipField();
+      }
+    }
+
+    LlmSafetyStats.refineValues(_instance);
+  }
+
+  /**
+   * Serializes a message to binary format using provided binary reader
+   * @param _instance message instance
+   * @param _writer binary writer instance
+   */
+  static serializeBinaryToWriter(
+    _instance: LlmSafetyStats,
+    _writer: BinaryWriter
+  ) {
+    if (_instance.totalAssessed) {
+      _writer.writeInt64String(1, _instance.totalAssessed);
+    }
+    if (_instance.flaggedCount) {
+      _writer.writeInt64String(2, _instance.flaggedCount);
+    }
+    if (_instance.overallSafetyScore) {
+      _writer.writeDouble(3, _instance.overallSafetyScore);
+    }
+    if (_instance.categoryStats && _instance.categoryStats.length) {
+      _writer.writeRepeatedMessage(
+        4,
+        _instance.categoryStats as any,
+        LlmSafetyCategoryStat.serializeBinaryToWriter
+      );
+    }
+  }
+
+  private _totalAssessed: string;
+  private _flaggedCount: string;
+  private _overallSafetyScore: number;
+  private _categoryStats?: LlmSafetyCategoryStat[];
+
+  /**
+   * Message constructor. Initializes the properties and applies default Protobuf values if necessary
+   * @param _value initial values object or instance of LlmSafetyStats to deeply clone from
+   */
+  constructor(_value?: RecursivePartial<LlmSafetyStats.AsObject>) {
+    _value = _value || {};
+    this.totalAssessed = _value.totalAssessed;
+    this.flaggedCount = _value.flaggedCount;
+    this.overallSafetyScore = _value.overallSafetyScore;
+    this.categoryStats = (_value.categoryStats || []).map(
+      m => new LlmSafetyCategoryStat(m)
+    );
+    LlmSafetyStats.refineValues(this);
+  }
+  get totalAssessed(): string {
+    return this._totalAssessed;
+  }
+  set totalAssessed(value: string) {
+    this._totalAssessed = value;
+  }
+  get flaggedCount(): string {
+    return this._flaggedCount;
+  }
+  set flaggedCount(value: string) {
+    this._flaggedCount = value;
+  }
+  get overallSafetyScore(): number {
+    return this._overallSafetyScore;
+  }
+  set overallSafetyScore(value: number) {
+    this._overallSafetyScore = value;
+  }
+  get categoryStats(): LlmSafetyCategoryStat[] | undefined {
+    return this._categoryStats;
+  }
+  set categoryStats(value: LlmSafetyCategoryStat[] | undefined) {
+    this._categoryStats = value;
+  }
+
+  /**
+   * Serialize message to binary data
+   * @param instance message instance
+   */
+  serializeBinary() {
+    const writer = new BinaryWriter();
+    LlmSafetyStats.serializeBinaryToWriter(this, writer);
+    return writer.getResultBuffer();
+  }
+
+  /**
+   * Cast message to standard JavaScript object (all non-primitive values are deeply cloned)
+   */
+  toObject(): LlmSafetyStats.AsObject {
+    return {
+      totalAssessed: this.totalAssessed,
+      flaggedCount: this.flaggedCount,
+      overallSafetyScore: this.overallSafetyScore,
+      categoryStats: (this.categoryStats || []).map(m => m.toObject())
+    };
+  }
+
+  /**
+   * Convenience method to support JSON.stringify(message), replicates the structure of toObject()
+   */
+  toJSON() {
+    return this.toObject();
+  }
+
+  /**
+   * Cast message to JSON using protobuf JSON notation: https://developers.google.com/protocol-buffers/docs/proto3#json
+   * Attention: output differs from toObject() e.g. enums are represented as names and not as numbers, Timestamp is an ISO Date string format etc.
+   * If the message itself or some of descendant messages is google.protobuf.Any, you MUST provide a message pool as options. If not, the messagePool is not required
+   */
+  toProtobufJSON(
+    // @ts-ignore
+    options?: ToProtobufJSONOptions
+  ): LlmSafetyStats.AsProtobufJSON {
+    return {
+      totalAssessed: this.totalAssessed,
+      flaggedCount: this.flaggedCount,
+      overallSafetyScore: this.overallSafetyScore,
+      categoryStats: (this.categoryStats || []).map(m =>
+        m.toProtobufJSON(options)
+      )
+    };
+  }
+}
+export module LlmSafetyStats {
+  /**
+   * Standard JavaScript object representation for LlmSafetyStats
+   */
+  export interface AsObject {
+    totalAssessed: string;
+    flaggedCount: string;
+    overallSafetyScore: number;
+    categoryStats?: LlmSafetyCategoryStat.AsObject[];
+  }
+
+  /**
+   * Protobuf JSON representation for LlmSafetyStats
+   */
+  export interface AsProtobufJSON {
+    totalAssessed: string;
+    flaggedCount: string;
+    overallSafetyScore: number;
+    categoryStats: LlmSafetyCategoryStat.AsProtobufJSON[] | null;
+  }
+}
+
+/**
+ * Message implementation for ondewo.nlu.LlmCallStartedEvent
+ */
+export class LlmCallStartedEvent implements GrpcMessage {
+  static id = 'ondewo.nlu.LlmCallStartedEvent';
+
+  /**
+   * Deserialize binary data to message
+   * @param instance message instance
+   */
+  static deserializeBinary(bytes: ByteSource) {
+    const instance = new LlmCallStartedEvent();
+    LlmCallStartedEvent.deserializeBinaryFromReader(
+      instance,
+      new BinaryReader(bytes)
+    );
+    return instance;
+  }
+
+  /**
+   * Check all the properties and set default protobuf values if necessary
+   * @param _instance message instance
+   */
+  static refineValues(_instance: LlmCallStartedEvent) {
+    _instance.llmCallId = _instance.llmCallId || '';
+    _instance.provider = _instance.provider || '';
+    _instance.modelName = _instance.modelName || '';
+    _instance.agentName = _instance.agentName || '';
+    _instance.startTime = _instance.startTime || undefined;
+  }
+
+  /**
+   * Deserializes / reads binary message into message instance using provided binary reader
+   * @param _instance message instance
+   * @param _reader binary reader instance
+   */
+  static deserializeBinaryFromReader(
+    _instance: LlmCallStartedEvent,
+    _reader: BinaryReader
+  ) {
+    while (_reader.nextField()) {
+      if (_reader.isEndGroup()) break;
+
+      switch (_reader.getFieldNumber()) {
+        case 1:
+          _instance.llmCallId = _reader.readString();
+          break;
+        case 2:
+          _instance.provider = _reader.readString();
+          break;
+        case 3:
+          _instance.modelName = _reader.readString();
+          break;
+        case 4:
+          _instance.agentName = _reader.readString();
+          break;
+        case 5:
+          _instance.startTime = new googleProtobuf005.Timestamp();
+          _reader.readMessage(
+            _instance.startTime,
+            googleProtobuf005.Timestamp.deserializeBinaryFromReader
+          );
+          break;
+        default:
+          _reader.skipField();
+      }
+    }
+
+    LlmCallStartedEvent.refineValues(_instance);
+  }
+
+  /**
+   * Serializes a message to binary format using provided binary reader
+   * @param _instance message instance
+   * @param _writer binary writer instance
+   */
+  static serializeBinaryToWriter(
+    _instance: LlmCallStartedEvent,
+    _writer: BinaryWriter
+  ) {
+    if (_instance.llmCallId) {
+      _writer.writeString(1, _instance.llmCallId);
+    }
+    if (_instance.provider) {
+      _writer.writeString(2, _instance.provider);
+    }
+    if (_instance.modelName) {
+      _writer.writeString(3, _instance.modelName);
+    }
+    if (_instance.agentName) {
+      _writer.writeString(4, _instance.agentName);
+    }
+    if (_instance.startTime) {
+      _writer.writeMessage(
+        5,
+        _instance.startTime as any,
+        googleProtobuf005.Timestamp.serializeBinaryToWriter
+      );
+    }
+  }
+
+  private _llmCallId: string;
+  private _provider: string;
+  private _modelName: string;
+  private _agentName: string;
+  private _startTime?: googleProtobuf005.Timestamp;
+
+  /**
+   * Message constructor. Initializes the properties and applies default Protobuf values if necessary
+   * @param _value initial values object or instance of LlmCallStartedEvent to deeply clone from
+   */
+  constructor(_value?: RecursivePartial<LlmCallStartedEvent.AsObject>) {
+    _value = _value || {};
+    this.llmCallId = _value.llmCallId;
+    this.provider = _value.provider;
+    this.modelName = _value.modelName;
+    this.agentName = _value.agentName;
+    this.startTime = _value.startTime
+      ? new googleProtobuf005.Timestamp(_value.startTime)
+      : undefined;
+    LlmCallStartedEvent.refineValues(this);
+  }
+  get llmCallId(): string {
+    return this._llmCallId;
+  }
+  set llmCallId(value: string) {
+    this._llmCallId = value;
+  }
+  get provider(): string {
+    return this._provider;
+  }
+  set provider(value: string) {
+    this._provider = value;
+  }
+  get modelName(): string {
+    return this._modelName;
+  }
+  set modelName(value: string) {
+    this._modelName = value;
+  }
+  get agentName(): string {
+    return this._agentName;
+  }
+  set agentName(value: string) {
+    this._agentName = value;
+  }
+  get startTime(): googleProtobuf005.Timestamp | undefined {
+    return this._startTime;
+  }
+  set startTime(value: googleProtobuf005.Timestamp | undefined) {
+    this._startTime = value;
+  }
+
+  /**
+   * Serialize message to binary data
+   * @param instance message instance
+   */
+  serializeBinary() {
+    const writer = new BinaryWriter();
+    LlmCallStartedEvent.serializeBinaryToWriter(this, writer);
+    return writer.getResultBuffer();
+  }
+
+  /**
+   * Cast message to standard JavaScript object (all non-primitive values are deeply cloned)
+   */
+  toObject(): LlmCallStartedEvent.AsObject {
+    return {
+      llmCallId: this.llmCallId,
+      provider: this.provider,
+      modelName: this.modelName,
+      agentName: this.agentName,
+      startTime: this.startTime ? this.startTime.toObject() : undefined
+    };
+  }
+
+  /**
+   * Convenience method to support JSON.stringify(message), replicates the structure of toObject()
+   */
+  toJSON() {
+    return this.toObject();
+  }
+
+  /**
+   * Cast message to JSON using protobuf JSON notation: https://developers.google.com/protocol-buffers/docs/proto3#json
+   * Attention: output differs from toObject() e.g. enums are represented as names and not as numbers, Timestamp is an ISO Date string format etc.
+   * If the message itself or some of descendant messages is google.protobuf.Any, you MUST provide a message pool as options. If not, the messagePool is not required
+   */
+  toProtobufJSON(
+    // @ts-ignore
+    options?: ToProtobufJSONOptions
+  ): LlmCallStartedEvent.AsProtobufJSON {
+    return {
+      llmCallId: this.llmCallId,
+      provider: this.provider,
+      modelName: this.modelName,
+      agentName: this.agentName,
+      startTime: this.startTime ? this.startTime.toProtobufJSON(options) : null
+    };
+  }
+}
+export module LlmCallStartedEvent {
+  /**
+   * Standard JavaScript object representation for LlmCallStartedEvent
+   */
+  export interface AsObject {
+    llmCallId: string;
+    provider: string;
+    modelName: string;
+    agentName: string;
+    startTime?: googleProtobuf005.Timestamp.AsObject;
+  }
+
+  /**
+   * Protobuf JSON representation for LlmCallStartedEvent
+   */
+  export interface AsProtobufJSON {
+    llmCallId: string;
+    provider: string;
+    modelName: string;
+    agentName: string;
+    startTime: googleProtobuf005.Timestamp.AsProtobufJSON | null;
+  }
+}
+
+/**
+ * Message implementation for ondewo.nlu.LlmCallFinishedEvent
+ */
+export class LlmCallFinishedEvent implements GrpcMessage {
+  static id = 'ondewo.nlu.LlmCallFinishedEvent';
+
+  /**
+   * Deserialize binary data to message
+   * @param instance message instance
+   */
+  static deserializeBinary(bytes: ByteSource) {
+    const instance = new LlmCallFinishedEvent();
+    LlmCallFinishedEvent.deserializeBinaryFromReader(
+      instance,
+      new BinaryReader(bytes)
+    );
+    return instance;
+  }
+
+  /**
+   * Check all the properties and set default protobuf values if necessary
+   * @param _instance message instance
+   */
+  static refineValues(_instance: LlmCallFinishedEvent) {
+    _instance.llmCallId = _instance.llmCallId || '';
+    _instance.endTime = _instance.endTime || undefined;
+    _instance.durationInS = _instance.durationInS || 0;
+    _instance.llmTokenUsage = _instance.llmTokenUsage || undefined;
+  }
+
+  /**
+   * Deserializes / reads binary message into message instance using provided binary reader
+   * @param _instance message instance
+   * @param _reader binary reader instance
+   */
+  static deserializeBinaryFromReader(
+    _instance: LlmCallFinishedEvent,
+    _reader: BinaryReader
+  ) {
+    while (_reader.nextField()) {
+      if (_reader.isEndGroup()) break;
+
+      switch (_reader.getFieldNumber()) {
+        case 1:
+          _instance.llmCallId = _reader.readString();
+          break;
+        case 2:
+          _instance.endTime = new googleProtobuf005.Timestamp();
+          _reader.readMessage(
+            _instance.endTime,
+            googleProtobuf005.Timestamp.deserializeBinaryFromReader
+          );
+          break;
+        case 3:
+          _instance.durationInS = _reader.readDouble();
+          break;
+        case 4:
+          _instance.llmTokenUsage = new LlmTokenUsage();
+          _reader.readMessage(
+            _instance.llmTokenUsage,
+            LlmTokenUsage.deserializeBinaryFromReader
+          );
+          break;
+        default:
+          _reader.skipField();
+      }
+    }
+
+    LlmCallFinishedEvent.refineValues(_instance);
+  }
+
+  /**
+   * Serializes a message to binary format using provided binary reader
+   * @param _instance message instance
+   * @param _writer binary writer instance
+   */
+  static serializeBinaryToWriter(
+    _instance: LlmCallFinishedEvent,
+    _writer: BinaryWriter
+  ) {
+    if (_instance.llmCallId) {
+      _writer.writeString(1, _instance.llmCallId);
+    }
+    if (_instance.endTime) {
+      _writer.writeMessage(
+        2,
+        _instance.endTime as any,
+        googleProtobuf005.Timestamp.serializeBinaryToWriter
+      );
+    }
+    if (_instance.durationInS) {
+      _writer.writeDouble(3, _instance.durationInS);
+    }
+    if (_instance.llmTokenUsage) {
+      _writer.writeMessage(
+        4,
+        _instance.llmTokenUsage as any,
+        LlmTokenUsage.serializeBinaryToWriter
+      );
+    }
+  }
+
+  private _llmCallId: string;
+  private _endTime?: googleProtobuf005.Timestamp;
+  private _durationInS: number;
+  private _llmTokenUsage?: LlmTokenUsage;
+
+  /**
+   * Message constructor. Initializes the properties and applies default Protobuf values if necessary
+   * @param _value initial values object or instance of LlmCallFinishedEvent to deeply clone from
+   */
+  constructor(_value?: RecursivePartial<LlmCallFinishedEvent.AsObject>) {
+    _value = _value || {};
+    this.llmCallId = _value.llmCallId;
+    this.endTime = _value.endTime
+      ? new googleProtobuf005.Timestamp(_value.endTime)
+      : undefined;
+    this.durationInS = _value.durationInS;
+    this.llmTokenUsage = _value.llmTokenUsage
+      ? new LlmTokenUsage(_value.llmTokenUsage)
+      : undefined;
+    LlmCallFinishedEvent.refineValues(this);
+  }
+  get llmCallId(): string {
+    return this._llmCallId;
+  }
+  set llmCallId(value: string) {
+    this._llmCallId = value;
+  }
+  get endTime(): googleProtobuf005.Timestamp | undefined {
+    return this._endTime;
+  }
+  set endTime(value: googleProtobuf005.Timestamp | undefined) {
+    this._endTime = value;
+  }
+  get durationInS(): number {
+    return this._durationInS;
+  }
+  set durationInS(value: number) {
+    this._durationInS = value;
+  }
+  get llmTokenUsage(): LlmTokenUsage | undefined {
+    return this._llmTokenUsage;
+  }
+  set llmTokenUsage(value: LlmTokenUsage | undefined) {
+    this._llmTokenUsage = value;
+  }
+
+  /**
+   * Serialize message to binary data
+   * @param instance message instance
+   */
+  serializeBinary() {
+    const writer = new BinaryWriter();
+    LlmCallFinishedEvent.serializeBinaryToWriter(this, writer);
+    return writer.getResultBuffer();
+  }
+
+  /**
+   * Cast message to standard JavaScript object (all non-primitive values are deeply cloned)
+   */
+  toObject(): LlmCallFinishedEvent.AsObject {
+    return {
+      llmCallId: this.llmCallId,
+      endTime: this.endTime ? this.endTime.toObject() : undefined,
+      durationInS: this.durationInS,
+      llmTokenUsage: this.llmTokenUsage
+        ? this.llmTokenUsage.toObject()
+        : undefined
+    };
+  }
+
+  /**
+   * Convenience method to support JSON.stringify(message), replicates the structure of toObject()
+   */
+  toJSON() {
+    return this.toObject();
+  }
+
+  /**
+   * Cast message to JSON using protobuf JSON notation: https://developers.google.com/protocol-buffers/docs/proto3#json
+   * Attention: output differs from toObject() e.g. enums are represented as names and not as numbers, Timestamp is an ISO Date string format etc.
+   * If the message itself or some of descendant messages is google.protobuf.Any, you MUST provide a message pool as options. If not, the messagePool is not required
+   */
+  toProtobufJSON(
+    // @ts-ignore
+    options?: ToProtobufJSONOptions
+  ): LlmCallFinishedEvent.AsProtobufJSON {
+    return {
+      llmCallId: this.llmCallId,
+      endTime: this.endTime ? this.endTime.toProtobufJSON(options) : null,
+      durationInS: this.durationInS,
+      llmTokenUsage: this.llmTokenUsage
+        ? this.llmTokenUsage.toProtobufJSON(options)
+        : null
+    };
+  }
+}
+export module LlmCallFinishedEvent {
+  /**
+   * Standard JavaScript object representation for LlmCallFinishedEvent
+   */
+  export interface AsObject {
+    llmCallId: string;
+    endTime?: googleProtobuf005.Timestamp.AsObject;
+    durationInS: number;
+    llmTokenUsage?: LlmTokenUsage.AsObject;
+  }
+
+  /**
+   * Protobuf JSON representation for LlmCallFinishedEvent
+   */
+  export interface AsProtobufJSON {
+    llmCallId: string;
+    endTime: googleProtobuf005.Timestamp.AsProtobufJSON | null;
+    durationInS: number;
+    llmTokenUsage: LlmTokenUsage.AsProtobufJSON | null;
+  }
+}
+
+/**
+ * Message implementation for ondewo.nlu.LlmToolCallStartedEvent
+ */
+export class LlmToolCallStartedEvent implements GrpcMessage {
+  static id = 'ondewo.nlu.LlmToolCallStartedEvent';
+
+  /**
+   * Deserialize binary data to message
+   * @param instance message instance
+   */
+  static deserializeBinary(bytes: ByteSource) {
+    const instance = new LlmToolCallStartedEvent();
+    LlmToolCallStartedEvent.deserializeBinaryFromReader(
+      instance,
+      new BinaryReader(bytes)
+    );
+    return instance;
+  }
+
+  /**
+   * Check all the properties and set default protobuf values if necessary
+   * @param _instance message instance
+   */
+  static refineValues(_instance: LlmToolCallStartedEvent) {
+    _instance.toolCallId = _instance.toolCallId || '';
+    _instance.toolName = _instance.toolName || '';
+    _instance.arguments = _instance.arguments || undefined;
+    _instance.startTime = _instance.startTime || undefined;
+    _instance.llmCallId = _instance.llmCallId || '';
+  }
+
+  /**
+   * Deserializes / reads binary message into message instance using provided binary reader
+   * @param _instance message instance
+   * @param _reader binary reader instance
+   */
+  static deserializeBinaryFromReader(
+    _instance: LlmToolCallStartedEvent,
+    _reader: BinaryReader
+  ) {
+    while (_reader.nextField()) {
+      if (_reader.isEndGroup()) break;
+
+      switch (_reader.getFieldNumber()) {
+        case 1:
+          _instance.toolCallId = _reader.readString();
+          break;
+        case 2:
+          _instance.toolName = _reader.readString();
+          break;
+        case 3:
+          _instance.arguments = new googleProtobuf004.Struct();
+          _reader.readMessage(
+            _instance.arguments,
+            googleProtobuf004.Struct.deserializeBinaryFromReader
+          );
+          break;
+        case 4:
+          _instance.startTime = new googleProtobuf005.Timestamp();
+          _reader.readMessage(
+            _instance.startTime,
+            googleProtobuf005.Timestamp.deserializeBinaryFromReader
+          );
+          break;
+        case 5:
+          _instance.llmCallId = _reader.readString();
+          break;
+        default:
+          _reader.skipField();
+      }
+    }
+
+    LlmToolCallStartedEvent.refineValues(_instance);
+  }
+
+  /**
+   * Serializes a message to binary format using provided binary reader
+   * @param _instance message instance
+   * @param _writer binary writer instance
+   */
+  static serializeBinaryToWriter(
+    _instance: LlmToolCallStartedEvent,
+    _writer: BinaryWriter
+  ) {
+    if (_instance.toolCallId) {
+      _writer.writeString(1, _instance.toolCallId);
+    }
+    if (_instance.toolName) {
+      _writer.writeString(2, _instance.toolName);
+    }
+    if (_instance.arguments) {
+      _writer.writeMessage(
+        3,
+        _instance.arguments as any,
+        googleProtobuf004.Struct.serializeBinaryToWriter
+      );
+    }
+    if (_instance.startTime) {
+      _writer.writeMessage(
+        4,
+        _instance.startTime as any,
+        googleProtobuf005.Timestamp.serializeBinaryToWriter
+      );
+    }
+    if (_instance.llmCallId) {
+      _writer.writeString(5, _instance.llmCallId);
+    }
+  }
+
+  private _toolCallId: string;
+  private _toolName: string;
+  private _arguments?: googleProtobuf004.Struct;
+  private _startTime?: googleProtobuf005.Timestamp;
+  private _llmCallId: string;
+
+  /**
+   * Message constructor. Initializes the properties and applies default Protobuf values if necessary
+   * @param _value initial values object or instance of LlmToolCallStartedEvent to deeply clone from
+   */
+  constructor(_value?: RecursivePartial<LlmToolCallStartedEvent.AsObject>) {
+    _value = _value || {};
+    this.toolCallId = _value.toolCallId;
+    this.toolName = _value.toolName;
+    this.arguments = _value.arguments
+      ? new googleProtobuf004.Struct(_value.arguments)
+      : undefined;
+    this.startTime = _value.startTime
+      ? new googleProtobuf005.Timestamp(_value.startTime)
+      : undefined;
+    this.llmCallId = _value.llmCallId;
+    LlmToolCallStartedEvent.refineValues(this);
+  }
+  get toolCallId(): string {
+    return this._toolCallId;
+  }
+  set toolCallId(value: string) {
+    this._toolCallId = value;
+  }
+  get toolName(): string {
+    return this._toolName;
+  }
+  set toolName(value: string) {
+    this._toolName = value;
+  }
+  get arguments(): googleProtobuf004.Struct | undefined {
+    return this._arguments;
+  }
+  set arguments(value: googleProtobuf004.Struct | undefined) {
+    this._arguments = value;
+  }
+  get startTime(): googleProtobuf005.Timestamp | undefined {
+    return this._startTime;
+  }
+  set startTime(value: googleProtobuf005.Timestamp | undefined) {
+    this._startTime = value;
+  }
+  get llmCallId(): string {
+    return this._llmCallId;
+  }
+  set llmCallId(value: string) {
+    this._llmCallId = value;
+  }
+
+  /**
+   * Serialize message to binary data
+   * @param instance message instance
+   */
+  serializeBinary() {
+    const writer = new BinaryWriter();
+    LlmToolCallStartedEvent.serializeBinaryToWriter(this, writer);
+    return writer.getResultBuffer();
+  }
+
+  /**
+   * Cast message to standard JavaScript object (all non-primitive values are deeply cloned)
+   */
+  toObject(): LlmToolCallStartedEvent.AsObject {
+    return {
+      toolCallId: this.toolCallId,
+      toolName: this.toolName,
+      arguments: this.arguments ? this.arguments.toObject() : undefined,
+      startTime: this.startTime ? this.startTime.toObject() : undefined,
+      llmCallId: this.llmCallId
+    };
+  }
+
+  /**
+   * Convenience method to support JSON.stringify(message), replicates the structure of toObject()
+   */
+  toJSON() {
+    return this.toObject();
+  }
+
+  /**
+   * Cast message to JSON using protobuf JSON notation: https://developers.google.com/protocol-buffers/docs/proto3#json
+   * Attention: output differs from toObject() e.g. enums are represented as names and not as numbers, Timestamp is an ISO Date string format etc.
+   * If the message itself or some of descendant messages is google.protobuf.Any, you MUST provide a message pool as options. If not, the messagePool is not required
+   */
+  toProtobufJSON(
+    // @ts-ignore
+    options?: ToProtobufJSONOptions
+  ): LlmToolCallStartedEvent.AsProtobufJSON {
+    return {
+      toolCallId: this.toolCallId,
+      toolName: this.toolName,
+      arguments: this.arguments ? this.arguments.toProtobufJSON(options) : null,
+      startTime: this.startTime ? this.startTime.toProtobufJSON(options) : null,
+      llmCallId: this.llmCallId
+    };
+  }
+}
+export module LlmToolCallStartedEvent {
+  /**
+   * Standard JavaScript object representation for LlmToolCallStartedEvent
+   */
+  export interface AsObject {
+    toolCallId: string;
+    toolName: string;
+    arguments?: googleProtobuf004.Struct.AsObject;
+    startTime?: googleProtobuf005.Timestamp.AsObject;
+    llmCallId: string;
+  }
+
+  /**
+   * Protobuf JSON representation for LlmToolCallStartedEvent
+   */
+  export interface AsProtobufJSON {
+    toolCallId: string;
+    toolName: string;
+    arguments: googleProtobuf004.Struct.AsProtobufJSON | null;
+    startTime: googleProtobuf005.Timestamp.AsProtobufJSON | null;
+    llmCallId: string;
+  }
+}
+
+/**
+ * Message implementation for ondewo.nlu.LlmToolCallFinishedEvent
+ */
+export class LlmToolCallFinishedEvent implements GrpcMessage {
+  static id = 'ondewo.nlu.LlmToolCallFinishedEvent';
+
+  /**
+   * Deserialize binary data to message
+   * @param instance message instance
+   */
+  static deserializeBinary(bytes: ByteSource) {
+    const instance = new LlmToolCallFinishedEvent();
+    LlmToolCallFinishedEvent.deserializeBinaryFromReader(
+      instance,
+      new BinaryReader(bytes)
+    );
+    return instance;
+  }
+
+  /**
+   * Check all the properties and set default protobuf values if necessary
+   * @param _instance message instance
+   */
+  static refineValues(_instance: LlmToolCallFinishedEvent) {
+    _instance.toolCallId = _instance.toolCallId || '';
+    _instance.endTime = _instance.endTime || undefined;
+    _instance.durationInS = _instance.durationInS || 0;
+    _instance.llmTokenUsage = _instance.llmTokenUsage || undefined;
+    _instance.result = _instance.result || undefined;
+    _instance.errorMessage = _instance.errorMessage || '';
+    _instance.llmCallId = _instance.llmCallId || '';
+  }
+
+  /**
+   * Deserializes / reads binary message into message instance using provided binary reader
+   * @param _instance message instance
+   * @param _reader binary reader instance
+   */
+  static deserializeBinaryFromReader(
+    _instance: LlmToolCallFinishedEvent,
+    _reader: BinaryReader
+  ) {
+    while (_reader.nextField()) {
+      if (_reader.isEndGroup()) break;
+
+      switch (_reader.getFieldNumber()) {
+        case 1:
+          _instance.toolCallId = _reader.readString();
+          break;
+        case 2:
+          _instance.endTime = new googleProtobuf005.Timestamp();
+          _reader.readMessage(
+            _instance.endTime,
+            googleProtobuf005.Timestamp.deserializeBinaryFromReader
+          );
+          break;
+        case 3:
+          _instance.durationInS = _reader.readDouble();
+          break;
+        case 4:
+          _instance.llmTokenUsage = new LlmTokenUsage();
+          _reader.readMessage(
+            _instance.llmTokenUsage,
+            LlmTokenUsage.deserializeBinaryFromReader
+          );
+          break;
+        case 5:
+          _instance.result = new googleProtobuf004.Struct();
+          _reader.readMessage(
+            _instance.result,
+            googleProtobuf004.Struct.deserializeBinaryFromReader
+          );
+          break;
+        case 6:
+          _instance.errorMessage = _reader.readString();
+          break;
+        case 7:
+          _instance.llmCallId = _reader.readString();
+          break;
+        default:
+          _reader.skipField();
+      }
+    }
+
+    LlmToolCallFinishedEvent.refineValues(_instance);
+  }
+
+  /**
+   * Serializes a message to binary format using provided binary reader
+   * @param _instance message instance
+   * @param _writer binary writer instance
+   */
+  static serializeBinaryToWriter(
+    _instance: LlmToolCallFinishedEvent,
+    _writer: BinaryWriter
+  ) {
+    if (_instance.toolCallId) {
+      _writer.writeString(1, _instance.toolCallId);
+    }
+    if (_instance.endTime) {
+      _writer.writeMessage(
+        2,
+        _instance.endTime as any,
+        googleProtobuf005.Timestamp.serializeBinaryToWriter
+      );
+    }
+    if (_instance.durationInS) {
+      _writer.writeDouble(3, _instance.durationInS);
+    }
+    if (_instance.llmTokenUsage) {
+      _writer.writeMessage(
+        4,
+        _instance.llmTokenUsage as any,
+        LlmTokenUsage.serializeBinaryToWriter
+      );
+    }
+    if (_instance.result) {
+      _writer.writeMessage(
+        5,
+        _instance.result as any,
+        googleProtobuf004.Struct.serializeBinaryToWriter
+      );
+    }
+    if (_instance.errorMessage) {
+      _writer.writeString(6, _instance.errorMessage);
+    }
+    if (_instance.llmCallId) {
+      _writer.writeString(7, _instance.llmCallId);
+    }
+  }
+
+  private _toolCallId: string;
+  private _endTime?: googleProtobuf005.Timestamp;
+  private _durationInS: number;
+  private _llmTokenUsage?: LlmTokenUsage;
+  private _result?: googleProtobuf004.Struct;
+  private _errorMessage: string;
+  private _llmCallId: string;
+
+  /**
+   * Message constructor. Initializes the properties and applies default Protobuf values if necessary
+   * @param _value initial values object or instance of LlmToolCallFinishedEvent to deeply clone from
+   */
+  constructor(_value?: RecursivePartial<LlmToolCallFinishedEvent.AsObject>) {
+    _value = _value || {};
+    this.toolCallId = _value.toolCallId;
+    this.endTime = _value.endTime
+      ? new googleProtobuf005.Timestamp(_value.endTime)
+      : undefined;
+    this.durationInS = _value.durationInS;
+    this.llmTokenUsage = _value.llmTokenUsage
+      ? new LlmTokenUsage(_value.llmTokenUsage)
+      : undefined;
+    this.result = _value.result
+      ? new googleProtobuf004.Struct(_value.result)
+      : undefined;
+    this.errorMessage = _value.errorMessage;
+    this.llmCallId = _value.llmCallId;
+    LlmToolCallFinishedEvent.refineValues(this);
+  }
+  get toolCallId(): string {
+    return this._toolCallId;
+  }
+  set toolCallId(value: string) {
+    this._toolCallId = value;
+  }
+  get endTime(): googleProtobuf005.Timestamp | undefined {
+    return this._endTime;
+  }
+  set endTime(value: googleProtobuf005.Timestamp | undefined) {
+    this._endTime = value;
+  }
+  get durationInS(): number {
+    return this._durationInS;
+  }
+  set durationInS(value: number) {
+    this._durationInS = value;
+  }
+  get llmTokenUsage(): LlmTokenUsage | undefined {
+    return this._llmTokenUsage;
+  }
+  set llmTokenUsage(value: LlmTokenUsage | undefined) {
+    this._llmTokenUsage = value;
+  }
+  get result(): googleProtobuf004.Struct | undefined {
+    return this._result;
+  }
+  set result(value: googleProtobuf004.Struct | undefined) {
+    this._result = value;
+  }
+  get errorMessage(): string {
+    return this._errorMessage;
+  }
+  set errorMessage(value: string) {
+    this._errorMessage = value;
+  }
+  get llmCallId(): string {
+    return this._llmCallId;
+  }
+  set llmCallId(value: string) {
+    this._llmCallId = value;
+  }
+
+  /**
+   * Serialize message to binary data
+   * @param instance message instance
+   */
+  serializeBinary() {
+    const writer = new BinaryWriter();
+    LlmToolCallFinishedEvent.serializeBinaryToWriter(this, writer);
+    return writer.getResultBuffer();
+  }
+
+  /**
+   * Cast message to standard JavaScript object (all non-primitive values are deeply cloned)
+   */
+  toObject(): LlmToolCallFinishedEvent.AsObject {
+    return {
+      toolCallId: this.toolCallId,
+      endTime: this.endTime ? this.endTime.toObject() : undefined,
+      durationInS: this.durationInS,
+      llmTokenUsage: this.llmTokenUsage
+        ? this.llmTokenUsage.toObject()
+        : undefined,
+      result: this.result ? this.result.toObject() : undefined,
+      errorMessage: this.errorMessage,
+      llmCallId: this.llmCallId
+    };
+  }
+
+  /**
+   * Convenience method to support JSON.stringify(message), replicates the structure of toObject()
+   */
+  toJSON() {
+    return this.toObject();
+  }
+
+  /**
+   * Cast message to JSON using protobuf JSON notation: https://developers.google.com/protocol-buffers/docs/proto3#json
+   * Attention: output differs from toObject() e.g. enums are represented as names and not as numbers, Timestamp is an ISO Date string format etc.
+   * If the message itself or some of descendant messages is google.protobuf.Any, you MUST provide a message pool as options. If not, the messagePool is not required
+   */
+  toProtobufJSON(
+    // @ts-ignore
+    options?: ToProtobufJSONOptions
+  ): LlmToolCallFinishedEvent.AsProtobufJSON {
+    return {
+      toolCallId: this.toolCallId,
+      endTime: this.endTime ? this.endTime.toProtobufJSON(options) : null,
+      durationInS: this.durationInS,
+      llmTokenUsage: this.llmTokenUsage
+        ? this.llmTokenUsage.toProtobufJSON(options)
+        : null,
+      result: this.result ? this.result.toProtobufJSON(options) : null,
+      errorMessage: this.errorMessage,
+      llmCallId: this.llmCallId
+    };
+  }
+}
+export module LlmToolCallFinishedEvent {
+  /**
+   * Standard JavaScript object representation for LlmToolCallFinishedEvent
+   */
+  export interface AsObject {
+    toolCallId: string;
+    endTime?: googleProtobuf005.Timestamp.AsObject;
+    durationInS: number;
+    llmTokenUsage?: LlmTokenUsage.AsObject;
+    result?: googleProtobuf004.Struct.AsObject;
+    errorMessage: string;
+    llmCallId: string;
+  }
+
+  /**
+   * Protobuf JSON representation for LlmToolCallFinishedEvent
+   */
+  export interface AsProtobufJSON {
+    toolCallId: string;
+    endTime: googleProtobuf005.Timestamp.AsProtobufJSON | null;
+    durationInS: number;
+    llmTokenUsage: LlmTokenUsage.AsProtobufJSON | null;
+    result: googleProtobuf004.Struct.AsProtobufJSON | null;
+    errorMessage: string;
+    llmCallId: string;
+  }
+}
+
+/**
+ * Message implementation for ondewo.nlu.LlmThinkingDeltaEvent
+ */
+export class LlmThinkingDeltaEvent implements GrpcMessage {
+  static id = 'ondewo.nlu.LlmThinkingDeltaEvent';
+
+  /**
+   * Deserialize binary data to message
+   * @param instance message instance
+   */
+  static deserializeBinary(bytes: ByteSource) {
+    const instance = new LlmThinkingDeltaEvent();
+    LlmThinkingDeltaEvent.deserializeBinaryFromReader(
+      instance,
+      new BinaryReader(bytes)
+    );
+    return instance;
+  }
+
+  /**
+   * Check all the properties and set default protobuf values if necessary
+   * @param _instance message instance
+   */
+  static refineValues(_instance: LlmThinkingDeltaEvent) {
+    _instance.llmCallId = _instance.llmCallId || '';
+    _instance.textDelta = _instance.textDelta || '';
+    _instance.timestamp = _instance.timestamp || undefined;
+  }
+
+  /**
+   * Deserializes / reads binary message into message instance using provided binary reader
+   * @param _instance message instance
+   * @param _reader binary reader instance
+   */
+  static deserializeBinaryFromReader(
+    _instance: LlmThinkingDeltaEvent,
+    _reader: BinaryReader
+  ) {
+    while (_reader.nextField()) {
+      if (_reader.isEndGroup()) break;
+
+      switch (_reader.getFieldNumber()) {
+        case 1:
+          _instance.llmCallId = _reader.readString();
+          break;
+        case 2:
+          _instance.textDelta = _reader.readString();
+          break;
+        case 3:
+          _instance.timestamp = new googleProtobuf005.Timestamp();
+          _reader.readMessage(
+            _instance.timestamp,
+            googleProtobuf005.Timestamp.deserializeBinaryFromReader
+          );
+          break;
+        default:
+          _reader.skipField();
+      }
+    }
+
+    LlmThinkingDeltaEvent.refineValues(_instance);
+  }
+
+  /**
+   * Serializes a message to binary format using provided binary reader
+   * @param _instance message instance
+   * @param _writer binary writer instance
+   */
+  static serializeBinaryToWriter(
+    _instance: LlmThinkingDeltaEvent,
+    _writer: BinaryWriter
+  ) {
+    if (_instance.llmCallId) {
+      _writer.writeString(1, _instance.llmCallId);
+    }
+    if (_instance.textDelta) {
+      _writer.writeString(2, _instance.textDelta);
+    }
+    if (_instance.timestamp) {
+      _writer.writeMessage(
+        3,
+        _instance.timestamp as any,
+        googleProtobuf005.Timestamp.serializeBinaryToWriter
+      );
+    }
+  }
+
+  private _llmCallId: string;
+  private _textDelta: string;
+  private _timestamp?: googleProtobuf005.Timestamp;
+
+  /**
+   * Message constructor. Initializes the properties and applies default Protobuf values if necessary
+   * @param _value initial values object or instance of LlmThinkingDeltaEvent to deeply clone from
+   */
+  constructor(_value?: RecursivePartial<LlmThinkingDeltaEvent.AsObject>) {
+    _value = _value || {};
+    this.llmCallId = _value.llmCallId;
+    this.textDelta = _value.textDelta;
+    this.timestamp = _value.timestamp
+      ? new googleProtobuf005.Timestamp(_value.timestamp)
+      : undefined;
+    LlmThinkingDeltaEvent.refineValues(this);
+  }
+  get llmCallId(): string {
+    return this._llmCallId;
+  }
+  set llmCallId(value: string) {
+    this._llmCallId = value;
+  }
+  get textDelta(): string {
+    return this._textDelta;
+  }
+  set textDelta(value: string) {
+    this._textDelta = value;
+  }
+  get timestamp(): googleProtobuf005.Timestamp | undefined {
+    return this._timestamp;
+  }
+  set timestamp(value: googleProtobuf005.Timestamp | undefined) {
+    this._timestamp = value;
+  }
+
+  /**
+   * Serialize message to binary data
+   * @param instance message instance
+   */
+  serializeBinary() {
+    const writer = new BinaryWriter();
+    LlmThinkingDeltaEvent.serializeBinaryToWriter(this, writer);
+    return writer.getResultBuffer();
+  }
+
+  /**
+   * Cast message to standard JavaScript object (all non-primitive values are deeply cloned)
+   */
+  toObject(): LlmThinkingDeltaEvent.AsObject {
+    return {
+      llmCallId: this.llmCallId,
+      textDelta: this.textDelta,
+      timestamp: this.timestamp ? this.timestamp.toObject() : undefined
+    };
+  }
+
+  /**
+   * Convenience method to support JSON.stringify(message), replicates the structure of toObject()
+   */
+  toJSON() {
+    return this.toObject();
+  }
+
+  /**
+   * Cast message to JSON using protobuf JSON notation: https://developers.google.com/protocol-buffers/docs/proto3#json
+   * Attention: output differs from toObject() e.g. enums are represented as names and not as numbers, Timestamp is an ISO Date string format etc.
+   * If the message itself or some of descendant messages is google.protobuf.Any, you MUST provide a message pool as options. If not, the messagePool is not required
+   */
+  toProtobufJSON(
+    // @ts-ignore
+    options?: ToProtobufJSONOptions
+  ): LlmThinkingDeltaEvent.AsProtobufJSON {
+    return {
+      llmCallId: this.llmCallId,
+      textDelta: this.textDelta,
+      timestamp: this.timestamp ? this.timestamp.toProtobufJSON(options) : null
+    };
+  }
+}
+export module LlmThinkingDeltaEvent {
+  /**
+   * Standard JavaScript object representation for LlmThinkingDeltaEvent
+   */
+  export interface AsObject {
+    llmCallId: string;
+    textDelta: string;
+    timestamp?: googleProtobuf005.Timestamp.AsObject;
+  }
+
+  /**
+   * Protobuf JSON representation for LlmThinkingDeltaEvent
+   */
+  export interface AsProtobufJSON {
+    llmCallId: string;
+    textDelta: string;
+    timestamp: googleProtobuf005.Timestamp.AsProtobufJSON | null;
+  }
+}
+
+/**
+ * Message implementation for ondewo.nlu.LlmTokenUsageUpdateEvent
+ */
+export class LlmTokenUsageUpdateEvent implements GrpcMessage {
+  static id = 'ondewo.nlu.LlmTokenUsageUpdateEvent';
+
+  /**
+   * Deserialize binary data to message
+   * @param instance message instance
+   */
+  static deserializeBinary(bytes: ByteSource) {
+    const instance = new LlmTokenUsageUpdateEvent();
+    LlmTokenUsageUpdateEvent.deserializeBinaryFromReader(
+      instance,
+      new BinaryReader(bytes)
+    );
+    return instance;
+  }
+
+  /**
+   * Check all the properties and set default protobuf values if necessary
+   * @param _instance message instance
+   */
+  static refineValues(_instance: LlmTokenUsageUpdateEvent) {
+    _instance.llmCallId = _instance.llmCallId || '';
+    _instance.llmTokenUsage = _instance.llmTokenUsage || undefined;
+  }
+
+  /**
+   * Deserializes / reads binary message into message instance using provided binary reader
+   * @param _instance message instance
+   * @param _reader binary reader instance
+   */
+  static deserializeBinaryFromReader(
+    _instance: LlmTokenUsageUpdateEvent,
+    _reader: BinaryReader
+  ) {
+    while (_reader.nextField()) {
+      if (_reader.isEndGroup()) break;
+
+      switch (_reader.getFieldNumber()) {
+        case 1:
+          _instance.llmCallId = _reader.readString();
+          break;
+        case 2:
+          _instance.llmTokenUsage = new LlmTokenUsage();
+          _reader.readMessage(
+            _instance.llmTokenUsage,
+            LlmTokenUsage.deserializeBinaryFromReader
+          );
+          break;
+        default:
+          _reader.skipField();
+      }
+    }
+
+    LlmTokenUsageUpdateEvent.refineValues(_instance);
+  }
+
+  /**
+   * Serializes a message to binary format using provided binary reader
+   * @param _instance message instance
+   * @param _writer binary writer instance
+   */
+  static serializeBinaryToWriter(
+    _instance: LlmTokenUsageUpdateEvent,
+    _writer: BinaryWriter
+  ) {
+    if (_instance.llmCallId) {
+      _writer.writeString(1, _instance.llmCallId);
+    }
+    if (_instance.llmTokenUsage) {
+      _writer.writeMessage(
+        2,
+        _instance.llmTokenUsage as any,
+        LlmTokenUsage.serializeBinaryToWriter
+      );
+    }
+  }
+
+  private _llmCallId: string;
+  private _llmTokenUsage?: LlmTokenUsage;
+
+  /**
+   * Message constructor. Initializes the properties and applies default Protobuf values if necessary
+   * @param _value initial values object or instance of LlmTokenUsageUpdateEvent to deeply clone from
+   */
+  constructor(_value?: RecursivePartial<LlmTokenUsageUpdateEvent.AsObject>) {
+    _value = _value || {};
+    this.llmCallId = _value.llmCallId;
+    this.llmTokenUsage = _value.llmTokenUsage
+      ? new LlmTokenUsage(_value.llmTokenUsage)
+      : undefined;
+    LlmTokenUsageUpdateEvent.refineValues(this);
+  }
+  get llmCallId(): string {
+    return this._llmCallId;
+  }
+  set llmCallId(value: string) {
+    this._llmCallId = value;
+  }
+  get llmTokenUsage(): LlmTokenUsage | undefined {
+    return this._llmTokenUsage;
+  }
+  set llmTokenUsage(value: LlmTokenUsage | undefined) {
+    this._llmTokenUsage = value;
+  }
+
+  /**
+   * Serialize message to binary data
+   * @param instance message instance
+   */
+  serializeBinary() {
+    const writer = new BinaryWriter();
+    LlmTokenUsageUpdateEvent.serializeBinaryToWriter(this, writer);
+    return writer.getResultBuffer();
+  }
+
+  /**
+   * Cast message to standard JavaScript object (all non-primitive values are deeply cloned)
+   */
+  toObject(): LlmTokenUsageUpdateEvent.AsObject {
+    return {
+      llmCallId: this.llmCallId,
+      llmTokenUsage: this.llmTokenUsage
+        ? this.llmTokenUsage.toObject()
+        : undefined
+    };
+  }
+
+  /**
+   * Convenience method to support JSON.stringify(message), replicates the structure of toObject()
+   */
+  toJSON() {
+    return this.toObject();
+  }
+
+  /**
+   * Cast message to JSON using protobuf JSON notation: https://developers.google.com/protocol-buffers/docs/proto3#json
+   * Attention: output differs from toObject() e.g. enums are represented as names and not as numbers, Timestamp is an ISO Date string format etc.
+   * If the message itself or some of descendant messages is google.protobuf.Any, you MUST provide a message pool as options. If not, the messagePool is not required
+   */
+  toProtobufJSON(
+    // @ts-ignore
+    options?: ToProtobufJSONOptions
+  ): LlmTokenUsageUpdateEvent.AsProtobufJSON {
+    return {
+      llmCallId: this.llmCallId,
+      llmTokenUsage: this.llmTokenUsage
+        ? this.llmTokenUsage.toProtobufJSON(options)
+        : null
+    };
+  }
+}
+export module LlmTokenUsageUpdateEvent {
+  /**
+   * Standard JavaScript object representation for LlmTokenUsageUpdateEvent
+   */
+  export interface AsObject {
+    llmCallId: string;
+    llmTokenUsage?: LlmTokenUsage.AsObject;
+  }
+
+  /**
+   * Protobuf JSON representation for LlmTokenUsageUpdateEvent
+   */
+  export interface AsProtobufJSON {
+    llmCallId: string;
+    llmTokenUsage: LlmTokenUsage.AsProtobufJSON | null;
+  }
+}
+
+/**
+ * Message implementation for ondewo.nlu.ReferencedChunk
+ */
+export class ReferencedChunk implements GrpcMessage {
+  static id = 'ondewo.nlu.ReferencedChunk';
+
+  /**
+   * Deserialize binary data to message
+   * @param instance message instance
+   */
+  static deserializeBinary(bytes: ByteSource) {
+    const instance = new ReferencedChunk();
+    ReferencedChunk.deserializeBinaryFromReader(
+      instance,
+      new BinaryReader(bytes)
+    );
+    return instance;
+  }
+
+  /**
+   * Check all the properties and set default protobuf values if necessary
+   * @param _instance message instance
+   */
+  static refineValues(_instance: ReferencedChunk) {
+    _instance.referenceIndex = _instance.referenceIndex || 0;
+    _instance.datasetId = _instance.datasetId || '';
+    _instance.documentId = _instance.documentId || '';
+    _instance.chunkId = _instance.chunkId || '';
+    _instance.documentName = _instance.documentName || '';
+    _instance.content = _instance.content || '';
+    _instance.similarity = _instance.similarity || 0;
+    _instance.documentUrl = _instance.documentUrl || '';
+    _instance.deepLinkUrl = _instance.deepLinkUrl || '';
+  }
+
+  /**
+   * Deserializes / reads binary message into message instance using provided binary reader
+   * @param _instance message instance
+   * @param _reader binary reader instance
+   */
+  static deserializeBinaryFromReader(
+    _instance: ReferencedChunk,
+    _reader: BinaryReader
+  ) {
+    while (_reader.nextField()) {
+      if (_reader.isEndGroup()) break;
+
+      switch (_reader.getFieldNumber()) {
+        case 1:
+          _instance.referenceIndex = _reader.readInt32();
+          break;
+        case 2:
+          _instance.datasetId = _reader.readString();
+          break;
+        case 3:
+          _instance.documentId = _reader.readString();
+          break;
+        case 4:
+          _instance.chunkId = _reader.readString();
+          break;
+        case 5:
+          _instance.documentName = _reader.readString();
+          break;
+        case 6:
+          _instance.content = _reader.readString();
+          break;
+        case 7:
+          _instance.similarity = _reader.readFloat();
+          break;
+        case 8:
+          _instance.documentUrl = _reader.readString();
+          break;
+        case 9:
+          _instance.deepLinkUrl = _reader.readString();
+          break;
+        default:
+          _reader.skipField();
+      }
+    }
+
+    ReferencedChunk.refineValues(_instance);
+  }
+
+  /**
+   * Serializes a message to binary format using provided binary reader
+   * @param _instance message instance
+   * @param _writer binary writer instance
+   */
+  static serializeBinaryToWriter(
+    _instance: ReferencedChunk,
+    _writer: BinaryWriter
+  ) {
+    if (_instance.referenceIndex) {
+      _writer.writeInt32(1, _instance.referenceIndex);
+    }
+    if (_instance.datasetId) {
+      _writer.writeString(2, _instance.datasetId);
+    }
+    if (_instance.documentId) {
+      _writer.writeString(3, _instance.documentId);
+    }
+    if (_instance.chunkId) {
+      _writer.writeString(4, _instance.chunkId);
+    }
+    if (_instance.documentName) {
+      _writer.writeString(5, _instance.documentName);
+    }
+    if (_instance.content) {
+      _writer.writeString(6, _instance.content);
+    }
+    if (_instance.similarity) {
+      _writer.writeFloat(7, _instance.similarity);
+    }
+    if (_instance.documentUrl) {
+      _writer.writeString(8, _instance.documentUrl);
+    }
+    if (_instance.deepLinkUrl) {
+      _writer.writeString(9, _instance.deepLinkUrl);
+    }
+  }
+
+  private _referenceIndex: number;
+  private _datasetId: string;
+  private _documentId: string;
+  private _chunkId: string;
+  private _documentName: string;
+  private _content: string;
+  private _similarity: number;
+  private _documentUrl: string;
+  private _deepLinkUrl: string;
+
+  /**
+   * Message constructor. Initializes the properties and applies default Protobuf values if necessary
+   * @param _value initial values object or instance of ReferencedChunk to deeply clone from
+   */
+  constructor(_value?: RecursivePartial<ReferencedChunk.AsObject>) {
+    _value = _value || {};
+    this.referenceIndex = _value.referenceIndex;
+    this.datasetId = _value.datasetId;
+    this.documentId = _value.documentId;
+    this.chunkId = _value.chunkId;
+    this.documentName = _value.documentName;
+    this.content = _value.content;
+    this.similarity = _value.similarity;
+    this.documentUrl = _value.documentUrl;
+    this.deepLinkUrl = _value.deepLinkUrl;
+    ReferencedChunk.refineValues(this);
+  }
+  get referenceIndex(): number {
+    return this._referenceIndex;
+  }
+  set referenceIndex(value: number) {
+    this._referenceIndex = value;
+  }
+  get datasetId(): string {
+    return this._datasetId;
+  }
+  set datasetId(value: string) {
+    this._datasetId = value;
+  }
+  get documentId(): string {
+    return this._documentId;
+  }
+  set documentId(value: string) {
+    this._documentId = value;
+  }
+  get chunkId(): string {
+    return this._chunkId;
+  }
+  set chunkId(value: string) {
+    this._chunkId = value;
+  }
+  get documentName(): string {
+    return this._documentName;
+  }
+  set documentName(value: string) {
+    this._documentName = value;
+  }
+  get content(): string {
+    return this._content;
+  }
+  set content(value: string) {
+    this._content = value;
+  }
+  get similarity(): number {
+    return this._similarity;
+  }
+  set similarity(value: number) {
+    this._similarity = value;
+  }
+  get documentUrl(): string {
+    return this._documentUrl;
+  }
+  set documentUrl(value: string) {
+    this._documentUrl = value;
+  }
+  get deepLinkUrl(): string {
+    return this._deepLinkUrl;
+  }
+  set deepLinkUrl(value: string) {
+    this._deepLinkUrl = value;
+  }
+
+  /**
+   * Serialize message to binary data
+   * @param instance message instance
+   */
+  serializeBinary() {
+    const writer = new BinaryWriter();
+    ReferencedChunk.serializeBinaryToWriter(this, writer);
+    return writer.getResultBuffer();
+  }
+
+  /**
+   * Cast message to standard JavaScript object (all non-primitive values are deeply cloned)
+   */
+  toObject(): ReferencedChunk.AsObject {
+    return {
+      referenceIndex: this.referenceIndex,
+      datasetId: this.datasetId,
+      documentId: this.documentId,
+      chunkId: this.chunkId,
+      documentName: this.documentName,
+      content: this.content,
+      similarity: this.similarity,
+      documentUrl: this.documentUrl,
+      deepLinkUrl: this.deepLinkUrl
+    };
+  }
+
+  /**
+   * Convenience method to support JSON.stringify(message), replicates the structure of toObject()
+   */
+  toJSON() {
+    return this.toObject();
+  }
+
+  /**
+   * Cast message to JSON using protobuf JSON notation: https://developers.google.com/protocol-buffers/docs/proto3#json
+   * Attention: output differs from toObject() e.g. enums are represented as names and not as numbers, Timestamp is an ISO Date string format etc.
+   * If the message itself or some of descendant messages is google.protobuf.Any, you MUST provide a message pool as options. If not, the messagePool is not required
+   */
+  toProtobufJSON(
+    // @ts-ignore
+    options?: ToProtobufJSONOptions
+  ): ReferencedChunk.AsProtobufJSON {
+    return {
+      referenceIndex: this.referenceIndex,
+      datasetId: this.datasetId,
+      documentId: this.documentId,
+      chunkId: this.chunkId,
+      documentName: this.documentName,
+      content: this.content,
+      similarity: this.similarity,
+      documentUrl: this.documentUrl,
+      deepLinkUrl: this.deepLinkUrl
+    };
+  }
+}
+export module ReferencedChunk {
+  /**
+   * Standard JavaScript object representation for ReferencedChunk
+   */
+  export interface AsObject {
+    referenceIndex: number;
+    datasetId: string;
+    documentId: string;
+    chunkId: string;
+    documentName: string;
+    content: string;
+    similarity: number;
+    documentUrl: string;
+    deepLinkUrl: string;
+  }
+
+  /**
+   * Protobuf JSON representation for ReferencedChunk
+   */
+  export interface AsProtobufJSON {
+    referenceIndex: number;
+    datasetId: string;
+    documentId: string;
+    chunkId: string;
+    documentName: string;
+    content: string;
+    similarity: number;
+    documentUrl: string;
+    deepLinkUrl: string;
+  }
+}
+
+/**
  * Message implementation for ondewo.nlu.QueryResult
  */
 export class QueryResult implements GrpcMessage {
@@ -1579,6 +10331,8 @@ export class QueryResult implements GrpcMessage {
     _instance.diagnosticInfo = _instance.diagnosticInfo || undefined;
     _instance.languageCode = _instance.languageCode || '';
     _instance.fileResources = _instance.fileResources || [];
+    _instance.llmTelemetryReport = _instance.llmTelemetryReport || undefined;
+    _instance.referencedChunks = _instance.referencedChunks || [];
   }
 
   /**
@@ -1604,10 +10358,10 @@ export class QueryResult implements GrpcMessage {
           _instance.action = _reader.readString();
           break;
         case 4:
-          _instance.parameters = new googleProtobuf010.Struct();
+          _instance.parameters = new googleProtobuf004.Struct();
           _reader.readMessage(
             _instance.parameters,
-            googleProtobuf010.Struct.deserializeBinaryFromReader
+            googleProtobuf004.Struct.deserializeBinaryFromReader
           );
           break;
         case 5:
@@ -1617,10 +10371,10 @@ export class QueryResult implements GrpcMessage {
           _instance.fulfillmentText = _reader.readString();
           break;
         case 7:
-          const messageInitializer7 = new ondewoNlu013.Intent.Message();
+          const messageInitializer7 = new ondewoNlu015.Intent.Message();
           _reader.readMessage(
             messageInitializer7,
-            ondewoNlu013.Intent.Message.deserializeBinaryFromReader
+            ondewoNlu015.Intent.Message.deserializeBinaryFromReader
           );
           (_instance.fulfillmentMessages =
             _instance.fulfillmentMessages || []).push(messageInitializer7);
@@ -1629,27 +10383,27 @@ export class QueryResult implements GrpcMessage {
           _instance.webhookSource = _reader.readString();
           break;
         case 9:
-          _instance.webhookPayload = new googleProtobuf010.Struct();
+          _instance.webhookPayload = new googleProtobuf004.Struct();
           _reader.readMessage(
             _instance.webhookPayload,
-            googleProtobuf010.Struct.deserializeBinaryFromReader
+            googleProtobuf004.Struct.deserializeBinaryFromReader
           );
           break;
         case 10:
-          const messageInitializer10 = new ondewoNlu007.Context();
+          const messageInitializer10 = new ondewoNlu010.Context();
           _reader.readMessage(
             messageInitializer10,
-            ondewoNlu007.Context.deserializeBinaryFromReader
+            ondewoNlu010.Context.deserializeBinaryFromReader
           );
           (_instance.outputContexts = _instance.outputContexts || []).push(
             messageInitializer10
           );
           break;
         case 11:
-          _instance.intent = new ondewoNlu013.Intent();
+          _instance.intent = new ondewoNlu015.Intent();
           _reader.readMessage(
             _instance.intent,
-            ondewoNlu013.Intent.deserializeBinaryFromReader
+            ondewoNlu015.Intent.deserializeBinaryFromReader
           );
           break;
         case 12:
@@ -1659,10 +10413,10 @@ export class QueryResult implements GrpcMessage {
           _instance.queryTextOriginal = _reader.readString();
           break;
         case 14:
-          _instance.diagnosticInfo = new googleProtobuf010.Struct();
+          _instance.diagnosticInfo = new googleProtobuf004.Struct();
           _reader.readMessage(
             _instance.diagnosticInfo,
-            googleProtobuf010.Struct.deserializeBinaryFromReader
+            googleProtobuf004.Struct.deserializeBinaryFromReader
           );
           break;
         case 15:
@@ -1676,6 +10430,23 @@ export class QueryResult implements GrpcMessage {
           );
           (_instance.fileResources = _instance.fileResources || []).push(
             messageInitializer16
+          );
+          break;
+        case 17:
+          _instance.llmTelemetryReport = new LlmTelemetryReport();
+          _reader.readMessage(
+            _instance.llmTelemetryReport,
+            LlmTelemetryReport.deserializeBinaryFromReader
+          );
+          break;
+        case 18:
+          const messageInitializer18 = new ReferencedChunk();
+          _reader.readMessage(
+            messageInitializer18,
+            ReferencedChunk.deserializeBinaryFromReader
+          );
+          (_instance.referencedChunks = _instance.referencedChunks || []).push(
+            messageInitializer18
           );
           break;
         default:
@@ -1708,7 +10479,7 @@ export class QueryResult implements GrpcMessage {
       _writer.writeMessage(
         4,
         _instance.parameters as any,
-        googleProtobuf010.Struct.serializeBinaryToWriter
+        googleProtobuf004.Struct.serializeBinaryToWriter
       );
     }
     if (_instance.allRequiredParamsPresent) {
@@ -1721,7 +10492,7 @@ export class QueryResult implements GrpcMessage {
       _writer.writeRepeatedMessage(
         7,
         _instance.fulfillmentMessages as any,
-        ondewoNlu013.Intent.Message.serializeBinaryToWriter
+        ondewoNlu015.Intent.Message.serializeBinaryToWriter
       );
     }
     if (_instance.webhookSource) {
@@ -1731,21 +10502,21 @@ export class QueryResult implements GrpcMessage {
       _writer.writeMessage(
         9,
         _instance.webhookPayload as any,
-        googleProtobuf010.Struct.serializeBinaryToWriter
+        googleProtobuf004.Struct.serializeBinaryToWriter
       );
     }
     if (_instance.outputContexts && _instance.outputContexts.length) {
       _writer.writeRepeatedMessage(
         10,
         _instance.outputContexts as any,
-        ondewoNlu007.Context.serializeBinaryToWriter
+        ondewoNlu010.Context.serializeBinaryToWriter
       );
     }
     if (_instance.intent) {
       _writer.writeMessage(
         11,
         _instance.intent as any,
-        ondewoNlu013.Intent.serializeBinaryToWriter
+        ondewoNlu015.Intent.serializeBinaryToWriter
       );
     }
     if (_instance.intentDetectionConfidence) {
@@ -1758,7 +10529,7 @@ export class QueryResult implements GrpcMessage {
       _writer.writeMessage(
         14,
         _instance.diagnosticInfo as any,
-        googleProtobuf010.Struct.serializeBinaryToWriter
+        googleProtobuf004.Struct.serializeBinaryToWriter
       );
     }
     if (_instance.languageCode) {
@@ -1771,24 +10542,40 @@ export class QueryResult implements GrpcMessage {
         FileResource.serializeBinaryToWriter
       );
     }
+    if (_instance.llmTelemetryReport) {
+      _writer.writeMessage(
+        17,
+        _instance.llmTelemetryReport as any,
+        LlmTelemetryReport.serializeBinaryToWriter
+      );
+    }
+    if (_instance.referencedChunks && _instance.referencedChunks.length) {
+      _writer.writeRepeatedMessage(
+        18,
+        _instance.referencedChunks as any,
+        ReferencedChunk.serializeBinaryToWriter
+      );
+    }
   }
 
   private _queryText: string;
   private _speechRecognitionConfidence: number;
   private _action: string;
-  private _parameters?: googleProtobuf010.Struct;
+  private _parameters?: googleProtobuf004.Struct;
   private _allRequiredParamsPresent: boolean;
   private _fulfillmentText: string;
-  private _fulfillmentMessages?: ondewoNlu013.Intent.Message[];
+  private _fulfillmentMessages?: ondewoNlu015.Intent.Message[];
   private _webhookSource: string;
-  private _webhookPayload?: googleProtobuf010.Struct;
-  private _outputContexts?: ondewoNlu007.Context[];
-  private _intent?: ondewoNlu013.Intent;
+  private _webhookPayload?: googleProtobuf004.Struct;
+  private _outputContexts?: ondewoNlu010.Context[];
+  private _intent?: ondewoNlu015.Intent;
   private _intentDetectionConfidence: number;
   private _queryTextOriginal: string;
-  private _diagnosticInfo?: googleProtobuf010.Struct;
+  private _diagnosticInfo?: googleProtobuf004.Struct;
   private _languageCode: string;
   private _fileResources?: FileResource[];
+  private _llmTelemetryReport?: LlmTelemetryReport;
+  private _referencedChunks?: ReferencedChunk[];
 
   /**
    * Message constructor. Initializes the properties and applies default Protobuf values if necessary
@@ -1800,31 +10587,37 @@ export class QueryResult implements GrpcMessage {
     this.speechRecognitionConfidence = _value.speechRecognitionConfidence;
     this.action = _value.action;
     this.parameters = _value.parameters
-      ? new googleProtobuf010.Struct(_value.parameters)
+      ? new googleProtobuf004.Struct(_value.parameters)
       : undefined;
     this.allRequiredParamsPresent = _value.allRequiredParamsPresent;
     this.fulfillmentText = _value.fulfillmentText;
     this.fulfillmentMessages = (_value.fulfillmentMessages || []).map(
-      m => new ondewoNlu013.Intent.Message(m)
+      m => new ondewoNlu015.Intent.Message(m)
     );
     this.webhookSource = _value.webhookSource;
     this.webhookPayload = _value.webhookPayload
-      ? new googleProtobuf010.Struct(_value.webhookPayload)
+      ? new googleProtobuf004.Struct(_value.webhookPayload)
       : undefined;
     this.outputContexts = (_value.outputContexts || []).map(
-      m => new ondewoNlu007.Context(m)
+      m => new ondewoNlu010.Context(m)
     );
     this.intent = _value.intent
-      ? new ondewoNlu013.Intent(_value.intent)
+      ? new ondewoNlu015.Intent(_value.intent)
       : undefined;
     this.intentDetectionConfidence = _value.intentDetectionConfidence;
     this.queryTextOriginal = _value.queryTextOriginal;
     this.diagnosticInfo = _value.diagnosticInfo
-      ? new googleProtobuf010.Struct(_value.diagnosticInfo)
+      ? new googleProtobuf004.Struct(_value.diagnosticInfo)
       : undefined;
     this.languageCode = _value.languageCode;
     this.fileResources = (_value.fileResources || []).map(
       m => new FileResource(m)
+    );
+    this.llmTelemetryReport = _value.llmTelemetryReport
+      ? new LlmTelemetryReport(_value.llmTelemetryReport)
+      : undefined;
+    this.referencedChunks = (_value.referencedChunks || []).map(
+      m => new ReferencedChunk(m)
     );
     QueryResult.refineValues(this);
   }
@@ -1846,10 +10639,10 @@ export class QueryResult implements GrpcMessage {
   set action(value: string) {
     this._action = value;
   }
-  get parameters(): googleProtobuf010.Struct | undefined {
+  get parameters(): googleProtobuf004.Struct | undefined {
     return this._parameters;
   }
-  set parameters(value: googleProtobuf010.Struct | undefined) {
+  set parameters(value: googleProtobuf004.Struct | undefined) {
     this._parameters = value;
   }
   get allRequiredParamsPresent(): boolean {
@@ -1864,10 +10657,10 @@ export class QueryResult implements GrpcMessage {
   set fulfillmentText(value: string) {
     this._fulfillmentText = value;
   }
-  get fulfillmentMessages(): ondewoNlu013.Intent.Message[] | undefined {
+  get fulfillmentMessages(): ondewoNlu015.Intent.Message[] | undefined {
     return this._fulfillmentMessages;
   }
-  set fulfillmentMessages(value: ondewoNlu013.Intent.Message[] | undefined) {
+  set fulfillmentMessages(value: ondewoNlu015.Intent.Message[] | undefined) {
     this._fulfillmentMessages = value;
   }
   get webhookSource(): string {
@@ -1876,22 +10669,22 @@ export class QueryResult implements GrpcMessage {
   set webhookSource(value: string) {
     this._webhookSource = value;
   }
-  get webhookPayload(): googleProtobuf010.Struct | undefined {
+  get webhookPayload(): googleProtobuf004.Struct | undefined {
     return this._webhookPayload;
   }
-  set webhookPayload(value: googleProtobuf010.Struct | undefined) {
+  set webhookPayload(value: googleProtobuf004.Struct | undefined) {
     this._webhookPayload = value;
   }
-  get outputContexts(): ondewoNlu007.Context[] | undefined {
+  get outputContexts(): ondewoNlu010.Context[] | undefined {
     return this._outputContexts;
   }
-  set outputContexts(value: ondewoNlu007.Context[] | undefined) {
+  set outputContexts(value: ondewoNlu010.Context[] | undefined) {
     this._outputContexts = value;
   }
-  get intent(): ondewoNlu013.Intent | undefined {
+  get intent(): ondewoNlu015.Intent | undefined {
     return this._intent;
   }
-  set intent(value: ondewoNlu013.Intent | undefined) {
+  set intent(value: ondewoNlu015.Intent | undefined) {
     this._intent = value;
   }
   get intentDetectionConfidence(): number {
@@ -1906,10 +10699,10 @@ export class QueryResult implements GrpcMessage {
   set queryTextOriginal(value: string) {
     this._queryTextOriginal = value;
   }
-  get diagnosticInfo(): googleProtobuf010.Struct | undefined {
+  get diagnosticInfo(): googleProtobuf004.Struct | undefined {
     return this._diagnosticInfo;
   }
-  set diagnosticInfo(value: googleProtobuf010.Struct | undefined) {
+  set diagnosticInfo(value: googleProtobuf004.Struct | undefined) {
     this._diagnosticInfo = value;
   }
   get languageCode(): string {
@@ -1923,6 +10716,18 @@ export class QueryResult implements GrpcMessage {
   }
   set fileResources(value: FileResource[] | undefined) {
     this._fileResources = value;
+  }
+  get llmTelemetryReport(): LlmTelemetryReport | undefined {
+    return this._llmTelemetryReport;
+  }
+  set llmTelemetryReport(value: LlmTelemetryReport | undefined) {
+    this._llmTelemetryReport = value;
+  }
+  get referencedChunks(): ReferencedChunk[] | undefined {
+    return this._referencedChunks;
+  }
+  set referencedChunks(value: ReferencedChunk[] | undefined) {
+    this._referencedChunks = value;
   }
 
   /**
@@ -1961,7 +10766,11 @@ export class QueryResult implements GrpcMessage {
         ? this.diagnosticInfo.toObject()
         : undefined,
       languageCode: this.languageCode,
-      fileResources: (this.fileResources || []).map(m => m.toObject())
+      fileResources: (this.fileResources || []).map(m => m.toObject()),
+      llmTelemetryReport: this.llmTelemetryReport
+        ? this.llmTelemetryReport.toObject()
+        : undefined,
+      referencedChunks: (this.referencedChunks || []).map(m => m.toObject())
     };
   }
 
@@ -2009,6 +10818,12 @@ export class QueryResult implements GrpcMessage {
       languageCode: this.languageCode,
       fileResources: (this.fileResources || []).map(m =>
         m.toProtobufJSON(options)
+      ),
+      llmTelemetryReport: this.llmTelemetryReport
+        ? this.llmTelemetryReport.toProtobufJSON(options)
+        : null,
+      referencedChunks: (this.referencedChunks || []).map(m =>
+        m.toProtobufJSON(options)
       )
     };
   }
@@ -2021,19 +10836,21 @@ export module QueryResult {
     queryText: string;
     speechRecognitionConfidence: number;
     action: string;
-    parameters?: googleProtobuf010.Struct.AsObject;
+    parameters?: googleProtobuf004.Struct.AsObject;
     allRequiredParamsPresent: boolean;
     fulfillmentText: string;
-    fulfillmentMessages?: ondewoNlu013.Intent.Message.AsObject[];
+    fulfillmentMessages?: ondewoNlu015.Intent.Message.AsObject[];
     webhookSource: string;
-    webhookPayload?: googleProtobuf010.Struct.AsObject;
-    outputContexts?: ondewoNlu007.Context.AsObject[];
-    intent?: ondewoNlu013.Intent.AsObject;
+    webhookPayload?: googleProtobuf004.Struct.AsObject;
+    outputContexts?: ondewoNlu010.Context.AsObject[];
+    intent?: ondewoNlu015.Intent.AsObject;
     intentDetectionConfidence: number;
     queryTextOriginal: string;
-    diagnosticInfo?: googleProtobuf010.Struct.AsObject;
+    diagnosticInfo?: googleProtobuf004.Struct.AsObject;
     languageCode: string;
     fileResources?: FileResource.AsObject[];
+    llmTelemetryReport?: LlmTelemetryReport.AsObject;
+    referencedChunks?: ReferencedChunk.AsObject[];
   }
 
   /**
@@ -2043,19 +10860,21 @@ export module QueryResult {
     queryText: string;
     speechRecognitionConfidence: number;
     action: string;
-    parameters: googleProtobuf010.Struct.AsProtobufJSON | null;
+    parameters: googleProtobuf004.Struct.AsProtobufJSON | null;
     allRequiredParamsPresent: boolean;
     fulfillmentText: string;
-    fulfillmentMessages: ondewoNlu013.Intent.Message.AsProtobufJSON[] | null;
+    fulfillmentMessages: ondewoNlu015.Intent.Message.AsProtobufJSON[] | null;
     webhookSource: string;
-    webhookPayload: googleProtobuf010.Struct.AsProtobufJSON | null;
-    outputContexts: ondewoNlu007.Context.AsProtobufJSON[] | null;
-    intent: ondewoNlu013.Intent.AsProtobufJSON | null;
+    webhookPayload: googleProtobuf004.Struct.AsProtobufJSON | null;
+    outputContexts: ondewoNlu010.Context.AsProtobufJSON[] | null;
+    intent: ondewoNlu015.Intent.AsProtobufJSON | null;
     intentDetectionConfidence: number;
     queryTextOriginal: string;
-    diagnosticInfo: googleProtobuf010.Struct.AsProtobufJSON | null;
+    diagnosticInfo: googleProtobuf004.Struct.AsProtobufJSON | null;
     languageCode: string;
     fileResources: FileResource.AsProtobufJSON[] | null;
+    llmTelemetryReport: LlmTelemetryReport.AsProtobufJSON | null;
+    referencedChunks: ReferencedChunk.AsProtobufJSON[] | null;
   }
 }
 
@@ -2369,6 +11188,48 @@ export class StreamingDetectIntentResponse implements GrpcMessage {
             googleRpc011.Status.deserializeBinaryFromReader
           );
           break;
+        case 5:
+          _instance.llmCallStarted = new LlmCallStartedEvent();
+          _reader.readMessage(
+            _instance.llmCallStarted,
+            LlmCallStartedEvent.deserializeBinaryFromReader
+          );
+          break;
+        case 6:
+          _instance.llmCallFinished = new LlmCallFinishedEvent();
+          _reader.readMessage(
+            _instance.llmCallFinished,
+            LlmCallFinishedEvent.deserializeBinaryFromReader
+          );
+          break;
+        case 7:
+          _instance.llmToolCallStarted = new LlmToolCallStartedEvent();
+          _reader.readMessage(
+            _instance.llmToolCallStarted,
+            LlmToolCallStartedEvent.deserializeBinaryFromReader
+          );
+          break;
+        case 8:
+          _instance.llmToolCallFinished = new LlmToolCallFinishedEvent();
+          _reader.readMessage(
+            _instance.llmToolCallFinished,
+            LlmToolCallFinishedEvent.deserializeBinaryFromReader
+          );
+          break;
+        case 9:
+          _instance.llmThinkingDelta = new LlmThinkingDeltaEvent();
+          _reader.readMessage(
+            _instance.llmThinkingDelta,
+            LlmThinkingDeltaEvent.deserializeBinaryFromReader
+          );
+          break;
+        case 10:
+          _instance.llmTokenUsageUpdate = new LlmTokenUsageUpdateEvent();
+          _reader.readMessage(
+            _instance.llmTokenUsageUpdate,
+            LlmTokenUsageUpdateEvent.deserializeBinaryFromReader
+          );
+          break;
         default:
           _reader.skipField();
       }
@@ -2410,12 +11271,63 @@ export class StreamingDetectIntentResponse implements GrpcMessage {
         googleRpc011.Status.serializeBinaryToWriter
       );
     }
+    if (_instance.llmCallStarted) {
+      _writer.writeMessage(
+        5,
+        _instance.llmCallStarted as any,
+        LlmCallStartedEvent.serializeBinaryToWriter
+      );
+    }
+    if (_instance.llmCallFinished) {
+      _writer.writeMessage(
+        6,
+        _instance.llmCallFinished as any,
+        LlmCallFinishedEvent.serializeBinaryToWriter
+      );
+    }
+    if (_instance.llmToolCallStarted) {
+      _writer.writeMessage(
+        7,
+        _instance.llmToolCallStarted as any,
+        LlmToolCallStartedEvent.serializeBinaryToWriter
+      );
+    }
+    if (_instance.llmToolCallFinished) {
+      _writer.writeMessage(
+        8,
+        _instance.llmToolCallFinished as any,
+        LlmToolCallFinishedEvent.serializeBinaryToWriter
+      );
+    }
+    if (_instance.llmThinkingDelta) {
+      _writer.writeMessage(
+        9,
+        _instance.llmThinkingDelta as any,
+        LlmThinkingDeltaEvent.serializeBinaryToWriter
+      );
+    }
+    if (_instance.llmTokenUsageUpdate) {
+      _writer.writeMessage(
+        10,
+        _instance.llmTokenUsageUpdate as any,
+        LlmTokenUsageUpdateEvent.serializeBinaryToWriter
+      );
+    }
   }
 
   private _responseId: string;
   private _recognitionResult?: StreamingRecognitionResult;
   private _queryResult?: QueryResult;
   private _webhookStatus?: googleRpc011.Status;
+  private _llmCallStarted?: LlmCallStartedEvent;
+  private _llmCallFinished?: LlmCallFinishedEvent;
+  private _llmToolCallStarted?: LlmToolCallStartedEvent;
+  private _llmToolCallFinished?: LlmToolCallFinishedEvent;
+  private _llmThinkingDelta?: LlmThinkingDeltaEvent;
+  private _llmTokenUsageUpdate?: LlmTokenUsageUpdateEvent;
+
+  private _telemetryEvent: StreamingDetectIntentResponse.TelemetryEventCase =
+    StreamingDetectIntentResponse.TelemetryEventCase.none;
 
   /**
    * Message constructor. Initializes the properties and applies default Protobuf values if necessary
@@ -2434,6 +11346,24 @@ export class StreamingDetectIntentResponse implements GrpcMessage {
       : undefined;
     this.webhookStatus = _value.webhookStatus
       ? new googleRpc011.Status(_value.webhookStatus)
+      : undefined;
+    this.llmCallStarted = _value.llmCallStarted
+      ? new LlmCallStartedEvent(_value.llmCallStarted)
+      : undefined;
+    this.llmCallFinished = _value.llmCallFinished
+      ? new LlmCallFinishedEvent(_value.llmCallFinished)
+      : undefined;
+    this.llmToolCallStarted = _value.llmToolCallStarted
+      ? new LlmToolCallStartedEvent(_value.llmToolCallStarted)
+      : undefined;
+    this.llmToolCallFinished = _value.llmToolCallFinished
+      ? new LlmToolCallFinishedEvent(_value.llmToolCallFinished)
+      : undefined;
+    this.llmThinkingDelta = _value.llmThinkingDelta
+      ? new LlmThinkingDeltaEvent(_value.llmThinkingDelta)
+      : undefined;
+    this.llmTokenUsageUpdate = _value.llmTokenUsageUpdate
+      ? new LlmTokenUsageUpdateEvent(_value.llmTokenUsageUpdate)
       : undefined;
     StreamingDetectIntentResponse.refineValues(this);
   }
@@ -2461,6 +11391,75 @@ export class StreamingDetectIntentResponse implements GrpcMessage {
   set webhookStatus(value: googleRpc011.Status | undefined) {
     this._webhookStatus = value;
   }
+  get llmCallStarted(): LlmCallStartedEvent | undefined {
+    return this._llmCallStarted;
+  }
+  set llmCallStarted(value: LlmCallStartedEvent | undefined) {
+    if (value !== undefined && value !== null) {
+      this._llmCallFinished = this._llmToolCallStarted = this._llmToolCallFinished = this._llmThinkingDelta = this._llmTokenUsageUpdate = undefined;
+      this._telemetryEvent =
+        StreamingDetectIntentResponse.TelemetryEventCase.llmCallStarted;
+    }
+    this._llmCallStarted = value;
+  }
+  get llmCallFinished(): LlmCallFinishedEvent | undefined {
+    return this._llmCallFinished;
+  }
+  set llmCallFinished(value: LlmCallFinishedEvent | undefined) {
+    if (value !== undefined && value !== null) {
+      this._llmCallStarted = this._llmToolCallStarted = this._llmToolCallFinished = this._llmThinkingDelta = this._llmTokenUsageUpdate = undefined;
+      this._telemetryEvent =
+        StreamingDetectIntentResponse.TelemetryEventCase.llmCallFinished;
+    }
+    this._llmCallFinished = value;
+  }
+  get llmToolCallStarted(): LlmToolCallStartedEvent | undefined {
+    return this._llmToolCallStarted;
+  }
+  set llmToolCallStarted(value: LlmToolCallStartedEvent | undefined) {
+    if (value !== undefined && value !== null) {
+      this._llmCallStarted = this._llmCallFinished = this._llmToolCallFinished = this._llmThinkingDelta = this._llmTokenUsageUpdate = undefined;
+      this._telemetryEvent =
+        StreamingDetectIntentResponse.TelemetryEventCase.llmToolCallStarted;
+    }
+    this._llmToolCallStarted = value;
+  }
+  get llmToolCallFinished(): LlmToolCallFinishedEvent | undefined {
+    return this._llmToolCallFinished;
+  }
+  set llmToolCallFinished(value: LlmToolCallFinishedEvent | undefined) {
+    if (value !== undefined && value !== null) {
+      this._llmCallStarted = this._llmCallFinished = this._llmToolCallStarted = this._llmThinkingDelta = this._llmTokenUsageUpdate = undefined;
+      this._telemetryEvent =
+        StreamingDetectIntentResponse.TelemetryEventCase.llmToolCallFinished;
+    }
+    this._llmToolCallFinished = value;
+  }
+  get llmThinkingDelta(): LlmThinkingDeltaEvent | undefined {
+    return this._llmThinkingDelta;
+  }
+  set llmThinkingDelta(value: LlmThinkingDeltaEvent | undefined) {
+    if (value !== undefined && value !== null) {
+      this._llmCallStarted = this._llmCallFinished = this._llmToolCallStarted = this._llmToolCallFinished = this._llmTokenUsageUpdate = undefined;
+      this._telemetryEvent =
+        StreamingDetectIntentResponse.TelemetryEventCase.llmThinkingDelta;
+    }
+    this._llmThinkingDelta = value;
+  }
+  get llmTokenUsageUpdate(): LlmTokenUsageUpdateEvent | undefined {
+    return this._llmTokenUsageUpdate;
+  }
+  set llmTokenUsageUpdate(value: LlmTokenUsageUpdateEvent | undefined) {
+    if (value !== undefined && value !== null) {
+      this._llmCallStarted = this._llmCallFinished = this._llmToolCallStarted = this._llmToolCallFinished = this._llmThinkingDelta = undefined;
+      this._telemetryEvent =
+        StreamingDetectIntentResponse.TelemetryEventCase.llmTokenUsageUpdate;
+    }
+    this._llmTokenUsageUpdate = value;
+  }
+  get telemetryEvent() {
+    return this._telemetryEvent;
+  }
 
   /**
    * Serialize message to binary data
@@ -2484,6 +11483,24 @@ export class StreamingDetectIntentResponse implements GrpcMessage {
       queryResult: this.queryResult ? this.queryResult.toObject() : undefined,
       webhookStatus: this.webhookStatus
         ? this.webhookStatus.toObject()
+        : undefined,
+      llmCallStarted: this.llmCallStarted
+        ? this.llmCallStarted.toObject()
+        : undefined,
+      llmCallFinished: this.llmCallFinished
+        ? this.llmCallFinished.toObject()
+        : undefined,
+      llmToolCallStarted: this.llmToolCallStarted
+        ? this.llmToolCallStarted.toObject()
+        : undefined,
+      llmToolCallFinished: this.llmToolCallFinished
+        ? this.llmToolCallFinished.toObject()
+        : undefined,
+      llmThinkingDelta: this.llmThinkingDelta
+        ? this.llmThinkingDelta.toObject()
+        : undefined,
+      llmTokenUsageUpdate: this.llmTokenUsageUpdate
+        ? this.llmTokenUsageUpdate.toObject()
         : undefined
     };
   }
@@ -2514,6 +11531,24 @@ export class StreamingDetectIntentResponse implements GrpcMessage {
         : null,
       webhookStatus: this.webhookStatus
         ? this.webhookStatus.toProtobufJSON(options)
+        : null,
+      llmCallStarted: this.llmCallStarted
+        ? this.llmCallStarted.toProtobufJSON(options)
+        : null,
+      llmCallFinished: this.llmCallFinished
+        ? this.llmCallFinished.toProtobufJSON(options)
+        : null,
+      llmToolCallStarted: this.llmToolCallStarted
+        ? this.llmToolCallStarted.toProtobufJSON(options)
+        : null,
+      llmToolCallFinished: this.llmToolCallFinished
+        ? this.llmToolCallFinished.toProtobufJSON(options)
+        : null,
+      llmThinkingDelta: this.llmThinkingDelta
+        ? this.llmThinkingDelta.toProtobufJSON(options)
+        : null,
+      llmTokenUsageUpdate: this.llmTokenUsageUpdate
+        ? this.llmTokenUsageUpdate.toProtobufJSON(options)
         : null
     };
   }
@@ -2527,6 +11562,12 @@ export module StreamingDetectIntentResponse {
     recognitionResult?: StreamingRecognitionResult.AsObject;
     queryResult?: QueryResult.AsObject;
     webhookStatus?: googleRpc011.Status.AsObject;
+    llmCallStarted?: LlmCallStartedEvent.AsObject;
+    llmCallFinished?: LlmCallFinishedEvent.AsObject;
+    llmToolCallStarted?: LlmToolCallStartedEvent.AsObject;
+    llmToolCallFinished?: LlmToolCallFinishedEvent.AsObject;
+    llmThinkingDelta?: LlmThinkingDeltaEvent.AsObject;
+    llmTokenUsageUpdate?: LlmTokenUsageUpdateEvent.AsObject;
   }
 
   /**
@@ -2537,6 +11578,21 @@ export module StreamingDetectIntentResponse {
     recognitionResult: StreamingRecognitionResult.AsProtobufJSON | null;
     queryResult: QueryResult.AsProtobufJSON | null;
     webhookStatus: googleRpc011.Status.AsProtobufJSON | null;
+    llmCallStarted: LlmCallStartedEvent.AsProtobufJSON | null;
+    llmCallFinished: LlmCallFinishedEvent.AsProtobufJSON | null;
+    llmToolCallStarted: LlmToolCallStartedEvent.AsProtobufJSON | null;
+    llmToolCallFinished: LlmToolCallFinishedEvent.AsProtobufJSON | null;
+    llmThinkingDelta: LlmThinkingDeltaEvent.AsProtobufJSON | null;
+    llmTokenUsageUpdate: LlmTokenUsageUpdateEvent.AsProtobufJSON | null;
+  }
+  export enum TelemetryEventCase {
+    none = 0,
+    llmCallStarted = 1,
+    llmCallFinished = 2,
+    llmToolCallStarted = 3,
+    llmToolCallFinished = 4,
+    llmThinkingDelta = 5,
+    llmTokenUsageUpdate = 6
   }
 }
 
@@ -3144,10 +12200,10 @@ export class EventInput implements GrpcMessage {
           _instance.name = _reader.readString();
           break;
         case 2:
-          _instance.parameters = new googleProtobuf010.Struct();
+          _instance.parameters = new googleProtobuf004.Struct();
           _reader.readMessage(
             _instance.parameters,
-            googleProtobuf010.Struct.deserializeBinaryFromReader
+            googleProtobuf004.Struct.deserializeBinaryFromReader
           );
           break;
         case 3:
@@ -3174,7 +12230,7 @@ export class EventInput implements GrpcMessage {
       _writer.writeMessage(
         2,
         _instance.parameters as any,
-        googleProtobuf010.Struct.serializeBinaryToWriter
+        googleProtobuf004.Struct.serializeBinaryToWriter
       );
     }
     if (_instance.languageCode) {
@@ -3183,7 +12239,7 @@ export class EventInput implements GrpcMessage {
   }
 
   private _name: string;
-  private _parameters?: googleProtobuf010.Struct;
+  private _parameters?: googleProtobuf004.Struct;
   private _languageCode: string;
 
   /**
@@ -3194,7 +12250,7 @@ export class EventInput implements GrpcMessage {
     _value = _value || {};
     this.name = _value.name;
     this.parameters = _value.parameters
-      ? new googleProtobuf010.Struct(_value.parameters)
+      ? new googleProtobuf004.Struct(_value.parameters)
       : undefined;
     this.languageCode = _value.languageCode;
     EventInput.refineValues(this);
@@ -3205,10 +12261,10 @@ export class EventInput implements GrpcMessage {
   set name(value: string) {
     this._name = value;
   }
-  get parameters(): googleProtobuf010.Struct | undefined {
+  get parameters(): googleProtobuf004.Struct | undefined {
     return this._parameters;
   }
-  set parameters(value: googleProtobuf010.Struct | undefined) {
+  set parameters(value: googleProtobuf004.Struct | undefined) {
     this._parameters = value;
   }
   get languageCode(): string {
@@ -3270,7 +12326,7 @@ export module EventInput {
    */
   export interface AsObject {
     name: string;
-    parameters?: googleProtobuf010.Struct.AsObject;
+    parameters?: googleProtobuf004.Struct.AsObject;
     languageCode: string;
   }
 
@@ -3279,7 +12335,7 @@ export module EventInput {
    */
   export interface AsProtobufJSON {
     name: string;
-    parameters: googleProtobuf010.Struct.AsProtobufJSON | null;
+    parameters: googleProtobuf004.Struct.AsProtobufJSON | null;
     languageCode: string;
   }
 }
@@ -3348,17 +12404,17 @@ export class Session implements GrpcMessage {
           );
           break;
         case 4:
-          _instance.createdAt = new googleProtobuf004.Timestamp();
+          _instance.createdAt = new googleProtobuf005.Timestamp();
           _reader.readMessage(
             _instance.createdAt,
-            googleProtobuf004.Timestamp.deserializeBinaryFromReader
+            googleProtobuf005.Timestamp.deserializeBinaryFromReader
           );
           break;
         case 5:
-          _instance.modifiedAt = new googleProtobuf004.Timestamp();
+          _instance.modifiedAt = new googleProtobuf005.Timestamp();
           _reader.readMessage(
             _instance.modifiedAt,
-            googleProtobuf004.Timestamp.deserializeBinaryFromReader
+            googleProtobuf005.Timestamp.deserializeBinaryFromReader
           );
           break;
         case 6:
@@ -3402,14 +12458,14 @@ export class Session implements GrpcMessage {
       _writer.writeMessage(
         4,
         _instance.createdAt as any,
-        googleProtobuf004.Timestamp.serializeBinaryToWriter
+        googleProtobuf005.Timestamp.serializeBinaryToWriter
       );
     }
     if (_instance.modifiedAt) {
       _writer.writeMessage(
         5,
         _instance.modifiedAt as any,
-        googleProtobuf004.Timestamp.serializeBinaryToWriter
+        googleProtobuf005.Timestamp.serializeBinaryToWriter
       );
     }
     if (_instance.createdBy) {
@@ -3423,8 +12479,8 @@ export class Session implements GrpcMessage {
   private _name: string;
   private _sessionSteps?: SessionStep[];
   private _sessionInfo?: SessionInfo;
-  private _createdAt?: googleProtobuf004.Timestamp;
-  private _modifiedAt?: googleProtobuf004.Timestamp;
+  private _createdAt?: googleProtobuf005.Timestamp;
+  private _modifiedAt?: googleProtobuf005.Timestamp;
   private _createdBy: string;
   private _modifiedBy: string;
 
@@ -3442,10 +12498,10 @@ export class Session implements GrpcMessage {
       ? new SessionInfo(_value.sessionInfo)
       : undefined;
     this.createdAt = _value.createdAt
-      ? new googleProtobuf004.Timestamp(_value.createdAt)
+      ? new googleProtobuf005.Timestamp(_value.createdAt)
       : undefined;
     this.modifiedAt = _value.modifiedAt
-      ? new googleProtobuf004.Timestamp(_value.modifiedAt)
+      ? new googleProtobuf005.Timestamp(_value.modifiedAt)
       : undefined;
     this.createdBy = _value.createdBy;
     this.modifiedBy = _value.modifiedBy;
@@ -3469,16 +12525,16 @@ export class Session implements GrpcMessage {
   set sessionInfo(value: SessionInfo | undefined) {
     this._sessionInfo = value;
   }
-  get createdAt(): googleProtobuf004.Timestamp | undefined {
+  get createdAt(): googleProtobuf005.Timestamp | undefined {
     return this._createdAt;
   }
-  set createdAt(value: googleProtobuf004.Timestamp | undefined) {
+  set createdAt(value: googleProtobuf005.Timestamp | undefined) {
     this._createdAt = value;
   }
-  get modifiedAt(): googleProtobuf004.Timestamp | undefined {
+  get modifiedAt(): googleProtobuf005.Timestamp | undefined {
     return this._modifiedAt;
   }
-  set modifiedAt(value: googleProtobuf004.Timestamp | undefined) {
+  set modifiedAt(value: googleProtobuf005.Timestamp | undefined) {
     this._modifiedAt = value;
   }
   get createdBy(): string {
@@ -3560,8 +12616,8 @@ export module Session {
     name: string;
     sessionSteps?: SessionStep.AsObject[];
     sessionInfo?: SessionInfo.AsObject;
-    createdAt?: googleProtobuf004.Timestamp.AsObject;
-    modifiedAt?: googleProtobuf004.Timestamp.AsObject;
+    createdAt?: googleProtobuf005.Timestamp.AsObject;
+    modifiedAt?: googleProtobuf005.Timestamp.AsObject;
     createdBy: string;
     modifiedBy: string;
   }
@@ -3573,8 +12629,8 @@ export module Session {
     name: string;
     sessionSteps: SessionStep.AsProtobufJSON[] | null;
     sessionInfo: SessionInfo.AsProtobufJSON | null;
-    createdAt: googleProtobuf004.Timestamp.AsProtobufJSON | null;
-    modifiedAt: googleProtobuf004.Timestamp.AsProtobufJSON | null;
+    createdAt: googleProtobuf005.Timestamp.AsProtobufJSON | null;
+    modifiedAt: googleProtobuf005.Timestamp.AsProtobufJSON | null;
     createdBy: string;
     modifiedBy: string;
   }
@@ -3617,6 +12673,7 @@ export class SessionStep implements GrpcMessage {
     _instance.createdBy = _instance.createdBy || '';
     _instance.modifiedBy = _instance.modifiedBy || '';
     _instance.audioFileResources = _instance.audioFileResources || [];
+    _instance.llmTelemetryReport = _instance.llmTelemetryReport || undefined;
   }
 
   /**
@@ -3650,34 +12707,34 @@ export class SessionStep implements GrpcMessage {
           );
           break;
         case 4:
-          const messageInitializer4 = new ondewoNlu007.Context();
+          const messageInitializer4 = new ondewoNlu010.Context();
           _reader.readMessage(
             messageInitializer4,
-            ondewoNlu007.Context.deserializeBinaryFromReader
+            ondewoNlu010.Context.deserializeBinaryFromReader
           );
           (_instance.contexts = _instance.contexts || []).push(
             messageInitializer4
           );
           break;
         case 5:
-          _instance.timestamp = new googleProtobuf004.Timestamp();
+          _instance.timestamp = new googleProtobuf005.Timestamp();
           _reader.readMessage(
             _instance.timestamp,
-            googleProtobuf004.Timestamp.deserializeBinaryFromReader
+            googleProtobuf005.Timestamp.deserializeBinaryFromReader
           );
           break;
         case 6:
-          _instance.createdAt = new googleProtobuf004.Timestamp();
+          _instance.createdAt = new googleProtobuf005.Timestamp();
           _reader.readMessage(
             _instance.createdAt,
-            googleProtobuf004.Timestamp.deserializeBinaryFromReader
+            googleProtobuf005.Timestamp.deserializeBinaryFromReader
           );
           break;
         case 7:
-          _instance.modifiedAt = new googleProtobuf004.Timestamp();
+          _instance.modifiedAt = new googleProtobuf005.Timestamp();
           _reader.readMessage(
             _instance.modifiedAt,
-            googleProtobuf004.Timestamp.deserializeBinaryFromReader
+            googleProtobuf005.Timestamp.deserializeBinaryFromReader
           );
           break;
         case 8:
@@ -3694,6 +12751,13 @@ export class SessionStep implements GrpcMessage {
           );
           (_instance.audioFileResources =
             _instance.audioFileResources || []).push(messageInitializer10);
+          break;
+        case 11:
+          _instance.llmTelemetryReport = new LlmTelemetryReport();
+          _reader.readMessage(
+            _instance.llmTelemetryReport,
+            LlmTelemetryReport.deserializeBinaryFromReader
+          );
           break;
         default:
           _reader.skipField();
@@ -3733,28 +12797,28 @@ export class SessionStep implements GrpcMessage {
       _writer.writeRepeatedMessage(
         4,
         _instance.contexts as any,
-        ondewoNlu007.Context.serializeBinaryToWriter
+        ondewoNlu010.Context.serializeBinaryToWriter
       );
     }
     if (_instance.timestamp) {
       _writer.writeMessage(
         5,
         _instance.timestamp as any,
-        googleProtobuf004.Timestamp.serializeBinaryToWriter
+        googleProtobuf005.Timestamp.serializeBinaryToWriter
       );
     }
     if (_instance.createdAt) {
       _writer.writeMessage(
         6,
         _instance.createdAt as any,
-        googleProtobuf004.Timestamp.serializeBinaryToWriter
+        googleProtobuf005.Timestamp.serializeBinaryToWriter
       );
     }
     if (_instance.modifiedAt) {
       _writer.writeMessage(
         7,
         _instance.modifiedAt as any,
-        googleProtobuf004.Timestamp.serializeBinaryToWriter
+        googleProtobuf005.Timestamp.serializeBinaryToWriter
       );
     }
     if (_instance.createdBy) {
@@ -3770,18 +12834,26 @@ export class SessionStep implements GrpcMessage {
         AudioFileResource.serializeBinaryToWriter
       );
     }
+    if (_instance.llmTelemetryReport) {
+      _writer.writeMessage(
+        11,
+        _instance.llmTelemetryReport as any,
+        LlmTelemetryReport.serializeBinaryToWriter
+      );
+    }
   }
 
   private _name: string;
   private _detectIntentRequest?: DetectIntentRequest;
   private _detectIntentResponse?: DetectIntentResponse;
-  private _contexts?: ondewoNlu007.Context[];
-  private _timestamp?: googleProtobuf004.Timestamp;
-  private _createdAt?: googleProtobuf004.Timestamp;
-  private _modifiedAt?: googleProtobuf004.Timestamp;
+  private _contexts?: ondewoNlu010.Context[];
+  private _timestamp?: googleProtobuf005.Timestamp;
+  private _createdAt?: googleProtobuf005.Timestamp;
+  private _modifiedAt?: googleProtobuf005.Timestamp;
   private _createdBy: string;
   private _modifiedBy: string;
   private _audioFileResources?: AudioFileResource[];
+  private _llmTelemetryReport?: LlmTelemetryReport;
 
   /**
    * Message constructor. Initializes the properties and applies default Protobuf values if necessary
@@ -3797,22 +12869,25 @@ export class SessionStep implements GrpcMessage {
       ? new DetectIntentResponse(_value.detectIntentResponse)
       : undefined;
     this.contexts = (_value.contexts || []).map(
-      m => new ondewoNlu007.Context(m)
+      m => new ondewoNlu010.Context(m)
     );
     this.timestamp = _value.timestamp
-      ? new googleProtobuf004.Timestamp(_value.timestamp)
+      ? new googleProtobuf005.Timestamp(_value.timestamp)
       : undefined;
     this.createdAt = _value.createdAt
-      ? new googleProtobuf004.Timestamp(_value.createdAt)
+      ? new googleProtobuf005.Timestamp(_value.createdAt)
       : undefined;
     this.modifiedAt = _value.modifiedAt
-      ? new googleProtobuf004.Timestamp(_value.modifiedAt)
+      ? new googleProtobuf005.Timestamp(_value.modifiedAt)
       : undefined;
     this.createdBy = _value.createdBy;
     this.modifiedBy = _value.modifiedBy;
     this.audioFileResources = (_value.audioFileResources || []).map(
       m => new AudioFileResource(m)
     );
+    this.llmTelemetryReport = _value.llmTelemetryReport
+      ? new LlmTelemetryReport(_value.llmTelemetryReport)
+      : undefined;
     SessionStep.refineValues(this);
   }
   get name(): string {
@@ -3833,28 +12908,28 @@ export class SessionStep implements GrpcMessage {
   set detectIntentResponse(value: DetectIntentResponse | undefined) {
     this._detectIntentResponse = value;
   }
-  get contexts(): ondewoNlu007.Context[] | undefined {
+  get contexts(): ondewoNlu010.Context[] | undefined {
     return this._contexts;
   }
-  set contexts(value: ondewoNlu007.Context[] | undefined) {
+  set contexts(value: ondewoNlu010.Context[] | undefined) {
     this._contexts = value;
   }
-  get timestamp(): googleProtobuf004.Timestamp | undefined {
+  get timestamp(): googleProtobuf005.Timestamp | undefined {
     return this._timestamp;
   }
-  set timestamp(value: googleProtobuf004.Timestamp | undefined) {
+  set timestamp(value: googleProtobuf005.Timestamp | undefined) {
     this._timestamp = value;
   }
-  get createdAt(): googleProtobuf004.Timestamp | undefined {
+  get createdAt(): googleProtobuf005.Timestamp | undefined {
     return this._createdAt;
   }
-  set createdAt(value: googleProtobuf004.Timestamp | undefined) {
+  set createdAt(value: googleProtobuf005.Timestamp | undefined) {
     this._createdAt = value;
   }
-  get modifiedAt(): googleProtobuf004.Timestamp | undefined {
+  get modifiedAt(): googleProtobuf005.Timestamp | undefined {
     return this._modifiedAt;
   }
-  set modifiedAt(value: googleProtobuf004.Timestamp | undefined) {
+  set modifiedAt(value: googleProtobuf005.Timestamp | undefined) {
     this._modifiedAt = value;
   }
   get createdBy(): string {
@@ -3874,6 +12949,12 @@ export class SessionStep implements GrpcMessage {
   }
   set audioFileResources(value: AudioFileResource[] | undefined) {
     this._audioFileResources = value;
+  }
+  get llmTelemetryReport(): LlmTelemetryReport | undefined {
+    return this._llmTelemetryReport;
+  }
+  set llmTelemetryReport(value: LlmTelemetryReport | undefined) {
+    this._llmTelemetryReport = value;
   }
 
   /**
@@ -3904,7 +12985,12 @@ export class SessionStep implements GrpcMessage {
       modifiedAt: this.modifiedAt ? this.modifiedAt.toObject() : undefined,
       createdBy: this.createdBy,
       modifiedBy: this.modifiedBy,
-      audioFileResources: (this.audioFileResources || []).map(m => m.toObject())
+      audioFileResources: (this.audioFileResources || []).map(m =>
+        m.toObject()
+      ),
+      llmTelemetryReport: this.llmTelemetryReport
+        ? this.llmTelemetryReport.toObject()
+        : undefined
     };
   }
 
@@ -3942,7 +13028,10 @@ export class SessionStep implements GrpcMessage {
       modifiedBy: this.modifiedBy,
       audioFileResources: (this.audioFileResources || []).map(m =>
         m.toProtobufJSON(options)
-      )
+      ),
+      llmTelemetryReport: this.llmTelemetryReport
+        ? this.llmTelemetryReport.toProtobufJSON(options)
+        : null
     };
   }
 }
@@ -3954,13 +13043,14 @@ export module SessionStep {
     name: string;
     detectIntentRequest?: DetectIntentRequest.AsObject;
     detectIntentResponse?: DetectIntentResponse.AsObject;
-    contexts?: ondewoNlu007.Context.AsObject[];
-    timestamp?: googleProtobuf004.Timestamp.AsObject;
-    createdAt?: googleProtobuf004.Timestamp.AsObject;
-    modifiedAt?: googleProtobuf004.Timestamp.AsObject;
+    contexts?: ondewoNlu010.Context.AsObject[];
+    timestamp?: googleProtobuf005.Timestamp.AsObject;
+    createdAt?: googleProtobuf005.Timestamp.AsObject;
+    modifiedAt?: googleProtobuf005.Timestamp.AsObject;
     createdBy: string;
     modifiedBy: string;
     audioFileResources?: AudioFileResource.AsObject[];
+    llmTelemetryReport?: LlmTelemetryReport.AsObject;
   }
 
   /**
@@ -3970,13 +13060,14 @@ export module SessionStep {
     name: string;
     detectIntentRequest: DetectIntentRequest.AsProtobufJSON | null;
     detectIntentResponse: DetectIntentResponse.AsProtobufJSON | null;
-    contexts: ondewoNlu007.Context.AsProtobufJSON[] | null;
-    timestamp: googleProtobuf004.Timestamp.AsProtobufJSON | null;
-    createdAt: googleProtobuf004.Timestamp.AsProtobufJSON | null;
-    modifiedAt: googleProtobuf004.Timestamp.AsProtobufJSON | null;
+    contexts: ondewoNlu010.Context.AsProtobufJSON[] | null;
+    timestamp: googleProtobuf005.Timestamp.AsProtobufJSON | null;
+    createdAt: googleProtobuf005.Timestamp.AsProtobufJSON | null;
+    modifiedAt: googleProtobuf005.Timestamp.AsProtobufJSON | null;
     createdBy: string;
     modifiedBy: string;
     audioFileResources: AudioFileResource.AsProtobufJSON[] | null;
+    llmTelemetryReport: LlmTelemetryReport.AsProtobufJSON | null;
   }
 }
 
@@ -5256,10 +14347,10 @@ export class SessionFilter implements GrpcMessage {
           );
           break;
         case 2:
-          const messageInitializer2 = new ondewoNlu013.Intent();
+          const messageInitializer2 = new ondewoNlu015.Intent();
           _reader.readMessage(
             messageInitializer2,
-            ondewoNlu013.Intent.deserializeBinaryFromReader
+            ondewoNlu015.Intent.deserializeBinaryFromReader
           );
           (_instance.matchedIntents = _instance.matchedIntents || []).push(
             messageInitializer2
@@ -5319,20 +14410,20 @@ export class SessionFilter implements GrpcMessage {
           );
           break;
         case 16:
-          const messageInitializer16 = new ondewoNlu007.Context();
+          const messageInitializer16 = new ondewoNlu010.Context();
           _reader.readMessage(
             messageInitializer16,
-            ondewoNlu007.Context.deserializeBinaryFromReader
+            ondewoNlu010.Context.deserializeBinaryFromReader
           );
           (_instance.inputContexts = _instance.inputContexts || []).push(
             messageInitializer16
           );
           break;
         case 17:
-          const messageInitializer17 = new ondewoNlu007.Context();
+          const messageInitializer17 = new ondewoNlu010.Context();
           _reader.readMessage(
             messageInitializer17,
-            ondewoNlu007.Context.deserializeBinaryFromReader
+            ondewoNlu010.Context.deserializeBinaryFromReader
           );
           (_instance.outputContexts = _instance.outputContexts || []).push(
             messageInitializer17
@@ -5469,7 +14560,7 @@ export class SessionFilter implements GrpcMessage {
       _writer.writeRepeatedMessage(
         2,
         _instance.matchedIntents as any,
-        ondewoNlu013.Intent.serializeBinaryToWriter
+        ondewoNlu015.Intent.serializeBinaryToWriter
       );
     }
     if (_instance.matchedEntityTypes && _instance.matchedEntityTypes.length) {
@@ -5519,14 +14610,14 @@ export class SessionFilter implements GrpcMessage {
       _writer.writeRepeatedMessage(
         16,
         _instance.inputContexts as any,
-        ondewoNlu007.Context.serializeBinaryToWriter
+        ondewoNlu010.Context.serializeBinaryToWriter
       );
     }
     if (_instance.outputContexts && _instance.outputContexts.length) {
       _writer.writeRepeatedMessage(
         17,
         _instance.outputContexts as any,
-        ondewoNlu007.Context.serializeBinaryToWriter
+        ondewoNlu010.Context.serializeBinaryToWriter
       );
     }
     if (_instance.durationInSMin) {
@@ -5628,7 +14719,7 @@ export class SessionFilter implements GrpcMessage {
   }
 
   private _languageCodes: string[];
-  private _matchedIntents?: ondewoNlu013.Intent[];
+  private _matchedIntents?: ondewoNlu015.Intent[];
   private _matchedEntityTypes?: ondewoNlu014.EntityType[];
   private _minIntentsConfidenceMin: number;
   private _minIntentsConfidenceMax: number;
@@ -5642,8 +14733,8 @@ export class SessionFilter implements GrpcMessage {
   private _userIds: string[];
   private _intentTags: string[];
   private _sessionIds: string[];
-  private _inputContexts?: ondewoNlu007.Context[];
-  private _outputContexts?: ondewoNlu007.Context[];
+  private _inputContexts?: ondewoNlu010.Context[];
+  private _outputContexts?: ondewoNlu010.Context[];
   private _durationInSMin: number;
   private _durationInSMax: number;
   private _durationInMMin: number;
@@ -5668,7 +14759,7 @@ export class SessionFilter implements GrpcMessage {
   private _startedTimeSlotPerMinuteMax: string;
   private _durationInSRoundedMin: number;
   private _durationInSRoundedMax: number;
-  private _platforms: ondewoNlu013.Intent.Message.Platform[];
+  private _platforms: ondewoNlu015.Intent.Message.Platform[];
   private _accountIds: string[];
   private _propertyIds: string[];
   private _datastreamIds: string[];
@@ -5685,7 +14776,7 @@ export class SessionFilter implements GrpcMessage {
     _value = _value || {};
     this.languageCodes = (_value.languageCodes || []).slice();
     this.matchedIntents = (_value.matchedIntents || []).map(
-      m => new ondewoNlu013.Intent(m)
+      m => new ondewoNlu015.Intent(m)
     );
     this.matchedEntityTypes = (_value.matchedEntityTypes || []).map(
       m => new ondewoNlu014.EntityType(m)
@@ -5703,10 +14794,10 @@ export class SessionFilter implements GrpcMessage {
     this.intentTags = (_value.intentTags || []).slice();
     this.sessionIds = (_value.sessionIds || []).slice();
     this.inputContexts = (_value.inputContexts || []).map(
-      m => new ondewoNlu007.Context(m)
+      m => new ondewoNlu010.Context(m)
     );
     this.outputContexts = (_value.outputContexts || []).map(
-      m => new ondewoNlu007.Context(m)
+      m => new ondewoNlu010.Context(m)
     );
     this.durationInSMin = _value.durationInSMin;
     this.durationInSMax = _value.durationInSMax;
@@ -5750,10 +14841,10 @@ export class SessionFilter implements GrpcMessage {
   set languageCodes(value: string[]) {
     this._languageCodes = value;
   }
-  get matchedIntents(): ondewoNlu013.Intent[] | undefined {
+  get matchedIntents(): ondewoNlu015.Intent[] | undefined {
     return this._matchedIntents;
   }
-  set matchedIntents(value: ondewoNlu013.Intent[] | undefined) {
+  set matchedIntents(value: ondewoNlu015.Intent[] | undefined) {
     this._matchedIntents = value;
   }
   get matchedEntityTypes(): ondewoNlu014.EntityType[] | undefined {
@@ -5834,16 +14925,16 @@ export class SessionFilter implements GrpcMessage {
   set sessionIds(value: string[]) {
     this._sessionIds = value;
   }
-  get inputContexts(): ondewoNlu007.Context[] | undefined {
+  get inputContexts(): ondewoNlu010.Context[] | undefined {
     return this._inputContexts;
   }
-  set inputContexts(value: ondewoNlu007.Context[] | undefined) {
+  set inputContexts(value: ondewoNlu010.Context[] | undefined) {
     this._inputContexts = value;
   }
-  get outputContexts(): ondewoNlu007.Context[] | undefined {
+  get outputContexts(): ondewoNlu010.Context[] | undefined {
     return this._outputContexts;
   }
-  set outputContexts(value: ondewoNlu007.Context[] | undefined) {
+  set outputContexts(value: ondewoNlu010.Context[] | undefined) {
     this._outputContexts = value;
   }
   get durationInSMin(): number {
@@ -5990,10 +15081,10 @@ export class SessionFilter implements GrpcMessage {
   set durationInSRoundedMax(value: number) {
     this._durationInSRoundedMax = value;
   }
-  get platforms(): ondewoNlu013.Intent.Message.Platform[] {
+  get platforms(): ondewoNlu015.Intent.Message.Platform[] {
     return this._platforms;
   }
-  set platforms(value: ondewoNlu013.Intent.Message.Platform[]) {
+  set platforms(value: ondewoNlu015.Intent.Message.Platform[]) {
     this._platforms = value;
   }
   get accountIds(): string[] {
@@ -6175,7 +15266,7 @@ export class SessionFilter implements GrpcMessage {
       durationInSRoundedMin: this.durationInSRoundedMin,
       durationInSRoundedMax: this.durationInSRoundedMax,
       platforms: (this.platforms || []).map(
-        v => ondewoNlu013.Intent.Message.Platform[v]
+        v => ondewoNlu015.Intent.Message.Platform[v]
       ),
       accountIds: (this.accountIds || []).slice(),
       propertyIds: (this.propertyIds || []).slice(),
@@ -6193,7 +15284,7 @@ export module SessionFilter {
    */
   export interface AsObject {
     languageCodes: string[];
-    matchedIntents?: ondewoNlu013.Intent.AsObject[];
+    matchedIntents?: ondewoNlu015.Intent.AsObject[];
     matchedEntityTypes?: ondewoNlu014.EntityType.AsObject[];
     minIntentsConfidenceMin: number;
     minIntentsConfidenceMax: number;
@@ -6207,8 +15298,8 @@ export module SessionFilter {
     userIds: string[];
     intentTags: string[];
     sessionIds: string[];
-    inputContexts?: ondewoNlu007.Context.AsObject[];
-    outputContexts?: ondewoNlu007.Context.AsObject[];
+    inputContexts?: ondewoNlu010.Context.AsObject[];
+    outputContexts?: ondewoNlu010.Context.AsObject[];
     durationInSMin: number;
     durationInSMax: number;
     durationInMMin: number;
@@ -6233,7 +15324,7 @@ export module SessionFilter {
     startedTimeSlotPerMinuteMax: string;
     durationInSRoundedMin: number;
     durationInSRoundedMax: number;
-    platforms: ondewoNlu013.Intent.Message.Platform[];
+    platforms: ondewoNlu015.Intent.Message.Platform[];
     accountIds: string[];
     propertyIds: string[];
     datastreamIds: string[];
@@ -6248,7 +15339,7 @@ export module SessionFilter {
    */
   export interface AsProtobufJSON {
     languageCodes: string[];
-    matchedIntents: ondewoNlu013.Intent.AsProtobufJSON[] | null;
+    matchedIntents: ondewoNlu015.Intent.AsProtobufJSON[] | null;
     matchedEntityTypes: ondewoNlu014.EntityType.AsProtobufJSON[] | null;
     minIntentsConfidenceMin: number;
     minIntentsConfidenceMax: number;
@@ -6262,8 +15353,8 @@ export module SessionFilter {
     userIds: string[];
     intentTags: string[];
     sessionIds: string[];
-    inputContexts: ondewoNlu007.Context.AsProtobufJSON[] | null;
-    outputContexts: ondewoNlu007.Context.AsProtobufJSON[] | null;
+    inputContexts: ondewoNlu010.Context.AsProtobufJSON[] | null;
+    outputContexts: ondewoNlu010.Context.AsProtobufJSON[] | null;
     durationInSMin: number;
     durationInSMax: number;
     durationInMMin: number;
@@ -6383,10 +15474,10 @@ export class SessionInfo implements GrpcMessage {
           );
           break;
         case 2:
-          const messageInitializer2 = new ondewoNlu013.Intent();
+          const messageInitializer2 = new ondewoNlu015.Intent();
           _reader.readMessage(
             messageInitializer2,
-            ondewoNlu013.Intent.deserializeBinaryFromReader
+            ondewoNlu015.Intent.deserializeBinaryFromReader
           );
           (_instance.matchedIntents = _instance.matchedIntents || []).push(
             messageInitializer2
@@ -6518,10 +15609,10 @@ export class SessionInfo implements GrpcMessage {
           _instance.durationInterval60sRounded = _reader.readFloat();
           break;
         case 33:
-          const messageInitializer33 = new ondewoNlu008.Comment();
+          const messageInitializer33 = new ondewoNlu006.Comment();
           _reader.readMessage(
             messageInitializer33,
-            ondewoNlu008.Comment.deserializeBinaryFromReader
+            ondewoNlu006.Comment.deserializeBinaryFromReader
           );
           (_instance.parentComment = _instance.parentComment || []).push(
             messageInitializer33
@@ -6551,7 +15642,7 @@ export class SessionInfo implements GrpcMessage {
       _writer.writeRepeatedMessage(
         2,
         _instance.matchedIntents as any,
-        ondewoNlu013.Intent.serializeBinaryToWriter
+        ondewoNlu015.Intent.serializeBinaryToWriter
       );
     }
     if (_instance.matchedEntityTypes && _instance.matchedEntityTypes.length) {
@@ -6660,13 +15751,13 @@ export class SessionInfo implements GrpcMessage {
       _writer.writeRepeatedMessage(
         33,
         _instance.parentComment as any,
-        ondewoNlu008.Comment.serializeBinaryToWriter
+        ondewoNlu006.Comment.serializeBinaryToWriter
       );
     }
   }
 
   private _languageCodes: string[];
-  private _matchedIntents?: ondewoNlu013.Intent[];
+  private _matchedIntents?: ondewoNlu015.Intent[];
   private _matchedEntityTypes?: ondewoNlu014.EntityType[];
   private _minIntentsConfidence: number;
   private _minEntityTypesConfidence: number;
@@ -6690,14 +15781,14 @@ export class SessionInfo implements GrpcMessage {
   private _startedTimeSlotPerDayPhase: string;
   private _startedTimeSlotPerMinute: string;
   private _durationInSRounded: number;
-  private _platforms: ondewoNlu013.Intent.Message.Platform[];
+  private _platforms: ondewoNlu015.Intent.Message.Platform[];
   private _accountIds: string[];
   private _propertyIds: string[];
   private _datastreamIds: string[];
   private _originIds: string[];
   private _identifiedUserIds: string[];
   private _durationInterval60sRounded: number;
-  private _parentComment?: ondewoNlu008.Comment[];
+  private _parentComment?: ondewoNlu006.Comment[];
 
   /**
    * Message constructor. Initializes the properties and applies default Protobuf values if necessary
@@ -6707,7 +15798,7 @@ export class SessionInfo implements GrpcMessage {
     _value = _value || {};
     this.languageCodes = (_value.languageCodes || []).slice();
     this.matchedIntents = (_value.matchedIntents || []).map(
-      m => new ondewoNlu013.Intent(m)
+      m => new ondewoNlu015.Intent(m)
     );
     this.matchedEntityTypes = (_value.matchedEntityTypes || []).map(
       m => new ondewoNlu014.EntityType(m)
@@ -6746,7 +15837,7 @@ export class SessionInfo implements GrpcMessage {
     this.identifiedUserIds = (_value.identifiedUserIds || []).slice();
     this.durationInterval60sRounded = _value.durationInterval60sRounded;
     this.parentComment = (_value.parentComment || []).map(
-      m => new ondewoNlu008.Comment(m)
+      m => new ondewoNlu006.Comment(m)
     );
     SessionInfo.refineValues(this);
   }
@@ -6756,10 +15847,10 @@ export class SessionInfo implements GrpcMessage {
   set languageCodes(value: string[]) {
     this._languageCodes = value;
   }
-  get matchedIntents(): ondewoNlu013.Intent[] | undefined {
+  get matchedIntents(): ondewoNlu015.Intent[] | undefined {
     return this._matchedIntents;
   }
-  set matchedIntents(value: ondewoNlu013.Intent[] | undefined) {
+  set matchedIntents(value: ondewoNlu015.Intent[] | undefined) {
     this._matchedIntents = value;
   }
   get matchedEntityTypes(): ondewoNlu014.EntityType[] | undefined {
@@ -6900,10 +15991,10 @@ export class SessionInfo implements GrpcMessage {
   set durationInSRounded(value: number) {
     this._durationInSRounded = value;
   }
-  get platforms(): ondewoNlu013.Intent.Message.Platform[] {
+  get platforms(): ondewoNlu015.Intent.Message.Platform[] {
     return this._platforms;
   }
-  set platforms(value: ondewoNlu013.Intent.Message.Platform[]) {
+  set platforms(value: ondewoNlu015.Intent.Message.Platform[]) {
     this._platforms = value;
   }
   get accountIds(): string[] {
@@ -6942,10 +16033,10 @@ export class SessionInfo implements GrpcMessage {
   set durationInterval60sRounded(value: number) {
     this._durationInterval60sRounded = value;
   }
-  get parentComment(): ondewoNlu008.Comment[] | undefined {
+  get parentComment(): ondewoNlu006.Comment[] | undefined {
     return this._parentComment;
   }
-  set parentComment(value: ondewoNlu008.Comment[] | undefined) {
+  set parentComment(value: ondewoNlu006.Comment[] | undefined) {
     this._parentComment = value;
   }
 
@@ -7055,7 +16146,7 @@ export class SessionInfo implements GrpcMessage {
       startedTimeSlotPerMinute: this.startedTimeSlotPerMinute,
       durationInSRounded: this.durationInSRounded,
       platforms: (this.platforms || []).map(
-        v => ondewoNlu013.Intent.Message.Platform[v]
+        v => ondewoNlu015.Intent.Message.Platform[v]
       ),
       accountIds: (this.accountIds || []).slice(),
       propertyIds: (this.propertyIds || []).slice(),
@@ -7075,7 +16166,7 @@ export module SessionInfo {
    */
   export interface AsObject {
     languageCodes: string[];
-    matchedIntents?: ondewoNlu013.Intent.AsObject[];
+    matchedIntents?: ondewoNlu015.Intent.AsObject[];
     matchedEntityTypes?: ondewoNlu014.EntityType.AsObject[];
     minIntentsConfidence: number;
     minEntityTypesConfidence: number;
@@ -7099,14 +16190,14 @@ export module SessionInfo {
     startedTimeSlotPerDayPhase: string;
     startedTimeSlotPerMinute: string;
     durationInSRounded: number;
-    platforms: ondewoNlu013.Intent.Message.Platform[];
+    platforms: ondewoNlu015.Intent.Message.Platform[];
     accountIds: string[];
     propertyIds: string[];
     datastreamIds: string[];
     originIds: string[];
     identifiedUserIds: string[];
     durationInterval60sRounded: number;
-    parentComment?: ondewoNlu008.Comment.AsObject[];
+    parentComment?: ondewoNlu006.Comment.AsObject[];
   }
 
   /**
@@ -7114,7 +16205,7 @@ export module SessionInfo {
    */
   export interface AsProtobufJSON {
     languageCodes: string[];
-    matchedIntents: ondewoNlu013.Intent.AsProtobufJSON[] | null;
+    matchedIntents: ondewoNlu015.Intent.AsProtobufJSON[] | null;
     matchedEntityTypes: ondewoNlu014.EntityType.AsProtobufJSON[] | null;
     minIntentsConfidence: number;
     minEntityTypesConfidence: number;
@@ -7145,7 +16236,7 @@ export module SessionInfo {
     originIds: string[];
     identifiedUserIds: string[];
     durationInterval60sRounded: number;
-    parentComment: ondewoNlu008.Comment.AsProtobufJSON[] | null;
+    parentComment: ondewoNlu006.Comment.AsProtobufJSON[] | null;
   }
 
   /**
@@ -7189,10 +16280,10 @@ export module SessionInfo {
 
         switch (_reader.getFieldNumber()) {
           case 1:
-            const messageInitializer1 = new ondewoNlu007.Context();
+            const messageInitializer1 = new ondewoNlu010.Context();
             _reader.readMessage(
               messageInitializer1,
-              ondewoNlu007.Context.deserializeBinaryFromReader
+              ondewoNlu010.Context.deserializeBinaryFromReader
             );
             (_instance.contexts = _instance.contexts || []).push(
               messageInitializer1
@@ -7219,12 +16310,12 @@ export module SessionInfo {
         _writer.writeRepeatedMessage(
           1,
           _instance.contexts as any,
-          ondewoNlu007.Context.serializeBinaryToWriter
+          ondewoNlu010.Context.serializeBinaryToWriter
         );
       }
     }
 
-    private _contexts?: ondewoNlu007.Context[];
+    private _contexts?: ondewoNlu010.Context[];
 
     /**
      * Message constructor. Initializes the properties and applies default Protobuf values if necessary
@@ -7233,14 +16324,14 @@ export module SessionInfo {
     constructor(_value?: RecursivePartial<ContextSteps.AsObject>) {
       _value = _value || {};
       this.contexts = (_value.contexts || []).map(
-        m => new ondewoNlu007.Context(m)
+        m => new ondewoNlu010.Context(m)
       );
       ContextSteps.refineValues(this);
     }
-    get contexts(): ondewoNlu007.Context[] | undefined {
+    get contexts(): ondewoNlu010.Context[] | undefined {
       return this._contexts;
     }
-    set contexts(value: ondewoNlu007.Context[] | undefined) {
+    set contexts(value: ondewoNlu010.Context[] | undefined) {
       this._contexts = value;
     }
 
@@ -7289,14 +16380,14 @@ export module SessionInfo {
      * Standard JavaScript object representation for ContextSteps
      */
     export interface AsObject {
-      contexts?: ondewoNlu007.Context.AsObject[];
+      contexts?: ondewoNlu010.Context.AsObject[];
     }
 
     /**
      * Protobuf JSON representation for ContextSteps
      */
     export interface AsProtobufJSON {
-      contexts: ondewoNlu007.Context.AsProtobufJSON[] | null;
+      contexts: ondewoNlu010.Context.AsProtobufJSON[] | null;
     }
   }
 }
@@ -7717,10 +16808,10 @@ export class CreateSessionRequest implements GrpcMessage {
           );
           break;
         case 4:
-          const messageInitializer4 = new ondewoNlu007.Context();
+          const messageInitializer4 = new ondewoNlu010.Context();
           _reader.readMessage(
             messageInitializer4,
-            ondewoNlu007.Context.deserializeBinaryFromReader
+            ondewoNlu010.Context.deserializeBinaryFromReader
           );
           (_instance.contexts = _instance.contexts || []).push(
             messageInitializer4
@@ -7756,7 +16847,7 @@ export class CreateSessionRequest implements GrpcMessage {
       _writer.writeRepeatedMessage(
         4,
         _instance.contexts as any,
-        ondewoNlu007.Context.serializeBinaryToWriter
+        ondewoNlu010.Context.serializeBinaryToWriter
       );
     }
   }
@@ -7764,7 +16855,7 @@ export class CreateSessionRequest implements GrpcMessage {
   private _parent: string;
   private _sessionUuid: string;
   private _labels: string[];
-  private _contexts?: ondewoNlu007.Context[];
+  private _contexts?: ondewoNlu010.Context[];
 
   /**
    * Message constructor. Initializes the properties and applies default Protobuf values if necessary
@@ -7776,7 +16867,7 @@ export class CreateSessionRequest implements GrpcMessage {
     this.sessionUuid = _value.sessionUuid;
     this.labels = (_value.labels || []).slice();
     this.contexts = (_value.contexts || []).map(
-      m => new ondewoNlu007.Context(m)
+      m => new ondewoNlu010.Context(m)
     );
     CreateSessionRequest.refineValues(this);
   }
@@ -7798,10 +16889,10 @@ export class CreateSessionRequest implements GrpcMessage {
   set labels(value: string[]) {
     this._labels = value;
   }
-  get contexts(): ondewoNlu007.Context[] | undefined {
+  get contexts(): ondewoNlu010.Context[] | undefined {
     return this._contexts;
   }
-  set contexts(value: ondewoNlu007.Context[] | undefined) {
+  set contexts(value: ondewoNlu010.Context[] | undefined) {
     this._contexts = value;
   }
 
@@ -7859,7 +16950,7 @@ export module CreateSessionRequest {
     parent: string;
     sessionUuid: string;
     labels: string[];
-    contexts?: ondewoNlu007.Context.AsObject[];
+    contexts?: ondewoNlu010.Context.AsObject[];
   }
 
   /**
@@ -7869,7 +16960,7 @@ export module CreateSessionRequest {
     parent: string;
     sessionUuid: string;
     labels: string[];
-    contexts: ondewoNlu007.Context.AsProtobufJSON[] | null;
+    contexts: ondewoNlu010.Context.AsProtobufJSON[] | null;
   }
 }
 
@@ -8286,17 +17377,17 @@ export class SessionReview implements GrpcMessage {
             _instance.sessionReviewSteps || []).push(messageInitializer2);
           break;
         case 3:
-          _instance.createdAt = new googleProtobuf004.Timestamp();
+          _instance.createdAt = new googleProtobuf005.Timestamp();
           _reader.readMessage(
             _instance.createdAt,
-            googleProtobuf004.Timestamp.deserializeBinaryFromReader
+            googleProtobuf005.Timestamp.deserializeBinaryFromReader
           );
           break;
         case 4:
-          _instance.modifiedAt = new googleProtobuf004.Timestamp();
+          _instance.modifiedAt = new googleProtobuf005.Timestamp();
           _reader.readMessage(
             _instance.modifiedAt,
-            googleProtobuf004.Timestamp.deserializeBinaryFromReader
+            googleProtobuf005.Timestamp.deserializeBinaryFromReader
           );
           break;
         case 5:
@@ -8336,14 +17427,14 @@ export class SessionReview implements GrpcMessage {
       _writer.writeMessage(
         3,
         _instance.createdAt as any,
-        googleProtobuf004.Timestamp.serializeBinaryToWriter
+        googleProtobuf005.Timestamp.serializeBinaryToWriter
       );
     }
     if (_instance.modifiedAt) {
       _writer.writeMessage(
         4,
         _instance.modifiedAt as any,
-        googleProtobuf004.Timestamp.serializeBinaryToWriter
+        googleProtobuf005.Timestamp.serializeBinaryToWriter
       );
     }
     if (_instance.createdBy) {
@@ -8356,8 +17447,8 @@ export class SessionReview implements GrpcMessage {
 
   private _name: string;
   private _sessionReviewSteps?: SessionReviewStep[];
-  private _createdAt?: googleProtobuf004.Timestamp;
-  private _modifiedAt?: googleProtobuf004.Timestamp;
+  private _createdAt?: googleProtobuf005.Timestamp;
+  private _modifiedAt?: googleProtobuf005.Timestamp;
   private _createdBy: string;
   private _modifiedBy: string;
 
@@ -8372,10 +17463,10 @@ export class SessionReview implements GrpcMessage {
       m => new SessionReviewStep(m)
     );
     this.createdAt = _value.createdAt
-      ? new googleProtobuf004.Timestamp(_value.createdAt)
+      ? new googleProtobuf005.Timestamp(_value.createdAt)
       : undefined;
     this.modifiedAt = _value.modifiedAt
-      ? new googleProtobuf004.Timestamp(_value.modifiedAt)
+      ? new googleProtobuf005.Timestamp(_value.modifiedAt)
       : undefined;
     this.createdBy = _value.createdBy;
     this.modifiedBy = _value.modifiedBy;
@@ -8393,16 +17484,16 @@ export class SessionReview implements GrpcMessage {
   set sessionReviewSteps(value: SessionReviewStep[] | undefined) {
     this._sessionReviewSteps = value;
   }
-  get createdAt(): googleProtobuf004.Timestamp | undefined {
+  get createdAt(): googleProtobuf005.Timestamp | undefined {
     return this._createdAt;
   }
-  set createdAt(value: googleProtobuf004.Timestamp | undefined) {
+  set createdAt(value: googleProtobuf005.Timestamp | undefined) {
     this._createdAt = value;
   }
-  get modifiedAt(): googleProtobuf004.Timestamp | undefined {
+  get modifiedAt(): googleProtobuf005.Timestamp | undefined {
     return this._modifiedAt;
   }
-  set modifiedAt(value: googleProtobuf004.Timestamp | undefined) {
+  set modifiedAt(value: googleProtobuf005.Timestamp | undefined) {
     this._modifiedAt = value;
   }
   get createdBy(): string {
@@ -8481,8 +17572,8 @@ export module SessionReview {
   export interface AsObject {
     name: string;
     sessionReviewSteps?: SessionReviewStep.AsObject[];
-    createdAt?: googleProtobuf004.Timestamp.AsObject;
-    modifiedAt?: googleProtobuf004.Timestamp.AsObject;
+    createdAt?: googleProtobuf005.Timestamp.AsObject;
+    modifiedAt?: googleProtobuf005.Timestamp.AsObject;
     createdBy: string;
     modifiedBy: string;
   }
@@ -8493,8 +17584,8 @@ export module SessionReview {
   export interface AsProtobufJSON {
     name: string;
     sessionReviewSteps: SessionReviewStep.AsProtobufJSON[] | null;
-    createdAt: googleProtobuf004.Timestamp.AsProtobufJSON | null;
-    modifiedAt: googleProtobuf004.Timestamp.AsProtobufJSON | null;
+    createdAt: googleProtobuf005.Timestamp.AsProtobufJSON | null;
+    modifiedAt: googleProtobuf005.Timestamp.AsProtobufJSON | null;
     createdBy: string;
     modifiedBy: string;
   }
@@ -8562,10 +17653,10 @@ export class SessionReviewStep implements GrpcMessage {
           _instance.name = _reader.readString();
           break;
         case 2:
-          _instance.annotatedUsersays = new ondewoNlu013.Intent.TrainingPhrase();
+          _instance.annotatedUsersays = new ondewoNlu015.Intent.TrainingPhrase();
           _reader.readMessage(
             _instance.annotatedUsersays,
-            ondewoNlu013.Intent.TrainingPhrase.deserializeBinaryFromReader
+            ondewoNlu015.Intent.TrainingPhrase.deserializeBinaryFromReader
           );
           break;
         case 3:
@@ -8582,20 +17673,20 @@ export class SessionReviewStep implements GrpcMessage {
           );
           break;
         case 5:
-          const messageInitializer5 = new ondewoNlu007.Context();
+          const messageInitializer5 = new ondewoNlu010.Context();
           _reader.readMessage(
             messageInitializer5,
-            ondewoNlu007.Context.deserializeBinaryFromReader
+            ondewoNlu010.Context.deserializeBinaryFromReader
           );
           (_instance.contexts = _instance.contexts || []).push(
             messageInitializer5
           );
           break;
         case 6:
-          const messageInitializer6 = new ondewoNlu007.Context();
+          const messageInitializer6 = new ondewoNlu010.Context();
           _reader.readMessage(
             messageInitializer6,
-            ondewoNlu007.Context.deserializeBinaryFromReader
+            ondewoNlu010.Context.deserializeBinaryFromReader
           );
           (_instance.contextsOut = _instance.contextsOut || []).push(
             messageInitializer6
@@ -8610,24 +17701,24 @@ export class SessionReviewStep implements GrpcMessage {
           );
           break;
         case 9:
-          _instance.timestamp = new googleProtobuf004.Timestamp();
+          _instance.timestamp = new googleProtobuf005.Timestamp();
           _reader.readMessage(
             _instance.timestamp,
-            googleProtobuf004.Timestamp.deserializeBinaryFromReader
+            googleProtobuf005.Timestamp.deserializeBinaryFromReader
           );
           break;
         case 10:
-          _instance.createdAt = new googleProtobuf004.Timestamp();
+          _instance.createdAt = new googleProtobuf005.Timestamp();
           _reader.readMessage(
             _instance.createdAt,
-            googleProtobuf004.Timestamp.deserializeBinaryFromReader
+            googleProtobuf005.Timestamp.deserializeBinaryFromReader
           );
           break;
         case 11:
-          _instance.modifiedAt = new googleProtobuf004.Timestamp();
+          _instance.modifiedAt = new googleProtobuf005.Timestamp();
           _reader.readMessage(
             _instance.modifiedAt,
-            googleProtobuf004.Timestamp.deserializeBinaryFromReader
+            googleProtobuf005.Timestamp.deserializeBinaryFromReader
           );
           break;
         case 12:
@@ -8669,7 +17760,7 @@ export class SessionReviewStep implements GrpcMessage {
       _writer.writeMessage(
         2,
         _instance.annotatedUsersays as any,
-        ondewoNlu013.Intent.TrainingPhrase.serializeBinaryToWriter
+        ondewoNlu015.Intent.TrainingPhrase.serializeBinaryToWriter
       );
     }
     if (_instance.languageCode) {
@@ -8686,14 +17777,14 @@ export class SessionReviewStep implements GrpcMessage {
       _writer.writeRepeatedMessage(
         5,
         _instance.contexts as any,
-        ondewoNlu007.Context.serializeBinaryToWriter
+        ondewoNlu010.Context.serializeBinaryToWriter
       );
     }
     if (_instance.contextsOut && _instance.contextsOut.length) {
       _writer.writeRepeatedMessage(
         6,
         _instance.contextsOut as any,
-        ondewoNlu007.Context.serializeBinaryToWriter
+        ondewoNlu010.Context.serializeBinaryToWriter
       );
     }
     if (_instance.queryTextOriginal) {
@@ -8706,21 +17797,21 @@ export class SessionReviewStep implements GrpcMessage {
       _writer.writeMessage(
         9,
         _instance.timestamp as any,
-        googleProtobuf004.Timestamp.serializeBinaryToWriter
+        googleProtobuf005.Timestamp.serializeBinaryToWriter
       );
     }
     if (_instance.createdAt) {
       _writer.writeMessage(
         10,
         _instance.createdAt as any,
-        googleProtobuf004.Timestamp.serializeBinaryToWriter
+        googleProtobuf005.Timestamp.serializeBinaryToWriter
       );
     }
     if (_instance.modifiedAt) {
       _writer.writeMessage(
         11,
         _instance.modifiedAt as any,
-        googleProtobuf004.Timestamp.serializeBinaryToWriter
+        googleProtobuf005.Timestamp.serializeBinaryToWriter
       );
     }
     if (_instance.createdBy) {
@@ -8739,16 +17830,16 @@ export class SessionReviewStep implements GrpcMessage {
   }
 
   private _name: string;
-  private _annotatedUsersays?: ondewoNlu013.Intent.TrainingPhrase;
+  private _annotatedUsersays?: ondewoNlu015.Intent.TrainingPhrase;
   private _languageCode: string;
   private _detectedIntents?: DetectedIntent[];
-  private _contexts?: ondewoNlu007.Context[];
-  private _contextsOut?: ondewoNlu007.Context[];
+  private _contexts?: ondewoNlu010.Context[];
+  private _contextsOut?: ondewoNlu010.Context[];
   private _queryTextOriginal: string;
-  private _platforms: ondewoNlu013.Intent.Message.Platform[];
-  private _timestamp?: googleProtobuf004.Timestamp;
-  private _createdAt?: googleProtobuf004.Timestamp;
-  private _modifiedAt?: googleProtobuf004.Timestamp;
+  private _platforms: ondewoNlu015.Intent.Message.Platform[];
+  private _timestamp?: googleProtobuf005.Timestamp;
+  private _createdAt?: googleProtobuf005.Timestamp;
+  private _modifiedAt?: googleProtobuf005.Timestamp;
   private _createdBy: string;
   private _modifiedBy: string;
   private _audioFileResources?: AudioFileResource[];
@@ -8761,28 +17852,28 @@ export class SessionReviewStep implements GrpcMessage {
     _value = _value || {};
     this.name = _value.name;
     this.annotatedUsersays = _value.annotatedUsersays
-      ? new ondewoNlu013.Intent.TrainingPhrase(_value.annotatedUsersays)
+      ? new ondewoNlu015.Intent.TrainingPhrase(_value.annotatedUsersays)
       : undefined;
     this.languageCode = _value.languageCode;
     this.detectedIntents = (_value.detectedIntents || []).map(
       m => new DetectedIntent(m)
     );
     this.contexts = (_value.contexts || []).map(
-      m => new ondewoNlu007.Context(m)
+      m => new ondewoNlu010.Context(m)
     );
     this.contextsOut = (_value.contextsOut || []).map(
-      m => new ondewoNlu007.Context(m)
+      m => new ondewoNlu010.Context(m)
     );
     this.queryTextOriginal = _value.queryTextOriginal;
     this.platforms = (_value.platforms || []).slice();
     this.timestamp = _value.timestamp
-      ? new googleProtobuf004.Timestamp(_value.timestamp)
+      ? new googleProtobuf005.Timestamp(_value.timestamp)
       : undefined;
     this.createdAt = _value.createdAt
-      ? new googleProtobuf004.Timestamp(_value.createdAt)
+      ? new googleProtobuf005.Timestamp(_value.createdAt)
       : undefined;
     this.modifiedAt = _value.modifiedAt
-      ? new googleProtobuf004.Timestamp(_value.modifiedAt)
+      ? new googleProtobuf005.Timestamp(_value.modifiedAt)
       : undefined;
     this.createdBy = _value.createdBy;
     this.modifiedBy = _value.modifiedBy;
@@ -8797,10 +17888,10 @@ export class SessionReviewStep implements GrpcMessage {
   set name(value: string) {
     this._name = value;
   }
-  get annotatedUsersays(): ondewoNlu013.Intent.TrainingPhrase | undefined {
+  get annotatedUsersays(): ondewoNlu015.Intent.TrainingPhrase | undefined {
     return this._annotatedUsersays;
   }
-  set annotatedUsersays(value: ondewoNlu013.Intent.TrainingPhrase | undefined) {
+  set annotatedUsersays(value: ondewoNlu015.Intent.TrainingPhrase | undefined) {
     this._annotatedUsersays = value;
   }
   get languageCode(): string {
@@ -8815,16 +17906,16 @@ export class SessionReviewStep implements GrpcMessage {
   set detectedIntents(value: DetectedIntent[] | undefined) {
     this._detectedIntents = value;
   }
-  get contexts(): ondewoNlu007.Context[] | undefined {
+  get contexts(): ondewoNlu010.Context[] | undefined {
     return this._contexts;
   }
-  set contexts(value: ondewoNlu007.Context[] | undefined) {
+  set contexts(value: ondewoNlu010.Context[] | undefined) {
     this._contexts = value;
   }
-  get contextsOut(): ondewoNlu007.Context[] | undefined {
+  get contextsOut(): ondewoNlu010.Context[] | undefined {
     return this._contextsOut;
   }
-  set contextsOut(value: ondewoNlu007.Context[] | undefined) {
+  set contextsOut(value: ondewoNlu010.Context[] | undefined) {
     this._contextsOut = value;
   }
   get queryTextOriginal(): string {
@@ -8833,28 +17924,28 @@ export class SessionReviewStep implements GrpcMessage {
   set queryTextOriginal(value: string) {
     this._queryTextOriginal = value;
   }
-  get platforms(): ondewoNlu013.Intent.Message.Platform[] {
+  get platforms(): ondewoNlu015.Intent.Message.Platform[] {
     return this._platforms;
   }
-  set platforms(value: ondewoNlu013.Intent.Message.Platform[]) {
+  set platforms(value: ondewoNlu015.Intent.Message.Platform[]) {
     this._platforms = value;
   }
-  get timestamp(): googleProtobuf004.Timestamp | undefined {
+  get timestamp(): googleProtobuf005.Timestamp | undefined {
     return this._timestamp;
   }
-  set timestamp(value: googleProtobuf004.Timestamp | undefined) {
+  set timestamp(value: googleProtobuf005.Timestamp | undefined) {
     this._timestamp = value;
   }
-  get createdAt(): googleProtobuf004.Timestamp | undefined {
+  get createdAt(): googleProtobuf005.Timestamp | undefined {
     return this._createdAt;
   }
-  set createdAt(value: googleProtobuf004.Timestamp | undefined) {
+  set createdAt(value: googleProtobuf005.Timestamp | undefined) {
     this._createdAt = value;
   }
-  get modifiedAt(): googleProtobuf004.Timestamp | undefined {
+  get modifiedAt(): googleProtobuf005.Timestamp | undefined {
     return this._modifiedAt;
   }
-  set modifiedAt(value: googleProtobuf004.Timestamp | undefined) {
+  set modifiedAt(value: googleProtobuf005.Timestamp | undefined) {
     this._modifiedAt = value;
   }
   get createdBy(): string {
@@ -8939,7 +18030,7 @@ export class SessionReviewStep implements GrpcMessage {
       contextsOut: (this.contextsOut || []).map(m => m.toProtobufJSON(options)),
       queryTextOriginal: this.queryTextOriginal,
       platforms: (this.platforms || []).map(
-        v => ondewoNlu013.Intent.Message.Platform[v]
+        v => ondewoNlu015.Intent.Message.Platform[v]
       ),
       timestamp: this.timestamp ? this.timestamp.toProtobufJSON(options) : null,
       createdAt: this.createdAt ? this.createdAt.toProtobufJSON(options) : null,
@@ -8960,16 +18051,16 @@ export module SessionReviewStep {
    */
   export interface AsObject {
     name: string;
-    annotatedUsersays?: ondewoNlu013.Intent.TrainingPhrase.AsObject;
+    annotatedUsersays?: ondewoNlu015.Intent.TrainingPhrase.AsObject;
     languageCode: string;
     detectedIntents?: DetectedIntent.AsObject[];
-    contexts?: ondewoNlu007.Context.AsObject[];
-    contextsOut?: ondewoNlu007.Context.AsObject[];
+    contexts?: ondewoNlu010.Context.AsObject[];
+    contextsOut?: ondewoNlu010.Context.AsObject[];
     queryTextOriginal: string;
-    platforms: ondewoNlu013.Intent.Message.Platform[];
-    timestamp?: googleProtobuf004.Timestamp.AsObject;
-    createdAt?: googleProtobuf004.Timestamp.AsObject;
-    modifiedAt?: googleProtobuf004.Timestamp.AsObject;
+    platforms: ondewoNlu015.Intent.Message.Platform[];
+    timestamp?: googleProtobuf005.Timestamp.AsObject;
+    createdAt?: googleProtobuf005.Timestamp.AsObject;
+    modifiedAt?: googleProtobuf005.Timestamp.AsObject;
     createdBy: string;
     modifiedBy: string;
     audioFileResources?: AudioFileResource.AsObject[];
@@ -8980,16 +18071,16 @@ export module SessionReviewStep {
    */
   export interface AsProtobufJSON {
     name: string;
-    annotatedUsersays: ondewoNlu013.Intent.TrainingPhrase.AsProtobufJSON | null;
+    annotatedUsersays: ondewoNlu015.Intent.TrainingPhrase.AsProtobufJSON | null;
     languageCode: string;
     detectedIntents: DetectedIntent.AsProtobufJSON[] | null;
-    contexts: ondewoNlu007.Context.AsProtobufJSON[] | null;
-    contextsOut: ondewoNlu007.Context.AsProtobufJSON[] | null;
+    contexts: ondewoNlu010.Context.AsProtobufJSON[] | null;
+    contextsOut: ondewoNlu010.Context.AsProtobufJSON[] | null;
     queryTextOriginal: string;
     platforms: string[];
-    timestamp: googleProtobuf004.Timestamp.AsProtobufJSON | null;
-    createdAt: googleProtobuf004.Timestamp.AsProtobufJSON | null;
-    modifiedAt: googleProtobuf004.Timestamp.AsProtobufJSON | null;
+    timestamp: googleProtobuf005.Timestamp.AsProtobufJSON | null;
+    createdAt: googleProtobuf005.Timestamp.AsProtobufJSON | null;
+    modifiedAt: googleProtobuf005.Timestamp.AsProtobufJSON | null;
     createdBy: string;
     modifiedBy: string;
     audioFileResources: AudioFileResource.AsProtobufJSON[] | null;
@@ -9041,10 +18132,10 @@ export class DetectedIntent implements GrpcMessage {
 
       switch (_reader.getFieldNumber()) {
         case 1:
-          _instance.intent = new ondewoNlu013.Intent();
+          _instance.intent = new ondewoNlu015.Intent();
           _reader.readMessage(
             _instance.intent,
-            ondewoNlu013.Intent.deserializeBinaryFromReader
+            ondewoNlu015.Intent.deserializeBinaryFromReader
           );
           break;
         case 2:
@@ -9054,10 +18145,10 @@ export class DetectedIntent implements GrpcMessage {
           _instance.algorithm = _reader.readString();
           break;
         case 4:
-          const messageInitializer4 = new ondewoNlu013.Intent.Message();
+          const messageInitializer4 = new ondewoNlu015.Intent.Message();
           _reader.readMessage(
             messageInitializer4,
-            ondewoNlu013.Intent.Message.deserializeBinaryFromReader
+            ondewoNlu015.Intent.Message.deserializeBinaryFromReader
           );
           (_instance.fulfillmentMessages =
             _instance.fulfillmentMessages || []).push(messageInitializer4);
@@ -9086,7 +18177,7 @@ export class DetectedIntent implements GrpcMessage {
       _writer.writeMessage(
         1,
         _instance.intent as any,
-        ondewoNlu013.Intent.serializeBinaryToWriter
+        ondewoNlu015.Intent.serializeBinaryToWriter
       );
     }
     if (_instance.score) {
@@ -9099,7 +18190,7 @@ export class DetectedIntent implements GrpcMessage {
       _writer.writeRepeatedMessage(
         4,
         _instance.fulfillmentMessages as any,
-        ondewoNlu013.Intent.Message.serializeBinaryToWriter
+        ondewoNlu015.Intent.Message.serializeBinaryToWriter
       );
     }
     if (_instance.requiredParamMissing) {
@@ -9107,10 +18198,10 @@ export class DetectedIntent implements GrpcMessage {
     }
   }
 
-  private _intent?: ondewoNlu013.Intent;
+  private _intent?: ondewoNlu015.Intent;
   private _score: number;
   private _algorithm: string;
-  private _fulfillmentMessages?: ondewoNlu013.Intent.Message[];
+  private _fulfillmentMessages?: ondewoNlu015.Intent.Message[];
   private _requiredParamMissing: boolean;
 
   /**
@@ -9120,20 +18211,20 @@ export class DetectedIntent implements GrpcMessage {
   constructor(_value?: RecursivePartial<DetectedIntent.AsObject>) {
     _value = _value || {};
     this.intent = _value.intent
-      ? new ondewoNlu013.Intent(_value.intent)
+      ? new ondewoNlu015.Intent(_value.intent)
       : undefined;
     this.score = _value.score;
     this.algorithm = _value.algorithm;
     this.fulfillmentMessages = (_value.fulfillmentMessages || []).map(
-      m => new ondewoNlu013.Intent.Message(m)
+      m => new ondewoNlu015.Intent.Message(m)
     );
     this.requiredParamMissing = _value.requiredParamMissing;
     DetectedIntent.refineValues(this);
   }
-  get intent(): ondewoNlu013.Intent | undefined {
+  get intent(): ondewoNlu015.Intent | undefined {
     return this._intent;
   }
-  set intent(value: ondewoNlu013.Intent | undefined) {
+  set intent(value: ondewoNlu015.Intent | undefined) {
     this._intent = value;
   }
   get score(): number {
@@ -9148,10 +18239,10 @@ export class DetectedIntent implements GrpcMessage {
   set algorithm(value: string) {
     this._algorithm = value;
   }
-  get fulfillmentMessages(): ondewoNlu013.Intent.Message[] | undefined {
+  get fulfillmentMessages(): ondewoNlu015.Intent.Message[] | undefined {
     return this._fulfillmentMessages;
   }
-  set fulfillmentMessages(value: ondewoNlu013.Intent.Message[] | undefined) {
+  set fulfillmentMessages(value: ondewoNlu015.Intent.Message[] | undefined) {
     this._fulfillmentMessages = value;
   }
   get requiredParamMissing(): boolean {
@@ -9218,10 +18309,10 @@ export module DetectedIntent {
    * Standard JavaScript object representation for DetectedIntent
    */
   export interface AsObject {
-    intent?: ondewoNlu013.Intent.AsObject;
+    intent?: ondewoNlu015.Intent.AsObject;
     score: number;
     algorithm: string;
-    fulfillmentMessages?: ondewoNlu013.Intent.Message.AsObject[];
+    fulfillmentMessages?: ondewoNlu015.Intent.Message.AsObject[];
     requiredParamMissing: boolean;
   }
 
@@ -9229,10 +18320,10 @@ export module DetectedIntent {
    * Protobuf JSON representation for DetectedIntent
    */
   export interface AsProtobufJSON {
-    intent: ondewoNlu013.Intent.AsProtobufJSON | null;
+    intent: ondewoNlu015.Intent.AsProtobufJSON | null;
     score: number;
     algorithm: string;
-    fulfillmentMessages: ondewoNlu013.Intent.Message.AsProtobufJSON[] | null;
+    fulfillmentMessages: ondewoNlu015.Intent.Message.AsProtobufJSON[] | null;
     requiredParamMissing: boolean;
   }
 }
@@ -9402,6 +18493,7 @@ export class ListSessionLabelsOfAllSessionsRequest implements GrpcMessage {
   static refineValues(_instance: ListSessionLabelsOfAllSessionsRequest) {
     _instance.parent = _instance.parent || '';
     _instance.sessionFilter = _instance.sessionFilter || undefined;
+    _instance.fieldMask = _instance.fieldMask || undefined;
   }
 
   /**
@@ -9425,6 +18517,13 @@ export class ListSessionLabelsOfAllSessionsRequest implements GrpcMessage {
           _reader.readMessage(
             _instance.sessionFilter,
             SessionFilter.deserializeBinaryFromReader
+          );
+          break;
+        case 3:
+          _instance.fieldMask = new googleProtobuf003.FieldMask();
+          _reader.readMessage(
+            _instance.fieldMask,
+            googleProtobuf003.FieldMask.deserializeBinaryFromReader
           );
           break;
         default:
@@ -9454,10 +18553,18 @@ export class ListSessionLabelsOfAllSessionsRequest implements GrpcMessage {
         SessionFilter.serializeBinaryToWriter
       );
     }
+    if (_instance.fieldMask) {
+      _writer.writeMessage(
+        3,
+        _instance.fieldMask as any,
+        googleProtobuf003.FieldMask.serializeBinaryToWriter
+      );
+    }
   }
 
   private _parent: string;
   private _sessionFilter?: SessionFilter;
+  private _fieldMask?: googleProtobuf003.FieldMask;
 
   /**
    * Message constructor. Initializes the properties and applies default Protobuf values if necessary
@@ -9470,6 +18577,9 @@ export class ListSessionLabelsOfAllSessionsRequest implements GrpcMessage {
     this.parent = _value.parent;
     this.sessionFilter = _value.sessionFilter
       ? new SessionFilter(_value.sessionFilter)
+      : undefined;
+    this.fieldMask = _value.fieldMask
+      ? new googleProtobuf003.FieldMask(_value.fieldMask)
       : undefined;
     ListSessionLabelsOfAllSessionsRequest.refineValues(this);
   }
@@ -9484,6 +18594,12 @@ export class ListSessionLabelsOfAllSessionsRequest implements GrpcMessage {
   }
   set sessionFilter(value: SessionFilter | undefined) {
     this._sessionFilter = value;
+  }
+  get fieldMask(): googleProtobuf003.FieldMask | undefined {
+    return this._fieldMask;
+  }
+  set fieldMask(value: googleProtobuf003.FieldMask | undefined) {
+    this._fieldMask = value;
   }
 
   /**
@@ -9504,7 +18620,8 @@ export class ListSessionLabelsOfAllSessionsRequest implements GrpcMessage {
       parent: this.parent,
       sessionFilter: this.sessionFilter
         ? this.sessionFilter.toObject()
-        : undefined
+        : undefined,
+      fieldMask: this.fieldMask ? this.fieldMask.toObject() : undefined
     };
   }
 
@@ -9528,7 +18645,8 @@ export class ListSessionLabelsOfAllSessionsRequest implements GrpcMessage {
       parent: this.parent,
       sessionFilter: this.sessionFilter
         ? this.sessionFilter.toProtobufJSON(options)
-        : null
+        : null,
+      fieldMask: this.fieldMask ? this.fieldMask.toProtobufJSON(options) : null
     };
   }
 }
@@ -9539,6 +18657,7 @@ export module ListSessionLabelsOfAllSessionsRequest {
   export interface AsObject {
     parent: string;
     sessionFilter?: SessionFilter.AsObject;
+    fieldMask?: googleProtobuf003.FieldMask.AsObject;
   }
 
   /**
@@ -9547,6 +18666,7 @@ export module ListSessionLabelsOfAllSessionsRequest {
   export interface AsProtobufJSON {
     parent: string;
     sessionFilter: SessionFilter.AsProtobufJSON | null;
+    fieldMask: googleProtobuf003.FieldMask.AsProtobufJSON | null;
   }
 }
 
@@ -9717,6 +18837,7 @@ export class ListLanguageCodesOfAllSessionsRequest implements GrpcMessage {
   static refineValues(_instance: ListLanguageCodesOfAllSessionsRequest) {
     _instance.parent = _instance.parent || '';
     _instance.sessionFilter = _instance.sessionFilter || undefined;
+    _instance.fieldMask = _instance.fieldMask || undefined;
   }
 
   /**
@@ -9740,6 +18861,13 @@ export class ListLanguageCodesOfAllSessionsRequest implements GrpcMessage {
           _reader.readMessage(
             _instance.sessionFilter,
             SessionFilter.deserializeBinaryFromReader
+          );
+          break;
+        case 3:
+          _instance.fieldMask = new googleProtobuf003.FieldMask();
+          _reader.readMessage(
+            _instance.fieldMask,
+            googleProtobuf003.FieldMask.deserializeBinaryFromReader
           );
           break;
         default:
@@ -9769,10 +18897,18 @@ export class ListLanguageCodesOfAllSessionsRequest implements GrpcMessage {
         SessionFilter.serializeBinaryToWriter
       );
     }
+    if (_instance.fieldMask) {
+      _writer.writeMessage(
+        3,
+        _instance.fieldMask as any,
+        googleProtobuf003.FieldMask.serializeBinaryToWriter
+      );
+    }
   }
 
   private _parent: string;
   private _sessionFilter?: SessionFilter;
+  private _fieldMask?: googleProtobuf003.FieldMask;
 
   /**
    * Message constructor. Initializes the properties and applies default Protobuf values if necessary
@@ -9785,6 +18921,9 @@ export class ListLanguageCodesOfAllSessionsRequest implements GrpcMessage {
     this.parent = _value.parent;
     this.sessionFilter = _value.sessionFilter
       ? new SessionFilter(_value.sessionFilter)
+      : undefined;
+    this.fieldMask = _value.fieldMask
+      ? new googleProtobuf003.FieldMask(_value.fieldMask)
       : undefined;
     ListLanguageCodesOfAllSessionsRequest.refineValues(this);
   }
@@ -9799,6 +18938,12 @@ export class ListLanguageCodesOfAllSessionsRequest implements GrpcMessage {
   }
   set sessionFilter(value: SessionFilter | undefined) {
     this._sessionFilter = value;
+  }
+  get fieldMask(): googleProtobuf003.FieldMask | undefined {
+    return this._fieldMask;
+  }
+  set fieldMask(value: googleProtobuf003.FieldMask | undefined) {
+    this._fieldMask = value;
   }
 
   /**
@@ -9819,7 +18964,8 @@ export class ListLanguageCodesOfAllSessionsRequest implements GrpcMessage {
       parent: this.parent,
       sessionFilter: this.sessionFilter
         ? this.sessionFilter.toObject()
-        : undefined
+        : undefined,
+      fieldMask: this.fieldMask ? this.fieldMask.toObject() : undefined
     };
   }
 
@@ -9843,7 +18989,8 @@ export class ListLanguageCodesOfAllSessionsRequest implements GrpcMessage {
       parent: this.parent,
       sessionFilter: this.sessionFilter
         ? this.sessionFilter.toProtobufJSON(options)
-        : null
+        : null,
+      fieldMask: this.fieldMask ? this.fieldMask.toProtobufJSON(options) : null
     };
   }
 }
@@ -9854,6 +19001,7 @@ export module ListLanguageCodesOfAllSessionsRequest {
   export interface AsObject {
     parent: string;
     sessionFilter?: SessionFilter.AsObject;
+    fieldMask?: googleProtobuf003.FieldMask.AsObject;
   }
 
   /**
@@ -9862,6 +19010,7 @@ export module ListLanguageCodesOfAllSessionsRequest {
   export interface AsProtobufJSON {
     parent: string;
     sessionFilter: SessionFilter.AsProtobufJSON | null;
+    fieldMask: googleProtobuf003.FieldMask.AsProtobufJSON | null;
   }
 }
 
@@ -10032,6 +19181,7 @@ export class ListMatchedIntentsOfAllSessionsRequest implements GrpcMessage {
   static refineValues(_instance: ListMatchedIntentsOfAllSessionsRequest) {
     _instance.parent = _instance.parent || '';
     _instance.sessionFilter = _instance.sessionFilter || undefined;
+    _instance.fieldMask = _instance.fieldMask || undefined;
   }
 
   /**
@@ -10055,6 +19205,13 @@ export class ListMatchedIntentsOfAllSessionsRequest implements GrpcMessage {
           _reader.readMessage(
             _instance.sessionFilter,
             SessionFilter.deserializeBinaryFromReader
+          );
+          break;
+        case 3:
+          _instance.fieldMask = new googleProtobuf003.FieldMask();
+          _reader.readMessage(
+            _instance.fieldMask,
+            googleProtobuf003.FieldMask.deserializeBinaryFromReader
           );
           break;
         default:
@@ -10084,10 +19241,18 @@ export class ListMatchedIntentsOfAllSessionsRequest implements GrpcMessage {
         SessionFilter.serializeBinaryToWriter
       );
     }
+    if (_instance.fieldMask) {
+      _writer.writeMessage(
+        3,
+        _instance.fieldMask as any,
+        googleProtobuf003.FieldMask.serializeBinaryToWriter
+      );
+    }
   }
 
   private _parent: string;
   private _sessionFilter?: SessionFilter;
+  private _fieldMask?: googleProtobuf003.FieldMask;
 
   /**
    * Message constructor. Initializes the properties and applies default Protobuf values if necessary
@@ -10100,6 +19265,9 @@ export class ListMatchedIntentsOfAllSessionsRequest implements GrpcMessage {
     this.parent = _value.parent;
     this.sessionFilter = _value.sessionFilter
       ? new SessionFilter(_value.sessionFilter)
+      : undefined;
+    this.fieldMask = _value.fieldMask
+      ? new googleProtobuf003.FieldMask(_value.fieldMask)
       : undefined;
     ListMatchedIntentsOfAllSessionsRequest.refineValues(this);
   }
@@ -10114,6 +19282,12 @@ export class ListMatchedIntentsOfAllSessionsRequest implements GrpcMessage {
   }
   set sessionFilter(value: SessionFilter | undefined) {
     this._sessionFilter = value;
+  }
+  get fieldMask(): googleProtobuf003.FieldMask | undefined {
+    return this._fieldMask;
+  }
+  set fieldMask(value: googleProtobuf003.FieldMask | undefined) {
+    this._fieldMask = value;
   }
 
   /**
@@ -10137,7 +19311,8 @@ export class ListMatchedIntentsOfAllSessionsRequest implements GrpcMessage {
       parent: this.parent,
       sessionFilter: this.sessionFilter
         ? this.sessionFilter.toObject()
-        : undefined
+        : undefined,
+      fieldMask: this.fieldMask ? this.fieldMask.toObject() : undefined
     };
   }
 
@@ -10161,7 +19336,8 @@ export class ListMatchedIntentsOfAllSessionsRequest implements GrpcMessage {
       parent: this.parent,
       sessionFilter: this.sessionFilter
         ? this.sessionFilter.toProtobufJSON(options)
-        : null
+        : null,
+      fieldMask: this.fieldMask ? this.fieldMask.toProtobufJSON(options) : null
     };
   }
 }
@@ -10172,6 +19348,7 @@ export module ListMatchedIntentsOfAllSessionsRequest {
   export interface AsObject {
     parent: string;
     sessionFilter?: SessionFilter.AsObject;
+    fieldMask?: googleProtobuf003.FieldMask.AsObject;
   }
 
   /**
@@ -10180,6 +19357,7 @@ export module ListMatchedIntentsOfAllSessionsRequest {
   export interface AsProtobufJSON {
     parent: string;
     sessionFilter: SessionFilter.AsProtobufJSON | null;
+    fieldMask: googleProtobuf003.FieldMask.AsProtobufJSON | null;
   }
 }
 
@@ -10350,6 +19528,7 @@ export class ListMatchedEntityTypesOfAllSessionsRequest implements GrpcMessage {
   static refineValues(_instance: ListMatchedEntityTypesOfAllSessionsRequest) {
     _instance.parent = _instance.parent || '';
     _instance.sessionFilter = _instance.sessionFilter || undefined;
+    _instance.fieldMask = _instance.fieldMask || undefined;
   }
 
   /**
@@ -10373,6 +19552,13 @@ export class ListMatchedEntityTypesOfAllSessionsRequest implements GrpcMessage {
           _reader.readMessage(
             _instance.sessionFilter,
             SessionFilter.deserializeBinaryFromReader
+          );
+          break;
+        case 3:
+          _instance.fieldMask = new googleProtobuf003.FieldMask();
+          _reader.readMessage(
+            _instance.fieldMask,
+            googleProtobuf003.FieldMask.deserializeBinaryFromReader
           );
           break;
         default:
@@ -10402,10 +19588,18 @@ export class ListMatchedEntityTypesOfAllSessionsRequest implements GrpcMessage {
         SessionFilter.serializeBinaryToWriter
       );
     }
+    if (_instance.fieldMask) {
+      _writer.writeMessage(
+        3,
+        _instance.fieldMask as any,
+        googleProtobuf003.FieldMask.serializeBinaryToWriter
+      );
+    }
   }
 
   private _parent: string;
   private _sessionFilter?: SessionFilter;
+  private _fieldMask?: googleProtobuf003.FieldMask;
 
   /**
    * Message constructor. Initializes the properties and applies default Protobuf values if necessary
@@ -10421,6 +19615,9 @@ export class ListMatchedEntityTypesOfAllSessionsRequest implements GrpcMessage {
     this.sessionFilter = _value.sessionFilter
       ? new SessionFilter(_value.sessionFilter)
       : undefined;
+    this.fieldMask = _value.fieldMask
+      ? new googleProtobuf003.FieldMask(_value.fieldMask)
+      : undefined;
     ListMatchedEntityTypesOfAllSessionsRequest.refineValues(this);
   }
   get parent(): string {
@@ -10434,6 +19631,12 @@ export class ListMatchedEntityTypesOfAllSessionsRequest implements GrpcMessage {
   }
   set sessionFilter(value: SessionFilter | undefined) {
     this._sessionFilter = value;
+  }
+  get fieldMask(): googleProtobuf003.FieldMask | undefined {
+    return this._fieldMask;
+  }
+  set fieldMask(value: googleProtobuf003.FieldMask | undefined) {
+    this._fieldMask = value;
   }
 
   /**
@@ -10457,7 +19660,8 @@ export class ListMatchedEntityTypesOfAllSessionsRequest implements GrpcMessage {
       parent: this.parent,
       sessionFilter: this.sessionFilter
         ? this.sessionFilter.toObject()
-        : undefined
+        : undefined,
+      fieldMask: this.fieldMask ? this.fieldMask.toObject() : undefined
     };
   }
 
@@ -10481,7 +19685,8 @@ export class ListMatchedEntityTypesOfAllSessionsRequest implements GrpcMessage {
       parent: this.parent,
       sessionFilter: this.sessionFilter
         ? this.sessionFilter.toProtobufJSON(options)
-        : null
+        : null,
+      fieldMask: this.fieldMask ? this.fieldMask.toProtobufJSON(options) : null
     };
   }
 }
@@ -10492,6 +19697,7 @@ export module ListMatchedEntityTypesOfAllSessionsRequest {
   export interface AsObject {
     parent: string;
     sessionFilter?: SessionFilter.AsObject;
+    fieldMask?: googleProtobuf003.FieldMask.AsObject;
   }
 
   /**
@@ -10500,6 +19706,7 @@ export module ListMatchedEntityTypesOfAllSessionsRequest {
   export interface AsProtobufJSON {
     parent: string;
     sessionFilter: SessionFilter.AsProtobufJSON | null;
+    fieldMask: googleProtobuf003.FieldMask.AsProtobufJSON | null;
   }
 }
 
@@ -10671,6 +19878,7 @@ export class ListUserIdsOfAllSessionsRequest implements GrpcMessage {
   static refineValues(_instance: ListUserIdsOfAllSessionsRequest) {
     _instance.parent = _instance.parent || '';
     _instance.sessionFilter = _instance.sessionFilter || undefined;
+    _instance.fieldMask = _instance.fieldMask || undefined;
   }
 
   /**
@@ -10694,6 +19902,13 @@ export class ListUserIdsOfAllSessionsRequest implements GrpcMessage {
           _reader.readMessage(
             _instance.sessionFilter,
             SessionFilter.deserializeBinaryFromReader
+          );
+          break;
+        case 3:
+          _instance.fieldMask = new googleProtobuf003.FieldMask();
+          _reader.readMessage(
+            _instance.fieldMask,
+            googleProtobuf003.FieldMask.deserializeBinaryFromReader
           );
           break;
         default:
@@ -10723,10 +19938,18 @@ export class ListUserIdsOfAllSessionsRequest implements GrpcMessage {
         SessionFilter.serializeBinaryToWriter
       );
     }
+    if (_instance.fieldMask) {
+      _writer.writeMessage(
+        3,
+        _instance.fieldMask as any,
+        googleProtobuf003.FieldMask.serializeBinaryToWriter
+      );
+    }
   }
 
   private _parent: string;
   private _sessionFilter?: SessionFilter;
+  private _fieldMask?: googleProtobuf003.FieldMask;
 
   /**
    * Message constructor. Initializes the properties and applies default Protobuf values if necessary
@@ -10739,6 +19962,9 @@ export class ListUserIdsOfAllSessionsRequest implements GrpcMessage {
     this.parent = _value.parent;
     this.sessionFilter = _value.sessionFilter
       ? new SessionFilter(_value.sessionFilter)
+      : undefined;
+    this.fieldMask = _value.fieldMask
+      ? new googleProtobuf003.FieldMask(_value.fieldMask)
       : undefined;
     ListUserIdsOfAllSessionsRequest.refineValues(this);
   }
@@ -10753,6 +19979,12 @@ export class ListUserIdsOfAllSessionsRequest implements GrpcMessage {
   }
   set sessionFilter(value: SessionFilter | undefined) {
     this._sessionFilter = value;
+  }
+  get fieldMask(): googleProtobuf003.FieldMask | undefined {
+    return this._fieldMask;
+  }
+  set fieldMask(value: googleProtobuf003.FieldMask | undefined) {
+    this._fieldMask = value;
   }
 
   /**
@@ -10773,7 +20005,8 @@ export class ListUserIdsOfAllSessionsRequest implements GrpcMessage {
       parent: this.parent,
       sessionFilter: this.sessionFilter
         ? this.sessionFilter.toObject()
-        : undefined
+        : undefined,
+      fieldMask: this.fieldMask ? this.fieldMask.toObject() : undefined
     };
   }
 
@@ -10797,7 +20030,8 @@ export class ListUserIdsOfAllSessionsRequest implements GrpcMessage {
       parent: this.parent,
       sessionFilter: this.sessionFilter
         ? this.sessionFilter.toProtobufJSON(options)
-        : null
+        : null,
+      fieldMask: this.fieldMask ? this.fieldMask.toProtobufJSON(options) : null
     };
   }
 }
@@ -10808,6 +20042,7 @@ export module ListUserIdsOfAllSessionsRequest {
   export interface AsObject {
     parent: string;
     sessionFilter?: SessionFilter.AsObject;
+    fieldMask?: googleProtobuf003.FieldMask.AsObject;
   }
 
   /**
@@ -10816,6 +20051,7 @@ export module ListUserIdsOfAllSessionsRequest {
   export interface AsProtobufJSON {
     parent: string;
     sessionFilter: SessionFilter.AsProtobufJSON | null;
+    fieldMask: googleProtobuf003.FieldMask.AsProtobufJSON | null;
   }
 }
 
@@ -10986,6 +20222,7 @@ export class ListIdentifiedUserIdsOfAllSessionsRequest implements GrpcMessage {
   static refineValues(_instance: ListIdentifiedUserIdsOfAllSessionsRequest) {
     _instance.parent = _instance.parent || '';
     _instance.sessionFilter = _instance.sessionFilter || undefined;
+    _instance.fieldMask = _instance.fieldMask || undefined;
   }
 
   /**
@@ -11009,6 +20246,13 @@ export class ListIdentifiedUserIdsOfAllSessionsRequest implements GrpcMessage {
           _reader.readMessage(
             _instance.sessionFilter,
             SessionFilter.deserializeBinaryFromReader
+          );
+          break;
+        case 3:
+          _instance.fieldMask = new googleProtobuf003.FieldMask();
+          _reader.readMessage(
+            _instance.fieldMask,
+            googleProtobuf003.FieldMask.deserializeBinaryFromReader
           );
           break;
         default:
@@ -11038,10 +20282,18 @@ export class ListIdentifiedUserIdsOfAllSessionsRequest implements GrpcMessage {
         SessionFilter.serializeBinaryToWriter
       );
     }
+    if (_instance.fieldMask) {
+      _writer.writeMessage(
+        3,
+        _instance.fieldMask as any,
+        googleProtobuf003.FieldMask.serializeBinaryToWriter
+      );
+    }
   }
 
   private _parent: string;
   private _sessionFilter?: SessionFilter;
+  private _fieldMask?: googleProtobuf003.FieldMask;
 
   /**
    * Message constructor. Initializes the properties and applies default Protobuf values if necessary
@@ -11057,6 +20309,9 @@ export class ListIdentifiedUserIdsOfAllSessionsRequest implements GrpcMessage {
     this.sessionFilter = _value.sessionFilter
       ? new SessionFilter(_value.sessionFilter)
       : undefined;
+    this.fieldMask = _value.fieldMask
+      ? new googleProtobuf003.FieldMask(_value.fieldMask)
+      : undefined;
     ListIdentifiedUserIdsOfAllSessionsRequest.refineValues(this);
   }
   get parent(): string {
@@ -11070,6 +20325,12 @@ export class ListIdentifiedUserIdsOfAllSessionsRequest implements GrpcMessage {
   }
   set sessionFilter(value: SessionFilter | undefined) {
     this._sessionFilter = value;
+  }
+  get fieldMask(): googleProtobuf003.FieldMask | undefined {
+    return this._fieldMask;
+  }
+  set fieldMask(value: googleProtobuf003.FieldMask | undefined) {
+    this._fieldMask = value;
   }
 
   /**
@@ -11093,7 +20354,8 @@ export class ListIdentifiedUserIdsOfAllSessionsRequest implements GrpcMessage {
       parent: this.parent,
       sessionFilter: this.sessionFilter
         ? this.sessionFilter.toObject()
-        : undefined
+        : undefined,
+      fieldMask: this.fieldMask ? this.fieldMask.toObject() : undefined
     };
   }
 
@@ -11117,7 +20379,8 @@ export class ListIdentifiedUserIdsOfAllSessionsRequest implements GrpcMessage {
       parent: this.parent,
       sessionFilter: this.sessionFilter
         ? this.sessionFilter.toProtobufJSON(options)
-        : null
+        : null,
+      fieldMask: this.fieldMask ? this.fieldMask.toProtobufJSON(options) : null
     };
   }
 }
@@ -11128,6 +20391,7 @@ export module ListIdentifiedUserIdsOfAllSessionsRequest {
   export interface AsObject {
     parent: string;
     sessionFilter?: SessionFilter.AsObject;
+    fieldMask?: googleProtobuf003.FieldMask.AsObject;
   }
 
   /**
@@ -11136,6 +20400,7 @@ export module ListIdentifiedUserIdsOfAllSessionsRequest {
   export interface AsProtobufJSON {
     parent: string;
     sessionFilter: SessionFilter.AsProtobufJSON | null;
+    fieldMask: googleProtobuf003.FieldMask.AsProtobufJSON | null;
   }
 }
 
@@ -11307,6 +20572,7 @@ export class ListTagsOfAllSessionsRequest implements GrpcMessage {
   static refineValues(_instance: ListTagsOfAllSessionsRequest) {
     _instance.parent = _instance.parent || '';
     _instance.sessionFilter = _instance.sessionFilter || undefined;
+    _instance.fieldMask = _instance.fieldMask || undefined;
   }
 
   /**
@@ -11330,6 +20596,13 @@ export class ListTagsOfAllSessionsRequest implements GrpcMessage {
           _reader.readMessage(
             _instance.sessionFilter,
             SessionFilter.deserializeBinaryFromReader
+          );
+          break;
+        case 3:
+          _instance.fieldMask = new googleProtobuf003.FieldMask();
+          _reader.readMessage(
+            _instance.fieldMask,
+            googleProtobuf003.FieldMask.deserializeBinaryFromReader
           );
           break;
         default:
@@ -11359,10 +20632,18 @@ export class ListTagsOfAllSessionsRequest implements GrpcMessage {
         SessionFilter.serializeBinaryToWriter
       );
     }
+    if (_instance.fieldMask) {
+      _writer.writeMessage(
+        3,
+        _instance.fieldMask as any,
+        googleProtobuf003.FieldMask.serializeBinaryToWriter
+      );
+    }
   }
 
   private _parent: string;
   private _sessionFilter?: SessionFilter;
+  private _fieldMask?: googleProtobuf003.FieldMask;
 
   /**
    * Message constructor. Initializes the properties and applies default Protobuf values if necessary
@@ -11375,6 +20656,9 @@ export class ListTagsOfAllSessionsRequest implements GrpcMessage {
     this.parent = _value.parent;
     this.sessionFilter = _value.sessionFilter
       ? new SessionFilter(_value.sessionFilter)
+      : undefined;
+    this.fieldMask = _value.fieldMask
+      ? new googleProtobuf003.FieldMask(_value.fieldMask)
       : undefined;
     ListTagsOfAllSessionsRequest.refineValues(this);
   }
@@ -11389,6 +20673,12 @@ export class ListTagsOfAllSessionsRequest implements GrpcMessage {
   }
   set sessionFilter(value: SessionFilter | undefined) {
     this._sessionFilter = value;
+  }
+  get fieldMask(): googleProtobuf003.FieldMask | undefined {
+    return this._fieldMask;
+  }
+  set fieldMask(value: googleProtobuf003.FieldMask | undefined) {
+    this._fieldMask = value;
   }
 
   /**
@@ -11409,7 +20699,8 @@ export class ListTagsOfAllSessionsRequest implements GrpcMessage {
       parent: this.parent,
       sessionFilter: this.sessionFilter
         ? this.sessionFilter.toObject()
-        : undefined
+        : undefined,
+      fieldMask: this.fieldMask ? this.fieldMask.toObject() : undefined
     };
   }
 
@@ -11433,7 +20724,8 @@ export class ListTagsOfAllSessionsRequest implements GrpcMessage {
       parent: this.parent,
       sessionFilter: this.sessionFilter
         ? this.sessionFilter.toProtobufJSON(options)
-        : null
+        : null,
+      fieldMask: this.fieldMask ? this.fieldMask.toProtobufJSON(options) : null
     };
   }
 }
@@ -11444,6 +20736,7 @@ export module ListTagsOfAllSessionsRequest {
   export interface AsObject {
     parent: string;
     sessionFilter?: SessionFilter.AsObject;
+    fieldMask?: googleProtobuf003.FieldMask.AsObject;
   }
 
   /**
@@ -11452,6 +20745,7 @@ export module ListTagsOfAllSessionsRequest {
   export interface AsProtobufJSON {
     parent: string;
     sessionFilter: SessionFilter.AsProtobufJSON | null;
+    fieldMask: googleProtobuf003.FieldMask.AsProtobufJSON | null;
   }
 }
 
@@ -11620,6 +20914,7 @@ export class ListInputContextsOfAllSessionsRequest implements GrpcMessage {
   static refineValues(_instance: ListInputContextsOfAllSessionsRequest) {
     _instance.parent = _instance.parent || '';
     _instance.sessionFilter = _instance.sessionFilter || undefined;
+    _instance.fieldMask = _instance.fieldMask || undefined;
   }
 
   /**
@@ -11643,6 +20938,13 @@ export class ListInputContextsOfAllSessionsRequest implements GrpcMessage {
           _reader.readMessage(
             _instance.sessionFilter,
             SessionFilter.deserializeBinaryFromReader
+          );
+          break;
+        case 3:
+          _instance.fieldMask = new googleProtobuf003.FieldMask();
+          _reader.readMessage(
+            _instance.fieldMask,
+            googleProtobuf003.FieldMask.deserializeBinaryFromReader
           );
           break;
         default:
@@ -11672,10 +20974,18 @@ export class ListInputContextsOfAllSessionsRequest implements GrpcMessage {
         SessionFilter.serializeBinaryToWriter
       );
     }
+    if (_instance.fieldMask) {
+      _writer.writeMessage(
+        3,
+        _instance.fieldMask as any,
+        googleProtobuf003.FieldMask.serializeBinaryToWriter
+      );
+    }
   }
 
   private _parent: string;
   private _sessionFilter?: SessionFilter;
+  private _fieldMask?: googleProtobuf003.FieldMask;
 
   /**
    * Message constructor. Initializes the properties and applies default Protobuf values if necessary
@@ -11688,6 +20998,9 @@ export class ListInputContextsOfAllSessionsRequest implements GrpcMessage {
     this.parent = _value.parent;
     this.sessionFilter = _value.sessionFilter
       ? new SessionFilter(_value.sessionFilter)
+      : undefined;
+    this.fieldMask = _value.fieldMask
+      ? new googleProtobuf003.FieldMask(_value.fieldMask)
       : undefined;
     ListInputContextsOfAllSessionsRequest.refineValues(this);
   }
@@ -11702,6 +21015,12 @@ export class ListInputContextsOfAllSessionsRequest implements GrpcMessage {
   }
   set sessionFilter(value: SessionFilter | undefined) {
     this._sessionFilter = value;
+  }
+  get fieldMask(): googleProtobuf003.FieldMask | undefined {
+    return this._fieldMask;
+  }
+  set fieldMask(value: googleProtobuf003.FieldMask | undefined) {
+    this._fieldMask = value;
   }
 
   /**
@@ -11722,7 +21041,8 @@ export class ListInputContextsOfAllSessionsRequest implements GrpcMessage {
       parent: this.parent,
       sessionFilter: this.sessionFilter
         ? this.sessionFilter.toObject()
-        : undefined
+        : undefined,
+      fieldMask: this.fieldMask ? this.fieldMask.toObject() : undefined
     };
   }
 
@@ -11746,7 +21066,8 @@ export class ListInputContextsOfAllSessionsRequest implements GrpcMessage {
       parent: this.parent,
       sessionFilter: this.sessionFilter
         ? this.sessionFilter.toProtobufJSON(options)
-        : null
+        : null,
+      fieldMask: this.fieldMask ? this.fieldMask.toProtobufJSON(options) : null
     };
   }
 }
@@ -11757,6 +21078,7 @@ export module ListInputContextsOfAllSessionsRequest {
   export interface AsObject {
     parent: string;
     sessionFilter?: SessionFilter.AsObject;
+    fieldMask?: googleProtobuf003.FieldMask.AsObject;
   }
 
   /**
@@ -11765,6 +21087,7 @@ export module ListInputContextsOfAllSessionsRequest {
   export interface AsProtobufJSON {
     parent: string;
     sessionFilter: SessionFilter.AsProtobufJSON | null;
+    fieldMask: googleProtobuf003.FieldMask.AsProtobufJSON | null;
   }
 }
 
@@ -11935,6 +21258,7 @@ export class ListOutputContextsOfAllSessionsRequest implements GrpcMessage {
   static refineValues(_instance: ListOutputContextsOfAllSessionsRequest) {
     _instance.parent = _instance.parent || '';
     _instance.sessionFilter = _instance.sessionFilter || undefined;
+    _instance.fieldMask = _instance.fieldMask || undefined;
   }
 
   /**
@@ -11958,6 +21282,13 @@ export class ListOutputContextsOfAllSessionsRequest implements GrpcMessage {
           _reader.readMessage(
             _instance.sessionFilter,
             SessionFilter.deserializeBinaryFromReader
+          );
+          break;
+        case 3:
+          _instance.fieldMask = new googleProtobuf003.FieldMask();
+          _reader.readMessage(
+            _instance.fieldMask,
+            googleProtobuf003.FieldMask.deserializeBinaryFromReader
           );
           break;
         default:
@@ -11987,10 +21318,18 @@ export class ListOutputContextsOfAllSessionsRequest implements GrpcMessage {
         SessionFilter.serializeBinaryToWriter
       );
     }
+    if (_instance.fieldMask) {
+      _writer.writeMessage(
+        3,
+        _instance.fieldMask as any,
+        googleProtobuf003.FieldMask.serializeBinaryToWriter
+      );
+    }
   }
 
   private _parent: string;
   private _sessionFilter?: SessionFilter;
+  private _fieldMask?: googleProtobuf003.FieldMask;
 
   /**
    * Message constructor. Initializes the properties and applies default Protobuf values if necessary
@@ -12003,6 +21342,9 @@ export class ListOutputContextsOfAllSessionsRequest implements GrpcMessage {
     this.parent = _value.parent;
     this.sessionFilter = _value.sessionFilter
       ? new SessionFilter(_value.sessionFilter)
+      : undefined;
+    this.fieldMask = _value.fieldMask
+      ? new googleProtobuf003.FieldMask(_value.fieldMask)
       : undefined;
     ListOutputContextsOfAllSessionsRequest.refineValues(this);
   }
@@ -12017,6 +21359,12 @@ export class ListOutputContextsOfAllSessionsRequest implements GrpcMessage {
   }
   set sessionFilter(value: SessionFilter | undefined) {
     this._sessionFilter = value;
+  }
+  get fieldMask(): googleProtobuf003.FieldMask | undefined {
+    return this._fieldMask;
+  }
+  set fieldMask(value: googleProtobuf003.FieldMask | undefined) {
+    this._fieldMask = value;
   }
 
   /**
@@ -12040,7 +21388,8 @@ export class ListOutputContextsOfAllSessionsRequest implements GrpcMessage {
       parent: this.parent,
       sessionFilter: this.sessionFilter
         ? this.sessionFilter.toObject()
-        : undefined
+        : undefined,
+      fieldMask: this.fieldMask ? this.fieldMask.toObject() : undefined
     };
   }
 
@@ -12064,7 +21413,8 @@ export class ListOutputContextsOfAllSessionsRequest implements GrpcMessage {
       parent: this.parent,
       sessionFilter: this.sessionFilter
         ? this.sessionFilter.toProtobufJSON(options)
-        : null
+        : null,
+      fieldMask: this.fieldMask ? this.fieldMask.toProtobufJSON(options) : null
     };
   }
 }
@@ -12075,6 +21425,7 @@ export module ListOutputContextsOfAllSessionsRequest {
   export interface AsObject {
     parent: string;
     sessionFilter?: SessionFilter.AsObject;
+    fieldMask?: googleProtobuf003.FieldMask.AsObject;
   }
 
   /**
@@ -12083,6 +21434,7 @@ export module ListOutputContextsOfAllSessionsRequest {
   export interface AsProtobufJSON {
     parent: string;
     sessionFilter: SessionFilter.AsProtobufJSON | null;
+    fieldMask: googleProtobuf003.FieldMask.AsProtobufJSON | null;
   }
 }
 
@@ -12253,6 +21605,7 @@ export class ListPlatformsOfAllSessionsRequest implements GrpcMessage {
   static refineValues(_instance: ListPlatformsOfAllSessionsRequest) {
     _instance.parent = _instance.parent || '';
     _instance.sessionFilter = _instance.sessionFilter || undefined;
+    _instance.fieldMask = _instance.fieldMask || undefined;
   }
 
   /**
@@ -12276,6 +21629,13 @@ export class ListPlatformsOfAllSessionsRequest implements GrpcMessage {
           _reader.readMessage(
             _instance.sessionFilter,
             SessionFilter.deserializeBinaryFromReader
+          );
+          break;
+        case 3:
+          _instance.fieldMask = new googleProtobuf003.FieldMask();
+          _reader.readMessage(
+            _instance.fieldMask,
+            googleProtobuf003.FieldMask.deserializeBinaryFromReader
           );
           break;
         default:
@@ -12305,10 +21665,18 @@ export class ListPlatformsOfAllSessionsRequest implements GrpcMessage {
         SessionFilter.serializeBinaryToWriter
       );
     }
+    if (_instance.fieldMask) {
+      _writer.writeMessage(
+        3,
+        _instance.fieldMask as any,
+        googleProtobuf003.FieldMask.serializeBinaryToWriter
+      );
+    }
   }
 
   private _parent: string;
   private _sessionFilter?: SessionFilter;
+  private _fieldMask?: googleProtobuf003.FieldMask;
 
   /**
    * Message constructor. Initializes the properties and applies default Protobuf values if necessary
@@ -12321,6 +21689,9 @@ export class ListPlatformsOfAllSessionsRequest implements GrpcMessage {
     this.parent = _value.parent;
     this.sessionFilter = _value.sessionFilter
       ? new SessionFilter(_value.sessionFilter)
+      : undefined;
+    this.fieldMask = _value.fieldMask
+      ? new googleProtobuf003.FieldMask(_value.fieldMask)
       : undefined;
     ListPlatformsOfAllSessionsRequest.refineValues(this);
   }
@@ -12335,6 +21706,12 @@ export class ListPlatformsOfAllSessionsRequest implements GrpcMessage {
   }
   set sessionFilter(value: SessionFilter | undefined) {
     this._sessionFilter = value;
+  }
+  get fieldMask(): googleProtobuf003.FieldMask | undefined {
+    return this._fieldMask;
+  }
+  set fieldMask(value: googleProtobuf003.FieldMask | undefined) {
+    this._fieldMask = value;
   }
 
   /**
@@ -12355,7 +21732,8 @@ export class ListPlatformsOfAllSessionsRequest implements GrpcMessage {
       parent: this.parent,
       sessionFilter: this.sessionFilter
         ? this.sessionFilter.toObject()
-        : undefined
+        : undefined,
+      fieldMask: this.fieldMask ? this.fieldMask.toObject() : undefined
     };
   }
 
@@ -12379,7 +21757,8 @@ export class ListPlatformsOfAllSessionsRequest implements GrpcMessage {
       parent: this.parent,
       sessionFilter: this.sessionFilter
         ? this.sessionFilter.toProtobufJSON(options)
-        : null
+        : null,
+      fieldMask: this.fieldMask ? this.fieldMask.toProtobufJSON(options) : null
     };
   }
 }
@@ -12390,6 +21769,7 @@ export module ListPlatformsOfAllSessionsRequest {
   export interface AsObject {
     parent: string;
     sessionFilter?: SessionFilter.AsObject;
+    fieldMask?: googleProtobuf003.FieldMask.AsObject;
   }
 
   /**
@@ -12398,6 +21778,7 @@ export module ListPlatformsOfAllSessionsRequest {
   export interface AsProtobufJSON {
     parent: string;
     sessionFilter: SessionFilter.AsProtobufJSON | null;
+    fieldMask: googleProtobuf003.FieldMask.AsProtobufJSON | null;
   }
 }
 
@@ -12568,6 +21949,7 @@ export class ListAccountIdsOfAllSessionsRequest implements GrpcMessage {
   static refineValues(_instance: ListAccountIdsOfAllSessionsRequest) {
     _instance.parent = _instance.parent || '';
     _instance.sessionFilter = _instance.sessionFilter || undefined;
+    _instance.fieldMask = _instance.fieldMask || undefined;
   }
 
   /**
@@ -12591,6 +21973,13 @@ export class ListAccountIdsOfAllSessionsRequest implements GrpcMessage {
           _reader.readMessage(
             _instance.sessionFilter,
             SessionFilter.deserializeBinaryFromReader
+          );
+          break;
+        case 3:
+          _instance.fieldMask = new googleProtobuf003.FieldMask();
+          _reader.readMessage(
+            _instance.fieldMask,
+            googleProtobuf003.FieldMask.deserializeBinaryFromReader
           );
           break;
         default:
@@ -12620,10 +22009,18 @@ export class ListAccountIdsOfAllSessionsRequest implements GrpcMessage {
         SessionFilter.serializeBinaryToWriter
       );
     }
+    if (_instance.fieldMask) {
+      _writer.writeMessage(
+        3,
+        _instance.fieldMask as any,
+        googleProtobuf003.FieldMask.serializeBinaryToWriter
+      );
+    }
   }
 
   private _parent: string;
   private _sessionFilter?: SessionFilter;
+  private _fieldMask?: googleProtobuf003.FieldMask;
 
   /**
    * Message constructor. Initializes the properties and applies default Protobuf values if necessary
@@ -12636,6 +22033,9 @@ export class ListAccountIdsOfAllSessionsRequest implements GrpcMessage {
     this.parent = _value.parent;
     this.sessionFilter = _value.sessionFilter
       ? new SessionFilter(_value.sessionFilter)
+      : undefined;
+    this.fieldMask = _value.fieldMask
+      ? new googleProtobuf003.FieldMask(_value.fieldMask)
       : undefined;
     ListAccountIdsOfAllSessionsRequest.refineValues(this);
   }
@@ -12650,6 +22050,12 @@ export class ListAccountIdsOfAllSessionsRequest implements GrpcMessage {
   }
   set sessionFilter(value: SessionFilter | undefined) {
     this._sessionFilter = value;
+  }
+  get fieldMask(): googleProtobuf003.FieldMask | undefined {
+    return this._fieldMask;
+  }
+  set fieldMask(value: googleProtobuf003.FieldMask | undefined) {
+    this._fieldMask = value;
   }
 
   /**
@@ -12670,7 +22076,8 @@ export class ListAccountIdsOfAllSessionsRequest implements GrpcMessage {
       parent: this.parent,
       sessionFilter: this.sessionFilter
         ? this.sessionFilter.toObject()
-        : undefined
+        : undefined,
+      fieldMask: this.fieldMask ? this.fieldMask.toObject() : undefined
     };
   }
 
@@ -12694,7 +22101,8 @@ export class ListAccountIdsOfAllSessionsRequest implements GrpcMessage {
       parent: this.parent,
       sessionFilter: this.sessionFilter
         ? this.sessionFilter.toProtobufJSON(options)
-        : null
+        : null,
+      fieldMask: this.fieldMask ? this.fieldMask.toProtobufJSON(options) : null
     };
   }
 }
@@ -12705,6 +22113,7 @@ export module ListAccountIdsOfAllSessionsRequest {
   export interface AsObject {
     parent: string;
     sessionFilter?: SessionFilter.AsObject;
+    fieldMask?: googleProtobuf003.FieldMask.AsObject;
   }
 
   /**
@@ -12713,6 +22122,7 @@ export module ListAccountIdsOfAllSessionsRequest {
   export interface AsProtobufJSON {
     parent: string;
     sessionFilter: SessionFilter.AsProtobufJSON | null;
+    fieldMask: googleProtobuf003.FieldMask.AsProtobufJSON | null;
   }
 }
 
@@ -13513,6 +22923,7 @@ export class ListOriginIdsOfAllSessionsRequest implements GrpcMessage {
   static refineValues(_instance: ListOriginIdsOfAllSessionsRequest) {
     _instance.parent = _instance.parent || '';
     _instance.sessionFilter = _instance.sessionFilter || undefined;
+    _instance.fieldMask = _instance.fieldMask || undefined;
   }
 
   /**
@@ -13536,6 +22947,13 @@ export class ListOriginIdsOfAllSessionsRequest implements GrpcMessage {
           _reader.readMessage(
             _instance.sessionFilter,
             SessionFilter.deserializeBinaryFromReader
+          );
+          break;
+        case 3:
+          _instance.fieldMask = new googleProtobuf003.FieldMask();
+          _reader.readMessage(
+            _instance.fieldMask,
+            googleProtobuf003.FieldMask.deserializeBinaryFromReader
           );
           break;
         default:
@@ -13565,10 +22983,18 @@ export class ListOriginIdsOfAllSessionsRequest implements GrpcMessage {
         SessionFilter.serializeBinaryToWriter
       );
     }
+    if (_instance.fieldMask) {
+      _writer.writeMessage(
+        3,
+        _instance.fieldMask as any,
+        googleProtobuf003.FieldMask.serializeBinaryToWriter
+      );
+    }
   }
 
   private _parent: string;
   private _sessionFilter?: SessionFilter;
+  private _fieldMask?: googleProtobuf003.FieldMask;
 
   /**
    * Message constructor. Initializes the properties and applies default Protobuf values if necessary
@@ -13581,6 +23007,9 @@ export class ListOriginIdsOfAllSessionsRequest implements GrpcMessage {
     this.parent = _value.parent;
     this.sessionFilter = _value.sessionFilter
       ? new SessionFilter(_value.sessionFilter)
+      : undefined;
+    this.fieldMask = _value.fieldMask
+      ? new googleProtobuf003.FieldMask(_value.fieldMask)
       : undefined;
     ListOriginIdsOfAllSessionsRequest.refineValues(this);
   }
@@ -13595,6 +23024,12 @@ export class ListOriginIdsOfAllSessionsRequest implements GrpcMessage {
   }
   set sessionFilter(value: SessionFilter | undefined) {
     this._sessionFilter = value;
+  }
+  get fieldMask(): googleProtobuf003.FieldMask | undefined {
+    return this._fieldMask;
+  }
+  set fieldMask(value: googleProtobuf003.FieldMask | undefined) {
+    this._fieldMask = value;
   }
 
   /**
@@ -13615,7 +23050,8 @@ export class ListOriginIdsOfAllSessionsRequest implements GrpcMessage {
       parent: this.parent,
       sessionFilter: this.sessionFilter
         ? this.sessionFilter.toObject()
-        : undefined
+        : undefined,
+      fieldMask: this.fieldMask ? this.fieldMask.toObject() : undefined
     };
   }
 
@@ -13639,7 +23075,8 @@ export class ListOriginIdsOfAllSessionsRequest implements GrpcMessage {
       parent: this.parent,
       sessionFilter: this.sessionFilter
         ? this.sessionFilter.toProtobufJSON(options)
-        : null
+        : null,
+      fieldMask: this.fieldMask ? this.fieldMask.toProtobufJSON(options) : null
     };
   }
 }
@@ -13650,6 +23087,7 @@ export module ListOriginIdsOfAllSessionsRequest {
   export interface AsObject {
     parent: string;
     sessionFilter?: SessionFilter.AsObject;
+    fieldMask?: googleProtobuf003.FieldMask.AsObject;
   }
 
   /**
@@ -13658,6 +23096,7 @@ export module ListOriginIdsOfAllSessionsRequest {
   export interface AsProtobufJSON {
     parent: string;
     sessionFilter: SessionFilter.AsProtobufJSON | null;
+    fieldMask: googleProtobuf003.FieldMask.AsProtobufJSON | null;
   }
 }
 
@@ -14167,10 +23606,10 @@ export class AddSessionCommentRequest implements GrpcMessage {
           _instance.sessionId = _reader.readString();
           break;
         case 2:
-          _instance.comment = new ondewoNlu008.Comment();
+          _instance.comment = new ondewoNlu006.Comment();
           _reader.readMessage(
             _instance.comment,
-            ondewoNlu008.Comment.deserializeBinaryFromReader
+            ondewoNlu006.Comment.deserializeBinaryFromReader
           );
           break;
         default:
@@ -14197,13 +23636,13 @@ export class AddSessionCommentRequest implements GrpcMessage {
       _writer.writeMessage(
         2,
         _instance.comment as any,
-        ondewoNlu008.Comment.serializeBinaryToWriter
+        ondewoNlu006.Comment.serializeBinaryToWriter
       );
     }
   }
 
   private _sessionId: string;
-  private _comment?: ondewoNlu008.Comment;
+  private _comment?: ondewoNlu006.Comment;
 
   /**
    * Message constructor. Initializes the properties and applies default Protobuf values if necessary
@@ -14213,7 +23652,7 @@ export class AddSessionCommentRequest implements GrpcMessage {
     _value = _value || {};
     this.sessionId = _value.sessionId;
     this.comment = _value.comment
-      ? new ondewoNlu008.Comment(_value.comment)
+      ? new ondewoNlu006.Comment(_value.comment)
       : undefined;
     AddSessionCommentRequest.refineValues(this);
   }
@@ -14223,10 +23662,10 @@ export class AddSessionCommentRequest implements GrpcMessage {
   set sessionId(value: string) {
     this._sessionId = value;
   }
-  get comment(): ondewoNlu008.Comment | undefined {
+  get comment(): ondewoNlu006.Comment | undefined {
     return this._comment;
   }
-  set comment(value: ondewoNlu008.Comment | undefined) {
+  set comment(value: ondewoNlu006.Comment | undefined) {
     this._comment = value;
   }
 
@@ -14278,7 +23717,7 @@ export module AddSessionCommentRequest {
    */
   export interface AsObject {
     sessionId: string;
-    comment?: ondewoNlu008.Comment.AsObject;
+    comment?: ondewoNlu006.Comment.AsObject;
   }
 
   /**
@@ -14286,7 +23725,7 @@ export module AddSessionCommentRequest {
    */
   export interface AsProtobufJSON {
     sessionId: string;
-    comment: ondewoNlu008.Comment.AsProtobufJSON | null;
+    comment: ondewoNlu006.Comment.AsProtobufJSON | null;
   }
 }
 
@@ -14497,10 +23936,10 @@ export class UpdateSessionCommentsRequest implements GrpcMessage {
           _instance.sessionId = _reader.readString();
           break;
         case 2:
-          _instance.comment = new ondewoNlu008.Comment();
+          _instance.comment = new ondewoNlu006.Comment();
           _reader.readMessage(
             _instance.comment,
-            ondewoNlu008.Comment.deserializeBinaryFromReader
+            ondewoNlu006.Comment.deserializeBinaryFromReader
           );
           break;
         default:
@@ -14527,13 +23966,13 @@ export class UpdateSessionCommentsRequest implements GrpcMessage {
       _writer.writeMessage(
         2,
         _instance.comment as any,
-        ondewoNlu008.Comment.serializeBinaryToWriter
+        ondewoNlu006.Comment.serializeBinaryToWriter
       );
     }
   }
 
   private _sessionId: string;
-  private _comment?: ondewoNlu008.Comment;
+  private _comment?: ondewoNlu006.Comment;
 
   /**
    * Message constructor. Initializes the properties and applies default Protobuf values if necessary
@@ -14545,7 +23984,7 @@ export class UpdateSessionCommentsRequest implements GrpcMessage {
     _value = _value || {};
     this.sessionId = _value.sessionId;
     this.comment = _value.comment
-      ? new ondewoNlu008.Comment(_value.comment)
+      ? new ondewoNlu006.Comment(_value.comment)
       : undefined;
     UpdateSessionCommentsRequest.refineValues(this);
   }
@@ -14555,10 +23994,10 @@ export class UpdateSessionCommentsRequest implements GrpcMessage {
   set sessionId(value: string) {
     this._sessionId = value;
   }
-  get comment(): ondewoNlu008.Comment | undefined {
+  get comment(): ondewoNlu006.Comment | undefined {
     return this._comment;
   }
-  set comment(value: ondewoNlu008.Comment | undefined) {
+  set comment(value: ondewoNlu006.Comment | undefined) {
     this._comment = value;
   }
 
@@ -14610,7 +24049,7 @@ export module UpdateSessionCommentsRequest {
    */
   export interface AsObject {
     sessionId: string;
-    comment?: ondewoNlu008.Comment.AsObject;
+    comment?: ondewoNlu006.Comment.AsObject;
   }
 
   /**
@@ -14618,7 +24057,7 @@ export module UpdateSessionCommentsRequest {
    */
   export interface AsProtobufJSON {
     sessionId: string;
-    comment: ondewoNlu008.Comment.AsProtobufJSON | null;
+    comment: ondewoNlu006.Comment.AsProtobufJSON | null;
   }
 }
 
@@ -14648,6 +24087,8 @@ export class ListSessionCommentsRequest implements GrpcMessage {
   static refineValues(_instance: ListSessionCommentsRequest) {
     _instance.sessionId = _instance.sessionId || '';
     _instance.pageToken = _instance.pageToken || '';
+    _instance.fieldMask = _instance.fieldMask || undefined;
+    _instance.isResolved = _instance.isResolved || false;
   }
 
   /**
@@ -14668,6 +24109,16 @@ export class ListSessionCommentsRequest implements GrpcMessage {
           break;
         case 2:
           _instance.pageToken = _reader.readString();
+          break;
+        case 3:
+          _instance.fieldMask = new googleProtobuf003.FieldMask();
+          _reader.readMessage(
+            _instance.fieldMask,
+            googleProtobuf003.FieldMask.deserializeBinaryFromReader
+          );
+          break;
+        case 4:
+          _instance.isResolved = _reader.readBool();
           break;
         default:
           _reader.skipField();
@@ -14692,10 +24143,22 @@ export class ListSessionCommentsRequest implements GrpcMessage {
     if (_instance.pageToken) {
       _writer.writeString(2, _instance.pageToken);
     }
+    if (_instance.fieldMask) {
+      _writer.writeMessage(
+        3,
+        _instance.fieldMask as any,
+        googleProtobuf003.FieldMask.serializeBinaryToWriter
+      );
+    }
+    if (_instance.isResolved) {
+      _writer.writeBool(4, _instance.isResolved);
+    }
   }
 
   private _sessionId: string;
   private _pageToken: string;
+  private _fieldMask?: googleProtobuf003.FieldMask;
+  private _isResolved: boolean;
 
   /**
    * Message constructor. Initializes the properties and applies default Protobuf values if necessary
@@ -14705,6 +24168,10 @@ export class ListSessionCommentsRequest implements GrpcMessage {
     _value = _value || {};
     this.sessionId = _value.sessionId;
     this.pageToken = _value.pageToken;
+    this.fieldMask = _value.fieldMask
+      ? new googleProtobuf003.FieldMask(_value.fieldMask)
+      : undefined;
+    this.isResolved = _value.isResolved;
     ListSessionCommentsRequest.refineValues(this);
   }
   get sessionId(): string {
@@ -14718,6 +24185,18 @@ export class ListSessionCommentsRequest implements GrpcMessage {
   }
   set pageToken(value: string) {
     this._pageToken = value;
+  }
+  get fieldMask(): googleProtobuf003.FieldMask | undefined {
+    return this._fieldMask;
+  }
+  set fieldMask(value: googleProtobuf003.FieldMask | undefined) {
+    this._fieldMask = value;
+  }
+  get isResolved(): boolean {
+    return this._isResolved;
+  }
+  set isResolved(value: boolean) {
+    this._isResolved = value;
   }
 
   /**
@@ -14736,7 +24215,9 @@ export class ListSessionCommentsRequest implements GrpcMessage {
   toObject(): ListSessionCommentsRequest.AsObject {
     return {
       sessionId: this.sessionId,
-      pageToken: this.pageToken
+      pageToken: this.pageToken,
+      fieldMask: this.fieldMask ? this.fieldMask.toObject() : undefined,
+      isResolved: this.isResolved
     };
   }
 
@@ -14758,7 +24239,9 @@ export class ListSessionCommentsRequest implements GrpcMessage {
   ): ListSessionCommentsRequest.AsProtobufJSON {
     return {
       sessionId: this.sessionId,
-      pageToken: this.pageToken
+      pageToken: this.pageToken,
+      fieldMask: this.fieldMask ? this.fieldMask.toProtobufJSON(options) : null,
+      isResolved: this.isResolved
     };
   }
 }
@@ -14769,6 +24252,8 @@ export module ListSessionCommentsRequest {
   export interface AsObject {
     sessionId: string;
     pageToken: string;
+    fieldMask?: googleProtobuf003.FieldMask.AsObject;
+    isResolved: boolean;
   }
 
   /**
@@ -14777,6 +24262,252 @@ export module ListSessionCommentsRequest {
   export interface AsProtobufJSON {
     sessionId: string;
     pageToken: string;
+    fieldMask: googleProtobuf003.FieldMask.AsProtobufJSON | null;
+    isResolved: boolean;
+  }
+}
+
+/**
+ * Message implementation for ondewo.nlu.ListSessionCommentsOfAllSessionsRequest
+ */
+export class ListSessionCommentsOfAllSessionsRequest implements GrpcMessage {
+  static id = 'ondewo.nlu.ListSessionCommentsOfAllSessionsRequest';
+
+  /**
+   * Deserialize binary data to message
+   * @param instance message instance
+   */
+  static deserializeBinary(bytes: ByteSource) {
+    const instance = new ListSessionCommentsOfAllSessionsRequest();
+    ListSessionCommentsOfAllSessionsRequest.deserializeBinaryFromReader(
+      instance,
+      new BinaryReader(bytes)
+    );
+    return instance;
+  }
+
+  /**
+   * Check all the properties and set default protobuf values if necessary
+   * @param _instance message instance
+   */
+  static refineValues(_instance: ListSessionCommentsOfAllSessionsRequest) {
+    _instance.parent = _instance.parent || '';
+    _instance.sessionFilter = _instance.sessionFilter || undefined;
+    _instance.pageToken = _instance.pageToken || '';
+    _instance.fieldMask = _instance.fieldMask || undefined;
+    _instance.isResolved = _instance.isResolved || false;
+  }
+
+  /**
+   * Deserializes / reads binary message into message instance using provided binary reader
+   * @param _instance message instance
+   * @param _reader binary reader instance
+   */
+  static deserializeBinaryFromReader(
+    _instance: ListSessionCommentsOfAllSessionsRequest,
+    _reader: BinaryReader
+  ) {
+    while (_reader.nextField()) {
+      if (_reader.isEndGroup()) break;
+
+      switch (_reader.getFieldNumber()) {
+        case 1:
+          _instance.parent = _reader.readString();
+          break;
+        case 2:
+          _instance.sessionFilter = new SessionFilter();
+          _reader.readMessage(
+            _instance.sessionFilter,
+            SessionFilter.deserializeBinaryFromReader
+          );
+          break;
+        case 3:
+          _instance.pageToken = _reader.readString();
+          break;
+        case 4:
+          _instance.fieldMask = new googleProtobuf003.FieldMask();
+          _reader.readMessage(
+            _instance.fieldMask,
+            googleProtobuf003.FieldMask.deserializeBinaryFromReader
+          );
+          break;
+        case 5:
+          _instance.isResolved = _reader.readBool();
+          break;
+        default:
+          _reader.skipField();
+      }
+    }
+
+    ListSessionCommentsOfAllSessionsRequest.refineValues(_instance);
+  }
+
+  /**
+   * Serializes a message to binary format using provided binary reader
+   * @param _instance message instance
+   * @param _writer binary writer instance
+   */
+  static serializeBinaryToWriter(
+    _instance: ListSessionCommentsOfAllSessionsRequest,
+    _writer: BinaryWriter
+  ) {
+    if (_instance.parent) {
+      _writer.writeString(1, _instance.parent);
+    }
+    if (_instance.sessionFilter) {
+      _writer.writeMessage(
+        2,
+        _instance.sessionFilter as any,
+        SessionFilter.serializeBinaryToWriter
+      );
+    }
+    if (_instance.pageToken) {
+      _writer.writeString(3, _instance.pageToken);
+    }
+    if (_instance.fieldMask) {
+      _writer.writeMessage(
+        4,
+        _instance.fieldMask as any,
+        googleProtobuf003.FieldMask.serializeBinaryToWriter
+      );
+    }
+    if (_instance.isResolved) {
+      _writer.writeBool(5, _instance.isResolved);
+    }
+  }
+
+  private _parent: string;
+  private _sessionFilter?: SessionFilter;
+  private _pageToken: string;
+  private _fieldMask?: googleProtobuf003.FieldMask;
+  private _isResolved: boolean;
+
+  /**
+   * Message constructor. Initializes the properties and applies default Protobuf values if necessary
+   * @param _value initial values object or instance of ListSessionCommentsOfAllSessionsRequest to deeply clone from
+   */
+  constructor(
+    _value?: RecursivePartial<ListSessionCommentsOfAllSessionsRequest.AsObject>
+  ) {
+    _value = _value || {};
+    this.parent = _value.parent;
+    this.sessionFilter = _value.sessionFilter
+      ? new SessionFilter(_value.sessionFilter)
+      : undefined;
+    this.pageToken = _value.pageToken;
+    this.fieldMask = _value.fieldMask
+      ? new googleProtobuf003.FieldMask(_value.fieldMask)
+      : undefined;
+    this.isResolved = _value.isResolved;
+    ListSessionCommentsOfAllSessionsRequest.refineValues(this);
+  }
+  get parent(): string {
+    return this._parent;
+  }
+  set parent(value: string) {
+    this._parent = value;
+  }
+  get sessionFilter(): SessionFilter | undefined {
+    return this._sessionFilter;
+  }
+  set sessionFilter(value: SessionFilter | undefined) {
+    this._sessionFilter = value;
+  }
+  get pageToken(): string {
+    return this._pageToken;
+  }
+  set pageToken(value: string) {
+    this._pageToken = value;
+  }
+  get fieldMask(): googleProtobuf003.FieldMask | undefined {
+    return this._fieldMask;
+  }
+  set fieldMask(value: googleProtobuf003.FieldMask | undefined) {
+    this._fieldMask = value;
+  }
+  get isResolved(): boolean {
+    return this._isResolved;
+  }
+  set isResolved(value: boolean) {
+    this._isResolved = value;
+  }
+
+  /**
+   * Serialize message to binary data
+   * @param instance message instance
+   */
+  serializeBinary() {
+    const writer = new BinaryWriter();
+    ListSessionCommentsOfAllSessionsRequest.serializeBinaryToWriter(
+      this,
+      writer
+    );
+    return writer.getResultBuffer();
+  }
+
+  /**
+   * Cast message to standard JavaScript object (all non-primitive values are deeply cloned)
+   */
+  toObject(): ListSessionCommentsOfAllSessionsRequest.AsObject {
+    return {
+      parent: this.parent,
+      sessionFilter: this.sessionFilter
+        ? this.sessionFilter.toObject()
+        : undefined,
+      pageToken: this.pageToken,
+      fieldMask: this.fieldMask ? this.fieldMask.toObject() : undefined,
+      isResolved: this.isResolved
+    };
+  }
+
+  /**
+   * Convenience method to support JSON.stringify(message), replicates the structure of toObject()
+   */
+  toJSON() {
+    return this.toObject();
+  }
+
+  /**
+   * Cast message to JSON using protobuf JSON notation: https://developers.google.com/protocol-buffers/docs/proto3#json
+   * Attention: output differs from toObject() e.g. enums are represented as names and not as numbers, Timestamp is an ISO Date string format etc.
+   * If the message itself or some of descendant messages is google.protobuf.Any, you MUST provide a message pool as options. If not, the messagePool is not required
+   */
+  toProtobufJSON(
+    // @ts-ignore
+    options?: ToProtobufJSONOptions
+  ): ListSessionCommentsOfAllSessionsRequest.AsProtobufJSON {
+    return {
+      parent: this.parent,
+      sessionFilter: this.sessionFilter
+        ? this.sessionFilter.toProtobufJSON(options)
+        : null,
+      pageToken: this.pageToken,
+      fieldMask: this.fieldMask ? this.fieldMask.toProtobufJSON(options) : null,
+      isResolved: this.isResolved
+    };
+  }
+}
+export module ListSessionCommentsOfAllSessionsRequest {
+  /**
+   * Standard JavaScript object representation for ListSessionCommentsOfAllSessionsRequest
+   */
+  export interface AsObject {
+    parent: string;
+    sessionFilter?: SessionFilter.AsObject;
+    pageToken: string;
+    fieldMask?: googleProtobuf003.FieldMask.AsObject;
+    isResolved: boolean;
+  }
+
+  /**
+   * Protobuf JSON representation for ListSessionCommentsOfAllSessionsRequest
+   */
+  export interface AsProtobufJSON {
+    parent: string;
+    sessionFilter: SessionFilter.AsProtobufJSON | null;
+    pageToken: string;
+    fieldMask: googleProtobuf003.FieldMask.AsProtobufJSON | null;
+    isResolved: boolean;
   }
 }
 
@@ -14822,10 +24553,10 @@ export class ListSessionCommentsResponse implements GrpcMessage {
 
       switch (_reader.getFieldNumber()) {
         case 1:
-          const messageInitializer1 = new ondewoNlu008.Comment();
+          const messageInitializer1 = new ondewoNlu006.Comment();
           _reader.readMessage(
             messageInitializer1,
-            ondewoNlu008.Comment.deserializeBinaryFromReader
+            ondewoNlu006.Comment.deserializeBinaryFromReader
           );
           (_instance.comment = _instance.comment || []).push(
             messageInitializer1
@@ -14855,7 +24586,7 @@ export class ListSessionCommentsResponse implements GrpcMessage {
       _writer.writeRepeatedMessage(
         1,
         _instance.comment as any,
-        ondewoNlu008.Comment.serializeBinaryToWriter
+        ondewoNlu006.Comment.serializeBinaryToWriter
       );
     }
     if (_instance.pageToken) {
@@ -14863,7 +24594,7 @@ export class ListSessionCommentsResponse implements GrpcMessage {
     }
   }
 
-  private _comment?: ondewoNlu008.Comment[];
+  private _comment?: ondewoNlu006.Comment[];
   private _pageToken: string;
 
   /**
@@ -14872,14 +24603,14 @@ export class ListSessionCommentsResponse implements GrpcMessage {
    */
   constructor(_value?: RecursivePartial<ListSessionCommentsResponse.AsObject>) {
     _value = _value || {};
-    this.comment = (_value.comment || []).map(m => new ondewoNlu008.Comment(m));
+    this.comment = (_value.comment || []).map(m => new ondewoNlu006.Comment(m));
     this.pageToken = _value.pageToken;
     ListSessionCommentsResponse.refineValues(this);
   }
-  get comment(): ondewoNlu008.Comment[] | undefined {
+  get comment(): ondewoNlu006.Comment[] | undefined {
     return this._comment;
   }
-  set comment(value: ondewoNlu008.Comment[] | undefined) {
+  set comment(value: ondewoNlu006.Comment[] | undefined) {
     this._comment = value;
   }
   get pageToken(): string {
@@ -14936,7 +24667,7 @@ export module ListSessionCommentsResponse {
    * Standard JavaScript object representation for ListSessionCommentsResponse
    */
   export interface AsObject {
-    comment?: ondewoNlu008.Comment.AsObject[];
+    comment?: ondewoNlu006.Comment.AsObject[];
     pageToken: string;
   }
 
@@ -14944,8 +24675,4281 @@ export module ListSessionCommentsResponse {
    * Protobuf JSON representation for ListSessionCommentsResponse
    */
   export interface AsProtobufJSON {
-    comment: ondewoNlu008.Comment.AsProtobufJSON[] | null;
+    comment: ondewoNlu006.Comment.AsProtobufJSON[] | null;
     pageToken: string;
+  }
+}
+
+/**
+ * Message implementation for ondewo.nlu.SessionFeedback
+ */
+export class SessionFeedback implements GrpcMessage {
+  static id = 'ondewo.nlu.SessionFeedback';
+
+  /**
+   * Deserialize binary data to message
+   * @param instance message instance
+   */
+  static deserializeBinary(bytes: ByteSource) {
+    const instance = new SessionFeedback();
+    SessionFeedback.deserializeBinaryFromReader(
+      instance,
+      new BinaryReader(bytes)
+    );
+    return instance;
+  }
+
+  /**
+   * Check all the properties and set default protobuf values if necessary
+   * @param _instance message instance
+   */
+  static refineValues(_instance: SessionFeedback) {
+    _instance.name = _instance.name || '';
+    _instance.sessionId = _instance.sessionId || '';
+    _instance.sessionStepId = _instance.sessionStepId || '';
+    _instance.responseId = _instance.responseId || '';
+    _instance.sessionStepLlmTelemetryId =
+      _instance.sessionStepLlmTelemetryId || '';
+    _instance.rating = _instance.rating || 0;
+    _instance.categoricalValue = _instance.categoricalValue || '';
+    _instance.score = _instance.score || 0;
+    _instance.comment = _instance.comment || '';
+    _instance.criterion = _instance.criterion || '';
+    _instance.authorType = _instance.authorType || 0;
+    _instance.annotatorUserId = _instance.annotatorUserId || '';
+    _instance.originId = _instance.originId || '';
+    _instance.identifiedUserId = _instance.identifiedUserId || '';
+    _instance.raw = _instance.raw || undefined;
+    _instance.createdAt = _instance.createdAt || undefined;
+    _instance.modifiedAt = _instance.modifiedAt || undefined;
+    _instance.createdBy = _instance.createdBy || '';
+    _instance.modifiedBy = _instance.modifiedBy || '';
+  }
+
+  /**
+   * Deserializes / reads binary message into message instance using provided binary reader
+   * @param _instance message instance
+   * @param _reader binary reader instance
+   */
+  static deserializeBinaryFromReader(
+    _instance: SessionFeedback,
+    _reader: BinaryReader
+  ) {
+    while (_reader.nextField()) {
+      if (_reader.isEndGroup()) break;
+
+      switch (_reader.getFieldNumber()) {
+        case 1:
+          _instance.name = _reader.readString();
+          break;
+        case 2:
+          _instance.sessionId = _reader.readString();
+          break;
+        case 3:
+          _instance.sessionStepId = _reader.readString();
+          break;
+        case 4:
+          _instance.responseId = _reader.readString();
+          break;
+        case 5:
+          _instance.sessionStepLlmTelemetryId = _reader.readString();
+          break;
+        case 6:
+          _instance.rating = _reader.readEnum();
+          break;
+        case 7:
+          _instance.categoricalValue = _reader.readString();
+          break;
+        case 8:
+          _instance.score = _reader.readFloat();
+          break;
+        case 9:
+          _instance.comment = _reader.readString();
+          break;
+        case 10:
+          _instance.criterion = _reader.readString();
+          break;
+        case 11:
+          _instance.authorType = _reader.readEnum();
+          break;
+        case 12:
+          _instance.annotatorUserId = _reader.readString();
+          break;
+        case 13:
+          _instance.originId = _reader.readString();
+          break;
+        case 14:
+          _instance.identifiedUserId = _reader.readString();
+          break;
+        case 15:
+          _instance.raw = new googleProtobuf004.Struct();
+          _reader.readMessage(
+            _instance.raw,
+            googleProtobuf004.Struct.deserializeBinaryFromReader
+          );
+          break;
+        case 16:
+          _instance.createdAt = new googleProtobuf005.Timestamp();
+          _reader.readMessage(
+            _instance.createdAt,
+            googleProtobuf005.Timestamp.deserializeBinaryFromReader
+          );
+          break;
+        case 17:
+          _instance.modifiedAt = new googleProtobuf005.Timestamp();
+          _reader.readMessage(
+            _instance.modifiedAt,
+            googleProtobuf005.Timestamp.deserializeBinaryFromReader
+          );
+          break;
+        case 18:
+          _instance.createdBy = _reader.readString();
+          break;
+        case 19:
+          _instance.modifiedBy = _reader.readString();
+          break;
+        default:
+          _reader.skipField();
+      }
+    }
+
+    SessionFeedback.refineValues(_instance);
+  }
+
+  /**
+   * Serializes a message to binary format using provided binary reader
+   * @param _instance message instance
+   * @param _writer binary writer instance
+   */
+  static serializeBinaryToWriter(
+    _instance: SessionFeedback,
+    _writer: BinaryWriter
+  ) {
+    if (_instance.name) {
+      _writer.writeString(1, _instance.name);
+    }
+    if (_instance.sessionId) {
+      _writer.writeString(2, _instance.sessionId);
+    }
+    if (_instance.sessionStepId) {
+      _writer.writeString(3, _instance.sessionStepId);
+    }
+    if (_instance.responseId) {
+      _writer.writeString(4, _instance.responseId);
+    }
+    if (_instance.sessionStepLlmTelemetryId) {
+      _writer.writeString(5, _instance.sessionStepLlmTelemetryId);
+    }
+    if (_instance.rating) {
+      _writer.writeEnum(6, _instance.rating);
+    }
+    if (_instance.categoricalValue) {
+      _writer.writeString(7, _instance.categoricalValue);
+    }
+    if (_instance.score) {
+      _writer.writeFloat(8, _instance.score);
+    }
+    if (_instance.comment) {
+      _writer.writeString(9, _instance.comment);
+    }
+    if (_instance.criterion) {
+      _writer.writeString(10, _instance.criterion);
+    }
+    if (_instance.authorType) {
+      _writer.writeEnum(11, _instance.authorType);
+    }
+    if (_instance.annotatorUserId) {
+      _writer.writeString(12, _instance.annotatorUserId);
+    }
+    if (_instance.originId) {
+      _writer.writeString(13, _instance.originId);
+    }
+    if (_instance.identifiedUserId) {
+      _writer.writeString(14, _instance.identifiedUserId);
+    }
+    if (_instance.raw) {
+      _writer.writeMessage(
+        15,
+        _instance.raw as any,
+        googleProtobuf004.Struct.serializeBinaryToWriter
+      );
+    }
+    if (_instance.createdAt) {
+      _writer.writeMessage(
+        16,
+        _instance.createdAt as any,
+        googleProtobuf005.Timestamp.serializeBinaryToWriter
+      );
+    }
+    if (_instance.modifiedAt) {
+      _writer.writeMessage(
+        17,
+        _instance.modifiedAt as any,
+        googleProtobuf005.Timestamp.serializeBinaryToWriter
+      );
+    }
+    if (_instance.createdBy) {
+      _writer.writeString(18, _instance.createdBy);
+    }
+    if (_instance.modifiedBy) {
+      _writer.writeString(19, _instance.modifiedBy);
+    }
+  }
+
+  private _name: string;
+  private _sessionId: string;
+  private _sessionStepId: string;
+  private _responseId: string;
+  private _sessionStepLlmTelemetryId: string;
+  private _rating: FeedbackRating;
+  private _categoricalValue: string;
+  private _score: number;
+  private _comment: string;
+  private _criterion: string;
+  private _authorType: FeedbackAuthorType;
+  private _annotatorUserId: string;
+  private _originId: string;
+  private _identifiedUserId: string;
+  private _raw?: googleProtobuf004.Struct;
+  private _createdAt?: googleProtobuf005.Timestamp;
+  private _modifiedAt?: googleProtobuf005.Timestamp;
+  private _createdBy: string;
+  private _modifiedBy: string;
+
+  /**
+   * Message constructor. Initializes the properties and applies default Protobuf values if necessary
+   * @param _value initial values object or instance of SessionFeedback to deeply clone from
+   */
+  constructor(_value?: RecursivePartial<SessionFeedback.AsObject>) {
+    _value = _value || {};
+    this.name = _value.name;
+    this.sessionId = _value.sessionId;
+    this.sessionStepId = _value.sessionStepId;
+    this.responseId = _value.responseId;
+    this.sessionStepLlmTelemetryId = _value.sessionStepLlmTelemetryId;
+    this.rating = _value.rating;
+    this.categoricalValue = _value.categoricalValue;
+    this.score = _value.score;
+    this.comment = _value.comment;
+    this.criterion = _value.criterion;
+    this.authorType = _value.authorType;
+    this.annotatorUserId = _value.annotatorUserId;
+    this.originId = _value.originId;
+    this.identifiedUserId = _value.identifiedUserId;
+    this.raw = _value.raw
+      ? new googleProtobuf004.Struct(_value.raw)
+      : undefined;
+    this.createdAt = _value.createdAt
+      ? new googleProtobuf005.Timestamp(_value.createdAt)
+      : undefined;
+    this.modifiedAt = _value.modifiedAt
+      ? new googleProtobuf005.Timestamp(_value.modifiedAt)
+      : undefined;
+    this.createdBy = _value.createdBy;
+    this.modifiedBy = _value.modifiedBy;
+    SessionFeedback.refineValues(this);
+  }
+  get name(): string {
+    return this._name;
+  }
+  set name(value: string) {
+    this._name = value;
+  }
+  get sessionId(): string {
+    return this._sessionId;
+  }
+  set sessionId(value: string) {
+    this._sessionId = value;
+  }
+  get sessionStepId(): string {
+    return this._sessionStepId;
+  }
+  set sessionStepId(value: string) {
+    this._sessionStepId = value;
+  }
+  get responseId(): string {
+    return this._responseId;
+  }
+  set responseId(value: string) {
+    this._responseId = value;
+  }
+  get sessionStepLlmTelemetryId(): string {
+    return this._sessionStepLlmTelemetryId;
+  }
+  set sessionStepLlmTelemetryId(value: string) {
+    this._sessionStepLlmTelemetryId = value;
+  }
+  get rating(): FeedbackRating {
+    return this._rating;
+  }
+  set rating(value: FeedbackRating) {
+    this._rating = value;
+  }
+  get categoricalValue(): string {
+    return this._categoricalValue;
+  }
+  set categoricalValue(value: string) {
+    this._categoricalValue = value;
+  }
+  get score(): number {
+    return this._score;
+  }
+  set score(value: number) {
+    this._score = value;
+  }
+  get comment(): string {
+    return this._comment;
+  }
+  set comment(value: string) {
+    this._comment = value;
+  }
+  get criterion(): string {
+    return this._criterion;
+  }
+  set criterion(value: string) {
+    this._criterion = value;
+  }
+  get authorType(): FeedbackAuthorType {
+    return this._authorType;
+  }
+  set authorType(value: FeedbackAuthorType) {
+    this._authorType = value;
+  }
+  get annotatorUserId(): string {
+    return this._annotatorUserId;
+  }
+  set annotatorUserId(value: string) {
+    this._annotatorUserId = value;
+  }
+  get originId(): string {
+    return this._originId;
+  }
+  set originId(value: string) {
+    this._originId = value;
+  }
+  get identifiedUserId(): string {
+    return this._identifiedUserId;
+  }
+  set identifiedUserId(value: string) {
+    this._identifiedUserId = value;
+  }
+  get raw(): googleProtobuf004.Struct | undefined {
+    return this._raw;
+  }
+  set raw(value: googleProtobuf004.Struct | undefined) {
+    this._raw = value;
+  }
+  get createdAt(): googleProtobuf005.Timestamp | undefined {
+    return this._createdAt;
+  }
+  set createdAt(value: googleProtobuf005.Timestamp | undefined) {
+    this._createdAt = value;
+  }
+  get modifiedAt(): googleProtobuf005.Timestamp | undefined {
+    return this._modifiedAt;
+  }
+  set modifiedAt(value: googleProtobuf005.Timestamp | undefined) {
+    this._modifiedAt = value;
+  }
+  get createdBy(): string {
+    return this._createdBy;
+  }
+  set createdBy(value: string) {
+    this._createdBy = value;
+  }
+  get modifiedBy(): string {
+    return this._modifiedBy;
+  }
+  set modifiedBy(value: string) {
+    this._modifiedBy = value;
+  }
+
+  /**
+   * Serialize message to binary data
+   * @param instance message instance
+   */
+  serializeBinary() {
+    const writer = new BinaryWriter();
+    SessionFeedback.serializeBinaryToWriter(this, writer);
+    return writer.getResultBuffer();
+  }
+
+  /**
+   * Cast message to standard JavaScript object (all non-primitive values are deeply cloned)
+   */
+  toObject(): SessionFeedback.AsObject {
+    return {
+      name: this.name,
+      sessionId: this.sessionId,
+      sessionStepId: this.sessionStepId,
+      responseId: this.responseId,
+      sessionStepLlmTelemetryId: this.sessionStepLlmTelemetryId,
+      rating: this.rating,
+      categoricalValue: this.categoricalValue,
+      score: this.score,
+      comment: this.comment,
+      criterion: this.criterion,
+      authorType: this.authorType,
+      annotatorUserId: this.annotatorUserId,
+      originId: this.originId,
+      identifiedUserId: this.identifiedUserId,
+      raw: this.raw ? this.raw.toObject() : undefined,
+      createdAt: this.createdAt ? this.createdAt.toObject() : undefined,
+      modifiedAt: this.modifiedAt ? this.modifiedAt.toObject() : undefined,
+      createdBy: this.createdBy,
+      modifiedBy: this.modifiedBy
+    };
+  }
+
+  /**
+   * Convenience method to support JSON.stringify(message), replicates the structure of toObject()
+   */
+  toJSON() {
+    return this.toObject();
+  }
+
+  /**
+   * Cast message to JSON using protobuf JSON notation: https://developers.google.com/protocol-buffers/docs/proto3#json
+   * Attention: output differs from toObject() e.g. enums are represented as names and not as numbers, Timestamp is an ISO Date string format etc.
+   * If the message itself or some of descendant messages is google.protobuf.Any, you MUST provide a message pool as options. If not, the messagePool is not required
+   */
+  toProtobufJSON(
+    // @ts-ignore
+    options?: ToProtobufJSONOptions
+  ): SessionFeedback.AsProtobufJSON {
+    return {
+      name: this.name,
+      sessionId: this.sessionId,
+      sessionStepId: this.sessionStepId,
+      responseId: this.responseId,
+      sessionStepLlmTelemetryId: this.sessionStepLlmTelemetryId,
+      rating:
+        FeedbackRating[
+          this.rating === null || this.rating === undefined ? 0 : this.rating
+        ],
+      categoricalValue: this.categoricalValue,
+      score: this.score,
+      comment: this.comment,
+      criterion: this.criterion,
+      authorType:
+        FeedbackAuthorType[
+          this.authorType === null || this.authorType === undefined
+            ? 0
+            : this.authorType
+        ],
+      annotatorUserId: this.annotatorUserId,
+      originId: this.originId,
+      identifiedUserId: this.identifiedUserId,
+      raw: this.raw ? this.raw.toProtobufJSON(options) : null,
+      createdAt: this.createdAt ? this.createdAt.toProtobufJSON(options) : null,
+      modifiedAt: this.modifiedAt
+        ? this.modifiedAt.toProtobufJSON(options)
+        : null,
+      createdBy: this.createdBy,
+      modifiedBy: this.modifiedBy
+    };
+  }
+}
+export module SessionFeedback {
+  /**
+   * Standard JavaScript object representation for SessionFeedback
+   */
+  export interface AsObject {
+    name: string;
+    sessionId: string;
+    sessionStepId: string;
+    responseId: string;
+    sessionStepLlmTelemetryId: string;
+    rating: FeedbackRating;
+    categoricalValue: string;
+    score: number;
+    comment: string;
+    criterion: string;
+    authorType: FeedbackAuthorType;
+    annotatorUserId: string;
+    originId: string;
+    identifiedUserId: string;
+    raw?: googleProtobuf004.Struct.AsObject;
+    createdAt?: googleProtobuf005.Timestamp.AsObject;
+    modifiedAt?: googleProtobuf005.Timestamp.AsObject;
+    createdBy: string;
+    modifiedBy: string;
+  }
+
+  /**
+   * Protobuf JSON representation for SessionFeedback
+   */
+  export interface AsProtobufJSON {
+    name: string;
+    sessionId: string;
+    sessionStepId: string;
+    responseId: string;
+    sessionStepLlmTelemetryId: string;
+    rating: string;
+    categoricalValue: string;
+    score: number;
+    comment: string;
+    criterion: string;
+    authorType: string;
+    annotatorUserId: string;
+    originId: string;
+    identifiedUserId: string;
+    raw: googleProtobuf004.Struct.AsProtobufJSON | null;
+    createdAt: googleProtobuf005.Timestamp.AsProtobufJSON | null;
+    modifiedAt: googleProtobuf005.Timestamp.AsProtobufJSON | null;
+    createdBy: string;
+    modifiedBy: string;
+  }
+}
+
+/**
+ * Message implementation for ondewo.nlu.AddSessionFeedbackRequest
+ */
+export class AddSessionFeedbackRequest implements GrpcMessage {
+  static id = 'ondewo.nlu.AddSessionFeedbackRequest';
+
+  /**
+   * Deserialize binary data to message
+   * @param instance message instance
+   */
+  static deserializeBinary(bytes: ByteSource) {
+    const instance = new AddSessionFeedbackRequest();
+    AddSessionFeedbackRequest.deserializeBinaryFromReader(
+      instance,
+      new BinaryReader(bytes)
+    );
+    return instance;
+  }
+
+  /**
+   * Check all the properties and set default protobuf values if necessary
+   * @param _instance message instance
+   */
+  static refineValues(_instance: AddSessionFeedbackRequest) {
+    _instance.sessionId = _instance.sessionId || '';
+    _instance.feedback = _instance.feedback || undefined;
+  }
+
+  /**
+   * Deserializes / reads binary message into message instance using provided binary reader
+   * @param _instance message instance
+   * @param _reader binary reader instance
+   */
+  static deserializeBinaryFromReader(
+    _instance: AddSessionFeedbackRequest,
+    _reader: BinaryReader
+  ) {
+    while (_reader.nextField()) {
+      if (_reader.isEndGroup()) break;
+
+      switch (_reader.getFieldNumber()) {
+        case 1:
+          _instance.sessionId = _reader.readString();
+          break;
+        case 2:
+          _instance.feedback = new SessionFeedback();
+          _reader.readMessage(
+            _instance.feedback,
+            SessionFeedback.deserializeBinaryFromReader
+          );
+          break;
+        default:
+          _reader.skipField();
+      }
+    }
+
+    AddSessionFeedbackRequest.refineValues(_instance);
+  }
+
+  /**
+   * Serializes a message to binary format using provided binary reader
+   * @param _instance message instance
+   * @param _writer binary writer instance
+   */
+  static serializeBinaryToWriter(
+    _instance: AddSessionFeedbackRequest,
+    _writer: BinaryWriter
+  ) {
+    if (_instance.sessionId) {
+      _writer.writeString(1, _instance.sessionId);
+    }
+    if (_instance.feedback) {
+      _writer.writeMessage(
+        2,
+        _instance.feedback as any,
+        SessionFeedback.serializeBinaryToWriter
+      );
+    }
+  }
+
+  private _sessionId: string;
+  private _feedback?: SessionFeedback;
+
+  /**
+   * Message constructor. Initializes the properties and applies default Protobuf values if necessary
+   * @param _value initial values object or instance of AddSessionFeedbackRequest to deeply clone from
+   */
+  constructor(_value?: RecursivePartial<AddSessionFeedbackRequest.AsObject>) {
+    _value = _value || {};
+    this.sessionId = _value.sessionId;
+    this.feedback = _value.feedback
+      ? new SessionFeedback(_value.feedback)
+      : undefined;
+    AddSessionFeedbackRequest.refineValues(this);
+  }
+  get sessionId(): string {
+    return this._sessionId;
+  }
+  set sessionId(value: string) {
+    this._sessionId = value;
+  }
+  get feedback(): SessionFeedback | undefined {
+    return this._feedback;
+  }
+  set feedback(value: SessionFeedback | undefined) {
+    this._feedback = value;
+  }
+
+  /**
+   * Serialize message to binary data
+   * @param instance message instance
+   */
+  serializeBinary() {
+    const writer = new BinaryWriter();
+    AddSessionFeedbackRequest.serializeBinaryToWriter(this, writer);
+    return writer.getResultBuffer();
+  }
+
+  /**
+   * Cast message to standard JavaScript object (all non-primitive values are deeply cloned)
+   */
+  toObject(): AddSessionFeedbackRequest.AsObject {
+    return {
+      sessionId: this.sessionId,
+      feedback: this.feedback ? this.feedback.toObject() : undefined
+    };
+  }
+
+  /**
+   * Convenience method to support JSON.stringify(message), replicates the structure of toObject()
+   */
+  toJSON() {
+    return this.toObject();
+  }
+
+  /**
+   * Cast message to JSON using protobuf JSON notation: https://developers.google.com/protocol-buffers/docs/proto3#json
+   * Attention: output differs from toObject() e.g. enums are represented as names and not as numbers, Timestamp is an ISO Date string format etc.
+   * If the message itself or some of descendant messages is google.protobuf.Any, you MUST provide a message pool as options. If not, the messagePool is not required
+   */
+  toProtobufJSON(
+    // @ts-ignore
+    options?: ToProtobufJSONOptions
+  ): AddSessionFeedbackRequest.AsProtobufJSON {
+    return {
+      sessionId: this.sessionId,
+      feedback: this.feedback ? this.feedback.toProtobufJSON(options) : null
+    };
+  }
+}
+export module AddSessionFeedbackRequest {
+  /**
+   * Standard JavaScript object representation for AddSessionFeedbackRequest
+   */
+  export interface AsObject {
+    sessionId: string;
+    feedback?: SessionFeedback.AsObject;
+  }
+
+  /**
+   * Protobuf JSON representation for AddSessionFeedbackRequest
+   */
+  export interface AsProtobufJSON {
+    sessionId: string;
+    feedback: SessionFeedback.AsProtobufJSON | null;
+  }
+}
+
+/**
+ * Message implementation for ondewo.nlu.AddSessionStepFeedbackRequest
+ */
+export class AddSessionStepFeedbackRequest implements GrpcMessage {
+  static id = 'ondewo.nlu.AddSessionStepFeedbackRequest';
+
+  /**
+   * Deserialize binary data to message
+   * @param instance message instance
+   */
+  static deserializeBinary(bytes: ByteSource) {
+    const instance = new AddSessionStepFeedbackRequest();
+    AddSessionStepFeedbackRequest.deserializeBinaryFromReader(
+      instance,
+      new BinaryReader(bytes)
+    );
+    return instance;
+  }
+
+  /**
+   * Check all the properties and set default protobuf values if necessary
+   * @param _instance message instance
+   */
+  static refineValues(_instance: AddSessionStepFeedbackRequest) {
+    _instance.sessionId = _instance.sessionId || '';
+    _instance.sessionStepId = _instance.sessionStepId || '';
+    _instance.feedback = _instance.feedback || undefined;
+  }
+
+  /**
+   * Deserializes / reads binary message into message instance using provided binary reader
+   * @param _instance message instance
+   * @param _reader binary reader instance
+   */
+  static deserializeBinaryFromReader(
+    _instance: AddSessionStepFeedbackRequest,
+    _reader: BinaryReader
+  ) {
+    while (_reader.nextField()) {
+      if (_reader.isEndGroup()) break;
+
+      switch (_reader.getFieldNumber()) {
+        case 1:
+          _instance.sessionId = _reader.readString();
+          break;
+        case 2:
+          _instance.sessionStepId = _reader.readString();
+          break;
+        case 3:
+          _instance.feedback = new SessionFeedback();
+          _reader.readMessage(
+            _instance.feedback,
+            SessionFeedback.deserializeBinaryFromReader
+          );
+          break;
+        default:
+          _reader.skipField();
+      }
+    }
+
+    AddSessionStepFeedbackRequest.refineValues(_instance);
+  }
+
+  /**
+   * Serializes a message to binary format using provided binary reader
+   * @param _instance message instance
+   * @param _writer binary writer instance
+   */
+  static serializeBinaryToWriter(
+    _instance: AddSessionStepFeedbackRequest,
+    _writer: BinaryWriter
+  ) {
+    if (_instance.sessionId) {
+      _writer.writeString(1, _instance.sessionId);
+    }
+    if (_instance.sessionStepId) {
+      _writer.writeString(2, _instance.sessionStepId);
+    }
+    if (_instance.feedback) {
+      _writer.writeMessage(
+        3,
+        _instance.feedback as any,
+        SessionFeedback.serializeBinaryToWriter
+      );
+    }
+  }
+
+  private _sessionId: string;
+  private _sessionStepId: string;
+  private _feedback?: SessionFeedback;
+
+  /**
+   * Message constructor. Initializes the properties and applies default Protobuf values if necessary
+   * @param _value initial values object or instance of AddSessionStepFeedbackRequest to deeply clone from
+   */
+  constructor(
+    _value?: RecursivePartial<AddSessionStepFeedbackRequest.AsObject>
+  ) {
+    _value = _value || {};
+    this.sessionId = _value.sessionId;
+    this.sessionStepId = _value.sessionStepId;
+    this.feedback = _value.feedback
+      ? new SessionFeedback(_value.feedback)
+      : undefined;
+    AddSessionStepFeedbackRequest.refineValues(this);
+  }
+  get sessionId(): string {
+    return this._sessionId;
+  }
+  set sessionId(value: string) {
+    this._sessionId = value;
+  }
+  get sessionStepId(): string {
+    return this._sessionStepId;
+  }
+  set sessionStepId(value: string) {
+    this._sessionStepId = value;
+  }
+  get feedback(): SessionFeedback | undefined {
+    return this._feedback;
+  }
+  set feedback(value: SessionFeedback | undefined) {
+    this._feedback = value;
+  }
+
+  /**
+   * Serialize message to binary data
+   * @param instance message instance
+   */
+  serializeBinary() {
+    const writer = new BinaryWriter();
+    AddSessionStepFeedbackRequest.serializeBinaryToWriter(this, writer);
+    return writer.getResultBuffer();
+  }
+
+  /**
+   * Cast message to standard JavaScript object (all non-primitive values are deeply cloned)
+   */
+  toObject(): AddSessionStepFeedbackRequest.AsObject {
+    return {
+      sessionId: this.sessionId,
+      sessionStepId: this.sessionStepId,
+      feedback: this.feedback ? this.feedback.toObject() : undefined
+    };
+  }
+
+  /**
+   * Convenience method to support JSON.stringify(message), replicates the structure of toObject()
+   */
+  toJSON() {
+    return this.toObject();
+  }
+
+  /**
+   * Cast message to JSON using protobuf JSON notation: https://developers.google.com/protocol-buffers/docs/proto3#json
+   * Attention: output differs from toObject() e.g. enums are represented as names and not as numbers, Timestamp is an ISO Date string format etc.
+   * If the message itself or some of descendant messages is google.protobuf.Any, you MUST provide a message pool as options. If not, the messagePool is not required
+   */
+  toProtobufJSON(
+    // @ts-ignore
+    options?: ToProtobufJSONOptions
+  ): AddSessionStepFeedbackRequest.AsProtobufJSON {
+    return {
+      sessionId: this.sessionId,
+      sessionStepId: this.sessionStepId,
+      feedback: this.feedback ? this.feedback.toProtobufJSON(options) : null
+    };
+  }
+}
+export module AddSessionStepFeedbackRequest {
+  /**
+   * Standard JavaScript object representation for AddSessionStepFeedbackRequest
+   */
+  export interface AsObject {
+    sessionId: string;
+    sessionStepId: string;
+    feedback?: SessionFeedback.AsObject;
+  }
+
+  /**
+   * Protobuf JSON representation for AddSessionStepFeedbackRequest
+   */
+  export interface AsProtobufJSON {
+    sessionId: string;
+    sessionStepId: string;
+    feedback: SessionFeedback.AsProtobufJSON | null;
+  }
+}
+
+/**
+ * Message implementation for ondewo.nlu.GetSessionFeedbackRequest
+ */
+export class GetSessionFeedbackRequest implements GrpcMessage {
+  static id = 'ondewo.nlu.GetSessionFeedbackRequest';
+
+  /**
+   * Deserialize binary data to message
+   * @param instance message instance
+   */
+  static deserializeBinary(bytes: ByteSource) {
+    const instance = new GetSessionFeedbackRequest();
+    GetSessionFeedbackRequest.deserializeBinaryFromReader(
+      instance,
+      new BinaryReader(bytes)
+    );
+    return instance;
+  }
+
+  /**
+   * Check all the properties and set default protobuf values if necessary
+   * @param _instance message instance
+   */
+  static refineValues(_instance: GetSessionFeedbackRequest) {
+    _instance.name = _instance.name || '';
+    _instance.fieldMask = _instance.fieldMask || undefined;
+  }
+
+  /**
+   * Deserializes / reads binary message into message instance using provided binary reader
+   * @param _instance message instance
+   * @param _reader binary reader instance
+   */
+  static deserializeBinaryFromReader(
+    _instance: GetSessionFeedbackRequest,
+    _reader: BinaryReader
+  ) {
+    while (_reader.nextField()) {
+      if (_reader.isEndGroup()) break;
+
+      switch (_reader.getFieldNumber()) {
+        case 1:
+          _instance.name = _reader.readString();
+          break;
+        case 2:
+          _instance.fieldMask = new googleProtobuf003.FieldMask();
+          _reader.readMessage(
+            _instance.fieldMask,
+            googleProtobuf003.FieldMask.deserializeBinaryFromReader
+          );
+          break;
+        default:
+          _reader.skipField();
+      }
+    }
+
+    GetSessionFeedbackRequest.refineValues(_instance);
+  }
+
+  /**
+   * Serializes a message to binary format using provided binary reader
+   * @param _instance message instance
+   * @param _writer binary writer instance
+   */
+  static serializeBinaryToWriter(
+    _instance: GetSessionFeedbackRequest,
+    _writer: BinaryWriter
+  ) {
+    if (_instance.name) {
+      _writer.writeString(1, _instance.name);
+    }
+    if (_instance.fieldMask) {
+      _writer.writeMessage(
+        2,
+        _instance.fieldMask as any,
+        googleProtobuf003.FieldMask.serializeBinaryToWriter
+      );
+    }
+  }
+
+  private _name: string;
+  private _fieldMask?: googleProtobuf003.FieldMask;
+
+  /**
+   * Message constructor. Initializes the properties and applies default Protobuf values if necessary
+   * @param _value initial values object or instance of GetSessionFeedbackRequest to deeply clone from
+   */
+  constructor(_value?: RecursivePartial<GetSessionFeedbackRequest.AsObject>) {
+    _value = _value || {};
+    this.name = _value.name;
+    this.fieldMask = _value.fieldMask
+      ? new googleProtobuf003.FieldMask(_value.fieldMask)
+      : undefined;
+    GetSessionFeedbackRequest.refineValues(this);
+  }
+  get name(): string {
+    return this._name;
+  }
+  set name(value: string) {
+    this._name = value;
+  }
+  get fieldMask(): googleProtobuf003.FieldMask | undefined {
+    return this._fieldMask;
+  }
+  set fieldMask(value: googleProtobuf003.FieldMask | undefined) {
+    this._fieldMask = value;
+  }
+
+  /**
+   * Serialize message to binary data
+   * @param instance message instance
+   */
+  serializeBinary() {
+    const writer = new BinaryWriter();
+    GetSessionFeedbackRequest.serializeBinaryToWriter(this, writer);
+    return writer.getResultBuffer();
+  }
+
+  /**
+   * Cast message to standard JavaScript object (all non-primitive values are deeply cloned)
+   */
+  toObject(): GetSessionFeedbackRequest.AsObject {
+    return {
+      name: this.name,
+      fieldMask: this.fieldMask ? this.fieldMask.toObject() : undefined
+    };
+  }
+
+  /**
+   * Convenience method to support JSON.stringify(message), replicates the structure of toObject()
+   */
+  toJSON() {
+    return this.toObject();
+  }
+
+  /**
+   * Cast message to JSON using protobuf JSON notation: https://developers.google.com/protocol-buffers/docs/proto3#json
+   * Attention: output differs from toObject() e.g. enums are represented as names and not as numbers, Timestamp is an ISO Date string format etc.
+   * If the message itself or some of descendant messages is google.protobuf.Any, you MUST provide a message pool as options. If not, the messagePool is not required
+   */
+  toProtobufJSON(
+    // @ts-ignore
+    options?: ToProtobufJSONOptions
+  ): GetSessionFeedbackRequest.AsProtobufJSON {
+    return {
+      name: this.name,
+      fieldMask: this.fieldMask ? this.fieldMask.toProtobufJSON(options) : null
+    };
+  }
+}
+export module GetSessionFeedbackRequest {
+  /**
+   * Standard JavaScript object representation for GetSessionFeedbackRequest
+   */
+  export interface AsObject {
+    name: string;
+    fieldMask?: googleProtobuf003.FieldMask.AsObject;
+  }
+
+  /**
+   * Protobuf JSON representation for GetSessionFeedbackRequest
+   */
+  export interface AsProtobufJSON {
+    name: string;
+    fieldMask: googleProtobuf003.FieldMask.AsProtobufJSON | null;
+  }
+}
+
+/**
+ * Message implementation for ondewo.nlu.UpdateSessionFeedbackRequest
+ */
+export class UpdateSessionFeedbackRequest implements GrpcMessage {
+  static id = 'ondewo.nlu.UpdateSessionFeedbackRequest';
+
+  /**
+   * Deserialize binary data to message
+   * @param instance message instance
+   */
+  static deserializeBinary(bytes: ByteSource) {
+    const instance = new UpdateSessionFeedbackRequest();
+    UpdateSessionFeedbackRequest.deserializeBinaryFromReader(
+      instance,
+      new BinaryReader(bytes)
+    );
+    return instance;
+  }
+
+  /**
+   * Check all the properties and set default protobuf values if necessary
+   * @param _instance message instance
+   */
+  static refineValues(_instance: UpdateSessionFeedbackRequest) {
+    _instance.feedback = _instance.feedback || undefined;
+    _instance.updateMask = _instance.updateMask || undefined;
+  }
+
+  /**
+   * Deserializes / reads binary message into message instance using provided binary reader
+   * @param _instance message instance
+   * @param _reader binary reader instance
+   */
+  static deserializeBinaryFromReader(
+    _instance: UpdateSessionFeedbackRequest,
+    _reader: BinaryReader
+  ) {
+    while (_reader.nextField()) {
+      if (_reader.isEndGroup()) break;
+
+      switch (_reader.getFieldNumber()) {
+        case 1:
+          _instance.feedback = new SessionFeedback();
+          _reader.readMessage(
+            _instance.feedback,
+            SessionFeedback.deserializeBinaryFromReader
+          );
+          break;
+        case 2:
+          _instance.updateMask = new googleProtobuf003.FieldMask();
+          _reader.readMessage(
+            _instance.updateMask,
+            googleProtobuf003.FieldMask.deserializeBinaryFromReader
+          );
+          break;
+        default:
+          _reader.skipField();
+      }
+    }
+
+    UpdateSessionFeedbackRequest.refineValues(_instance);
+  }
+
+  /**
+   * Serializes a message to binary format using provided binary reader
+   * @param _instance message instance
+   * @param _writer binary writer instance
+   */
+  static serializeBinaryToWriter(
+    _instance: UpdateSessionFeedbackRequest,
+    _writer: BinaryWriter
+  ) {
+    if (_instance.feedback) {
+      _writer.writeMessage(
+        1,
+        _instance.feedback as any,
+        SessionFeedback.serializeBinaryToWriter
+      );
+    }
+    if (_instance.updateMask) {
+      _writer.writeMessage(
+        2,
+        _instance.updateMask as any,
+        googleProtobuf003.FieldMask.serializeBinaryToWriter
+      );
+    }
+  }
+
+  private _feedback?: SessionFeedback;
+  private _updateMask?: googleProtobuf003.FieldMask;
+
+  /**
+   * Message constructor. Initializes the properties and applies default Protobuf values if necessary
+   * @param _value initial values object or instance of UpdateSessionFeedbackRequest to deeply clone from
+   */
+  constructor(
+    _value?: RecursivePartial<UpdateSessionFeedbackRequest.AsObject>
+  ) {
+    _value = _value || {};
+    this.feedback = _value.feedback
+      ? new SessionFeedback(_value.feedback)
+      : undefined;
+    this.updateMask = _value.updateMask
+      ? new googleProtobuf003.FieldMask(_value.updateMask)
+      : undefined;
+    UpdateSessionFeedbackRequest.refineValues(this);
+  }
+  get feedback(): SessionFeedback | undefined {
+    return this._feedback;
+  }
+  set feedback(value: SessionFeedback | undefined) {
+    this._feedback = value;
+  }
+  get updateMask(): googleProtobuf003.FieldMask | undefined {
+    return this._updateMask;
+  }
+  set updateMask(value: googleProtobuf003.FieldMask | undefined) {
+    this._updateMask = value;
+  }
+
+  /**
+   * Serialize message to binary data
+   * @param instance message instance
+   */
+  serializeBinary() {
+    const writer = new BinaryWriter();
+    UpdateSessionFeedbackRequest.serializeBinaryToWriter(this, writer);
+    return writer.getResultBuffer();
+  }
+
+  /**
+   * Cast message to standard JavaScript object (all non-primitive values are deeply cloned)
+   */
+  toObject(): UpdateSessionFeedbackRequest.AsObject {
+    return {
+      feedback: this.feedback ? this.feedback.toObject() : undefined,
+      updateMask: this.updateMask ? this.updateMask.toObject() : undefined
+    };
+  }
+
+  /**
+   * Convenience method to support JSON.stringify(message), replicates the structure of toObject()
+   */
+  toJSON() {
+    return this.toObject();
+  }
+
+  /**
+   * Cast message to JSON using protobuf JSON notation: https://developers.google.com/protocol-buffers/docs/proto3#json
+   * Attention: output differs from toObject() e.g. enums are represented as names and not as numbers, Timestamp is an ISO Date string format etc.
+   * If the message itself or some of descendant messages is google.protobuf.Any, you MUST provide a message pool as options. If not, the messagePool is not required
+   */
+  toProtobufJSON(
+    // @ts-ignore
+    options?: ToProtobufJSONOptions
+  ): UpdateSessionFeedbackRequest.AsProtobufJSON {
+    return {
+      feedback: this.feedback ? this.feedback.toProtobufJSON(options) : null,
+      updateMask: this.updateMask
+        ? this.updateMask.toProtobufJSON(options)
+        : null
+    };
+  }
+}
+export module UpdateSessionFeedbackRequest {
+  /**
+   * Standard JavaScript object representation for UpdateSessionFeedbackRequest
+   */
+  export interface AsObject {
+    feedback?: SessionFeedback.AsObject;
+    updateMask?: googleProtobuf003.FieldMask.AsObject;
+  }
+
+  /**
+   * Protobuf JSON representation for UpdateSessionFeedbackRequest
+   */
+  export interface AsProtobufJSON {
+    feedback: SessionFeedback.AsProtobufJSON | null;
+    updateMask: googleProtobuf003.FieldMask.AsProtobufJSON | null;
+  }
+}
+
+/**
+ * Message implementation for ondewo.nlu.DeleteSessionFeedbackRequest
+ */
+export class DeleteSessionFeedbackRequest implements GrpcMessage {
+  static id = 'ondewo.nlu.DeleteSessionFeedbackRequest';
+
+  /**
+   * Deserialize binary data to message
+   * @param instance message instance
+   */
+  static deserializeBinary(bytes: ByteSource) {
+    const instance = new DeleteSessionFeedbackRequest();
+    DeleteSessionFeedbackRequest.deserializeBinaryFromReader(
+      instance,
+      new BinaryReader(bytes)
+    );
+    return instance;
+  }
+
+  /**
+   * Check all the properties and set default protobuf values if necessary
+   * @param _instance message instance
+   */
+  static refineValues(_instance: DeleteSessionFeedbackRequest) {
+    _instance.name = _instance.name || '';
+  }
+
+  /**
+   * Deserializes / reads binary message into message instance using provided binary reader
+   * @param _instance message instance
+   * @param _reader binary reader instance
+   */
+  static deserializeBinaryFromReader(
+    _instance: DeleteSessionFeedbackRequest,
+    _reader: BinaryReader
+  ) {
+    while (_reader.nextField()) {
+      if (_reader.isEndGroup()) break;
+
+      switch (_reader.getFieldNumber()) {
+        case 1:
+          _instance.name = _reader.readString();
+          break;
+        default:
+          _reader.skipField();
+      }
+    }
+
+    DeleteSessionFeedbackRequest.refineValues(_instance);
+  }
+
+  /**
+   * Serializes a message to binary format using provided binary reader
+   * @param _instance message instance
+   * @param _writer binary writer instance
+   */
+  static serializeBinaryToWriter(
+    _instance: DeleteSessionFeedbackRequest,
+    _writer: BinaryWriter
+  ) {
+    if (_instance.name) {
+      _writer.writeString(1, _instance.name);
+    }
+  }
+
+  private _name: string;
+
+  /**
+   * Message constructor. Initializes the properties and applies default Protobuf values if necessary
+   * @param _value initial values object or instance of DeleteSessionFeedbackRequest to deeply clone from
+   */
+  constructor(
+    _value?: RecursivePartial<DeleteSessionFeedbackRequest.AsObject>
+  ) {
+    _value = _value || {};
+    this.name = _value.name;
+    DeleteSessionFeedbackRequest.refineValues(this);
+  }
+  get name(): string {
+    return this._name;
+  }
+  set name(value: string) {
+    this._name = value;
+  }
+
+  /**
+   * Serialize message to binary data
+   * @param instance message instance
+   */
+  serializeBinary() {
+    const writer = new BinaryWriter();
+    DeleteSessionFeedbackRequest.serializeBinaryToWriter(this, writer);
+    return writer.getResultBuffer();
+  }
+
+  /**
+   * Cast message to standard JavaScript object (all non-primitive values are deeply cloned)
+   */
+  toObject(): DeleteSessionFeedbackRequest.AsObject {
+    return {
+      name: this.name
+    };
+  }
+
+  /**
+   * Convenience method to support JSON.stringify(message), replicates the structure of toObject()
+   */
+  toJSON() {
+    return this.toObject();
+  }
+
+  /**
+   * Cast message to JSON using protobuf JSON notation: https://developers.google.com/protocol-buffers/docs/proto3#json
+   * Attention: output differs from toObject() e.g. enums are represented as names and not as numbers, Timestamp is an ISO Date string format etc.
+   * If the message itself or some of descendant messages is google.protobuf.Any, you MUST provide a message pool as options. If not, the messagePool is not required
+   */
+  toProtobufJSON(
+    // @ts-ignore
+    options?: ToProtobufJSONOptions
+  ): DeleteSessionFeedbackRequest.AsProtobufJSON {
+    return {
+      name: this.name
+    };
+  }
+}
+export module DeleteSessionFeedbackRequest {
+  /**
+   * Standard JavaScript object representation for DeleteSessionFeedbackRequest
+   */
+  export interface AsObject {
+    name: string;
+  }
+
+  /**
+   * Protobuf JSON representation for DeleteSessionFeedbackRequest
+   */
+  export interface AsProtobufJSON {
+    name: string;
+  }
+}
+
+/**
+ * Message implementation for ondewo.nlu.ListSessionFeedbackRequest
+ */
+export class ListSessionFeedbackRequest implements GrpcMessage {
+  static id = 'ondewo.nlu.ListSessionFeedbackRequest';
+
+  /**
+   * Deserialize binary data to message
+   * @param instance message instance
+   */
+  static deserializeBinary(bytes: ByteSource) {
+    const instance = new ListSessionFeedbackRequest();
+    ListSessionFeedbackRequest.deserializeBinaryFromReader(
+      instance,
+      new BinaryReader(bytes)
+    );
+    return instance;
+  }
+
+  /**
+   * Check all the properties and set default protobuf values if necessary
+   * @param _instance message instance
+   */
+  static refineValues(_instance: ListSessionFeedbackRequest) {
+    _instance.sessionId = _instance.sessionId || '';
+    _instance.pageToken = _instance.pageToken || '';
+    _instance.fieldMask = _instance.fieldMask || undefined;
+  }
+
+  /**
+   * Deserializes / reads binary message into message instance using provided binary reader
+   * @param _instance message instance
+   * @param _reader binary reader instance
+   */
+  static deserializeBinaryFromReader(
+    _instance: ListSessionFeedbackRequest,
+    _reader: BinaryReader
+  ) {
+    while (_reader.nextField()) {
+      if (_reader.isEndGroup()) break;
+
+      switch (_reader.getFieldNumber()) {
+        case 1:
+          _instance.sessionId = _reader.readString();
+          break;
+        case 2:
+          _instance.pageToken = _reader.readString();
+          break;
+        case 3:
+          _instance.fieldMask = new googleProtobuf003.FieldMask();
+          _reader.readMessage(
+            _instance.fieldMask,
+            googleProtobuf003.FieldMask.deserializeBinaryFromReader
+          );
+          break;
+        default:
+          _reader.skipField();
+      }
+    }
+
+    ListSessionFeedbackRequest.refineValues(_instance);
+  }
+
+  /**
+   * Serializes a message to binary format using provided binary reader
+   * @param _instance message instance
+   * @param _writer binary writer instance
+   */
+  static serializeBinaryToWriter(
+    _instance: ListSessionFeedbackRequest,
+    _writer: BinaryWriter
+  ) {
+    if (_instance.sessionId) {
+      _writer.writeString(1, _instance.sessionId);
+    }
+    if (_instance.pageToken) {
+      _writer.writeString(2, _instance.pageToken);
+    }
+    if (_instance.fieldMask) {
+      _writer.writeMessage(
+        3,
+        _instance.fieldMask as any,
+        googleProtobuf003.FieldMask.serializeBinaryToWriter
+      );
+    }
+  }
+
+  private _sessionId: string;
+  private _pageToken: string;
+  private _fieldMask?: googleProtobuf003.FieldMask;
+
+  /**
+   * Message constructor. Initializes the properties and applies default Protobuf values if necessary
+   * @param _value initial values object or instance of ListSessionFeedbackRequest to deeply clone from
+   */
+  constructor(_value?: RecursivePartial<ListSessionFeedbackRequest.AsObject>) {
+    _value = _value || {};
+    this.sessionId = _value.sessionId;
+    this.pageToken = _value.pageToken;
+    this.fieldMask = _value.fieldMask
+      ? new googleProtobuf003.FieldMask(_value.fieldMask)
+      : undefined;
+    ListSessionFeedbackRequest.refineValues(this);
+  }
+  get sessionId(): string {
+    return this._sessionId;
+  }
+  set sessionId(value: string) {
+    this._sessionId = value;
+  }
+  get pageToken(): string {
+    return this._pageToken;
+  }
+  set pageToken(value: string) {
+    this._pageToken = value;
+  }
+  get fieldMask(): googleProtobuf003.FieldMask | undefined {
+    return this._fieldMask;
+  }
+  set fieldMask(value: googleProtobuf003.FieldMask | undefined) {
+    this._fieldMask = value;
+  }
+
+  /**
+   * Serialize message to binary data
+   * @param instance message instance
+   */
+  serializeBinary() {
+    const writer = new BinaryWriter();
+    ListSessionFeedbackRequest.serializeBinaryToWriter(this, writer);
+    return writer.getResultBuffer();
+  }
+
+  /**
+   * Cast message to standard JavaScript object (all non-primitive values are deeply cloned)
+   */
+  toObject(): ListSessionFeedbackRequest.AsObject {
+    return {
+      sessionId: this.sessionId,
+      pageToken: this.pageToken,
+      fieldMask: this.fieldMask ? this.fieldMask.toObject() : undefined
+    };
+  }
+
+  /**
+   * Convenience method to support JSON.stringify(message), replicates the structure of toObject()
+   */
+  toJSON() {
+    return this.toObject();
+  }
+
+  /**
+   * Cast message to JSON using protobuf JSON notation: https://developers.google.com/protocol-buffers/docs/proto3#json
+   * Attention: output differs from toObject() e.g. enums are represented as names and not as numbers, Timestamp is an ISO Date string format etc.
+   * If the message itself or some of descendant messages is google.protobuf.Any, you MUST provide a message pool as options. If not, the messagePool is not required
+   */
+  toProtobufJSON(
+    // @ts-ignore
+    options?: ToProtobufJSONOptions
+  ): ListSessionFeedbackRequest.AsProtobufJSON {
+    return {
+      sessionId: this.sessionId,
+      pageToken: this.pageToken,
+      fieldMask: this.fieldMask ? this.fieldMask.toProtobufJSON(options) : null
+    };
+  }
+}
+export module ListSessionFeedbackRequest {
+  /**
+   * Standard JavaScript object representation for ListSessionFeedbackRequest
+   */
+  export interface AsObject {
+    sessionId: string;
+    pageToken: string;
+    fieldMask?: googleProtobuf003.FieldMask.AsObject;
+  }
+
+  /**
+   * Protobuf JSON representation for ListSessionFeedbackRequest
+   */
+  export interface AsProtobufJSON {
+    sessionId: string;
+    pageToken: string;
+    fieldMask: googleProtobuf003.FieldMask.AsProtobufJSON | null;
+  }
+}
+
+/**
+ * Message implementation for ondewo.nlu.ListSessionFeedbackOfAllSessionsRequest
+ */
+export class ListSessionFeedbackOfAllSessionsRequest implements GrpcMessage {
+  static id = 'ondewo.nlu.ListSessionFeedbackOfAllSessionsRequest';
+
+  /**
+   * Deserialize binary data to message
+   * @param instance message instance
+   */
+  static deserializeBinary(bytes: ByteSource) {
+    const instance = new ListSessionFeedbackOfAllSessionsRequest();
+    ListSessionFeedbackOfAllSessionsRequest.deserializeBinaryFromReader(
+      instance,
+      new BinaryReader(bytes)
+    );
+    return instance;
+  }
+
+  /**
+   * Check all the properties and set default protobuf values if necessary
+   * @param _instance message instance
+   */
+  static refineValues(_instance: ListSessionFeedbackOfAllSessionsRequest) {
+    _instance.parent = _instance.parent || '';
+    _instance.sessionFilter = _instance.sessionFilter || undefined;
+    _instance.pageToken = _instance.pageToken || '';
+    _instance.fieldMask = _instance.fieldMask || undefined;
+    _instance.feedbackFilter = _instance.feedbackFilter || undefined;
+    _instance.orderBy = _instance.orderBy || '';
+  }
+
+  /**
+   * Deserializes / reads binary message into message instance using provided binary reader
+   * @param _instance message instance
+   * @param _reader binary reader instance
+   */
+  static deserializeBinaryFromReader(
+    _instance: ListSessionFeedbackOfAllSessionsRequest,
+    _reader: BinaryReader
+  ) {
+    while (_reader.nextField()) {
+      if (_reader.isEndGroup()) break;
+
+      switch (_reader.getFieldNumber()) {
+        case 1:
+          _instance.parent = _reader.readString();
+          break;
+        case 2:
+          _instance.sessionFilter = new SessionFilter();
+          _reader.readMessage(
+            _instance.sessionFilter,
+            SessionFilter.deserializeBinaryFromReader
+          );
+          break;
+        case 3:
+          _instance.pageToken = _reader.readString();
+          break;
+        case 4:
+          _instance.fieldMask = new googleProtobuf003.FieldMask();
+          _reader.readMessage(
+            _instance.fieldMask,
+            googleProtobuf003.FieldMask.deserializeBinaryFromReader
+          );
+          break;
+        case 5:
+          _instance.feedbackFilter = new FeedbackFilter();
+          _reader.readMessage(
+            _instance.feedbackFilter,
+            FeedbackFilter.deserializeBinaryFromReader
+          );
+          break;
+        case 6:
+          _instance.orderBy = _reader.readString();
+          break;
+        default:
+          _reader.skipField();
+      }
+    }
+
+    ListSessionFeedbackOfAllSessionsRequest.refineValues(_instance);
+  }
+
+  /**
+   * Serializes a message to binary format using provided binary reader
+   * @param _instance message instance
+   * @param _writer binary writer instance
+   */
+  static serializeBinaryToWriter(
+    _instance: ListSessionFeedbackOfAllSessionsRequest,
+    _writer: BinaryWriter
+  ) {
+    if (_instance.parent) {
+      _writer.writeString(1, _instance.parent);
+    }
+    if (_instance.sessionFilter) {
+      _writer.writeMessage(
+        2,
+        _instance.sessionFilter as any,
+        SessionFilter.serializeBinaryToWriter
+      );
+    }
+    if (_instance.pageToken) {
+      _writer.writeString(3, _instance.pageToken);
+    }
+    if (_instance.fieldMask) {
+      _writer.writeMessage(
+        4,
+        _instance.fieldMask as any,
+        googleProtobuf003.FieldMask.serializeBinaryToWriter
+      );
+    }
+    if (_instance.feedbackFilter) {
+      _writer.writeMessage(
+        5,
+        _instance.feedbackFilter as any,
+        FeedbackFilter.serializeBinaryToWriter
+      );
+    }
+    if (_instance.orderBy) {
+      _writer.writeString(6, _instance.orderBy);
+    }
+  }
+
+  private _parent: string;
+  private _sessionFilter?: SessionFilter;
+  private _pageToken: string;
+  private _fieldMask?: googleProtobuf003.FieldMask;
+  private _feedbackFilter?: FeedbackFilter;
+  private _orderBy: string;
+
+  /**
+   * Message constructor. Initializes the properties and applies default Protobuf values if necessary
+   * @param _value initial values object or instance of ListSessionFeedbackOfAllSessionsRequest to deeply clone from
+   */
+  constructor(
+    _value?: RecursivePartial<ListSessionFeedbackOfAllSessionsRequest.AsObject>
+  ) {
+    _value = _value || {};
+    this.parent = _value.parent;
+    this.sessionFilter = _value.sessionFilter
+      ? new SessionFilter(_value.sessionFilter)
+      : undefined;
+    this.pageToken = _value.pageToken;
+    this.fieldMask = _value.fieldMask
+      ? new googleProtobuf003.FieldMask(_value.fieldMask)
+      : undefined;
+    this.feedbackFilter = _value.feedbackFilter
+      ? new FeedbackFilter(_value.feedbackFilter)
+      : undefined;
+    this.orderBy = _value.orderBy;
+    ListSessionFeedbackOfAllSessionsRequest.refineValues(this);
+  }
+  get parent(): string {
+    return this._parent;
+  }
+  set parent(value: string) {
+    this._parent = value;
+  }
+  get sessionFilter(): SessionFilter | undefined {
+    return this._sessionFilter;
+  }
+  set sessionFilter(value: SessionFilter | undefined) {
+    this._sessionFilter = value;
+  }
+  get pageToken(): string {
+    return this._pageToken;
+  }
+  set pageToken(value: string) {
+    this._pageToken = value;
+  }
+  get fieldMask(): googleProtobuf003.FieldMask | undefined {
+    return this._fieldMask;
+  }
+  set fieldMask(value: googleProtobuf003.FieldMask | undefined) {
+    this._fieldMask = value;
+  }
+  get feedbackFilter(): FeedbackFilter | undefined {
+    return this._feedbackFilter;
+  }
+  set feedbackFilter(value: FeedbackFilter | undefined) {
+    this._feedbackFilter = value;
+  }
+  get orderBy(): string {
+    return this._orderBy;
+  }
+  set orderBy(value: string) {
+    this._orderBy = value;
+  }
+
+  /**
+   * Serialize message to binary data
+   * @param instance message instance
+   */
+  serializeBinary() {
+    const writer = new BinaryWriter();
+    ListSessionFeedbackOfAllSessionsRequest.serializeBinaryToWriter(
+      this,
+      writer
+    );
+    return writer.getResultBuffer();
+  }
+
+  /**
+   * Cast message to standard JavaScript object (all non-primitive values are deeply cloned)
+   */
+  toObject(): ListSessionFeedbackOfAllSessionsRequest.AsObject {
+    return {
+      parent: this.parent,
+      sessionFilter: this.sessionFilter
+        ? this.sessionFilter.toObject()
+        : undefined,
+      pageToken: this.pageToken,
+      fieldMask: this.fieldMask ? this.fieldMask.toObject() : undefined,
+      feedbackFilter: this.feedbackFilter
+        ? this.feedbackFilter.toObject()
+        : undefined,
+      orderBy: this.orderBy
+    };
+  }
+
+  /**
+   * Convenience method to support JSON.stringify(message), replicates the structure of toObject()
+   */
+  toJSON() {
+    return this.toObject();
+  }
+
+  /**
+   * Cast message to JSON using protobuf JSON notation: https://developers.google.com/protocol-buffers/docs/proto3#json
+   * Attention: output differs from toObject() e.g. enums are represented as names and not as numbers, Timestamp is an ISO Date string format etc.
+   * If the message itself or some of descendant messages is google.protobuf.Any, you MUST provide a message pool as options. If not, the messagePool is not required
+   */
+  toProtobufJSON(
+    // @ts-ignore
+    options?: ToProtobufJSONOptions
+  ): ListSessionFeedbackOfAllSessionsRequest.AsProtobufJSON {
+    return {
+      parent: this.parent,
+      sessionFilter: this.sessionFilter
+        ? this.sessionFilter.toProtobufJSON(options)
+        : null,
+      pageToken: this.pageToken,
+      fieldMask: this.fieldMask ? this.fieldMask.toProtobufJSON(options) : null,
+      feedbackFilter: this.feedbackFilter
+        ? this.feedbackFilter.toProtobufJSON(options)
+        : null,
+      orderBy: this.orderBy
+    };
+  }
+}
+export module ListSessionFeedbackOfAllSessionsRequest {
+  /**
+   * Standard JavaScript object representation for ListSessionFeedbackOfAllSessionsRequest
+   */
+  export interface AsObject {
+    parent: string;
+    sessionFilter?: SessionFilter.AsObject;
+    pageToken: string;
+    fieldMask?: googleProtobuf003.FieldMask.AsObject;
+    feedbackFilter?: FeedbackFilter.AsObject;
+    orderBy: string;
+  }
+
+  /**
+   * Protobuf JSON representation for ListSessionFeedbackOfAllSessionsRequest
+   */
+  export interface AsProtobufJSON {
+    parent: string;
+    sessionFilter: SessionFilter.AsProtobufJSON | null;
+    pageToken: string;
+    fieldMask: googleProtobuf003.FieldMask.AsProtobufJSON | null;
+    feedbackFilter: FeedbackFilter.AsProtobufJSON | null;
+    orderBy: string;
+  }
+}
+
+/**
+ * Message implementation for ondewo.nlu.ListSessionFeedbackResponse
+ */
+export class ListSessionFeedbackResponse implements GrpcMessage {
+  static id = 'ondewo.nlu.ListSessionFeedbackResponse';
+
+  /**
+   * Deserialize binary data to message
+   * @param instance message instance
+   */
+  static deserializeBinary(bytes: ByteSource) {
+    const instance = new ListSessionFeedbackResponse();
+    ListSessionFeedbackResponse.deserializeBinaryFromReader(
+      instance,
+      new BinaryReader(bytes)
+    );
+    return instance;
+  }
+
+  /**
+   * Check all the properties and set default protobuf values if necessary
+   * @param _instance message instance
+   */
+  static refineValues(_instance: ListSessionFeedbackResponse) {
+    _instance.feedback = _instance.feedback || [];
+    _instance.nextPageToken = _instance.nextPageToken || '';
+    _instance.totalCount = _instance.totalCount || 0;
+  }
+
+  /**
+   * Deserializes / reads binary message into message instance using provided binary reader
+   * @param _instance message instance
+   * @param _reader binary reader instance
+   */
+  static deserializeBinaryFromReader(
+    _instance: ListSessionFeedbackResponse,
+    _reader: BinaryReader
+  ) {
+    while (_reader.nextField()) {
+      if (_reader.isEndGroup()) break;
+
+      switch (_reader.getFieldNumber()) {
+        case 1:
+          const messageInitializer1 = new SessionFeedback();
+          _reader.readMessage(
+            messageInitializer1,
+            SessionFeedback.deserializeBinaryFromReader
+          );
+          (_instance.feedback = _instance.feedback || []).push(
+            messageInitializer1
+          );
+          break;
+        case 2:
+          _instance.nextPageToken = _reader.readString();
+          break;
+        case 3:
+          _instance.totalCount = _reader.readInt32();
+          break;
+        default:
+          _reader.skipField();
+      }
+    }
+
+    ListSessionFeedbackResponse.refineValues(_instance);
+  }
+
+  /**
+   * Serializes a message to binary format using provided binary reader
+   * @param _instance message instance
+   * @param _writer binary writer instance
+   */
+  static serializeBinaryToWriter(
+    _instance: ListSessionFeedbackResponse,
+    _writer: BinaryWriter
+  ) {
+    if (_instance.feedback && _instance.feedback.length) {
+      _writer.writeRepeatedMessage(
+        1,
+        _instance.feedback as any,
+        SessionFeedback.serializeBinaryToWriter
+      );
+    }
+    if (_instance.nextPageToken) {
+      _writer.writeString(2, _instance.nextPageToken);
+    }
+    if (_instance.totalCount) {
+      _writer.writeInt32(3, _instance.totalCount);
+    }
+  }
+
+  private _feedback?: SessionFeedback[];
+  private _nextPageToken: string;
+  private _totalCount: number;
+
+  /**
+   * Message constructor. Initializes the properties and applies default Protobuf values if necessary
+   * @param _value initial values object or instance of ListSessionFeedbackResponse to deeply clone from
+   */
+  constructor(_value?: RecursivePartial<ListSessionFeedbackResponse.AsObject>) {
+    _value = _value || {};
+    this.feedback = (_value.feedback || []).map(m => new SessionFeedback(m));
+    this.nextPageToken = _value.nextPageToken;
+    this.totalCount = _value.totalCount;
+    ListSessionFeedbackResponse.refineValues(this);
+  }
+  get feedback(): SessionFeedback[] | undefined {
+    return this._feedback;
+  }
+  set feedback(value: SessionFeedback[] | undefined) {
+    this._feedback = value;
+  }
+  get nextPageToken(): string {
+    return this._nextPageToken;
+  }
+  set nextPageToken(value: string) {
+    this._nextPageToken = value;
+  }
+  get totalCount(): number {
+    return this._totalCount;
+  }
+  set totalCount(value: number) {
+    this._totalCount = value;
+  }
+
+  /**
+   * Serialize message to binary data
+   * @param instance message instance
+   */
+  serializeBinary() {
+    const writer = new BinaryWriter();
+    ListSessionFeedbackResponse.serializeBinaryToWriter(this, writer);
+    return writer.getResultBuffer();
+  }
+
+  /**
+   * Cast message to standard JavaScript object (all non-primitive values are deeply cloned)
+   */
+  toObject(): ListSessionFeedbackResponse.AsObject {
+    return {
+      feedback: (this.feedback || []).map(m => m.toObject()),
+      nextPageToken: this.nextPageToken,
+      totalCount: this.totalCount
+    };
+  }
+
+  /**
+   * Convenience method to support JSON.stringify(message), replicates the structure of toObject()
+   */
+  toJSON() {
+    return this.toObject();
+  }
+
+  /**
+   * Cast message to JSON using protobuf JSON notation: https://developers.google.com/protocol-buffers/docs/proto3#json
+   * Attention: output differs from toObject() e.g. enums are represented as names and not as numbers, Timestamp is an ISO Date string format etc.
+   * If the message itself or some of descendant messages is google.protobuf.Any, you MUST provide a message pool as options. If not, the messagePool is not required
+   */
+  toProtobufJSON(
+    // @ts-ignore
+    options?: ToProtobufJSONOptions
+  ): ListSessionFeedbackResponse.AsProtobufJSON {
+    return {
+      feedback: (this.feedback || []).map(m => m.toProtobufJSON(options)),
+      nextPageToken: this.nextPageToken,
+      totalCount: this.totalCount
+    };
+  }
+}
+export module ListSessionFeedbackResponse {
+  /**
+   * Standard JavaScript object representation for ListSessionFeedbackResponse
+   */
+  export interface AsObject {
+    feedback?: SessionFeedback.AsObject[];
+    nextPageToken: string;
+    totalCount: number;
+  }
+
+  /**
+   * Protobuf JSON representation for ListSessionFeedbackResponse
+   */
+  export interface AsProtobufJSON {
+    feedback: SessionFeedback.AsProtobufJSON[] | null;
+    nextPageToken: string;
+    totalCount: number;
+  }
+}
+
+/**
+ * Message implementation for ondewo.nlu.FeedbackFilter
+ */
+export class FeedbackFilter implements GrpcMessage {
+  static id = 'ondewo.nlu.FeedbackFilter';
+
+  /**
+   * Deserialize binary data to message
+   * @param instance message instance
+   */
+  static deserializeBinary(bytes: ByteSource) {
+    const instance = new FeedbackFilter();
+    FeedbackFilter.deserializeBinaryFromReader(
+      instance,
+      new BinaryReader(bytes)
+    );
+    return instance;
+  }
+
+  /**
+   * Check all the properties and set default protobuf values if necessary
+   * @param _instance message instance
+   */
+  static refineValues(_instance: FeedbackFilter) {
+    _instance.ratings = _instance.ratings || [];
+    _instance.authorTypes = _instance.authorTypes || [];
+    _instance.hasComment = _instance.hasComment || false;
+    _instance.earliest = _instance.earliest || undefined;
+    _instance.latest = _instance.latest || undefined;
+    _instance.criteria = _instance.criteria || [];
+    _instance.languageCodes = _instance.languageCodes || [];
+    _instance.annotatorUserIds = _instance.annotatorUserIds || [];
+    _instance.originIds = _instance.originIds || [];
+    _instance.scoreMin = _instance.scoreMin || 0;
+    _instance.scoreMax = _instance.scoreMax || 0;
+    _instance.scope = _instance.scope || 0;
+  }
+
+  /**
+   * Deserializes / reads binary message into message instance using provided binary reader
+   * @param _instance message instance
+   * @param _reader binary reader instance
+   */
+  static deserializeBinaryFromReader(
+    _instance: FeedbackFilter,
+    _reader: BinaryReader
+  ) {
+    while (_reader.nextField()) {
+      if (_reader.isEndGroup()) break;
+
+      switch (_reader.getFieldNumber()) {
+        case 1:
+          _reader.readPackableEnumInto(
+            (_instance.ratings = _instance.ratings || [])
+          );
+          break;
+        case 2:
+          _reader.readPackableEnumInto(
+            (_instance.authorTypes = _instance.authorTypes || [])
+          );
+          break;
+        case 3:
+          _instance.hasComment = _reader.readBool();
+          break;
+        case 4:
+          _instance.earliest = new googleProtobuf005.Timestamp();
+          _reader.readMessage(
+            _instance.earliest,
+            googleProtobuf005.Timestamp.deserializeBinaryFromReader
+          );
+          break;
+        case 5:
+          _instance.latest = new googleProtobuf005.Timestamp();
+          _reader.readMessage(
+            _instance.latest,
+            googleProtobuf005.Timestamp.deserializeBinaryFromReader
+          );
+          break;
+        case 6:
+          (_instance.criteria = _instance.criteria || []).push(
+            _reader.readString()
+          );
+          break;
+        case 7:
+          (_instance.languageCodes = _instance.languageCodes || []).push(
+            _reader.readString()
+          );
+          break;
+        case 8:
+          (_instance.annotatorUserIds = _instance.annotatorUserIds || []).push(
+            _reader.readString()
+          );
+          break;
+        case 9:
+          (_instance.originIds = _instance.originIds || []).push(
+            _reader.readString()
+          );
+          break;
+        case 10:
+          _instance.scoreMin = _reader.readFloat();
+          break;
+        case 11:
+          _instance.scoreMax = _reader.readFloat();
+          break;
+        case 12:
+          _instance.scope = _reader.readEnum();
+          break;
+        default:
+          _reader.skipField();
+      }
+    }
+
+    FeedbackFilter.refineValues(_instance);
+  }
+
+  /**
+   * Serializes a message to binary format using provided binary reader
+   * @param _instance message instance
+   * @param _writer binary writer instance
+   */
+  static serializeBinaryToWriter(
+    _instance: FeedbackFilter,
+    _writer: BinaryWriter
+  ) {
+    if (_instance.ratings && _instance.ratings.length) {
+      _writer.writePackedEnum(1, _instance.ratings);
+    }
+    if (_instance.authorTypes && _instance.authorTypes.length) {
+      _writer.writePackedEnum(2, _instance.authorTypes);
+    }
+    if (_instance.hasComment) {
+      _writer.writeBool(3, _instance.hasComment);
+    }
+    if (_instance.earliest) {
+      _writer.writeMessage(
+        4,
+        _instance.earliest as any,
+        googleProtobuf005.Timestamp.serializeBinaryToWriter
+      );
+    }
+    if (_instance.latest) {
+      _writer.writeMessage(
+        5,
+        _instance.latest as any,
+        googleProtobuf005.Timestamp.serializeBinaryToWriter
+      );
+    }
+    if (_instance.criteria && _instance.criteria.length) {
+      _writer.writeRepeatedString(6, _instance.criteria);
+    }
+    if (_instance.languageCodes && _instance.languageCodes.length) {
+      _writer.writeRepeatedString(7, _instance.languageCodes);
+    }
+    if (_instance.annotatorUserIds && _instance.annotatorUserIds.length) {
+      _writer.writeRepeatedString(8, _instance.annotatorUserIds);
+    }
+    if (_instance.originIds && _instance.originIds.length) {
+      _writer.writeRepeatedString(9, _instance.originIds);
+    }
+    if (_instance.scoreMin) {
+      _writer.writeFloat(10, _instance.scoreMin);
+    }
+    if (_instance.scoreMax) {
+      _writer.writeFloat(11, _instance.scoreMax);
+    }
+    if (_instance.scope) {
+      _writer.writeEnum(12, _instance.scope);
+    }
+  }
+
+  private _ratings: FeedbackRating[];
+  private _authorTypes: FeedbackAuthorType[];
+  private _hasComment: boolean;
+  private _earliest?: googleProtobuf005.Timestamp;
+  private _latest?: googleProtobuf005.Timestamp;
+  private _criteria: string[];
+  private _languageCodes: string[];
+  private _annotatorUserIds: string[];
+  private _originIds: string[];
+  private _scoreMin: number;
+  private _scoreMax: number;
+  private _scope: FeedbackScope;
+
+  /**
+   * Message constructor. Initializes the properties and applies default Protobuf values if necessary
+   * @param _value initial values object or instance of FeedbackFilter to deeply clone from
+   */
+  constructor(_value?: RecursivePartial<FeedbackFilter.AsObject>) {
+    _value = _value || {};
+    this.ratings = (_value.ratings || []).slice();
+    this.authorTypes = (_value.authorTypes || []).slice();
+    this.hasComment = _value.hasComment;
+    this.earliest = _value.earliest
+      ? new googleProtobuf005.Timestamp(_value.earliest)
+      : undefined;
+    this.latest = _value.latest
+      ? new googleProtobuf005.Timestamp(_value.latest)
+      : undefined;
+    this.criteria = (_value.criteria || []).slice();
+    this.languageCodes = (_value.languageCodes || []).slice();
+    this.annotatorUserIds = (_value.annotatorUserIds || []).slice();
+    this.originIds = (_value.originIds || []).slice();
+    this.scoreMin = _value.scoreMin;
+    this.scoreMax = _value.scoreMax;
+    this.scope = _value.scope;
+    FeedbackFilter.refineValues(this);
+  }
+  get ratings(): FeedbackRating[] {
+    return this._ratings;
+  }
+  set ratings(value: FeedbackRating[]) {
+    this._ratings = value;
+  }
+  get authorTypes(): FeedbackAuthorType[] {
+    return this._authorTypes;
+  }
+  set authorTypes(value: FeedbackAuthorType[]) {
+    this._authorTypes = value;
+  }
+  get hasComment(): boolean {
+    return this._hasComment;
+  }
+  set hasComment(value: boolean) {
+    this._hasComment = value;
+  }
+  get earliest(): googleProtobuf005.Timestamp | undefined {
+    return this._earliest;
+  }
+  set earliest(value: googleProtobuf005.Timestamp | undefined) {
+    this._earliest = value;
+  }
+  get latest(): googleProtobuf005.Timestamp | undefined {
+    return this._latest;
+  }
+  set latest(value: googleProtobuf005.Timestamp | undefined) {
+    this._latest = value;
+  }
+  get criteria(): string[] {
+    return this._criteria;
+  }
+  set criteria(value: string[]) {
+    this._criteria = value;
+  }
+  get languageCodes(): string[] {
+    return this._languageCodes;
+  }
+  set languageCodes(value: string[]) {
+    this._languageCodes = value;
+  }
+  get annotatorUserIds(): string[] {
+    return this._annotatorUserIds;
+  }
+  set annotatorUserIds(value: string[]) {
+    this._annotatorUserIds = value;
+  }
+  get originIds(): string[] {
+    return this._originIds;
+  }
+  set originIds(value: string[]) {
+    this._originIds = value;
+  }
+  get scoreMin(): number {
+    return this._scoreMin;
+  }
+  set scoreMin(value: number) {
+    this._scoreMin = value;
+  }
+  get scoreMax(): number {
+    return this._scoreMax;
+  }
+  set scoreMax(value: number) {
+    this._scoreMax = value;
+  }
+  get scope(): FeedbackScope {
+    return this._scope;
+  }
+  set scope(value: FeedbackScope) {
+    this._scope = value;
+  }
+
+  /**
+   * Serialize message to binary data
+   * @param instance message instance
+   */
+  serializeBinary() {
+    const writer = new BinaryWriter();
+    FeedbackFilter.serializeBinaryToWriter(this, writer);
+    return writer.getResultBuffer();
+  }
+
+  /**
+   * Cast message to standard JavaScript object (all non-primitive values are deeply cloned)
+   */
+  toObject(): FeedbackFilter.AsObject {
+    return {
+      ratings: (this.ratings || []).slice(),
+      authorTypes: (this.authorTypes || []).slice(),
+      hasComment: this.hasComment,
+      earliest: this.earliest ? this.earliest.toObject() : undefined,
+      latest: this.latest ? this.latest.toObject() : undefined,
+      criteria: (this.criteria || []).slice(),
+      languageCodes: (this.languageCodes || []).slice(),
+      annotatorUserIds: (this.annotatorUserIds || []).slice(),
+      originIds: (this.originIds || []).slice(),
+      scoreMin: this.scoreMin,
+      scoreMax: this.scoreMax,
+      scope: this.scope
+    };
+  }
+
+  /**
+   * Convenience method to support JSON.stringify(message), replicates the structure of toObject()
+   */
+  toJSON() {
+    return this.toObject();
+  }
+
+  /**
+   * Cast message to JSON using protobuf JSON notation: https://developers.google.com/protocol-buffers/docs/proto3#json
+   * Attention: output differs from toObject() e.g. enums are represented as names and not as numbers, Timestamp is an ISO Date string format etc.
+   * If the message itself or some of descendant messages is google.protobuf.Any, you MUST provide a message pool as options. If not, the messagePool is not required
+   */
+  toProtobufJSON(
+    // @ts-ignore
+    options?: ToProtobufJSONOptions
+  ): FeedbackFilter.AsProtobufJSON {
+    return {
+      ratings: (this.ratings || []).map(v => FeedbackRating[v]),
+      authorTypes: (this.authorTypes || []).map(v => FeedbackAuthorType[v]),
+      hasComment: this.hasComment,
+      earliest: this.earliest ? this.earliest.toProtobufJSON(options) : null,
+      latest: this.latest ? this.latest.toProtobufJSON(options) : null,
+      criteria: (this.criteria || []).slice(),
+      languageCodes: (this.languageCodes || []).slice(),
+      annotatorUserIds: (this.annotatorUserIds || []).slice(),
+      originIds: (this.originIds || []).slice(),
+      scoreMin: this.scoreMin,
+      scoreMax: this.scoreMax,
+      scope:
+        FeedbackScope[
+          this.scope === null || this.scope === undefined ? 0 : this.scope
+        ]
+    };
+  }
+}
+export module FeedbackFilter {
+  /**
+   * Standard JavaScript object representation for FeedbackFilter
+   */
+  export interface AsObject {
+    ratings: FeedbackRating[];
+    authorTypes: FeedbackAuthorType[];
+    hasComment: boolean;
+    earliest?: googleProtobuf005.Timestamp.AsObject;
+    latest?: googleProtobuf005.Timestamp.AsObject;
+    criteria: string[];
+    languageCodes: string[];
+    annotatorUserIds: string[];
+    originIds: string[];
+    scoreMin: number;
+    scoreMax: number;
+    scope: FeedbackScope;
+  }
+
+  /**
+   * Protobuf JSON representation for FeedbackFilter
+   */
+  export interface AsProtobufJSON {
+    ratings: string[];
+    authorTypes: string[];
+    hasComment: boolean;
+    earliest: googleProtobuf005.Timestamp.AsProtobufJSON | null;
+    latest: googleProtobuf005.Timestamp.AsProtobufJSON | null;
+    criteria: string[];
+    languageCodes: string[];
+    annotatorUserIds: string[];
+    originIds: string[];
+    scoreMin: number;
+    scoreMax: number;
+    scope: string;
+  }
+}
+
+/**
+ * Message implementation for ondewo.nlu.FeedbackBreakdownBucket
+ */
+export class FeedbackBreakdownBucket implements GrpcMessage {
+  static id = 'ondewo.nlu.FeedbackBreakdownBucket';
+
+  /**
+   * Deserialize binary data to message
+   * @param instance message instance
+   */
+  static deserializeBinary(bytes: ByteSource) {
+    const instance = new FeedbackBreakdownBucket();
+    FeedbackBreakdownBucket.deserializeBinaryFromReader(
+      instance,
+      new BinaryReader(bytes)
+    );
+    return instance;
+  }
+
+  /**
+   * Check all the properties and set default protobuf values if necessary
+   * @param _instance message instance
+   */
+  static refineValues(_instance: FeedbackBreakdownBucket) {
+    _instance.key = _instance.key || '';
+    _instance.thumbsUpCount = _instance.thumbsUpCount || 0;
+    _instance.thumbsDownCount = _instance.thumbsDownCount || 0;
+    _instance.total = _instance.total || 0;
+  }
+
+  /**
+   * Deserializes / reads binary message into message instance using provided binary reader
+   * @param _instance message instance
+   * @param _reader binary reader instance
+   */
+  static deserializeBinaryFromReader(
+    _instance: FeedbackBreakdownBucket,
+    _reader: BinaryReader
+  ) {
+    while (_reader.nextField()) {
+      if (_reader.isEndGroup()) break;
+
+      switch (_reader.getFieldNumber()) {
+        case 1:
+          _instance.key = _reader.readString();
+          break;
+        case 2:
+          _instance.thumbsUpCount = _reader.readInt32();
+          break;
+        case 3:
+          _instance.thumbsDownCount = _reader.readInt32();
+          break;
+        case 4:
+          _instance.total = _reader.readInt32();
+          break;
+        default:
+          _reader.skipField();
+      }
+    }
+
+    FeedbackBreakdownBucket.refineValues(_instance);
+  }
+
+  /**
+   * Serializes a message to binary format using provided binary reader
+   * @param _instance message instance
+   * @param _writer binary writer instance
+   */
+  static serializeBinaryToWriter(
+    _instance: FeedbackBreakdownBucket,
+    _writer: BinaryWriter
+  ) {
+    if (_instance.key) {
+      _writer.writeString(1, _instance.key);
+    }
+    if (_instance.thumbsUpCount) {
+      _writer.writeInt32(2, _instance.thumbsUpCount);
+    }
+    if (_instance.thumbsDownCount) {
+      _writer.writeInt32(3, _instance.thumbsDownCount);
+    }
+    if (_instance.total) {
+      _writer.writeInt32(4, _instance.total);
+    }
+  }
+
+  private _key: string;
+  private _thumbsUpCount: number;
+  private _thumbsDownCount: number;
+  private _total: number;
+
+  /**
+   * Message constructor. Initializes the properties and applies default Protobuf values if necessary
+   * @param _value initial values object or instance of FeedbackBreakdownBucket to deeply clone from
+   */
+  constructor(_value?: RecursivePartial<FeedbackBreakdownBucket.AsObject>) {
+    _value = _value || {};
+    this.key = _value.key;
+    this.thumbsUpCount = _value.thumbsUpCount;
+    this.thumbsDownCount = _value.thumbsDownCount;
+    this.total = _value.total;
+    FeedbackBreakdownBucket.refineValues(this);
+  }
+  get key(): string {
+    return this._key;
+  }
+  set key(value: string) {
+    this._key = value;
+  }
+  get thumbsUpCount(): number {
+    return this._thumbsUpCount;
+  }
+  set thumbsUpCount(value: number) {
+    this._thumbsUpCount = value;
+  }
+  get thumbsDownCount(): number {
+    return this._thumbsDownCount;
+  }
+  set thumbsDownCount(value: number) {
+    this._thumbsDownCount = value;
+  }
+  get total(): number {
+    return this._total;
+  }
+  set total(value: number) {
+    this._total = value;
+  }
+
+  /**
+   * Serialize message to binary data
+   * @param instance message instance
+   */
+  serializeBinary() {
+    const writer = new BinaryWriter();
+    FeedbackBreakdownBucket.serializeBinaryToWriter(this, writer);
+    return writer.getResultBuffer();
+  }
+
+  /**
+   * Cast message to standard JavaScript object (all non-primitive values are deeply cloned)
+   */
+  toObject(): FeedbackBreakdownBucket.AsObject {
+    return {
+      key: this.key,
+      thumbsUpCount: this.thumbsUpCount,
+      thumbsDownCount: this.thumbsDownCount,
+      total: this.total
+    };
+  }
+
+  /**
+   * Convenience method to support JSON.stringify(message), replicates the structure of toObject()
+   */
+  toJSON() {
+    return this.toObject();
+  }
+
+  /**
+   * Cast message to JSON using protobuf JSON notation: https://developers.google.com/protocol-buffers/docs/proto3#json
+   * Attention: output differs from toObject() e.g. enums are represented as names and not as numbers, Timestamp is an ISO Date string format etc.
+   * If the message itself or some of descendant messages is google.protobuf.Any, you MUST provide a message pool as options. If not, the messagePool is not required
+   */
+  toProtobufJSON(
+    // @ts-ignore
+    options?: ToProtobufJSONOptions
+  ): FeedbackBreakdownBucket.AsProtobufJSON {
+    return {
+      key: this.key,
+      thumbsUpCount: this.thumbsUpCount,
+      thumbsDownCount: this.thumbsDownCount,
+      total: this.total
+    };
+  }
+}
+export module FeedbackBreakdownBucket {
+  /**
+   * Standard JavaScript object representation for FeedbackBreakdownBucket
+   */
+  export interface AsObject {
+    key: string;
+    thumbsUpCount: number;
+    thumbsDownCount: number;
+    total: number;
+  }
+
+  /**
+   * Protobuf JSON representation for FeedbackBreakdownBucket
+   */
+  export interface AsProtobufJSON {
+    key: string;
+    thumbsUpCount: number;
+    thumbsDownCount: number;
+    total: number;
+  }
+}
+
+/**
+ * Message implementation for ondewo.nlu.FeedbackStatistics
+ */
+export class FeedbackStatistics implements GrpcMessage {
+  static id = 'ondewo.nlu.FeedbackStatistics';
+
+  /**
+   * Deserialize binary data to message
+   * @param instance message instance
+   */
+  static deserializeBinary(bytes: ByteSource) {
+    const instance = new FeedbackStatistics();
+    FeedbackStatistics.deserializeBinaryFromReader(
+      instance,
+      new BinaryReader(bytes)
+    );
+    return instance;
+  }
+
+  /**
+   * Check all the properties and set default protobuf values if necessary
+   * @param _instance message instance
+   */
+  static refineValues(_instance: FeedbackStatistics) {
+    _instance.totalFeedback = _instance.totalFeedback || 0;
+    _instance.thumbsUpCount = _instance.thumbsUpCount || 0;
+    _instance.thumbsDownCount = _instance.thumbsDownCount || 0;
+    _instance.sessionLevelCount = _instance.sessionLevelCount || 0;
+    _instance.sessionStepLevelCount = _instance.sessionStepLevelCount || 0;
+    _instance.commentCount = _instance.commentCount || 0;
+    _instance.sessionReviewCount = _instance.sessionReviewCount || 0;
+    _instance.sessionCommentCount = _instance.sessionCommentCount || 0;
+    _instance.byLanguage = _instance.byLanguage || [];
+    _instance.byIntent = _instance.byIntent || [];
+    _instance.byAuthorType = _instance.byAuthorType || [];
+    _instance.unspecifiedRatingCount = _instance.unspecifiedRatingCount || 0;
+    _instance.scoredCount = _instance.scoredCount || 0;
+    _instance.averageScore = _instance.averageScore || 0;
+    _instance.byOrigin = _instance.byOrigin || [];
+    _instance.byCriterion = _instance.byCriterion || [];
+  }
+
+  /**
+   * Deserializes / reads binary message into message instance using provided binary reader
+   * @param _instance message instance
+   * @param _reader binary reader instance
+   */
+  static deserializeBinaryFromReader(
+    _instance: FeedbackStatistics,
+    _reader: BinaryReader
+  ) {
+    while (_reader.nextField()) {
+      if (_reader.isEndGroup()) break;
+
+      switch (_reader.getFieldNumber()) {
+        case 1:
+          _instance.totalFeedback = _reader.readInt32();
+          break;
+        case 2:
+          _instance.thumbsUpCount = _reader.readInt32();
+          break;
+        case 3:
+          _instance.thumbsDownCount = _reader.readInt32();
+          break;
+        case 4:
+          _instance.sessionLevelCount = _reader.readInt32();
+          break;
+        case 5:
+          _instance.sessionStepLevelCount = _reader.readInt32();
+          break;
+        case 6:
+          _instance.commentCount = _reader.readInt32();
+          break;
+        case 7:
+          _instance.sessionReviewCount = _reader.readInt32();
+          break;
+        case 8:
+          _instance.sessionCommentCount = _reader.readInt32();
+          break;
+        case 9:
+          const messageInitializer9 = new FeedbackBreakdownBucket();
+          _reader.readMessage(
+            messageInitializer9,
+            FeedbackBreakdownBucket.deserializeBinaryFromReader
+          );
+          (_instance.byLanguage = _instance.byLanguage || []).push(
+            messageInitializer9
+          );
+          break;
+        case 10:
+          const messageInitializer10 = new FeedbackBreakdownBucket();
+          _reader.readMessage(
+            messageInitializer10,
+            FeedbackBreakdownBucket.deserializeBinaryFromReader
+          );
+          (_instance.byIntent = _instance.byIntent || []).push(
+            messageInitializer10
+          );
+          break;
+        case 11:
+          const messageInitializer11 = new FeedbackBreakdownBucket();
+          _reader.readMessage(
+            messageInitializer11,
+            FeedbackBreakdownBucket.deserializeBinaryFromReader
+          );
+          (_instance.byAuthorType = _instance.byAuthorType || []).push(
+            messageInitializer11
+          );
+          break;
+        case 12:
+          _instance.unspecifiedRatingCount = _reader.readInt32();
+          break;
+        case 13:
+          _instance.scoredCount = _reader.readInt32();
+          break;
+        case 14:
+          _instance.averageScore = _reader.readFloat();
+          break;
+        case 15:
+          const messageInitializer15 = new FeedbackBreakdownBucket();
+          _reader.readMessage(
+            messageInitializer15,
+            FeedbackBreakdownBucket.deserializeBinaryFromReader
+          );
+          (_instance.byOrigin = _instance.byOrigin || []).push(
+            messageInitializer15
+          );
+          break;
+        case 16:
+          const messageInitializer16 = new FeedbackBreakdownBucket();
+          _reader.readMessage(
+            messageInitializer16,
+            FeedbackBreakdownBucket.deserializeBinaryFromReader
+          );
+          (_instance.byCriterion = _instance.byCriterion || []).push(
+            messageInitializer16
+          );
+          break;
+        default:
+          _reader.skipField();
+      }
+    }
+
+    FeedbackStatistics.refineValues(_instance);
+  }
+
+  /**
+   * Serializes a message to binary format using provided binary reader
+   * @param _instance message instance
+   * @param _writer binary writer instance
+   */
+  static serializeBinaryToWriter(
+    _instance: FeedbackStatistics,
+    _writer: BinaryWriter
+  ) {
+    if (_instance.totalFeedback) {
+      _writer.writeInt32(1, _instance.totalFeedback);
+    }
+    if (_instance.thumbsUpCount) {
+      _writer.writeInt32(2, _instance.thumbsUpCount);
+    }
+    if (_instance.thumbsDownCount) {
+      _writer.writeInt32(3, _instance.thumbsDownCount);
+    }
+    if (_instance.sessionLevelCount) {
+      _writer.writeInt32(4, _instance.sessionLevelCount);
+    }
+    if (_instance.sessionStepLevelCount) {
+      _writer.writeInt32(5, _instance.sessionStepLevelCount);
+    }
+    if (_instance.commentCount) {
+      _writer.writeInt32(6, _instance.commentCount);
+    }
+    if (_instance.sessionReviewCount) {
+      _writer.writeInt32(7, _instance.sessionReviewCount);
+    }
+    if (_instance.sessionCommentCount) {
+      _writer.writeInt32(8, _instance.sessionCommentCount);
+    }
+    if (_instance.byLanguage && _instance.byLanguage.length) {
+      _writer.writeRepeatedMessage(
+        9,
+        _instance.byLanguage as any,
+        FeedbackBreakdownBucket.serializeBinaryToWriter
+      );
+    }
+    if (_instance.byIntent && _instance.byIntent.length) {
+      _writer.writeRepeatedMessage(
+        10,
+        _instance.byIntent as any,
+        FeedbackBreakdownBucket.serializeBinaryToWriter
+      );
+    }
+    if (_instance.byAuthorType && _instance.byAuthorType.length) {
+      _writer.writeRepeatedMessage(
+        11,
+        _instance.byAuthorType as any,
+        FeedbackBreakdownBucket.serializeBinaryToWriter
+      );
+    }
+    if (_instance.unspecifiedRatingCount) {
+      _writer.writeInt32(12, _instance.unspecifiedRatingCount);
+    }
+    if (_instance.scoredCount) {
+      _writer.writeInt32(13, _instance.scoredCount);
+    }
+    if (_instance.averageScore) {
+      _writer.writeFloat(14, _instance.averageScore);
+    }
+    if (_instance.byOrigin && _instance.byOrigin.length) {
+      _writer.writeRepeatedMessage(
+        15,
+        _instance.byOrigin as any,
+        FeedbackBreakdownBucket.serializeBinaryToWriter
+      );
+    }
+    if (_instance.byCriterion && _instance.byCriterion.length) {
+      _writer.writeRepeatedMessage(
+        16,
+        _instance.byCriterion as any,
+        FeedbackBreakdownBucket.serializeBinaryToWriter
+      );
+    }
+  }
+
+  private _totalFeedback: number;
+  private _thumbsUpCount: number;
+  private _thumbsDownCount: number;
+  private _sessionLevelCount: number;
+  private _sessionStepLevelCount: number;
+  private _commentCount: number;
+  private _sessionReviewCount: number;
+  private _sessionCommentCount: number;
+  private _byLanguage?: FeedbackBreakdownBucket[];
+  private _byIntent?: FeedbackBreakdownBucket[];
+  private _byAuthorType?: FeedbackBreakdownBucket[];
+  private _unspecifiedRatingCount: number;
+  private _scoredCount: number;
+  private _averageScore: number;
+  private _byOrigin?: FeedbackBreakdownBucket[];
+  private _byCriterion?: FeedbackBreakdownBucket[];
+
+  /**
+   * Message constructor. Initializes the properties and applies default Protobuf values if necessary
+   * @param _value initial values object or instance of FeedbackStatistics to deeply clone from
+   */
+  constructor(_value?: RecursivePartial<FeedbackStatistics.AsObject>) {
+    _value = _value || {};
+    this.totalFeedback = _value.totalFeedback;
+    this.thumbsUpCount = _value.thumbsUpCount;
+    this.thumbsDownCount = _value.thumbsDownCount;
+    this.sessionLevelCount = _value.sessionLevelCount;
+    this.sessionStepLevelCount = _value.sessionStepLevelCount;
+    this.commentCount = _value.commentCount;
+    this.sessionReviewCount = _value.sessionReviewCount;
+    this.sessionCommentCount = _value.sessionCommentCount;
+    this.byLanguage = (_value.byLanguage || []).map(
+      m => new FeedbackBreakdownBucket(m)
+    );
+    this.byIntent = (_value.byIntent || []).map(
+      m => new FeedbackBreakdownBucket(m)
+    );
+    this.byAuthorType = (_value.byAuthorType || []).map(
+      m => new FeedbackBreakdownBucket(m)
+    );
+    this.unspecifiedRatingCount = _value.unspecifiedRatingCount;
+    this.scoredCount = _value.scoredCount;
+    this.averageScore = _value.averageScore;
+    this.byOrigin = (_value.byOrigin || []).map(
+      m => new FeedbackBreakdownBucket(m)
+    );
+    this.byCriterion = (_value.byCriterion || []).map(
+      m => new FeedbackBreakdownBucket(m)
+    );
+    FeedbackStatistics.refineValues(this);
+  }
+  get totalFeedback(): number {
+    return this._totalFeedback;
+  }
+  set totalFeedback(value: number) {
+    this._totalFeedback = value;
+  }
+  get thumbsUpCount(): number {
+    return this._thumbsUpCount;
+  }
+  set thumbsUpCount(value: number) {
+    this._thumbsUpCount = value;
+  }
+  get thumbsDownCount(): number {
+    return this._thumbsDownCount;
+  }
+  set thumbsDownCount(value: number) {
+    this._thumbsDownCount = value;
+  }
+  get sessionLevelCount(): number {
+    return this._sessionLevelCount;
+  }
+  set sessionLevelCount(value: number) {
+    this._sessionLevelCount = value;
+  }
+  get sessionStepLevelCount(): number {
+    return this._sessionStepLevelCount;
+  }
+  set sessionStepLevelCount(value: number) {
+    this._sessionStepLevelCount = value;
+  }
+  get commentCount(): number {
+    return this._commentCount;
+  }
+  set commentCount(value: number) {
+    this._commentCount = value;
+  }
+  get sessionReviewCount(): number {
+    return this._sessionReviewCount;
+  }
+  set sessionReviewCount(value: number) {
+    this._sessionReviewCount = value;
+  }
+  get sessionCommentCount(): number {
+    return this._sessionCommentCount;
+  }
+  set sessionCommentCount(value: number) {
+    this._sessionCommentCount = value;
+  }
+  get byLanguage(): FeedbackBreakdownBucket[] | undefined {
+    return this._byLanguage;
+  }
+  set byLanguage(value: FeedbackBreakdownBucket[] | undefined) {
+    this._byLanguage = value;
+  }
+  get byIntent(): FeedbackBreakdownBucket[] | undefined {
+    return this._byIntent;
+  }
+  set byIntent(value: FeedbackBreakdownBucket[] | undefined) {
+    this._byIntent = value;
+  }
+  get byAuthorType(): FeedbackBreakdownBucket[] | undefined {
+    return this._byAuthorType;
+  }
+  set byAuthorType(value: FeedbackBreakdownBucket[] | undefined) {
+    this._byAuthorType = value;
+  }
+  get unspecifiedRatingCount(): number {
+    return this._unspecifiedRatingCount;
+  }
+  set unspecifiedRatingCount(value: number) {
+    this._unspecifiedRatingCount = value;
+  }
+  get scoredCount(): number {
+    return this._scoredCount;
+  }
+  set scoredCount(value: number) {
+    this._scoredCount = value;
+  }
+  get averageScore(): number {
+    return this._averageScore;
+  }
+  set averageScore(value: number) {
+    this._averageScore = value;
+  }
+  get byOrigin(): FeedbackBreakdownBucket[] | undefined {
+    return this._byOrigin;
+  }
+  set byOrigin(value: FeedbackBreakdownBucket[] | undefined) {
+    this._byOrigin = value;
+  }
+  get byCriterion(): FeedbackBreakdownBucket[] | undefined {
+    return this._byCriterion;
+  }
+  set byCriterion(value: FeedbackBreakdownBucket[] | undefined) {
+    this._byCriterion = value;
+  }
+
+  /**
+   * Serialize message to binary data
+   * @param instance message instance
+   */
+  serializeBinary() {
+    const writer = new BinaryWriter();
+    FeedbackStatistics.serializeBinaryToWriter(this, writer);
+    return writer.getResultBuffer();
+  }
+
+  /**
+   * Cast message to standard JavaScript object (all non-primitive values are deeply cloned)
+   */
+  toObject(): FeedbackStatistics.AsObject {
+    return {
+      totalFeedback: this.totalFeedback,
+      thumbsUpCount: this.thumbsUpCount,
+      thumbsDownCount: this.thumbsDownCount,
+      sessionLevelCount: this.sessionLevelCount,
+      sessionStepLevelCount: this.sessionStepLevelCount,
+      commentCount: this.commentCount,
+      sessionReviewCount: this.sessionReviewCount,
+      sessionCommentCount: this.sessionCommentCount,
+      byLanguage: (this.byLanguage || []).map(m => m.toObject()),
+      byIntent: (this.byIntent || []).map(m => m.toObject()),
+      byAuthorType: (this.byAuthorType || []).map(m => m.toObject()),
+      unspecifiedRatingCount: this.unspecifiedRatingCount,
+      scoredCount: this.scoredCount,
+      averageScore: this.averageScore,
+      byOrigin: (this.byOrigin || []).map(m => m.toObject()),
+      byCriterion: (this.byCriterion || []).map(m => m.toObject())
+    };
+  }
+
+  /**
+   * Convenience method to support JSON.stringify(message), replicates the structure of toObject()
+   */
+  toJSON() {
+    return this.toObject();
+  }
+
+  /**
+   * Cast message to JSON using protobuf JSON notation: https://developers.google.com/protocol-buffers/docs/proto3#json
+   * Attention: output differs from toObject() e.g. enums are represented as names and not as numbers, Timestamp is an ISO Date string format etc.
+   * If the message itself or some of descendant messages is google.protobuf.Any, you MUST provide a message pool as options. If not, the messagePool is not required
+   */
+  toProtobufJSON(
+    // @ts-ignore
+    options?: ToProtobufJSONOptions
+  ): FeedbackStatistics.AsProtobufJSON {
+    return {
+      totalFeedback: this.totalFeedback,
+      thumbsUpCount: this.thumbsUpCount,
+      thumbsDownCount: this.thumbsDownCount,
+      sessionLevelCount: this.sessionLevelCount,
+      sessionStepLevelCount: this.sessionStepLevelCount,
+      commentCount: this.commentCount,
+      sessionReviewCount: this.sessionReviewCount,
+      sessionCommentCount: this.sessionCommentCount,
+      byLanguage: (this.byLanguage || []).map(m => m.toProtobufJSON(options)),
+      byIntent: (this.byIntent || []).map(m => m.toProtobufJSON(options)),
+      byAuthorType: (this.byAuthorType || []).map(m =>
+        m.toProtobufJSON(options)
+      ),
+      unspecifiedRatingCount: this.unspecifiedRatingCount,
+      scoredCount: this.scoredCount,
+      averageScore: this.averageScore,
+      byOrigin: (this.byOrigin || []).map(m => m.toProtobufJSON(options)),
+      byCriterion: (this.byCriterion || []).map(m => m.toProtobufJSON(options))
+    };
+  }
+}
+export module FeedbackStatistics {
+  /**
+   * Standard JavaScript object representation for FeedbackStatistics
+   */
+  export interface AsObject {
+    totalFeedback: number;
+    thumbsUpCount: number;
+    thumbsDownCount: number;
+    sessionLevelCount: number;
+    sessionStepLevelCount: number;
+    commentCount: number;
+    sessionReviewCount: number;
+    sessionCommentCount: number;
+    byLanguage?: FeedbackBreakdownBucket.AsObject[];
+    byIntent?: FeedbackBreakdownBucket.AsObject[];
+    byAuthorType?: FeedbackBreakdownBucket.AsObject[];
+    unspecifiedRatingCount: number;
+    scoredCount: number;
+    averageScore: number;
+    byOrigin?: FeedbackBreakdownBucket.AsObject[];
+    byCriterion?: FeedbackBreakdownBucket.AsObject[];
+  }
+
+  /**
+   * Protobuf JSON representation for FeedbackStatistics
+   */
+  export interface AsProtobufJSON {
+    totalFeedback: number;
+    thumbsUpCount: number;
+    thumbsDownCount: number;
+    sessionLevelCount: number;
+    sessionStepLevelCount: number;
+    commentCount: number;
+    sessionReviewCount: number;
+    sessionCommentCount: number;
+    byLanguage: FeedbackBreakdownBucket.AsProtobufJSON[] | null;
+    byIntent: FeedbackBreakdownBucket.AsProtobufJSON[] | null;
+    byAuthorType: FeedbackBreakdownBucket.AsProtobufJSON[] | null;
+    unspecifiedRatingCount: number;
+    scoredCount: number;
+    averageScore: number;
+    byOrigin: FeedbackBreakdownBucket.AsProtobufJSON[] | null;
+    byCriterion: FeedbackBreakdownBucket.AsProtobufJSON[] | null;
+  }
+}
+
+/**
+ * Message implementation for ondewo.nlu.GetFeedbackStatisticsRequest
+ */
+export class GetFeedbackStatisticsRequest implements GrpcMessage {
+  static id = 'ondewo.nlu.GetFeedbackStatisticsRequest';
+
+  /**
+   * Deserialize binary data to message
+   * @param instance message instance
+   */
+  static deserializeBinary(bytes: ByteSource) {
+    const instance = new GetFeedbackStatisticsRequest();
+    GetFeedbackStatisticsRequest.deserializeBinaryFromReader(
+      instance,
+      new BinaryReader(bytes)
+    );
+    return instance;
+  }
+
+  /**
+   * Check all the properties and set default protobuf values if necessary
+   * @param _instance message instance
+   */
+  static refineValues(_instance: GetFeedbackStatisticsRequest) {
+    _instance.parent = _instance.parent || '';
+    _instance.sessionFilter = _instance.sessionFilter || undefined;
+    _instance.includeReviewAndCommentRollup =
+      _instance.includeReviewAndCommentRollup || false;
+    _instance.fieldMask = _instance.fieldMask || undefined;
+    _instance.feedbackFilter = _instance.feedbackFilter || undefined;
+  }
+
+  /**
+   * Deserializes / reads binary message into message instance using provided binary reader
+   * @param _instance message instance
+   * @param _reader binary reader instance
+   */
+  static deserializeBinaryFromReader(
+    _instance: GetFeedbackStatisticsRequest,
+    _reader: BinaryReader
+  ) {
+    while (_reader.nextField()) {
+      if (_reader.isEndGroup()) break;
+
+      switch (_reader.getFieldNumber()) {
+        case 1:
+          _instance.parent = _reader.readString();
+          break;
+        case 2:
+          _instance.sessionFilter = new SessionFilter();
+          _reader.readMessage(
+            _instance.sessionFilter,
+            SessionFilter.deserializeBinaryFromReader
+          );
+          break;
+        case 3:
+          _instance.includeReviewAndCommentRollup = _reader.readBool();
+          break;
+        case 4:
+          _instance.fieldMask = new googleProtobuf003.FieldMask();
+          _reader.readMessage(
+            _instance.fieldMask,
+            googleProtobuf003.FieldMask.deserializeBinaryFromReader
+          );
+          break;
+        case 5:
+          _instance.feedbackFilter = new FeedbackFilter();
+          _reader.readMessage(
+            _instance.feedbackFilter,
+            FeedbackFilter.deserializeBinaryFromReader
+          );
+          break;
+        default:
+          _reader.skipField();
+      }
+    }
+
+    GetFeedbackStatisticsRequest.refineValues(_instance);
+  }
+
+  /**
+   * Serializes a message to binary format using provided binary reader
+   * @param _instance message instance
+   * @param _writer binary writer instance
+   */
+  static serializeBinaryToWriter(
+    _instance: GetFeedbackStatisticsRequest,
+    _writer: BinaryWriter
+  ) {
+    if (_instance.parent) {
+      _writer.writeString(1, _instance.parent);
+    }
+    if (_instance.sessionFilter) {
+      _writer.writeMessage(
+        2,
+        _instance.sessionFilter as any,
+        SessionFilter.serializeBinaryToWriter
+      );
+    }
+    if (_instance.includeReviewAndCommentRollup) {
+      _writer.writeBool(3, _instance.includeReviewAndCommentRollup);
+    }
+    if (_instance.fieldMask) {
+      _writer.writeMessage(
+        4,
+        _instance.fieldMask as any,
+        googleProtobuf003.FieldMask.serializeBinaryToWriter
+      );
+    }
+    if (_instance.feedbackFilter) {
+      _writer.writeMessage(
+        5,
+        _instance.feedbackFilter as any,
+        FeedbackFilter.serializeBinaryToWriter
+      );
+    }
+  }
+
+  private _parent: string;
+  private _sessionFilter?: SessionFilter;
+  private _includeReviewAndCommentRollup: boolean;
+  private _fieldMask?: googleProtobuf003.FieldMask;
+  private _feedbackFilter?: FeedbackFilter;
+
+  /**
+   * Message constructor. Initializes the properties and applies default Protobuf values if necessary
+   * @param _value initial values object or instance of GetFeedbackStatisticsRequest to deeply clone from
+   */
+  constructor(
+    _value?: RecursivePartial<GetFeedbackStatisticsRequest.AsObject>
+  ) {
+    _value = _value || {};
+    this.parent = _value.parent;
+    this.sessionFilter = _value.sessionFilter
+      ? new SessionFilter(_value.sessionFilter)
+      : undefined;
+    this.includeReviewAndCommentRollup = _value.includeReviewAndCommentRollup;
+    this.fieldMask = _value.fieldMask
+      ? new googleProtobuf003.FieldMask(_value.fieldMask)
+      : undefined;
+    this.feedbackFilter = _value.feedbackFilter
+      ? new FeedbackFilter(_value.feedbackFilter)
+      : undefined;
+    GetFeedbackStatisticsRequest.refineValues(this);
+  }
+  get parent(): string {
+    return this._parent;
+  }
+  set parent(value: string) {
+    this._parent = value;
+  }
+  get sessionFilter(): SessionFilter | undefined {
+    return this._sessionFilter;
+  }
+  set sessionFilter(value: SessionFilter | undefined) {
+    this._sessionFilter = value;
+  }
+  get includeReviewAndCommentRollup(): boolean {
+    return this._includeReviewAndCommentRollup;
+  }
+  set includeReviewAndCommentRollup(value: boolean) {
+    this._includeReviewAndCommentRollup = value;
+  }
+  get fieldMask(): googleProtobuf003.FieldMask | undefined {
+    return this._fieldMask;
+  }
+  set fieldMask(value: googleProtobuf003.FieldMask | undefined) {
+    this._fieldMask = value;
+  }
+  get feedbackFilter(): FeedbackFilter | undefined {
+    return this._feedbackFilter;
+  }
+  set feedbackFilter(value: FeedbackFilter | undefined) {
+    this._feedbackFilter = value;
+  }
+
+  /**
+   * Serialize message to binary data
+   * @param instance message instance
+   */
+  serializeBinary() {
+    const writer = new BinaryWriter();
+    GetFeedbackStatisticsRequest.serializeBinaryToWriter(this, writer);
+    return writer.getResultBuffer();
+  }
+
+  /**
+   * Cast message to standard JavaScript object (all non-primitive values are deeply cloned)
+   */
+  toObject(): GetFeedbackStatisticsRequest.AsObject {
+    return {
+      parent: this.parent,
+      sessionFilter: this.sessionFilter
+        ? this.sessionFilter.toObject()
+        : undefined,
+      includeReviewAndCommentRollup: this.includeReviewAndCommentRollup,
+      fieldMask: this.fieldMask ? this.fieldMask.toObject() : undefined,
+      feedbackFilter: this.feedbackFilter
+        ? this.feedbackFilter.toObject()
+        : undefined
+    };
+  }
+
+  /**
+   * Convenience method to support JSON.stringify(message), replicates the structure of toObject()
+   */
+  toJSON() {
+    return this.toObject();
+  }
+
+  /**
+   * Cast message to JSON using protobuf JSON notation: https://developers.google.com/protocol-buffers/docs/proto3#json
+   * Attention: output differs from toObject() e.g. enums are represented as names and not as numbers, Timestamp is an ISO Date string format etc.
+   * If the message itself or some of descendant messages is google.protobuf.Any, you MUST provide a message pool as options. If not, the messagePool is not required
+   */
+  toProtobufJSON(
+    // @ts-ignore
+    options?: ToProtobufJSONOptions
+  ): GetFeedbackStatisticsRequest.AsProtobufJSON {
+    return {
+      parent: this.parent,
+      sessionFilter: this.sessionFilter
+        ? this.sessionFilter.toProtobufJSON(options)
+        : null,
+      includeReviewAndCommentRollup: this.includeReviewAndCommentRollup,
+      fieldMask: this.fieldMask ? this.fieldMask.toProtobufJSON(options) : null,
+      feedbackFilter: this.feedbackFilter
+        ? this.feedbackFilter.toProtobufJSON(options)
+        : null
+    };
+  }
+}
+export module GetFeedbackStatisticsRequest {
+  /**
+   * Standard JavaScript object representation for GetFeedbackStatisticsRequest
+   */
+  export interface AsObject {
+    parent: string;
+    sessionFilter?: SessionFilter.AsObject;
+    includeReviewAndCommentRollup: boolean;
+    fieldMask?: googleProtobuf003.FieldMask.AsObject;
+    feedbackFilter?: FeedbackFilter.AsObject;
+  }
+
+  /**
+   * Protobuf JSON representation for GetFeedbackStatisticsRequest
+   */
+  export interface AsProtobufJSON {
+    parent: string;
+    sessionFilter: SessionFilter.AsProtobufJSON | null;
+    includeReviewAndCommentRollup: boolean;
+    fieldMask: googleProtobuf003.FieldMask.AsProtobufJSON | null;
+    feedbackFilter: FeedbackFilter.AsProtobufJSON | null;
+  }
+}
+
+/**
+ * Message implementation for ondewo.nlu.GetFeedbackStatisticsResponse
+ */
+export class GetFeedbackStatisticsResponse implements GrpcMessage {
+  static id = 'ondewo.nlu.GetFeedbackStatisticsResponse';
+
+  /**
+   * Deserialize binary data to message
+   * @param instance message instance
+   */
+  static deserializeBinary(bytes: ByteSource) {
+    const instance = new GetFeedbackStatisticsResponse();
+    GetFeedbackStatisticsResponse.deserializeBinaryFromReader(
+      instance,
+      new BinaryReader(bytes)
+    );
+    return instance;
+  }
+
+  /**
+   * Check all the properties and set default protobuf values if necessary
+   * @param _instance message instance
+   */
+  static refineValues(_instance: GetFeedbackStatisticsResponse) {
+    _instance.statistics = _instance.statistics || undefined;
+  }
+
+  /**
+   * Deserializes / reads binary message into message instance using provided binary reader
+   * @param _instance message instance
+   * @param _reader binary reader instance
+   */
+  static deserializeBinaryFromReader(
+    _instance: GetFeedbackStatisticsResponse,
+    _reader: BinaryReader
+  ) {
+    while (_reader.nextField()) {
+      if (_reader.isEndGroup()) break;
+
+      switch (_reader.getFieldNumber()) {
+        case 1:
+          _instance.statistics = new FeedbackStatistics();
+          _reader.readMessage(
+            _instance.statistics,
+            FeedbackStatistics.deserializeBinaryFromReader
+          );
+          break;
+        default:
+          _reader.skipField();
+      }
+    }
+
+    GetFeedbackStatisticsResponse.refineValues(_instance);
+  }
+
+  /**
+   * Serializes a message to binary format using provided binary reader
+   * @param _instance message instance
+   * @param _writer binary writer instance
+   */
+  static serializeBinaryToWriter(
+    _instance: GetFeedbackStatisticsResponse,
+    _writer: BinaryWriter
+  ) {
+    if (_instance.statistics) {
+      _writer.writeMessage(
+        1,
+        _instance.statistics as any,
+        FeedbackStatistics.serializeBinaryToWriter
+      );
+    }
+  }
+
+  private _statistics?: FeedbackStatistics;
+
+  /**
+   * Message constructor. Initializes the properties and applies default Protobuf values if necessary
+   * @param _value initial values object or instance of GetFeedbackStatisticsResponse to deeply clone from
+   */
+  constructor(
+    _value?: RecursivePartial<GetFeedbackStatisticsResponse.AsObject>
+  ) {
+    _value = _value || {};
+    this.statistics = _value.statistics
+      ? new FeedbackStatistics(_value.statistics)
+      : undefined;
+    GetFeedbackStatisticsResponse.refineValues(this);
+  }
+  get statistics(): FeedbackStatistics | undefined {
+    return this._statistics;
+  }
+  set statistics(value: FeedbackStatistics | undefined) {
+    this._statistics = value;
+  }
+
+  /**
+   * Serialize message to binary data
+   * @param instance message instance
+   */
+  serializeBinary() {
+    const writer = new BinaryWriter();
+    GetFeedbackStatisticsResponse.serializeBinaryToWriter(this, writer);
+    return writer.getResultBuffer();
+  }
+
+  /**
+   * Cast message to standard JavaScript object (all non-primitive values are deeply cloned)
+   */
+  toObject(): GetFeedbackStatisticsResponse.AsObject {
+    return {
+      statistics: this.statistics ? this.statistics.toObject() : undefined
+    };
+  }
+
+  /**
+   * Convenience method to support JSON.stringify(message), replicates the structure of toObject()
+   */
+  toJSON() {
+    return this.toObject();
+  }
+
+  /**
+   * Cast message to JSON using protobuf JSON notation: https://developers.google.com/protocol-buffers/docs/proto3#json
+   * Attention: output differs from toObject() e.g. enums are represented as names and not as numbers, Timestamp is an ISO Date string format etc.
+   * If the message itself or some of descendant messages is google.protobuf.Any, you MUST provide a message pool as options. If not, the messagePool is not required
+   */
+  toProtobufJSON(
+    // @ts-ignore
+    options?: ToProtobufJSONOptions
+  ): GetFeedbackStatisticsResponse.AsProtobufJSON {
+    return {
+      statistics: this.statistics
+        ? this.statistics.toProtobufJSON(options)
+        : null
+    };
+  }
+}
+export module GetFeedbackStatisticsResponse {
+  /**
+   * Standard JavaScript object representation for GetFeedbackStatisticsResponse
+   */
+  export interface AsObject {
+    statistics?: FeedbackStatistics.AsObject;
+  }
+
+  /**
+   * Protobuf JSON representation for GetFeedbackStatisticsResponse
+   */
+  export interface AsProtobufJSON {
+    statistics: FeedbackStatistics.AsProtobufJSON | null;
+  }
+}
+
+/**
+ * Message implementation for ondewo.nlu.FeedbackTimeSeriesBucket
+ */
+export class FeedbackTimeSeriesBucket implements GrpcMessage {
+  static id = 'ondewo.nlu.FeedbackTimeSeriesBucket';
+
+  /**
+   * Deserialize binary data to message
+   * @param instance message instance
+   */
+  static deserializeBinary(bytes: ByteSource) {
+    const instance = new FeedbackTimeSeriesBucket();
+    FeedbackTimeSeriesBucket.deserializeBinaryFromReader(
+      instance,
+      new BinaryReader(bytes)
+    );
+    return instance;
+  }
+
+  /**
+   * Check all the properties and set default protobuf values if necessary
+   * @param _instance message instance
+   */
+  static refineValues(_instance: FeedbackTimeSeriesBucket) {
+    _instance.bucketStart = _instance.bucketStart || undefined;
+    _instance.thumbsUpCount = _instance.thumbsUpCount || 0;
+    _instance.thumbsDownCount = _instance.thumbsDownCount || 0;
+    _instance.total = _instance.total || 0;
+    _instance.bucketEnd = _instance.bucketEnd || undefined;
+  }
+
+  /**
+   * Deserializes / reads binary message into message instance using provided binary reader
+   * @param _instance message instance
+   * @param _reader binary reader instance
+   */
+  static deserializeBinaryFromReader(
+    _instance: FeedbackTimeSeriesBucket,
+    _reader: BinaryReader
+  ) {
+    while (_reader.nextField()) {
+      if (_reader.isEndGroup()) break;
+
+      switch (_reader.getFieldNumber()) {
+        case 1:
+          _instance.bucketStart = new googleProtobuf005.Timestamp();
+          _reader.readMessage(
+            _instance.bucketStart,
+            googleProtobuf005.Timestamp.deserializeBinaryFromReader
+          );
+          break;
+        case 2:
+          _instance.thumbsUpCount = _reader.readInt32();
+          break;
+        case 3:
+          _instance.thumbsDownCount = _reader.readInt32();
+          break;
+        case 4:
+          _instance.total = _reader.readInt32();
+          break;
+        case 5:
+          _instance.bucketEnd = new googleProtobuf005.Timestamp();
+          _reader.readMessage(
+            _instance.bucketEnd,
+            googleProtobuf005.Timestamp.deserializeBinaryFromReader
+          );
+          break;
+        default:
+          _reader.skipField();
+      }
+    }
+
+    FeedbackTimeSeriesBucket.refineValues(_instance);
+  }
+
+  /**
+   * Serializes a message to binary format using provided binary reader
+   * @param _instance message instance
+   * @param _writer binary writer instance
+   */
+  static serializeBinaryToWriter(
+    _instance: FeedbackTimeSeriesBucket,
+    _writer: BinaryWriter
+  ) {
+    if (_instance.bucketStart) {
+      _writer.writeMessage(
+        1,
+        _instance.bucketStart as any,
+        googleProtobuf005.Timestamp.serializeBinaryToWriter
+      );
+    }
+    if (_instance.thumbsUpCount) {
+      _writer.writeInt32(2, _instance.thumbsUpCount);
+    }
+    if (_instance.thumbsDownCount) {
+      _writer.writeInt32(3, _instance.thumbsDownCount);
+    }
+    if (_instance.total) {
+      _writer.writeInt32(4, _instance.total);
+    }
+    if (_instance.bucketEnd) {
+      _writer.writeMessage(
+        5,
+        _instance.bucketEnd as any,
+        googleProtobuf005.Timestamp.serializeBinaryToWriter
+      );
+    }
+  }
+
+  private _bucketStart?: googleProtobuf005.Timestamp;
+  private _thumbsUpCount: number;
+  private _thumbsDownCount: number;
+  private _total: number;
+  private _bucketEnd?: googleProtobuf005.Timestamp;
+
+  /**
+   * Message constructor. Initializes the properties and applies default Protobuf values if necessary
+   * @param _value initial values object or instance of FeedbackTimeSeriesBucket to deeply clone from
+   */
+  constructor(_value?: RecursivePartial<FeedbackTimeSeriesBucket.AsObject>) {
+    _value = _value || {};
+    this.bucketStart = _value.bucketStart
+      ? new googleProtobuf005.Timestamp(_value.bucketStart)
+      : undefined;
+    this.thumbsUpCount = _value.thumbsUpCount;
+    this.thumbsDownCount = _value.thumbsDownCount;
+    this.total = _value.total;
+    this.bucketEnd = _value.bucketEnd
+      ? new googleProtobuf005.Timestamp(_value.bucketEnd)
+      : undefined;
+    FeedbackTimeSeriesBucket.refineValues(this);
+  }
+  get bucketStart(): googleProtobuf005.Timestamp | undefined {
+    return this._bucketStart;
+  }
+  set bucketStart(value: googleProtobuf005.Timestamp | undefined) {
+    this._bucketStart = value;
+  }
+  get thumbsUpCount(): number {
+    return this._thumbsUpCount;
+  }
+  set thumbsUpCount(value: number) {
+    this._thumbsUpCount = value;
+  }
+  get thumbsDownCount(): number {
+    return this._thumbsDownCount;
+  }
+  set thumbsDownCount(value: number) {
+    this._thumbsDownCount = value;
+  }
+  get total(): number {
+    return this._total;
+  }
+  set total(value: number) {
+    this._total = value;
+  }
+  get bucketEnd(): googleProtobuf005.Timestamp | undefined {
+    return this._bucketEnd;
+  }
+  set bucketEnd(value: googleProtobuf005.Timestamp | undefined) {
+    this._bucketEnd = value;
+  }
+
+  /**
+   * Serialize message to binary data
+   * @param instance message instance
+   */
+  serializeBinary() {
+    const writer = new BinaryWriter();
+    FeedbackTimeSeriesBucket.serializeBinaryToWriter(this, writer);
+    return writer.getResultBuffer();
+  }
+
+  /**
+   * Cast message to standard JavaScript object (all non-primitive values are deeply cloned)
+   */
+  toObject(): FeedbackTimeSeriesBucket.AsObject {
+    return {
+      bucketStart: this.bucketStart ? this.bucketStart.toObject() : undefined,
+      thumbsUpCount: this.thumbsUpCount,
+      thumbsDownCount: this.thumbsDownCount,
+      total: this.total,
+      bucketEnd: this.bucketEnd ? this.bucketEnd.toObject() : undefined
+    };
+  }
+
+  /**
+   * Convenience method to support JSON.stringify(message), replicates the structure of toObject()
+   */
+  toJSON() {
+    return this.toObject();
+  }
+
+  /**
+   * Cast message to JSON using protobuf JSON notation: https://developers.google.com/protocol-buffers/docs/proto3#json
+   * Attention: output differs from toObject() e.g. enums are represented as names and not as numbers, Timestamp is an ISO Date string format etc.
+   * If the message itself or some of descendant messages is google.protobuf.Any, you MUST provide a message pool as options. If not, the messagePool is not required
+   */
+  toProtobufJSON(
+    // @ts-ignore
+    options?: ToProtobufJSONOptions
+  ): FeedbackTimeSeriesBucket.AsProtobufJSON {
+    return {
+      bucketStart: this.bucketStart
+        ? this.bucketStart.toProtobufJSON(options)
+        : null,
+      thumbsUpCount: this.thumbsUpCount,
+      thumbsDownCount: this.thumbsDownCount,
+      total: this.total,
+      bucketEnd: this.bucketEnd ? this.bucketEnd.toProtobufJSON(options) : null
+    };
+  }
+}
+export module FeedbackTimeSeriesBucket {
+  /**
+   * Standard JavaScript object representation for FeedbackTimeSeriesBucket
+   */
+  export interface AsObject {
+    bucketStart?: googleProtobuf005.Timestamp.AsObject;
+    thumbsUpCount: number;
+    thumbsDownCount: number;
+    total: number;
+    bucketEnd?: googleProtobuf005.Timestamp.AsObject;
+  }
+
+  /**
+   * Protobuf JSON representation for FeedbackTimeSeriesBucket
+   */
+  export interface AsProtobufJSON {
+    bucketStart: googleProtobuf005.Timestamp.AsProtobufJSON | null;
+    thumbsUpCount: number;
+    thumbsDownCount: number;
+    total: number;
+    bucketEnd: googleProtobuf005.Timestamp.AsProtobufJSON | null;
+  }
+}
+
+/**
+ * Message implementation for ondewo.nlu.GetFeedbackStatisticsTimeSeriesRequest
+ */
+export class GetFeedbackStatisticsTimeSeriesRequest implements GrpcMessage {
+  static id = 'ondewo.nlu.GetFeedbackStatisticsTimeSeriesRequest';
+
+  /**
+   * Deserialize binary data to message
+   * @param instance message instance
+   */
+  static deserializeBinary(bytes: ByteSource) {
+    const instance = new GetFeedbackStatisticsTimeSeriesRequest();
+    GetFeedbackStatisticsTimeSeriesRequest.deserializeBinaryFromReader(
+      instance,
+      new BinaryReader(bytes)
+    );
+    return instance;
+  }
+
+  /**
+   * Check all the properties and set default protobuf values if necessary
+   * @param _instance message instance
+   */
+  static refineValues(_instance: GetFeedbackStatisticsTimeSeriesRequest) {
+    _instance.parent = _instance.parent || '';
+    _instance.sessionFilter = _instance.sessionFilter || undefined;
+    _instance.bucketWidthSeconds = _instance.bucketWidthSeconds || 0;
+    _instance.maxBuckets = _instance.maxBuckets || 0;
+    _instance.fieldMask = _instance.fieldMask || undefined;
+    _instance.feedbackFilter = _instance.feedbackFilter || undefined;
+    _instance.granularity = _instance.granularity || 0;
+    _instance.timeZone = _instance.timeZone || '';
+    _instance.start = _instance.start || undefined;
+    _instance.end = _instance.end || undefined;
+  }
+
+  /**
+   * Deserializes / reads binary message into message instance using provided binary reader
+   * @param _instance message instance
+   * @param _reader binary reader instance
+   */
+  static deserializeBinaryFromReader(
+    _instance: GetFeedbackStatisticsTimeSeriesRequest,
+    _reader: BinaryReader
+  ) {
+    while (_reader.nextField()) {
+      if (_reader.isEndGroup()) break;
+
+      switch (_reader.getFieldNumber()) {
+        case 1:
+          _instance.parent = _reader.readString();
+          break;
+        case 2:
+          _instance.sessionFilter = new SessionFilter();
+          _reader.readMessage(
+            _instance.sessionFilter,
+            SessionFilter.deserializeBinaryFromReader
+          );
+          break;
+        case 3:
+          _instance.bucketWidthSeconds = _reader.readInt32();
+          break;
+        case 4:
+          _instance.maxBuckets = _reader.readInt32();
+          break;
+        case 5:
+          _instance.fieldMask = new googleProtobuf003.FieldMask();
+          _reader.readMessage(
+            _instance.fieldMask,
+            googleProtobuf003.FieldMask.deserializeBinaryFromReader
+          );
+          break;
+        case 6:
+          _instance.feedbackFilter = new FeedbackFilter();
+          _reader.readMessage(
+            _instance.feedbackFilter,
+            FeedbackFilter.deserializeBinaryFromReader
+          );
+          break;
+        case 7:
+          _instance.granularity = _reader.readEnum();
+          break;
+        case 8:
+          _instance.timeZone = _reader.readString();
+          break;
+        case 9:
+          _instance.start = new googleProtobuf005.Timestamp();
+          _reader.readMessage(
+            _instance.start,
+            googleProtobuf005.Timestamp.deserializeBinaryFromReader
+          );
+          break;
+        case 10:
+          _instance.end = new googleProtobuf005.Timestamp();
+          _reader.readMessage(
+            _instance.end,
+            googleProtobuf005.Timestamp.deserializeBinaryFromReader
+          );
+          break;
+        default:
+          _reader.skipField();
+      }
+    }
+
+    GetFeedbackStatisticsTimeSeriesRequest.refineValues(_instance);
+  }
+
+  /**
+   * Serializes a message to binary format using provided binary reader
+   * @param _instance message instance
+   * @param _writer binary writer instance
+   */
+  static serializeBinaryToWriter(
+    _instance: GetFeedbackStatisticsTimeSeriesRequest,
+    _writer: BinaryWriter
+  ) {
+    if (_instance.parent) {
+      _writer.writeString(1, _instance.parent);
+    }
+    if (_instance.sessionFilter) {
+      _writer.writeMessage(
+        2,
+        _instance.sessionFilter as any,
+        SessionFilter.serializeBinaryToWriter
+      );
+    }
+    if (_instance.bucketWidthSeconds) {
+      _writer.writeInt32(3, _instance.bucketWidthSeconds);
+    }
+    if (_instance.maxBuckets) {
+      _writer.writeInt32(4, _instance.maxBuckets);
+    }
+    if (_instance.fieldMask) {
+      _writer.writeMessage(
+        5,
+        _instance.fieldMask as any,
+        googleProtobuf003.FieldMask.serializeBinaryToWriter
+      );
+    }
+    if (_instance.feedbackFilter) {
+      _writer.writeMessage(
+        6,
+        _instance.feedbackFilter as any,
+        FeedbackFilter.serializeBinaryToWriter
+      );
+    }
+    if (_instance.granularity) {
+      _writer.writeEnum(7, _instance.granularity);
+    }
+    if (_instance.timeZone) {
+      _writer.writeString(8, _instance.timeZone);
+    }
+    if (_instance.start) {
+      _writer.writeMessage(
+        9,
+        _instance.start as any,
+        googleProtobuf005.Timestamp.serializeBinaryToWriter
+      );
+    }
+    if (_instance.end) {
+      _writer.writeMessage(
+        10,
+        _instance.end as any,
+        googleProtobuf005.Timestamp.serializeBinaryToWriter
+      );
+    }
+  }
+
+  private _parent: string;
+  private _sessionFilter?: SessionFilter;
+  private _bucketWidthSeconds: number;
+  private _maxBuckets: number;
+  private _fieldMask?: googleProtobuf003.FieldMask;
+  private _feedbackFilter?: FeedbackFilter;
+  private _granularity: FeedbackTimeGranularity;
+  private _timeZone: string;
+  private _start?: googleProtobuf005.Timestamp;
+  private _end?: googleProtobuf005.Timestamp;
+
+  /**
+   * Message constructor. Initializes the properties and applies default Protobuf values if necessary
+   * @param _value initial values object or instance of GetFeedbackStatisticsTimeSeriesRequest to deeply clone from
+   */
+  constructor(
+    _value?: RecursivePartial<GetFeedbackStatisticsTimeSeriesRequest.AsObject>
+  ) {
+    _value = _value || {};
+    this.parent = _value.parent;
+    this.sessionFilter = _value.sessionFilter
+      ? new SessionFilter(_value.sessionFilter)
+      : undefined;
+    this.bucketWidthSeconds = _value.bucketWidthSeconds;
+    this.maxBuckets = _value.maxBuckets;
+    this.fieldMask = _value.fieldMask
+      ? new googleProtobuf003.FieldMask(_value.fieldMask)
+      : undefined;
+    this.feedbackFilter = _value.feedbackFilter
+      ? new FeedbackFilter(_value.feedbackFilter)
+      : undefined;
+    this.granularity = _value.granularity;
+    this.timeZone = _value.timeZone;
+    this.start = _value.start
+      ? new googleProtobuf005.Timestamp(_value.start)
+      : undefined;
+    this.end = _value.end
+      ? new googleProtobuf005.Timestamp(_value.end)
+      : undefined;
+    GetFeedbackStatisticsTimeSeriesRequest.refineValues(this);
+  }
+  get parent(): string {
+    return this._parent;
+  }
+  set parent(value: string) {
+    this._parent = value;
+  }
+  get sessionFilter(): SessionFilter | undefined {
+    return this._sessionFilter;
+  }
+  set sessionFilter(value: SessionFilter | undefined) {
+    this._sessionFilter = value;
+  }
+  get bucketWidthSeconds(): number {
+    return this._bucketWidthSeconds;
+  }
+  set bucketWidthSeconds(value: number) {
+    this._bucketWidthSeconds = value;
+  }
+  get maxBuckets(): number {
+    return this._maxBuckets;
+  }
+  set maxBuckets(value: number) {
+    this._maxBuckets = value;
+  }
+  get fieldMask(): googleProtobuf003.FieldMask | undefined {
+    return this._fieldMask;
+  }
+  set fieldMask(value: googleProtobuf003.FieldMask | undefined) {
+    this._fieldMask = value;
+  }
+  get feedbackFilter(): FeedbackFilter | undefined {
+    return this._feedbackFilter;
+  }
+  set feedbackFilter(value: FeedbackFilter | undefined) {
+    this._feedbackFilter = value;
+  }
+  get granularity(): FeedbackTimeGranularity {
+    return this._granularity;
+  }
+  set granularity(value: FeedbackTimeGranularity) {
+    this._granularity = value;
+  }
+  get timeZone(): string {
+    return this._timeZone;
+  }
+  set timeZone(value: string) {
+    this._timeZone = value;
+  }
+  get start(): googleProtobuf005.Timestamp | undefined {
+    return this._start;
+  }
+  set start(value: googleProtobuf005.Timestamp | undefined) {
+    this._start = value;
+  }
+  get end(): googleProtobuf005.Timestamp | undefined {
+    return this._end;
+  }
+  set end(value: googleProtobuf005.Timestamp | undefined) {
+    this._end = value;
+  }
+
+  /**
+   * Serialize message to binary data
+   * @param instance message instance
+   */
+  serializeBinary() {
+    const writer = new BinaryWriter();
+    GetFeedbackStatisticsTimeSeriesRequest.serializeBinaryToWriter(
+      this,
+      writer
+    );
+    return writer.getResultBuffer();
+  }
+
+  /**
+   * Cast message to standard JavaScript object (all non-primitive values are deeply cloned)
+   */
+  toObject(): GetFeedbackStatisticsTimeSeriesRequest.AsObject {
+    return {
+      parent: this.parent,
+      sessionFilter: this.sessionFilter
+        ? this.sessionFilter.toObject()
+        : undefined,
+      bucketWidthSeconds: this.bucketWidthSeconds,
+      maxBuckets: this.maxBuckets,
+      fieldMask: this.fieldMask ? this.fieldMask.toObject() : undefined,
+      feedbackFilter: this.feedbackFilter
+        ? this.feedbackFilter.toObject()
+        : undefined,
+      granularity: this.granularity,
+      timeZone: this.timeZone,
+      start: this.start ? this.start.toObject() : undefined,
+      end: this.end ? this.end.toObject() : undefined
+    };
+  }
+
+  /**
+   * Convenience method to support JSON.stringify(message), replicates the structure of toObject()
+   */
+  toJSON() {
+    return this.toObject();
+  }
+
+  /**
+   * Cast message to JSON using protobuf JSON notation: https://developers.google.com/protocol-buffers/docs/proto3#json
+   * Attention: output differs from toObject() e.g. enums are represented as names and not as numbers, Timestamp is an ISO Date string format etc.
+   * If the message itself or some of descendant messages is google.protobuf.Any, you MUST provide a message pool as options. If not, the messagePool is not required
+   */
+  toProtobufJSON(
+    // @ts-ignore
+    options?: ToProtobufJSONOptions
+  ): GetFeedbackStatisticsTimeSeriesRequest.AsProtobufJSON {
+    return {
+      parent: this.parent,
+      sessionFilter: this.sessionFilter
+        ? this.sessionFilter.toProtobufJSON(options)
+        : null,
+      bucketWidthSeconds: this.bucketWidthSeconds,
+      maxBuckets: this.maxBuckets,
+      fieldMask: this.fieldMask ? this.fieldMask.toProtobufJSON(options) : null,
+      feedbackFilter: this.feedbackFilter
+        ? this.feedbackFilter.toProtobufJSON(options)
+        : null,
+      granularity:
+        FeedbackTimeGranularity[
+          this.granularity === null || this.granularity === undefined
+            ? 0
+            : this.granularity
+        ],
+      timeZone: this.timeZone,
+      start: this.start ? this.start.toProtobufJSON(options) : null,
+      end: this.end ? this.end.toProtobufJSON(options) : null
+    };
+  }
+}
+export module GetFeedbackStatisticsTimeSeriesRequest {
+  /**
+   * Standard JavaScript object representation for GetFeedbackStatisticsTimeSeriesRequest
+   */
+  export interface AsObject {
+    parent: string;
+    sessionFilter?: SessionFilter.AsObject;
+    bucketWidthSeconds: number;
+    maxBuckets: number;
+    fieldMask?: googleProtobuf003.FieldMask.AsObject;
+    feedbackFilter?: FeedbackFilter.AsObject;
+    granularity: FeedbackTimeGranularity;
+    timeZone: string;
+    start?: googleProtobuf005.Timestamp.AsObject;
+    end?: googleProtobuf005.Timestamp.AsObject;
+  }
+
+  /**
+   * Protobuf JSON representation for GetFeedbackStatisticsTimeSeriesRequest
+   */
+  export interface AsProtobufJSON {
+    parent: string;
+    sessionFilter: SessionFilter.AsProtobufJSON | null;
+    bucketWidthSeconds: number;
+    maxBuckets: number;
+    fieldMask: googleProtobuf003.FieldMask.AsProtobufJSON | null;
+    feedbackFilter: FeedbackFilter.AsProtobufJSON | null;
+    granularity: string;
+    timeZone: string;
+    start: googleProtobuf005.Timestamp.AsProtobufJSON | null;
+    end: googleProtobuf005.Timestamp.AsProtobufJSON | null;
+  }
+}
+
+/**
+ * Message implementation for ondewo.nlu.GetFeedbackStatisticsTimeSeriesResponse
+ */
+export class GetFeedbackStatisticsTimeSeriesResponse implements GrpcMessage {
+  static id = 'ondewo.nlu.GetFeedbackStatisticsTimeSeriesResponse';
+
+  /**
+   * Deserialize binary data to message
+   * @param instance message instance
+   */
+  static deserializeBinary(bytes: ByteSource) {
+    const instance = new GetFeedbackStatisticsTimeSeriesResponse();
+    GetFeedbackStatisticsTimeSeriesResponse.deserializeBinaryFromReader(
+      instance,
+      new BinaryReader(bytes)
+    );
+    return instance;
+  }
+
+  /**
+   * Check all the properties and set default protobuf values if necessary
+   * @param _instance message instance
+   */
+  static refineValues(_instance: GetFeedbackStatisticsTimeSeriesResponse) {
+    _instance.buckets = _instance.buckets || [];
+  }
+
+  /**
+   * Deserializes / reads binary message into message instance using provided binary reader
+   * @param _instance message instance
+   * @param _reader binary reader instance
+   */
+  static deserializeBinaryFromReader(
+    _instance: GetFeedbackStatisticsTimeSeriesResponse,
+    _reader: BinaryReader
+  ) {
+    while (_reader.nextField()) {
+      if (_reader.isEndGroup()) break;
+
+      switch (_reader.getFieldNumber()) {
+        case 1:
+          const messageInitializer1 = new FeedbackTimeSeriesBucket();
+          _reader.readMessage(
+            messageInitializer1,
+            FeedbackTimeSeriesBucket.deserializeBinaryFromReader
+          );
+          (_instance.buckets = _instance.buckets || []).push(
+            messageInitializer1
+          );
+          break;
+        default:
+          _reader.skipField();
+      }
+    }
+
+    GetFeedbackStatisticsTimeSeriesResponse.refineValues(_instance);
+  }
+
+  /**
+   * Serializes a message to binary format using provided binary reader
+   * @param _instance message instance
+   * @param _writer binary writer instance
+   */
+  static serializeBinaryToWriter(
+    _instance: GetFeedbackStatisticsTimeSeriesResponse,
+    _writer: BinaryWriter
+  ) {
+    if (_instance.buckets && _instance.buckets.length) {
+      _writer.writeRepeatedMessage(
+        1,
+        _instance.buckets as any,
+        FeedbackTimeSeriesBucket.serializeBinaryToWriter
+      );
+    }
+  }
+
+  private _buckets?: FeedbackTimeSeriesBucket[];
+
+  /**
+   * Message constructor. Initializes the properties and applies default Protobuf values if necessary
+   * @param _value initial values object or instance of GetFeedbackStatisticsTimeSeriesResponse to deeply clone from
+   */
+  constructor(
+    _value?: RecursivePartial<GetFeedbackStatisticsTimeSeriesResponse.AsObject>
+  ) {
+    _value = _value || {};
+    this.buckets = (_value.buckets || []).map(
+      m => new FeedbackTimeSeriesBucket(m)
+    );
+    GetFeedbackStatisticsTimeSeriesResponse.refineValues(this);
+  }
+  get buckets(): FeedbackTimeSeriesBucket[] | undefined {
+    return this._buckets;
+  }
+  set buckets(value: FeedbackTimeSeriesBucket[] | undefined) {
+    this._buckets = value;
+  }
+
+  /**
+   * Serialize message to binary data
+   * @param instance message instance
+   */
+  serializeBinary() {
+    const writer = new BinaryWriter();
+    GetFeedbackStatisticsTimeSeriesResponse.serializeBinaryToWriter(
+      this,
+      writer
+    );
+    return writer.getResultBuffer();
+  }
+
+  /**
+   * Cast message to standard JavaScript object (all non-primitive values are deeply cloned)
+   */
+  toObject(): GetFeedbackStatisticsTimeSeriesResponse.AsObject {
+    return {
+      buckets: (this.buckets || []).map(m => m.toObject())
+    };
+  }
+
+  /**
+   * Convenience method to support JSON.stringify(message), replicates the structure of toObject()
+   */
+  toJSON() {
+    return this.toObject();
+  }
+
+  /**
+   * Cast message to JSON using protobuf JSON notation: https://developers.google.com/protocol-buffers/docs/proto3#json
+   * Attention: output differs from toObject() e.g. enums are represented as names and not as numbers, Timestamp is an ISO Date string format etc.
+   * If the message itself or some of descendant messages is google.protobuf.Any, you MUST provide a message pool as options. If not, the messagePool is not required
+   */
+  toProtobufJSON(
+    // @ts-ignore
+    options?: ToProtobufJSONOptions
+  ): GetFeedbackStatisticsTimeSeriesResponse.AsProtobufJSON {
+    return {
+      buckets: (this.buckets || []).map(m => m.toProtobufJSON(options))
+    };
+  }
+}
+export module GetFeedbackStatisticsTimeSeriesResponse {
+  /**
+   * Standard JavaScript object representation for GetFeedbackStatisticsTimeSeriesResponse
+   */
+  export interface AsObject {
+    buckets?: FeedbackTimeSeriesBucket.AsObject[];
+  }
+
+  /**
+   * Protobuf JSON representation for GetFeedbackStatisticsTimeSeriesResponse
+   */
+  export interface AsProtobufJSON {
+    buckets: FeedbackTimeSeriesBucket.AsProtobufJSON[] | null;
   }
 }
 
@@ -15331,6 +29335,7 @@ export class GetSessionReviewRequest implements GrpcMessage {
   static refineValues(_instance: GetSessionReviewRequest) {
     _instance.sessionReviewId = _instance.sessionReviewId || '';
     _instance.sessionReviewView = _instance.sessionReviewView || 0;
+    _instance.fieldMask = _instance.fieldMask || undefined;
   }
 
   /**
@@ -15351,6 +29356,13 @@ export class GetSessionReviewRequest implements GrpcMessage {
           break;
         case 2:
           _instance.sessionReviewView = _reader.readEnum();
+          break;
+        case 3:
+          _instance.fieldMask = new googleProtobuf003.FieldMask();
+          _reader.readMessage(
+            _instance.fieldMask,
+            googleProtobuf003.FieldMask.deserializeBinaryFromReader
+          );
           break;
         default:
           _reader.skipField();
@@ -15375,10 +29387,18 @@ export class GetSessionReviewRequest implements GrpcMessage {
     if (_instance.sessionReviewView) {
       _writer.writeEnum(2, _instance.sessionReviewView);
     }
+    if (_instance.fieldMask) {
+      _writer.writeMessage(
+        3,
+        _instance.fieldMask as any,
+        googleProtobuf003.FieldMask.serializeBinaryToWriter
+      );
+    }
   }
 
   private _sessionReviewId: string;
   private _sessionReviewView: SessionReview.View;
+  private _fieldMask?: googleProtobuf003.FieldMask;
 
   /**
    * Message constructor. Initializes the properties and applies default Protobuf values if necessary
@@ -15388,6 +29408,9 @@ export class GetSessionReviewRequest implements GrpcMessage {
     _value = _value || {};
     this.sessionReviewId = _value.sessionReviewId;
     this.sessionReviewView = _value.sessionReviewView;
+    this.fieldMask = _value.fieldMask
+      ? new googleProtobuf003.FieldMask(_value.fieldMask)
+      : undefined;
     GetSessionReviewRequest.refineValues(this);
   }
   get sessionReviewId(): string {
@@ -15401,6 +29424,12 @@ export class GetSessionReviewRequest implements GrpcMessage {
   }
   set sessionReviewView(value: SessionReview.View) {
     this._sessionReviewView = value;
+  }
+  get fieldMask(): googleProtobuf003.FieldMask | undefined {
+    return this._fieldMask;
+  }
+  set fieldMask(value: googleProtobuf003.FieldMask | undefined) {
+    this._fieldMask = value;
   }
 
   /**
@@ -15419,7 +29448,8 @@ export class GetSessionReviewRequest implements GrpcMessage {
   toObject(): GetSessionReviewRequest.AsObject {
     return {
       sessionReviewId: this.sessionReviewId,
-      sessionReviewView: this.sessionReviewView
+      sessionReviewView: this.sessionReviewView,
+      fieldMask: this.fieldMask ? this.fieldMask.toObject() : undefined
     };
   }
 
@@ -15447,7 +29477,8 @@ export class GetSessionReviewRequest implements GrpcMessage {
           this.sessionReviewView === undefined
             ? 0
             : this.sessionReviewView
-        ]
+        ],
+      fieldMask: this.fieldMask ? this.fieldMask.toProtobufJSON(options) : null
     };
   }
 }
@@ -15458,6 +29489,7 @@ export module GetSessionReviewRequest {
   export interface AsObject {
     sessionReviewId: string;
     sessionReviewView: SessionReview.View;
+    fieldMask?: googleProtobuf003.FieldMask.AsObject;
   }
 
   /**
@@ -15466,6 +29498,7 @@ export module GetSessionReviewRequest {
   export interface AsProtobufJSON {
     sessionReviewId: string;
     sessionReviewView: string;
+    fieldMask: googleProtobuf003.FieldMask.AsProtobufJSON | null;
   }
 }
 
@@ -15495,6 +29528,7 @@ export class GetLatestSessionReviewRequest implements GrpcMessage {
   static refineValues(_instance: GetLatestSessionReviewRequest) {
     _instance.sessionId = _instance.sessionId || '';
     _instance.sessionReviewView = _instance.sessionReviewView || 0;
+    _instance.fieldMask = _instance.fieldMask || undefined;
   }
 
   /**
@@ -15515,6 +29549,13 @@ export class GetLatestSessionReviewRequest implements GrpcMessage {
           break;
         case 2:
           _instance.sessionReviewView = _reader.readEnum();
+          break;
+        case 3:
+          _instance.fieldMask = new googleProtobuf003.FieldMask();
+          _reader.readMessage(
+            _instance.fieldMask,
+            googleProtobuf003.FieldMask.deserializeBinaryFromReader
+          );
           break;
         default:
           _reader.skipField();
@@ -15539,10 +29580,18 @@ export class GetLatestSessionReviewRequest implements GrpcMessage {
     if (_instance.sessionReviewView) {
       _writer.writeEnum(2, _instance.sessionReviewView);
     }
+    if (_instance.fieldMask) {
+      _writer.writeMessage(
+        3,
+        _instance.fieldMask as any,
+        googleProtobuf003.FieldMask.serializeBinaryToWriter
+      );
+    }
   }
 
   private _sessionId: string;
   private _sessionReviewView: SessionReview.View;
+  private _fieldMask?: googleProtobuf003.FieldMask;
 
   /**
    * Message constructor. Initializes the properties and applies default Protobuf values if necessary
@@ -15554,6 +29603,9 @@ export class GetLatestSessionReviewRequest implements GrpcMessage {
     _value = _value || {};
     this.sessionId = _value.sessionId;
     this.sessionReviewView = _value.sessionReviewView;
+    this.fieldMask = _value.fieldMask
+      ? new googleProtobuf003.FieldMask(_value.fieldMask)
+      : undefined;
     GetLatestSessionReviewRequest.refineValues(this);
   }
   get sessionId(): string {
@@ -15567,6 +29619,12 @@ export class GetLatestSessionReviewRequest implements GrpcMessage {
   }
   set sessionReviewView(value: SessionReview.View) {
     this._sessionReviewView = value;
+  }
+  get fieldMask(): googleProtobuf003.FieldMask | undefined {
+    return this._fieldMask;
+  }
+  set fieldMask(value: googleProtobuf003.FieldMask | undefined) {
+    this._fieldMask = value;
   }
 
   /**
@@ -15585,7 +29643,8 @@ export class GetLatestSessionReviewRequest implements GrpcMessage {
   toObject(): GetLatestSessionReviewRequest.AsObject {
     return {
       sessionId: this.sessionId,
-      sessionReviewView: this.sessionReviewView
+      sessionReviewView: this.sessionReviewView,
+      fieldMask: this.fieldMask ? this.fieldMask.toObject() : undefined
     };
   }
 
@@ -15613,7 +29672,8 @@ export class GetLatestSessionReviewRequest implements GrpcMessage {
           this.sessionReviewView === undefined
             ? 0
             : this.sessionReviewView
-        ]
+        ],
+      fieldMask: this.fieldMask ? this.fieldMask.toProtobufJSON(options) : null
     };
   }
 }
@@ -15624,6 +29684,7 @@ export module GetLatestSessionReviewRequest {
   export interface AsObject {
     sessionId: string;
     sessionReviewView: SessionReview.View;
+    fieldMask?: googleProtobuf003.FieldMask.AsObject;
   }
 
   /**
@@ -15632,6 +29693,7 @@ export module GetLatestSessionReviewRequest {
   export interface AsProtobufJSON {
     sessionId: string;
     sessionReviewView: string;
+    fieldMask: googleProtobuf003.FieldMask.AsProtobufJSON | null;
   }
 }
 
@@ -15964,17 +30026,17 @@ export class DocumentFileResource implements GrpcMessage {
           _instance.bytes = _reader.readBytes();
           break;
         case 4:
-          _instance.createdAt = new googleProtobuf004.Timestamp();
+          _instance.createdAt = new googleProtobuf005.Timestamp();
           _reader.readMessage(
             _instance.createdAt,
-            googleProtobuf004.Timestamp.deserializeBinaryFromReader
+            googleProtobuf005.Timestamp.deserializeBinaryFromReader
           );
           break;
         case 5:
-          _instance.modifiedAt = new googleProtobuf004.Timestamp();
+          _instance.modifiedAt = new googleProtobuf005.Timestamp();
           _reader.readMessage(
             _instance.modifiedAt,
-            googleProtobuf004.Timestamp.deserializeBinaryFromReader
+            googleProtobuf005.Timestamp.deserializeBinaryFromReader
           );
           break;
         case 6:
@@ -16013,14 +30075,14 @@ export class DocumentFileResource implements GrpcMessage {
       _writer.writeMessage(
         4,
         _instance.createdAt as any,
-        googleProtobuf004.Timestamp.serializeBinaryToWriter
+        googleProtobuf005.Timestamp.serializeBinaryToWriter
       );
     }
     if (_instance.modifiedAt) {
       _writer.writeMessage(
         5,
         _instance.modifiedAt as any,
-        googleProtobuf004.Timestamp.serializeBinaryToWriter
+        googleProtobuf005.Timestamp.serializeBinaryToWriter
       );
     }
     if (_instance.createdBy) {
@@ -16034,8 +30096,8 @@ export class DocumentFileResource implements GrpcMessage {
   private _name: string;
   private _displayName: string;
   private _bytes: Uint8Array;
-  private _createdAt?: googleProtobuf004.Timestamp;
-  private _modifiedAt?: googleProtobuf004.Timestamp;
+  private _createdAt?: googleProtobuf005.Timestamp;
+  private _modifiedAt?: googleProtobuf005.Timestamp;
   private _createdBy: string;
   private _modifiedBy: string;
 
@@ -16049,10 +30111,10 @@ export class DocumentFileResource implements GrpcMessage {
     this.displayName = _value.displayName;
     this.bytes = _value.bytes;
     this.createdAt = _value.createdAt
-      ? new googleProtobuf004.Timestamp(_value.createdAt)
+      ? new googleProtobuf005.Timestamp(_value.createdAt)
       : undefined;
     this.modifiedAt = _value.modifiedAt
-      ? new googleProtobuf004.Timestamp(_value.modifiedAt)
+      ? new googleProtobuf005.Timestamp(_value.modifiedAt)
       : undefined;
     this.createdBy = _value.createdBy;
     this.modifiedBy = _value.modifiedBy;
@@ -16076,16 +30138,16 @@ export class DocumentFileResource implements GrpcMessage {
   set bytes(value: Uint8Array) {
     this._bytes = value;
   }
-  get createdAt(): googleProtobuf004.Timestamp | undefined {
+  get createdAt(): googleProtobuf005.Timestamp | undefined {
     return this._createdAt;
   }
-  set createdAt(value: googleProtobuf004.Timestamp | undefined) {
+  set createdAt(value: googleProtobuf005.Timestamp | undefined) {
     this._createdAt = value;
   }
-  get modifiedAt(): googleProtobuf004.Timestamp | undefined {
+  get modifiedAt(): googleProtobuf005.Timestamp | undefined {
     return this._modifiedAt;
   }
-  set modifiedAt(value: googleProtobuf004.Timestamp | undefined) {
+  set modifiedAt(value: googleProtobuf005.Timestamp | undefined) {
     this._modifiedAt = value;
   }
   get createdBy(): string {
@@ -16163,8 +30225,8 @@ export module DocumentFileResource {
     name: string;
     displayName: string;
     bytes: Uint8Array;
-    createdAt?: googleProtobuf004.Timestamp.AsObject;
-    modifiedAt?: googleProtobuf004.Timestamp.AsObject;
+    createdAt?: googleProtobuf005.Timestamp.AsObject;
+    modifiedAt?: googleProtobuf005.Timestamp.AsObject;
     createdBy: string;
     modifiedBy: string;
   }
@@ -16176,8 +30238,8 @@ export module DocumentFileResource {
     name: string;
     displayName: string;
     bytes: string;
-    createdAt: googleProtobuf004.Timestamp.AsProtobufJSON | null;
-    modifiedAt: googleProtobuf004.Timestamp.AsProtobufJSON | null;
+    createdAt: googleProtobuf005.Timestamp.AsProtobufJSON | null;
+    modifiedAt: googleProtobuf005.Timestamp.AsProtobufJSON | null;
     createdBy: string;
     modifiedBy: string;
   }
@@ -16239,17 +30301,17 @@ export class ImageFileResource implements GrpcMessage {
           _instance.bytes = _reader.readBytes();
           break;
         case 4:
-          _instance.createdAt = new googleProtobuf004.Timestamp();
+          _instance.createdAt = new googleProtobuf005.Timestamp();
           _reader.readMessage(
             _instance.createdAt,
-            googleProtobuf004.Timestamp.deserializeBinaryFromReader
+            googleProtobuf005.Timestamp.deserializeBinaryFromReader
           );
           break;
         case 5:
-          _instance.modifiedAt = new googleProtobuf004.Timestamp();
+          _instance.modifiedAt = new googleProtobuf005.Timestamp();
           _reader.readMessage(
             _instance.modifiedAt,
-            googleProtobuf004.Timestamp.deserializeBinaryFromReader
+            googleProtobuf005.Timestamp.deserializeBinaryFromReader
           );
           break;
         case 6:
@@ -16288,14 +30350,14 @@ export class ImageFileResource implements GrpcMessage {
       _writer.writeMessage(
         4,
         _instance.createdAt as any,
-        googleProtobuf004.Timestamp.serializeBinaryToWriter
+        googleProtobuf005.Timestamp.serializeBinaryToWriter
       );
     }
     if (_instance.modifiedAt) {
       _writer.writeMessage(
         5,
         _instance.modifiedAt as any,
-        googleProtobuf004.Timestamp.serializeBinaryToWriter
+        googleProtobuf005.Timestamp.serializeBinaryToWriter
       );
     }
     if (_instance.createdBy) {
@@ -16309,8 +30371,8 @@ export class ImageFileResource implements GrpcMessage {
   private _name: string;
   private _displayName: string;
   private _bytes: Uint8Array;
-  private _createdAt?: googleProtobuf004.Timestamp;
-  private _modifiedAt?: googleProtobuf004.Timestamp;
+  private _createdAt?: googleProtobuf005.Timestamp;
+  private _modifiedAt?: googleProtobuf005.Timestamp;
   private _createdBy: string;
   private _modifiedBy: string;
 
@@ -16324,10 +30386,10 @@ export class ImageFileResource implements GrpcMessage {
     this.displayName = _value.displayName;
     this.bytes = _value.bytes;
     this.createdAt = _value.createdAt
-      ? new googleProtobuf004.Timestamp(_value.createdAt)
+      ? new googleProtobuf005.Timestamp(_value.createdAt)
       : undefined;
     this.modifiedAt = _value.modifiedAt
-      ? new googleProtobuf004.Timestamp(_value.modifiedAt)
+      ? new googleProtobuf005.Timestamp(_value.modifiedAt)
       : undefined;
     this.createdBy = _value.createdBy;
     this.modifiedBy = _value.modifiedBy;
@@ -16351,16 +30413,16 @@ export class ImageFileResource implements GrpcMessage {
   set bytes(value: Uint8Array) {
     this._bytes = value;
   }
-  get createdAt(): googleProtobuf004.Timestamp | undefined {
+  get createdAt(): googleProtobuf005.Timestamp | undefined {
     return this._createdAt;
   }
-  set createdAt(value: googleProtobuf004.Timestamp | undefined) {
+  set createdAt(value: googleProtobuf005.Timestamp | undefined) {
     this._createdAt = value;
   }
-  get modifiedAt(): googleProtobuf004.Timestamp | undefined {
+  get modifiedAt(): googleProtobuf005.Timestamp | undefined {
     return this._modifiedAt;
   }
-  set modifiedAt(value: googleProtobuf004.Timestamp | undefined) {
+  set modifiedAt(value: googleProtobuf005.Timestamp | undefined) {
     this._modifiedAt = value;
   }
   get createdBy(): string {
@@ -16438,8 +30500,8 @@ export module ImageFileResource {
     name: string;
     displayName: string;
     bytes: Uint8Array;
-    createdAt?: googleProtobuf004.Timestamp.AsObject;
-    modifiedAt?: googleProtobuf004.Timestamp.AsObject;
+    createdAt?: googleProtobuf005.Timestamp.AsObject;
+    modifiedAt?: googleProtobuf005.Timestamp.AsObject;
     createdBy: string;
     modifiedBy: string;
   }
@@ -16451,8 +30513,8 @@ export module ImageFileResource {
     name: string;
     displayName: string;
     bytes: string;
-    createdAt: googleProtobuf004.Timestamp.AsProtobufJSON | null;
-    modifiedAt: googleProtobuf004.Timestamp.AsProtobufJSON | null;
+    createdAt: googleProtobuf005.Timestamp.AsProtobufJSON | null;
+    modifiedAt: googleProtobuf005.Timestamp.AsProtobufJSON | null;
     createdBy: string;
     modifiedBy: string;
   }
@@ -16538,17 +30600,17 @@ export class AudioFileResource implements GrpcMessage {
           );
           break;
         case 8:
-          _instance.createdAt = new googleProtobuf004.Timestamp();
+          _instance.createdAt = new googleProtobuf005.Timestamp();
           _reader.readMessage(
             _instance.createdAt,
-            googleProtobuf004.Timestamp.deserializeBinaryFromReader
+            googleProtobuf005.Timestamp.deserializeBinaryFromReader
           );
           break;
         case 9:
-          _instance.modifiedAt = new googleProtobuf004.Timestamp();
+          _instance.modifiedAt = new googleProtobuf005.Timestamp();
           _reader.readMessage(
             _instance.modifiedAt,
-            googleProtobuf004.Timestamp.deserializeBinaryFromReader
+            googleProtobuf005.Timestamp.deserializeBinaryFromReader
           );
           break;
         case 10:
@@ -16606,14 +30668,14 @@ export class AudioFileResource implements GrpcMessage {
       _writer.writeMessage(
         8,
         _instance.createdAt as any,
-        googleProtobuf004.Timestamp.serializeBinaryToWriter
+        googleProtobuf005.Timestamp.serializeBinaryToWriter
       );
     }
     if (_instance.modifiedAt) {
       _writer.writeMessage(
         9,
         _instance.modifiedAt as any,
-        googleProtobuf004.Timestamp.serializeBinaryToWriter
+        googleProtobuf005.Timestamp.serializeBinaryToWriter
       );
     }
     if (_instance.createdBy) {
@@ -16634,8 +30696,8 @@ export class AudioFileResource implements GrpcMessage {
   private _sampleRate: number;
   private _audioFileResourceType: AudioFileResourceType;
   private _transcriptions?: S2tTranscription[];
-  private _createdAt?: googleProtobuf004.Timestamp;
-  private _modifiedAt?: googleProtobuf004.Timestamp;
+  private _createdAt?: googleProtobuf005.Timestamp;
+  private _modifiedAt?: googleProtobuf005.Timestamp;
   private _createdBy: string;
   private _modifiedBy: string;
   private _displayName: string;
@@ -16656,10 +30718,10 @@ export class AudioFileResource implements GrpcMessage {
       m => new S2tTranscription(m)
     );
     this.createdAt = _value.createdAt
-      ? new googleProtobuf004.Timestamp(_value.createdAt)
+      ? new googleProtobuf005.Timestamp(_value.createdAt)
       : undefined;
     this.modifiedAt = _value.modifiedAt
-      ? new googleProtobuf004.Timestamp(_value.modifiedAt)
+      ? new googleProtobuf005.Timestamp(_value.modifiedAt)
       : undefined;
     this.createdBy = _value.createdBy;
     this.modifiedBy = _value.modifiedBy;
@@ -16708,16 +30770,16 @@ export class AudioFileResource implements GrpcMessage {
   set transcriptions(value: S2tTranscription[] | undefined) {
     this._transcriptions = value;
   }
-  get createdAt(): googleProtobuf004.Timestamp | undefined {
+  get createdAt(): googleProtobuf005.Timestamp | undefined {
     return this._createdAt;
   }
-  set createdAt(value: googleProtobuf004.Timestamp | undefined) {
+  set createdAt(value: googleProtobuf005.Timestamp | undefined) {
     this._createdAt = value;
   }
-  get modifiedAt(): googleProtobuf004.Timestamp | undefined {
+  get modifiedAt(): googleProtobuf005.Timestamp | undefined {
     return this._modifiedAt;
   }
-  set modifiedAt(value: googleProtobuf004.Timestamp | undefined) {
+  set modifiedAt(value: googleProtobuf005.Timestamp | undefined) {
     this._modifiedAt = value;
   }
   get createdBy(): string {
@@ -16823,8 +30885,8 @@ export module AudioFileResource {
     sampleRate: number;
     audioFileResourceType: AudioFileResourceType;
     transcriptions?: S2tTranscription.AsObject[];
-    createdAt?: googleProtobuf004.Timestamp.AsObject;
-    modifiedAt?: googleProtobuf004.Timestamp.AsObject;
+    createdAt?: googleProtobuf005.Timestamp.AsObject;
+    modifiedAt?: googleProtobuf005.Timestamp.AsObject;
     createdBy: string;
     modifiedBy: string;
     displayName: string;
@@ -16841,8 +30903,8 @@ export module AudioFileResource {
     sampleRate: number;
     audioFileResourceType: string;
     transcriptions: S2tTranscription.AsProtobufJSON[] | null;
-    createdAt: googleProtobuf004.Timestamp.AsProtobufJSON | null;
-    modifiedAt: googleProtobuf004.Timestamp.AsProtobufJSON | null;
+    createdAt: googleProtobuf005.Timestamp.AsProtobufJSON | null;
+    modifiedAt: googleProtobuf005.Timestamp.AsProtobufJSON | null;
     createdBy: string;
     modifiedBy: string;
     displayName: string;
@@ -16917,17 +30979,17 @@ export class VideoFileResource implements GrpcMessage {
           _instance.frameRate = _reader.readFloat();
           break;
         case 7:
-          _instance.createdAt = new googleProtobuf004.Timestamp();
+          _instance.createdAt = new googleProtobuf005.Timestamp();
           _reader.readMessage(
             _instance.createdAt,
-            googleProtobuf004.Timestamp.deserializeBinaryFromReader
+            googleProtobuf005.Timestamp.deserializeBinaryFromReader
           );
           break;
         case 8:
-          _instance.modifiedAt = new googleProtobuf004.Timestamp();
+          _instance.modifiedAt = new googleProtobuf005.Timestamp();
           _reader.readMessage(
             _instance.modifiedAt,
-            googleProtobuf004.Timestamp.deserializeBinaryFromReader
+            googleProtobuf005.Timestamp.deserializeBinaryFromReader
           );
           break;
         case 9:
@@ -16975,14 +31037,14 @@ export class VideoFileResource implements GrpcMessage {
       _writer.writeMessage(
         7,
         _instance.createdAt as any,
-        googleProtobuf004.Timestamp.serializeBinaryToWriter
+        googleProtobuf005.Timestamp.serializeBinaryToWriter
       );
     }
     if (_instance.modifiedAt) {
       _writer.writeMessage(
         8,
         _instance.modifiedAt as any,
-        googleProtobuf004.Timestamp.serializeBinaryToWriter
+        googleProtobuf005.Timestamp.serializeBinaryToWriter
       );
     }
     if (_instance.createdBy) {
@@ -16999,8 +31061,8 @@ export class VideoFileResource implements GrpcMessage {
   private _durationInS: number;
   private _resolution: string;
   private _frameRate: number;
-  private _createdAt?: googleProtobuf004.Timestamp;
-  private _modifiedAt?: googleProtobuf004.Timestamp;
+  private _createdAt?: googleProtobuf005.Timestamp;
+  private _modifiedAt?: googleProtobuf005.Timestamp;
   private _createdBy: string;
   private _modifiedBy: string;
 
@@ -17017,10 +31079,10 @@ export class VideoFileResource implements GrpcMessage {
     this.resolution = _value.resolution;
     this.frameRate = _value.frameRate;
     this.createdAt = _value.createdAt
-      ? new googleProtobuf004.Timestamp(_value.createdAt)
+      ? new googleProtobuf005.Timestamp(_value.createdAt)
       : undefined;
     this.modifiedAt = _value.modifiedAt
-      ? new googleProtobuf004.Timestamp(_value.modifiedAt)
+      ? new googleProtobuf005.Timestamp(_value.modifiedAt)
       : undefined;
     this.createdBy = _value.createdBy;
     this.modifiedBy = _value.modifiedBy;
@@ -17062,16 +31124,16 @@ export class VideoFileResource implements GrpcMessage {
   set frameRate(value: number) {
     this._frameRate = value;
   }
-  get createdAt(): googleProtobuf004.Timestamp | undefined {
+  get createdAt(): googleProtobuf005.Timestamp | undefined {
     return this._createdAt;
   }
-  set createdAt(value: googleProtobuf004.Timestamp | undefined) {
+  set createdAt(value: googleProtobuf005.Timestamp | undefined) {
     this._createdAt = value;
   }
-  get modifiedAt(): googleProtobuf004.Timestamp | undefined {
+  get modifiedAt(): googleProtobuf005.Timestamp | undefined {
     return this._modifiedAt;
   }
-  set modifiedAt(value: googleProtobuf004.Timestamp | undefined) {
+  set modifiedAt(value: googleProtobuf005.Timestamp | undefined) {
     this._modifiedAt = value;
   }
   get createdBy(): string {
@@ -17158,8 +31220,8 @@ export module VideoFileResource {
     durationInS: number;
     resolution: string;
     frameRate: number;
-    createdAt?: googleProtobuf004.Timestamp.AsObject;
-    modifiedAt?: googleProtobuf004.Timestamp.AsObject;
+    createdAt?: googleProtobuf005.Timestamp.AsObject;
+    modifiedAt?: googleProtobuf005.Timestamp.AsObject;
     createdBy: string;
     modifiedBy: string;
   }
@@ -17174,8 +31236,8 @@ export module VideoFileResource {
     durationInS: number;
     resolution: string;
     frameRate: number;
-    createdAt: googleProtobuf004.Timestamp.AsProtobufJSON | null;
-    modifiedAt: googleProtobuf004.Timestamp.AsProtobufJSON | null;
+    createdAt: googleProtobuf005.Timestamp.AsProtobufJSON | null;
+    modifiedAt: googleProtobuf005.Timestamp.AsProtobufJSON | null;
     createdBy: string;
     modifiedBy: string;
   }
@@ -17210,6 +31272,7 @@ export class GetAudioFilesRequest implements GrpcMessage {
     _instance.resourceView = _instance.resourceView || 0;
     _instance.pageToken = _instance.pageToken || '';
     _instance.sortingMode = _instance.sortingMode || 0;
+    _instance.fieldMask = _instance.fieldMask || undefined;
   }
 
   /**
@@ -17239,6 +31302,13 @@ export class GetAudioFilesRequest implements GrpcMessage {
           break;
         case 5:
           _instance.sortingMode = _reader.readEnum();
+          break;
+        case 6:
+          _instance.fieldMask = new googleProtobuf003.FieldMask();
+          _reader.readMessage(
+            _instance.fieldMask,
+            googleProtobuf003.FieldMask.deserializeBinaryFromReader
+          );
           break;
         default:
           _reader.skipField();
@@ -17272,13 +31342,21 @@ export class GetAudioFilesRequest implements GrpcMessage {
     if (_instance.sortingMode) {
       _writer.writeEnum(5, _instance.sortingMode);
     }
+    if (_instance.fieldMask) {
+      _writer.writeMessage(
+        6,
+        _instance.fieldMask as any,
+        googleProtobuf003.FieldMask.serializeBinaryToWriter
+      );
+    }
   }
 
   private _parent: string;
   private _names: string[];
   private _resourceView: ResourceView;
   private _pageToken: string;
-  private _sortingMode: ondewoNlu008.SortingMode;
+  private _sortingMode: ondewoNlu006.SortingMode;
+  private _fieldMask?: googleProtobuf003.FieldMask;
 
   /**
    * Message constructor. Initializes the properties and applies default Protobuf values if necessary
@@ -17291,6 +31369,9 @@ export class GetAudioFilesRequest implements GrpcMessage {
     this.resourceView = _value.resourceView;
     this.pageToken = _value.pageToken;
     this.sortingMode = _value.sortingMode;
+    this.fieldMask = _value.fieldMask
+      ? new googleProtobuf003.FieldMask(_value.fieldMask)
+      : undefined;
     GetAudioFilesRequest.refineValues(this);
   }
   get parent(): string {
@@ -17317,11 +31398,17 @@ export class GetAudioFilesRequest implements GrpcMessage {
   set pageToken(value: string) {
     this._pageToken = value;
   }
-  get sortingMode(): ondewoNlu008.SortingMode {
+  get sortingMode(): ondewoNlu006.SortingMode {
     return this._sortingMode;
   }
-  set sortingMode(value: ondewoNlu008.SortingMode) {
+  set sortingMode(value: ondewoNlu006.SortingMode) {
     this._sortingMode = value;
+  }
+  get fieldMask(): googleProtobuf003.FieldMask | undefined {
+    return this._fieldMask;
+  }
+  set fieldMask(value: googleProtobuf003.FieldMask | undefined) {
+    this._fieldMask = value;
   }
 
   /**
@@ -17343,7 +31430,8 @@ export class GetAudioFilesRequest implements GrpcMessage {
       names: (this.names || []).slice(),
       resourceView: this.resourceView,
       pageToken: this.pageToken,
-      sortingMode: this.sortingMode
+      sortingMode: this.sortingMode,
+      fieldMask: this.fieldMask ? this.fieldMask.toObject() : undefined
     };
   }
 
@@ -17374,11 +31462,12 @@ export class GetAudioFilesRequest implements GrpcMessage {
         ],
       pageToken: this.pageToken,
       sortingMode:
-        ondewoNlu008.SortingMode[
+        ondewoNlu006.SortingMode[
           this.sortingMode === null || this.sortingMode === undefined
             ? 0
             : this.sortingMode
-        ]
+        ],
+      fieldMask: this.fieldMask ? this.fieldMask.toProtobufJSON(options) : null
     };
   }
 }
@@ -17391,7 +31480,8 @@ export module GetAudioFilesRequest {
     names: string[];
     resourceView: ResourceView;
     pageToken: string;
-    sortingMode: ondewoNlu008.SortingMode;
+    sortingMode: ondewoNlu006.SortingMode;
+    fieldMask?: googleProtobuf003.FieldMask.AsObject;
   }
 
   /**
@@ -17403,6 +31493,7 @@ export module GetAudioFilesRequest {
     resourceView: string;
     pageToken: string;
     sortingMode: string;
+    fieldMask: googleProtobuf003.FieldMask.AsProtobufJSON | null;
   }
 }
 
@@ -18327,6 +32418,7 @@ export class ListAudioFilesRequest implements GrpcMessage {
     _instance.resourceView = _instance.resourceView || 0;
     _instance.pageToken = _instance.pageToken || '';
     _instance.sortingMode = _instance.sortingMode || 0;
+    _instance.fieldMask = _instance.fieldMask || undefined;
   }
 
   /**
@@ -18356,6 +32448,13 @@ export class ListAudioFilesRequest implements GrpcMessage {
           break;
         case 5:
           _instance.sortingMode = _reader.readEnum();
+          break;
+        case 6:
+          _instance.fieldMask = new googleProtobuf003.FieldMask();
+          _reader.readMessage(
+            _instance.fieldMask,
+            googleProtobuf003.FieldMask.deserializeBinaryFromReader
+          );
           break;
         default:
           _reader.skipField();
@@ -18389,13 +32488,21 @@ export class ListAudioFilesRequest implements GrpcMessage {
     if (_instance.sortingMode) {
       _writer.writeEnum(5, _instance.sortingMode);
     }
+    if (_instance.fieldMask) {
+      _writer.writeMessage(
+        6,
+        _instance.fieldMask as any,
+        googleProtobuf003.FieldMask.serializeBinaryToWriter
+      );
+    }
   }
 
   private _parent: string;
   private _sessionId: string;
   private _resourceView: ResourceView;
   private _pageToken: string;
-  private _sortingMode: ondewoNlu008.SortingMode;
+  private _sortingMode: ondewoNlu006.SortingMode;
+  private _fieldMask?: googleProtobuf003.FieldMask;
 
   /**
    * Message constructor. Initializes the properties and applies default Protobuf values if necessary
@@ -18408,6 +32515,9 @@ export class ListAudioFilesRequest implements GrpcMessage {
     this.resourceView = _value.resourceView;
     this.pageToken = _value.pageToken;
     this.sortingMode = _value.sortingMode;
+    this.fieldMask = _value.fieldMask
+      ? new googleProtobuf003.FieldMask(_value.fieldMask)
+      : undefined;
     ListAudioFilesRequest.refineValues(this);
   }
   get parent(): string {
@@ -18434,11 +32544,17 @@ export class ListAudioFilesRequest implements GrpcMessage {
   set pageToken(value: string) {
     this._pageToken = value;
   }
-  get sortingMode(): ondewoNlu008.SortingMode {
+  get sortingMode(): ondewoNlu006.SortingMode {
     return this._sortingMode;
   }
-  set sortingMode(value: ondewoNlu008.SortingMode) {
+  set sortingMode(value: ondewoNlu006.SortingMode) {
     this._sortingMode = value;
+  }
+  get fieldMask(): googleProtobuf003.FieldMask | undefined {
+    return this._fieldMask;
+  }
+  set fieldMask(value: googleProtobuf003.FieldMask | undefined) {
+    this._fieldMask = value;
   }
 
   /**
@@ -18460,7 +32576,8 @@ export class ListAudioFilesRequest implements GrpcMessage {
       sessionId: this.sessionId,
       resourceView: this.resourceView,
       pageToken: this.pageToken,
-      sortingMode: this.sortingMode
+      sortingMode: this.sortingMode,
+      fieldMask: this.fieldMask ? this.fieldMask.toObject() : undefined
     };
   }
 
@@ -18491,11 +32608,12 @@ export class ListAudioFilesRequest implements GrpcMessage {
         ],
       pageToken: this.pageToken,
       sortingMode:
-        ondewoNlu008.SortingMode[
+        ondewoNlu006.SortingMode[
           this.sortingMode === null || this.sortingMode === undefined
             ? 0
             : this.sortingMode
-        ]
+        ],
+      fieldMask: this.fieldMask ? this.fieldMask.toProtobufJSON(options) : null
     };
   }
 }
@@ -18508,7 +32626,8 @@ export module ListAudioFilesRequest {
     sessionId: string;
     resourceView: ResourceView;
     pageToken: string;
-    sortingMode: ondewoNlu008.SortingMode;
+    sortingMode: ondewoNlu006.SortingMode;
+    fieldMask?: googleProtobuf003.FieldMask.AsObject;
   }
 
   /**
@@ -18520,6 +32639,7 @@ export module ListAudioFilesRequest {
     resourceView: string;
     pageToken: string;
     sortingMode: string;
+    fieldMask: googleProtobuf003.FieldMask.AsProtobufJSON | null;
   }
 }
 
@@ -18740,6 +32860,7 @@ export class GetAudioFileOfSessionRequest implements GrpcMessage {
     _instance.parent = _instance.parent || '';
     _instance.sessionId = _instance.sessionId || '';
     _instance.resourceView = _instance.resourceView || 0;
+    _instance.fieldMask = _instance.fieldMask || undefined;
   }
 
   /**
@@ -18763,6 +32884,13 @@ export class GetAudioFileOfSessionRequest implements GrpcMessage {
           break;
         case 3:
           _instance.resourceView = _reader.readEnum();
+          break;
+        case 4:
+          _instance.fieldMask = new googleProtobuf003.FieldMask();
+          _reader.readMessage(
+            _instance.fieldMask,
+            googleProtobuf003.FieldMask.deserializeBinaryFromReader
+          );
           break;
         default:
           _reader.skipField();
@@ -18790,11 +32918,19 @@ export class GetAudioFileOfSessionRequest implements GrpcMessage {
     if (_instance.resourceView) {
       _writer.writeEnum(3, _instance.resourceView);
     }
+    if (_instance.fieldMask) {
+      _writer.writeMessage(
+        4,
+        _instance.fieldMask as any,
+        googleProtobuf003.FieldMask.serializeBinaryToWriter
+      );
+    }
   }
 
   private _parent: string;
   private _sessionId: string;
   private _resourceView: ResourceView;
+  private _fieldMask?: googleProtobuf003.FieldMask;
 
   /**
    * Message constructor. Initializes the properties and applies default Protobuf values if necessary
@@ -18807,6 +32943,9 @@ export class GetAudioFileOfSessionRequest implements GrpcMessage {
     this.parent = _value.parent;
     this.sessionId = _value.sessionId;
     this.resourceView = _value.resourceView;
+    this.fieldMask = _value.fieldMask
+      ? new googleProtobuf003.FieldMask(_value.fieldMask)
+      : undefined;
     GetAudioFileOfSessionRequest.refineValues(this);
   }
   get parent(): string {
@@ -18827,6 +32966,12 @@ export class GetAudioFileOfSessionRequest implements GrpcMessage {
   set resourceView(value: ResourceView) {
     this._resourceView = value;
   }
+  get fieldMask(): googleProtobuf003.FieldMask | undefined {
+    return this._fieldMask;
+  }
+  set fieldMask(value: googleProtobuf003.FieldMask | undefined) {
+    this._fieldMask = value;
+  }
 
   /**
    * Serialize message to binary data
@@ -18845,7 +32990,8 @@ export class GetAudioFileOfSessionRequest implements GrpcMessage {
     return {
       parent: this.parent,
       sessionId: this.sessionId,
-      resourceView: this.resourceView
+      resourceView: this.resourceView,
+      fieldMask: this.fieldMask ? this.fieldMask.toObject() : undefined
     };
   }
 
@@ -18873,7 +33019,8 @@ export class GetAudioFileOfSessionRequest implements GrpcMessage {
           this.resourceView === null || this.resourceView === undefined
             ? 0
             : this.resourceView
-        ]
+        ],
+      fieldMask: this.fieldMask ? this.fieldMask.toProtobufJSON(options) : null
     };
   }
 }
@@ -18885,6 +33032,7 @@ export module GetAudioFileOfSessionRequest {
     parent: string;
     sessionId: string;
     resourceView: ResourceView;
+    fieldMask?: googleProtobuf003.FieldMask.AsObject;
   }
 
   /**
@@ -18894,5 +33042,6 @@ export module GetAudioFileOfSessionRequest {
     parent: string;
     sessionId: string;
     resourceView: string;
+    fieldMask: googleProtobuf003.FieldMask.AsProtobufJSON | null;
   }
 }

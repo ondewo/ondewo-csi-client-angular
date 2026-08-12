@@ -19,17 +19,25 @@ import * as googleProtobuf004 from '@ngx-grpc/well-known-types';
 import * as googleProtobuf005 from '@ngx-grpc/well-known-types';
 import * as googleRpc006 from '../../google/rpc/status.pb';
 import * as googleType007 from '../../google/type/latlng.pb';
-import * as ondewoNlu008 from '../../ondewo/nlu/common.pb';
-import * as ondewoNlu009 from '../../ondewo/nlu/context.pb';
-import * as ondewoNlu010 from '../../ondewo/nlu/intent.pb';
+import * as ondewoNlu008 from '../../ondewo/nlu/ccai-project.pb';
+import * as ondewoNlu009 from '../../ondewo/nlu/common.pb';
+import * as ondewoNlu010 from '../../ondewo/nlu/context.pb';
 import * as ondewoNlu011 from '../../ondewo/nlu/entity-type.pb';
-import * as ondewoNlu012 from '../../ondewo/nlu/session.pb';
-import * as ondewoT2s013 from '../../ondewo/t2s/text-to-speech.pb';
-import * as ondewoS2t014 from '../../ondewo/s2t/speech-to-text.pb';
+import * as ondewoNlu012 from '../../ondewo/nlu/intent.pb';
+import * as ondewoNlu013 from '../../ondewo/nlu/llm-evaluation.pb';
+import * as ondewoNlu014 from '../../ondewo/nlu/session.pb';
+import * as ondewoT2s015 from '../../ondewo/t2s/text-to-speech.pb';
+import * as ondewoS2t016 from '../../ondewo/s2t/speech-to-text.pb';
 export enum ControlStatus {
   OK = 0,
   EMERGENCY_STOP = 1,
-  VAD_START_OF_SPEECH = 2
+  VAD_START_OF_SPEECH = 2,
+  BARGE_IN = 3,
+  RESUME_PLAYBACK = 4,
+  DISCARD_REMAINDER = 5,
+  PLAYBACK_RESUMED = 6,
+  PLAYBACK_DONE = 7,
+  CALL_ENDED = 8
 }
 export enum ControlMessageServiceName {
   UNKNOWNNAME = 0,
@@ -922,7 +930,12 @@ export class S2sStreamResponse implements GrpcMessage {
    * Check all the properties and set default protobuf values if necessary
    * @param _instance message instance
    */
-  static refineValues(_instance: S2sStreamResponse) {}
+  static refineValues(_instance: S2sStreamResponse) {
+    _instance.utteranceId = _instance.utteranceId || '';
+    _instance.chunkIndex = _instance.chunkIndex || 0;
+    _instance.lastChunk = _instance.lastChunk || false;
+    _instance.turnEpoch = _instance.turnEpoch || '0';
+  }
 
   /**
    * Deserializes / reads binary message into message instance using provided binary reader
@@ -938,17 +951,17 @@ export class S2sStreamResponse implements GrpcMessage {
 
       switch (_reader.getFieldNumber()) {
         case 1:
-          _instance.detectIntentResponse = new ondewoNlu012.DetectIntentResponse();
+          _instance.detectIntentResponse = new ondewoNlu014.DetectIntentResponse();
           _reader.readMessage(
             _instance.detectIntentResponse,
-            ondewoNlu012.DetectIntentResponse.deserializeBinaryFromReader
+            ondewoNlu014.DetectIntentResponse.deserializeBinaryFromReader
           );
           break;
         case 2:
-          _instance.synthesizeResponse = new ondewoT2s013.SynthesizeResponse();
+          _instance.synthesizeResponse = new ondewoT2s015.SynthesizeResponse();
           _reader.readMessage(
             _instance.synthesizeResponse,
-            ondewoT2s013.SynthesizeResponse.deserializeBinaryFromReader
+            ondewoT2s015.SynthesizeResponse.deserializeBinaryFromReader
           );
           break;
         case 3:
@@ -957,6 +970,18 @@ export class S2sStreamResponse implements GrpcMessage {
             _instance.sipTrigger,
             SipTrigger.deserializeBinaryFromReader
           );
+          break;
+        case 4:
+          _instance.utteranceId = _reader.readString();
+          break;
+        case 5:
+          _instance.chunkIndex = _reader.readInt32();
+          break;
+        case 6:
+          _instance.lastChunk = _reader.readBool();
+          break;
+        case 7:
+          _instance.turnEpoch = _reader.readUint64String();
           break;
         default:
           _reader.skipField();
@@ -979,14 +1004,14 @@ export class S2sStreamResponse implements GrpcMessage {
       _writer.writeMessage(
         1,
         _instance.detectIntentResponse as any,
-        ondewoNlu012.DetectIntentResponse.serializeBinaryToWriter
+        ondewoNlu014.DetectIntentResponse.serializeBinaryToWriter
       );
     }
     if (_instance.synthesizeResponse) {
       _writer.writeMessage(
         2,
         _instance.synthesizeResponse as any,
-        ondewoT2s013.SynthesizeResponse.serializeBinaryToWriter
+        ondewoT2s015.SynthesizeResponse.serializeBinaryToWriter
       );
     }
     if (_instance.sipTrigger) {
@@ -996,11 +1021,27 @@ export class S2sStreamResponse implements GrpcMessage {
         SipTrigger.serializeBinaryToWriter
       );
     }
+    if (_instance.utteranceId) {
+      _writer.writeString(4, _instance.utteranceId);
+    }
+    if (_instance.chunkIndex) {
+      _writer.writeInt32(5, _instance.chunkIndex);
+    }
+    if (_instance.lastChunk) {
+      _writer.writeBool(6, _instance.lastChunk);
+    }
+    if (_instance.turnEpoch) {
+      _writer.writeUint64String(7, _instance.turnEpoch);
+    }
   }
 
-  private _detectIntentResponse?: ondewoNlu012.DetectIntentResponse;
-  private _synthesizeResponse?: ondewoT2s013.SynthesizeResponse;
+  private _detectIntentResponse?: ondewoNlu014.DetectIntentResponse;
+  private _synthesizeResponse?: ondewoT2s015.SynthesizeResponse;
   private _sipTrigger?: SipTrigger;
+  private _utteranceId: string;
+  private _chunkIndex: number;
+  private _lastChunk: boolean;
+  private _turnEpoch: string;
 
   private _response: S2sStreamResponse.ResponseCase =
     S2sStreamResponse.ResponseCase.none;
@@ -1012,21 +1053,25 @@ export class S2sStreamResponse implements GrpcMessage {
   constructor(_value?: RecursivePartial<S2sStreamResponse.AsObject>) {
     _value = _value || {};
     this.detectIntentResponse = _value.detectIntentResponse
-      ? new ondewoNlu012.DetectIntentResponse(_value.detectIntentResponse)
+      ? new ondewoNlu014.DetectIntentResponse(_value.detectIntentResponse)
       : undefined;
     this.synthesizeResponse = _value.synthesizeResponse
-      ? new ondewoT2s013.SynthesizeResponse(_value.synthesizeResponse)
+      ? new ondewoT2s015.SynthesizeResponse(_value.synthesizeResponse)
       : undefined;
     this.sipTrigger = _value.sipTrigger
       ? new SipTrigger(_value.sipTrigger)
       : undefined;
+    this.utteranceId = _value.utteranceId;
+    this.chunkIndex = _value.chunkIndex;
+    this.lastChunk = _value.lastChunk;
+    this.turnEpoch = _value.turnEpoch;
     S2sStreamResponse.refineValues(this);
   }
-  get detectIntentResponse(): ondewoNlu012.DetectIntentResponse | undefined {
+  get detectIntentResponse(): ondewoNlu014.DetectIntentResponse | undefined {
     return this._detectIntentResponse;
   }
   set detectIntentResponse(
-    value: ondewoNlu012.DetectIntentResponse | undefined
+    value: ondewoNlu014.DetectIntentResponse | undefined
   ) {
     if (value !== undefined && value !== null) {
       this._synthesizeResponse = this._sipTrigger = undefined;
@@ -1034,10 +1079,10 @@ export class S2sStreamResponse implements GrpcMessage {
     }
     this._detectIntentResponse = value;
   }
-  get synthesizeResponse(): ondewoT2s013.SynthesizeResponse | undefined {
+  get synthesizeResponse(): ondewoT2s015.SynthesizeResponse | undefined {
     return this._synthesizeResponse;
   }
-  set synthesizeResponse(value: ondewoT2s013.SynthesizeResponse | undefined) {
+  set synthesizeResponse(value: ondewoT2s015.SynthesizeResponse | undefined) {
     if (value !== undefined && value !== null) {
       this._detectIntentResponse = this._sipTrigger = undefined;
       this._response = S2sStreamResponse.ResponseCase.synthesizeResponse;
@@ -1053,6 +1098,30 @@ export class S2sStreamResponse implements GrpcMessage {
       this._response = S2sStreamResponse.ResponseCase.sipTrigger;
     }
     this._sipTrigger = value;
+  }
+  get utteranceId(): string {
+    return this._utteranceId;
+  }
+  set utteranceId(value: string) {
+    this._utteranceId = value;
+  }
+  get chunkIndex(): number {
+    return this._chunkIndex;
+  }
+  set chunkIndex(value: number) {
+    this._chunkIndex = value;
+  }
+  get lastChunk(): boolean {
+    return this._lastChunk;
+  }
+  set lastChunk(value: boolean) {
+    this._lastChunk = value;
+  }
+  get turnEpoch(): string {
+    return this._turnEpoch;
+  }
+  set turnEpoch(value: string) {
+    this._turnEpoch = value;
   }
   get response() {
     return this._response;
@@ -1079,7 +1148,11 @@ export class S2sStreamResponse implements GrpcMessage {
       synthesizeResponse: this.synthesizeResponse
         ? this.synthesizeResponse.toObject()
         : undefined,
-      sipTrigger: this.sipTrigger ? this.sipTrigger.toObject() : undefined
+      sipTrigger: this.sipTrigger ? this.sipTrigger.toObject() : undefined,
+      utteranceId: this.utteranceId,
+      chunkIndex: this.chunkIndex,
+      lastChunk: this.lastChunk,
+      turnEpoch: this.turnEpoch
     };
   }
 
@@ -1108,7 +1181,11 @@ export class S2sStreamResponse implements GrpcMessage {
         : null,
       sipTrigger: this.sipTrigger
         ? this.sipTrigger.toProtobufJSON(options)
-        : null
+        : null,
+      utteranceId: this.utteranceId,
+      chunkIndex: this.chunkIndex,
+      lastChunk: this.lastChunk,
+      turnEpoch: this.turnEpoch
     };
   }
 }
@@ -1117,18 +1194,26 @@ export module S2sStreamResponse {
    * Standard JavaScript object representation for S2sStreamResponse
    */
   export interface AsObject {
-    detectIntentResponse?: ondewoNlu012.DetectIntentResponse.AsObject;
-    synthesizeResponse?: ondewoT2s013.SynthesizeResponse.AsObject;
+    detectIntentResponse?: ondewoNlu014.DetectIntentResponse.AsObject;
+    synthesizeResponse?: ondewoT2s015.SynthesizeResponse.AsObject;
     sipTrigger?: SipTrigger.AsObject;
+    utteranceId: string;
+    chunkIndex: number;
+    lastChunk: boolean;
+    turnEpoch: string;
   }
 
   /**
    * Protobuf JSON representation for S2sStreamResponse
    */
   export interface AsProtobufJSON {
-    detectIntentResponse: ondewoNlu012.DetectIntentResponse.AsProtobufJSON | null;
-    synthesizeResponse: ondewoT2s013.SynthesizeResponse.AsProtobufJSON | null;
+    detectIntentResponse: ondewoNlu014.DetectIntentResponse.AsProtobufJSON | null;
+    synthesizeResponse: ondewoT2s015.SynthesizeResponse.AsProtobufJSON | null;
     sipTrigger: SipTrigger.AsProtobufJSON | null;
+    utteranceId: string;
+    chunkIndex: number;
+    lastChunk: boolean;
+    turnEpoch: string;
   }
   export enum ResponseCase {
     none = 0,
@@ -1658,6 +1743,7 @@ export class ControlStreamResponse implements GrpcMessage {
    */
   static refineValues(_instance: ControlStreamResponse) {
     _instance.controlStatus = _instance.controlStatus || 0;
+    _instance.epoch = _instance.epoch || '0';
   }
 
   /**
@@ -1675,6 +1761,9 @@ export class ControlStreamResponse implements GrpcMessage {
       switch (_reader.getFieldNumber()) {
         case 1:
           _instance.controlStatus = _reader.readEnum();
+          break;
+        case 2:
+          _instance.epoch = _reader.readUint64String();
           break;
         default:
           _reader.skipField();
@@ -1696,9 +1785,13 @@ export class ControlStreamResponse implements GrpcMessage {
     if (_instance.controlStatus) {
       _writer.writeEnum(1, _instance.controlStatus);
     }
+    if (_instance.epoch) {
+      _writer.writeUint64String(2, _instance.epoch);
+    }
   }
 
   private _controlStatus: ControlStatus;
+  private _epoch: string;
 
   /**
    * Message constructor. Initializes the properties and applies default Protobuf values if necessary
@@ -1707,6 +1800,7 @@ export class ControlStreamResponse implements GrpcMessage {
   constructor(_value?: RecursivePartial<ControlStreamResponse.AsObject>) {
     _value = _value || {};
     this.controlStatus = _value.controlStatus;
+    this.epoch = _value.epoch;
     ControlStreamResponse.refineValues(this);
   }
   get controlStatus(): ControlStatus {
@@ -1714,6 +1808,12 @@ export class ControlStreamResponse implements GrpcMessage {
   }
   set controlStatus(value: ControlStatus) {
     this._controlStatus = value;
+  }
+  get epoch(): string {
+    return this._epoch;
+  }
+  set epoch(value: string) {
+    this._epoch = value;
   }
 
   /**
@@ -1731,7 +1831,8 @@ export class ControlStreamResponse implements GrpcMessage {
    */
   toObject(): ControlStreamResponse.AsObject {
     return {
-      controlStatus: this.controlStatus
+      controlStatus: this.controlStatus,
+      epoch: this.epoch
     };
   }
 
@@ -1757,7 +1858,8 @@ export class ControlStreamResponse implements GrpcMessage {
           this.controlStatus === null || this.controlStatus === undefined
             ? 0
             : this.controlStatus
-        ]
+        ],
+      epoch: this.epoch
     };
   }
 }
@@ -1767,6 +1869,7 @@ export module ControlStreamResponse {
    */
   export interface AsObject {
     controlStatus: ControlStatus;
+    epoch: string;
   }
 
   /**
@@ -1774,6 +1877,7 @@ export module ControlStreamResponse {
    */
   export interface AsProtobufJSON {
     controlStatus: string;
+    epoch: string;
   }
 }
 
@@ -2292,17 +2396,17 @@ export class ControlMessageServiceParameters implements GrpcMessage {
 
       switch (_reader.getFieldNumber()) {
         case 1:
-          _instance.t2sConfig = new ondewoT2s013.RequestConfig();
+          _instance.t2sConfig = new ondewoT2s015.RequestConfig();
           _reader.readMessage(
             _instance.t2sConfig,
-            ondewoT2s013.RequestConfig.deserializeBinaryFromReader
+            ondewoT2s015.RequestConfig.deserializeBinaryFromReader
           );
           break;
         case 2:
-          _instance.s2tConfig = new ondewoS2t014.TranscribeRequestConfig();
+          _instance.s2tConfig = new ondewoS2t016.TranscribeRequestConfig();
           _reader.readMessage(
             _instance.s2tConfig,
-            ondewoS2t014.TranscribeRequestConfig.deserializeBinaryFromReader
+            ondewoS2t016.TranscribeRequestConfig.deserializeBinaryFromReader
           );
           break;
         case 3:
@@ -2317,10 +2421,10 @@ export class ControlMessageServiceParameters implements GrpcMessage {
           _instance.text = _reader.readString();
           break;
         case 6:
-          _instance.context = new ondewoNlu009.Context();
+          _instance.context = new ondewoNlu010.Context();
           _reader.readMessage(
             _instance.context,
-            ondewoNlu009.Context.deserializeBinaryFromReader
+            ondewoNlu010.Context.deserializeBinaryFromReader
           );
           break;
         case 7:
@@ -2364,14 +2468,14 @@ export class ControlMessageServiceParameters implements GrpcMessage {
       _writer.writeMessage(
         1,
         _instance.t2sConfig as any,
-        ondewoT2s013.RequestConfig.serializeBinaryToWriter
+        ondewoT2s015.RequestConfig.serializeBinaryToWriter
       );
     }
     if (_instance.s2tConfig) {
       _writer.writeMessage(
         2,
         _instance.s2tConfig as any,
-        ondewoS2t014.TranscribeRequestConfig.serializeBinaryToWriter
+        ondewoS2t016.TranscribeRequestConfig.serializeBinaryToWriter
       );
     }
     if (_instance.transferId) {
@@ -2387,7 +2491,7 @@ export class ControlMessageServiceParameters implements GrpcMessage {
       _writer.writeMessage(
         6,
         _instance.context as any,
-        ondewoNlu009.Context.serializeBinaryToWriter
+        ondewoNlu010.Context.serializeBinaryToWriter
       );
     }
     if (_instance.sessionId) {
@@ -2412,12 +2516,12 @@ export class ControlMessageServiceParameters implements GrpcMessage {
     }
   }
 
-  private _t2sConfig?: ondewoT2s013.RequestConfig;
-  private _s2tConfig?: ondewoS2t014.TranscribeRequestConfig;
+  private _t2sConfig?: ondewoT2s015.RequestConfig;
+  private _s2tConfig?: ondewoS2t016.TranscribeRequestConfig;
   private _transferId: string;
   private _wavFiles: Uint8Array[];
   private _text: string;
-  private _context?: ondewoNlu009.Context;
+  private _context?: ondewoNlu010.Context;
   private _sessionId: string;
   private _contextName: string;
   private _conditionStart?: Condition;
@@ -2435,10 +2539,10 @@ export class ControlMessageServiceParameters implements GrpcMessage {
   ) {
     _value = _value || {};
     this.t2sConfig = _value.t2sConfig
-      ? new ondewoT2s013.RequestConfig(_value.t2sConfig)
+      ? new ondewoT2s015.RequestConfig(_value.t2sConfig)
       : undefined;
     this.s2tConfig = _value.s2tConfig
-      ? new ondewoS2t014.TranscribeRequestConfig(_value.s2tConfig)
+      ? new ondewoS2t016.TranscribeRequestConfig(_value.s2tConfig)
       : undefined;
     this.transferId = _value.transferId;
     this.wavFiles = (_value.wavFiles || []).map(b =>
@@ -2446,7 +2550,7 @@ export class ControlMessageServiceParameters implements GrpcMessage {
     );
     this.text = _value.text;
     this.context = _value.context
-      ? new ondewoNlu009.Context(_value.context)
+      ? new ondewoNlu010.Context(_value.context)
       : undefined;
     this.sessionId = _value.sessionId;
     this.contextName = _value.contextName;
@@ -2458,20 +2562,20 @@ export class ControlMessageServiceParameters implements GrpcMessage {
       : undefined;
     ControlMessageServiceParameters.refineValues(this);
   }
-  get t2sConfig(): ondewoT2s013.RequestConfig | undefined {
+  get t2sConfig(): ondewoT2s015.RequestConfig | undefined {
     return this._t2sConfig;
   }
-  set t2sConfig(value: ondewoT2s013.RequestConfig | undefined) {
+  set t2sConfig(value: ondewoT2s015.RequestConfig | undefined) {
     if (value !== undefined && value !== null) {
       this._s2tConfig = undefined;
       this._config = ControlMessageServiceParameters.ConfigCase.t2sConfig;
     }
     this._t2sConfig = value;
   }
-  get s2tConfig(): ondewoS2t014.TranscribeRequestConfig | undefined {
+  get s2tConfig(): ondewoS2t016.TranscribeRequestConfig | undefined {
     return this._s2tConfig;
   }
-  set s2tConfig(value: ondewoS2t014.TranscribeRequestConfig | undefined) {
+  set s2tConfig(value: ondewoS2t016.TranscribeRequestConfig | undefined) {
     if (value !== undefined && value !== null) {
       this._t2sConfig = undefined;
       this._config = ControlMessageServiceParameters.ConfigCase.s2tConfig;
@@ -2496,10 +2600,10 @@ export class ControlMessageServiceParameters implements GrpcMessage {
   set text(value: string) {
     this._text = value;
   }
-  get context(): ondewoNlu009.Context | undefined {
+  get context(): ondewoNlu010.Context | undefined {
     return this._context;
   }
-  set context(value: ondewoNlu009.Context | undefined) {
+  set context(value: ondewoNlu010.Context | undefined) {
     this._context = value;
   }
   get sessionId(): string {
@@ -2603,12 +2707,12 @@ export module ControlMessageServiceParameters {
    * Standard JavaScript object representation for ControlMessageServiceParameters
    */
   export interface AsObject {
-    t2sConfig?: ondewoT2s013.RequestConfig.AsObject;
-    s2tConfig?: ondewoS2t014.TranscribeRequestConfig.AsObject;
+    t2sConfig?: ondewoT2s015.RequestConfig.AsObject;
+    s2tConfig?: ondewoS2t016.TranscribeRequestConfig.AsObject;
     transferId: string;
     wavFiles: Uint8Array[];
     text: string;
-    context?: ondewoNlu009.Context.AsObject;
+    context?: ondewoNlu010.Context.AsObject;
     sessionId: string;
     contextName: string;
     conditionStart?: Condition.AsObject;
@@ -2619,12 +2723,12 @@ export module ControlMessageServiceParameters {
    * Protobuf JSON representation for ControlMessageServiceParameters
    */
   export interface AsProtobufJSON {
-    t2sConfig: ondewoT2s013.RequestConfig.AsProtobufJSON | null;
-    s2tConfig: ondewoS2t014.TranscribeRequestConfig.AsProtobufJSON | null;
+    t2sConfig: ondewoT2s015.RequestConfig.AsProtobufJSON | null;
+    s2tConfig: ondewoS2t016.TranscribeRequestConfig.AsProtobufJSON | null;
     transferId: string;
     wavFiles: string[];
     text: string;
-    context: ondewoNlu009.Context.AsProtobufJSON | null;
+    context: ondewoNlu010.Context.AsProtobufJSON | null;
     sessionId: string;
     contextName: string;
     conditionStart: Condition.AsProtobufJSON | null;

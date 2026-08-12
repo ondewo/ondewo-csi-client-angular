@@ -14,13 +14,14 @@ import * as googleApi000 from '../../google/api/http.pb';
 import * as googleProtobuf001 from '@ngx-grpc/well-known-types';
 import * as googleProtobuf002 from '@ngx-grpc/well-known-types';
 import * as googleProtobuf003 from '@ngx-grpc/well-known-types';
-import * as googleApi004 from '../../google/api/annotations.pb';
-import * as googleProtobuf005 from '@ngx-grpc/well-known-types';
+import * as googleProtobuf004 from '@ngx-grpc/well-known-types';
+import * as googleApi005 from '../../google/api/annotations.pb';
 import * as googleProtobuf006 from '@ngx-grpc/well-known-types';
-import * as googleRpc007 from '../../google/rpc/status.pb';
-import * as ondewoNlu008 from '../../ondewo/nlu/operation-metadata.pb';
-import * as ondewoNlu009 from '../../ondewo/nlu/common.pb';
-import * as ondewoNlu010 from '../../ondewo/nlu/operations.pb';
+import * as googleProtobuf007 from '@ngx-grpc/well-known-types';
+import * as googleRpc008 from '../../google/rpc/status.pb';
+import * as ondewoNlu009 from '../../ondewo/nlu/operation-metadata.pb';
+import * as ondewoNlu010 from '../../ondewo/nlu/common.pb';
+import * as ondewoNlu011 from '../../ondewo/nlu/operations.pb';
 export enum EntityTypeView {
   ENTITY_TYPE_VIEW_UNSPECIFIED = 0,
   ENTITY_TYPE_VIEW_FULL = 1,
@@ -117,17 +118,17 @@ export class EntityType implements GrpcMessage {
           _instance.synonymCount = _reader.readInt32();
           break;
         case 14:
-          _instance.createdAt = new googleProtobuf003.Timestamp();
+          _instance.createdAt = new googleProtobuf004.Timestamp();
           _reader.readMessage(
             _instance.createdAt,
-            googleProtobuf003.Timestamp.deserializeBinaryFromReader
+            googleProtobuf004.Timestamp.deserializeBinaryFromReader
           );
           break;
         case 15:
-          _instance.modifiedAt = new googleProtobuf003.Timestamp();
+          _instance.modifiedAt = new googleProtobuf004.Timestamp();
           _reader.readMessage(
             _instance.modifiedAt,
-            googleProtobuf003.Timestamp.deserializeBinaryFromReader
+            googleProtobuf004.Timestamp.deserializeBinaryFromReader
           );
           break;
         case 16:
@@ -185,14 +186,14 @@ export class EntityType implements GrpcMessage {
       _writer.writeMessage(
         14,
         _instance.createdAt as any,
-        googleProtobuf003.Timestamp.serializeBinaryToWriter
+        googleProtobuf004.Timestamp.serializeBinaryToWriter
       );
     }
     if (_instance.modifiedAt) {
       _writer.writeMessage(
         15,
         _instance.modifiedAt as any,
-        googleProtobuf003.Timestamp.serializeBinaryToWriter
+        googleProtobuf004.Timestamp.serializeBinaryToWriter
       );
     }
     if (_instance.createdBy) {
@@ -212,8 +213,8 @@ export class EntityType implements GrpcMessage {
   private _entityCount: number;
   private _status: EntityType.EntityTypeStatus;
   private _synonymCount: number;
-  private _createdAt?: googleProtobuf003.Timestamp;
-  private _modifiedAt?: googleProtobuf003.Timestamp;
+  private _createdAt?: googleProtobuf004.Timestamp;
+  private _modifiedAt?: googleProtobuf004.Timestamp;
   private _createdBy: string;
   private _modifiedBy: string;
 
@@ -233,10 +234,10 @@ export class EntityType implements GrpcMessage {
     this.status = _value.status;
     this.synonymCount = _value.synonymCount;
     this.createdAt = _value.createdAt
-      ? new googleProtobuf003.Timestamp(_value.createdAt)
+      ? new googleProtobuf004.Timestamp(_value.createdAt)
       : undefined;
     this.modifiedAt = _value.modifiedAt
-      ? new googleProtobuf003.Timestamp(_value.modifiedAt)
+      ? new googleProtobuf004.Timestamp(_value.modifiedAt)
       : undefined;
     this.createdBy = _value.createdBy;
     this.modifiedBy = _value.modifiedBy;
@@ -296,16 +297,16 @@ export class EntityType implements GrpcMessage {
   set synonymCount(value: number) {
     this._synonymCount = value;
   }
-  get createdAt(): googleProtobuf003.Timestamp | undefined {
+  get createdAt(): googleProtobuf004.Timestamp | undefined {
     return this._createdAt;
   }
-  set createdAt(value: googleProtobuf003.Timestamp | undefined) {
+  set createdAt(value: googleProtobuf004.Timestamp | undefined) {
     this._createdAt = value;
   }
-  get modifiedAt(): googleProtobuf003.Timestamp | undefined {
+  get modifiedAt(): googleProtobuf004.Timestamp | undefined {
     return this._modifiedAt;
   }
-  set modifiedAt(value: googleProtobuf003.Timestamp | undefined) {
+  set modifiedAt(value: googleProtobuf004.Timestamp | undefined) {
     this._modifiedAt = value;
   }
   get createdBy(): string {
@@ -413,8 +414,8 @@ export module EntityType {
     entityCount: number;
     status: EntityType.EntityTypeStatus;
     synonymCount: number;
-    createdAt?: googleProtobuf003.Timestamp.AsObject;
-    modifiedAt?: googleProtobuf003.Timestamp.AsObject;
+    createdAt?: googleProtobuf004.Timestamp.AsObject;
+    modifiedAt?: googleProtobuf004.Timestamp.AsObject;
     createdBy: string;
     modifiedBy: string;
   }
@@ -432,8 +433,8 @@ export module EntityType {
     entityCount: number;
     status: string;
     synonymCount: number;
-    createdAt: googleProtobuf003.Timestamp.AsProtobufJSON | null;
-    modifiedAt: googleProtobuf003.Timestamp.AsProtobufJSON | null;
+    createdAt: googleProtobuf004.Timestamp.AsProtobufJSON | null;
+    modifiedAt: googleProtobuf004.Timestamp.AsProtobufJSON | null;
     createdBy: string;
     modifiedBy: string;
   }
@@ -517,17 +518,17 @@ export module EntityType {
             _instance.languageCode = _reader.readString();
             break;
           case 7:
-            _instance.createdAt = new googleProtobuf003.Timestamp();
+            _instance.createdAt = new googleProtobuf004.Timestamp();
             _reader.readMessage(
               _instance.createdAt,
-              googleProtobuf003.Timestamp.deserializeBinaryFromReader
+              googleProtobuf004.Timestamp.deserializeBinaryFromReader
             );
             break;
           case 8:
-            _instance.modifiedAt = new googleProtobuf003.Timestamp();
+            _instance.modifiedAt = new googleProtobuf004.Timestamp();
             _reader.readMessage(
               _instance.modifiedAt,
-              googleProtobuf003.Timestamp.deserializeBinaryFromReader
+              googleProtobuf004.Timestamp.deserializeBinaryFromReader
             );
             break;
           case 9:
@@ -572,14 +573,14 @@ export module EntityType {
         _writer.writeMessage(
           7,
           _instance.createdAt as any,
-          googleProtobuf003.Timestamp.serializeBinaryToWriter
+          googleProtobuf004.Timestamp.serializeBinaryToWriter
         );
       }
       if (_instance.modifiedAt) {
         _writer.writeMessage(
           8,
           _instance.modifiedAt as any,
-          googleProtobuf003.Timestamp.serializeBinaryToWriter
+          googleProtobuf004.Timestamp.serializeBinaryToWriter
         );
       }
       if (_instance.createdBy) {
@@ -596,8 +597,8 @@ export module EntityType {
     private _displayName: string;
     private _synonymCount: number;
     private _languageCode: string;
-    private _createdAt?: googleProtobuf003.Timestamp;
-    private _modifiedAt?: googleProtobuf003.Timestamp;
+    private _createdAt?: googleProtobuf004.Timestamp;
+    private _modifiedAt?: googleProtobuf004.Timestamp;
     private _createdBy: string;
     private _modifiedBy: string;
 
@@ -614,10 +615,10 @@ export module EntityType {
       this.synonymCount = _value.synonymCount;
       this.languageCode = _value.languageCode;
       this.createdAt = _value.createdAt
-        ? new googleProtobuf003.Timestamp(_value.createdAt)
+        ? new googleProtobuf004.Timestamp(_value.createdAt)
         : undefined;
       this.modifiedAt = _value.modifiedAt
-        ? new googleProtobuf003.Timestamp(_value.modifiedAt)
+        ? new googleProtobuf004.Timestamp(_value.modifiedAt)
         : undefined;
       this.createdBy = _value.createdBy;
       this.modifiedBy = _value.modifiedBy;
@@ -659,16 +660,16 @@ export module EntityType {
     set languageCode(value: string) {
       this._languageCode = value;
     }
-    get createdAt(): googleProtobuf003.Timestamp | undefined {
+    get createdAt(): googleProtobuf004.Timestamp | undefined {
       return this._createdAt;
     }
-    set createdAt(value: googleProtobuf003.Timestamp | undefined) {
+    set createdAt(value: googleProtobuf004.Timestamp | undefined) {
       this._createdAt = value;
     }
-    get modifiedAt(): googleProtobuf003.Timestamp | undefined {
+    get modifiedAt(): googleProtobuf004.Timestamp | undefined {
       return this._modifiedAt;
     }
-    set modifiedAt(value: googleProtobuf003.Timestamp | undefined) {
+    set modifiedAt(value: googleProtobuf004.Timestamp | undefined) {
       this._modifiedAt = value;
     }
     get createdBy(): string {
@@ -757,8 +758,8 @@ export module EntityType {
       displayName: string;
       synonymCount: number;
       languageCode: string;
-      createdAt?: googleProtobuf003.Timestamp.AsObject;
-      modifiedAt?: googleProtobuf003.Timestamp.AsObject;
+      createdAt?: googleProtobuf004.Timestamp.AsObject;
+      modifiedAt?: googleProtobuf004.Timestamp.AsObject;
       createdBy: string;
       modifiedBy: string;
     }
@@ -773,8 +774,8 @@ export module EntityType {
       displayName: string;
       synonymCount: number;
       languageCode: string;
-      createdAt: googleProtobuf003.Timestamp.AsProtobufJSON | null;
-      modifiedAt: googleProtobuf003.Timestamp.AsProtobufJSON | null;
+      createdAt: googleProtobuf004.Timestamp.AsProtobufJSON | null;
+      modifiedAt: googleProtobuf004.Timestamp.AsProtobufJSON | null;
       createdBy: string;
       modifiedBy: string;
     }
@@ -2788,7 +2789,7 @@ export class EntityTypeSorting implements GrpcMessage {
   }
 
   private _sortingField: EntityTypeSorting.EntityTypeSortingField;
-  private _sortingMode: ondewoNlu009.SortingMode;
+  private _sortingMode: ondewoNlu010.SortingMode;
 
   /**
    * Message constructor. Initializes the properties and applies default Protobuf values if necessary
@@ -2806,10 +2807,10 @@ export class EntityTypeSorting implements GrpcMessage {
   set sortingField(value: EntityTypeSorting.EntityTypeSortingField) {
     this._sortingField = value;
   }
-  get sortingMode(): ondewoNlu009.SortingMode {
+  get sortingMode(): ondewoNlu010.SortingMode {
     return this._sortingMode;
   }
-  set sortingMode(value: ondewoNlu009.SortingMode) {
+  set sortingMode(value: ondewoNlu010.SortingMode) {
     this._sortingMode = value;
   }
 
@@ -2857,7 +2858,7 @@ export class EntityTypeSorting implements GrpcMessage {
             : this.sortingField
         ],
       sortingMode:
-        ondewoNlu009.SortingMode[
+        ondewoNlu010.SortingMode[
           this.sortingMode === null || this.sortingMode === undefined
             ? 0
             : this.sortingMode
@@ -2871,7 +2872,7 @@ export module EntityTypeSorting {
    */
   export interface AsObject {
     sortingField: EntityTypeSorting.EntityTypeSortingField;
-    sortingMode: ondewoNlu009.SortingMode;
+    sortingMode: ondewoNlu010.SortingMode;
   }
 
   /**
@@ -4468,10 +4469,10 @@ export class DeleteEntityStatus implements GrpcMessage {
 
       switch (_reader.getFieldNumber()) {
         case 1:
-          _instance.successfullyDeleted = new googleProtobuf006.Empty();
+          _instance.successfullyDeleted = new googleProtobuf007.Empty();
           _reader.readMessage(
             _instance.successfullyDeleted,
-            googleProtobuf006.Empty.deserializeBinaryFromReader
+            googleProtobuf007.Empty.deserializeBinaryFromReader
           );
           break;
         case 2:
@@ -4498,7 +4499,7 @@ export class DeleteEntityStatus implements GrpcMessage {
       _writer.writeMessage(
         1,
         _instance.successfullyDeleted as any,
-        googleProtobuf006.Empty.serializeBinaryToWriter
+        googleProtobuf007.Empty.serializeBinaryToWriter
       );
     }
     if (_instance.errorMessage || _instance.errorMessage === '') {
@@ -4506,7 +4507,7 @@ export class DeleteEntityStatus implements GrpcMessage {
     }
   }
 
-  private _successfullyDeleted?: googleProtobuf006.Empty;
+  private _successfullyDeleted?: googleProtobuf007.Empty;
   private _errorMessage: string;
 
   private _deleteStatus: DeleteEntityStatus.DeleteStatusCase =
@@ -4519,15 +4520,15 @@ export class DeleteEntityStatus implements GrpcMessage {
   constructor(_value?: RecursivePartial<DeleteEntityStatus.AsObject>) {
     _value = _value || {};
     this.successfullyDeleted = _value.successfullyDeleted
-      ? new googleProtobuf006.Empty(_value.successfullyDeleted)
+      ? new googleProtobuf007.Empty(_value.successfullyDeleted)
       : undefined;
     this.errorMessage = _value.errorMessage;
     DeleteEntityStatus.refineValues(this);
   }
-  get successfullyDeleted(): googleProtobuf006.Empty | undefined {
+  get successfullyDeleted(): googleProtobuf007.Empty | undefined {
     return this._successfullyDeleted;
   }
-  set successfullyDeleted(value: googleProtobuf006.Empty | undefined) {
+  set successfullyDeleted(value: googleProtobuf007.Empty | undefined) {
     if (value !== undefined && value !== null) {
       this._errorMessage = undefined;
       this._deleteStatus =
@@ -4603,7 +4604,7 @@ export module DeleteEntityStatus {
    * Standard JavaScript object representation for DeleteEntityStatus
    */
   export interface AsObject {
-    successfullyDeleted?: googleProtobuf006.Empty.AsObject;
+    successfullyDeleted?: googleProtobuf007.Empty.AsObject;
     errorMessage: string;
   }
 
@@ -4611,7 +4612,7 @@ export module DeleteEntityStatus {
    * Protobuf JSON representation for DeleteEntityStatus
    */
   export interface AsProtobufJSON {
-    successfullyDeleted: googleProtobuf006.Empty.AsProtobufJSON | null;
+    successfullyDeleted: googleProtobuf007.Empty.AsProtobufJSON | null;
     errorMessage: string | null;
   }
   export enum DeleteStatusCase {
@@ -5263,7 +5264,7 @@ export class EntityValueSorting implements GrpcMessage {
   }
 
   private _sortingField: EntityValueSorting.EntityValueSortingField;
-  private _sortingMode: ondewoNlu009.SortingMode;
+  private _sortingMode: ondewoNlu010.SortingMode;
 
   /**
    * Message constructor. Initializes the properties and applies default Protobuf values if necessary
@@ -5281,10 +5282,10 @@ export class EntityValueSorting implements GrpcMessage {
   set sortingField(value: EntityValueSorting.EntityValueSortingField) {
     this._sortingField = value;
   }
-  get sortingMode(): ondewoNlu009.SortingMode {
+  get sortingMode(): ondewoNlu010.SortingMode {
     return this._sortingMode;
   }
-  set sortingMode(value: ondewoNlu009.SortingMode) {
+  set sortingMode(value: ondewoNlu010.SortingMode) {
     this._sortingMode = value;
   }
 
@@ -5332,7 +5333,7 @@ export class EntityValueSorting implements GrpcMessage {
             : this.sortingField
         ],
       sortingMode:
-        ondewoNlu009.SortingMode[
+        ondewoNlu010.SortingMode[
           this.sortingMode === null || this.sortingMode === undefined
             ? 0
             : this.sortingMode
@@ -5346,7 +5347,7 @@ export module EntityValueSorting {
    */
   export interface AsObject {
     sortingField: EntityValueSorting.EntityValueSortingField;
-    sortingMode: ondewoNlu009.SortingMode;
+    sortingMode: ondewoNlu010.SortingMode;
   }
 
   /**

@@ -32,9 +32,11 @@ import * as ondewoNlu008 from '../../ondewo/nlu/context.pb';
 import * as googleProtobuf009 from '@ngx-grpc/well-known-types';
 import * as googleRpc010 from '../../google/rpc/status.pb';
 import * as googleType011 from '../../google/type/latlng.pb';
-import * as ondewoNlu012 from '../../ondewo/nlu/intent.pb';
+import * as ondewoNlu012 from '../../ondewo/nlu/ccai-project.pb';
 import * as ondewoNlu013 from '../../ondewo/nlu/entity-type.pb';
-import * as ondewoNlu014 from '../../ondewo/nlu/session.pb';
+import * as ondewoNlu014 from '../../ondewo/nlu/intent.pb';
+import * as ondewoNlu015 from '../../ondewo/nlu/llm-evaluation.pb';
+import * as ondewoNlu016 from '../../ondewo/nlu/session.pb';
 import { GRPC_WEBHOOK_CLIENT_SETTINGS } from './webhook.pbconf';
 /**
  * Service client implementation for ondewo.nlu.Webhook

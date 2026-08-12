@@ -17,12 +17,12 @@ import * as googleProtobuf003 from '@ngx-grpc/well-known-types';
 import * as googleProtobuf004 from '@ngx-grpc/well-known-types';
 import * as googleProtobuf005 from '@ngx-grpc/well-known-types';
 import * as googleProtobuf006 from '@ngx-grpc/well-known-types';
-import * as googleRpc007 from '../../google/rpc/status.pb';
-import * as ondewoNlu008 from '../../ondewo/nlu/operation-metadata.pb';
-import * as ondewoNlu009 from '../../ondewo/nlu/context.pb';
+import * as googleProtobuf007 from '@ngx-grpc/well-known-types';
+import * as googleRpc008 from '../../google/rpc/status.pb';
+import * as ondewoNlu009 from '../../ondewo/nlu/operation-metadata.pb';
 import * as ondewoNlu010 from '../../ondewo/nlu/common.pb';
-import * as ondewoNlu011 from '../../ondewo/nlu/operations.pb';
-import * as googleProtobuf012 from '@ngx-grpc/well-known-types';
+import * as ondewoNlu011 from '../../ondewo/nlu/context.pb';
+import * as ondewoNlu012 from '../../ondewo/nlu/operations.pb';
 export enum IntentView {
   INTENT_VIEW_UNSPECIFIED = 0,
   INTENT_VIEW_FULL = 1,
@@ -145,10 +145,10 @@ export class Intent implements GrpcMessage {
           _instance.action = _reader.readString();
           break;
         case 11:
-          const messageInitializer11 = new ondewoNlu009.Context();
+          const messageInitializer11 = new ondewoNlu011.Context();
           _reader.readMessage(
             messageInitializer11,
-            ondewoNlu009.Context.deserializeBinaryFromReader
+            ondewoNlu011.Context.deserializeBinaryFromReader
           );
           (_instance.outputContexts = _instance.outputContexts || []).push(
             messageInitializer11
@@ -305,7 +305,7 @@ export class Intent implements GrpcMessage {
       _writer.writeRepeatedMessage(
         11,
         _instance.outputContexts as any,
-        ondewoNlu009.Context.serializeBinaryToWriter
+        ondewoNlu011.Context.serializeBinaryToWriter
       );
     }
     if (_instance.resetContexts) {
@@ -411,7 +411,7 @@ export class Intent implements GrpcMessage {
   private _events: string[];
   private _trainingPhrases?: Intent.TrainingPhrase[];
   private _action: string;
-  private _outputContexts?: ondewoNlu009.Context[];
+  private _outputContexts?: ondewoNlu011.Context[];
   private _resetContexts: boolean;
   private _parameters?: Intent.Parameter[];
   private _messages?: Intent.Message[];
@@ -452,7 +452,7 @@ export class Intent implements GrpcMessage {
     );
     this.action = _value.action;
     this.outputContexts = (_value.outputContexts || []).map(
-      m => new ondewoNlu009.Context(m)
+      m => new ondewoNlu011.Context(m)
     );
     this.resetContexts = _value.resetContexts;
     this.parameters = (_value.parameters || []).map(
@@ -550,10 +550,10 @@ export class Intent implements GrpcMessage {
   set action(value: string) {
     this._action = value;
   }
-  get outputContexts(): ondewoNlu009.Context[] | undefined {
+  get outputContexts(): ondewoNlu011.Context[] | undefined {
     return this._outputContexts;
   }
-  set outputContexts(value: ondewoNlu009.Context[] | undefined) {
+  set outputContexts(value: ondewoNlu011.Context[] | undefined) {
     this._outputContexts = value;
   }
   get resetContexts(): boolean {
@@ -812,7 +812,7 @@ export module Intent {
     events: string[];
     trainingPhrases?: Intent.TrainingPhrase.AsObject[];
     action: string;
-    outputContexts?: ondewoNlu009.Context.AsObject[];
+    outputContexts?: ondewoNlu011.Context.AsObject[];
     resetContexts: boolean;
     parameters?: Intent.Parameter.AsObject[];
     messages?: Intent.Message.AsObject[];
@@ -849,7 +849,7 @@ export module Intent {
     events: string[];
     trainingPhrases: Intent.TrainingPhrase.AsProtobufJSON[] | null;
     action: string;
-    outputContexts: ondewoNlu009.Context.AsProtobufJSON[] | null;
+    outputContexts: ondewoNlu011.Context.AsProtobufJSON[] | null;
     resetContexts: boolean;
     parameters: Intent.Parameter.AsProtobufJSON[] | null;
     messages: Intent.Message.AsProtobufJSON[] | null;
@@ -2353,10 +2353,10 @@ export module Intent {
             );
             break;
           case 5:
-            _instance.payload = new googleProtobuf012.Struct();
+            _instance.payload = new googleProtobuf006.Struct();
             _reader.readMessage(
               _instance.payload,
-              googleProtobuf012.Struct.deserializeBinaryFromReader
+              googleProtobuf006.Struct.deserializeBinaryFromReader
             );
             break;
           case 7:
@@ -2500,7 +2500,7 @@ export module Intent {
         _writer.writeMessage(
           5,
           _instance.payload as any,
-          googleProtobuf012.Struct.serializeBinaryToWriter
+          googleProtobuf006.Struct.serializeBinaryToWriter
         );
       }
       if (_instance.simpleResponses) {
@@ -2600,7 +2600,7 @@ export module Intent {
     private _image?: Intent.Message.Image;
     private _quickReplies?: Intent.Message.QuickReplies;
     private _card?: Intent.Message.Card;
-    private _payload?: googleProtobuf012.Struct;
+    private _payload?: googleProtobuf006.Struct;
     private _simpleResponses?: Intent.Message.SimpleResponses;
     private _basicCard?: Intent.Message.BasicCard;
     private _suggestions?: Intent.Message.Suggestions;
@@ -2640,7 +2640,7 @@ export module Intent {
         ? new Intent.Message.Card(_value.card)
         : undefined;
       this.payload = _value.payload
-        ? new googleProtobuf012.Struct(_value.payload)
+        ? new googleProtobuf006.Struct(_value.payload)
         : undefined;
       this.simpleResponses = _value.simpleResponses
         ? new Intent.Message.SimpleResponses(_value.simpleResponses)
@@ -2733,10 +2733,10 @@ export module Intent {
       }
       this._card = value;
     }
-    get payload(): googleProtobuf012.Struct | undefined {
+    get payload(): googleProtobuf006.Struct | undefined {
       return this._payload;
     }
-    set payload(value: googleProtobuf012.Struct | undefined) {
+    set payload(value: googleProtobuf006.Struct | undefined) {
       if (value !== undefined && value !== null) {
         this._text = this._image = this._quickReplies = this._card = this._simpleResponses = this._basicCard = this._suggestions = this._linkOutSuggestion = this._listSelect = this._carouselSelect = this._htmlText = this._video = this._audio = undefined;
         this._message = Message.MessageCase.payload;
@@ -2997,7 +2997,7 @@ export module Intent {
       image?: Intent.Message.Image.AsObject;
       quickReplies?: Intent.Message.QuickReplies.AsObject;
       card?: Intent.Message.Card.AsObject;
-      payload?: googleProtobuf012.Struct.AsObject;
+      payload?: googleProtobuf006.Struct.AsObject;
       simpleResponses?: Intent.Message.SimpleResponses.AsObject;
       basicCard?: Intent.Message.BasicCard.AsObject;
       suggestions?: Intent.Message.Suggestions.AsObject;
@@ -3025,7 +3025,7 @@ export module Intent {
       image: Intent.Message.Image.AsProtobufJSON | null;
       quickReplies: Intent.Message.QuickReplies.AsProtobufJSON | null;
       card: Intent.Message.Card.AsProtobufJSON | null;
-      payload: googleProtobuf012.Struct.AsProtobufJSON | null;
+      payload: googleProtobuf006.Struct.AsProtobufJSON | null;
       simpleResponses: Intent.Message.SimpleResponses.AsProtobufJSON | null;
       basicCard: Intent.Message.BasicCard.AsProtobufJSON | null;
       suggestions: Intent.Message.Suggestions.AsProtobufJSON | null;

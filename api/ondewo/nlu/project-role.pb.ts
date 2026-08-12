@@ -741,6 +741,7 @@ export class GetProjectRoleRequest implements GrpcMessage {
     _instance.parent = _instance.parent || '';
 
     _instance.projectRoleView = _instance.projectRoleView || 0;
+    _instance.fieldMask = _instance.fieldMask || undefined;
   }
 
   /**
@@ -767,6 +768,13 @@ export class GetProjectRoleRequest implements GrpcMessage {
           break;
         case 4:
           _instance.projectRoleView = _reader.readEnum();
+          break;
+        case 5:
+          _instance.fieldMask = new googleProtobuf004.FieldMask();
+          _reader.readMessage(
+            _instance.fieldMask,
+            googleProtobuf004.FieldMask.deserializeBinaryFromReader
+          );
           break;
         default:
           _reader.skipField();
@@ -797,12 +805,20 @@ export class GetProjectRoleRequest implements GrpcMessage {
     if (_instance.projectRoleView) {
       _writer.writeEnum(4, _instance.projectRoleView);
     }
+    if (_instance.fieldMask) {
+      _writer.writeMessage(
+        5,
+        _instance.fieldMask as any,
+        googleProtobuf004.FieldMask.serializeBinaryToWriter
+      );
+    }
   }
 
   private _parent: string;
   private _roleId: number;
   private _roleName: string;
   private _projectRoleView: ProjectRoleView;
+  private _fieldMask?: googleProtobuf004.FieldMask;
 
   private _projectRoleIdentifier: GetProjectRoleRequest.ProjectRoleIdentifierCase =
     GetProjectRoleRequest.ProjectRoleIdentifierCase.none;
@@ -817,6 +833,9 @@ export class GetProjectRoleRequest implements GrpcMessage {
     this.roleId = _value.roleId;
     this.roleName = _value.roleName;
     this.projectRoleView = _value.projectRoleView;
+    this.fieldMask = _value.fieldMask
+      ? new googleProtobuf004.FieldMask(_value.fieldMask)
+      : undefined;
     GetProjectRoleRequest.refineValues(this);
   }
   get parent(): string {
@@ -853,6 +872,12 @@ export class GetProjectRoleRequest implements GrpcMessage {
   set projectRoleView(value: ProjectRoleView) {
     this._projectRoleView = value;
   }
+  get fieldMask(): googleProtobuf004.FieldMask | undefined {
+    return this._fieldMask;
+  }
+  set fieldMask(value: googleProtobuf004.FieldMask | undefined) {
+    this._fieldMask = value;
+  }
   get projectRoleIdentifier() {
     return this._projectRoleIdentifier;
   }
@@ -875,7 +900,8 @@ export class GetProjectRoleRequest implements GrpcMessage {
       parent: this.parent,
       roleId: this.roleId,
       roleName: this.roleName,
-      projectRoleView: this.projectRoleView
+      projectRoleView: this.projectRoleView,
+      fieldMask: this.fieldMask ? this.fieldMask.toObject() : undefined
     };
   }
 
@@ -908,7 +934,8 @@ export class GetProjectRoleRequest implements GrpcMessage {
           this.projectRoleView === null || this.projectRoleView === undefined
             ? 0
             : this.projectRoleView
-        ]
+        ],
+      fieldMask: this.fieldMask ? this.fieldMask.toProtobufJSON(options) : null
     };
   }
 }
@@ -921,6 +948,7 @@ export module GetProjectRoleRequest {
     roleId: number;
     roleName: string;
     projectRoleView: ProjectRoleView;
+    fieldMask?: googleProtobuf004.FieldMask.AsObject;
   }
 
   /**
@@ -931,6 +959,7 @@ export module GetProjectRoleRequest {
     roleId: number | null;
     roleName: string | null;
     projectRoleView: string;
+    fieldMask: googleProtobuf004.FieldMask.AsProtobufJSON | null;
   }
   export enum ProjectRoleIdentifierCase {
     none = 0,
@@ -1124,6 +1153,7 @@ export class ListProjectRolesRequest implements GrpcMessage {
     _instance.parent = _instance.parent || '';
     _instance.pageToken = _instance.pageToken || '';
     _instance.projectRoleView = _instance.projectRoleView || 0;
+    _instance.fieldMask = _instance.fieldMask || undefined;
   }
 
   /**
@@ -1147,6 +1177,13 @@ export class ListProjectRolesRequest implements GrpcMessage {
           break;
         case 3:
           _instance.projectRoleView = _reader.readEnum();
+          break;
+        case 4:
+          _instance.fieldMask = new googleProtobuf004.FieldMask();
+          _reader.readMessage(
+            _instance.fieldMask,
+            googleProtobuf004.FieldMask.deserializeBinaryFromReader
+          );
           break;
         default:
           _reader.skipField();
@@ -1174,11 +1211,19 @@ export class ListProjectRolesRequest implements GrpcMessage {
     if (_instance.projectRoleView) {
       _writer.writeEnum(3, _instance.projectRoleView);
     }
+    if (_instance.fieldMask) {
+      _writer.writeMessage(
+        4,
+        _instance.fieldMask as any,
+        googleProtobuf004.FieldMask.serializeBinaryToWriter
+      );
+    }
   }
 
   private _parent: string;
   private _pageToken: string;
   private _projectRoleView: ProjectRoleView;
+  private _fieldMask?: googleProtobuf004.FieldMask;
 
   /**
    * Message constructor. Initializes the properties and applies default Protobuf values if necessary
@@ -1189,6 +1234,9 @@ export class ListProjectRolesRequest implements GrpcMessage {
     this.parent = _value.parent;
     this.pageToken = _value.pageToken;
     this.projectRoleView = _value.projectRoleView;
+    this.fieldMask = _value.fieldMask
+      ? new googleProtobuf004.FieldMask(_value.fieldMask)
+      : undefined;
     ListProjectRolesRequest.refineValues(this);
   }
   get parent(): string {
@@ -1209,6 +1257,12 @@ export class ListProjectRolesRequest implements GrpcMessage {
   set projectRoleView(value: ProjectRoleView) {
     this._projectRoleView = value;
   }
+  get fieldMask(): googleProtobuf004.FieldMask | undefined {
+    return this._fieldMask;
+  }
+  set fieldMask(value: googleProtobuf004.FieldMask | undefined) {
+    this._fieldMask = value;
+  }
 
   /**
    * Serialize message to binary data
@@ -1227,7 +1281,8 @@ export class ListProjectRolesRequest implements GrpcMessage {
     return {
       parent: this.parent,
       pageToken: this.pageToken,
-      projectRoleView: this.projectRoleView
+      projectRoleView: this.projectRoleView,
+      fieldMask: this.fieldMask ? this.fieldMask.toObject() : undefined
     };
   }
 
@@ -1255,7 +1310,8 @@ export class ListProjectRolesRequest implements GrpcMessage {
           this.projectRoleView === null || this.projectRoleView === undefined
             ? 0
             : this.projectRoleView
-        ]
+        ],
+      fieldMask: this.fieldMask ? this.fieldMask.toProtobufJSON(options) : null
     };
   }
 }
@@ -1267,6 +1323,7 @@ export module ListProjectRolesRequest {
     parent: string;
     pageToken: string;
     projectRoleView: ProjectRoleView;
+    fieldMask?: googleProtobuf004.FieldMask.AsObject;
   }
 
   /**
@@ -1276,6 +1333,7 @@ export module ListProjectRolesRequest {
     parent: string;
     pageToken: string;
     projectRoleView: string;
+    fieldMask: googleProtobuf004.FieldMask.AsProtobufJSON | null;
   }
 }
 

@@ -28,13 +28,15 @@ import * as googleProtobuf004 from '@ngx-grpc/well-known-types';
 import * as googleProtobuf005 from '@ngx-grpc/well-known-types';
 import * as googleRpc006 from '../../google/rpc/status.pb';
 import * as googleType007 from '../../google/type/latlng.pb';
-import * as ondewoNlu008 from '../../ondewo/nlu/common.pb';
-import * as ondewoNlu009 from '../../ondewo/nlu/context.pb';
-import * as ondewoNlu010 from '../../ondewo/nlu/intent.pb';
+import * as ondewoNlu008 from '../../ondewo/nlu/ccai-project.pb';
+import * as ondewoNlu009 from '../../ondewo/nlu/common.pb';
+import * as ondewoNlu010 from '../../ondewo/nlu/context.pb';
 import * as ondewoNlu011 from '../../ondewo/nlu/entity-type.pb';
-import * as ondewoNlu012 from '../../ondewo/nlu/session.pb';
-import * as ondewoT2s013 from '../../ondewo/t2s/text-to-speech.pb';
-import * as ondewoS2t014 from '../../ondewo/s2t/speech-to-text.pb';
+import * as ondewoNlu012 from '../../ondewo/nlu/intent.pb';
+import * as ondewoNlu013 from '../../ondewo/nlu/llm-evaluation.pb';
+import * as ondewoNlu014 from '../../ondewo/nlu/session.pb';
+import * as ondewoT2s015 from '../../ondewo/t2s/text-to-speech.pb';
+import * as ondewoS2t016 from '../../ondewo/s2t/speech-to-text.pb';
 import { GRPC_CONVERSATIONS_CLIENT_SETTINGS } from './conversation.pbconf';
 /**
  * Service client implementation for ondewo.csi.Conversations

@@ -42,7 +42,14 @@ export enum CcaiServiceType {
   CCAI_SERVICE_TYPE_ONDEWO_NLU_WEBSEARCH = 14,
   CCAI_SERVICE_TYPE_ONDEWO_AIM_WEBCHAT = 15,
   CCAI_SERVICE_TYPE_ONDEWO_AIM_WEBPHONE = 16,
-  CCAI_SERVICE_TYPE_ONDEWO_NLU_VECTORSTORE = 17
+  CCAI_SERVICE_TYPE_ONDEWO_NLU_VECTORSTORE = 17,
+  CCAI_SERVICE_TYPE_ONDEWO_NLU_LLM_AGENT = 18,
+  CCAI_SERVICE_TYPE_ONDEWO_NLU_LLM_MCP = 19,
+  CCAI_SERVICE_TYPE_ONDEWO_NLU_LLM_RAG = 20,
+  CCAI_SERVICE_TYPE_ONDEWO_ANALYTICS = 21,
+  CCAI_SERVICE_TYPE_ONDEWO_ANALYTICS_DASHBOARD = 22,
+  CCAI_SERVICE_TYPE_ONDEWO_VTSI_OUTBOUND_CAMPAIGN = 23,
+  CCAI_SERVICE_TYPE_ONDEWO_VTSI_INBOUND_CAMPAIGN = 24
 }
 export enum CcaiServiceProvider {
   NO_CCAI_SERVICE_PROVIDER = 0,
@@ -66,7 +73,20 @@ export enum CcaiServiceProvider {
   CCAI_SERVICE_PROVIDER_ELASTICSEARCH = 18,
   CCAI_SERVICE_PROVIDER_MILVUS = 19,
   CCAI_SERVICE_PROVIDER_QDRANT = 20,
-  CCAI_SERVICE_PROVIDER_CHROMA = 21
+  CCAI_SERVICE_PROVIDER_CHROMA = 21,
+  CCAI_SERVICE_PROVIDER_GOOGLE = 22,
+  CCAI_SERVICE_PROVIDER_MICROSOFT = 23,
+  CCAI_SERVICE_PROVIDER_DEEPGRAM = 24,
+  CCAI_SERVICE_PROVIDER_ELEVENLABS = 25,
+  CCAI_SERVICE_PROVIDER_HUGGINGFACE_TGI = 26,
+  CCAI_SERVICE_PROVIDER_HUGGINGFACE_TGE = 27,
+  CCAI_SERVICE_PROVIDER_HUGGINGFACE_SMOLAGENTS = 28,
+  CCAI_SERVICE_PROVIDER_GOOGLE_AGENT_DEVELOPMENT_KIT = 29,
+  CCAI_SERVICE_PROVIDER_MODEL_CONTEXT_PROTOCOL = 30,
+  CCAI_SERVICE_PROVIDER_OPENSEARCH = 31,
+  CCAI_SERVICE_PROVIDER_GROK = 32,
+  CCAI_SERVICE_PROVIDER_POSTGRES = 33,
+  CCAI_SERVICE_PROVIDER_MICROSOFT_AGENT_FRAMEWORK = 34
 }
 export enum CcaiProjectView {
   CCAI_PROJECT_VIEW_UNSPECIFIED = 0,
@@ -142,17 +162,17 @@ export class CcaiProject implements GrpcMessage {
           _instance.ccaiProjectStatus = _reader.readEnum();
           break;
         case 6:
-          _instance.createdAt = new googleProtobuf001.Timestamp();
+          _instance.createdAt = new googleProtobuf002.Timestamp();
           _reader.readMessage(
             _instance.createdAt,
-            googleProtobuf001.Timestamp.deserializeBinaryFromReader
+            googleProtobuf002.Timestamp.deserializeBinaryFromReader
           );
           break;
         case 7:
-          _instance.modifiedAt = new googleProtobuf001.Timestamp();
+          _instance.modifiedAt = new googleProtobuf002.Timestamp();
           _reader.readMessage(
             _instance.modifiedAt,
-            googleProtobuf001.Timestamp.deserializeBinaryFromReader
+            googleProtobuf002.Timestamp.deserializeBinaryFromReader
           );
           break;
         case 8:
@@ -215,14 +235,14 @@ export class CcaiProject implements GrpcMessage {
       _writer.writeMessage(
         6,
         _instance.createdAt as any,
-        googleProtobuf001.Timestamp.serializeBinaryToWriter
+        googleProtobuf002.Timestamp.serializeBinaryToWriter
       );
     }
     if (_instance.modifiedAt) {
       _writer.writeMessage(
         7,
         _instance.modifiedAt as any,
-        googleProtobuf001.Timestamp.serializeBinaryToWriter
+        googleProtobuf002.Timestamp.serializeBinaryToWriter
       );
     }
     if (_instance.createdBy) {
@@ -241,8 +261,8 @@ export class CcaiProject implements GrpcMessage {
   private _ownerName: string;
   private _ccaiServicesMap: { [prop: string]: CcaiServiceList };
   private _ccaiProjectStatus: CcaiProjectStatus;
-  private _createdAt?: googleProtobuf001.Timestamp;
-  private _modifiedAt?: googleProtobuf001.Timestamp;
+  private _createdAt?: googleProtobuf002.Timestamp;
+  private _modifiedAt?: googleProtobuf002.Timestamp;
   private _createdBy: string;
   private _modifiedBy: string;
   private _nluProjectName: string;
@@ -269,10 +289,10 @@ export class CcaiProject implements GrpcMessage {
       : {}),
       (this.ccaiProjectStatus = _value.ccaiProjectStatus);
     this.createdAt = _value.createdAt
-      ? new googleProtobuf001.Timestamp(_value.createdAt)
+      ? new googleProtobuf002.Timestamp(_value.createdAt)
       : undefined;
     this.modifiedAt = _value.modifiedAt
-      ? new googleProtobuf001.Timestamp(_value.modifiedAt)
+      ? new googleProtobuf002.Timestamp(_value.modifiedAt)
       : undefined;
     this.createdBy = _value.createdBy;
     this.modifiedBy = _value.modifiedBy;
@@ -309,16 +329,16 @@ export class CcaiProject implements GrpcMessage {
   set ccaiProjectStatus(value: CcaiProjectStatus) {
     this._ccaiProjectStatus = value;
   }
-  get createdAt(): googleProtobuf001.Timestamp | undefined {
+  get createdAt(): googleProtobuf002.Timestamp | undefined {
     return this._createdAt;
   }
-  set createdAt(value: googleProtobuf001.Timestamp | undefined) {
+  set createdAt(value: googleProtobuf002.Timestamp | undefined) {
     this._createdAt = value;
   }
-  get modifiedAt(): googleProtobuf001.Timestamp | undefined {
+  get modifiedAt(): googleProtobuf002.Timestamp | undefined {
     return this._modifiedAt;
   }
-  set modifiedAt(value: googleProtobuf001.Timestamp | undefined) {
+  set modifiedAt(value: googleProtobuf002.Timestamp | undefined) {
     this._modifiedAt = value;
   }
   get createdBy(): string {
@@ -436,8 +456,8 @@ export module CcaiProject {
     ownerName: string;
     ccaiServicesMap: { [prop: string]: CcaiServiceList };
     ccaiProjectStatus: CcaiProjectStatus;
-    createdAt?: googleProtobuf001.Timestamp.AsObject;
-    modifiedAt?: googleProtobuf001.Timestamp.AsObject;
+    createdAt?: googleProtobuf002.Timestamp.AsObject;
+    modifiedAt?: googleProtobuf002.Timestamp.AsObject;
     createdBy: string;
     modifiedBy: string;
     nluProjectName: string;
@@ -452,8 +472,8 @@ export module CcaiProject {
     ownerName: string;
     ccaiServicesMap: { [prop: string]: CcaiServiceList };
     ccaiProjectStatus: string;
-    createdAt: googleProtobuf001.Timestamp.AsProtobufJSON | null;
-    modifiedAt: googleProtobuf001.Timestamp.AsProtobufJSON | null;
+    createdAt: googleProtobuf002.Timestamp.AsProtobufJSON | null;
+    modifiedAt: googleProtobuf002.Timestamp.AsProtobufJSON | null;
     createdBy: string;
     modifiedBy: string;
     nluProjectName: string;
@@ -893,24 +913,24 @@ export class CcaiService implements GrpcMessage {
           _instance.ccaiProjectName = _reader.readString();
           break;
         case 18:
-          _instance.ccaiServiceConfig = new googleProtobuf002.Struct();
+          _instance.ccaiServiceConfig = new googleProtobuf001.Struct();
           _reader.readMessage(
             _instance.ccaiServiceConfig,
-            googleProtobuf002.Struct.deserializeBinaryFromReader
+            googleProtobuf001.Struct.deserializeBinaryFromReader
           );
           break;
         case 19:
-          _instance.createdAt = new googleProtobuf001.Timestamp();
+          _instance.createdAt = new googleProtobuf002.Timestamp();
           _reader.readMessage(
             _instance.createdAt,
-            googleProtobuf001.Timestamp.deserializeBinaryFromReader
+            googleProtobuf002.Timestamp.deserializeBinaryFromReader
           );
           break;
         case 20:
-          _instance.modifiedAt = new googleProtobuf001.Timestamp();
+          _instance.modifiedAt = new googleProtobuf002.Timestamp();
           _reader.readMessage(
             _instance.modifiedAt,
-            googleProtobuf001.Timestamp.deserializeBinaryFromReader
+            googleProtobuf002.Timestamp.deserializeBinaryFromReader
           );
           break;
         case 21:
@@ -920,10 +940,10 @@ export class CcaiService implements GrpcMessage {
           _instance.modifiedBy = _reader.readString();
           break;
         case 23:
-          _instance.headers = new googleProtobuf002.Struct();
+          _instance.headers = new googleProtobuf001.Struct();
           _reader.readMessage(
             _instance.headers,
-            googleProtobuf002.Struct.deserializeBinaryFromReader
+            googleProtobuf001.Struct.deserializeBinaryFromReader
           );
           break;
         case 24:
@@ -1004,21 +1024,21 @@ export class CcaiService implements GrpcMessage {
       _writer.writeMessage(
         18,
         _instance.ccaiServiceConfig as any,
-        googleProtobuf002.Struct.serializeBinaryToWriter
+        googleProtobuf001.Struct.serializeBinaryToWriter
       );
     }
     if (_instance.createdAt) {
       _writer.writeMessage(
         19,
         _instance.createdAt as any,
-        googleProtobuf001.Timestamp.serializeBinaryToWriter
+        googleProtobuf002.Timestamp.serializeBinaryToWriter
       );
     }
     if (_instance.modifiedAt) {
       _writer.writeMessage(
         20,
         _instance.modifiedAt as any,
-        googleProtobuf001.Timestamp.serializeBinaryToWriter
+        googleProtobuf002.Timestamp.serializeBinaryToWriter
       );
     }
     if (_instance.createdBy) {
@@ -1031,7 +1051,7 @@ export class CcaiService implements GrpcMessage {
       _writer.writeMessage(
         23,
         _instance.headers as any,
-        googleProtobuf002.Struct.serializeBinaryToWriter
+        googleProtobuf001.Struct.serializeBinaryToWriter
       );
     }
     if (_instance.ccaiServiceProvider) {
@@ -1059,12 +1079,12 @@ export class CcaiService implements GrpcMessage {
   private _apiKey: string;
   private _ccaiServiceType: CcaiServiceType;
   private _ccaiProjectName: string;
-  private _ccaiServiceConfig?: googleProtobuf002.Struct;
-  private _createdAt?: googleProtobuf001.Timestamp;
-  private _modifiedAt?: googleProtobuf001.Timestamp;
+  private _ccaiServiceConfig?: googleProtobuf001.Struct;
+  private _createdAt?: googleProtobuf002.Timestamp;
+  private _modifiedAt?: googleProtobuf002.Timestamp;
   private _createdBy: string;
   private _modifiedBy: string;
-  private _headers?: googleProtobuf002.Struct;
+  private _headers?: googleProtobuf001.Struct;
   private _ccaiServiceProvider: CcaiServiceProvider;
   private _serviceHierarchy: string;
 
@@ -1092,18 +1112,18 @@ export class CcaiService implements GrpcMessage {
     this.ccaiServiceType = _value.ccaiServiceType;
     this.ccaiProjectName = _value.ccaiProjectName;
     this.ccaiServiceConfig = _value.ccaiServiceConfig
-      ? new googleProtobuf002.Struct(_value.ccaiServiceConfig)
+      ? new googleProtobuf001.Struct(_value.ccaiServiceConfig)
       : undefined;
     this.createdAt = _value.createdAt
-      ? new googleProtobuf001.Timestamp(_value.createdAt)
+      ? new googleProtobuf002.Timestamp(_value.createdAt)
       : undefined;
     this.modifiedAt = _value.modifiedAt
-      ? new googleProtobuf001.Timestamp(_value.modifiedAt)
+      ? new googleProtobuf002.Timestamp(_value.modifiedAt)
       : undefined;
     this.createdBy = _value.createdBy;
     this.modifiedBy = _value.modifiedBy;
     this.headers = _value.headers
-      ? new googleProtobuf002.Struct(_value.headers)
+      ? new googleProtobuf001.Struct(_value.headers)
       : undefined;
     this.ccaiServiceProvider = _value.ccaiServiceProvider;
     this.serviceHierarchy = _value.serviceHierarchy;
@@ -1211,22 +1231,22 @@ export class CcaiService implements GrpcMessage {
   set ccaiProjectName(value: string) {
     this._ccaiProjectName = value;
   }
-  get ccaiServiceConfig(): googleProtobuf002.Struct | undefined {
+  get ccaiServiceConfig(): googleProtobuf001.Struct | undefined {
     return this._ccaiServiceConfig;
   }
-  set ccaiServiceConfig(value: googleProtobuf002.Struct | undefined) {
+  set ccaiServiceConfig(value: googleProtobuf001.Struct | undefined) {
     this._ccaiServiceConfig = value;
   }
-  get createdAt(): googleProtobuf001.Timestamp | undefined {
+  get createdAt(): googleProtobuf002.Timestamp | undefined {
     return this._createdAt;
   }
-  set createdAt(value: googleProtobuf001.Timestamp | undefined) {
+  set createdAt(value: googleProtobuf002.Timestamp | undefined) {
     this._createdAt = value;
   }
-  get modifiedAt(): googleProtobuf001.Timestamp | undefined {
+  get modifiedAt(): googleProtobuf002.Timestamp | undefined {
     return this._modifiedAt;
   }
-  set modifiedAt(value: googleProtobuf001.Timestamp | undefined) {
+  set modifiedAt(value: googleProtobuf002.Timestamp | undefined) {
     this._modifiedAt = value;
   }
   get createdBy(): string {
@@ -1241,10 +1261,10 @@ export class CcaiService implements GrpcMessage {
   set modifiedBy(value: string) {
     this._modifiedBy = value;
   }
-  get headers(): googleProtobuf002.Struct | undefined {
+  get headers(): googleProtobuf001.Struct | undefined {
     return this._headers;
   }
-  set headers(value: googleProtobuf002.Struct | undefined) {
+  set headers(value: googleProtobuf001.Struct | undefined) {
     this._headers = value;
   }
   get ccaiServiceProvider(): CcaiServiceProvider {
@@ -1387,12 +1407,12 @@ export module CcaiService {
     apiKey: string;
     ccaiServiceType: CcaiServiceType;
     ccaiProjectName: string;
-    ccaiServiceConfig?: googleProtobuf002.Struct.AsObject;
-    createdAt?: googleProtobuf001.Timestamp.AsObject;
-    modifiedAt?: googleProtobuf001.Timestamp.AsObject;
+    ccaiServiceConfig?: googleProtobuf001.Struct.AsObject;
+    createdAt?: googleProtobuf002.Timestamp.AsObject;
+    modifiedAt?: googleProtobuf002.Timestamp.AsObject;
     createdBy: string;
     modifiedBy: string;
-    headers?: googleProtobuf002.Struct.AsObject;
+    headers?: googleProtobuf001.Struct.AsObject;
     ccaiServiceProvider: CcaiServiceProvider;
     serviceHierarchy: string;
   }
@@ -1418,12 +1438,12 @@ export module CcaiService {
     apiKey: string;
     ccaiServiceType: string;
     ccaiProjectName: string;
-    ccaiServiceConfig: googleProtobuf002.Struct.AsProtobufJSON | null;
-    createdAt: googleProtobuf001.Timestamp.AsProtobufJSON | null;
-    modifiedAt: googleProtobuf001.Timestamp.AsProtobufJSON | null;
+    ccaiServiceConfig: googleProtobuf001.Struct.AsProtobufJSON | null;
+    createdAt: googleProtobuf002.Timestamp.AsProtobufJSON | null;
+    modifiedAt: googleProtobuf002.Timestamp.AsProtobufJSON | null;
     createdBy: string;
     modifiedBy: string;
-    headers: googleProtobuf002.Struct.AsProtobufJSON | null;
+    headers: googleProtobuf001.Struct.AsProtobufJSON | null;
     ccaiServiceProvider: string;
     serviceHierarchy: string;
   }
@@ -1797,6 +1817,7 @@ export class GetCcaiProjectRequest implements GrpcMessage {
     _instance.ccaiProjectView = _instance.ccaiProjectView || 0;
     _instance.ccaiServiceFilter = _instance.ccaiServiceFilter || undefined;
     _instance.nluProjectName = _instance.nluProjectName || '';
+    _instance.fieldMask = _instance.fieldMask || undefined;
   }
 
   /**
@@ -1827,6 +1848,13 @@ export class GetCcaiProjectRequest implements GrpcMessage {
           break;
         case 4:
           _instance.nluProjectName = _reader.readString();
+          break;
+        case 5:
+          _instance.fieldMask = new googleProtobuf000.FieldMask();
+          _reader.readMessage(
+            _instance.fieldMask,
+            googleProtobuf000.FieldMask.deserializeBinaryFromReader
+          );
           break;
         default:
           _reader.skipField();
@@ -1861,12 +1889,20 @@ export class GetCcaiProjectRequest implements GrpcMessage {
     if (_instance.nluProjectName) {
       _writer.writeString(4, _instance.nluProjectName);
     }
+    if (_instance.fieldMask) {
+      _writer.writeMessage(
+        5,
+        _instance.fieldMask as any,
+        googleProtobuf000.FieldMask.serializeBinaryToWriter
+      );
+    }
   }
 
   private _name: string;
   private _ccaiProjectView: CcaiProjectView;
   private _ccaiServiceFilter?: CcaiServiceFilter;
   private _nluProjectName: string;
+  private _fieldMask?: googleProtobuf000.FieldMask;
 
   /**
    * Message constructor. Initializes the properties and applies default Protobuf values if necessary
@@ -1880,6 +1916,9 @@ export class GetCcaiProjectRequest implements GrpcMessage {
       ? new CcaiServiceFilter(_value.ccaiServiceFilter)
       : undefined;
     this.nluProjectName = _value.nluProjectName;
+    this.fieldMask = _value.fieldMask
+      ? new googleProtobuf000.FieldMask(_value.fieldMask)
+      : undefined;
     GetCcaiProjectRequest.refineValues(this);
   }
   get name(): string {
@@ -1906,6 +1945,12 @@ export class GetCcaiProjectRequest implements GrpcMessage {
   set nluProjectName(value: string) {
     this._nluProjectName = value;
   }
+  get fieldMask(): googleProtobuf000.FieldMask | undefined {
+    return this._fieldMask;
+  }
+  set fieldMask(value: googleProtobuf000.FieldMask | undefined) {
+    this._fieldMask = value;
+  }
 
   /**
    * Serialize message to binary data
@@ -1927,7 +1972,8 @@ export class GetCcaiProjectRequest implements GrpcMessage {
       ccaiServiceFilter: this.ccaiServiceFilter
         ? this.ccaiServiceFilter.toObject()
         : undefined,
-      nluProjectName: this.nluProjectName
+      nluProjectName: this.nluProjectName,
+      fieldMask: this.fieldMask ? this.fieldMask.toObject() : undefined
     };
   }
 
@@ -1958,7 +2004,8 @@ export class GetCcaiProjectRequest implements GrpcMessage {
       ccaiServiceFilter: this.ccaiServiceFilter
         ? this.ccaiServiceFilter.toProtobufJSON(options)
         : null,
-      nluProjectName: this.nluProjectName
+      nluProjectName: this.nluProjectName,
+      fieldMask: this.fieldMask ? this.fieldMask.toProtobufJSON(options) : null
     };
   }
 }
@@ -1971,6 +2018,7 @@ export module GetCcaiProjectRequest {
     ccaiProjectView: CcaiProjectView;
     ccaiServiceFilter?: CcaiServiceFilter.AsObject;
     nluProjectName: string;
+    fieldMask?: googleProtobuf000.FieldMask.AsObject;
   }
 
   /**
@@ -1981,6 +2029,7 @@ export module GetCcaiProjectRequest {
     ccaiProjectView: string;
     ccaiServiceFilter: CcaiServiceFilter.AsProtobufJSON | null;
     nluProjectName: string;
+    fieldMask: googleProtobuf000.FieldMask.AsProtobufJSON | null;
   }
 }
 
@@ -2010,6 +2059,7 @@ export class GetCcaiServiceRequest implements GrpcMessage {
   static refineValues(_instance: GetCcaiServiceRequest) {
     _instance.name = _instance.name || '';
     _instance.nluProjectName = _instance.nluProjectName || '';
+    _instance.fieldMask = _instance.fieldMask || undefined;
   }
 
   /**
@@ -2030,6 +2080,13 @@ export class GetCcaiServiceRequest implements GrpcMessage {
           break;
         case 4:
           _instance.nluProjectName = _reader.readString();
+          break;
+        case 5:
+          _instance.fieldMask = new googleProtobuf000.FieldMask();
+          _reader.readMessage(
+            _instance.fieldMask,
+            googleProtobuf000.FieldMask.deserializeBinaryFromReader
+          );
           break;
         default:
           _reader.skipField();
@@ -2054,10 +2111,18 @@ export class GetCcaiServiceRequest implements GrpcMessage {
     if (_instance.nluProjectName) {
       _writer.writeString(4, _instance.nluProjectName);
     }
+    if (_instance.fieldMask) {
+      _writer.writeMessage(
+        5,
+        _instance.fieldMask as any,
+        googleProtobuf000.FieldMask.serializeBinaryToWriter
+      );
+    }
   }
 
   private _name: string;
   private _nluProjectName: string;
+  private _fieldMask?: googleProtobuf000.FieldMask;
 
   /**
    * Message constructor. Initializes the properties and applies default Protobuf values if necessary
@@ -2067,6 +2132,9 @@ export class GetCcaiServiceRequest implements GrpcMessage {
     _value = _value || {};
     this.name = _value.name;
     this.nluProjectName = _value.nluProjectName;
+    this.fieldMask = _value.fieldMask
+      ? new googleProtobuf000.FieldMask(_value.fieldMask)
+      : undefined;
     GetCcaiServiceRequest.refineValues(this);
   }
   get name(): string {
@@ -2080,6 +2148,12 @@ export class GetCcaiServiceRequest implements GrpcMessage {
   }
   set nluProjectName(value: string) {
     this._nluProjectName = value;
+  }
+  get fieldMask(): googleProtobuf000.FieldMask | undefined {
+    return this._fieldMask;
+  }
+  set fieldMask(value: googleProtobuf000.FieldMask | undefined) {
+    this._fieldMask = value;
   }
 
   /**
@@ -2098,7 +2172,8 @@ export class GetCcaiServiceRequest implements GrpcMessage {
   toObject(): GetCcaiServiceRequest.AsObject {
     return {
       name: this.name,
-      nluProjectName: this.nluProjectName
+      nluProjectName: this.nluProjectName,
+      fieldMask: this.fieldMask ? this.fieldMask.toObject() : undefined
     };
   }
 
@@ -2120,7 +2195,8 @@ export class GetCcaiServiceRequest implements GrpcMessage {
   ): GetCcaiServiceRequest.AsProtobufJSON {
     return {
       name: this.name,
-      nluProjectName: this.nluProjectName
+      nluProjectName: this.nluProjectName,
+      fieldMask: this.fieldMask ? this.fieldMask.toProtobufJSON(options) : null
     };
   }
 }
@@ -2131,6 +2207,7 @@ export module GetCcaiServiceRequest {
   export interface AsObject {
     name: string;
     nluProjectName: string;
+    fieldMask?: googleProtobuf000.FieldMask.AsObject;
   }
 
   /**
@@ -2139,6 +2216,7 @@ export module GetCcaiServiceRequest {
   export interface AsProtobufJSON {
     name: string;
     nluProjectName: string;
+    fieldMask: googleProtobuf000.FieldMask.AsProtobufJSON | null;
   }
 }
 
@@ -2171,6 +2249,7 @@ export class ListCcaiProjectsRequest implements GrpcMessage {
     _instance.ccaiProjectSorting = _instance.ccaiProjectSorting || undefined;
     _instance.pageToken = _instance.pageToken || '';
     _instance.nluProjectName = _instance.nluProjectName || '';
+    _instance.fieldMask = _instance.fieldMask || undefined;
   }
 
   /**
@@ -2208,6 +2287,13 @@ export class ListCcaiProjectsRequest implements GrpcMessage {
           break;
         case 5:
           _instance.nluProjectName = _reader.readString();
+          break;
+        case 6:
+          _instance.fieldMask = new googleProtobuf000.FieldMask();
+          _reader.readMessage(
+            _instance.fieldMask,
+            googleProtobuf000.FieldMask.deserializeBinaryFromReader
+          );
           break;
         default:
           _reader.skipField();
@@ -2249,6 +2335,13 @@ export class ListCcaiProjectsRequest implements GrpcMessage {
     if (_instance.nluProjectName) {
       _writer.writeString(5, _instance.nluProjectName);
     }
+    if (_instance.fieldMask) {
+      _writer.writeMessage(
+        6,
+        _instance.fieldMask as any,
+        googleProtobuf000.FieldMask.serializeBinaryToWriter
+      );
+    }
   }
 
   private _ccaiProjectView: CcaiProjectView;
@@ -2256,6 +2349,7 @@ export class ListCcaiProjectsRequest implements GrpcMessage {
   private _ccaiProjectSorting?: CcaiProjectSorting;
   private _pageToken: string;
   private _nluProjectName: string;
+  private _fieldMask?: googleProtobuf000.FieldMask;
 
   /**
    * Message constructor. Initializes the properties and applies default Protobuf values if necessary
@@ -2272,6 +2366,9 @@ export class ListCcaiProjectsRequest implements GrpcMessage {
       : undefined;
     this.pageToken = _value.pageToken;
     this.nluProjectName = _value.nluProjectName;
+    this.fieldMask = _value.fieldMask
+      ? new googleProtobuf000.FieldMask(_value.fieldMask)
+      : undefined;
     ListCcaiProjectsRequest.refineValues(this);
   }
   get ccaiProjectView(): CcaiProjectView {
@@ -2304,6 +2401,12 @@ export class ListCcaiProjectsRequest implements GrpcMessage {
   set nluProjectName(value: string) {
     this._nluProjectName = value;
   }
+  get fieldMask(): googleProtobuf000.FieldMask | undefined {
+    return this._fieldMask;
+  }
+  set fieldMask(value: googleProtobuf000.FieldMask | undefined) {
+    this._fieldMask = value;
+  }
 
   /**
    * Serialize message to binary data
@@ -2328,7 +2431,8 @@ export class ListCcaiProjectsRequest implements GrpcMessage {
         ? this.ccaiProjectSorting.toObject()
         : undefined,
       pageToken: this.pageToken,
-      nluProjectName: this.nluProjectName
+      nluProjectName: this.nluProjectName,
+      fieldMask: this.fieldMask ? this.fieldMask.toObject() : undefined
     };
   }
 
@@ -2362,7 +2466,8 @@ export class ListCcaiProjectsRequest implements GrpcMessage {
         ? this.ccaiProjectSorting.toProtobufJSON(options)
         : null,
       pageToken: this.pageToken,
-      nluProjectName: this.nluProjectName
+      nluProjectName: this.nluProjectName,
+      fieldMask: this.fieldMask ? this.fieldMask.toProtobufJSON(options) : null
     };
   }
 }
@@ -2376,6 +2481,7 @@ export module ListCcaiProjectsRequest {
     ccaiProjectSorting?: CcaiProjectSorting.AsObject;
     pageToken: string;
     nluProjectName: string;
+    fieldMask?: googleProtobuf000.FieldMask.AsObject;
   }
 
   /**
@@ -2387,6 +2493,7 @@ export module ListCcaiProjectsRequest {
     ccaiProjectSorting: CcaiProjectSorting.AsProtobufJSON | null;
     pageToken: string;
     nluProjectName: string;
+    fieldMask: googleProtobuf000.FieldMask.AsProtobufJSON | null;
   }
 }
 
@@ -2764,6 +2871,7 @@ export class CcaiServiceFilter implements GrpcMessage {
   static refineValues(_instance: CcaiServiceFilter) {
     _instance.languageCodes = _instance.languageCodes || [];
     _instance.ccaiServiceTypes = _instance.ccaiServiceTypes || [];
+    _instance.ccaiServiceProviders = _instance.ccaiServiceProviders || [];
   }
 
   /**
@@ -2789,6 +2897,12 @@ export class CcaiServiceFilter implements GrpcMessage {
             (_instance.ccaiServiceTypes = _instance.ccaiServiceTypes || [])
           );
           break;
+        case 3:
+          _reader.readPackableEnumInto(
+            (_instance.ccaiServiceProviders =
+              _instance.ccaiServiceProviders || [])
+          );
+          break;
         default:
           _reader.skipField();
       }
@@ -2812,10 +2926,17 @@ export class CcaiServiceFilter implements GrpcMessage {
     if (_instance.ccaiServiceTypes && _instance.ccaiServiceTypes.length) {
       _writer.writePackedEnum(2, _instance.ccaiServiceTypes);
     }
+    if (
+      _instance.ccaiServiceProviders &&
+      _instance.ccaiServiceProviders.length
+    ) {
+      _writer.writePackedEnum(3, _instance.ccaiServiceProviders);
+    }
   }
 
   private _languageCodes: string[];
   private _ccaiServiceTypes: CcaiServiceType[];
+  private _ccaiServiceProviders: CcaiServiceProvider[];
 
   /**
    * Message constructor. Initializes the properties and applies default Protobuf values if necessary
@@ -2825,6 +2946,7 @@ export class CcaiServiceFilter implements GrpcMessage {
     _value = _value || {};
     this.languageCodes = (_value.languageCodes || []).slice();
     this.ccaiServiceTypes = (_value.ccaiServiceTypes || []).slice();
+    this.ccaiServiceProviders = (_value.ccaiServiceProviders || []).slice();
     CcaiServiceFilter.refineValues(this);
   }
   get languageCodes(): string[] {
@@ -2838,6 +2960,12 @@ export class CcaiServiceFilter implements GrpcMessage {
   }
   set ccaiServiceTypes(value: CcaiServiceType[]) {
     this._ccaiServiceTypes = value;
+  }
+  get ccaiServiceProviders(): CcaiServiceProvider[] {
+    return this._ccaiServiceProviders;
+  }
+  set ccaiServiceProviders(value: CcaiServiceProvider[]) {
+    this._ccaiServiceProviders = value;
   }
 
   /**
@@ -2856,7 +2984,8 @@ export class CcaiServiceFilter implements GrpcMessage {
   toObject(): CcaiServiceFilter.AsObject {
     return {
       languageCodes: (this.languageCodes || []).slice(),
-      ccaiServiceTypes: (this.ccaiServiceTypes || []).slice()
+      ccaiServiceTypes: (this.ccaiServiceTypes || []).slice(),
+      ccaiServiceProviders: (this.ccaiServiceProviders || []).slice()
     };
   }
 
@@ -2880,6 +3009,9 @@ export class CcaiServiceFilter implements GrpcMessage {
       languageCodes: (this.languageCodes || []).slice(),
       ccaiServiceTypes: (this.ccaiServiceTypes || []).map(
         v => CcaiServiceType[v]
+      ),
+      ccaiServiceProviders: (this.ccaiServiceProviders || []).map(
+        v => CcaiServiceProvider[v]
       )
     };
   }
@@ -2891,6 +3023,7 @@ export module CcaiServiceFilter {
   export interface AsObject {
     languageCodes: string[];
     ccaiServiceTypes: CcaiServiceType[];
+    ccaiServiceProviders: CcaiServiceProvider[];
   }
 
   /**
@@ -2899,6 +3032,7 @@ export module CcaiServiceFilter {
   export interface AsProtobufJSON {
     languageCodes: string[];
     ccaiServiceTypes: string[];
+    ccaiServiceProviders: string[];
   }
 }
 
