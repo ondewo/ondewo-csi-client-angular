@@ -30,7 +30,7 @@ IMAGE_UTILS_NAME=ondewo-csi-client-utils-angular:${ONDEWO_CSI_VERSION}
 PRETTIER_WRITE?=
 
 CURRENT_RELEASE_NOTES=`cat RELEASE.md \
-	| perl -ne 'print if /Release ONDEWO CSI Angular Client ${ONDEWO_CSI_VERSION}/../\*\*/'`
+	| perl -ne 'print if /Release ONDEWO CSI Angular Client ${ONDEWO_CSI_VERSION}/../^\*{5}/'`
 
 GH_REPO="https://github.com/ondewo/ondewo-csi-client-angular"
 DEVOPS_ACCOUNT_GIT="ondewo-devops-accounts"
