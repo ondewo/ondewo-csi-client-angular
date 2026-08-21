@@ -21,14 +21,14 @@ config:
   # published section — they look "unused" to the linter but must NOT be removed.
   MD053: false
 globs:
-  - "*.md"
+  - '*.md'
 ignores:
-  - "node_modules/**"
-  - "api/**"
-  - "fesm2022/**"
-  - "coverage/**"
-  - "dist/**"
-  - "build/**"
-  - ".venv/**"
-  - "ondewo-proto-compiler/**"
-  - "src/ondewo-csi-api/**"
+  - 'node_modules/**'
+  - 'api/**'
+  - 'fesm2022/**'
+  - 'coverage/**'
+  - 'dist/**'
+  - 'build/**'
+  - '.venv/**'
+  - 'ondewo-proto-compiler/**'
+  - 'src/ondewo-csi-api/**'
