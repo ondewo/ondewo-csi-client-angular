@@ -20,6 +20,15 @@ jobs:
         with:
           submodules: false
 
+      # The library-layout guard reads ng-packagr's `dest` from the proto-compiler's own
+      # ng-package.json and fails loudly, rather than passing, when it cannot resolve it.
+      # Only that submodule is needed; .gitmodules uses an ssh URL, so rewrite it to https
+      # because the repository is public and the runner has no deploy key.
+      - name: Check out the proto-compiler submodule
+        run: |
+          git config --global url."https://github.com/".insteadOf "git@github.com:"
+          git submodule update --init ondewo-proto-compiler
+
       - name: Set up Node.js 20
         uses: actions/setup-node@v5
         with:

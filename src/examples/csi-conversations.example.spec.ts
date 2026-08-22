@@ -5,7 +5,7 @@ import type {
   ListS2sPipelinesResponse,
   S2sPipeline,
   S2sPipelineId
-} from "../../../api/ondewo/csi/conversation.pb";
+} from "../../api/ondewo/csi/conversation.pb";
 import {
   CSI_CONVERSATIONS_CLIENT,
   CsiConversationsClient,

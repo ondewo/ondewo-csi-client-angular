@@ -1,12 +1,12 @@
 import { Inject, Injectable, InjectionToken } from "@angular/core";
 import { map, Observable } from "rxjs";
-import type { ConversationsClient } from "../../../api/ondewo/csi/conversation.pbsc";
+import type { ConversationsClient } from "../../api/ondewo/csi/conversation.pbsc";
 import type {
   ListS2sPipelinesRequest,
   ListS2sPipelinesResponse,
   S2sPipeline,
   S2sPipelineId
-} from "../../../api/ondewo/csi/conversation.pb";
+} from "../../api/ondewo/csi/conversation.pb";
 
 /**
  * The subset of the generated `ondewo.csi.Conversations` service client this
