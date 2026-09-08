@@ -114,6 +114,12 @@ release: ## Create Github and NPM Release
 	git status
 	git add api
 	git add fesm2022
+# public-api.ts and index.d.ts are build outputs too: the proto compiler's
+# compile-proto-2-angular.sh deletes and regenerates public-api.ts in the output volume, and
+# index.d.ts is copied out of ng-packagr's lib/. Leaving them unstaged let the tracked copies
+# drift from the package npm receives.
+	git add public-api.ts
+	git add index.d.ts
 	git add src
 	git add README.md
 	git add RELEASE.md
