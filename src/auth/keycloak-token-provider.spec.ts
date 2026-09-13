@@ -8,6 +8,7 @@ import {
   KeycloakTokenProvider,
   KeycloakTokenProviderConfig,
   MIN_REFRESH_DELAY_SECONDS,
+  REFRESH_RETRY_BASE_DELAY_SECONDS,
   REFRESH_SKEW_SECONDS
 } from "./keycloak-token-provider";
 
@@ -340,6 +341,166 @@ describe("KeycloakTokenProvider", () => {
 
       // The failed refresh is swallowed and the previous access token stays served.
       expect(provider.getToken()).toBe("access-0");
+      provider.stop();
+      httpMock.verify();
+    });
+
+    /**
+     * Drive a login with a deterministic jitter source, so the failure-path backoff delay
+     * is exact rather than drawn from Math.random.
+     *
+     * @param expiresIn the access-token lifetime the login response reports.
+     * @param fraction the [0,1) value the backoff jitter should use.
+     */
+    async function loggedInWithJitter(
+      expiresIn: number,
+      fraction: number
+    ): Promise<{ provider: KeycloakTokenProvider; httpMock: HttpTestingController }> {
+      const { provider, httpMock } = build({ ...offlineConfig(), randomFraction: (): number => fraction });
+      const pending: Promise<void> = provider.login();
+      httpMock
+        .expectOne(TOKEN_ENDPOINT)
+        .flush({ access_token: "access-0", refresh_token: "offline-token-1", expires_in: expiresIn });
+      await pending;
+      return { provider, httpMock };
+    }
+
+    // A failed background refresh must RE-ARM the loop. Before this the provider armed its next
+    // refresh only on the success path, so a single transient failure ended token renewal for the
+    // whole life of the application -- silently, because the stale token keeps working until it
+    // expires. Re-arming at MIN_REFRESH_DELAY_SECONDS (1 s) would have traded that for a 1 Hz poll
+    // per client against a realm every call container logs into, hence the jittered ladder.
+
+    /** A failed refresh re-arms the loop, and the next attempt recovers the token. */
+    it("re-arms the refresh loop after a failed background refresh", async () => {
+      const expiresIn: number = 300;
+      // fraction 0 puts every retry at the base of its window, so the delay is exactly 5 s.
+      const { provider, httpMock } = await loggedInWithJitter(expiresIn, 0);
+
+      await jest.advanceTimersByTimeAsync((expiresIn - REFRESH_SKEW_SECONDS) * 1000);
+      httpMock.expectOne(TOKEN_ENDPOINT).flush("nope", { status: 503, statusText: "Unavailable" });
+      await Promise.resolve();
+      await Promise.resolve();
+      expect(provider.getToken()).toBe("access-0");
+
+      // Nothing may fire before the 5 s retry base...
+      await jest.advanceTimersByTimeAsync(REFRESH_RETRY_BASE_DELAY_SECONDS * 1000 - 1);
+      httpMock.expectNone(TOKEN_ENDPOINT);
+
+      // ...and the retry must fire once it does. This is the assertion that fails outright on the
+      // pre-fix provider, where no timer was ever re-armed.
+      await jest.advanceTimersByTimeAsync(1);
+      const retry: TestRequest = httpMock.expectOne(TOKEN_ENDPOINT);
+      expect(formFields(retry).grant_type).toBe("refresh_token");
+      retry.flush({ access_token: "access-1", refresh_token: "offline-token-2", expires_in: expiresIn });
+      await Promise.resolve();
+
+      expect(provider.getToken()).toBe("access-1");
+      provider.stop();
+      httpMock.verify();
+    });
+
+    /** Consecutive failures back off exponentially and stop growing at the ceiling. */
+    it("backs off exponentially while refreshes keep failing, capped at the ceiling", async () => {
+      const expiresIn: number = 300;
+      // fraction 1 puts every retry at the TOP of its window, i.e. exactly the ceiling for that
+      // failure count -- which is what makes the ladder observable.
+      const { provider, httpMock } = await loggedInWithJitter(expiresIn, 1);
+
+      await jest.advanceTimersByTimeAsync((expiresIn - REFRESH_SKEW_SECONDS) * 1000);
+      httpMock.expectOne(TOKEN_ENDPOINT).flush("nope", { status: 503, statusText: "Unavailable" });
+      await Promise.resolve();
+      await Promise.resolve();
+
+      // base * 2^(failures-1), capped at REFRESH_RETRY_MAX_DELAY_SECONDS. The cap is the point:
+      // without it a long outage would push the next attempt out by hours.
+      const expectedDelaysInS: number[] = [5, 10, 20, 40, 80, 160, 300, 300];
+      for (const delayInS of expectedDelaysInS) {
+        await jest.advanceTimersByTimeAsync(delayInS * 1000 - 1);
+        httpMock.expectNone(TOKEN_ENDPOINT);
+
+        await jest.advanceTimersByTimeAsync(1);
+        httpMock.expectOne(TOKEN_ENDPOINT).flush("nope", { status: 503, statusText: "Unavailable" });
+        await Promise.resolve();
+        await Promise.resolve();
+      }
+      expect(provider.getToken()).toBe("access-0");
+      provider.stop();
+      httpMock.verify();
+    });
+
+    /** The delay is drawn from inside the jitter window, not pinned to either edge. */
+    it("draws the retry delay from the jitter window", async () => {
+      const expiresIn: number = 300;
+      const { provider, httpMock } = await loggedInWithJitter(expiresIn, 0.5);
+
+      await jest.advanceTimersByTimeAsync((expiresIn - REFRESH_SKEW_SECONDS) * 1000);
+      httpMock.expectOne(TOKEN_ENDPOINT).flush("nope", { status: 503, statusText: "Unavailable" });
+      await Promise.resolve();
+      await Promise.resolve();
+
+      // Failure 1: window [5, 5] -> 5 s regardless of the fraction.
+      await jest.advanceTimersByTimeAsync(5000);
+      httpMock.expectOne(TOKEN_ENDPOINT).flush("nope", { status: 503, statusText: "Unavailable" });
+      await Promise.resolve();
+      await Promise.resolve();
+
+      // Failure 2: window [5, 10], fraction 0.5 -> 7.5 s. Neither edge of the window.
+      await jest.advanceTimersByTimeAsync(7499);
+      httpMock.expectNone(TOKEN_ENDPOINT);
+      await jest.advanceTimersByTimeAsync(1);
+      httpMock.expectOne(TOKEN_ENDPOINT).flush({
+        access_token: "access-1",
+        refresh_token: "offline-token-2",
+        expires_in: expiresIn
+      });
+      await Promise.resolve();
+
+      expect(provider.getToken()).toBe("access-1");
+      provider.stop();
+      httpMock.verify();
+    });
+
+    /** A successful refresh resets the ladder, so the next failure waits the base again. */
+    it("resets the backoff ladder after a successful refresh", async () => {
+      const expiresIn: number = 300;
+      const { provider, httpMock } = await loggedInWithJitter(expiresIn, 1);
+
+      await jest.advanceTimersByTimeAsync((expiresIn - REFRESH_SKEW_SECONDS) * 1000);
+      httpMock.expectOne(TOKEN_ENDPOINT).flush("nope", { status: 503, statusText: "Unavailable" });
+      await Promise.resolve();
+      await Promise.resolve();
+
+      // Failure 1 -> 5 s, and this attempt fails too.
+      await jest.advanceTimersByTimeAsync(5000);
+      httpMock.expectOne(TOKEN_ENDPOINT).flush("nope", { status: 503, statusText: "Unavailable" });
+      await Promise.resolve();
+      await Promise.resolve();
+
+      // Failure 2 -> 10 s, and this attempt SUCCEEDS.
+      await jest.advanceTimersByTimeAsync(10000);
+      httpMock.expectOne(TOKEN_ENDPOINT).flush({
+        access_token: "access-1",
+        refresh_token: "offline-token-2",
+        expires_in: expiresIn
+      });
+      await Promise.resolve();
+      expect(provider.getToken()).toBe("access-1");
+
+      // Back on the success schedule, and that attempt fails again.
+      await jest.advanceTimersByTimeAsync((expiresIn - REFRESH_SKEW_SECONDS) * 1000);
+      httpMock.expectOne(TOKEN_ENDPOINT).flush("nope", { status: 503, statusText: "Unavailable" });
+      await Promise.resolve();
+      await Promise.resolve();
+
+      // Because the ladder was reset it must wait 5 s, not 20 s.
+      await jest.advanceTimersByTimeAsync(4999);
+      httpMock.expectNone(TOKEN_ENDPOINT);
+      await jest.advanceTimersByTimeAsync(1);
+      httpMock.expectOne(TOKEN_ENDPOINT).flush("nope", { status: 503, statusText: "Unavailable" });
+      await Promise.resolve();
+      await Promise.resolve();
+
       provider.stop();
       httpMock.verify();
     });

@@ -83541,6 +83541,11 @@ interface KeycloakTokenProviderConfig {
 	 * browser/OS level instead.
 	 */
 	keycloakVerifySsl?: boolean;
+	/**
+	 * Optional [0,1) random source for the failure-backoff jitter; defaults to
+	 * `Math.random`. Tests inject a constant to make the retry delay exact.
+	 */
+	randomFraction?: () => number;
 }
 /**
  * DI token under which the consuming application provides the
@@ -83604,6 +83609,10 @@ declare class KeycloakTokenProvider implements TokenProvider, OnDestroy {
 	private timer;
 	/** Whether {@link stop} has run; suppresses any further (re-)scheduling. */
 	private stopped;
+	/** Consecutive failed background refreshes; drives the retry backoff, reset on every success. */
+	private consecutiveRefreshFailures;
+	/** [0,1) random source used for the failure-backoff jitter (test-injectable). */
+	private readonly randomFraction;
 	/** Public SDK client id sent on every token request (no `client_secret`). */
 	private readonly clientId;
 	/**
@@ -83684,6 +83693,25 @@ declare class KeycloakTokenProvider implements TokenProvider, OnDestroy {
 	 * @param expiresInRaw the `expires_in` (seconds) from the latest response.
 	 */
 	private scheduleRefresh;
+	/**
+	 * Arm the next attempt after a FAILED refresh, using bounded exponential backoff
+	 * with full jitter.
+	 *
+	 * The delay grows `REFRESH_RETRY_BASE_DELAY_SECONDS * 2 ** (failures - 1)` up to
+	 * {@link REFRESH_RETRY_MAX_DELAY_SECONDS}, and the actual wait is drawn uniformly
+	 * from `[base, ceiling]`. The jitter is the load-bearing half: N clients whose
+	 * refreshes fail in the same instant would otherwise retry in lockstep for as long
+	 * as the outage lasts.
+	 */
+	private scheduleRetryAfterFailure;
+	/**
+	 * Arm the single refresh timer `delaySeconds` from now. Shared by the success path
+	 * ({@link scheduleRefresh}) and the failure path ({@link scheduleRetryAfterFailure})
+	 * so the `stopped` guard and the clear-before-arm are written exactly once.
+	 *
+	 * @param delaySeconds seconds to wait before the next refresh attempt.
+	 */
+	private armRefreshTimer;
 	/**
 	 * POST a form-urlencoded body to the token endpoint and return the parsed
 	 * response.

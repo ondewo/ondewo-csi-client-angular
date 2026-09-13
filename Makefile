@@ -15,7 +15,7 @@ export
 # 		Variables
 ########################################################
 
-ONDEWO_CSI_VERSION=5.5.0
+ONDEWO_CSI_VERSION=5.5.1
 CSI_API_GIT_BRANCH=tags/5.5.0
 ONDEWO_PROTO_COMPILER_GIT_BRANCH=tags/5.13.0
 ONDEWO_PROTO_COMPILER_DIR=ondewo-proto-compiler

@@ -21,6 +21,20 @@ export const REFRESH_SKEW_SECONDS: number = 30;
 export const MIN_REFRESH_DELAY_SECONDS: number = 1;
 
 /**
+ * First retry delay (seconds) after a FAILED background refresh. Deliberately far above
+ * {@link MIN_REFRESH_DELAY_SECONDS}: retrying at the 1 s floor turns a Keycloak outage into a 1 Hz
+ * poll per client, and ondewo runs one client per call container -- so a floor that is harmless for
+ * a single process is an amplifier against a shared realm.
+ */
+export const REFRESH_RETRY_BASE_DELAY_SECONDS: number = 5;
+
+/** Ceiling (seconds) for the failure backoff: a persistent outage is retried at most this often. */
+export const REFRESH_RETRY_MAX_DELAY_SECONDS: number = 300;
+
+/** Exponent cap so `2 ** n` cannot grow without bound; 5 * 2^6 = 320 already exceeds the ceiling. */
+export const MAX_REFRESH_RETRY_EXPONENT: number = 6;
+
+/**
  * Configuration for {@link KeycloakTokenProvider}.
  *
  * Supply EITHER an `offlineToken` (a pre-issued offline/refresh token — the
@@ -74,6 +88,11 @@ export interface KeycloakTokenProviderConfig {
    * browser/OS level instead.
    */
   keycloakVerifySsl?: boolean;
+  /**
+   * Optional [0,1) random source for the failure-backoff jitter; defaults to
+   * `Math.random`. Tests inject a constant to make the retry delay exact.
+   */
+  randomFraction?: () => number;
 }
 
 /**
@@ -177,6 +196,12 @@ export class KeycloakTokenProvider implements TokenProvider, OnDestroy {
   /** Whether {@link stop} has run; suppresses any further (re-)scheduling. */
   private stopped: boolean = false;
 
+  /** Consecutive failed background refreshes; drives the retry backoff, reset on every success. */
+  private consecutiveRefreshFailures: number = 0;
+
+  /** [0,1) random source used for the failure-backoff jitter (test-injectable). */
+  private readonly randomFraction: () => number;
+
   /** Public SDK client id sent on every token request (no `client_secret`). */
   private readonly clientId: string;
 
@@ -230,6 +255,7 @@ export class KeycloakTokenProvider implements TokenProvider, OnDestroy {
     this.clientId = injectedConfig.clientId;
     // Stored for cross-SDK config parity; a no-op on the browser transport (see field doc).
     this.verifySsl = injectedConfig.keycloakVerifySsl ?? true;
+    this.randomFraction = injectedConfig.randomFraction ?? Math.random;
     const base: string = injectedConfig.keycloakUrl.replace(/\/+$/, "");
     this.tokenEndpoint = `${base}/realms/${encodeURIComponent(injectedConfig.realm)}/protocol/openid-connect/token`;
 
@@ -338,20 +364,59 @@ export class KeycloakTokenProvider implements TokenProvider, OnDestroy {
    * @param expiresInRaw the `expires_in` (seconds) from the latest response.
    */
   private scheduleRefresh(expiresInRaw: number | undefined): void {
+    // Only ever reached after a token exchange SUCCEEDED, so the backoff ladder resets here.
+    this.consecutiveRefreshFailures = 0;
+    const expiresInSeconds: number =
+      typeof expiresInRaw === "number" && expiresInRaw > 0 ? expiresInRaw : MIN_REFRESH_DELAY_SECONDS;
+    this.armRefreshTimer(Math.max(expiresInSeconds - REFRESH_SKEW_SECONDS, MIN_REFRESH_DELAY_SECONDS));
+  }
+
+  /**
+   * Arm the next attempt after a FAILED refresh, using bounded exponential backoff
+   * with full jitter.
+   *
+   * The delay grows `REFRESH_RETRY_BASE_DELAY_SECONDS * 2 ** (failures - 1)` up to
+   * {@link REFRESH_RETRY_MAX_DELAY_SECONDS}, and the actual wait is drawn uniformly
+   * from `[base, ceiling]`. The jitter is the load-bearing half: N clients whose
+   * refreshes fail in the same instant would otherwise retry in lockstep for as long
+   * as the outage lasts.
+   */
+  private scheduleRetryAfterFailure(): void {
+    this.consecutiveRefreshFailures += 1;
+    const exponent: number = Math.min(this.consecutiveRefreshFailures - 1, MAX_REFRESH_RETRY_EXPONENT);
+    const growthFactor: number = 2 ** exponent;
+    const ceilingSeconds: number = Math.min(
+      REFRESH_RETRY_BASE_DELAY_SECONDS * growthFactor,
+      REFRESH_RETRY_MAX_DELAY_SECONDS
+    );
+    const jitteredSeconds: number =
+      REFRESH_RETRY_BASE_DELAY_SECONDS +
+      (this.randomFraction() * (ceilingSeconds - REFRESH_RETRY_BASE_DELAY_SECONDS));
+    this.armRefreshTimer(jitteredSeconds);
+  }
+
+  /**
+   * Arm the single refresh timer `delaySeconds` from now. Shared by the success path
+   * ({@link scheduleRefresh}) and the failure path ({@link scheduleRetryAfterFailure})
+   * so the `stopped` guard and the clear-before-arm are written exactly once.
+   *
+   * @param delaySeconds seconds to wait before the next refresh attempt.
+   */
+  private armRefreshTimer(delaySeconds: number): void {
     if (this.stopped) {
       return;
     }
     if (this.timer !== null) {
       clearTimeout(this.timer);
     }
-    const expiresInSeconds: number =
-      typeof expiresInRaw === "number" && expiresInRaw > 0 ? expiresInRaw : MIN_REFRESH_DELAY_SECONDS;
-    const delaySeconds: number = Math.max(expiresInSeconds - REFRESH_SKEW_SECONDS, MIN_REFRESH_DELAY_SECONDS);
     this.timer = setTimeout((): void => {
       void this.refresh().catch((): void => {
-        // Swallow a transient background-refresh failure: the next interceptor read
-        // gets the stale (possibly expired) token and the server replies
-        // UNAUTHENTICATED, prompting the consumer to re-login.
+        // A transient background-refresh failure does not surface to the caller: the
+        // next interceptor read gets the stale (possibly expired) token and the server
+        // replies UNAUTHENTICATED, prompting the consumer to re-login. What it MUST do
+        // is re-arm -- scheduleRefresh runs only on the success path, so without this a
+        // single failure ended token renewal for the whole life of the application.
+        this.scheduleRetryAfterFailure();
       });
     }, delaySeconds * 1000);
   }
