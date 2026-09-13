@@ -1,13 +1,12 @@
 name: tests
 
 on:
+  # Every branch, so the release/* branch a version actually ships from is covered too.
+  # The other four CSI clients already use this trigger; angular was the lone outlier and
+  # its release branches therefore had no CI at all.
   push:
-    branches:
-      - master
-      - 'OND211-**'
+    branches: ['**']
   pull_request:
-    branches:
-      - master
 
 jobs:
   auth-unit-tests:
