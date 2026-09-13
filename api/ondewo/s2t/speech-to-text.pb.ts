@@ -49,6 +49,17 @@ export enum ReasoningEffort {
   REASONING_EFFORT_MEDIUM = 3,
   REASONING_EFFORT_HIGH = 4
 }
+export enum VadMethod {
+  VAD_METHOD_UNSPECIFIED = 0,
+  VAD_METHOD_PYANNOTE = 1,
+  VAD_METHOD_SILERO = 2
+}
+export enum TsdMethod {
+  TSD_METHOD_UNSPECIFIED = 0,
+  TSD_METHOD_NONE = 1,
+  TSD_METHOD_PYANNOTE = 2,
+  TSD_METHOD_WESPEAKER = 3
+}
 /**
  * Message implementation for ondewo.s2t.TranscribeRequestConfig
  */
@@ -10800,6 +10811,10 @@ export class VoiceActivityDetection implements GrpcMessage {
     _instance.active = _instance.active || '';
     _instance.samplingRate = _instance.samplingRate || '0';
     _instance.pyannote = _instance.pyannote || undefined;
+    _instance.silero = _instance.silero || undefined;
+    _instance.wespeakerTsd = _instance.wespeakerTsd || undefined;
+    _instance.vadMethod = _instance.vadMethod || 0;
+    _instance.tsdMethod = _instance.tsdMethod || 0;
   }
 
   /**
@@ -10827,6 +10842,26 @@ export class VoiceActivityDetection implements GrpcMessage {
             _instance.pyannote,
             Pyannote.deserializeBinaryFromReader
           );
+          break;
+        case 4:
+          _instance.silero = new Silero();
+          _reader.readMessage(
+            _instance.silero,
+            Silero.deserializeBinaryFromReader
+          );
+          break;
+        case 5:
+          _instance.wespeakerTsd = new WespeakerTsd();
+          _reader.readMessage(
+            _instance.wespeakerTsd,
+            WespeakerTsd.deserializeBinaryFromReader
+          );
+          break;
+        case 6:
+          _instance.vadMethod = _reader.readEnum();
+          break;
+        case 7:
+          _instance.tsdMethod = _reader.readEnum();
           break;
         default:
           _reader.skipField();
@@ -10858,11 +10893,35 @@ export class VoiceActivityDetection implements GrpcMessage {
         Pyannote.serializeBinaryToWriter
       );
     }
+    if (_instance.silero) {
+      _writer.writeMessage(
+        4,
+        _instance.silero as any,
+        Silero.serializeBinaryToWriter
+      );
+    }
+    if (_instance.wespeakerTsd) {
+      _writer.writeMessage(
+        5,
+        _instance.wespeakerTsd as any,
+        WespeakerTsd.serializeBinaryToWriter
+      );
+    }
+    if (_instance.vadMethod) {
+      _writer.writeEnum(6, _instance.vadMethod);
+    }
+    if (_instance.tsdMethod) {
+      _writer.writeEnum(7, _instance.tsdMethod);
+    }
   }
 
   private _active: string;
   private _samplingRate: string;
   private _pyannote?: Pyannote;
+  private _silero?: Silero;
+  private _wespeakerTsd?: WespeakerTsd;
+  private _vadMethod: VadMethod;
+  private _tsdMethod: TsdMethod;
 
   /**
    * Message constructor. Initializes the properties and applies default Protobuf values if necessary
@@ -10873,6 +10932,12 @@ export class VoiceActivityDetection implements GrpcMessage {
     this.active = _value.active;
     this.samplingRate = _value.samplingRate;
     this.pyannote = _value.pyannote ? new Pyannote(_value.pyannote) : undefined;
+    this.silero = _value.silero ? new Silero(_value.silero) : undefined;
+    this.wespeakerTsd = _value.wespeakerTsd
+      ? new WespeakerTsd(_value.wespeakerTsd)
+      : undefined;
+    this.vadMethod = _value.vadMethod;
+    this.tsdMethod = _value.tsdMethod;
     VoiceActivityDetection.refineValues(this);
   }
   get active(): string {
@@ -10893,6 +10958,30 @@ export class VoiceActivityDetection implements GrpcMessage {
   set pyannote(value: Pyannote | undefined) {
     this._pyannote = value;
   }
+  get silero(): Silero | undefined {
+    return this._silero;
+  }
+  set silero(value: Silero | undefined) {
+    this._silero = value;
+  }
+  get wespeakerTsd(): WespeakerTsd | undefined {
+    return this._wespeakerTsd;
+  }
+  set wespeakerTsd(value: WespeakerTsd | undefined) {
+    this._wespeakerTsd = value;
+  }
+  get vadMethod(): VadMethod {
+    return this._vadMethod;
+  }
+  set vadMethod(value: VadMethod) {
+    this._vadMethod = value;
+  }
+  get tsdMethod(): TsdMethod {
+    return this._tsdMethod;
+  }
+  set tsdMethod(value: TsdMethod) {
+    this._tsdMethod = value;
+  }
 
   /**
    * Serialize message to binary data
@@ -10911,7 +11000,13 @@ export class VoiceActivityDetection implements GrpcMessage {
     return {
       active: this.active,
       samplingRate: this.samplingRate,
-      pyannote: this.pyannote ? this.pyannote.toObject() : undefined
+      pyannote: this.pyannote ? this.pyannote.toObject() : undefined,
+      silero: this.silero ? this.silero.toObject() : undefined,
+      wespeakerTsd: this.wespeakerTsd
+        ? this.wespeakerTsd.toObject()
+        : undefined,
+      vadMethod: this.vadMethod,
+      tsdMethod: this.tsdMethod
     };
   }
 
@@ -10934,7 +11029,23 @@ export class VoiceActivityDetection implements GrpcMessage {
     return {
       active: this.active,
       samplingRate: this.samplingRate,
-      pyannote: this.pyannote ? this.pyannote.toProtobufJSON(options) : null
+      pyannote: this.pyannote ? this.pyannote.toProtobufJSON(options) : null,
+      silero: this.silero ? this.silero.toProtobufJSON(options) : null,
+      wespeakerTsd: this.wespeakerTsd
+        ? this.wespeakerTsd.toProtobufJSON(options)
+        : null,
+      vadMethod:
+        VadMethod[
+          this.vadMethod === null || this.vadMethod === undefined
+            ? 0
+            : this.vadMethod
+        ],
+      tsdMethod:
+        TsdMethod[
+          this.tsdMethod === null || this.tsdMethod === undefined
+            ? 0
+            : this.tsdMethod
+        ]
     };
   }
 }
@@ -10946,6 +11057,10 @@ export module VoiceActivityDetection {
     active: string;
     samplingRate: string;
     pyannote?: Pyannote.AsObject;
+    silero?: Silero.AsObject;
+    wespeakerTsd?: WespeakerTsd.AsObject;
+    vadMethod: VadMethod;
+    tsdMethod: TsdMethod;
   }
 
   /**
@@ -10955,6 +11070,10 @@ export module VoiceActivityDetection {
     active: string;
     samplingRate: string;
     pyannote: Pyannote.AsProtobufJSON | null;
+    silero: Silero.AsProtobufJSON | null;
+    wespeakerTsd: WespeakerTsd.AsProtobufJSON | null;
+    vadMethod: string;
+    tsdMethod: string;
   }
 }
 
@@ -11183,6 +11302,519 @@ export module Pyannote {
     minDurationOn: number;
     tritonServerHost: string;
     tritonServerPort: string;
+  }
+}
+
+/**
+ * Message implementation for ondewo.s2t.Silero
+ */
+export class Silero implements GrpcMessage {
+  static id = 'ondewo.s2t.Silero';
+
+  /**
+   * Deserialize binary data to message
+   * @param instance message instance
+   */
+  static deserializeBinary(bytes: ByteSource) {
+    const instance = new Silero();
+    Silero.deserializeBinaryFromReader(instance, new BinaryReader(bytes));
+    return instance;
+  }
+
+  /**
+   * Check all the properties and set default protobuf values if necessary
+   * @param _instance message instance
+   */
+  static refineValues(_instance: Silero) {
+    _instance.modelName = _instance.modelName || '';
+    _instance.minAudioSize = _instance.minAudioSize || '0';
+    _instance.threshold = _instance.threshold || 0;
+    _instance.minSpeechDurationMs = _instance.minSpeechDurationMs || 0;
+    _instance.minSilenceDurationMs = _instance.minSilenceDurationMs || 0;
+    _instance.speechPadMs = _instance.speechPadMs || 0;
+    _instance.tritonServerHost = _instance.tritonServerHost || '';
+    _instance.tritonServerPort = _instance.tritonServerPort || '0';
+  }
+
+  /**
+   * Deserializes / reads binary message into message instance using provided binary reader
+   * @param _instance message instance
+   * @param _reader binary reader instance
+   */
+  static deserializeBinaryFromReader(_instance: Silero, _reader: BinaryReader) {
+    while (_reader.nextField()) {
+      if (_reader.isEndGroup()) break;
+
+      switch (_reader.getFieldNumber()) {
+        case 1:
+          _instance.modelName = _reader.readString();
+          break;
+        case 2:
+          _instance.minAudioSize = _reader.readInt64String();
+          break;
+        case 3:
+          _instance.threshold = _reader.readFloat();
+          break;
+        case 4:
+          _instance.minSpeechDurationMs = _reader.readFloat();
+          break;
+        case 5:
+          _instance.minSilenceDurationMs = _reader.readFloat();
+          break;
+        case 6:
+          _instance.speechPadMs = _reader.readFloat();
+          break;
+        case 7:
+          _instance.tritonServerHost = _reader.readString();
+          break;
+        case 8:
+          _instance.tritonServerPort = _reader.readInt64String();
+          break;
+        default:
+          _reader.skipField();
+      }
+    }
+
+    Silero.refineValues(_instance);
+  }
+
+  /**
+   * Serializes a message to binary format using provided binary reader
+   * @param _instance message instance
+   * @param _writer binary writer instance
+   */
+  static serializeBinaryToWriter(_instance: Silero, _writer: BinaryWriter) {
+    if (_instance.modelName) {
+      _writer.writeString(1, _instance.modelName);
+    }
+    if (_instance.minAudioSize) {
+      _writer.writeInt64String(2, _instance.minAudioSize);
+    }
+    if (_instance.threshold) {
+      _writer.writeFloat(3, _instance.threshold);
+    }
+    if (_instance.minSpeechDurationMs) {
+      _writer.writeFloat(4, _instance.minSpeechDurationMs);
+    }
+    if (_instance.minSilenceDurationMs) {
+      _writer.writeFloat(5, _instance.minSilenceDurationMs);
+    }
+    if (_instance.speechPadMs) {
+      _writer.writeFloat(6, _instance.speechPadMs);
+    }
+    if (_instance.tritonServerHost) {
+      _writer.writeString(7, _instance.tritonServerHost);
+    }
+    if (_instance.tritonServerPort) {
+      _writer.writeInt64String(8, _instance.tritonServerPort);
+    }
+  }
+
+  private _modelName: string;
+  private _minAudioSize: string;
+  private _threshold: number;
+  private _minSpeechDurationMs: number;
+  private _minSilenceDurationMs: number;
+  private _speechPadMs: number;
+  private _tritonServerHost: string;
+  private _tritonServerPort: string;
+
+  /**
+   * Message constructor. Initializes the properties and applies default Protobuf values if necessary
+   * @param _value initial values object or instance of Silero to deeply clone from
+   */
+  constructor(_value?: RecursivePartial<Silero.AsObject>) {
+    _value = _value || {};
+    this.modelName = _value.modelName;
+    this.minAudioSize = _value.minAudioSize;
+    this.threshold = _value.threshold;
+    this.minSpeechDurationMs = _value.minSpeechDurationMs;
+    this.minSilenceDurationMs = _value.minSilenceDurationMs;
+    this.speechPadMs = _value.speechPadMs;
+    this.tritonServerHost = _value.tritonServerHost;
+    this.tritonServerPort = _value.tritonServerPort;
+    Silero.refineValues(this);
+  }
+  get modelName(): string {
+    return this._modelName;
+  }
+  set modelName(value: string) {
+    this._modelName = value;
+  }
+  get minAudioSize(): string {
+    return this._minAudioSize;
+  }
+  set minAudioSize(value: string) {
+    this._minAudioSize = value;
+  }
+  get threshold(): number {
+    return this._threshold;
+  }
+  set threshold(value: number) {
+    this._threshold = value;
+  }
+  get minSpeechDurationMs(): number {
+    return this._minSpeechDurationMs;
+  }
+  set minSpeechDurationMs(value: number) {
+    this._minSpeechDurationMs = value;
+  }
+  get minSilenceDurationMs(): number {
+    return this._minSilenceDurationMs;
+  }
+  set minSilenceDurationMs(value: number) {
+    this._minSilenceDurationMs = value;
+  }
+  get speechPadMs(): number {
+    return this._speechPadMs;
+  }
+  set speechPadMs(value: number) {
+    this._speechPadMs = value;
+  }
+  get tritonServerHost(): string {
+    return this._tritonServerHost;
+  }
+  set tritonServerHost(value: string) {
+    this._tritonServerHost = value;
+  }
+  get tritonServerPort(): string {
+    return this._tritonServerPort;
+  }
+  set tritonServerPort(value: string) {
+    this._tritonServerPort = value;
+  }
+
+  /**
+   * Serialize message to binary data
+   * @param instance message instance
+   */
+  serializeBinary() {
+    const writer = new BinaryWriter();
+    Silero.serializeBinaryToWriter(this, writer);
+    return writer.getResultBuffer();
+  }
+
+  /**
+   * Cast message to standard JavaScript object (all non-primitive values are deeply cloned)
+   */
+  toObject(): Silero.AsObject {
+    return {
+      modelName: this.modelName,
+      minAudioSize: this.minAudioSize,
+      threshold: this.threshold,
+      minSpeechDurationMs: this.minSpeechDurationMs,
+      minSilenceDurationMs: this.minSilenceDurationMs,
+      speechPadMs: this.speechPadMs,
+      tritonServerHost: this.tritonServerHost,
+      tritonServerPort: this.tritonServerPort
+    };
+  }
+
+  /**
+   * Convenience method to support JSON.stringify(message), replicates the structure of toObject()
+   */
+  toJSON() {
+    return this.toObject();
+  }
+
+  /**
+   * Cast message to JSON using protobuf JSON notation: https://developers.google.com/protocol-buffers/docs/proto3#json
+   * Attention: output differs from toObject() e.g. enums are represented as names and not as numbers, Timestamp is an ISO Date string format etc.
+   * If the message itself or some of descendant messages is google.protobuf.Any, you MUST provide a message pool as options. If not, the messagePool is not required
+   */
+  toProtobufJSON(
+    // @ts-ignore
+    options?: ToProtobufJSONOptions
+  ): Silero.AsProtobufJSON {
+    return {
+      modelName: this.modelName,
+      minAudioSize: this.minAudioSize,
+      threshold: this.threshold,
+      minSpeechDurationMs: this.minSpeechDurationMs,
+      minSilenceDurationMs: this.minSilenceDurationMs,
+      speechPadMs: this.speechPadMs,
+      tritonServerHost: this.tritonServerHost,
+      tritonServerPort: this.tritonServerPort
+    };
+  }
+}
+export module Silero {
+  /**
+   * Standard JavaScript object representation for Silero
+   */
+  export interface AsObject {
+    modelName: string;
+    minAudioSize: string;
+    threshold: number;
+    minSpeechDurationMs: number;
+    minSilenceDurationMs: number;
+    speechPadMs: number;
+    tritonServerHost: string;
+    tritonServerPort: string;
+  }
+
+  /**
+   * Protobuf JSON representation for Silero
+   */
+  export interface AsProtobufJSON {
+    modelName: string;
+    minAudioSize: string;
+    threshold: number;
+    minSpeechDurationMs: number;
+    minSilenceDurationMs: number;
+    speechPadMs: number;
+    tritonServerHost: string;
+    tritonServerPort: string;
+  }
+}
+
+/**
+ * Message implementation for ondewo.s2t.WespeakerTsd
+ */
+export class WespeakerTsd implements GrpcMessage {
+  static id = 'ondewo.s2t.WespeakerTsd';
+
+  /**
+   * Deserialize binary data to message
+   * @param instance message instance
+   */
+  static deserializeBinary(bytes: ByteSource) {
+    const instance = new WespeakerTsd();
+    WespeakerTsd.deserializeBinaryFromReader(instance, new BinaryReader(bytes));
+    return instance;
+  }
+
+  /**
+   * Check all the properties and set default protobuf values if necessary
+   * @param _instance message instance
+   */
+  static refineValues(_instance: WespeakerTsd) {
+    _instance.active = _instance.active || false;
+    _instance.modelName = _instance.modelName || '';
+    _instance.tritonServerHost = _instance.tritonServerHost || '';
+    _instance.tritonServerPort = _instance.tritonServerPort || '0';
+    _instance.similarityThreshold = _instance.similarityThreshold || 0;
+    _instance.minAudioLength = _instance.minAudioLength || 0;
+    _instance.referenceMaxLength = _instance.referenceMaxLength || 0;
+  }
+
+  /**
+   * Deserializes / reads binary message into message instance using provided binary reader
+   * @param _instance message instance
+   * @param _reader binary reader instance
+   */
+  static deserializeBinaryFromReader(
+    _instance: WespeakerTsd,
+    _reader: BinaryReader
+  ) {
+    while (_reader.nextField()) {
+      if (_reader.isEndGroup()) break;
+
+      switch (_reader.getFieldNumber()) {
+        case 1:
+          _instance.active = _reader.readBool();
+          break;
+        case 2:
+          _instance.modelName = _reader.readString();
+          break;
+        case 3:
+          _instance.tritonServerHost = _reader.readString();
+          break;
+        case 4:
+          _instance.tritonServerPort = _reader.readInt64String();
+          break;
+        case 5:
+          _instance.similarityThreshold = _reader.readFloat();
+          break;
+        case 6:
+          _instance.minAudioLength = _reader.readFloat();
+          break;
+        case 7:
+          _instance.referenceMaxLength = _reader.readFloat();
+          break;
+        default:
+          _reader.skipField();
+      }
+    }
+
+    WespeakerTsd.refineValues(_instance);
+  }
+
+  /**
+   * Serializes a message to binary format using provided binary reader
+   * @param _instance message instance
+   * @param _writer binary writer instance
+   */
+  static serializeBinaryToWriter(
+    _instance: WespeakerTsd,
+    _writer: BinaryWriter
+  ) {
+    if (_instance.active) {
+      _writer.writeBool(1, _instance.active);
+    }
+    if (_instance.modelName) {
+      _writer.writeString(2, _instance.modelName);
+    }
+    if (_instance.tritonServerHost) {
+      _writer.writeString(3, _instance.tritonServerHost);
+    }
+    if (_instance.tritonServerPort) {
+      _writer.writeInt64String(4, _instance.tritonServerPort);
+    }
+    if (_instance.similarityThreshold) {
+      _writer.writeFloat(5, _instance.similarityThreshold);
+    }
+    if (_instance.minAudioLength) {
+      _writer.writeFloat(6, _instance.minAudioLength);
+    }
+    if (_instance.referenceMaxLength) {
+      _writer.writeFloat(7, _instance.referenceMaxLength);
+    }
+  }
+
+  private _active: boolean;
+  private _modelName: string;
+  private _tritonServerHost: string;
+  private _tritonServerPort: string;
+  private _similarityThreshold: number;
+  private _minAudioLength: number;
+  private _referenceMaxLength: number;
+
+  /**
+   * Message constructor. Initializes the properties and applies default Protobuf values if necessary
+   * @param _value initial values object or instance of WespeakerTsd to deeply clone from
+   */
+  constructor(_value?: RecursivePartial<WespeakerTsd.AsObject>) {
+    _value = _value || {};
+    this.active = _value.active;
+    this.modelName = _value.modelName;
+    this.tritonServerHost = _value.tritonServerHost;
+    this.tritonServerPort = _value.tritonServerPort;
+    this.similarityThreshold = _value.similarityThreshold;
+    this.minAudioLength = _value.minAudioLength;
+    this.referenceMaxLength = _value.referenceMaxLength;
+    WespeakerTsd.refineValues(this);
+  }
+  get active(): boolean {
+    return this._active;
+  }
+  set active(value: boolean) {
+    this._active = value;
+  }
+  get modelName(): string {
+    return this._modelName;
+  }
+  set modelName(value: string) {
+    this._modelName = value;
+  }
+  get tritonServerHost(): string {
+    return this._tritonServerHost;
+  }
+  set tritonServerHost(value: string) {
+    this._tritonServerHost = value;
+  }
+  get tritonServerPort(): string {
+    return this._tritonServerPort;
+  }
+  set tritonServerPort(value: string) {
+    this._tritonServerPort = value;
+  }
+  get similarityThreshold(): number {
+    return this._similarityThreshold;
+  }
+  set similarityThreshold(value: number) {
+    this._similarityThreshold = value;
+  }
+  get minAudioLength(): number {
+    return this._minAudioLength;
+  }
+  set minAudioLength(value: number) {
+    this._minAudioLength = value;
+  }
+  get referenceMaxLength(): number {
+    return this._referenceMaxLength;
+  }
+  set referenceMaxLength(value: number) {
+    this._referenceMaxLength = value;
+  }
+
+  /**
+   * Serialize message to binary data
+   * @param instance message instance
+   */
+  serializeBinary() {
+    const writer = new BinaryWriter();
+    WespeakerTsd.serializeBinaryToWriter(this, writer);
+    return writer.getResultBuffer();
+  }
+
+  /**
+   * Cast message to standard JavaScript object (all non-primitive values are deeply cloned)
+   */
+  toObject(): WespeakerTsd.AsObject {
+    return {
+      active: this.active,
+      modelName: this.modelName,
+      tritonServerHost: this.tritonServerHost,
+      tritonServerPort: this.tritonServerPort,
+      similarityThreshold: this.similarityThreshold,
+      minAudioLength: this.minAudioLength,
+      referenceMaxLength: this.referenceMaxLength
+    };
+  }
+
+  /**
+   * Convenience method to support JSON.stringify(message), replicates the structure of toObject()
+   */
+  toJSON() {
+    return this.toObject();
+  }
+
+  /**
+   * Cast message to JSON using protobuf JSON notation: https://developers.google.com/protocol-buffers/docs/proto3#json
+   * Attention: output differs from toObject() e.g. enums are represented as names and not as numbers, Timestamp is an ISO Date string format etc.
+   * If the message itself or some of descendant messages is google.protobuf.Any, you MUST provide a message pool as options. If not, the messagePool is not required
+   */
+  toProtobufJSON(
+    // @ts-ignore
+    options?: ToProtobufJSONOptions
+  ): WespeakerTsd.AsProtobufJSON {
+    return {
+      active: this.active,
+      modelName: this.modelName,
+      tritonServerHost: this.tritonServerHost,
+      tritonServerPort: this.tritonServerPort,
+      similarityThreshold: this.similarityThreshold,
+      minAudioLength: this.minAudioLength,
+      referenceMaxLength: this.referenceMaxLength
+    };
+  }
+}
+export module WespeakerTsd {
+  /**
+   * Standard JavaScript object representation for WespeakerTsd
+   */
+  export interface AsObject {
+    active: boolean;
+    modelName: string;
+    tritonServerHost: string;
+    tritonServerPort: string;
+    similarityThreshold: number;
+    minAudioLength: number;
+    referenceMaxLength: number;
+  }
+
+  /**
+   * Protobuf JSON representation for WespeakerTsd
+   */
+  export interface AsProtobufJSON {
+    active: boolean;
+    modelName: string;
+    tritonServerHost: string;
+    tritonServerPort: string;
+    similarityThreshold: number;
+    minAudioLength: number;
+    referenceMaxLength: number;
   }
 }
 
