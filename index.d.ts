@@ -83885,6 +83885,59 @@ declare class AuthGrpcInterceptor implements GrpcInterceptor {
  */
 declare function provideOndewoCsiAuth(tokenProvider: Type<TokenProvider>): EnvironmentProviders;
 
+/**
+ * Builds the gRPC-web endpoint URL (`host` setting of `@ngx-grpc/grpc-web-client`) from the
+ * same `host` / `port` / `useSecureChannel` fields every ONDEWO SDK takes.
+ *
+ * In a browser the TLS handshake belongs to the user agent: it verifies the server against
+ * its own (OS / browser) trust store and presents a client certificate only from the
+ * browser's certificate store. Application code can neither add a CA nor attach a client
+ * identity, and a private key must never be shipped to a browser. The certificate fields the
+ * other SDKs accept (`grpcCert`, `grpcClientCert`, `grpcClientKey`) are therefore refused
+ * here instead of being silently dropped.
+ */
+/** Connection settings for a gRPC-web endpoint (an Envoy / gRPC-web proxy in front of the ONDEWO server). */
+interface GrpcWebEndpointConfig {
+	/**
+	 * Host name or IP address (`nlu.example.com`, `10.0.0.5`, `::1`, `[::1]`), or a complete base
+	 * URL with scheme (`https://nlu.example.com:8443/grpc`), which is then used as given.
+	 */
+	host: string;
+	/** Port; omit it for the scheme's default port. Must be omitted when `host` is a URL. */
+	port?: number | string;
+	/** `true` (default): `https://`. `false`: plain `http://`, logged as a warning -- never in production. */
+	useSecureChannel?: boolean;
+}
+/**
+ * Certificate / key fields of the other ONDEWO SDKs' configs (camelCase and snake_case) that a
+ * browser cannot use. A non-empty value in any of them makes {@link buildGrpcWebHost} throw.
+ */
+declare const BROWSER_UNSUPPORTED_TLS_FIELDS: readonly string[];
+/** Raised for an unusable {@link GrpcWebEndpointConfig}. The message names fields, never their values. */
+declare class GrpcWebEndpointError extends Error {
+	/**
+	 * @param message a description of the problem that names the offending field.
+	 */
+	constructor(message: string);
+}
+/**
+ * Return the gRPC-web base URL for `config`: `https://host:port` by default, `http://host:port`
+ * when `useSecureChannel` is `false` (with a warning naming `host:port`). A bare IPv6 literal is
+ * bracketed (`https://[::1]:8443`); a bracketed host or a host that already carries a scheme is
+ * left alone.
+ *
+ * ```ts
+ * GrpcWebClientModule.forRoot({ settings: { host: buildGrpcWebHost({ host: "nlu.example.com", port: 443 }) } })
+ * ```
+ *
+ * @param config the endpoint settings.
+ * @returns the base URL to pass as the gRPC-web client's `host` setting.
+ * @throws GrpcWebEndpointError when a certificate / key field is set, the host is empty or
+ *   carries a port, the port is invalid, or an `http://` URL is combined with
+ *   `useSecureChannel: true`.
+ */
+declare function buildGrpcWebHost(config: GrpcWebEndpointConfig): string;
+
 export {
 	AUTHORIZATION_HEADER,
 	AcousticModels,
@@ -83922,6 +83975,7 @@ export {
 	AudioFormat,
 	AuthGrpcInterceptor,
 	BEARER_PREFIX,
+	BROWSER_UNSUPPORTED_TLS_FIELDS,
 	BatchCreateEntitiesRequest,
 	BatchCreateParametersRequest,
 	BatchCreateResponseMessagesRequest,
@@ -84214,6 +84268,7 @@ export {
 	GloVeEnrichmentConfig,
 	GlowTTS,
 	GlowTTSTriton,
+	GrpcWebEndpointError,
 	HiFiGan,
 	HiFiGanTriton,
 	Http,
@@ -84804,8 +84859,9 @@ export {
 	XLNetAugEnrichmentConfig,
 	authHttpInterceptor,
 	buildBearerValue,
+	buildGrpcWebHost,
 	provideOndewoCsiAuth,
 	resolveBearerValue,
 	resolveToken
 };
-export type { KeycloakTokenProviderConfig, TokenProvider, TokenResult };
+export type { GrpcWebEndpointConfig, KeycloakTokenProviderConfig, TokenProvider, TokenResult };

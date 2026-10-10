@@ -40,7 +40,6 @@ export class Context implements GrpcMessage {
     _instance.name = _instance.name || '';
     _instance.lifespanCount = _instance.lifespanCount || 0;
     _instance.parameters = _instance.parameters || {};
-    _instance.lifespanTime = _instance.lifespanTime || 0;
     _instance.createdAt = _instance.createdAt || undefined;
     _instance.modifiedAt = _instance.modifiedAt || undefined;
     _instance.createdBy = _instance.createdBy || '';
@@ -133,7 +132,10 @@ export class Context implements GrpcMessage {
         );
       }
     }
-    if (_instance.lifespanTime) {
+    if (
+      _instance.lifespanTime !== undefined &&
+      _instance.lifespanTime !== null
+    ) {
       _writer.writeFloat(4, _instance.lifespanTime);
     }
     if (_instance.createdAt) {

@@ -239,7 +239,6 @@ export class Comment implements GrpcMessage {
     _instance.modifiedAt = _instance.modifiedAt || undefined;
     _instance.createdBy = _instance.createdBy || '';
     _instance.modifiedBy = _instance.modifiedBy || '';
-    _instance.isResolved = _instance.isResolved || false;
   }
 
   /**
@@ -342,7 +341,7 @@ export class Comment implements GrpcMessage {
     if (_instance.modifiedBy) {
       _writer.writeString(9, _instance.modifiedBy);
     }
-    if (_instance.isResolved) {
+    if (_instance.isResolved !== undefined && _instance.isResolved !== null) {
       _writer.writeBool(10, _instance.isResolved);
     }
   }

@@ -2453,14 +2453,7 @@ export class LlmTelemetry implements GrpcMessage {
     _instance.baseUrl = _instance.baseUrl || '';
     _instance.defaultHeaders = _instance.defaultHeaders || undefined;
     _instance.defaultQuery = _instance.defaultQuery || undefined;
-    _instance.frequencyPenalty = _instance.frequencyPenalty || 0;
     _instance.openaiMetadata = _instance.openaiMetadata || undefined;
-    _instance.presencePenalty = _instance.presencePenalty || 0;
-    _instance.reasoningEffort = _instance.reasoningEffort || 0;
-    _instance.user = _instance.user || '';
-    _instance.timeout = _instance.timeout || 0;
-    _instance.strictResponseValidation =
-      _instance.strictResponseValidation || false;
     _instance.extraHeaders = _instance.extraHeaders || undefined;
     _instance.extraQuery = _instance.extraQuery || undefined;
     _instance.extraBody = _instance.extraBody || undefined;
@@ -2961,7 +2954,10 @@ export class LlmTelemetry implements GrpcMessage {
         googleProtobuf004.Struct.serializeBinaryToWriter
       );
     }
-    if (_instance.frequencyPenalty) {
+    if (
+      _instance.frequencyPenalty !== undefined &&
+      _instance.frequencyPenalty !== null
+    ) {
       _writer.writeFloat(50, _instance.frequencyPenalty);
     }
     if (_instance.openaiMetadata) {
@@ -2971,19 +2967,28 @@ export class LlmTelemetry implements GrpcMessage {
         googleProtobuf004.Struct.serializeBinaryToWriter
       );
     }
-    if (_instance.presencePenalty) {
+    if (
+      _instance.presencePenalty !== undefined &&
+      _instance.presencePenalty !== null
+    ) {
       _writer.writeFloat(52, _instance.presencePenalty);
     }
-    if (_instance.reasoningEffort) {
+    if (
+      _instance.reasoningEffort !== undefined &&
+      _instance.reasoningEffort !== null
+    ) {
       _writer.writeEnum(53, _instance.reasoningEffort);
     }
-    if (_instance.user) {
+    if (_instance.user !== undefined && _instance.user !== null) {
       _writer.writeString(54, _instance.user);
     }
-    if (_instance.timeout) {
+    if (_instance.timeout !== undefined && _instance.timeout !== null) {
       _writer.writeFloat(55, _instance.timeout);
     }
-    if (_instance.strictResponseValidation) {
+    if (
+      _instance.strictResponseValidation !== undefined &&
+      _instance.strictResponseValidation !== null
+    ) {
       _writer.writeBool(56, _instance.strictResponseValidation);
     }
     if (_instance.extraHeaders) {
@@ -24088,7 +24093,6 @@ export class ListSessionCommentsRequest implements GrpcMessage {
     _instance.sessionId = _instance.sessionId || '';
     _instance.pageToken = _instance.pageToken || '';
     _instance.fieldMask = _instance.fieldMask || undefined;
-    _instance.isResolved = _instance.isResolved || false;
   }
 
   /**
@@ -24150,7 +24154,7 @@ export class ListSessionCommentsRequest implements GrpcMessage {
         googleProtobuf003.FieldMask.serializeBinaryToWriter
       );
     }
-    if (_instance.isResolved) {
+    if (_instance.isResolved !== undefined && _instance.isResolved !== null) {
       _writer.writeBool(4, _instance.isResolved);
     }
   }
@@ -24295,7 +24299,6 @@ export class ListSessionCommentsOfAllSessionsRequest implements GrpcMessage {
     _instance.sessionFilter = _instance.sessionFilter || undefined;
     _instance.pageToken = _instance.pageToken || '';
     _instance.fieldMask = _instance.fieldMask || undefined;
-    _instance.isResolved = _instance.isResolved || false;
   }
 
   /**
@@ -24371,7 +24374,7 @@ export class ListSessionCommentsOfAllSessionsRequest implements GrpcMessage {
         googleProtobuf003.FieldMask.serializeBinaryToWriter
       );
     }
-    if (_instance.isResolved) {
+    if (_instance.isResolved !== undefined && _instance.isResolved !== null) {
       _writer.writeBool(5, _instance.isResolved);
     }
   }
@@ -24712,7 +24715,6 @@ export class SessionFeedback implements GrpcMessage {
       _instance.sessionStepLlmTelemetryId || '';
     _instance.rating = _instance.rating || 0;
     _instance.categoricalValue = _instance.categoricalValue || '';
-    _instance.score = _instance.score || 0;
     _instance.comment = _instance.comment || '';
     _instance.criterion = _instance.criterion || '';
     _instance.authorType = _instance.authorType || 0;
@@ -24846,7 +24848,7 @@ export class SessionFeedback implements GrpcMessage {
     if (_instance.categoricalValue) {
       _writer.writeString(7, _instance.categoricalValue);
     }
-    if (_instance.score) {
+    if (_instance.score !== undefined && _instance.score !== null) {
       _writer.writeFloat(8, _instance.score);
     }
     if (_instance.comment) {
@@ -26728,15 +26730,12 @@ export class FeedbackFilter implements GrpcMessage {
   static refineValues(_instance: FeedbackFilter) {
     _instance.ratings = _instance.ratings || [];
     _instance.authorTypes = _instance.authorTypes || [];
-    _instance.hasComment = _instance.hasComment || false;
     _instance.earliest = _instance.earliest || undefined;
     _instance.latest = _instance.latest || undefined;
     _instance.criteria = _instance.criteria || [];
     _instance.languageCodes = _instance.languageCodes || [];
     _instance.annotatorUserIds = _instance.annotatorUserIds || [];
     _instance.originIds = _instance.originIds || [];
-    _instance.scoreMin = _instance.scoreMin || 0;
-    _instance.scoreMax = _instance.scoreMax || 0;
     _instance.scope = _instance.scope || 0;
   }
 
@@ -26832,7 +26831,7 @@ export class FeedbackFilter implements GrpcMessage {
     if (_instance.authorTypes && _instance.authorTypes.length) {
       _writer.writePackedEnum(2, _instance.authorTypes);
     }
-    if (_instance.hasComment) {
+    if (_instance.hasComment !== undefined && _instance.hasComment !== null) {
       _writer.writeBool(3, _instance.hasComment);
     }
     if (_instance.earliest) {
@@ -26861,10 +26860,10 @@ export class FeedbackFilter implements GrpcMessage {
     if (_instance.originIds && _instance.originIds.length) {
       _writer.writeRepeatedString(9, _instance.originIds);
     }
-    if (_instance.scoreMin) {
+    if (_instance.scoreMin !== undefined && _instance.scoreMin !== null) {
       _writer.writeFloat(10, _instance.scoreMin);
     }
-    if (_instance.scoreMax) {
+    if (_instance.scoreMax !== undefined && _instance.scoreMax !== null) {
       _writer.writeFloat(11, _instance.scoreMax);
     }
     if (_instance.scope) {

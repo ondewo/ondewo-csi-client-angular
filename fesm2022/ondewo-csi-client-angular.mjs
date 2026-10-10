@@ -808,7 +808,6 @@ class Context {
         _instance.name = _instance.name || '';
         _instance.lifespanCount = _instance.lifespanCount || 0;
         _instance.parameters = _instance.parameters || {};
-        _instance.lifespanTime = _instance.lifespanTime || 0;
         _instance.createdAt = _instance.createdAt || undefined;
         _instance.modifiedAt = _instance.modifiedAt || undefined;
         _instance.createdBy = _instance.createdBy || '';
@@ -880,7 +879,8 @@ class Context {
                 _writer.writeRepeatedMessage(3, repeated_3, Context.ParametersEntry.serializeBinaryToWriter);
             }
         }
-        if (_instance.lifespanTime) {
+        if (_instance.lifespanTime !== undefined &&
+            _instance.lifespanTime !== null) {
             _writer.writeFloat(4, _instance.lifespanTime);
         }
         if (_instance.createdAt) {
@@ -2359,7 +2359,6 @@ class Comment {
         _instance.modifiedAt = _instance.modifiedAt || undefined;
         _instance.createdBy = _instance.createdBy || '';
         _instance.modifiedBy = _instance.modifiedBy || '';
-        _instance.isResolved = _instance.isResolved || false;
     }
     /**
      * Deserializes / reads binary message into message instance using provided binary reader
@@ -2442,7 +2441,7 @@ class Comment {
         if (_instance.modifiedBy) {
             _writer.writeString(9, _instance.modifiedBy);
         }
-        if (_instance.isResolved) {
+        if (_instance.isResolved !== undefined && _instance.isResolved !== null) {
             _writer.writeBool(10, _instance.isResolved);
         }
     }
@@ -24640,7 +24639,6 @@ class LlmEvaluationFeedback {
         _instance.name = _instance.name || '';
         _instance.displayName = _instance.displayName || '';
         _instance.criterion = _instance.criterion || '';
-        _instance.score = _instance.score || 0;
         _instance.categoricalValue = _instance.categoricalValue || '';
         _instance.comment = _instance.comment || '';
         _instance.annotatorUserId = _instance.annotatorUserId || '';
@@ -24735,7 +24733,7 @@ class LlmEvaluationFeedback {
         if (_instance.criterion) {
             _writer.writeString(3, _instance.criterion);
         }
-        if (_instance.score) {
+        if (_instance.score !== undefined && _instance.score !== null) {
             _writer.writeDouble(4, _instance.score);
         }
         if (_instance.categoricalValue) {
@@ -30543,8 +30541,6 @@ class LlmEvaluationReleaseGateThresholds {
      */
     static refineValues(_instance) {
         _instance.minPassRate = _instance.minPassRate || 0;
-        _instance.maxRegressionPerCriterion =
-            _instance.maxRegressionPerCriterion || 0;
         _instance.maxP95LatencySeconds = _instance.maxP95LatencySeconds || 0;
         _instance.acceptanceMustPass = _instance.acceptanceMustPass || false;
     }
@@ -30585,7 +30581,8 @@ class LlmEvaluationReleaseGateThresholds {
         if (_instance.minPassRate) {
             _writer.writeDouble(1, _instance.minPassRate);
         }
-        if (_instance.maxRegressionPerCriterion) {
+        if (_instance.maxRegressionPerCriterion !== undefined &&
+            _instance.maxRegressionPerCriterion !== null) {
             _writer.writeDouble(2, _instance.maxRegressionPerCriterion);
         }
         if (_instance.maxP95LatencySeconds) {
@@ -30695,8 +30692,6 @@ class LlmEvaluationReleaseGateSafetyConfig {
         _instance.enabled = _instance.enabled || false;
         _instance.adversarialDatasetName = _instance.adversarialDatasetName || '';
         _instance.evaluatorNames = _instance.evaluatorNames || [];
-        _instance.maxToxicity = _instance.maxToxicity || 0;
-        _instance.maxBias = _instance.maxBias || 0;
     }
     /**
      * Deserializes / reads binary message into message instance using provided binary reader
@@ -30744,10 +30739,10 @@ class LlmEvaluationReleaseGateSafetyConfig {
         if (_instance.evaluatorNames && _instance.evaluatorNames.length) {
             _writer.writeRepeatedString(3, _instance.evaluatorNames);
         }
-        if (_instance.maxToxicity) {
+        if (_instance.maxToxicity !== undefined && _instance.maxToxicity !== null) {
             _writer.writeDouble(4, _instance.maxToxicity);
         }
-        if (_instance.maxBias) {
+        if (_instance.maxBias !== undefined && _instance.maxBias !== null) {
             _writer.writeDouble(5, _instance.maxBias);
         }
     }
@@ -44204,7 +44199,6 @@ class LlmEvaluationOnlineConfig {
         _instance.sampleRate = _instance.sampleRate || 0;
         _instance.enabled = _instance.enabled || false;
         _instance.targetDatasetName = _instance.targetDatasetName || '';
-        _instance.failThreshold = _instance.failThreshold || 0;
         _instance.settleSeconds = _instance.settleSeconds || 0;
         _instance.requireTelemetry = _instance.requireTelemetry || false;
         _instance.llmEvaluationOnlineSessionFilter =
@@ -44322,7 +44316,8 @@ class LlmEvaluationOnlineConfig {
         if (_instance.targetDatasetName) {
             _writer.writeString(7, _instance.targetDatasetName);
         }
-        if (_instance.failThreshold) {
+        if (_instance.failThreshold !== undefined &&
+            _instance.failThreshold !== null) {
             _writer.writeDouble(8, _instance.failThreshold);
         }
         if (_instance.settleSeconds) {
@@ -49709,14 +49704,7 @@ class LlmTelemetry {
         _instance.baseUrl = _instance.baseUrl || '';
         _instance.defaultHeaders = _instance.defaultHeaders || undefined;
         _instance.defaultQuery = _instance.defaultQuery || undefined;
-        _instance.frequencyPenalty = _instance.frequencyPenalty || 0;
         _instance.openaiMetadata = _instance.openaiMetadata || undefined;
-        _instance.presencePenalty = _instance.presencePenalty || 0;
-        _instance.reasoningEffort = _instance.reasoningEffort || 0;
-        _instance.user = _instance.user || '';
-        _instance.timeout = _instance.timeout || 0;
-        _instance.strictResponseValidation =
-            _instance.strictResponseValidation || false;
         _instance.extraHeaders = _instance.extraHeaders || undefined;
         _instance.extraQuery = _instance.extraQuery || undefined;
         _instance.extraBody = _instance.extraBody || undefined;
@@ -50107,25 +50095,29 @@ class LlmTelemetry {
         if (_instance.defaultQuery) {
             _writer.writeMessage(49, _instance.defaultQuery, googleProtobuf005.Struct.serializeBinaryToWriter);
         }
-        if (_instance.frequencyPenalty) {
+        if (_instance.frequencyPenalty !== undefined &&
+            _instance.frequencyPenalty !== null) {
             _writer.writeFloat(50, _instance.frequencyPenalty);
         }
         if (_instance.openaiMetadata) {
             _writer.writeMessage(51, _instance.openaiMetadata, googleProtobuf005.Struct.serializeBinaryToWriter);
         }
-        if (_instance.presencePenalty) {
+        if (_instance.presencePenalty !== undefined &&
+            _instance.presencePenalty !== null) {
             _writer.writeFloat(52, _instance.presencePenalty);
         }
-        if (_instance.reasoningEffort) {
+        if (_instance.reasoningEffort !== undefined &&
+            _instance.reasoningEffort !== null) {
             _writer.writeEnum(53, _instance.reasoningEffort);
         }
-        if (_instance.user) {
+        if (_instance.user !== undefined && _instance.user !== null) {
             _writer.writeString(54, _instance.user);
         }
-        if (_instance.timeout) {
+        if (_instance.timeout !== undefined && _instance.timeout !== null) {
             _writer.writeFloat(55, _instance.timeout);
         }
-        if (_instance.strictResponseValidation) {
+        if (_instance.strictResponseValidation !== undefined &&
+            _instance.strictResponseValidation !== null) {
             _writer.writeBool(56, _instance.strictResponseValidation);
         }
         if (_instance.extraHeaders) {
@@ -65507,7 +65499,6 @@ class ListSessionCommentsRequest {
         _instance.sessionId = _instance.sessionId || '';
         _instance.pageToken = _instance.pageToken || '';
         _instance.fieldMask = _instance.fieldMask || undefined;
-        _instance.isResolved = _instance.isResolved || false;
     }
     /**
      * Deserializes / reads binary message into message instance using provided binary reader
@@ -65553,7 +65544,7 @@ class ListSessionCommentsRequest {
         if (_instance.fieldMask) {
             _writer.writeMessage(3, _instance.fieldMask, googleProtobuf005.FieldMask.serializeBinaryToWriter);
         }
-        if (_instance.isResolved) {
+        if (_instance.isResolved !== undefined && _instance.isResolved !== null) {
             _writer.writeBool(4, _instance.isResolved);
         }
     }
@@ -65660,7 +65651,6 @@ class ListSessionCommentsOfAllSessionsRequest {
         _instance.sessionFilter = _instance.sessionFilter || undefined;
         _instance.pageToken = _instance.pageToken || '';
         _instance.fieldMask = _instance.fieldMask || undefined;
-        _instance.isResolved = _instance.isResolved || false;
     }
     /**
      * Deserializes / reads binary message into message instance using provided binary reader
@@ -65713,7 +65703,7 @@ class ListSessionCommentsOfAllSessionsRequest {
         if (_instance.fieldMask) {
             _writer.writeMessage(4, _instance.fieldMask, googleProtobuf005.FieldMask.serializeBinaryToWriter);
         }
-        if (_instance.isResolved) {
+        if (_instance.isResolved !== undefined && _instance.isResolved !== null) {
             _writer.writeBool(5, _instance.isResolved);
         }
     }
@@ -65958,7 +65948,6 @@ class SessionFeedback {
             _instance.sessionStepLlmTelemetryId || '';
         _instance.rating = _instance.rating || 0;
         _instance.categoricalValue = _instance.categoricalValue || '';
-        _instance.score = _instance.score || 0;
         _instance.comment = _instance.comment || '';
         _instance.criterion = _instance.criterion || '';
         _instance.authorType = _instance.authorType || 0;
@@ -66074,7 +66063,7 @@ class SessionFeedback {
         if (_instance.categoricalValue) {
             _writer.writeString(7, _instance.categoricalValue);
         }
-        if (_instance.score) {
+        if (_instance.score !== undefined && _instance.score !== null) {
             _writer.writeFloat(8, _instance.score);
         }
         if (_instance.comment) {
@@ -67426,15 +67415,12 @@ class FeedbackFilter {
     static refineValues(_instance) {
         _instance.ratings = _instance.ratings || [];
         _instance.authorTypes = _instance.authorTypes || [];
-        _instance.hasComment = _instance.hasComment || false;
         _instance.earliest = _instance.earliest || undefined;
         _instance.latest = _instance.latest || undefined;
         _instance.criteria = _instance.criteria || [];
         _instance.languageCodes = _instance.languageCodes || [];
         _instance.annotatorUserIds = _instance.annotatorUserIds || [];
         _instance.originIds = _instance.originIds || [];
-        _instance.scoreMin = _instance.scoreMin || 0;
-        _instance.scoreMax = _instance.scoreMax || 0;
         _instance.scope = _instance.scope || 0;
     }
     /**
@@ -67503,7 +67489,7 @@ class FeedbackFilter {
         if (_instance.authorTypes && _instance.authorTypes.length) {
             _writer.writePackedEnum(2, _instance.authorTypes);
         }
-        if (_instance.hasComment) {
+        if (_instance.hasComment !== undefined && _instance.hasComment !== null) {
             _writer.writeBool(3, _instance.hasComment);
         }
         if (_instance.earliest) {
@@ -67524,10 +67510,10 @@ class FeedbackFilter {
         if (_instance.originIds && _instance.originIds.length) {
             _writer.writeRepeatedString(9, _instance.originIds);
         }
-        if (_instance.scoreMin) {
+        if (_instance.scoreMin !== undefined && _instance.scoreMin !== null) {
             _writer.writeFloat(10, _instance.scoreMin);
         }
-        if (_instance.scoreMax) {
+        if (_instance.scoreMax !== undefined && _instance.scoreMax !== null) {
             _writer.writeFloat(11, _instance.scoreMax);
         }
         if (_instance.scope) {
@@ -72511,7 +72497,6 @@ class RequestConfig {
             _instance.t2sCloudProviderConfig || undefined;
         _instance.wordToPhonemeMapping =
             _instance.wordToPhonemeMapping || undefined;
-        _instance.instruction = _instance.instruction || '';
     }
     /**
      * Deserializes / reads binary message into message instance using provided binary reader
@@ -72608,7 +72593,7 @@ class RequestConfig {
         if (_instance.wordToPhonemeMapping) {
             _writer.writeMessage(12, _instance.wordToPhonemeMapping, googleProtobuf005.Struct.serializeBinaryToWriter);
         }
-        if (_instance.instruction) {
+        if (_instance.instruction !== undefined && _instance.instruction !== null) {
             _writer.writeString(13, _instance.instruction);
         }
     }
@@ -81274,8 +81259,6 @@ class TranscribeRequestConfig {
     static refineValues(_instance) {
         _instance.s2tPipelineId = _instance.s2tPipelineId || '';
         _instance.decoding = _instance.decoding || 0;
-        _instance.language = _instance.language || '';
-        _instance.task = _instance.task || '';
         _instance.s2tServiceConfig = _instance.s2tServiceConfig || undefined;
         _instance.s2tCloudProviderConfig =
             _instance.s2tCloudProviderConfig || undefined;
@@ -81362,10 +81345,10 @@ class TranscribeRequestConfig {
         if (_instance.returnOptions) {
             _writer.writeMessage(8, _instance.returnOptions, TranscriptionReturnOptions.serializeBinaryToWriter);
         }
-        if (_instance.language) {
+        if (_instance.language !== undefined && _instance.language !== null) {
             _writer.writeString(9, _instance.language);
         }
-        if (_instance.task) {
+        if (_instance.task !== undefined && _instance.task !== null) {
             _writer.writeString(10, _instance.task);
         }
         if (_instance.s2tServiceConfig) {
@@ -81817,11 +81800,6 @@ class S2tCloudProviderConfigAmazon {
      * @param _instance message instance
      */
     static refineValues(_instance) {
-        _instance.enablePartialResultsStabilization =
-            _instance.enablePartialResultsStabilization || false;
-        _instance.partialResultsStability = _instance.partialResultsStability || '';
-        _instance.languageModelName = _instance.languageModelName || '';
-        _instance.vocabularyName = _instance.vocabularyName || '';
     }
     /**
      * Deserializes / reads binary message into message instance using provided binary reader
@@ -81857,16 +81835,20 @@ class S2tCloudProviderConfigAmazon {
      * @param _writer binary writer instance
      */
     static serializeBinaryToWriter(_instance, _writer) {
-        if (_instance.enablePartialResultsStabilization) {
+        if (_instance.enablePartialResultsStabilization !== undefined &&
+            _instance.enablePartialResultsStabilization !== null) {
             _writer.writeBool(1, _instance.enablePartialResultsStabilization);
         }
-        if (_instance.partialResultsStability) {
+        if (_instance.partialResultsStability !== undefined &&
+            _instance.partialResultsStability !== null) {
             _writer.writeString(2, _instance.partialResultsStability);
         }
-        if (_instance.languageModelName) {
+        if (_instance.languageModelName !== undefined &&
+            _instance.languageModelName !== null) {
             _writer.writeString(3, _instance.languageModelName);
         }
-        if (_instance.vocabularyName) {
+        if (_instance.vocabularyName !== undefined &&
+            _instance.vocabularyName !== null) {
             _writer.writeString(4, _instance.vocabularyName);
         }
     }
@@ -81968,11 +81950,6 @@ class S2tCloudProviderConfigDeepgram {
      * @param _instance message instance
      */
     static refineValues(_instance) {
-        _instance.punctuate = _instance.punctuate || false;
-        _instance.smartFormat = _instance.smartFormat || false;
-        _instance.numerals = _instance.numerals || false;
-        _instance.measurements = _instance.measurements || false;
-        _instance.dictation = _instance.dictation || false;
     }
     /**
      * Deserializes / reads binary message into message instance using provided binary reader
@@ -82011,19 +81988,20 @@ class S2tCloudProviderConfigDeepgram {
      * @param _writer binary writer instance
      */
     static serializeBinaryToWriter(_instance, _writer) {
-        if (_instance.punctuate) {
+        if (_instance.punctuate !== undefined && _instance.punctuate !== null) {
             _writer.writeBool(1, _instance.punctuate);
         }
-        if (_instance.smartFormat) {
+        if (_instance.smartFormat !== undefined && _instance.smartFormat !== null) {
             _writer.writeBool(2, _instance.smartFormat);
         }
-        if (_instance.numerals) {
+        if (_instance.numerals !== undefined && _instance.numerals !== null) {
             _writer.writeBool(3, _instance.numerals);
         }
-        if (_instance.measurements) {
+        if (_instance.measurements !== undefined &&
+            _instance.measurements !== null) {
             _writer.writeBool(4, _instance.measurements);
         }
-        if (_instance.dictation) {
+        if (_instance.dictation !== undefined && _instance.dictation !== null) {
             _writer.writeBool(5, _instance.dictation);
         }
     }
@@ -82133,13 +82111,6 @@ class S2tCloudProviderConfigGoogle {
      * @param _instance message instance
      */
     static refineValues(_instance) {
-        _instance.enableAutomaticPunctuation =
-            _instance.enableAutomaticPunctuation || false;
-        _instance.enableWordTimeOffsets = _instance.enableWordTimeOffsets || false;
-        _instance.enableWordConfidence = _instance.enableWordConfidence || false;
-        _instance.transcriptNormalization =
-            _instance.transcriptNormalization || false;
-        _instance.maxAlternatives = _instance.maxAlternatives || 0;
     }
     /**
      * Deserializes / reads binary message into message instance using provided binary reader
@@ -82178,19 +82149,24 @@ class S2tCloudProviderConfigGoogle {
      * @param _writer binary writer instance
      */
     static serializeBinaryToWriter(_instance, _writer) {
-        if (_instance.enableAutomaticPunctuation) {
+        if (_instance.enableAutomaticPunctuation !== undefined &&
+            _instance.enableAutomaticPunctuation !== null) {
             _writer.writeBool(1, _instance.enableAutomaticPunctuation);
         }
-        if (_instance.enableWordTimeOffsets) {
+        if (_instance.enableWordTimeOffsets !== undefined &&
+            _instance.enableWordTimeOffsets !== null) {
             _writer.writeBool(2, _instance.enableWordTimeOffsets);
         }
-        if (_instance.enableWordConfidence) {
+        if (_instance.enableWordConfidence !== undefined &&
+            _instance.enableWordConfidence !== null) {
             _writer.writeBool(3, _instance.enableWordConfidence);
         }
-        if (_instance.transcriptNormalization) {
+        if (_instance.transcriptNormalization !== undefined &&
+            _instance.transcriptNormalization !== null) {
             _writer.writeBool(4, _instance.transcriptNormalization);
         }
-        if (_instance.maxAlternatives) {
+        if (_instance.maxAlternatives !== undefined &&
+            _instance.maxAlternatives !== null) {
             _writer.writeInt32(5, _instance.maxAlternatives);
         }
     }
@@ -82300,10 +82276,6 @@ class S2tCloudProviderConfigMicrosoft {
      * @param _instance message instance
      */
     static refineValues(_instance) {
-        _instance.useFastTranscriptionApi =
-            _instance.useFastTranscriptionApi || false;
-        _instance.useDetailedOutputFormat =
-            _instance.useDetailedOutputFormat || false;
     }
     /**
      * Deserializes / reads binary message into message instance using provided binary reader
@@ -82333,10 +82305,12 @@ class S2tCloudProviderConfigMicrosoft {
      * @param _writer binary writer instance
      */
     static serializeBinaryToWriter(_instance, _writer) {
-        if (_instance.useFastTranscriptionApi) {
+        if (_instance.useFastTranscriptionApi !== undefined &&
+            _instance.useFastTranscriptionApi !== null) {
             _writer.writeBool(1, _instance.useFastTranscriptionApi);
         }
-        if (_instance.useDetailedOutputFormat) {
+        if (_instance.useDetailedOutputFormat !== undefined &&
+            _instance.useDetailedOutputFormat !== null) {
             _writer.writeBool(2, _instance.useDetailedOutputFormat);
         }
     }
@@ -88160,12 +88134,6 @@ class TurnDetectionOptions {
      * @param _instance message instance
      */
     static refineValues(_instance) {
-        _instance.active = _instance.active || false;
-        _instance.fullUtteranceDeployment =
-            _instance.fullUtteranceDeployment || false;
-        _instance.turnDetectionSystemPrompt =
-            _instance.turnDetectionSystemPrompt || '';
-        _instance.turnDetectionUserPrompt = _instance.turnDetectionUserPrompt || '';
         _instance.turnDetectionLlmOpenaiOptions =
             _instance.turnDetectionLlmOpenaiOptions || undefined;
     }
@@ -88207,16 +88175,19 @@ class TurnDetectionOptions {
      * @param _writer binary writer instance
      */
     static serializeBinaryToWriter(_instance, _writer) {
-        if (_instance.active) {
+        if (_instance.active !== undefined && _instance.active !== null) {
             _writer.writeBool(1, _instance.active);
         }
-        if (_instance.fullUtteranceDeployment) {
+        if (_instance.fullUtteranceDeployment !== undefined &&
+            _instance.fullUtteranceDeployment !== null) {
             _writer.writeBool(2, _instance.fullUtteranceDeployment);
         }
-        if (_instance.turnDetectionSystemPrompt) {
+        if (_instance.turnDetectionSystemPrompt !== undefined &&
+            _instance.turnDetectionSystemPrompt !== null) {
             _writer.writeString(3, _instance.turnDetectionSystemPrompt);
         }
-        if (_instance.turnDetectionUserPrompt) {
+        if (_instance.turnDetectionUserPrompt !== undefined &&
+            _instance.turnDetectionUserPrompt !== null) {
             _writer.writeString(4, _instance.turnDetectionUserPrompt);
         }
         if (_instance.turnDetectionLlmOpenaiOptions) {
@@ -88335,38 +88306,12 @@ class OpenaiLlmOptions {
      * @param _instance message instance
      */
     static refineValues(_instance) {
-        _instance.apiKey = _instance.apiKey || '';
-        _instance.organization = _instance.organization || '';
-        _instance.project = _instance.project || '';
-        _instance.webhookSecret = _instance.webhookSecret || '';
-        _instance.baseUrl = _instance.baseUrl || '';
-        _instance.websocketBaseUrl = _instance.websocketBaseUrl || '';
-        _instance.timeout = _instance.timeout || 0;
-        _instance.maxRetries = _instance.maxRetries || 0;
         _instance.defaultHeaders = _instance.defaultHeaders || {};
         _instance.defaultQuery = _instance.defaultQuery || undefined;
-        _instance.strictResponseValidation =
-            _instance.strictResponseValidation || false;
         _instance.model = _instance.model || '';
-        _instance.frequencyPenalty = _instance.frequencyPenalty || 0;
         _instance.logitBias = _instance.logitBias || {};
-        _instance.logprobs = _instance.logprobs || false;
-        _instance.maxCompletionTokens = _instance.maxCompletionTokens || 0;
-        _instance.maxTokens = _instance.maxTokens || 0;
         _instance.metadata = _instance.metadata || undefined;
-        _instance.n = _instance.n || 0;
-        _instance.presencePenalty = _instance.presencePenalty || 0;
-        _instance.promptCacheKey = _instance.promptCacheKey || '';
-        _instance.reasoningEffort = _instance.reasoningEffort || 0;
-        _instance.seed = _instance.seed || '0';
-        _instance.serviceTier = _instance.serviceTier || 0;
         _instance.stop = _instance.stop || [];
-        _instance.store = _instance.store || false;
-        _instance.temperature = _instance.temperature || 0;
-        _instance.topLogprobs = _instance.topLogprobs || 0;
-        _instance.topP = _instance.topP || 0;
-        _instance.user = _instance.user || '';
-        _instance.verbosity = _instance.verbosity || 0;
         _instance.extraHeaders = _instance.extraHeaders || undefined;
         _instance.extraQuery = _instance.extraQuery || undefined;
         _instance.extraBody = _instance.extraBody || undefined;
@@ -88506,28 +88451,31 @@ class OpenaiLlmOptions {
      * @param _writer binary writer instance
      */
     static serializeBinaryToWriter(_instance, _writer) {
-        if (_instance.apiKey) {
+        if (_instance.apiKey !== undefined && _instance.apiKey !== null) {
             _writer.writeString(1, _instance.apiKey);
         }
-        if (_instance.organization) {
+        if (_instance.organization !== undefined &&
+            _instance.organization !== null) {
             _writer.writeString(2, _instance.organization);
         }
-        if (_instance.project) {
+        if (_instance.project !== undefined && _instance.project !== null) {
             _writer.writeString(3, _instance.project);
         }
-        if (_instance.webhookSecret) {
+        if (_instance.webhookSecret !== undefined &&
+            _instance.webhookSecret !== null) {
             _writer.writeString(4, _instance.webhookSecret);
         }
-        if (_instance.baseUrl) {
+        if (_instance.baseUrl !== undefined && _instance.baseUrl !== null) {
             _writer.writeString(5, _instance.baseUrl);
         }
-        if (_instance.websocketBaseUrl) {
+        if (_instance.websocketBaseUrl !== undefined &&
+            _instance.websocketBaseUrl !== null) {
             _writer.writeString(6, _instance.websocketBaseUrl);
         }
-        if (_instance.timeout) {
+        if (_instance.timeout !== undefined && _instance.timeout !== null) {
             _writer.writeFloat(7, _instance.timeout);
         }
-        if (_instance.maxRetries) {
+        if (_instance.maxRetries !== undefined && _instance.maxRetries !== null) {
             _writer.writeInt32(8, _instance.maxRetries);
         }
         if (!!_instance.defaultHeaders) {
@@ -88545,13 +88493,15 @@ class OpenaiLlmOptions {
         if (_instance.defaultQuery) {
             _writer.writeMessage(10, _instance.defaultQuery, googleProtobuf005.Struct.serializeBinaryToWriter);
         }
-        if (_instance.strictResponseValidation) {
+        if (_instance.strictResponseValidation !== undefined &&
+            _instance.strictResponseValidation !== null) {
             _writer.writeBool(11, _instance.strictResponseValidation);
         }
         if (_instance.model) {
             _writer.writeString(12, _instance.model);
         }
-        if (_instance.frequencyPenalty) {
+        if (_instance.frequencyPenalty !== undefined &&
+            _instance.frequencyPenalty !== null) {
             _writer.writeFloat(13, _instance.frequencyPenalty);
         }
         if (!!_instance.logitBias) {
@@ -88563,55 +88513,59 @@ class OpenaiLlmOptions {
                 _writer.writeRepeatedMessage(14, repeated_14, OpenaiLlmOptions.LogitBiasEntry.serializeBinaryToWriter);
             }
         }
-        if (_instance.logprobs) {
+        if (_instance.logprobs !== undefined && _instance.logprobs !== null) {
             _writer.writeBool(15, _instance.logprobs);
         }
-        if (_instance.maxCompletionTokens) {
+        if (_instance.maxCompletionTokens !== undefined &&
+            _instance.maxCompletionTokens !== null) {
             _writer.writeInt32(16, _instance.maxCompletionTokens);
         }
-        if (_instance.maxTokens) {
+        if (_instance.maxTokens !== undefined && _instance.maxTokens !== null) {
             _writer.writeInt32(17, _instance.maxTokens);
         }
         if (_instance.metadata) {
             _writer.writeMessage(18, _instance.metadata, googleProtobuf005.Struct.serializeBinaryToWriter);
         }
-        if (_instance.n) {
+        if (_instance.n !== undefined && _instance.n !== null) {
             _writer.writeInt32(19, _instance.n);
         }
-        if (_instance.presencePenalty) {
+        if (_instance.presencePenalty !== undefined &&
+            _instance.presencePenalty !== null) {
             _writer.writeFloat(20, _instance.presencePenalty);
         }
-        if (_instance.promptCacheKey) {
+        if (_instance.promptCacheKey !== undefined &&
+            _instance.promptCacheKey !== null) {
             _writer.writeString(21, _instance.promptCacheKey);
         }
-        if (_instance.reasoningEffort) {
+        if (_instance.reasoningEffort !== undefined &&
+            _instance.reasoningEffort !== null) {
             _writer.writeEnum(22, _instance.reasoningEffort);
         }
-        if (_instance.seed) {
+        if (_instance.seed !== undefined && _instance.seed !== null) {
             _writer.writeInt64String(23, _instance.seed);
         }
-        if (_instance.serviceTier) {
+        if (_instance.serviceTier !== undefined && _instance.serviceTier !== null) {
             _writer.writeEnum(24, _instance.serviceTier);
         }
         if (_instance.stop && _instance.stop.length) {
             _writer.writeRepeatedString(25, _instance.stop);
         }
-        if (_instance.store) {
+        if (_instance.store !== undefined && _instance.store !== null) {
             _writer.writeBool(26, _instance.store);
         }
-        if (_instance.temperature) {
+        if (_instance.temperature !== undefined && _instance.temperature !== null) {
             _writer.writeFloat(27, _instance.temperature);
         }
-        if (_instance.topLogprobs) {
+        if (_instance.topLogprobs !== undefined && _instance.topLogprobs !== null) {
             _writer.writeInt32(28, _instance.topLogprobs);
         }
-        if (_instance.topP) {
+        if (_instance.topP !== undefined && _instance.topP !== null) {
             _writer.writeFloat(29, _instance.topP);
         }
-        if (_instance.user) {
+        if (_instance.user !== undefined && _instance.user !== null) {
             _writer.writeString(30, _instance.user);
         }
-        if (_instance.verbosity) {
+        if (_instance.verbosity !== undefined && _instance.verbosity !== null) {
             _writer.writeEnum(31, _instance.verbosity);
         }
         if (_instance.extraHeaders) {
@@ -89660,10 +89614,6 @@ class Silero {
     static refineValues(_instance) {
         _instance.modelName = _instance.modelName || '';
         _instance.minAudioSize = _instance.minAudioSize || '0';
-        _instance.threshold = _instance.threshold || 0;
-        _instance.minSpeechDurationMs = _instance.minSpeechDurationMs || 0;
-        _instance.minSilenceDurationMs = _instance.minSilenceDurationMs || 0;
-        _instance.speechPadMs = _instance.speechPadMs || 0;
         _instance.tritonServerHost = _instance.tritonServerHost || '';
         _instance.tritonServerPort = _instance.tritonServerPort || '0';
     }
@@ -89719,16 +89669,18 @@ class Silero {
         if (_instance.minAudioSize) {
             _writer.writeInt64String(2, _instance.minAudioSize);
         }
-        if (_instance.threshold) {
+        if (_instance.threshold !== undefined && _instance.threshold !== null) {
             _writer.writeFloat(3, _instance.threshold);
         }
-        if (_instance.minSpeechDurationMs) {
+        if (_instance.minSpeechDurationMs !== undefined &&
+            _instance.minSpeechDurationMs !== null) {
             _writer.writeFloat(4, _instance.minSpeechDurationMs);
         }
-        if (_instance.minSilenceDurationMs) {
+        if (_instance.minSilenceDurationMs !== undefined &&
+            _instance.minSilenceDurationMs !== null) {
             _writer.writeFloat(5, _instance.minSilenceDurationMs);
         }
-        if (_instance.speechPadMs) {
+        if (_instance.speechPadMs !== undefined && _instance.speechPadMs !== null) {
             _writer.writeFloat(6, _instance.speechPadMs);
         }
         if (_instance.tritonServerHost) {
@@ -89875,8 +89827,6 @@ class WespeakerTsd {
         _instance.modelName = _instance.modelName || '';
         _instance.tritonServerHost = _instance.tritonServerHost || '';
         _instance.tritonServerPort = _instance.tritonServerPort || '0';
-        _instance.similarityThreshold = _instance.similarityThreshold || 0;
-        _instance.minAudioLength = _instance.minAudioLength || 0;
         _instance.referenceMaxLength = _instance.referenceMaxLength || 0;
     }
     /**
@@ -89934,10 +89884,12 @@ class WespeakerTsd {
         if (_instance.tritonServerPort) {
             _writer.writeInt64String(4, _instance.tritonServerPort);
         }
-        if (_instance.similarityThreshold) {
+        if (_instance.similarityThreshold !== undefined &&
+            _instance.similarityThreshold !== null) {
             _writer.writeFloat(5, _instance.similarityThreshold);
         }
-        if (_instance.minAudioLength) {
+        if (_instance.minAudioLength !== undefined &&
+            _instance.minAudioLength !== null) {
             _writer.writeFloat(6, _instance.minAudioLength);
         }
         if (_instance.referenceMaxLength) {
@@ -90593,10 +90545,6 @@ class S2tLlmPostProcessing {
     static refineValues(_instance) {
         _instance.s2tLlmPostProcessingOpenaiOptions =
             _instance.s2tLlmPostProcessingOpenaiOptions || undefined;
-        _instance.s2tLlmPostProcessingSystemPrompt =
-            _instance.s2tLlmPostProcessingSystemPrompt || '';
-        _instance.s2tLlmPostProcessingEndingPrompt =
-            _instance.s2tLlmPostProcessingEndingPrompt || '';
         _instance.s2tLlmPostProcessingCasingOptions =
             _instance.s2tLlmPostProcessingCasingOptions || undefined;
         _instance.s2tLlmPostProcessingPunctuationOptions =
@@ -90687,10 +90635,12 @@ class S2tLlmPostProcessing {
         if (_instance.s2tLlmPostProcessingOpenaiOptions) {
             _writer.writeMessage(1, _instance.s2tLlmPostProcessingOpenaiOptions, OpenaiLlmOptions.serializeBinaryToWriter);
         }
-        if (_instance.s2tLlmPostProcessingSystemPrompt) {
+        if (_instance.s2tLlmPostProcessingSystemPrompt !== undefined &&
+            _instance.s2tLlmPostProcessingSystemPrompt !== null) {
             _writer.writeString(2, _instance.s2tLlmPostProcessingSystemPrompt);
         }
-        if (_instance.s2tLlmPostProcessingEndingPrompt) {
+        if (_instance.s2tLlmPostProcessingEndingPrompt !== undefined &&
+            _instance.s2tLlmPostProcessingEndingPrompt !== null) {
             _writer.writeString(3, _instance.s2tLlmPostProcessingEndingPrompt);
         }
         if (_instance.s2tLlmPostProcessingCasingOptions) {
@@ -90968,9 +90918,6 @@ class S2tLlmPostProcessingTranslationOptions {
      * @param _instance message instance
      */
     static refineValues(_instance) {
-        _instance.active = _instance.active || false;
-        _instance.language = _instance.language || '';
-        _instance.prompt = _instance.prompt || '';
     }
     /**
      * Deserializes / reads binary message into message instance using provided binary reader
@@ -91003,13 +90950,13 @@ class S2tLlmPostProcessingTranslationOptions {
      * @param _writer binary writer instance
      */
     static serializeBinaryToWriter(_instance, _writer) {
-        if (_instance.active) {
+        if (_instance.active !== undefined && _instance.active !== null) {
             _writer.writeBool(1, _instance.active);
         }
-        if (_instance.language) {
+        if (_instance.language !== undefined && _instance.language !== null) {
             _writer.writeString(2, _instance.language);
         }
-        if (_instance.prompt) {
+        if (_instance.prompt !== undefined && _instance.prompt !== null) {
             _writer.writeString(3, _instance.prompt);
         }
     }
@@ -91101,7 +91048,6 @@ class S2tLlmPostProcessingInverseNormalizationOptions {
      * @param _instance message instance
      */
     static refineValues(_instance) {
-        _instance.active = _instance.active || false;
         _instance.email = _instance.email || undefined;
         _instance.phoneNumber = _instance.phoneNumber || undefined;
         _instance.dateAndTime = _instance.dateAndTime || undefined;
@@ -91159,7 +91105,7 @@ class S2tLlmPostProcessingInverseNormalizationOptions {
      * @param _writer binary writer instance
      */
     static serializeBinaryToWriter(_instance, _writer) {
-        if (_instance.active) {
+        if (_instance.active !== undefined && _instance.active !== null) {
             _writer.writeBool(1, _instance.active);
         }
         if (_instance.email) {
@@ -91329,7 +91275,6 @@ class S2tLlmPostProcessingNormalizationOptions {
      * @param _instance message instance
      */
     static refineValues(_instance) {
-        _instance.active = _instance.active || false;
         _instance.email = _instance.email || undefined;
         _instance.phoneNumber = _instance.phoneNumber || undefined;
         _instance.dateAndTime = _instance.dateAndTime || undefined;
@@ -91387,7 +91332,7 @@ class S2tLlmPostProcessingNormalizationOptions {
      * @param _writer binary writer instance
      */
     static serializeBinaryToWriter(_instance, _writer) {
-        if (_instance.active) {
+        if (_instance.active !== undefined && _instance.active !== null) {
             _writer.writeBool(1, _instance.active);
         }
         if (_instance.email) {
@@ -91557,10 +91502,6 @@ class S2tLlmPostProcessingSummarizationOptions {
      * @param _instance message instance
      */
     static refineValues(_instance) {
-        _instance.active = _instance.active || false;
-        _instance.prompt = _instance.prompt || '';
-        _instance.minChars = _instance.minChars || 0;
-        _instance.maxChars = _instance.maxChars || 0;
     }
     /**
      * Deserializes / reads binary message into message instance using provided binary reader
@@ -91596,16 +91537,16 @@ class S2tLlmPostProcessingSummarizationOptions {
      * @param _writer binary writer instance
      */
     static serializeBinaryToWriter(_instance, _writer) {
-        if (_instance.active) {
+        if (_instance.active !== undefined && _instance.active !== null) {
             _writer.writeBool(1, _instance.active);
         }
-        if (_instance.prompt) {
+        if (_instance.prompt !== undefined && _instance.prompt !== null) {
             _writer.writeString(2, _instance.prompt);
         }
-        if (_instance.minChars) {
+        if (_instance.minChars !== undefined && _instance.minChars !== null) {
             _writer.writeInt32(3, _instance.minChars);
         }
-        if (_instance.maxChars) {
+        if (_instance.maxChars !== undefined && _instance.maxChars !== null) {
             _writer.writeInt32(4, _instance.maxChars);
         }
     }
@@ -91706,8 +91647,6 @@ class S2tLlmPostProcessingSubTaskOptions {
      * @param _instance message instance
      */
     static refineValues(_instance) {
-        _instance.active = _instance.active || false;
-        _instance.prompt = _instance.prompt || '';
     }
     /**
      * Deserializes / reads binary message into message instance using provided binary reader
@@ -91737,10 +91676,10 @@ class S2tLlmPostProcessingSubTaskOptions {
      * @param _writer binary writer instance
      */
     static serializeBinaryToWriter(_instance, _writer) {
-        if (_instance.active) {
+        if (_instance.active !== undefined && _instance.active !== null) {
             _writer.writeBool(1, _instance.active);
         }
-        if (_instance.prompt) {
+        if (_instance.prompt !== undefined && _instance.prompt !== null) {
             _writer.writeString(2, _instance.prompt);
         }
     }
@@ -95341,10 +95280,10 @@ class ConversationsClient {
             .setControlStatus(requestData, requestMetadata)
             .pipe(throwStatusErrors(), takeMessages());
     }
-    static { this.ɵfac = i0.ɵɵngDeclareFactory({ minVersion: "12.0.0", version: "20.3.31", ngImport: i0, type: ConversationsClient, deps: [{ token: GRPC_CONVERSATIONS_CLIENT_SETTINGS, optional: true }, { token: GRPC_CLIENT_FACTORY }, { token: i1.GrpcHandler }], target: i0.ɵɵFactoryTarget.Injectable }); }
-    static { this.ɵprov = i0.ɵɵngDeclareInjectable({ minVersion: "12.0.0", version: "20.3.31", ngImport: i0, type: ConversationsClient, providedIn: 'any' }); }
+    static { this.ɵfac = i0.ɵɵngDeclareFactory({ minVersion: "12.0.0", version: "20.3.33", ngImport: i0, type: ConversationsClient, deps: [{ token: GRPC_CONVERSATIONS_CLIENT_SETTINGS, optional: true }, { token: GRPC_CLIENT_FACTORY }, { token: i1.GrpcHandler }], target: i0.ɵɵFactoryTarget.Injectable }); }
+    static { this.ɵprov = i0.ɵɵngDeclareInjectable({ minVersion: "12.0.0", version: "20.3.33", ngImport: i0, type: ConversationsClient, providedIn: 'any' }); }
 }
-i0.ɵɵngDeclareClassMetadata({ minVersion: "12.0.0", version: "20.3.31", ngImport: i0, type: ConversationsClient, decorators: [{
+i0.ɵɵngDeclareClassMetadata({ minVersion: "12.0.0", version: "20.3.33", ngImport: i0, type: ConversationsClient, decorators: [{
             type: Injectable,
             args: [{ providedIn: 'any' }]
         }], ctorParameters: () => [{ type: undefined, decorators: [{
@@ -118826,10 +118765,10 @@ class AgentsClient {
             .rotateProjectTechnicalUserPassword(requestData, requestMetadata)
             .pipe(throwStatusErrors(), takeMessages());
     }
-    static { this.ɵfac = i0.ɵɵngDeclareFactory({ minVersion: "12.0.0", version: "20.3.31", ngImport: i0, type: AgentsClient, deps: [{ token: GRPC_AGENTS_CLIENT_SETTINGS, optional: true }, { token: GRPC_CLIENT_FACTORY }, { token: i1.GrpcHandler }], target: i0.ɵɵFactoryTarget.Injectable }); }
-    static { this.ɵprov = i0.ɵɵngDeclareInjectable({ minVersion: "12.0.0", version: "20.3.31", ngImport: i0, type: AgentsClient, providedIn: 'any' }); }
+    static { this.ɵfac = i0.ɵɵngDeclareFactory({ minVersion: "12.0.0", version: "20.3.33", ngImport: i0, type: AgentsClient, deps: [{ token: GRPC_AGENTS_CLIENT_SETTINGS, optional: true }, { token: GRPC_CLIENT_FACTORY }, { token: i1.GrpcHandler }], target: i0.ɵɵFactoryTarget.Injectable }); }
+    static { this.ɵprov = i0.ɵɵngDeclareInjectable({ minVersion: "12.0.0", version: "20.3.33", ngImport: i0, type: AgentsClient, providedIn: 'any' }); }
 }
-i0.ɵɵngDeclareClassMetadata({ minVersion: "12.0.0", version: "20.3.31", ngImport: i0, type: AgentsClient, decorators: [{
+i0.ɵɵngDeclareClassMetadata({ minVersion: "12.0.0", version: "20.3.33", ngImport: i0, type: AgentsClient, decorators: [{
             type: Injectable,
             args: [{ providedIn: 'any' }]
         }], ctorParameters: () => [{ type: undefined, decorators: [{
@@ -124702,10 +124641,10 @@ class AiServicesClient {
             .listLlmModels(requestData, requestMetadata)
             .pipe(throwStatusErrors(), takeMessages());
     }
-    static { this.ɵfac = i0.ɵɵngDeclareFactory({ minVersion: "12.0.0", version: "20.3.31", ngImport: i0, type: AiServicesClient, deps: [{ token: GRPC_AI_SERVICES_CLIENT_SETTINGS, optional: true }, { token: GRPC_CLIENT_FACTORY }, { token: i1.GrpcHandler }], target: i0.ɵɵFactoryTarget.Injectable }); }
-    static { this.ɵprov = i0.ɵɵngDeclareInjectable({ minVersion: "12.0.0", version: "20.3.31", ngImport: i0, type: AiServicesClient, providedIn: 'any' }); }
+    static { this.ɵfac = i0.ɵɵngDeclareFactory({ minVersion: "12.0.0", version: "20.3.33", ngImport: i0, type: AiServicesClient, deps: [{ token: GRPC_AI_SERVICES_CLIENT_SETTINGS, optional: true }, { token: GRPC_CLIENT_FACTORY }, { token: i1.GrpcHandler }], target: i0.ɵɵFactoryTarget.Injectable }); }
+    static { this.ɵprov = i0.ɵɵngDeclareInjectable({ minVersion: "12.0.0", version: "20.3.33", ngImport: i0, type: AiServicesClient, providedIn: 'any' }); }
 }
-i0.ɵɵngDeclareClassMetadata({ minVersion: "12.0.0", version: "20.3.31", ngImport: i0, type: AiServicesClient, decorators: [{
+i0.ɵɵngDeclareClassMetadata({ minVersion: "12.0.0", version: "20.3.33", ngImport: i0, type: AiServicesClient, decorators: [{
             type: Injectable,
             args: [{ providedIn: 'any' }]
         }], ctorParameters: () => [{ type: undefined, decorators: [{
@@ -124931,10 +124870,10 @@ class CcaiProjectsClient {
             .getCcaiService(requestData, requestMetadata)
             .pipe(throwStatusErrors(), takeMessages());
     }
-    static { this.ɵfac = i0.ɵɵngDeclareFactory({ minVersion: "12.0.0", version: "20.3.31", ngImport: i0, type: CcaiProjectsClient, deps: [{ token: GRPC_CCAI_PROJECTS_CLIENT_SETTINGS, optional: true }, { token: GRPC_CLIENT_FACTORY }, { token: i1.GrpcHandler }], target: i0.ɵɵFactoryTarget.Injectable }); }
-    static { this.ɵprov = i0.ɵɵngDeclareInjectable({ minVersion: "12.0.0", version: "20.3.31", ngImport: i0, type: CcaiProjectsClient, providedIn: 'any' }); }
+    static { this.ɵfac = i0.ɵɵngDeclareFactory({ minVersion: "12.0.0", version: "20.3.33", ngImport: i0, type: CcaiProjectsClient, deps: [{ token: GRPC_CCAI_PROJECTS_CLIENT_SETTINGS, optional: true }, { token: GRPC_CLIENT_FACTORY }, { token: i1.GrpcHandler }], target: i0.ɵɵFactoryTarget.Injectable }); }
+    static { this.ɵprov = i0.ɵɵngDeclareInjectable({ minVersion: "12.0.0", version: "20.3.33", ngImport: i0, type: CcaiProjectsClient, providedIn: 'any' }); }
 }
-i0.ɵɵngDeclareClassMetadata({ minVersion: "12.0.0", version: "20.3.31", ngImport: i0, type: CcaiProjectsClient, decorators: [{
+i0.ɵɵngDeclareClassMetadata({ minVersion: "12.0.0", version: "20.3.33", ngImport: i0, type: CcaiProjectsClient, decorators: [{
             type: Injectable,
             args: [{ providedIn: 'any' }]
         }], ctorParameters: () => [{ type: undefined, decorators: [{
@@ -125160,10 +125099,10 @@ class ContextsClient {
             .deleteAllContexts(requestData, requestMetadata)
             .pipe(throwStatusErrors(), takeMessages());
     }
-    static { this.ɵfac = i0.ɵɵngDeclareFactory({ minVersion: "12.0.0", version: "20.3.31", ngImport: i0, type: ContextsClient, deps: [{ token: GRPC_CONTEXTS_CLIENT_SETTINGS, optional: true }, { token: GRPC_CLIENT_FACTORY }, { token: i1.GrpcHandler }], target: i0.ɵɵFactoryTarget.Injectable }); }
-    static { this.ɵprov = i0.ɵɵngDeclareInjectable({ minVersion: "12.0.0", version: "20.3.31", ngImport: i0, type: ContextsClient, providedIn: 'any' }); }
+    static { this.ɵfac = i0.ɵɵngDeclareFactory({ minVersion: "12.0.0", version: "20.3.33", ngImport: i0, type: ContextsClient, deps: [{ token: GRPC_CONTEXTS_CLIENT_SETTINGS, optional: true }, { token: GRPC_CLIENT_FACTORY }, { token: i1.GrpcHandler }], target: i0.ɵɵFactoryTarget.Injectable }); }
+    static { this.ɵprov = i0.ɵɵngDeclareInjectable({ minVersion: "12.0.0", version: "20.3.33", ngImport: i0, type: ContextsClient, providedIn: 'any' }); }
 }
-i0.ɵɵngDeclareClassMetadata({ minVersion: "12.0.0", version: "20.3.31", ngImport: i0, type: ContextsClient, decorators: [{
+i0.ɵɵngDeclareClassMetadata({ minVersion: "12.0.0", version: "20.3.33", ngImport: i0, type: ContextsClient, decorators: [{
             type: Injectable,
             args: [{ providedIn: 'any' }]
         }], ctorParameters: () => [{ type: undefined, decorators: [{
@@ -125689,10 +125628,10 @@ class EntityTypesClient {
             .listEntities(requestData, requestMetadata)
             .pipe(throwStatusErrors(), takeMessages());
     }
-    static { this.ɵfac = i0.ɵɵngDeclareFactory({ minVersion: "12.0.0", version: "20.3.31", ngImport: i0, type: EntityTypesClient, deps: [{ token: GRPC_ENTITY_TYPES_CLIENT_SETTINGS, optional: true }, { token: GRPC_CLIENT_FACTORY }, { token: i1.GrpcHandler }], target: i0.ɵɵFactoryTarget.Injectable }); }
-    static { this.ɵprov = i0.ɵɵngDeclareInjectable({ minVersion: "12.0.0", version: "20.3.31", ngImport: i0, type: EntityTypesClient, providedIn: 'any' }); }
+    static { this.ɵfac = i0.ɵɵngDeclareFactory({ minVersion: "12.0.0", version: "20.3.33", ngImport: i0, type: EntityTypesClient, deps: [{ token: GRPC_ENTITY_TYPES_CLIENT_SETTINGS, optional: true }, { token: GRPC_CLIENT_FACTORY }, { token: i1.GrpcHandler }], target: i0.ɵɵFactoryTarget.Injectable }); }
+    static { this.ɵprov = i0.ɵɵngDeclareInjectable({ minVersion: "12.0.0", version: "20.3.33", ngImport: i0, type: EntityTypesClient, providedIn: 'any' }); }
 }
-i0.ɵɵngDeclareClassMetadata({ minVersion: "12.0.0", version: "20.3.31", ngImport: i0, type: EntityTypesClient, decorators: [{
+i0.ɵɵngDeclareClassMetadata({ minVersion: "12.0.0", version: "20.3.33", ngImport: i0, type: EntityTypesClient, decorators: [{
             type: Injectable,
             args: [{ providedIn: 'any' }]
         }], ctorParameters: () => [{ type: undefined, decorators: [{
@@ -126548,10 +126487,10 @@ class IntentsClient {
             .listTrainingPhrasesofIntentsWithEnrichment(requestData, requestMetadata)
             .pipe(throwStatusErrors(), takeMessages());
     }
-    static { this.ɵfac = i0.ɵɵngDeclareFactory({ minVersion: "12.0.0", version: "20.3.31", ngImport: i0, type: IntentsClient, deps: [{ token: GRPC_INTENTS_CLIENT_SETTINGS, optional: true }, { token: GRPC_CLIENT_FACTORY }, { token: i1.GrpcHandler }], target: i0.ɵɵFactoryTarget.Injectable }); }
-    static { this.ɵprov = i0.ɵɵngDeclareInjectable({ minVersion: "12.0.0", version: "20.3.31", ngImport: i0, type: IntentsClient, providedIn: 'any' }); }
+    static { this.ɵfac = i0.ɵɵngDeclareFactory({ minVersion: "12.0.0", version: "20.3.33", ngImport: i0, type: IntentsClient, deps: [{ token: GRPC_INTENTS_CLIENT_SETTINGS, optional: true }, { token: GRPC_CLIENT_FACTORY }, { token: i1.GrpcHandler }], target: i0.ɵɵFactoryTarget.Injectable }); }
+    static { this.ɵprov = i0.ɵɵngDeclareInjectable({ minVersion: "12.0.0", version: "20.3.33", ngImport: i0, type: IntentsClient, providedIn: 'any' }); }
 }
-i0.ɵɵngDeclareClassMetadata({ minVersion: "12.0.0", version: "20.3.31", ngImport: i0, type: IntentsClient, decorators: [{
+i0.ɵɵngDeclareClassMetadata({ minVersion: "12.0.0", version: "20.3.33", ngImport: i0, type: IntentsClient, decorators: [{
             type: Injectable,
             args: [{ providedIn: 'any' }]
         }], ctorParameters: () => [{ type: undefined, decorators: [{
@@ -128757,10 +128696,10 @@ class LlmEvaluationsClient {
             .llmEvaluationPromoteAnnotationQueueItem(requestData, requestMetadata)
             .pipe(throwStatusErrors(), takeMessages());
     }
-    static { this.ɵfac = i0.ɵɵngDeclareFactory({ minVersion: "12.0.0", version: "20.3.31", ngImport: i0, type: LlmEvaluationsClient, deps: [{ token: GRPC_LLM_EVALUATIONS_CLIENT_SETTINGS, optional: true }, { token: GRPC_CLIENT_FACTORY }, { token: i1.GrpcHandler }], target: i0.ɵɵFactoryTarget.Injectable }); }
-    static { this.ɵprov = i0.ɵɵngDeclareInjectable({ minVersion: "12.0.0", version: "20.3.31", ngImport: i0, type: LlmEvaluationsClient, providedIn: 'any' }); }
+    static { this.ɵfac = i0.ɵɵngDeclareFactory({ minVersion: "12.0.0", version: "20.3.33", ngImport: i0, type: LlmEvaluationsClient, deps: [{ token: GRPC_LLM_EVALUATIONS_CLIENT_SETTINGS, optional: true }, { token: GRPC_CLIENT_FACTORY }, { token: i1.GrpcHandler }], target: i0.ɵɵFactoryTarget.Injectable }); }
+    static { this.ɵprov = i0.ɵɵngDeclareInjectable({ minVersion: "12.0.0", version: "20.3.33", ngImport: i0, type: LlmEvaluationsClient, providedIn: 'any' }); }
 }
-i0.ɵɵngDeclareClassMetadata({ minVersion: "12.0.0", version: "20.3.31", ngImport: i0, type: LlmEvaluationsClient, decorators: [{
+i0.ɵɵngDeclareClassMetadata({ minVersion: "12.0.0", version: "20.3.33", ngImport: i0, type: LlmEvaluationsClient, decorators: [{
             type: Injectable,
             args: [{ providedIn: 'any' }]
         }], ctorParameters: () => [{ type: undefined, decorators: [{
@@ -129046,10 +128985,10 @@ class OperationsClient {
             .listRemoteOperationContainers(requestData, requestMetadata)
             .pipe(throwStatusErrors(), takeMessages());
     }
-    static { this.ɵfac = i0.ɵɵngDeclareFactory({ minVersion: "12.0.0", version: "20.3.31", ngImport: i0, type: OperationsClient, deps: [{ token: GRPC_OPERATIONS_CLIENT_SETTINGS, optional: true }, { token: GRPC_CLIENT_FACTORY }, { token: i1.GrpcHandler }], target: i0.ɵɵFactoryTarget.Injectable }); }
-    static { this.ɵprov = i0.ɵɵngDeclareInjectable({ minVersion: "12.0.0", version: "20.3.31", ngImport: i0, type: OperationsClient, providedIn: 'any' }); }
+    static { this.ɵfac = i0.ɵɵngDeclareFactory({ minVersion: "12.0.0", version: "20.3.33", ngImport: i0, type: OperationsClient, deps: [{ token: GRPC_OPERATIONS_CLIENT_SETTINGS, optional: true }, { token: GRPC_CLIENT_FACTORY }, { token: i1.GrpcHandler }], target: i0.ɵɵFactoryTarget.Injectable }); }
+    static { this.ɵprov = i0.ɵɵngDeclareInjectable({ minVersion: "12.0.0", version: "20.3.33", ngImport: i0, type: OperationsClient, providedIn: 'any' }); }
 }
-i0.ɵɵngDeclareClassMetadata({ minVersion: "12.0.0", version: "20.3.31", ngImport: i0, type: OperationsClient, decorators: [{
+i0.ɵɵngDeclareClassMetadata({ minVersion: "12.0.0", version: "20.3.33", ngImport: i0, type: OperationsClient, decorators: [{
             type: Injectable,
             args: [{ providedIn: 'any' }]
         }], ctorParameters: () => [{ type: undefined, decorators: [{
@@ -129245,10 +129184,10 @@ class ProjectRolesClient {
             .listProjectRoles(requestData, requestMetadata)
             .pipe(throwStatusErrors(), takeMessages());
     }
-    static { this.ɵfac = i0.ɵɵngDeclareFactory({ minVersion: "12.0.0", version: "20.3.31", ngImport: i0, type: ProjectRolesClient, deps: [{ token: GRPC_PROJECT_ROLES_CLIENT_SETTINGS, optional: true }, { token: GRPC_CLIENT_FACTORY }, { token: i1.GrpcHandler }], target: i0.ɵɵFactoryTarget.Injectable }); }
-    static { this.ɵprov = i0.ɵɵngDeclareInjectable({ minVersion: "12.0.0", version: "20.3.31", ngImport: i0, type: ProjectRolesClient, providedIn: 'any' }); }
+    static { this.ɵfac = i0.ɵɵngDeclareFactory({ minVersion: "12.0.0", version: "20.3.33", ngImport: i0, type: ProjectRolesClient, deps: [{ token: GRPC_PROJECT_ROLES_CLIENT_SETTINGS, optional: true }, { token: GRPC_CLIENT_FACTORY }, { token: i1.GrpcHandler }], target: i0.ɵɵFactoryTarget.Injectable }); }
+    static { this.ɵprov = i0.ɵɵngDeclareInjectable({ minVersion: "12.0.0", version: "20.3.33", ngImport: i0, type: ProjectRolesClient, providedIn: 'any' }); }
 }
-i0.ɵɵngDeclareClassMetadata({ minVersion: "12.0.0", version: "20.3.31", ngImport: i0, type: ProjectRolesClient, decorators: [{
+i0.ɵɵngDeclareClassMetadata({ minVersion: "12.0.0", version: "20.3.33", ngImport: i0, type: ProjectRolesClient, decorators: [{
             type: Injectable,
             args: [{ providedIn: 'any' }]
         }], ctorParameters: () => [{ type: undefined, decorators: [{
@@ -129991,10 +129930,10 @@ class ProjectStatisticsClient {
             .getEntitySynonymCount(requestData, requestMetadata)
             .pipe(throwStatusErrors(), takeMessages());
     }
-    static { this.ɵfac = i0.ɵɵngDeclareFactory({ minVersion: "12.0.0", version: "20.3.31", ngImport: i0, type: ProjectStatisticsClient, deps: [{ token: GRPC_PROJECT_STATISTICS_CLIENT_SETTINGS, optional: true }, { token: GRPC_CLIENT_FACTORY }, { token: i1.GrpcHandler }], target: i0.ɵɵFactoryTarget.Injectable }); }
-    static { this.ɵprov = i0.ɵɵngDeclareInjectable({ minVersion: "12.0.0", version: "20.3.31", ngImport: i0, type: ProjectStatisticsClient, providedIn: 'any' }); }
+    static { this.ɵfac = i0.ɵɵngDeclareFactory({ minVersion: "12.0.0", version: "20.3.33", ngImport: i0, type: ProjectStatisticsClient, deps: [{ token: GRPC_PROJECT_STATISTICS_CLIENT_SETTINGS, optional: true }, { token: GRPC_CLIENT_FACTORY }, { token: i1.GrpcHandler }], target: i0.ɵɵFactoryTarget.Injectable }); }
+    static { this.ɵprov = i0.ɵɵngDeclareInjectable({ minVersion: "12.0.0", version: "20.3.33", ngImport: i0, type: ProjectStatisticsClient, providedIn: 'any' }); }
 }
-i0.ɵɵngDeclareClassMetadata({ minVersion: "12.0.0", version: "20.3.31", ngImport: i0, type: ProjectStatisticsClient, decorators: [{
+i0.ɵɵngDeclareClassMetadata({ minVersion: "12.0.0", version: "20.3.33", ngImport: i0, type: ProjectStatisticsClient, decorators: [{
             type: Injectable,
             args: [{ providedIn: 'any' }]
         }], ctorParameters: () => [{ type: undefined, decorators: [{
@@ -130606,15 +130545,11 @@ class RagParserConfig {
      * @param _instance message instance
      */
     static refineValues(_instance) {
-        _instance.autoKeywords = _instance.autoKeywords || 0;
-        _instance.autoQuestions = _instance.autoQuestions || 0;
         _instance.chunkTokenNum = _instance.chunkTokenNum || 0;
         _instance.delimiter = _instance.delimiter || '';
-        _instance.html4excel = _instance.html4excel || false;
         _instance.layoutRecognize = _instance.layoutRecognize || '';
         _instance.tagKbIds = _instance.tagKbIds || [];
         _instance.topnTags = _instance.topnTags || 0;
-        _instance.filenameEmbdWeight = _instance.filenameEmbdWeight || 0;
         _instance.taskPageSize = _instance.taskPageSize || 0;
         _instance.raptor = _instance.raptor || undefined;
         _instance.graphrag = _instance.graphrag || undefined;
@@ -130679,10 +130614,12 @@ class RagParserConfig {
      * @param _writer binary writer instance
      */
     static serializeBinaryToWriter(_instance, _writer) {
-        if (_instance.autoKeywords) {
+        if (_instance.autoKeywords !== undefined &&
+            _instance.autoKeywords !== null) {
             _writer.writeInt32(1, _instance.autoKeywords);
         }
-        if (_instance.autoQuestions) {
+        if (_instance.autoQuestions !== undefined &&
+            _instance.autoQuestions !== null) {
             _writer.writeInt32(2, _instance.autoQuestions);
         }
         if (_instance.chunkTokenNum) {
@@ -130691,7 +130628,7 @@ class RagParserConfig {
         if (_instance.delimiter) {
             _writer.writeString(4, _instance.delimiter);
         }
-        if (_instance.html4excel) {
+        if (_instance.html4excel !== undefined && _instance.html4excel !== null) {
             _writer.writeBool(5, _instance.html4excel);
         }
         if (_instance.layoutRecognize) {
@@ -130703,7 +130640,8 @@ class RagParserConfig {
         if (_instance.topnTags) {
             _writer.writeInt32(8, _instance.topnTags);
         }
-        if (_instance.filenameEmbdWeight) {
+        if (_instance.filenameEmbdWeight !== undefined &&
+            _instance.filenameEmbdWeight !== null) {
             _writer.writeFloat(9, _instance.filenameEmbdWeight);
         }
         if (_instance.taskPageSize) {
@@ -130889,12 +130827,9 @@ class RagRaptorConfig {
      * @param _instance message instance
      */
     static refineValues(_instance) {
-        _instance.useRaptor = _instance.useRaptor || false;
         _instance.prompt = _instance.prompt || '';
         _instance.maxToken = _instance.maxToken || 0;
-        _instance.threshold = _instance.threshold || 0;
         _instance.maxCluster = _instance.maxCluster || 0;
-        _instance.randomSeed = _instance.randomSeed || '0';
     }
     /**
      * Deserializes / reads binary message into message instance using provided binary reader
@@ -130936,7 +130871,7 @@ class RagRaptorConfig {
      * @param _writer binary writer instance
      */
     static serializeBinaryToWriter(_instance, _writer) {
-        if (_instance.useRaptor) {
+        if (_instance.useRaptor !== undefined && _instance.useRaptor !== null) {
             _writer.writeBool(1, _instance.useRaptor);
         }
         if (_instance.prompt) {
@@ -130945,13 +130880,13 @@ class RagRaptorConfig {
         if (_instance.maxToken) {
             _writer.writeInt32(3, _instance.maxToken);
         }
-        if (_instance.threshold) {
+        if (_instance.threshold !== undefined && _instance.threshold !== null) {
             _writer.writeFloat(4, _instance.threshold);
         }
         if (_instance.maxCluster) {
             _writer.writeInt32(5, _instance.maxCluster);
         }
-        if (_instance.randomSeed) {
+        if (_instance.randomSeed !== undefined && _instance.randomSeed !== null) {
             _writer.writeInt64String(6, _instance.randomSeed);
         }
     }
@@ -131070,11 +131005,8 @@ class RagGraphRagConfig {
      * @param _instance message instance
      */
     static refineValues(_instance) {
-        _instance.useGraphrag = _instance.useGraphrag || false;
         _instance.entityTypes = _instance.entityTypes || [];
         _instance.method = _instance.method || 0;
-        _instance.community = _instance.community || false;
-        _instance.resolution = _instance.resolution || false;
     }
     /**
      * Deserializes / reads binary message into message instance using provided binary reader
@@ -131113,7 +131045,7 @@ class RagGraphRagConfig {
      * @param _writer binary writer instance
      */
     static serializeBinaryToWriter(_instance, _writer) {
-        if (_instance.useGraphrag) {
+        if (_instance.useGraphrag !== undefined && _instance.useGraphrag !== null) {
             _writer.writeBool(1, _instance.useGraphrag);
         }
         if (_instance.entityTypes && _instance.entityTypes.length) {
@@ -131122,10 +131054,10 @@ class RagGraphRagConfig {
         if (_instance.method) {
             _writer.writeEnum(3, _instance.method);
         }
-        if (_instance.community) {
+        if (_instance.community !== undefined && _instance.community !== null) {
             _writer.writeBool(4, _instance.community);
         }
-        if (_instance.resolution) {
+        if (_instance.resolution !== undefined && _instance.resolution !== null) {
             _writer.writeBool(5, _instance.resolution);
         }
     }
@@ -131239,12 +131171,8 @@ class RagDataset {
         _instance.avatar = _instance.avatar || '';
         _instance.name = _instance.name || '';
         _instance.description = _instance.description || '';
-        _instance.documentCount = _instance.documentCount || 0;
-        _instance.tokenNum = _instance.tokenNum || 0;
-        _instance.chunkCount = _instance.chunkCount || 0;
         _instance.chunkMethod = _instance.chunkMethod || 0;
         _instance.parserConfig = _instance.parserConfig || undefined;
-        _instance.pagerank = _instance.pagerank || 0;
         _instance.parsingStatus = _instance.parsingStatus || undefined;
         _instance.createTime = _instance.createTime || undefined;
         _instance.updateTime = _instance.updateTime || undefined;
@@ -131331,13 +131259,14 @@ class RagDataset {
         if (_instance.description) {
             _writer.writeString(4, _instance.description);
         }
-        if (_instance.documentCount) {
+        if (_instance.documentCount !== undefined &&
+            _instance.documentCount !== null) {
             _writer.writeInt32(5, _instance.documentCount);
         }
-        if (_instance.tokenNum) {
+        if (_instance.tokenNum !== undefined && _instance.tokenNum !== null) {
             _writer.writeInt32(6, _instance.tokenNum);
         }
-        if (_instance.chunkCount) {
+        if (_instance.chunkCount !== undefined && _instance.chunkCount !== null) {
             _writer.writeInt32(7, _instance.chunkCount);
         }
         if (_instance.chunkMethod) {
@@ -131346,7 +131275,7 @@ class RagDataset {
         if (_instance.parserConfig) {
             _writer.writeMessage(9, _instance.parserConfig, RagParserConfig.serializeBinaryToWriter);
         }
-        if (_instance.pagerank) {
+        if (_instance.pagerank !== undefined && _instance.pagerank !== null) {
             _writer.writeInt32(10, _instance.pagerank);
         }
         if (_instance.parsingStatus) {
@@ -131740,11 +131669,8 @@ class RagUpdateDatasetRequest {
         _instance.languageCode = _instance.languageCode || '';
         _instance.datasetId = _instance.datasetId || '';
         _instance.name = _instance.name || '';
-        _instance.description = _instance.description || '';
-        _instance.avatar = _instance.avatar || '';
         _instance.chunkMethod = _instance.chunkMethod || 0;
         _instance.parserConfig = _instance.parserConfig || undefined;
-        _instance.pagerank = _instance.pagerank || 0;
         _instance.updateMask = _instance.updateMask || undefined;
         _instance.fieldMask = _instance.fieldMask || undefined;
         _instance.embeddingModelCcaiServiceName =
@@ -131823,10 +131749,10 @@ class RagUpdateDatasetRequest {
         if (_instance.name) {
             _writer.writeString(4, _instance.name);
         }
-        if (_instance.description) {
+        if (_instance.description !== undefined && _instance.description !== null) {
             _writer.writeString(5, _instance.description);
         }
-        if (_instance.avatar) {
+        if (_instance.avatar !== undefined && _instance.avatar !== null) {
             _writer.writeString(6, _instance.avatar);
         }
         if (_instance.chunkMethod) {
@@ -131835,7 +131761,7 @@ class RagUpdateDatasetRequest {
         if (_instance.parserConfig) {
             _writer.writeMessage(8, _instance.parserConfig, RagParserConfig.serializeBinaryToWriter);
         }
-        if (_instance.pagerank) {
+        if (_instance.pagerank !== undefined && _instance.pagerank !== null) {
             _writer.writeInt32(9, _instance.pagerank);
         }
         if (_instance.updateMask) {
@@ -132186,7 +132112,6 @@ class RagListDatasetsRequest {
         _instance.id = _instance.id || '';
         _instance.name = _instance.name || '';
         _instance.orderby = _instance.orderby || '';
-        _instance.desc = _instance.desc || false;
         _instance.sortingMode = _instance.sortingMode || 0;
         _instance.fieldMask = _instance.fieldMask || undefined;
     }
@@ -132258,7 +132183,7 @@ class RagListDatasetsRequest {
         if (_instance.orderby) {
             _writer.writeString(6, _instance.orderby);
         }
-        if (_instance.desc) {
+        if (_instance.desc !== undefined && _instance.desc !== null) {
             _writer.writeBool(7, _instance.desc);
         }
         if (_instance.sortingMode) {
@@ -132724,13 +132649,8 @@ class RagDocument {
         _instance.parserConfig = _instance.parserConfig || undefined;
         _instance.type = _instance.type || 0;
         _instance.name = _instance.name || '';
-        _instance.size = _instance.size || '0';
-        _instance.chunkCount = _instance.chunkCount || 0;
-        _instance.tokenCount = _instance.tokenCount || 0;
-        _instance.progress = _instance.progress || 0;
         _instance.progressMsg = _instance.progressMsg || '';
         _instance.processBeginAt = _instance.processBeginAt || undefined;
-        _instance.processDuration = _instance.processDuration || 0;
         _instance.metaFields = _instance.metaFields || undefined;
         _instance.run = _instance.run || 0;
         _instance.status = _instance.status || '';
@@ -132842,16 +132762,16 @@ class RagDocument {
         if (_instance.name) {
             _writer.writeString(7, _instance.name);
         }
-        if (_instance.size) {
+        if (_instance.size !== undefined && _instance.size !== null) {
             _writer.writeInt64String(8, _instance.size);
         }
-        if (_instance.chunkCount) {
+        if (_instance.chunkCount !== undefined && _instance.chunkCount !== null) {
             _writer.writeInt32(9, _instance.chunkCount);
         }
-        if (_instance.tokenCount) {
+        if (_instance.tokenCount !== undefined && _instance.tokenCount !== null) {
             _writer.writeInt32(10, _instance.tokenCount);
         }
-        if (_instance.progress) {
+        if (_instance.progress !== undefined && _instance.progress !== null) {
             _writer.writeFloat(11, _instance.progress);
         }
         if (_instance.progressMsg) {
@@ -132860,7 +132780,8 @@ class RagDocument {
         if (_instance.processBeginAt) {
             _writer.writeMessage(13, _instance.processBeginAt, googleProtobuf005.Timestamp.serializeBinaryToWriter);
         }
-        if (_instance.processDuration) {
+        if (_instance.processDuration !== undefined &&
+            _instance.processDuration !== null) {
             _writer.writeFloat(14, _instance.processDuration);
         }
         if (_instance.metaFields) {
@@ -133144,7 +133065,6 @@ class RagUpdateDocumentRequest {
         _instance.name = _instance.name || '';
         _instance.chunkMethod = _instance.chunkMethod || 0;
         _instance.parserConfig = _instance.parserConfig || undefined;
-        _instance.enabled = _instance.enabled || false;
         _instance.metaFields = _instance.metaFields || undefined;
         _instance.updateMask = _instance.updateMask || undefined;
         _instance.fieldMask = _instance.fieldMask || undefined;
@@ -133229,7 +133149,7 @@ class RagUpdateDocumentRequest {
         if (_instance.parserConfig) {
             _writer.writeMessage(7, _instance.parserConfig, RagParserConfig.serializeBinaryToWriter);
         }
-        if (_instance.enabled) {
+        if (_instance.enabled !== undefined && _instance.enabled !== null) {
             _writer.writeBool(8, _instance.enabled);
         }
         if (_instance.metaFields) {
@@ -133696,7 +133616,6 @@ class RagListDocumentsRequest {
         _instance.name = _instance.name || '';
         _instance.pageToken = _instance.pageToken || '';
         _instance.orderby = _instance.orderby || '';
-        _instance.desc = _instance.desc || false;
         _instance.keywords = _instance.keywords || '';
         _instance.suffix = _instance.suffix || [];
         _instance.runStatus = _instance.runStatus || [];
@@ -133801,7 +133720,7 @@ class RagListDocumentsRequest {
         if (_instance.orderby) {
             _writer.writeString(7, _instance.orderby);
         }
-        if (_instance.desc) {
+        if (_instance.desc !== undefined && _instance.desc !== null) {
             _writer.writeBool(8, _instance.desc);
         }
         if (_instance.keywords) {
@@ -134766,20 +134685,11 @@ class RagRetrievalRequest {
         _instance.pageToken = _instance.pageToken || '';
         _instance.question = _instance.question || '';
         _instance.documentIds = _instance.documentIds || [];
-        _instance.useKg = _instance.useKg || false;
         _instance.crossLanguages = _instance.crossLanguages || [];
         _instance.metadataCondition = _instance.metadataCondition || undefined;
-        _instance.similarityThreshold = _instance.similarityThreshold || 0;
-        _instance.vectorSimilarityWeight = _instance.vectorSimilarityWeight || 0;
         _instance.topK = _instance.topK || 0;
-        _instance.highlight = _instance.highlight || false;
-        _instance.keyword = _instance.keyword || false;
         _instance.fieldMask = _instance.fieldMask || undefined;
-        _instance.rerankModelCcaiServiceName =
-            _instance.rerankModelCcaiServiceName || '';
         _instance.rerankCandidates = _instance.rerankCandidates || 0;
-        _instance.dedupThreshold = _instance.dedupThreshold || 0;
-        _instance.dedupBeforeRerank = _instance.dedupBeforeRerank || false;
     }
     /**
      * Deserializes / reads binary message into message instance using provided binary reader
@@ -134880,7 +134790,7 @@ class RagRetrievalRequest {
         if (_instance.documentIds && _instance.documentIds.length) {
             _writer.writeRepeatedString(6, _instance.documentIds);
         }
-        if (_instance.useKg) {
+        if (_instance.useKg !== undefined && _instance.useKg !== null) {
             _writer.writeBool(7, _instance.useKg);
         }
         if (_instance.crossLanguages && _instance.crossLanguages.length) {
@@ -134889,34 +134799,39 @@ class RagRetrievalRequest {
         if (_instance.metadataCondition) {
             _writer.writeMessage(9, _instance.metadataCondition, RagMetadataConditions.serializeBinaryToWriter);
         }
-        if (_instance.similarityThreshold) {
+        if (_instance.similarityThreshold !== undefined &&
+            _instance.similarityThreshold !== null) {
             _writer.writeFloat(10, _instance.similarityThreshold);
         }
-        if (_instance.vectorSimilarityWeight) {
+        if (_instance.vectorSimilarityWeight !== undefined &&
+            _instance.vectorSimilarityWeight !== null) {
             _writer.writeFloat(11, _instance.vectorSimilarityWeight);
         }
         if (_instance.topK) {
             _writer.writeInt32(12, _instance.topK);
         }
-        if (_instance.highlight) {
+        if (_instance.highlight !== undefined && _instance.highlight !== null) {
             _writer.writeBool(13, _instance.highlight);
         }
-        if (_instance.keyword) {
+        if (_instance.keyword !== undefined && _instance.keyword !== null) {
             _writer.writeBool(14, _instance.keyword);
         }
         if (_instance.fieldMask) {
             _writer.writeMessage(15, _instance.fieldMask, googleProtobuf005.FieldMask.serializeBinaryToWriter);
         }
-        if (_instance.rerankModelCcaiServiceName) {
+        if (_instance.rerankModelCcaiServiceName !== undefined &&
+            _instance.rerankModelCcaiServiceName !== null) {
             _writer.writeString(16, _instance.rerankModelCcaiServiceName);
         }
         if (_instance.rerankCandidates) {
             _writer.writeInt32(17, _instance.rerankCandidates);
         }
-        if (_instance.dedupThreshold) {
+        if (_instance.dedupThreshold !== undefined &&
+            _instance.dedupThreshold !== null) {
             _writer.writeFloat(18, _instance.dedupThreshold);
         }
-        if (_instance.dedupBeforeRerank) {
+        if (_instance.dedupBeforeRerank !== undefined &&
+            _instance.dedupBeforeRerank !== null) {
             _writer.writeBool(19, _instance.dedupBeforeRerank);
         }
     }
@@ -135323,7 +135238,6 @@ class RagChunk {
         _instance.positions = _instance.positions || [];
         _instance.createTime = _instance.createTime || undefined;
         _instance.documentKeyword = _instance.documentKeyword || '';
-        _instance.similarity = _instance.similarity || 0;
     }
     /**
      * Deserializes / reads binary message into message instance using provided binary reader
@@ -135414,7 +135328,7 @@ class RagChunk {
         if (_instance.documentKeyword) {
             _writer.writeString(10, _instance.documentKeyword);
         }
-        if (_instance.similarity) {
+        if (_instance.similarity !== undefined && _instance.similarity !== null) {
             _writer.writeFloat(11, _instance.similarity);
         }
     }
@@ -136378,7 +136292,6 @@ class RagListCrawlersRequest {
         _instance.datasetName = _instance.datasetName || '';
         _instance.crawlerName = _instance.crawlerName || '';
         _instance.orderby = _instance.orderby || '';
-        _instance.sortingMode = _instance.sortingMode || 0;
         _instance.fieldMask = _instance.fieldMask || undefined;
     }
     /**
@@ -136446,7 +136359,7 @@ class RagListCrawlersRequest {
         if (_instance.orderby) {
             _writer.writeString(6, _instance.orderby);
         }
-        if (_instance.sortingMode) {
+        if (_instance.sortingMode !== undefined && _instance.sortingMode !== null) {
             _writer.writeEnum(7, _instance.sortingMode);
         }
         if (_instance.fieldMask) {
@@ -138326,7 +138239,6 @@ class RagCrawlerBrowserConfig {
     static refineValues(_instance) {
         _instance.crawlerHeaders = _instance.crawlerHeaders || [];
         _instance.crawlerCookies = _instance.crawlerCookies || [];
-        _instance.crawlerUserAgent = _instance.crawlerUserAgent || '';
     }
     /**
      * Deserializes / reads binary message into message instance using provided binary reader
@@ -138369,7 +138281,8 @@ class RagCrawlerBrowserConfig {
         if (_instance.crawlerCookies && _instance.crawlerCookies.length) {
             _writer.writeRepeatedMessage(2, _instance.crawlerCookies, RagCrawlerCookie.serializeBinaryToWriter);
         }
-        if (_instance.crawlerUserAgent) {
+        if (_instance.crawlerUserAgent !== undefined &&
+            _instance.crawlerUserAgent !== null) {
             _writer.writeString(3, _instance.crawlerUserAgent);
         }
     }
@@ -138913,10 +138826,8 @@ class RagCrawlerDeepCrawlerConfig {
     static refineValues(_instance) {
         _instance.isActive = _instance.isActive || false;
         _instance.crawlStrategy = _instance.crawlStrategy || 0;
-        _instance.maxDepth = _instance.maxDepth || 0;
         _instance.maxPages = _instance.maxPages || 0;
         _instance.deepCrawlerFilters = _instance.deepCrawlerFilters || undefined;
-        _instance.normalizeUrlCase = _instance.normalizeUrlCase || false;
     }
     /**
      * Deserializes / reads binary message into message instance using provided binary reader
@@ -138965,7 +138876,7 @@ class RagCrawlerDeepCrawlerConfig {
         if (_instance.crawlStrategy) {
             _writer.writeEnum(2, _instance.crawlStrategy);
         }
-        if (_instance.maxDepth) {
+        if (_instance.maxDepth !== undefined && _instance.maxDepth !== null) {
             _writer.writeInt32(3, _instance.maxDepth);
         }
         if (_instance.maxPages) {
@@ -138974,7 +138885,8 @@ class RagCrawlerDeepCrawlerConfig {
         if (_instance.deepCrawlerFilters) {
             _writer.writeMessage(5, _instance.deepCrawlerFilters, RagCrawlerFilters.serializeBinaryToWriter);
         }
-        if (_instance.normalizeUrlCase) {
+        if (_instance.normalizeUrlCase !== undefined &&
+            _instance.normalizeUrlCase !== null) {
             _writer.writeBool(6, _instance.normalizeUrlCase);
         }
     }
@@ -139101,7 +139013,6 @@ class RagCrawlerResultsConfig {
      * @param _instance message instance
      */
     static refineValues(_instance) {
-        _instance.injectFrontmatter = _instance.injectFrontmatter || false;
         _instance.metaDataExtractors = _instance.metaDataExtractors || [];
         _instance.contentScope = _instance.contentScope || undefined;
         _instance.densityPruning = _instance.densityPruning || undefined;
@@ -139150,7 +139061,8 @@ class RagCrawlerResultsConfig {
      * @param _writer binary writer instance
      */
     static serializeBinaryToWriter(_instance, _writer) {
-        if (_instance.injectFrontmatter) {
+        if (_instance.injectFrontmatter !== undefined &&
+            _instance.injectFrontmatter !== null) {
             _writer.writeBool(1, _instance.injectFrontmatter);
         }
         if (_instance.metaDataExtractors && _instance.metaDataExtractors.length) {
@@ -139402,10 +139314,6 @@ class RagCrawlerDensityPruning {
      * @param _instance message instance
      */
     static refineValues(_instance) {
-        _instance.isActive = _instance.isActive || false;
-        _instance.threshold = _instance.threshold || 0;
-        _instance.thresholdType = _instance.thresholdType || 0;
-        _instance.minWordThreshold = _instance.minWordThreshold || 0;
     }
     /**
      * Deserializes / reads binary message into message instance using provided binary reader
@@ -139441,16 +139349,18 @@ class RagCrawlerDensityPruning {
      * @param _writer binary writer instance
      */
     static serializeBinaryToWriter(_instance, _writer) {
-        if (_instance.isActive) {
+        if (_instance.isActive !== undefined && _instance.isActive !== null) {
             _writer.writeBool(1, _instance.isActive);
         }
-        if (_instance.threshold) {
+        if (_instance.threshold !== undefined && _instance.threshold !== null) {
             _writer.writeFloat(2, _instance.threshold);
         }
-        if (_instance.thresholdType) {
+        if (_instance.thresholdType !== undefined &&
+            _instance.thresholdType !== null) {
             _writer.writeEnum(3, _instance.thresholdType);
         }
-        if (_instance.minWordThreshold) {
+        if (_instance.minWordThreshold !== undefined &&
+            _instance.minWordThreshold !== null) {
             _writer.writeInt32(4, _instance.minWordThreshold);
         }
     }
@@ -139686,10 +139596,6 @@ class RagCrawlerRetryConfig {
      * @param _instance message instance
      */
     static refineValues(_instance) {
-        _instance.pageLoadTimeoutSeconds = _instance.pageLoadTimeoutSeconds || 0;
-        _instance.retryMaxAttempts = _instance.retryMaxAttempts || 0;
-        _instance.retryBackoffSeconds = _instance.retryBackoffSeconds || 0;
-        _instance.maxStallSeconds = _instance.maxStallSeconds || 0;
     }
     /**
      * Deserializes / reads binary message into message instance using provided binary reader
@@ -139725,16 +139631,20 @@ class RagCrawlerRetryConfig {
      * @param _writer binary writer instance
      */
     static serializeBinaryToWriter(_instance, _writer) {
-        if (_instance.pageLoadTimeoutSeconds) {
+        if (_instance.pageLoadTimeoutSeconds !== undefined &&
+            _instance.pageLoadTimeoutSeconds !== null) {
             _writer.writeInt32(1, _instance.pageLoadTimeoutSeconds);
         }
-        if (_instance.retryMaxAttempts) {
+        if (_instance.retryMaxAttempts !== undefined &&
+            _instance.retryMaxAttempts !== null) {
             _writer.writeInt32(2, _instance.retryMaxAttempts);
         }
-        if (_instance.retryBackoffSeconds) {
+        if (_instance.retryBackoffSeconds !== undefined &&
+            _instance.retryBackoffSeconds !== null) {
             _writer.writeFloat(3, _instance.retryBackoffSeconds);
         }
-        if (_instance.maxStallSeconds) {
+        if (_instance.maxStallSeconds !== undefined &&
+            _instance.maxStallSeconds !== null) {
             _writer.writeInt32(4, _instance.maxStallSeconds);
         }
     }
@@ -139835,7 +139745,6 @@ class RagCrawlerStatusFilter {
      * @param _instance message instance
      */
     static refineValues(_instance) {
-        _instance.isActive = _instance.isActive || false;
         _instance.acceptedStatusCodes = _instance.acceptedStatusCodes || [];
     }
     /**
@@ -139867,7 +139776,7 @@ class RagCrawlerStatusFilter {
      * @param _writer binary writer instance
      */
     static serializeBinaryToWriter(_instance, _writer) {
-        if (_instance.isActive) {
+        if (_instance.isActive !== undefined && _instance.isActive !== null) {
             _writer.writeBool(1, _instance.isActive);
         }
         if (_instance.acceptedStatusCodes && _instance.acceptedStatusCodes.length) {
@@ -139954,7 +139863,6 @@ class RagCrawlerIncrementalConfig {
      */
     static refineValues(_instance) {
         _instance.isActive = _instance.isActive || false;
-        _instance.maxAgeDays = _instance.maxAgeDays || 0;
     }
     /**
      * Deserializes / reads binary message into message instance using provided binary reader
@@ -139987,7 +139895,7 @@ class RagCrawlerIncrementalConfig {
         if (_instance.isActive) {
             _writer.writeBool(1, _instance.isActive);
         }
-        if (_instance.maxAgeDays) {
+        if (_instance.maxAgeDays !== undefined && _instance.maxAgeDays !== null) {
             _writer.writeInt32(2, _instance.maxAgeDays);
         }
     }
@@ -140071,7 +139979,6 @@ class RagCrawlerContentResult {
      */
     static refineValues(_instance) {
         _instance.metadata = _instance.metadata || undefined;
-        _instance.markdown = _instance.markdown || '';
     }
     /**
      * Deserializes / reads binary message into message instance using provided binary reader
@@ -140105,7 +140012,7 @@ class RagCrawlerContentResult {
         if (_instance.metadata) {
             _writer.writeMessage(1, _instance.metadata, googleProtobuf005.Struct.serializeBinaryToWriter);
         }
-        if (_instance.markdown) {
+        if (_instance.markdown !== undefined && _instance.markdown !== null) {
             _writer.writeString(2, _instance.markdown);
         }
     }
@@ -140191,8 +140098,6 @@ class RagCrawlerExecutionInfo {
      */
     static refineValues(_instance) {
         _instance.sslCertificate = _instance.sslCertificate || undefined;
-        _instance.success = _instance.success || false;
-        _instance.errorMessage = _instance.errorMessage || '';
     }
     /**
      * Deserializes / reads binary message into message instance using provided binary reader
@@ -140229,10 +140134,11 @@ class RagCrawlerExecutionInfo {
         if (_instance.sslCertificate) {
             _writer.writeMessage(1, _instance.sslCertificate, googleProtobuf005.Struct.serializeBinaryToWriter);
         }
-        if (_instance.success) {
+        if (_instance.success !== undefined && _instance.success !== null) {
             _writer.writeBool(2, _instance.success);
         }
-        if (_instance.errorMessage) {
+        if (_instance.errorMessage !== undefined &&
+            _instance.errorMessage !== null) {
             _writer.writeString(3, _instance.errorMessage);
         }
     }
@@ -140843,7 +140749,6 @@ class RagListCrawlerRunsRequest {
         _instance.pageToken = _instance.pageToken || '';
         _instance.status = _instance.status || 0;
         _instance.orderby = _instance.orderby || '';
-        _instance.sortingMode = _instance.sortingMode || 0;
     }
     /**
      * Deserializes / reads binary message into message instance using provided binary reader
@@ -140906,7 +140811,7 @@ class RagListCrawlerRunsRequest {
         if (_instance.orderby) {
             _writer.writeString(6, _instance.orderby);
         }
-        if (_instance.sortingMode) {
+        if (_instance.sortingMode !== undefined && _instance.sortingMode !== null) {
             _writer.writeEnum(7, _instance.sortingMode);
         }
     }
@@ -141678,7 +141583,6 @@ class RagGetCrawlerResultsRequest {
         _instance.urlQuery = _instance.urlQuery || '';
         _instance.fieldMask = _instance.fieldMask || undefined;
         _instance.orderby = _instance.orderby || '';
-        _instance.sortingMode = _instance.sortingMode || 0;
     }
     /**
      * Deserializes / reads binary message into message instance using provided binary reader
@@ -141748,7 +141652,7 @@ class RagGetCrawlerResultsRequest {
         if (_instance.orderby) {
             _writer.writeString(7, _instance.orderby);
         }
-        if (_instance.sortingMode) {
+        if (_instance.sortingMode !== undefined && _instance.sortingMode !== null) {
             _writer.writeEnum(8, _instance.sortingMode);
         }
     }
@@ -142531,7 +142435,6 @@ class RagGetCrawlerAttachedDatasetsRequest {
         _instance.pageToken = _instance.pageToken || '';
         _instance.fieldMask = _instance.fieldMask || undefined;
         _instance.orderby = _instance.orderby || '';
-        _instance.sortingMode = _instance.sortingMode || 0;
     }
     /**
      * Deserializes / reads binary message into message instance using provided binary reader
@@ -142601,7 +142504,7 @@ class RagGetCrawlerAttachedDatasetsRequest {
         if (_instance.orderby) {
             _writer.writeString(7, _instance.orderby);
         }
-        if (_instance.sortingMode) {
+        if (_instance.sortingMode !== undefined && _instance.sortingMode !== null) {
             _writer.writeEnum(8, _instance.sortingMode);
         }
     }
@@ -142873,7 +142776,6 @@ class RagGetCrawlerRunLogsRequest {
         _instance.endTime = _instance.endTime || undefined;
         _instance.sourceUrlFilter = _instance.sourceUrlFilter || '';
         _instance.orderby = _instance.orderby || '';
-        _instance.sortingMode = _instance.sortingMode || 0;
         _instance.fieldMask = _instance.fieldMask || undefined;
     }
     /**
@@ -142979,7 +142881,7 @@ class RagGetCrawlerRunLogsRequest {
         if (_instance.orderby) {
             _writer.writeString(12, _instance.orderby);
         }
-        if (_instance.sortingMode) {
+        if (_instance.sortingMode !== undefined && _instance.sortingMode !== null) {
             _writer.writeEnum(13, _instance.sortingMode);
         }
         if (_instance.fieldMask) {
@@ -144249,10 +144151,10 @@ class RagsClient {
             .ragGetCrawlerRunLogs(requestData, requestMetadata)
             .pipe(throwStatusErrors(), takeMessages());
     }
-    static { this.ɵfac = i0.ɵɵngDeclareFactory({ minVersion: "12.0.0", version: "20.3.31", ngImport: i0, type: RagsClient, deps: [{ token: GRPC_RAGS_CLIENT_SETTINGS, optional: true }, { token: GRPC_CLIENT_FACTORY }, { token: i1.GrpcHandler }], target: i0.ɵɵFactoryTarget.Injectable }); }
-    static { this.ɵprov = i0.ɵɵngDeclareInjectable({ minVersion: "12.0.0", version: "20.3.31", ngImport: i0, type: RagsClient, providedIn: 'any' }); }
+    static { this.ɵfac = i0.ɵɵngDeclareFactory({ minVersion: "12.0.0", version: "20.3.33", ngImport: i0, type: RagsClient, deps: [{ token: GRPC_RAGS_CLIENT_SETTINGS, optional: true }, { token: GRPC_CLIENT_FACTORY }, { token: i1.GrpcHandler }], target: i0.ɵɵFactoryTarget.Injectable }); }
+    static { this.ɵprov = i0.ɵɵngDeclareInjectable({ minVersion: "12.0.0", version: "20.3.33", ngImport: i0, type: RagsClient, providedIn: 'any' }); }
 }
-i0.ɵɵngDeclareClassMetadata({ minVersion: "12.0.0", version: "20.3.31", ngImport: i0, type: RagsClient, decorators: [{
+i0.ɵɵngDeclareClassMetadata({ minVersion: "12.0.0", version: "20.3.33", ngImport: i0, type: RagsClient, decorators: [{
             type: Injectable,
             args: [{ providedIn: 'any' }]
         }], ctorParameters: () => [{ type: undefined, decorators: [{
@@ -144490,10 +144392,10 @@ class ServerStatisticsClient {
             .getUserCount(requestData, requestMetadata)
             .pipe(throwStatusErrors(), takeMessages());
     }
-    static { this.ɵfac = i0.ɵɵngDeclareFactory({ minVersion: "12.0.0", version: "20.3.31", ngImport: i0, type: ServerStatisticsClient, deps: [{ token: GRPC_SERVER_STATISTICS_CLIENT_SETTINGS, optional: true }, { token: GRPC_CLIENT_FACTORY }, { token: i1.GrpcHandler }], target: i0.ɵɵFactoryTarget.Injectable }); }
-    static { this.ɵprov = i0.ɵɵngDeclareInjectable({ minVersion: "12.0.0", version: "20.3.31", ngImport: i0, type: ServerStatisticsClient, providedIn: 'any' }); }
+    static { this.ɵfac = i0.ɵɵngDeclareFactory({ minVersion: "12.0.0", version: "20.3.33", ngImport: i0, type: ServerStatisticsClient, deps: [{ token: GRPC_SERVER_STATISTICS_CLIENT_SETTINGS, optional: true }, { token: GRPC_CLIENT_FACTORY }, { token: i1.GrpcHandler }], target: i0.ɵɵFactoryTarget.Injectable }); }
+    static { this.ɵprov = i0.ɵɵngDeclareInjectable({ minVersion: "12.0.0", version: "20.3.33", ngImport: i0, type: ServerStatisticsClient, providedIn: 'any' }); }
 }
-i0.ɵɵngDeclareClassMetadata({ minVersion: "12.0.0", version: "20.3.31", ngImport: i0, type: ServerStatisticsClient, decorators: [{
+i0.ɵɵngDeclareClassMetadata({ minVersion: "12.0.0", version: "20.3.33", ngImport: i0, type: ServerStatisticsClient, decorators: [{
             type: Injectable,
             args: [{ providedIn: 'any' }]
         }], ctorParameters: () => [{ type: undefined, decorators: [{
@@ -146039,10 +145941,10 @@ class SessionsClient {
             .listAudioFiles(requestData, requestMetadata)
             .pipe(throwStatusErrors(), takeMessages());
     }
-    static { this.ɵfac = i0.ɵɵngDeclareFactory({ minVersion: "12.0.0", version: "20.3.31", ngImport: i0, type: SessionsClient, deps: [{ token: GRPC_SESSIONS_CLIENT_SETTINGS, optional: true }, { token: GRPC_CLIENT_FACTORY }, { token: i1.GrpcHandler }], target: i0.ɵɵFactoryTarget.Injectable }); }
-    static { this.ɵprov = i0.ɵɵngDeclareInjectable({ minVersion: "12.0.0", version: "20.3.31", ngImport: i0, type: SessionsClient, providedIn: 'any' }); }
+    static { this.ɵfac = i0.ɵɵngDeclareFactory({ minVersion: "12.0.0", version: "20.3.33", ngImport: i0, type: SessionsClient, deps: [{ token: GRPC_SESSIONS_CLIENT_SETTINGS, optional: true }, { token: GRPC_CLIENT_FACTORY }, { token: i1.GrpcHandler }], target: i0.ɵɵFactoryTarget.Injectable }); }
+    static { this.ɵprov = i0.ɵɵngDeclareInjectable({ minVersion: "12.0.0", version: "20.3.33", ngImport: i0, type: SessionsClient, providedIn: 'any' }); }
 }
-i0.ɵɵngDeclareClassMetadata({ minVersion: "12.0.0", version: "20.3.31", ngImport: i0, type: SessionsClient, decorators: [{
+i0.ɵɵngDeclareClassMetadata({ minVersion: "12.0.0", version: "20.3.33", ngImport: i0, type: SessionsClient, decorators: [{
             type: Injectable,
             args: [{ providedIn: 'any' }]
         }], ctorParameters: () => [{ type: undefined, decorators: [{
@@ -146868,10 +146770,10 @@ class UsersClient {
             .deleteAllUserPreferences(requestData, requestMetadata)
             .pipe(throwStatusErrors(), takeMessages());
     }
-    static { this.ɵfac = i0.ɵɵngDeclareFactory({ minVersion: "12.0.0", version: "20.3.31", ngImport: i0, type: UsersClient, deps: [{ token: GRPC_USERS_CLIENT_SETTINGS, optional: true }, { token: GRPC_CLIENT_FACTORY }, { token: i1.GrpcHandler }], target: i0.ɵɵFactoryTarget.Injectable }); }
-    static { this.ɵprov = i0.ɵɵngDeclareInjectable({ minVersion: "12.0.0", version: "20.3.31", ngImport: i0, type: UsersClient, providedIn: 'any' }); }
+    static { this.ɵfac = i0.ɵɵngDeclareFactory({ minVersion: "12.0.0", version: "20.3.33", ngImport: i0, type: UsersClient, deps: [{ token: GRPC_USERS_CLIENT_SETTINGS, optional: true }, { token: GRPC_CLIENT_FACTORY }, { token: i1.GrpcHandler }], target: i0.ɵɵFactoryTarget.Injectable }); }
+    static { this.ɵprov = i0.ɵɵngDeclareInjectable({ minVersion: "12.0.0", version: "20.3.33", ngImport: i0, type: UsersClient, providedIn: 'any' }); }
 }
-i0.ɵɵngDeclareClassMetadata({ minVersion: "12.0.0", version: "20.3.31", ngImport: i0, type: UsersClient, decorators: [{
+i0.ɵɵngDeclareClassMetadata({ minVersion: "12.0.0", version: "20.3.33", ngImport: i0, type: UsersClient, decorators: [{
             type: Injectable,
             args: [{ providedIn: 'any' }]
         }], ctorParameters: () => [{ type: undefined, decorators: [{
@@ -150455,10 +150357,10 @@ class UtilitiesClient {
             .addTrainingPhrasesFromCSV(requestData, requestMetadata)
             .pipe(throwStatusErrors(), takeMessages());
     }
-    static { this.ɵfac = i0.ɵɵngDeclareFactory({ minVersion: "12.0.0", version: "20.3.31", ngImport: i0, type: UtilitiesClient, deps: [{ token: GRPC_UTILITIES_CLIENT_SETTINGS, optional: true }, { token: GRPC_CLIENT_FACTORY }, { token: i1.GrpcHandler }], target: i0.ɵɵFactoryTarget.Injectable }); }
-    static { this.ɵprov = i0.ɵɵngDeclareInjectable({ minVersion: "12.0.0", version: "20.3.31", ngImport: i0, type: UtilitiesClient, providedIn: 'any' }); }
+    static { this.ɵfac = i0.ɵɵngDeclareFactory({ minVersion: "12.0.0", version: "20.3.33", ngImport: i0, type: UtilitiesClient, deps: [{ token: GRPC_UTILITIES_CLIENT_SETTINGS, optional: true }, { token: GRPC_CLIENT_FACTORY }, { token: i1.GrpcHandler }], target: i0.ɵɵFactoryTarget.Injectable }); }
+    static { this.ɵprov = i0.ɵɵngDeclareInjectable({ minVersion: "12.0.0", version: "20.3.33", ngImport: i0, type: UtilitiesClient, providedIn: 'any' }); }
 }
-i0.ɵɵngDeclareClassMetadata({ minVersion: "12.0.0", version: "20.3.31", ngImport: i0, type: UtilitiesClient, decorators: [{
+i0.ɵɵngDeclareClassMetadata({ minVersion: "12.0.0", version: "20.3.33", ngImport: i0, type: UtilitiesClient, decorators: [{
             type: Injectable,
             args: [{ providedIn: 'any' }]
         }], ctorParameters: () => [{ type: undefined, decorators: [{
@@ -152273,10 +152175,10 @@ class WebhookClient {
             .deleteSessionEntityType(requestData, requestMetadata)
             .pipe(throwStatusErrors(), takeMessages());
     }
-    static { this.ɵfac = i0.ɵɵngDeclareFactory({ minVersion: "12.0.0", version: "20.3.31", ngImport: i0, type: WebhookClient, deps: [{ token: GRPC_WEBHOOK_CLIENT_SETTINGS, optional: true }, { token: GRPC_CLIENT_FACTORY }, { token: i1.GrpcHandler }], target: i0.ɵɵFactoryTarget.Injectable }); }
-    static { this.ɵprov = i0.ɵɵngDeclareInjectable({ minVersion: "12.0.0", version: "20.3.31", ngImport: i0, type: WebhookClient, providedIn: 'any' }); }
+    static { this.ɵfac = i0.ɵɵngDeclareFactory({ minVersion: "12.0.0", version: "20.3.33", ngImport: i0, type: WebhookClient, deps: [{ token: GRPC_WEBHOOK_CLIENT_SETTINGS, optional: true }, { token: GRPC_CLIENT_FACTORY }, { token: i1.GrpcHandler }], target: i0.ɵɵFactoryTarget.Injectable }); }
+    static { this.ɵprov = i0.ɵɵngDeclareInjectable({ minVersion: "12.0.0", version: "20.3.33", ngImport: i0, type: WebhookClient, providedIn: 'any' }); }
 }
-i0.ɵɵngDeclareClassMetadata({ minVersion: "12.0.0", version: "20.3.31", ngImport: i0, type: WebhookClient, decorators: [{
+i0.ɵɵngDeclareClassMetadata({ minVersion: "12.0.0", version: "20.3.33", ngImport: i0, type: WebhookClient, decorators: [{
             type: Injectable,
             args: [{ providedIn: 'any' }]
         }], ctorParameters: () => [{ type: undefined, decorators: [{
@@ -152802,10 +152704,10 @@ class Speech2TextClient {
             .listS2tNormalizationPipelines(requestData, requestMetadata)
             .pipe(throwStatusErrors(), takeMessages());
     }
-    static { this.ɵfac = i0.ɵɵngDeclareFactory({ minVersion: "12.0.0", version: "20.3.31", ngImport: i0, type: Speech2TextClient, deps: [{ token: GRPC_SPEECH2_TEXT_CLIENT_SETTINGS, optional: true }, { token: GRPC_CLIENT_FACTORY }, { token: i1.GrpcHandler }], target: i0.ɵɵFactoryTarget.Injectable }); }
-    static { this.ɵprov = i0.ɵɵngDeclareInjectable({ minVersion: "12.0.0", version: "20.3.31", ngImport: i0, type: Speech2TextClient, providedIn: 'any' }); }
+    static { this.ɵfac = i0.ɵɵngDeclareFactory({ minVersion: "12.0.0", version: "20.3.33", ngImport: i0, type: Speech2TextClient, deps: [{ token: GRPC_SPEECH2_TEXT_CLIENT_SETTINGS, optional: true }, { token: GRPC_CLIENT_FACTORY }, { token: i1.GrpcHandler }], target: i0.ɵɵFactoryTarget.Injectable }); }
+    static { this.ɵprov = i0.ɵɵngDeclareInjectable({ minVersion: "12.0.0", version: "20.3.33", ngImport: i0, type: Speech2TextClient, providedIn: 'any' }); }
 }
-i0.ɵɵngDeclareClassMetadata({ minVersion: "12.0.0", version: "20.3.31", ngImport: i0, type: Speech2TextClient, decorators: [{
+i0.ɵɵngDeclareClassMetadata({ minVersion: "12.0.0", version: "20.3.33", ngImport: i0, type: Speech2TextClient, decorators: [{
             type: Injectable,
             args: [{ providedIn: 'any' }]
         }], ctorParameters: () => [{ type: undefined, decorators: [{
@@ -153421,10 +153323,10 @@ class Text2SpeechClient {
             .voiceCloning(requestData, requestMetadata)
             .pipe(throwStatusErrors(), takeMessages());
     }
-    static { this.ɵfac = i0.ɵɵngDeclareFactory({ minVersion: "12.0.0", version: "20.3.31", ngImport: i0, type: Text2SpeechClient, deps: [{ token: GRPC_TEXT2_SPEECH_CLIENT_SETTINGS, optional: true }, { token: GRPC_CLIENT_FACTORY }, { token: i1.GrpcHandler }], target: i0.ɵɵFactoryTarget.Injectable }); }
-    static { this.ɵprov = i0.ɵɵngDeclareInjectable({ minVersion: "12.0.0", version: "20.3.31", ngImport: i0, type: Text2SpeechClient, providedIn: 'any' }); }
+    static { this.ɵfac = i0.ɵɵngDeclareFactory({ minVersion: "12.0.0", version: "20.3.33", ngImport: i0, type: Text2SpeechClient, deps: [{ token: GRPC_TEXT2_SPEECH_CLIENT_SETTINGS, optional: true }, { token: GRPC_CLIENT_FACTORY }, { token: i1.GrpcHandler }], target: i0.ɵɵFactoryTarget.Injectable }); }
+    static { this.ɵprov = i0.ɵɵngDeclareInjectable({ minVersion: "12.0.0", version: "20.3.33", ngImport: i0, type: Text2SpeechClient, providedIn: 'any' }); }
 }
-i0.ɵɵngDeclareClassMetadata({ minVersion: "12.0.0", version: "20.3.31", ngImport: i0, type: Text2SpeechClient, decorators: [{
+i0.ɵɵngDeclareClassMetadata({ minVersion: "12.0.0", version: "20.3.33", ngImport: i0, type: Text2SpeechClient, decorators: [{
             type: Injectable,
             args: [{ providedIn: 'any' }]
         }], ctorParameters: () => [{ type: undefined, decorators: [{
@@ -153781,10 +153683,10 @@ class KeycloakTokenProvider {
     ngOnDestroy() {
         this.stop();
     }
-    static { this.ɵfac = i0.ɵɵngDeclareFactory({ minVersion: "12.0.0", version: "20.3.31", ngImport: i0, type: KeycloakTokenProvider, deps: [{ token: i1$1.HttpClient }, { token: KEYCLOAK_TOKEN_PROVIDER_CONFIG, optional: true }], target: i0.ɵɵFactoryTarget.Injectable }); }
-    static { this.ɵprov = i0.ɵɵngDeclareInjectable({ minVersion: "12.0.0", version: "20.3.31", ngImport: i0, type: KeycloakTokenProvider }); }
+    static { this.ɵfac = i0.ɵɵngDeclareFactory({ minVersion: "12.0.0", version: "20.3.33", ngImport: i0, type: KeycloakTokenProvider, deps: [{ token: i1$1.HttpClient }, { token: KEYCLOAK_TOKEN_PROVIDER_CONFIG, optional: true }], target: i0.ɵɵFactoryTarget.Injectable }); }
+    static { this.ɵprov = i0.ɵɵngDeclareInjectable({ minVersion: "12.0.0", version: "20.3.33", ngImport: i0, type: KeycloakTokenProvider }); }
 }
-i0.ɵɵngDeclareClassMetadata({ minVersion: "12.0.0", version: "20.3.31", ngImport: i0, type: KeycloakTokenProvider, decorators: [{
+i0.ɵɵngDeclareClassMetadata({ minVersion: "12.0.0", version: "20.3.33", ngImport: i0, type: KeycloakTokenProvider, decorators: [{
             type: Injectable
         }], ctorParameters: () => [{ type: i1$1.HttpClient }, { type: undefined, decorators: [{
                     type: Optional
@@ -153974,10 +153876,10 @@ class AuthGrpcInterceptor {
             return next.handle(request);
         }));
     }
-    static { this.ɵfac = i0.ɵɵngDeclareFactory({ minVersion: "12.0.0", version: "20.3.31", ngImport: i0, type: AuthGrpcInterceptor, deps: [{ token: TOKEN_PROVIDER }], target: i0.ɵɵFactoryTarget.Injectable }); }
-    static { this.ɵprov = i0.ɵɵngDeclareInjectable({ minVersion: "12.0.0", version: "20.3.31", ngImport: i0, type: AuthGrpcInterceptor }); }
+    static { this.ɵfac = i0.ɵɵngDeclareFactory({ minVersion: "12.0.0", version: "20.3.33", ngImport: i0, type: AuthGrpcInterceptor, deps: [{ token: TOKEN_PROVIDER }], target: i0.ɵɵFactoryTarget.Injectable }); }
+    static { this.ɵprov = i0.ɵɵngDeclareInjectable({ minVersion: "12.0.0", version: "20.3.33", ngImport: i0, type: AuthGrpcInterceptor }); }
 }
-i0.ɵɵngDeclareClassMetadata({ minVersion: "12.0.0", version: "20.3.31", ngImport: i0, type: AuthGrpcInterceptor, decorators: [{
+i0.ɵɵngDeclareClassMetadata({ minVersion: "12.0.0", version: "20.3.33", ngImport: i0, type: AuthGrpcInterceptor, decorators: [{
             type: Injectable
         }], ctorParameters: () => [{ type: undefined, decorators: [{
                     type: Inject,
@@ -154023,6 +153925,131 @@ function provideOndewoCsiAuth(tokenProvider) {
 }
 
 /**
+ * Builds the gRPC-web endpoint URL (`host` setting of `@ngx-grpc/grpc-web-client`) from the
+ * same `host` / `port` / `useSecureChannel` fields every ONDEWO SDK takes.
+ *
+ * In a browser the TLS handshake belongs to the user agent: it verifies the server against
+ * its own (OS / browser) trust store and presents a client certificate only from the
+ * browser's certificate store. Application code can neither add a CA nor attach a client
+ * identity, and a private key must never be shipped to a browser. The certificate fields the
+ * other SDKs accept (`grpcCert`, `grpcClientCert`, `grpcClientKey`) are therefore refused
+ * here instead of being silently dropped.
+ */
+/**
+ * Certificate / key fields of the other ONDEWO SDKs' configs (camelCase and snake_case) that a
+ * browser cannot use. A non-empty value in any of them makes {@link buildGrpcWebHost} throw.
+ */
+const BROWSER_UNSUPPORTED_TLS_FIELDS = [
+    "grpcCert",
+    "grpcClientCert",
+    "grpcClientKey",
+    "grpc_cert",
+    "grpc_client_cert",
+    "grpc_client_key"
+];
+/** Raised for an unusable {@link GrpcWebEndpointConfig}. The message names fields, never their values. */
+class GrpcWebEndpointError extends Error {
+    /**
+     * @param message a description of the problem that names the offending field.
+     */
+    constructor(message) {
+        super(message);
+        this.name = "GrpcWebEndpointError";
+    }
+}
+/** A URL scheme at the start of `host` (`https://…`). */
+const SCHEME_PATTERN = /^[a-z][a-z0-9+.-]*:\/\//i;
+/** A bare IPv6 literal: hex digits, dots (embedded IPv4) and at least two colons. */
+const BARE_IPV6_PATTERN = /^(?=(?:[^:]*:){2})[0-9a-f:.]+$/i;
+/**
+ * Return the gRPC-web base URL for `config`: `https://host:port` by default, `http://host:port`
+ * when `useSecureChannel` is `false` (with a warning naming `host:port`). A bare IPv6 literal is
+ * bracketed (`https://[::1]:8443`); a bracketed host or a host that already carries a scheme is
+ * left alone.
+ *
+ * ```ts
+ * GrpcWebClientModule.forRoot({ settings: { host: buildGrpcWebHost({ host: "nlu.example.com", port: 443 }) } })
+ * ```
+ *
+ * @param config the endpoint settings.
+ * @returns the base URL to pass as the gRPC-web client's `host` setting.
+ * @throws GrpcWebEndpointError when a certificate / key field is set, the host is empty or
+ *   carries a port, the port is invalid, or an `http://` URL is combined with
+ *   `useSecureChannel: true`.
+ */
+function buildGrpcWebHost(config) {
+    const fields = config;
+    for (const field of BROWSER_UNSUPPORTED_TLS_FIELDS) {
+        const value = fields[field];
+        if (value !== undefined && value !== null && value !== "") {
+            throw new GrpcWebEndpointError(`GrpcWebEndpointConfig.${field} is not supported by a browser gRPC-web client: the browser owns the TLS ` +
+                "handshake, trusts its own certificate store and presents a client certificate only from the browser/OS " +
+                "store. Remove the field (never ship a private key to a browser); see the README section " +
+                "'TLS, mutual TLS and certificates'.");
+        }
+    }
+    const host = config.host;
+    if (typeof host !== "string" || host.trim() === "") {
+        throw new GrpcWebEndpointError("GrpcWebEndpointConfig.host must be a non-empty string");
+    }
+    const secure = config.useSecureChannel !== false;
+    if (SCHEME_PATTERN.test(host)) {
+        if (config.port !== undefined) {
+            throw new GrpcWebEndpointError("GrpcWebEndpointConfig.port must be omitted when GrpcWebEndpointConfig.host is a URL; put the port in the URL");
+        }
+        let url;
+        try {
+            url = new URL(host);
+        }
+        catch {
+            throw new GrpcWebEndpointError("GrpcWebEndpointConfig.host is not a valid URL");
+        }
+        if (url.protocol !== "https:" && url.protocol !== "http:") {
+            throw new GrpcWebEndpointError("GrpcWebEndpointConfig.host must use the http:// or https:// scheme");
+        }
+        if (url.protocol === "http:") {
+            if (secure) {
+                throw new GrpcWebEndpointError("GrpcWebEndpointConfig.host uses http:// but useSecureChannel is true; use an https:// URL " +
+                    "or set useSecureChannel: false");
+            }
+            // URL.host leaves out any user:password@ part, so the warning cannot leak credentials
+            warnInsecure(url.host);
+        }
+        return host;
+    }
+    let bareHost = host;
+    if (!host.startsWith("[") && host.includes(":")) {
+        if (!BARE_IPV6_PATTERN.test(host)) {
+            throw new GrpcWebEndpointError("GrpcWebEndpointConfig.host must not contain a port; set GrpcWebEndpointConfig.port instead");
+        }
+        bareHost = `[${host}]`;
+    }
+    let authority = bareHost;
+    if (config.port !== undefined) {
+        const port = Number(config.port);
+        if (String(config.port).trim() === "" || !Number.isInteger(port) || port < 1 || port > 65535) {
+            throw new GrpcWebEndpointError("GrpcWebEndpointConfig.port must be an integer between 1 and 65535");
+        }
+        authority = `${bareHost}:${port}`;
+    }
+    if (secure) {
+        return `https://${authority}`;
+    }
+    warnInsecure(authority);
+    return `http://${authority}`;
+}
+/**
+ * Warn, through the console the host application already uses, that requests (and bearer
+ * tokens) to `authority` travel unencrypted.
+ *
+ * @param authority the `host:port` the insecure channel targets.
+ */
+function warnInsecure(authority) {
+    console.warn(`ONDEWO gRPC-web: insecure http:// endpoint ${authority}; requests and bearer tokens are sent unencrypted. ` +
+        "Use useSecureChannel: true (https://) outside local development.");
+}
+
+/**
  * Public auth surface for `@ondewo/csi-client-angular`.
  *
  * The consuming application supplies the current Keycloak access token through a
@@ -154035,5 +154062,5 @@ function provideOndewoCsiAuth(tokenProvider) {
  * Generated bundle index. Do not edit.
  */
 
-export { AUTHORIZATION_HEADER, AcousticModels, AddAudioFilesRequest, AddAudioFilesResponse, AddDataToUserLanguageModelRequest, AddLlmEvaluationExampleRequest, AddLlmEvaluationExamplesRequest, AddLlmEvaluationExamplesResponse, AddNotificationsRequest, AddNotificationsResponse, AddSessionCommentRequest, AddSessionFeedbackRequest, AddSessionLabelsRequest, AddSessionStepFeedbackRequest, AddTrainingPhrasesFromCSVRequest, AddTrainingPhrasesRequest, AddTrainingPhrasesResponse, AddUserToProjectRequest, Agent, AgentOfUserWithOwner, AgentSorting, AgentStatus, AgentView, AgentWithOwner, AgentsClient, AiServicesClient, AltSentence, AltTrainingPhrase, Apodization, ApplyLlmEvaluationAbRolloutRequest, AudioEncoding, AudioFileResource, AudioFileResourceType, AudioFormat, AuthGrpcInterceptor, BEARER_PREFIX, BatchCreateEntitiesRequest, BatchCreateParametersRequest, BatchCreateResponseMessagesRequest, BatchCreateTrainingPhrasesRequest, BatchDeleteEntitiesRequest, BatchDeleteEntitiesResponse, BatchDeleteEntityTypesRequest, BatchDeleteIntentsRequest, BatchDeleteParametersRequest, BatchDeleteParametersResponse, BatchDeleteResponseMessagesRequest, BatchDeleteResponseMessagesResponse, BatchDeleteTrainingPhrasesRequest, BatchDeleteTrainingPhrasesResponse, BatchEntitiesResponse, BatchGetEntitiesRequest, BatchGetParametersRequest, BatchGetResponseMessagesRequest, BatchGetTrainingPhrasesRequest, BatchParametersStatusResponse, BatchResponseMessagesStatusResponse, BatchSynthesizeRequest, BatchSynthesizeResponse, BatchTrainingPhrasesStatusResponse, BatchUpdateEntitiesRequest, BatchUpdateEntityTypesRequest, BatchUpdateEntityTypesResponse, BatchUpdateIntentsRequest, BatchUpdateIntentsResponse, BatchUpdateParametersRequest, BatchUpdateResponseMessagesRequest, BatchUpdateTrainingPhrasesRequest, BertAugEnrichmentConfig, BuildCacheRequest, Caching, CancelLlmEvaluationExperimentRequest, CancelOperationRequest, CcaiProject, CcaiProjectSorting, CcaiProjectStatus, CcaiProjectView, CcaiProjectsClient, CcaiService, CcaiServiceFilter, CcaiServiceList, CcaiServiceProvider, CcaiServiceType, CheckUpstreamHealthResponse, CkptFile, ClassifyIntentsRequest, ClassifyIntentsResponse, CleanAllEntityTypesRequest, CleanAllEntityTypesResponse, CleanAllIntentsRequest, CleanAllIntentsResponse, CleanEntityTypeRequest, CleanEntityTypeResponse, CleanIntentRequest, CleanIntentResponse, Comment, CompareLlmEvaluationExperimentsRequest, ComparisonOperator, CompositeInference, Condition, ConditionType, Context, ContextFilter, ContextsClient, ControlMessage, ControlMessageServiceMethod, ControlMessageServiceName, ControlMessageServiceParameters, ControlStatus, ControlStreamRequest, ControlStreamResponse, ConversationsClient, CreateAgentRequest, CreateCcaiProjectRequest, CreateCcaiProjectResponse, CreateContextRequest, CreateCustomPhonemizerRequest, CreateEntityRequest, CreateEntityTypeRequest, CreateIntentRequest, CreateLlmEvaluationAbExperimentRequest, CreateLlmEvaluationDatasetRequest, CreateLlmEvaluationExamplesFromSessionRequest, CreateLlmEvaluationExamplesFromSessionResponse, CreateLlmEvaluationOnlineConfigRequest, CreateLlmEvaluationReleaseGateRequest, CreateLlmEvaluationReportRequest, CreateLlmEvaluationScheduleRequest, CreateLlmEvaluationScorecardRequest, CreateProjectRoleRequest, CreateProjectTechnicalUserRequest, CreateProjectTechnicalUserResponse, CreateServerRoleRequest, CreateSessionEntityTypeRequest, CreateSessionRequest, CreateSessionReviewRequest, CreateSessionStepRequest, CreateUserLanguageModelRequest, CreateUserRequest, CustomHttpPattern, CustomPhonemizerProto, CustomPlatformInfo, DataEnrichmentConfig, Decoding, DefaultProjectRole, DefaultServerRole, DeleteAgentRequest, DeleteAllContextsRequest, DeleteAllUserPreferencesRequest, DeleteAudioFilesRequest, DeleteAudioFilesResponse, DeleteCcaiProjectRequest, DeleteCcaiProjectResponse, DeleteContextRequest, DeleteEntityRequest, DeleteEntityStatus, DeleteEntityTypeRequest, DeleteIntentRequest, DeleteLlmEvaluationAbExperimentRequest, DeleteLlmEvaluationDatasetRequest, DeleteLlmEvaluationExampleRequest, DeleteLlmEvaluationExperimentRequest, DeleteLlmEvaluationFeedbackRequest, DeleteLlmEvaluationOnlineConfigRequest, DeleteLlmEvaluationReleaseGateRequest, DeleteLlmEvaluationReportRequest, DeleteLlmEvaluationScheduleRequest, DeleteLlmEvaluationScorecardRequest, DeleteNotificationsRequest, DeleteOperationRequest, DeleteProjectRoleRequest, DeleteProjectTechnicalUserRequest, DeleteResourcesRequest, DeleteServerRoleRequest, DeleteSessionCommentsRequest, DeleteSessionEntityTypeRequest, DeleteSessionFeedbackRequest, DeleteSessionLabelsRequest, DeleteSessionRequest, DeleteSessionStepRequest, DeleteUserLanguageModelRequest, DeleteUserPreferencesRequest, DeleteUserPreferencesResponse, DeleteUserRequest, DetectIntentRequest, DetectIntentResponse, DetectedIntent, DocumentFileResource, EntityDetected, EntityEnrichmentConfig, EntityStatus, EntityType, EntityTypeBatch, EntityTypeCategory, EntityTypeFuzzyNerConfig, EntityTypeSorting, EntityTypeUpdate, EntityTypeView, EntityTypesClient, EntityValueSorting, EventInput, ExportAgentRequest, ExportAgentResponse, ExportBenchmarkAgentRequest, ExportBenchmarkAgentResponse, ExportResourcesRequest, ExportResourcesResponse, ExtractEntitiesFuzzyRequest, ExtractEntitiesRequest, ExtractEntitiesResponse, FeedbackAuthorType, FeedbackBreakdownBucket, FeedbackFilter, FeedbackRating, FeedbackScope, FeedbackStatistics, FeedbackTimeGranularity, FeedbackTimeSeriesBucket, FileResource, FullTextSearchRequest, FullTextSearchResponseEntity, FullTextSearchResponseEntitySynonym, FullTextSearchResponseEntityType, FullTextSearchResponseIntent, FullTextSearchResponseIntentContextIn, FullTextSearchResponseIntentContextOut, FullTextSearchResponseIntentParameters, FullTextSearchResponseIntentResponse, FullTextSearchResponseIntentTags, FullTextSearchResponseIntentUsersays, GPT2EnrichmentConfig, GRPC_AGENTS_CLIENT_SETTINGS, GRPC_AI_SERVICES_CLIENT_SETTINGS, GRPC_CCAI_PROJECTS_CLIENT_SETTINGS, GRPC_CONTEXTS_CLIENT_SETTINGS, GRPC_CONVERSATIONS_CLIENT_SETTINGS, GRPC_ENTITY_TYPES_CLIENT_SETTINGS, GRPC_INTENTS_CLIENT_SETTINGS, GRPC_LLM_EVALUATIONS_CLIENT_SETTINGS, GRPC_OPERATIONS_CLIENT_SETTINGS, GRPC_PROJECT_ROLES_CLIENT_SETTINGS, GRPC_PROJECT_STATISTICS_CLIENT_SETTINGS, GRPC_RAGS_CLIENT_SETTINGS, GRPC_SERVER_STATISTICS_CLIENT_SETTINGS, GRPC_SESSIONS_CLIENT_SETTINGS, GRPC_SPEECH2_TEXT_CLIENT_SETTINGS, GRPC_TEXT2_SPEECH_CLIENT_SETTINGS, GRPC_USERS_CLIENT_SETTINGS, GRPC_UTILITIES_CLIENT_SETTINGS, GRPC_WEBHOOK_CLIENT_SETTINGS, GenerateResponsesRequest, GenerateResponsesResponse, GenerateUserSaysRequest, GenerateUserSaysResponse, GetAgentRequest, GetAgentStatisticsRequest, GetAgentStatisticsResponse, GetAllIntentTagsRequest, GetAlternativeSentencesRequest, GetAlternativeSentencesResponse, GetAlternativeTrainingPhrasesRequest, GetAlternativeTrainingPhrasesResponse, GetAudioFileOfSessionRequest, GetAudioFilesRequest, GetAudioFilesResponse, GetCcaiProjectRequest, GetCcaiServiceRequest, GetContextRequest, GetEntityRequest, GetEntityTypeCountRequest, GetEntityTypeRequest, GetFeedbackStatisticsRequest, GetFeedbackStatisticsResponse, GetFeedbackStatisticsTimeSeriesRequest, GetFeedbackStatisticsTimeSeriesResponse, GetIntentCountRequest, GetIntentRequest, GetIntentTagsRequest, GetIntentTagsResponse, GetLatestSessionReviewRequest, GetLlmEvaluationAbExperimentRequest, GetLlmEvaluationAbExperimentResultsRequest, GetLlmEvaluationAbExperimentResultsResponse, GetLlmEvaluationAbRolloutDecisionRequest, GetLlmEvaluationAbRolloutRecommendationRequest, GetLlmEvaluationAnnotationQueueItemRequest, GetLlmEvaluationDatasetRequest, GetLlmEvaluationExampleRequest, GetLlmEvaluationExperimentRequest, GetLlmEvaluationOnlineConfigRequest, GetLlmEvaluationOnlineResultRequest, GetLlmEvaluationProjectSettingsRequest, GetLlmEvaluationReleaseGateRequest, GetLlmEvaluationReleaseGateRunRequest, GetLlmEvaluationReportRequest, GetLlmEvaluationScheduleRequest, GetLlmEvaluationScorecardRequest, GetModelStatusesRequest, GetModelStatusesResponse, GetNotificationRequest, GetOperationRequest, GetPlatformInfoResponse, GetPlatformMappingRequest, GetProjectElementStatRequest, GetProjectRoleRequest, GetProjectStatRequest, GetRemoteOperationContainerLogsRequest, GetRemoteOperationContainerLogsResponse, GetRemoteOperationContainerStatusRequest, GetServerRoleRequest, GetSessionEntityTypeRequest, GetSessionFeedbackRequest, GetSessionRequest, GetSessionReviewRequest, GetSessionStepRequest, GetSessionsStatisticsRequest, GetSessionsStatisticsResponse, GetSessionsStatisticsTimeSeriesRequest, GetSessionsStatisticsTimeSeriesResponse, GetSynonymsRequest, GetSynonymsResponse, GetUserPreferencesRequest, GetUserPreferencesResponse, GetUserProjectCountRequest, GetUserRequest, GloVeEnrichmentConfig, GlowTTS, GlowTTSTriton, HiFiGan, HiFiGanTriton, Http, HttpRule, ImageFileResource, ImportAgentRequest, InferenceBackend, InitiationProtocol, InputAudioConfig, Intent, IntentAlgorithms, IntentBatch, IntentCategory, IntentClassified, IntentSorting, IntentTagRequest, IntentUpdate, IntentView, IntentsClient, KEYCLOAK_TOKEN_PROVIDER_CONFIG, KeyValuePair, KeycloakAuthenticationError, KeycloakTokenProvider, LanguageModelPipelineId, LanguageModels, LatLng, ListAccountIdsOfAllSessionsRequest, ListAccountIdsResponse, ListAgentsOfUserResponse, ListAgentsRequest, ListAgentsResponse, ListAudioFilesRequest, ListAudioFilesResponse, ListCcaiProjectsRequest, ListCcaiProjectsResponse, ListContextsRequest, ListContextsResponse, ListCustomPhonemizerRequest, ListCustomPhonemizerResponse, ListDatastreamIdsOfAllSessionsRequest, ListDatastreamIdsResponse, ListEntitiesRequest, ListEntitiesResponse, ListEntityTypesRequest, ListEntityTypesResponse, ListIdentifiedUserIdsOfAllSessionsRequest, ListIdentifiedUserIdsResponse, ListInputContextsOfAllSessionsRequest, ListInputContextsResponse, ListIntentsRequest, ListIntentsResponse, ListLanguageCodesOfAllSessionsRequest, ListLanguageCodesResponse, ListLlmEvaluationAbExperimentsRequest, ListLlmEvaluationAbExperimentsResponse, ListLlmEvaluationAbRolloutDecisionsRequest, ListLlmEvaluationAbRolloutDecisionsResponse, ListLlmEvaluationAnnotationQueueItemsRequest, ListLlmEvaluationAnnotationQueueItemsResponse, ListLlmEvaluationDatasetsRequest, ListLlmEvaluationDatasetsResponse, ListLlmEvaluationEvaluatorsRequest, ListLlmEvaluationEvaluatorsResponse, ListLlmEvaluationExamplesRequest, ListLlmEvaluationExamplesResponse, ListLlmEvaluationExperimentsRequest, ListLlmEvaluationExperimentsResponse, ListLlmEvaluationFeedbackRequest, ListLlmEvaluationFeedbackResponse, ListLlmEvaluationOnlineConfigsRequest, ListLlmEvaluationOnlineConfigsResponse, ListLlmEvaluationOnlineResultsRequest, ListLlmEvaluationOnlineResultsResponse, ListLlmEvaluationReleaseGateRunsRequest, ListLlmEvaluationReleaseGateRunsResponse, ListLlmEvaluationReleaseGatesRequest, ListLlmEvaluationReleaseGatesResponse, ListLlmEvaluationReportsRequest, ListLlmEvaluationReportsResponse, ListLlmEvaluationSchedulesRequest, ListLlmEvaluationSchedulesResponse, ListLlmEvaluationScorecardsRequest, ListLlmEvaluationScorecardsResponse, ListLlmModelsRequest, ListLlmModelsResponse, ListMatchedEntityTypesOfAllSessionsRequest, ListMatchedEntityTypesResponse, ListMatchedIntentsOfAllSessionsRequest, ListMatchedIntentsResponse, ListNotificationsRequest, ListNotificationsResponse, ListOperationsRequest, ListOperationsResponse, ListOriginIdsOfAllSessionsRequest, ListOriginIdsResponse, ListOutputContextsOfAllSessionsRequest, ListOutputContextsResponse, ListParametersRequest, ListParametersResponse, ListPlatformsOfAllSessionsRequest, ListPlatformsResponse, ListProjectPermissionsRequest, ListProjectPermissionsResponse, ListProjectRolesRequest, ListProjectRolesResponse, ListProjectTechnicalUsersRequest, ListProjectTechnicalUsersResponse, ListPropertyIdsOfAllSessionsRequest, ListPropertyIdsResponse, ListRemoteOperationContainersRequest, ListRemoteOperationContainersResponse, ListResponseMessagesRequest, ListResponseMessagesResponse, ListS2sPipelinesRequest, ListS2sPipelinesResponse, ListS2tDomainsRequest, ListS2tDomainsResponse, ListS2tLanguageModelsRequest, ListS2tLanguageModelsResponse, ListS2tLanguagesRequest, ListS2tLanguagesResponse, ListS2tNormalizationPipelinesRequest, ListS2tNormalizationPipelinesResponse, ListS2tPipelinesRequest, ListS2tPipelinesResponse, ListServerPermissionsRequest, ListServerPermissionsResponse, ListServerRolesRequest, ListServerRolesResponse, ListSessionCommentsOfAllSessionsRequest, ListSessionCommentsRequest, ListSessionCommentsResponse, ListSessionEntityTypesRequest, ListSessionEntityTypesResponse, ListSessionFeedbackOfAllSessionsRequest, ListSessionFeedbackRequest, ListSessionFeedbackResponse, ListSessionLabelsOfAllSessionsRequest, ListSessionLabelsRequest, ListSessionLabelsResponse, ListSessionReviewsRequest, ListSessionReviewsResponse, ListSessionsRequest, ListSessionsResponse, ListT2sDomainsRequest, ListT2sDomainsResponse, ListT2sLanguagesRequest, ListT2sLanguagesResponse, ListT2sNormalizationPipelinesRequest, ListT2sNormalizationPipelinesResponse, ListT2sPipelinesRequest, ListT2sPipelinesResponse, ListTagsOfAllSessionsRequest, ListTagsResponse, ListTrainingPhrasesRequest, ListTrainingPhrasesResponse, ListTrainingPhrasesofIntentsWithEnrichmentRequest, ListTrainingPhrasesofIntentsWithEnrichmentResponse, ListUserIdsOfAllSessionsRequest, ListUserIdsResponse, ListUserInfosResponse, ListUserPreferencesRequest, ListUserPreferencesResponse, ListUsersInProjectRequest, ListUsersInProjectResponse, ListUsersRequest, ListUsersResponse, LlmAgentUsage, LlmCacheStats, LlmCallFinishedEvent, LlmCallStartedEvent, LlmCcaiServiceUsage, LlmEnrichmentConfig, LlmErrorStat, LlmErrorStats, LlmEvaluationAbExperiment, LlmEvaluationAbExperimentFilter, LlmEvaluationAbExperimentStatus, LlmEvaluationAbOptimizeMetric, LlmEvaluationAbRolloutDecision, LlmEvaluationAbRolloutDecisionFilter, LlmEvaluationAbRolloutRecommendation, LlmEvaluationAbTrafficConfig, LlmEvaluationAbVariant, LlmEvaluationAbVariantResult, LlmEvaluationAnnotationQueueItem, LlmEvaluationAnnotationQueueItemFilter, LlmEvaluationAnnotationStatus, LlmEvaluationComparison, LlmEvaluationDataset, LlmEvaluationDatasetFilter, LlmEvaluationDatasetType, LlmEvaluationEvaluatorCategory, LlmEvaluationEvaluatorParameterSpec, LlmEvaluationEvaluatorRun, LlmEvaluationEvaluatorSpec, LlmEvaluationEvaluatorType, LlmEvaluationExample, LlmEvaluationExampleExtractionMode, LlmEvaluationExampleFilter, LlmEvaluationExperiment, LlmEvaluationExperimentFilter, LlmEvaluationExperimentKind, LlmEvaluationExperimentStatus, LlmEvaluationFeedback, LlmEvaluationFeedbackFilter, LlmEvaluationJudgeConfig, LlmEvaluationOnlineConfig, LlmEvaluationOnlineConfigFilter, LlmEvaluationOnlineResult, LlmEvaluationOnlineResultFilter, LlmEvaluationOnlineSessionFilter, LlmEvaluationPairwiseResult, LlmEvaluationProjectSettings, LlmEvaluationReleaseGate, LlmEvaluationReleaseGateCheck, LlmEvaluationReleaseGateFilter, LlmEvaluationReleaseGateRun, LlmEvaluationReleaseGateRunFilter, LlmEvaluationReleaseGateSafetyConfig, LlmEvaluationReleaseGateThresholds, LlmEvaluationReleaseGateVerdict, LlmEvaluationReport, LlmEvaluationReportFilter, LlmEvaluationSchedule, LlmEvaluationScheduleAction, LlmEvaluationScheduleFilter, LlmEvaluationScorecard, LlmEvaluationScorecardComponent, LlmEvaluationScorecardFilter, LlmEvaluationSimulationKind, LlmEvaluationSimulationPersona, LlmEvaluationTurnResult, LlmEvaluationsClient, LlmFinishReasonStat, LlmGenerateRequest, LlmGenerateResponse, LlmLatencyStats, LlmModel, LlmModelUsage, LlmProviderUsage, LlmReasoningEffortStat, LlmRetrievalMetadata, LlmRetrievedChunk, LlmSafetyAssessment, LlmSafetyCategoryStat, LlmSafetyFinding, LlmSafetyLocation, LlmSafetyStats, LlmTelemetry, LlmTelemetryReport, LlmTelemetryTimeSeriesBucket, LlmThinkingDeltaEvent, LlmThinkingMetadata, LlmTokenUsage, LlmTokenUsageUpdateEvent, LlmToolCallFinishedEvent, LlmToolCallMetadata, LlmToolCallStartedEvent, LlmToolUsage, LogEntry, LogSeverity, Logging, Logmnse, MIN_REFRESH_DELAY_SECONDS, Map, MbMelganTriton, Mel2Audio, MigrateAgentRequest, Mode, ModelStatus, NormalizeTextRequest, NormalizeTextResponse, Notification, NotificationFilter, NotificationFlaggedStatus, NotificationOrigin, NotificationReadStatus, NotificationType, NotificationVisibility, OpenaiLlmOptions, Operation, OperationFilter, OperationMetadata, OperationsClient, OptimizeRankingMatchRequest, OptimizeRankingMatchResponse, OriginalDetectIntentRequest, Parakeet, Pcm, PhonemizerId, PingRequest, PingResponse, PlatformMapping, PostProcessing, PostProcessingOptions, PostProcessors, Postprocessing, ProjectRole, ProjectRoleView, ProjectRolesClient, ProjectStatisticsClient, ProjectTechnicalUser, PromoteLlmEvaluationAnnotationQueueItemRequest, PromoteLlmEvaluationAnnotationQueueItemResponse, PtFiles, Pyannote, QueryInput, QueryParameters, QueryResult, Qwen3TtsBase, Qwen3TtsCustomVoice, REFRESH_SKEW_SECONDS, RagAddCrawlerResultsToDatasetsRequest, RagChunk, RagChunkMethod, RagComparisonOperator, RagCrawler, RagCrawlerAuth, RagCrawlerAuthenticationExecutionType, RagCrawlerBrowserConfig, RagCrawlerConcurrencyConfig, RagCrawlerConfig, RagCrawlerContentResult, RagCrawlerContentScope, RagCrawlerCookie, RagCrawlerCrawlStrategy, RagCrawlerDeepCrawlerConfig, RagCrawlerDensityPruning, RagCrawlerExecutionInfo, RagCrawlerFilters, RagCrawlerHtmlAuth, RagCrawlerHttpAuth, RagCrawlerIncrementalConfig, RagCrawlerMetaDataExtractor, RagCrawlerMetaDataExtractorType, RagCrawlerPruningThresholdType, RagCrawlerResult, RagCrawlerResultsConfig, RagCrawlerRetryConfig, RagCrawlerSeedUrlFilters, RagCrawlerSelectorType, RagCrawlerSources, RagCrawlerStatusFilter, RagCreateCrawlerRequest, RagCreateDatasetRequest, RagDataset, RagDatasetList, RagDatasetParsingStatus, RagDeleteCrawlerRequest, RagDeleteCrawlerResponse, RagDeleteCrawlerRunsRequest, RagDeleteCrawlerRunsResponse, RagDeleteCrawlersRequest, RagDeleteCrawlersResponse, RagDeleteDocumentsRequest, RagDeleteRequest, RagDocAgg, RagDocument, RagDocumentIdsRequest, RagDocumentList, RagDocumentStatus, RagDocumentType, RagDownloadDocumentRequest, RagFileChunk, RagFileMetadata, RagGetCrawlerAttachedDatasetsRequest, RagGetCrawlerAttachedDatasetsResponse, RagGetCrawlerRequest, RagGetCrawlerResultRequest, RagGetCrawlerResultsRequest, RagGetCrawlerResultsResponse, RagGetCrawlerRunLogsRequest, RagGetCrawlerRunLogsResponse, RagGetCrawlerRunRequest, RagGraphRagConfig, RagGraphRagMethod, RagListCrawlerRunsRequest, RagListCrawlerRunsResponse, RagListCrawlersRequest, RagListCrawlersResponse, RagListDatasetsRequest, RagListDocumentsRequest, RagLogic, RagMetadataCondition, RagMetadataConditions, RagParserConfig, RagPartialSuccess, RagRaptorConfig, RagRemoveCrawlerResultsFromDatasetsRequest, RagRetrievalRequest, RagRetrievalResponse, RagStartCrawlerRequest, RagStopCrawlerRequest, RagStopCrawlerResponse, RagUpdateCrawlerRequest, RagUpdateDatasetRequest, RagUpdateDocumentRequest, RagUploadDocumentRequest, RagVariantConfig, RagsClient, RankingMatchOptimizationConfig, ReannotateEntitiesOptions, ReasoningEffort$1 as ReasoningEffort, ReferencedChunk, ReindexAgentRequest, RemoteOperationContainer, RemoteOperationContainerLifecycleState, RemoteOperationContainerLogLine, RemoteOperationContainerStatus, RemoveUserFromProjectRequest, ReportFormat, ReportType, RequestConfig, ResourceView, RestoreAgentRequest, RotateProjectTechnicalUserPasswordRequest, RotateProjectTechnicalUserPasswordResponse, RunLlmEvaluationExperimentRequest, RunLlmEvaluationReleaseGateRequest, S2sPipeline, S2sPipelineId, S2sStreamRequest, S2sStreamResponse, S2tCloudProviderConfig, S2tCloudProviderConfigAmazon, S2tCloudProviderConfigDeepgram, S2tCloudProviderConfigGoogle, S2tCloudProviderConfigMicrosoft, S2tCloudServiceAmazon, S2tCloudServiceDeepgram, S2tCloudServiceGoogle, S2tCloudServiceMicrosoft, S2tDescription, S2tGetServiceInfoResponse, S2tInference, S2tLlmPostProcessing, S2tLlmPostProcessingInverseNormalizationOptions, S2tLlmPostProcessingNormalizationOptions, S2tLlmPostProcessingSubTaskOptions, S2tLlmPostProcessingSummarizationOptions, S2tLlmPostProcessingTranslationOptions, S2tNormalization, S2tPipelineId, S2tTranscription, ServerRole, ServerStatisticsClient, ServiceTier, Session, SessionEntityType, SessionFeedback, SessionFilter, SessionInfo, SessionReview, SessionReviewStep, SessionStep, SessionsClient, SessionsReportType, SetAgentStatusRequest, SetControlStatusRequest, SetControlStatusResponse, SetNotificationsFlaggedStatusRequest, SetNotificationsReadStatusRequest, SetResourcesRequest, SetUserPreferencesRequest, SetUserPreferencesResponse, Silero, SimulateLlmEvaluationConversationsRequest, SingleInference, SipTrigger, SortingMode, Speech2TextClient, Speech2TextConfig, StartLlmEvaluationAbExperimentRequest, StatResponse, Status, StopLlmEvaluationAbExperimentRequest, StreamNotificationsRequest, StreamRemoteOperationContainerLogsRequest, StreamingDetectIntentRequest, StreamingDetectIntentResponse, StreamingLlmGenerateResponse, StreamingRecognitionResult, StreamingServer, StreamingSpeechRecognition, StreamingSynthesizeRequest, StreamingSynthesizeResponse, StringUpdate, SubmitLlmEvaluationFeedbackRequest, SymSpell, Synonym, SynthesizeRequest, SynthesizeResponse, T2SCustomLengthScales, T2SDescription, T2SGetServiceInfoResponse, T2SInference, T2SNormalization, T2sCloudProviderConfig, T2sCloudProviderConfigElevenLabs, T2sCloudProviderConfigGoogle, T2sCloudProviderConfigMicrosoft, T2sCloudServiceAmazon, T2sCloudServiceElevenLabs, T2sCloudServiceGoogle, T2sCloudServiceMicrosoft, T2sPipelineId, TOKEN_PROVIDER, Text2Audio, Text2Mel, Text2SpeechClient, Text2SpeechConfig, TextInput, ThesaurusEnrichmentConfig, TrainAgentRequest, TrainUserLanguageModelRequest, TrainingPhraseCleanerOptions, TrainingPhraseStatus, TranscribeFileRequest, TranscribeFileResponse, TranscribeRequestConfig, TranscribeStreamRequest, TranscribeStreamResponse, Transcription, TranscriptionAlternative, TranscriptionReturnOptions, TranscriptionType, TsdMethod, TurnDetectionOptions, UpdateAgentRequest, UpdateCcaiProjectRequest, UpdateCcaiProjectResponse, UpdateContextRequest, UpdateCustomPhonemizerRequest, UpdateEntityRequest, UpdateEntityTypeRequest, UpdateIntentRequest, UpdateLlmEvaluationAbExperimentRequest, UpdateLlmEvaluationAnnotationQueueItemRequest, UpdateLlmEvaluationDatasetRequest, UpdateLlmEvaluationExampleRequest, UpdateLlmEvaluationExperimentRequest, UpdateLlmEvaluationFeedbackRequest, UpdateLlmEvaluationOnlineConfigRequest, UpdateLlmEvaluationProjectSettingsRequest, UpdateLlmEvaluationReleaseGateRequest, UpdateLlmEvaluationScheduleRequest, UpdateLlmEvaluationScorecardRequest, UpdateNotificationRequest, UpdateProjectRoleRequest, UpdateServerRoleRequest, UpdateSessionCommentsRequest, UpdateSessionEntityTypeRequest, UpdateSessionFeedbackRequest, UpdateSessionStepRequest, UpdateUserRequest, User, UserInProject, UserInfo, UsersClient, UtilitiesClient, UtteranceDetectionOptions, VadMethod, ValidateEmbeddedRegexRequest, ValidateEmbeddedRegexResponse, ValidateRegexRequest, ValidateRegexResponse, Verbosity, VideoFileResource, Vits, VitsTriton, VoiceActivityDetection, VoiceCloningRequest, VoiceSettings, Wav2Vec, Wav2VecTriton, WebhookClient, WebhookRequest, WebhookResponse, WespeakerTsd, Whisper, WhisperTriton, Wiener, Word2VecEnrichmentConfig, WordAlternative, WordDetail, WordNetAugEnrichmentConfig, XLNetAugEnrichmentConfig, authHttpInterceptor, buildBearerValue, provideOndewoCsiAuth, resolveBearerValue, resolveToken };
+export { AUTHORIZATION_HEADER, AcousticModels, AddAudioFilesRequest, AddAudioFilesResponse, AddDataToUserLanguageModelRequest, AddLlmEvaluationExampleRequest, AddLlmEvaluationExamplesRequest, AddLlmEvaluationExamplesResponse, AddNotificationsRequest, AddNotificationsResponse, AddSessionCommentRequest, AddSessionFeedbackRequest, AddSessionLabelsRequest, AddSessionStepFeedbackRequest, AddTrainingPhrasesFromCSVRequest, AddTrainingPhrasesRequest, AddTrainingPhrasesResponse, AddUserToProjectRequest, Agent, AgentOfUserWithOwner, AgentSorting, AgentStatus, AgentView, AgentWithOwner, AgentsClient, AiServicesClient, AltSentence, AltTrainingPhrase, Apodization, ApplyLlmEvaluationAbRolloutRequest, AudioEncoding, AudioFileResource, AudioFileResourceType, AudioFormat, AuthGrpcInterceptor, BEARER_PREFIX, BROWSER_UNSUPPORTED_TLS_FIELDS, BatchCreateEntitiesRequest, BatchCreateParametersRequest, BatchCreateResponseMessagesRequest, BatchCreateTrainingPhrasesRequest, BatchDeleteEntitiesRequest, BatchDeleteEntitiesResponse, BatchDeleteEntityTypesRequest, BatchDeleteIntentsRequest, BatchDeleteParametersRequest, BatchDeleteParametersResponse, BatchDeleteResponseMessagesRequest, BatchDeleteResponseMessagesResponse, BatchDeleteTrainingPhrasesRequest, BatchDeleteTrainingPhrasesResponse, BatchEntitiesResponse, BatchGetEntitiesRequest, BatchGetParametersRequest, BatchGetResponseMessagesRequest, BatchGetTrainingPhrasesRequest, BatchParametersStatusResponse, BatchResponseMessagesStatusResponse, BatchSynthesizeRequest, BatchSynthesizeResponse, BatchTrainingPhrasesStatusResponse, BatchUpdateEntitiesRequest, BatchUpdateEntityTypesRequest, BatchUpdateEntityTypesResponse, BatchUpdateIntentsRequest, BatchUpdateIntentsResponse, BatchUpdateParametersRequest, BatchUpdateResponseMessagesRequest, BatchUpdateTrainingPhrasesRequest, BertAugEnrichmentConfig, BuildCacheRequest, Caching, CancelLlmEvaluationExperimentRequest, CancelOperationRequest, CcaiProject, CcaiProjectSorting, CcaiProjectStatus, CcaiProjectView, CcaiProjectsClient, CcaiService, CcaiServiceFilter, CcaiServiceList, CcaiServiceProvider, CcaiServiceType, CheckUpstreamHealthResponse, CkptFile, ClassifyIntentsRequest, ClassifyIntentsResponse, CleanAllEntityTypesRequest, CleanAllEntityTypesResponse, CleanAllIntentsRequest, CleanAllIntentsResponse, CleanEntityTypeRequest, CleanEntityTypeResponse, CleanIntentRequest, CleanIntentResponse, Comment, CompareLlmEvaluationExperimentsRequest, ComparisonOperator, CompositeInference, Condition, ConditionType, Context, ContextFilter, ContextsClient, ControlMessage, ControlMessageServiceMethod, ControlMessageServiceName, ControlMessageServiceParameters, ControlStatus, ControlStreamRequest, ControlStreamResponse, ConversationsClient, CreateAgentRequest, CreateCcaiProjectRequest, CreateCcaiProjectResponse, CreateContextRequest, CreateCustomPhonemizerRequest, CreateEntityRequest, CreateEntityTypeRequest, CreateIntentRequest, CreateLlmEvaluationAbExperimentRequest, CreateLlmEvaluationDatasetRequest, CreateLlmEvaluationExamplesFromSessionRequest, CreateLlmEvaluationExamplesFromSessionResponse, CreateLlmEvaluationOnlineConfigRequest, CreateLlmEvaluationReleaseGateRequest, CreateLlmEvaluationReportRequest, CreateLlmEvaluationScheduleRequest, CreateLlmEvaluationScorecardRequest, CreateProjectRoleRequest, CreateProjectTechnicalUserRequest, CreateProjectTechnicalUserResponse, CreateServerRoleRequest, CreateSessionEntityTypeRequest, CreateSessionRequest, CreateSessionReviewRequest, CreateSessionStepRequest, CreateUserLanguageModelRequest, CreateUserRequest, CustomHttpPattern, CustomPhonemizerProto, CustomPlatformInfo, DataEnrichmentConfig, Decoding, DefaultProjectRole, DefaultServerRole, DeleteAgentRequest, DeleteAllContextsRequest, DeleteAllUserPreferencesRequest, DeleteAudioFilesRequest, DeleteAudioFilesResponse, DeleteCcaiProjectRequest, DeleteCcaiProjectResponse, DeleteContextRequest, DeleteEntityRequest, DeleteEntityStatus, DeleteEntityTypeRequest, DeleteIntentRequest, DeleteLlmEvaluationAbExperimentRequest, DeleteLlmEvaluationDatasetRequest, DeleteLlmEvaluationExampleRequest, DeleteLlmEvaluationExperimentRequest, DeleteLlmEvaluationFeedbackRequest, DeleteLlmEvaluationOnlineConfigRequest, DeleteLlmEvaluationReleaseGateRequest, DeleteLlmEvaluationReportRequest, DeleteLlmEvaluationScheduleRequest, DeleteLlmEvaluationScorecardRequest, DeleteNotificationsRequest, DeleteOperationRequest, DeleteProjectRoleRequest, DeleteProjectTechnicalUserRequest, DeleteResourcesRequest, DeleteServerRoleRequest, DeleteSessionCommentsRequest, DeleteSessionEntityTypeRequest, DeleteSessionFeedbackRequest, DeleteSessionLabelsRequest, DeleteSessionRequest, DeleteSessionStepRequest, DeleteUserLanguageModelRequest, DeleteUserPreferencesRequest, DeleteUserPreferencesResponse, DeleteUserRequest, DetectIntentRequest, DetectIntentResponse, DetectedIntent, DocumentFileResource, EntityDetected, EntityEnrichmentConfig, EntityStatus, EntityType, EntityTypeBatch, EntityTypeCategory, EntityTypeFuzzyNerConfig, EntityTypeSorting, EntityTypeUpdate, EntityTypeView, EntityTypesClient, EntityValueSorting, EventInput, ExportAgentRequest, ExportAgentResponse, ExportBenchmarkAgentRequest, ExportBenchmarkAgentResponse, ExportResourcesRequest, ExportResourcesResponse, ExtractEntitiesFuzzyRequest, ExtractEntitiesRequest, ExtractEntitiesResponse, FeedbackAuthorType, FeedbackBreakdownBucket, FeedbackFilter, FeedbackRating, FeedbackScope, FeedbackStatistics, FeedbackTimeGranularity, FeedbackTimeSeriesBucket, FileResource, FullTextSearchRequest, FullTextSearchResponseEntity, FullTextSearchResponseEntitySynonym, FullTextSearchResponseEntityType, FullTextSearchResponseIntent, FullTextSearchResponseIntentContextIn, FullTextSearchResponseIntentContextOut, FullTextSearchResponseIntentParameters, FullTextSearchResponseIntentResponse, FullTextSearchResponseIntentTags, FullTextSearchResponseIntentUsersays, GPT2EnrichmentConfig, GRPC_AGENTS_CLIENT_SETTINGS, GRPC_AI_SERVICES_CLIENT_SETTINGS, GRPC_CCAI_PROJECTS_CLIENT_SETTINGS, GRPC_CONTEXTS_CLIENT_SETTINGS, GRPC_CONVERSATIONS_CLIENT_SETTINGS, GRPC_ENTITY_TYPES_CLIENT_SETTINGS, GRPC_INTENTS_CLIENT_SETTINGS, GRPC_LLM_EVALUATIONS_CLIENT_SETTINGS, GRPC_OPERATIONS_CLIENT_SETTINGS, GRPC_PROJECT_ROLES_CLIENT_SETTINGS, GRPC_PROJECT_STATISTICS_CLIENT_SETTINGS, GRPC_RAGS_CLIENT_SETTINGS, GRPC_SERVER_STATISTICS_CLIENT_SETTINGS, GRPC_SESSIONS_CLIENT_SETTINGS, GRPC_SPEECH2_TEXT_CLIENT_SETTINGS, GRPC_TEXT2_SPEECH_CLIENT_SETTINGS, GRPC_USERS_CLIENT_SETTINGS, GRPC_UTILITIES_CLIENT_SETTINGS, GRPC_WEBHOOK_CLIENT_SETTINGS, GenerateResponsesRequest, GenerateResponsesResponse, GenerateUserSaysRequest, GenerateUserSaysResponse, GetAgentRequest, GetAgentStatisticsRequest, GetAgentStatisticsResponse, GetAllIntentTagsRequest, GetAlternativeSentencesRequest, GetAlternativeSentencesResponse, GetAlternativeTrainingPhrasesRequest, GetAlternativeTrainingPhrasesResponse, GetAudioFileOfSessionRequest, GetAudioFilesRequest, GetAudioFilesResponse, GetCcaiProjectRequest, GetCcaiServiceRequest, GetContextRequest, GetEntityRequest, GetEntityTypeCountRequest, GetEntityTypeRequest, GetFeedbackStatisticsRequest, GetFeedbackStatisticsResponse, GetFeedbackStatisticsTimeSeriesRequest, GetFeedbackStatisticsTimeSeriesResponse, GetIntentCountRequest, GetIntentRequest, GetIntentTagsRequest, GetIntentTagsResponse, GetLatestSessionReviewRequest, GetLlmEvaluationAbExperimentRequest, GetLlmEvaluationAbExperimentResultsRequest, GetLlmEvaluationAbExperimentResultsResponse, GetLlmEvaluationAbRolloutDecisionRequest, GetLlmEvaluationAbRolloutRecommendationRequest, GetLlmEvaluationAnnotationQueueItemRequest, GetLlmEvaluationDatasetRequest, GetLlmEvaluationExampleRequest, GetLlmEvaluationExperimentRequest, GetLlmEvaluationOnlineConfigRequest, GetLlmEvaluationOnlineResultRequest, GetLlmEvaluationProjectSettingsRequest, GetLlmEvaluationReleaseGateRequest, GetLlmEvaluationReleaseGateRunRequest, GetLlmEvaluationReportRequest, GetLlmEvaluationScheduleRequest, GetLlmEvaluationScorecardRequest, GetModelStatusesRequest, GetModelStatusesResponse, GetNotificationRequest, GetOperationRequest, GetPlatformInfoResponse, GetPlatformMappingRequest, GetProjectElementStatRequest, GetProjectRoleRequest, GetProjectStatRequest, GetRemoteOperationContainerLogsRequest, GetRemoteOperationContainerLogsResponse, GetRemoteOperationContainerStatusRequest, GetServerRoleRequest, GetSessionEntityTypeRequest, GetSessionFeedbackRequest, GetSessionRequest, GetSessionReviewRequest, GetSessionStepRequest, GetSessionsStatisticsRequest, GetSessionsStatisticsResponse, GetSessionsStatisticsTimeSeriesRequest, GetSessionsStatisticsTimeSeriesResponse, GetSynonymsRequest, GetSynonymsResponse, GetUserPreferencesRequest, GetUserPreferencesResponse, GetUserProjectCountRequest, GetUserRequest, GloVeEnrichmentConfig, GlowTTS, GlowTTSTriton, GrpcWebEndpointError, HiFiGan, HiFiGanTriton, Http, HttpRule, ImageFileResource, ImportAgentRequest, InferenceBackend, InitiationProtocol, InputAudioConfig, Intent, IntentAlgorithms, IntentBatch, IntentCategory, IntentClassified, IntentSorting, IntentTagRequest, IntentUpdate, IntentView, IntentsClient, KEYCLOAK_TOKEN_PROVIDER_CONFIG, KeyValuePair, KeycloakAuthenticationError, KeycloakTokenProvider, LanguageModelPipelineId, LanguageModels, LatLng, ListAccountIdsOfAllSessionsRequest, ListAccountIdsResponse, ListAgentsOfUserResponse, ListAgentsRequest, ListAgentsResponse, ListAudioFilesRequest, ListAudioFilesResponse, ListCcaiProjectsRequest, ListCcaiProjectsResponse, ListContextsRequest, ListContextsResponse, ListCustomPhonemizerRequest, ListCustomPhonemizerResponse, ListDatastreamIdsOfAllSessionsRequest, ListDatastreamIdsResponse, ListEntitiesRequest, ListEntitiesResponse, ListEntityTypesRequest, ListEntityTypesResponse, ListIdentifiedUserIdsOfAllSessionsRequest, ListIdentifiedUserIdsResponse, ListInputContextsOfAllSessionsRequest, ListInputContextsResponse, ListIntentsRequest, ListIntentsResponse, ListLanguageCodesOfAllSessionsRequest, ListLanguageCodesResponse, ListLlmEvaluationAbExperimentsRequest, ListLlmEvaluationAbExperimentsResponse, ListLlmEvaluationAbRolloutDecisionsRequest, ListLlmEvaluationAbRolloutDecisionsResponse, ListLlmEvaluationAnnotationQueueItemsRequest, ListLlmEvaluationAnnotationQueueItemsResponse, ListLlmEvaluationDatasetsRequest, ListLlmEvaluationDatasetsResponse, ListLlmEvaluationEvaluatorsRequest, ListLlmEvaluationEvaluatorsResponse, ListLlmEvaluationExamplesRequest, ListLlmEvaluationExamplesResponse, ListLlmEvaluationExperimentsRequest, ListLlmEvaluationExperimentsResponse, ListLlmEvaluationFeedbackRequest, ListLlmEvaluationFeedbackResponse, ListLlmEvaluationOnlineConfigsRequest, ListLlmEvaluationOnlineConfigsResponse, ListLlmEvaluationOnlineResultsRequest, ListLlmEvaluationOnlineResultsResponse, ListLlmEvaluationReleaseGateRunsRequest, ListLlmEvaluationReleaseGateRunsResponse, ListLlmEvaluationReleaseGatesRequest, ListLlmEvaluationReleaseGatesResponse, ListLlmEvaluationReportsRequest, ListLlmEvaluationReportsResponse, ListLlmEvaluationSchedulesRequest, ListLlmEvaluationSchedulesResponse, ListLlmEvaluationScorecardsRequest, ListLlmEvaluationScorecardsResponse, ListLlmModelsRequest, ListLlmModelsResponse, ListMatchedEntityTypesOfAllSessionsRequest, ListMatchedEntityTypesResponse, ListMatchedIntentsOfAllSessionsRequest, ListMatchedIntentsResponse, ListNotificationsRequest, ListNotificationsResponse, ListOperationsRequest, ListOperationsResponse, ListOriginIdsOfAllSessionsRequest, ListOriginIdsResponse, ListOutputContextsOfAllSessionsRequest, ListOutputContextsResponse, ListParametersRequest, ListParametersResponse, ListPlatformsOfAllSessionsRequest, ListPlatformsResponse, ListProjectPermissionsRequest, ListProjectPermissionsResponse, ListProjectRolesRequest, ListProjectRolesResponse, ListProjectTechnicalUsersRequest, ListProjectTechnicalUsersResponse, ListPropertyIdsOfAllSessionsRequest, ListPropertyIdsResponse, ListRemoteOperationContainersRequest, ListRemoteOperationContainersResponse, ListResponseMessagesRequest, ListResponseMessagesResponse, ListS2sPipelinesRequest, ListS2sPipelinesResponse, ListS2tDomainsRequest, ListS2tDomainsResponse, ListS2tLanguageModelsRequest, ListS2tLanguageModelsResponse, ListS2tLanguagesRequest, ListS2tLanguagesResponse, ListS2tNormalizationPipelinesRequest, ListS2tNormalizationPipelinesResponse, ListS2tPipelinesRequest, ListS2tPipelinesResponse, ListServerPermissionsRequest, ListServerPermissionsResponse, ListServerRolesRequest, ListServerRolesResponse, ListSessionCommentsOfAllSessionsRequest, ListSessionCommentsRequest, ListSessionCommentsResponse, ListSessionEntityTypesRequest, ListSessionEntityTypesResponse, ListSessionFeedbackOfAllSessionsRequest, ListSessionFeedbackRequest, ListSessionFeedbackResponse, ListSessionLabelsOfAllSessionsRequest, ListSessionLabelsRequest, ListSessionLabelsResponse, ListSessionReviewsRequest, ListSessionReviewsResponse, ListSessionsRequest, ListSessionsResponse, ListT2sDomainsRequest, ListT2sDomainsResponse, ListT2sLanguagesRequest, ListT2sLanguagesResponse, ListT2sNormalizationPipelinesRequest, ListT2sNormalizationPipelinesResponse, ListT2sPipelinesRequest, ListT2sPipelinesResponse, ListTagsOfAllSessionsRequest, ListTagsResponse, ListTrainingPhrasesRequest, ListTrainingPhrasesResponse, ListTrainingPhrasesofIntentsWithEnrichmentRequest, ListTrainingPhrasesofIntentsWithEnrichmentResponse, ListUserIdsOfAllSessionsRequest, ListUserIdsResponse, ListUserInfosResponse, ListUserPreferencesRequest, ListUserPreferencesResponse, ListUsersInProjectRequest, ListUsersInProjectResponse, ListUsersRequest, ListUsersResponse, LlmAgentUsage, LlmCacheStats, LlmCallFinishedEvent, LlmCallStartedEvent, LlmCcaiServiceUsage, LlmEnrichmentConfig, LlmErrorStat, LlmErrorStats, LlmEvaluationAbExperiment, LlmEvaluationAbExperimentFilter, LlmEvaluationAbExperimentStatus, LlmEvaluationAbOptimizeMetric, LlmEvaluationAbRolloutDecision, LlmEvaluationAbRolloutDecisionFilter, LlmEvaluationAbRolloutRecommendation, LlmEvaluationAbTrafficConfig, LlmEvaluationAbVariant, LlmEvaluationAbVariantResult, LlmEvaluationAnnotationQueueItem, LlmEvaluationAnnotationQueueItemFilter, LlmEvaluationAnnotationStatus, LlmEvaluationComparison, LlmEvaluationDataset, LlmEvaluationDatasetFilter, LlmEvaluationDatasetType, LlmEvaluationEvaluatorCategory, LlmEvaluationEvaluatorParameterSpec, LlmEvaluationEvaluatorRun, LlmEvaluationEvaluatorSpec, LlmEvaluationEvaluatorType, LlmEvaluationExample, LlmEvaluationExampleExtractionMode, LlmEvaluationExampleFilter, LlmEvaluationExperiment, LlmEvaluationExperimentFilter, LlmEvaluationExperimentKind, LlmEvaluationExperimentStatus, LlmEvaluationFeedback, LlmEvaluationFeedbackFilter, LlmEvaluationJudgeConfig, LlmEvaluationOnlineConfig, LlmEvaluationOnlineConfigFilter, LlmEvaluationOnlineResult, LlmEvaluationOnlineResultFilter, LlmEvaluationOnlineSessionFilter, LlmEvaluationPairwiseResult, LlmEvaluationProjectSettings, LlmEvaluationReleaseGate, LlmEvaluationReleaseGateCheck, LlmEvaluationReleaseGateFilter, LlmEvaluationReleaseGateRun, LlmEvaluationReleaseGateRunFilter, LlmEvaluationReleaseGateSafetyConfig, LlmEvaluationReleaseGateThresholds, LlmEvaluationReleaseGateVerdict, LlmEvaluationReport, LlmEvaluationReportFilter, LlmEvaluationSchedule, LlmEvaluationScheduleAction, LlmEvaluationScheduleFilter, LlmEvaluationScorecard, LlmEvaluationScorecardComponent, LlmEvaluationScorecardFilter, LlmEvaluationSimulationKind, LlmEvaluationSimulationPersona, LlmEvaluationTurnResult, LlmEvaluationsClient, LlmFinishReasonStat, LlmGenerateRequest, LlmGenerateResponse, LlmLatencyStats, LlmModel, LlmModelUsage, LlmProviderUsage, LlmReasoningEffortStat, LlmRetrievalMetadata, LlmRetrievedChunk, LlmSafetyAssessment, LlmSafetyCategoryStat, LlmSafetyFinding, LlmSafetyLocation, LlmSafetyStats, LlmTelemetry, LlmTelemetryReport, LlmTelemetryTimeSeriesBucket, LlmThinkingDeltaEvent, LlmThinkingMetadata, LlmTokenUsage, LlmTokenUsageUpdateEvent, LlmToolCallFinishedEvent, LlmToolCallMetadata, LlmToolCallStartedEvent, LlmToolUsage, LogEntry, LogSeverity, Logging, Logmnse, MIN_REFRESH_DELAY_SECONDS, Map, MbMelganTriton, Mel2Audio, MigrateAgentRequest, Mode, ModelStatus, NormalizeTextRequest, NormalizeTextResponse, Notification, NotificationFilter, NotificationFlaggedStatus, NotificationOrigin, NotificationReadStatus, NotificationType, NotificationVisibility, OpenaiLlmOptions, Operation, OperationFilter, OperationMetadata, OperationsClient, OptimizeRankingMatchRequest, OptimizeRankingMatchResponse, OriginalDetectIntentRequest, Parakeet, Pcm, PhonemizerId, PingRequest, PingResponse, PlatformMapping, PostProcessing, PostProcessingOptions, PostProcessors, Postprocessing, ProjectRole, ProjectRoleView, ProjectRolesClient, ProjectStatisticsClient, ProjectTechnicalUser, PromoteLlmEvaluationAnnotationQueueItemRequest, PromoteLlmEvaluationAnnotationQueueItemResponse, PtFiles, Pyannote, QueryInput, QueryParameters, QueryResult, Qwen3TtsBase, Qwen3TtsCustomVoice, REFRESH_SKEW_SECONDS, RagAddCrawlerResultsToDatasetsRequest, RagChunk, RagChunkMethod, RagComparisonOperator, RagCrawler, RagCrawlerAuth, RagCrawlerAuthenticationExecutionType, RagCrawlerBrowserConfig, RagCrawlerConcurrencyConfig, RagCrawlerConfig, RagCrawlerContentResult, RagCrawlerContentScope, RagCrawlerCookie, RagCrawlerCrawlStrategy, RagCrawlerDeepCrawlerConfig, RagCrawlerDensityPruning, RagCrawlerExecutionInfo, RagCrawlerFilters, RagCrawlerHtmlAuth, RagCrawlerHttpAuth, RagCrawlerIncrementalConfig, RagCrawlerMetaDataExtractor, RagCrawlerMetaDataExtractorType, RagCrawlerPruningThresholdType, RagCrawlerResult, RagCrawlerResultsConfig, RagCrawlerRetryConfig, RagCrawlerSeedUrlFilters, RagCrawlerSelectorType, RagCrawlerSources, RagCrawlerStatusFilter, RagCreateCrawlerRequest, RagCreateDatasetRequest, RagDataset, RagDatasetList, RagDatasetParsingStatus, RagDeleteCrawlerRequest, RagDeleteCrawlerResponse, RagDeleteCrawlerRunsRequest, RagDeleteCrawlerRunsResponse, RagDeleteCrawlersRequest, RagDeleteCrawlersResponse, RagDeleteDocumentsRequest, RagDeleteRequest, RagDocAgg, RagDocument, RagDocumentIdsRequest, RagDocumentList, RagDocumentStatus, RagDocumentType, RagDownloadDocumentRequest, RagFileChunk, RagFileMetadata, RagGetCrawlerAttachedDatasetsRequest, RagGetCrawlerAttachedDatasetsResponse, RagGetCrawlerRequest, RagGetCrawlerResultRequest, RagGetCrawlerResultsRequest, RagGetCrawlerResultsResponse, RagGetCrawlerRunLogsRequest, RagGetCrawlerRunLogsResponse, RagGetCrawlerRunRequest, RagGraphRagConfig, RagGraphRagMethod, RagListCrawlerRunsRequest, RagListCrawlerRunsResponse, RagListCrawlersRequest, RagListCrawlersResponse, RagListDatasetsRequest, RagListDocumentsRequest, RagLogic, RagMetadataCondition, RagMetadataConditions, RagParserConfig, RagPartialSuccess, RagRaptorConfig, RagRemoveCrawlerResultsFromDatasetsRequest, RagRetrievalRequest, RagRetrievalResponse, RagStartCrawlerRequest, RagStopCrawlerRequest, RagStopCrawlerResponse, RagUpdateCrawlerRequest, RagUpdateDatasetRequest, RagUpdateDocumentRequest, RagUploadDocumentRequest, RagVariantConfig, RagsClient, RankingMatchOptimizationConfig, ReannotateEntitiesOptions, ReasoningEffort$1 as ReasoningEffort, ReferencedChunk, ReindexAgentRequest, RemoteOperationContainer, RemoteOperationContainerLifecycleState, RemoteOperationContainerLogLine, RemoteOperationContainerStatus, RemoveUserFromProjectRequest, ReportFormat, ReportType, RequestConfig, ResourceView, RestoreAgentRequest, RotateProjectTechnicalUserPasswordRequest, RotateProjectTechnicalUserPasswordResponse, RunLlmEvaluationExperimentRequest, RunLlmEvaluationReleaseGateRequest, S2sPipeline, S2sPipelineId, S2sStreamRequest, S2sStreamResponse, S2tCloudProviderConfig, S2tCloudProviderConfigAmazon, S2tCloudProviderConfigDeepgram, S2tCloudProviderConfigGoogle, S2tCloudProviderConfigMicrosoft, S2tCloudServiceAmazon, S2tCloudServiceDeepgram, S2tCloudServiceGoogle, S2tCloudServiceMicrosoft, S2tDescription, S2tGetServiceInfoResponse, S2tInference, S2tLlmPostProcessing, S2tLlmPostProcessingInverseNormalizationOptions, S2tLlmPostProcessingNormalizationOptions, S2tLlmPostProcessingSubTaskOptions, S2tLlmPostProcessingSummarizationOptions, S2tLlmPostProcessingTranslationOptions, S2tNormalization, S2tPipelineId, S2tTranscription, ServerRole, ServerStatisticsClient, ServiceTier, Session, SessionEntityType, SessionFeedback, SessionFilter, SessionInfo, SessionReview, SessionReviewStep, SessionStep, SessionsClient, SessionsReportType, SetAgentStatusRequest, SetControlStatusRequest, SetControlStatusResponse, SetNotificationsFlaggedStatusRequest, SetNotificationsReadStatusRequest, SetResourcesRequest, SetUserPreferencesRequest, SetUserPreferencesResponse, Silero, SimulateLlmEvaluationConversationsRequest, SingleInference, SipTrigger, SortingMode, Speech2TextClient, Speech2TextConfig, StartLlmEvaluationAbExperimentRequest, StatResponse, Status, StopLlmEvaluationAbExperimentRequest, StreamNotificationsRequest, StreamRemoteOperationContainerLogsRequest, StreamingDetectIntentRequest, StreamingDetectIntentResponse, StreamingLlmGenerateResponse, StreamingRecognitionResult, StreamingServer, StreamingSpeechRecognition, StreamingSynthesizeRequest, StreamingSynthesizeResponse, StringUpdate, SubmitLlmEvaluationFeedbackRequest, SymSpell, Synonym, SynthesizeRequest, SynthesizeResponse, T2SCustomLengthScales, T2SDescription, T2SGetServiceInfoResponse, T2SInference, T2SNormalization, T2sCloudProviderConfig, T2sCloudProviderConfigElevenLabs, T2sCloudProviderConfigGoogle, T2sCloudProviderConfigMicrosoft, T2sCloudServiceAmazon, T2sCloudServiceElevenLabs, T2sCloudServiceGoogle, T2sCloudServiceMicrosoft, T2sPipelineId, TOKEN_PROVIDER, Text2Audio, Text2Mel, Text2SpeechClient, Text2SpeechConfig, TextInput, ThesaurusEnrichmentConfig, TrainAgentRequest, TrainUserLanguageModelRequest, TrainingPhraseCleanerOptions, TrainingPhraseStatus, TranscribeFileRequest, TranscribeFileResponse, TranscribeRequestConfig, TranscribeStreamRequest, TranscribeStreamResponse, Transcription, TranscriptionAlternative, TranscriptionReturnOptions, TranscriptionType, TsdMethod, TurnDetectionOptions, UpdateAgentRequest, UpdateCcaiProjectRequest, UpdateCcaiProjectResponse, UpdateContextRequest, UpdateCustomPhonemizerRequest, UpdateEntityRequest, UpdateEntityTypeRequest, UpdateIntentRequest, UpdateLlmEvaluationAbExperimentRequest, UpdateLlmEvaluationAnnotationQueueItemRequest, UpdateLlmEvaluationDatasetRequest, UpdateLlmEvaluationExampleRequest, UpdateLlmEvaluationExperimentRequest, UpdateLlmEvaluationFeedbackRequest, UpdateLlmEvaluationOnlineConfigRequest, UpdateLlmEvaluationProjectSettingsRequest, UpdateLlmEvaluationReleaseGateRequest, UpdateLlmEvaluationScheduleRequest, UpdateLlmEvaluationScorecardRequest, UpdateNotificationRequest, UpdateProjectRoleRequest, UpdateServerRoleRequest, UpdateSessionCommentsRequest, UpdateSessionEntityTypeRequest, UpdateSessionFeedbackRequest, UpdateSessionStepRequest, UpdateUserRequest, User, UserInProject, UserInfo, UsersClient, UtilitiesClient, UtteranceDetectionOptions, VadMethod, ValidateEmbeddedRegexRequest, ValidateEmbeddedRegexResponse, ValidateRegexRequest, ValidateRegexResponse, Verbosity, VideoFileResource, Vits, VitsTriton, VoiceActivityDetection, VoiceCloningRequest, VoiceSettings, Wav2Vec, Wav2VecTriton, WebhookClient, WebhookRequest, WebhookResponse, WespeakerTsd, Whisper, WhisperTriton, Wiener, Word2VecEnrichmentConfig, WordAlternative, WordDetail, WordNetAugEnrichmentConfig, XLNetAugEnrichmentConfig, authHttpInterceptor, buildBearerValue, buildGrpcWebHost, provideOndewoCsiAuth, resolveBearerValue, resolveToken };
 //# sourceMappingURL=ondewo-csi-client-angular.mjs.map

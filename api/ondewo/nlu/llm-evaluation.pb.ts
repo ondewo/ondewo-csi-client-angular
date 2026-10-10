@@ -2259,7 +2259,6 @@ export class LlmEvaluationFeedback implements GrpcMessage {
     _instance.name = _instance.name || '';
     _instance.displayName = _instance.displayName || '';
     _instance.criterion = _instance.criterion || '';
-    _instance.score = _instance.score || 0;
     _instance.categoricalValue = _instance.categoricalValue || '';
     _instance.comment = _instance.comment || '';
     _instance.annotatorUserId = _instance.annotatorUserId || '';
@@ -2372,7 +2371,7 @@ export class LlmEvaluationFeedback implements GrpcMessage {
     if (_instance.criterion) {
       _writer.writeString(3, _instance.criterion);
     }
-    if (_instance.score) {
+    if (_instance.score !== undefined && _instance.score !== null) {
       _writer.writeDouble(4, _instance.score);
     }
     if (_instance.categoricalValue) {
@@ -10393,8 +10392,6 @@ export class LlmEvaluationReleaseGateThresholds implements GrpcMessage {
    */
   static refineValues(_instance: LlmEvaluationReleaseGateThresholds) {
     _instance.minPassRate = _instance.minPassRate || 0;
-    _instance.maxRegressionPerCriterion =
-      _instance.maxRegressionPerCriterion || 0;
     _instance.maxP95LatencySeconds = _instance.maxP95LatencySeconds || 0;
     _instance.acceptanceMustPass = _instance.acceptanceMustPass || false;
   }
@@ -10444,7 +10441,10 @@ export class LlmEvaluationReleaseGateThresholds implements GrpcMessage {
     if (_instance.minPassRate) {
       _writer.writeDouble(1, _instance.minPassRate);
     }
-    if (_instance.maxRegressionPerCriterion) {
+    if (
+      _instance.maxRegressionPerCriterion !== undefined &&
+      _instance.maxRegressionPerCriterion !== null
+    ) {
       _writer.writeDouble(2, _instance.maxRegressionPerCriterion);
     }
     if (_instance.maxP95LatencySeconds) {
@@ -10594,8 +10594,6 @@ export class LlmEvaluationReleaseGateSafetyConfig implements GrpcMessage {
     _instance.enabled = _instance.enabled || false;
     _instance.adversarialDatasetName = _instance.adversarialDatasetName || '';
     _instance.evaluatorNames = _instance.evaluatorNames || [];
-    _instance.maxToxicity = _instance.maxToxicity || 0;
-    _instance.maxBias = _instance.maxBias || 0;
   }
 
   /**
@@ -10654,10 +10652,10 @@ export class LlmEvaluationReleaseGateSafetyConfig implements GrpcMessage {
     if (_instance.evaluatorNames && _instance.evaluatorNames.length) {
       _writer.writeRepeatedString(3, _instance.evaluatorNames);
     }
-    if (_instance.maxToxicity) {
+    if (_instance.maxToxicity !== undefined && _instance.maxToxicity !== null) {
       _writer.writeDouble(4, _instance.maxToxicity);
     }
-    if (_instance.maxBias) {
+    if (_instance.maxBias !== undefined && _instance.maxBias !== null) {
       _writer.writeDouble(5, _instance.maxBias);
     }
   }
@@ -29186,7 +29184,6 @@ export class LlmEvaluationOnlineConfig implements GrpcMessage {
     _instance.sampleRate = _instance.sampleRate || 0;
     _instance.enabled = _instance.enabled || false;
     _instance.targetDatasetName = _instance.targetDatasetName || '';
-    _instance.failThreshold = _instance.failThreshold || 0;
     _instance.settleSeconds = _instance.settleSeconds || 0;
     _instance.requireTelemetry = _instance.requireTelemetry || false;
     _instance.llmEvaluationOnlineSessionFilter =
@@ -29327,7 +29324,10 @@ export class LlmEvaluationOnlineConfig implements GrpcMessage {
     if (_instance.targetDatasetName) {
       _writer.writeString(7, _instance.targetDatasetName);
     }
-    if (_instance.failThreshold) {
+    if (
+      _instance.failThreshold !== undefined &&
+      _instance.failThreshold !== null
+    ) {
       _writer.writeDouble(8, _instance.failThreshold);
     }
     if (_instance.settleSeconds) {
