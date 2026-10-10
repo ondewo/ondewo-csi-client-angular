@@ -2,6 +2,15 @@
 
 *****************
 
+## Release ONDEWO CSI Angular Client 5.6.1
+
+### Bug Fixes
+
+* Removed the service-client methods of every client-streaming and bidirectional-streaming RPC, because they never worked in a browser: gRPC-web, the protocol this library speaks, carries unary and server-streaming calls only. The methods (plain and `$raw`) are gone from `ConversationsClient.s2sStream`, `SessionsClient.streamingDetectIntent`, `RagsClient.ragUploadDocument`, `Speech2TextClient.transcribeStream` and `Text2SpeechClient.streamingSynthesize`. Their request and response messages are still exported, and every unary and server-streaming method is unchanged. **Migration:** a client that has to send a request stream (speech-to-speech audio, streaming recognition, synthesis or detect-intent) uses a native SDK such as `ondewo-csi-client` (python, PyPI) or `@ondewo/csi-client-nodejs`. The js and typescript SDKs never generated these methods.
+* Generated with ondewo-proto-compiler [5.15.7](https://github.com/ondewo/ondewo-proto-compiler/releases/tag/5.15.7), which omits these methods for the angular target. `src/auth/no-client-streaming.spec.ts` fails if the public typings (`index.d.ts`) expose a method whose request is an `Observable`.
+
+*****************
+
 ## Release ONDEWO CSI Angular Client 5.6.0
 
 ### New Features

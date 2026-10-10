@@ -73,27 +73,6 @@ export class SessionsClient {
       });
     },
     /**
-     * Bidirectional streaming: /ondewo.nlu.Sessions/StreamingDetectIntent
-     *
-     * @param requestMessage Request message
-     * @param requestMetadata Request metadata
-     * @returns Observable<GrpcEvent<thisProto.StreamingDetectIntentResponse>>
-     */
-    streamingDetectIntent: (
-      requestData: Observable<thisProto.StreamingDetectIntentRequest>,
-      requestMetadata = new GrpcMetadata()
-    ): Observable<GrpcEvent<thisProto.StreamingDetectIntentResponse>> => {
-      return this.handler.handle({
-        type: GrpcCallType.bidiStream,
-        client: this.client,
-        path: '/ondewo.nlu.Sessions/StreamingDetectIntent',
-        requestData,
-        requestMetadata,
-        requestClass: thisProto.StreamingDetectIntentRequest,
-        responseClass: thisProto.StreamingDetectIntentResponse
-      });
-    },
-    /**
      * Unary call: /ondewo.nlu.Sessions/ListSessions
      *
      * @param requestMessage Request message
@@ -1126,22 +1105,6 @@ export class SessionsClient {
   ): Observable<thisProto.DetectIntentResponse> {
     return this.$raw
       .detectIntent(requestData, requestMetadata)
-      .pipe(throwStatusErrors(), takeMessages());
-  }
-
-  /**
-   * Bidirectional streaming @/ondewo.nlu.Sessions/StreamingDetectIntent
-   *
-   * @param requestMessage Request message
-   * @param requestMetadata Request metadata
-   * @returns Observable<thisProto.StreamingDetectIntentResponse>
-   */
-  streamingDetectIntent(
-    requestData: Observable<thisProto.StreamingDetectIntentRequest>,
-    requestMetadata = new GrpcMetadata()
-  ): Observable<thisProto.StreamingDetectIntentResponse> {
-    return this.$raw
-      .streamingDetectIntent(requestData, requestMetadata)
       .pipe(throwStatusErrors(), takeMessages());
   }
 

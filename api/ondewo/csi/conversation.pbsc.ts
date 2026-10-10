@@ -157,27 +157,6 @@ export class ConversationsClient {
       });
     },
     /**
-     * Bidirectional streaming: /ondewo.csi.Conversations/S2sStream
-     *
-     * @param requestMessage Request message
-     * @param requestMetadata Request metadata
-     * @returns Observable<GrpcEvent<thisProto.S2sStreamResponse>>
-     */
-    s2sStream: (
-      requestData: Observable<thisProto.S2sStreamRequest>,
-      requestMetadata = new GrpcMetadata()
-    ): Observable<GrpcEvent<thisProto.S2sStreamResponse>> => {
-      return this.handler.handle({
-        type: GrpcCallType.bidiStream,
-        client: this.client,
-        path: '/ondewo.csi.Conversations/S2sStream',
-        requestData,
-        requestMetadata,
-        requestClass: thisProto.S2sStreamRequest,
-        responseClass: thisProto.S2sStreamResponse
-      });
-    },
-    /**
      * Unary call: /ondewo.csi.Conversations/CheckUpstreamHealth
      *
      * @param requestMessage Request message
@@ -351,22 +330,6 @@ export class ConversationsClient {
   ): Observable<thisProto.ListS2sPipelinesResponse> {
     return this.$raw
       .listS2sPipelines(requestData, requestMetadata)
-      .pipe(throwStatusErrors(), takeMessages());
-  }
-
-  /**
-   * Bidirectional streaming @/ondewo.csi.Conversations/S2sStream
-   *
-   * @param requestMessage Request message
-   * @param requestMetadata Request metadata
-   * @returns Observable<thisProto.S2sStreamResponse>
-   */
-  s2sStream(
-    requestData: Observable<thisProto.S2sStreamRequest>,
-    requestMetadata = new GrpcMetadata()
-  ): Observable<thisProto.S2sStreamResponse> {
-    return this.$raw
-      .s2sStream(requestData, requestMetadata)
       .pipe(throwStatusErrors(), takeMessages());
   }
 
