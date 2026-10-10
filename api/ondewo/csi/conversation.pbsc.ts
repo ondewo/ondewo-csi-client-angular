@@ -239,6 +239,27 @@ export class ConversationsClient {
         requestClass: thisProto.SetControlStatusRequest,
         responseClass: thisProto.SetControlStatusResponse
       });
+    },
+    /**
+     * Unary call: /ondewo.csi.Conversations/SetCallMediaControl
+     *
+     * @param requestMessage Request message
+     * @param requestMetadata Request metadata
+     * @returns Observable<GrpcEvent<thisProto.SetCallMediaControlResponse>>
+     */
+    setCallMediaControl: (
+      requestData: thisProto.CallMediaControlLevel,
+      requestMetadata = new GrpcMetadata()
+    ): Observable<GrpcEvent<thisProto.SetCallMediaControlResponse>> => {
+      return this.handler.handle({
+        type: GrpcCallType.unary,
+        client: this.client,
+        path: '/ondewo.csi.Conversations/SetCallMediaControl',
+        requestData,
+        requestMetadata,
+        requestClass: thisProto.CallMediaControlLevel,
+        responseClass: thisProto.SetCallMediaControlResponse
+      });
     }
   };
 
@@ -394,6 +415,22 @@ export class ConversationsClient {
   ): Observable<thisProto.SetControlStatusResponse> {
     return this.$raw
       .setControlStatus(requestData, requestMetadata)
+      .pipe(throwStatusErrors(), takeMessages());
+  }
+
+  /**
+   * Unary call @/ondewo.csi.Conversations/SetCallMediaControl
+   *
+   * @param requestMessage Request message
+   * @param requestMetadata Request metadata
+   * @returns Observable<thisProto.SetCallMediaControlResponse>
+   */
+  setCallMediaControl(
+    requestData: thisProto.CallMediaControlLevel,
+    requestMetadata = new GrpcMetadata()
+  ): Observable<thisProto.SetCallMediaControlResponse> {
+    return this.$raw
+      .setCallMediaControl(requestData, requestMetadata)
       .pipe(throwStatusErrors(), takeMessages());
   }
 }

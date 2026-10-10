@@ -1744,6 +1744,7 @@ export class ControlStreamResponse implements GrpcMessage {
   static refineValues(_instance: ControlStreamResponse) {
     _instance.controlStatus = _instance.controlStatus || 0;
     _instance.epoch = _instance.epoch || '0';
+    _instance.mediaControl = _instance.mediaControl || undefined;
   }
 
   /**
@@ -1764,6 +1765,13 @@ export class ControlStreamResponse implements GrpcMessage {
           break;
         case 2:
           _instance.epoch = _reader.readUint64String();
+          break;
+        case 3:
+          _instance.mediaControl = new CallMediaControlLevel();
+          _reader.readMessage(
+            _instance.mediaControl,
+            CallMediaControlLevel.deserializeBinaryFromReader
+          );
           break;
         default:
           _reader.skipField();
@@ -1788,10 +1796,18 @@ export class ControlStreamResponse implements GrpcMessage {
     if (_instance.epoch) {
       _writer.writeUint64String(2, _instance.epoch);
     }
+    if (_instance.mediaControl) {
+      _writer.writeMessage(
+        3,
+        _instance.mediaControl as any,
+        CallMediaControlLevel.serializeBinaryToWriter
+      );
+    }
   }
 
   private _controlStatus: ControlStatus;
   private _epoch: string;
+  private _mediaControl?: CallMediaControlLevel;
 
   /**
    * Message constructor. Initializes the properties and applies default Protobuf values if necessary
@@ -1801,6 +1817,9 @@ export class ControlStreamResponse implements GrpcMessage {
     _value = _value || {};
     this.controlStatus = _value.controlStatus;
     this.epoch = _value.epoch;
+    this.mediaControl = _value.mediaControl
+      ? new CallMediaControlLevel(_value.mediaControl)
+      : undefined;
     ControlStreamResponse.refineValues(this);
   }
   get controlStatus(): ControlStatus {
@@ -1814,6 +1833,12 @@ export class ControlStreamResponse implements GrpcMessage {
   }
   set epoch(value: string) {
     this._epoch = value;
+  }
+  get mediaControl(): CallMediaControlLevel | undefined {
+    return this._mediaControl;
+  }
+  set mediaControl(value: CallMediaControlLevel | undefined) {
+    this._mediaControl = value;
   }
 
   /**
@@ -1832,7 +1857,8 @@ export class ControlStreamResponse implements GrpcMessage {
   toObject(): ControlStreamResponse.AsObject {
     return {
       controlStatus: this.controlStatus,
-      epoch: this.epoch
+      epoch: this.epoch,
+      mediaControl: this.mediaControl ? this.mediaControl.toObject() : undefined
     };
   }
 
@@ -1859,7 +1885,10 @@ export class ControlStreamResponse implements GrpcMessage {
             ? 0
             : this.controlStatus
         ],
-      epoch: this.epoch
+      epoch: this.epoch,
+      mediaControl: this.mediaControl
+        ? this.mediaControl.toProtobufJSON(options)
+        : null
     };
   }
 }
@@ -1870,6 +1899,7 @@ export module ControlStreamResponse {
   export interface AsObject {
     controlStatus: ControlStatus;
     epoch: string;
+    mediaControl?: CallMediaControlLevel.AsObject;
   }
 
   /**
@@ -1878,6 +1908,7 @@ export module ControlStreamResponse {
   export interface AsProtobufJSON {
     controlStatus: string;
     epoch: string;
+    mediaControl: CallMediaControlLevel.AsProtobufJSON | null;
   }
 }
 
@@ -2190,6 +2221,427 @@ export module SetControlStatusResponse {
   export interface AsProtobufJSON {
     oldControlStatus: string;
     newControlStatus: string;
+  }
+}
+
+/**
+ * Message implementation for ondewo.csi.CallMediaControlLevel
+ */
+export class CallMediaControlLevel implements GrpcMessage {
+  static id = 'ondewo.csi.CallMediaControlLevel';
+
+  /**
+   * Deserialize binary data to message
+   * @param instance message instance
+   */
+  static deserializeBinary(bytes: ByteSource) {
+    const instance = new CallMediaControlLevel();
+    CallMediaControlLevel.deserializeBinaryFromReader(
+      instance,
+      new BinaryReader(bytes)
+    );
+    return instance;
+  }
+
+  /**
+   * Check all the properties and set default protobuf values if necessary
+   * @param _instance message instance
+   */
+  static refineValues(_instance: CallMediaControlLevel) {
+    _instance.botMuted = _instance.botMuted || false;
+    _instance.listeningPaused = _instance.listeningPaused || false;
+    _instance.generation = _instance.generation || '0';
+    _instance.reason = _instance.reason || '';
+  }
+
+  /**
+   * Deserializes / reads binary message into message instance using provided binary reader
+   * @param _instance message instance
+   * @param _reader binary reader instance
+   */
+  static deserializeBinaryFromReader(
+    _instance: CallMediaControlLevel,
+    _reader: BinaryReader
+  ) {
+    while (_reader.nextField()) {
+      if (_reader.isEndGroup()) break;
+
+      switch (_reader.getFieldNumber()) {
+        case 1:
+          _instance.botMuted = _reader.readBool();
+          break;
+        case 2:
+          _instance.listeningPaused = _reader.readBool();
+          break;
+        case 3:
+          _instance.generation = _reader.readUint64String();
+          break;
+        case 4:
+          _instance.reason = _reader.readString();
+          break;
+        default:
+          _reader.skipField();
+      }
+    }
+
+    CallMediaControlLevel.refineValues(_instance);
+  }
+
+  /**
+   * Serializes a message to binary format using provided binary reader
+   * @param _instance message instance
+   * @param _writer binary writer instance
+   */
+  static serializeBinaryToWriter(
+    _instance: CallMediaControlLevel,
+    _writer: BinaryWriter
+  ) {
+    if (_instance.botMuted) {
+      _writer.writeBool(1, _instance.botMuted);
+    }
+    if (_instance.listeningPaused) {
+      _writer.writeBool(2, _instance.listeningPaused);
+    }
+    if (_instance.generation) {
+      _writer.writeUint64String(3, _instance.generation);
+    }
+    if (_instance.reason) {
+      _writer.writeString(4, _instance.reason);
+    }
+  }
+
+  private _botMuted: boolean;
+  private _listeningPaused: boolean;
+  private _generation: string;
+  private _reason: string;
+
+  /**
+   * Message constructor. Initializes the properties and applies default Protobuf values if necessary
+   * @param _value initial values object or instance of CallMediaControlLevel to deeply clone from
+   */
+  constructor(_value?: RecursivePartial<CallMediaControlLevel.AsObject>) {
+    _value = _value || {};
+    this.botMuted = _value.botMuted;
+    this.listeningPaused = _value.listeningPaused;
+    this.generation = _value.generation;
+    this.reason = _value.reason;
+    CallMediaControlLevel.refineValues(this);
+  }
+  get botMuted(): boolean {
+    return this._botMuted;
+  }
+  set botMuted(value: boolean) {
+    this._botMuted = value;
+  }
+  get listeningPaused(): boolean {
+    return this._listeningPaused;
+  }
+  set listeningPaused(value: boolean) {
+    this._listeningPaused = value;
+  }
+  get generation(): string {
+    return this._generation;
+  }
+  set generation(value: string) {
+    this._generation = value;
+  }
+  get reason(): string {
+    return this._reason;
+  }
+  set reason(value: string) {
+    this._reason = value;
+  }
+
+  /**
+   * Serialize message to binary data
+   * @param instance message instance
+   */
+  serializeBinary() {
+    const writer = new BinaryWriter();
+    CallMediaControlLevel.serializeBinaryToWriter(this, writer);
+    return writer.getResultBuffer();
+  }
+
+  /**
+   * Cast message to standard JavaScript object (all non-primitive values are deeply cloned)
+   */
+  toObject(): CallMediaControlLevel.AsObject {
+    return {
+      botMuted: this.botMuted,
+      listeningPaused: this.listeningPaused,
+      generation: this.generation,
+      reason: this.reason
+    };
+  }
+
+  /**
+   * Convenience method to support JSON.stringify(message), replicates the structure of toObject()
+   */
+  toJSON() {
+    return this.toObject();
+  }
+
+  /**
+   * Cast message to JSON using protobuf JSON notation: https://developers.google.com/protocol-buffers/docs/proto3#json
+   * Attention: output differs from toObject() e.g. enums are represented as names and not as numbers, Timestamp is an ISO Date string format etc.
+   * If the message itself or some of descendant messages is google.protobuf.Any, you MUST provide a message pool as options. If not, the messagePool is not required
+   */
+  toProtobufJSON(
+    // @ts-ignore
+    options?: ToProtobufJSONOptions
+  ): CallMediaControlLevel.AsProtobufJSON {
+    return {
+      botMuted: this.botMuted,
+      listeningPaused: this.listeningPaused,
+      generation: this.generation,
+      reason: this.reason
+    };
+  }
+}
+export module CallMediaControlLevel {
+  /**
+   * Standard JavaScript object representation for CallMediaControlLevel
+   */
+  export interface AsObject {
+    botMuted: boolean;
+    listeningPaused: boolean;
+    generation: string;
+    reason: string;
+  }
+
+  /**
+   * Protobuf JSON representation for CallMediaControlLevel
+   */
+  export interface AsProtobufJSON {
+    botMuted: boolean;
+    listeningPaused: boolean;
+    generation: string;
+    reason: string;
+  }
+}
+
+/**
+ * Message implementation for ondewo.csi.SetCallMediaControlResponse
+ */
+export class SetCallMediaControlResponse implements GrpcMessage {
+  static id = 'ondewo.csi.SetCallMediaControlResponse';
+
+  /**
+   * Deserialize binary data to message
+   * @param instance message instance
+   */
+  static deserializeBinary(bytes: ByteSource) {
+    const instance = new SetCallMediaControlResponse();
+    SetCallMediaControlResponse.deserializeBinaryFromReader(
+      instance,
+      new BinaryReader(bytes)
+    );
+    return instance;
+  }
+
+  /**
+   * Check all the properties and set default protobuf values if necessary
+   * @param _instance message instance
+   */
+  static refineValues(_instance: SetCallMediaControlResponse) {
+    _instance.applied = _instance.applied || undefined;
+    _instance.changed = _instance.changed || false;
+    _instance.stale = _instance.stale || false;
+    _instance.botPlaybackInFlight = _instance.botPlaybackInFlight || false;
+    _instance.refusalReason = _instance.refusalReason || '';
+  }
+
+  /**
+   * Deserializes / reads binary message into message instance using provided binary reader
+   * @param _instance message instance
+   * @param _reader binary reader instance
+   */
+  static deserializeBinaryFromReader(
+    _instance: SetCallMediaControlResponse,
+    _reader: BinaryReader
+  ) {
+    while (_reader.nextField()) {
+      if (_reader.isEndGroup()) break;
+
+      switch (_reader.getFieldNumber()) {
+        case 1:
+          _instance.applied = new CallMediaControlLevel();
+          _reader.readMessage(
+            _instance.applied,
+            CallMediaControlLevel.deserializeBinaryFromReader
+          );
+          break;
+        case 2:
+          _instance.changed = _reader.readBool();
+          break;
+        case 3:
+          _instance.stale = _reader.readBool();
+          break;
+        case 4:
+          _instance.botPlaybackInFlight = _reader.readBool();
+          break;
+        case 5:
+          _instance.refusalReason = _reader.readString();
+          break;
+        default:
+          _reader.skipField();
+      }
+    }
+
+    SetCallMediaControlResponse.refineValues(_instance);
+  }
+
+  /**
+   * Serializes a message to binary format using provided binary reader
+   * @param _instance message instance
+   * @param _writer binary writer instance
+   */
+  static serializeBinaryToWriter(
+    _instance: SetCallMediaControlResponse,
+    _writer: BinaryWriter
+  ) {
+    if (_instance.applied) {
+      _writer.writeMessage(
+        1,
+        _instance.applied as any,
+        CallMediaControlLevel.serializeBinaryToWriter
+      );
+    }
+    if (_instance.changed) {
+      _writer.writeBool(2, _instance.changed);
+    }
+    if (_instance.stale) {
+      _writer.writeBool(3, _instance.stale);
+    }
+    if (_instance.botPlaybackInFlight) {
+      _writer.writeBool(4, _instance.botPlaybackInFlight);
+    }
+    if (_instance.refusalReason) {
+      _writer.writeString(5, _instance.refusalReason);
+    }
+  }
+
+  private _applied?: CallMediaControlLevel;
+  private _changed: boolean;
+  private _stale: boolean;
+  private _botPlaybackInFlight: boolean;
+  private _refusalReason: string;
+
+  /**
+   * Message constructor. Initializes the properties and applies default Protobuf values if necessary
+   * @param _value initial values object or instance of SetCallMediaControlResponse to deeply clone from
+   */
+  constructor(_value?: RecursivePartial<SetCallMediaControlResponse.AsObject>) {
+    _value = _value || {};
+    this.applied = _value.applied
+      ? new CallMediaControlLevel(_value.applied)
+      : undefined;
+    this.changed = _value.changed;
+    this.stale = _value.stale;
+    this.botPlaybackInFlight = _value.botPlaybackInFlight;
+    this.refusalReason = _value.refusalReason;
+    SetCallMediaControlResponse.refineValues(this);
+  }
+  get applied(): CallMediaControlLevel | undefined {
+    return this._applied;
+  }
+  set applied(value: CallMediaControlLevel | undefined) {
+    this._applied = value;
+  }
+  get changed(): boolean {
+    return this._changed;
+  }
+  set changed(value: boolean) {
+    this._changed = value;
+  }
+  get stale(): boolean {
+    return this._stale;
+  }
+  set stale(value: boolean) {
+    this._stale = value;
+  }
+  get botPlaybackInFlight(): boolean {
+    return this._botPlaybackInFlight;
+  }
+  set botPlaybackInFlight(value: boolean) {
+    this._botPlaybackInFlight = value;
+  }
+  get refusalReason(): string {
+    return this._refusalReason;
+  }
+  set refusalReason(value: string) {
+    this._refusalReason = value;
+  }
+
+  /**
+   * Serialize message to binary data
+   * @param instance message instance
+   */
+  serializeBinary() {
+    const writer = new BinaryWriter();
+    SetCallMediaControlResponse.serializeBinaryToWriter(this, writer);
+    return writer.getResultBuffer();
+  }
+
+  /**
+   * Cast message to standard JavaScript object (all non-primitive values are deeply cloned)
+   */
+  toObject(): SetCallMediaControlResponse.AsObject {
+    return {
+      applied: this.applied ? this.applied.toObject() : undefined,
+      changed: this.changed,
+      stale: this.stale,
+      botPlaybackInFlight: this.botPlaybackInFlight,
+      refusalReason: this.refusalReason
+    };
+  }
+
+  /**
+   * Convenience method to support JSON.stringify(message), replicates the structure of toObject()
+   */
+  toJSON() {
+    return this.toObject();
+  }
+
+  /**
+   * Cast message to JSON using protobuf JSON notation: https://developers.google.com/protocol-buffers/docs/proto3#json
+   * Attention: output differs from toObject() e.g. enums are represented as names and not as numbers, Timestamp is an ISO Date string format etc.
+   * If the message itself or some of descendant messages is google.protobuf.Any, you MUST provide a message pool as options. If not, the messagePool is not required
+   */
+  toProtobufJSON(
+    // @ts-ignore
+    options?: ToProtobufJSONOptions
+  ): SetCallMediaControlResponse.AsProtobufJSON {
+    return {
+      applied: this.applied ? this.applied.toProtobufJSON(options) : null,
+      changed: this.changed,
+      stale: this.stale,
+      botPlaybackInFlight: this.botPlaybackInFlight,
+      refusalReason: this.refusalReason
+    };
+  }
+}
+export module SetCallMediaControlResponse {
+  /**
+   * Standard JavaScript object representation for SetCallMediaControlResponse
+   */
+  export interface AsObject {
+    applied?: CallMediaControlLevel.AsObject;
+    changed: boolean;
+    stale: boolean;
+    botPlaybackInFlight: boolean;
+    refusalReason: string;
+  }
+
+  /**
+   * Protobuf JSON representation for SetCallMediaControlResponse
+   */
+  export interface AsProtobufJSON {
+    applied: CallMediaControlLevel.AsProtobufJSON | null;
+    changed: boolean;
+    stale: boolean;
+    botPlaybackInFlight: boolean;
+    refusalReason: string;
   }
 }
 
