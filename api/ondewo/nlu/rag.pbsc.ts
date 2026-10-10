@@ -136,27 +136,6 @@ export class RagsClient {
       });
     },
     /**
-     * Client streaming: /ondewo.nlu.Rags/RagUploadDocument
-     *
-     * @param requestMessage Request message
-     * @param requestMetadata Request metadata
-     * @returns Observable<GrpcEvent<thisProto.RagDocument>>
-     */
-    ragUploadDocument: (
-      requestData: Observable<thisProto.RagUploadDocumentRequest>,
-      requestMetadata = new GrpcMetadata()
-    ): Observable<GrpcEvent<thisProto.RagDocument>> => {
-      return this.handler.handle({
-        type: GrpcCallType.clientStream,
-        client: this.client,
-        path: '/ondewo.nlu.Rags/RagUploadDocument',
-        requestData,
-        requestMetadata,
-        requestClass: thisProto.RagUploadDocumentRequest,
-        responseClass: thisProto.RagDocument
-      });
-    },
-    /**
      * Unary call: /ondewo.nlu.Rags/RagUpdateDocument
      *
      * @param requestMessage Request message
@@ -733,22 +712,6 @@ export class RagsClient {
   ): Observable<thisProto.RagDatasetList> {
     return this.$raw
       .ragListDatasets(requestData, requestMetadata)
-      .pipe(throwStatusErrors(), takeMessages());
-  }
-
-  /**
-   * Client streaming @/ondewo.nlu.Rags/RagUploadDocument
-   *
-   * @param requestMessage Request message
-   * @param requestMetadata Request metadata
-   * @returns Observable<thisProto.RagDocument>
-   */
-  ragUploadDocument(
-    requestData: Observable<thisProto.RagUploadDocumentRequest>,
-    requestMetadata = new GrpcMetadata()
-  ): Observable<thisProto.RagDocument> {
-    return this.$raw
-      .ragUploadDocument(requestData, requestMetadata)
       .pipe(throwStatusErrors(), takeMessages());
   }
 

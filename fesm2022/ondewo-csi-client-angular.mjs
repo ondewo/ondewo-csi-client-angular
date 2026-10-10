@@ -95436,24 +95436,6 @@ class ConversationsClient {
                 });
             },
             /**
-             * Bidirectional streaming: /ondewo.csi.Conversations/S2sStream
-             *
-             * @param requestMessage Request message
-             * @param requestMetadata Request metadata
-             * @returns Observable<GrpcEvent<thisProto.S2sStreamResponse>>
-             */
-            s2sStream: (requestData, requestMetadata = new GrpcMetadata()) => {
-                return this.handler.handle({
-                    type: GrpcCallType.bidiStream,
-                    client: this.client,
-                    path: '/ondewo.csi.Conversations/S2sStream',
-                    requestData,
-                    requestMetadata,
-                    requestClass: S2sStreamRequest,
-                    responseClass: S2sStreamResponse
-                });
-            },
-            /**
              * Unary call: /ondewo.csi.Conversations/CheckUpstreamHealth
              *
              * @param requestMessage Request message
@@ -95586,18 +95568,6 @@ class ConversationsClient {
     listS2sPipelines(requestData, requestMetadata = new GrpcMetadata()) {
         return this.$raw
             .listS2sPipelines(requestData, requestMetadata)
-            .pipe(throwStatusErrors(), takeMessages());
-    }
-    /**
-     * Bidirectional streaming @/ondewo.csi.Conversations/S2sStream
-     *
-     * @param requestMessage Request message
-     * @param requestMetadata Request metadata
-     * @returns Observable<thisProto.S2sStreamResponse>
-     */
-    s2sStream(requestData, requestMetadata = new GrpcMetadata()) {
-        return this.$raw
-            .s2sStream(requestData, requestMetadata)
             .pipe(throwStatusErrors(), takeMessages());
     }
     /**
@@ -143719,24 +143689,6 @@ class RagsClient {
                 });
             },
             /**
-             * Client streaming: /ondewo.nlu.Rags/RagUploadDocument
-             *
-             * @param requestMessage Request message
-             * @param requestMetadata Request metadata
-             * @returns Observable<GrpcEvent<thisProto.RagDocument>>
-             */
-            ragUploadDocument: (requestData, requestMetadata = new GrpcMetadata()) => {
-                return this.handler.handle({
-                    type: GrpcCallType.clientStream,
-                    client: this.client,
-                    path: '/ondewo.nlu.Rags/RagUploadDocument',
-                    requestData,
-                    requestMetadata,
-                    requestClass: RagUploadDocumentRequest,
-                    responseClass: RagDocument
-                });
-            },
-            /**
              * Unary call: /ondewo.nlu.Rags/RagUpdateDocument
              *
              * @param requestMessage Request message
@@ -144217,18 +144169,6 @@ class RagsClient {
     ragListDatasets(requestData, requestMetadata = new GrpcMetadata()) {
         return this.$raw
             .ragListDatasets(requestData, requestMetadata)
-            .pipe(throwStatusErrors(), takeMessages());
-    }
-    /**
-     * Client streaming @/ondewo.nlu.Rags/RagUploadDocument
-     *
-     * @param requestMessage Request message
-     * @param requestMetadata Request metadata
-     * @returns Observable<thisProto.RagDocument>
-     */
-    ragUploadDocument(requestData, requestMetadata = new GrpcMetadata()) {
-        return this.$raw
-            .ragUploadDocument(requestData, requestMetadata)
             .pipe(throwStatusErrors(), takeMessages());
     }
     /**
@@ -144822,24 +144762,6 @@ class SessionsClient {
                     requestMetadata,
                     requestClass: DetectIntentRequest,
                     responseClass: DetectIntentResponse
-                });
-            },
-            /**
-             * Bidirectional streaming: /ondewo.nlu.Sessions/StreamingDetectIntent
-             *
-             * @param requestMessage Request message
-             * @param requestMetadata Request metadata
-             * @returns Observable<GrpcEvent<thisProto.StreamingDetectIntentResponse>>
-             */
-            streamingDetectIntent: (requestData, requestMetadata = new GrpcMetadata()) => {
-                return this.handler.handle({
-                    type: GrpcCallType.bidiStream,
-                    client: this.client,
-                    path: '/ondewo.nlu.Sessions/StreamingDetectIntent',
-                    requestData,
-                    requestMetadata,
-                    requestClass: StreamingDetectIntentRequest,
-                    responseClass: StreamingDetectIntentResponse
                 });
             },
             /**
@@ -145719,18 +145641,6 @@ class SessionsClient {
     detectIntent(requestData, requestMetadata = new GrpcMetadata()) {
         return this.$raw
             .detectIntent(requestData, requestMetadata)
-            .pipe(throwStatusErrors(), takeMessages());
-    }
-    /**
-     * Bidirectional streaming @/ondewo.nlu.Sessions/StreamingDetectIntent
-     *
-     * @param requestMessage Request message
-     * @param requestMetadata Request metadata
-     * @returns Observable<thisProto.StreamingDetectIntentResponse>
-     */
-    streamingDetectIntent(requestData, requestMetadata = new GrpcMetadata()) {
-        return this.$raw
-            .streamingDetectIntent(requestData, requestMetadata)
             .pipe(throwStatusErrors(), takeMessages());
     }
     /**
@@ -152608,24 +152518,6 @@ class Speech2TextClient {
                 });
             },
             /**
-             * Bidirectional streaming: /ondewo.s2t.Speech2Text/TranscribeStream
-             *
-             * @param requestMessage Request message
-             * @param requestMetadata Request metadata
-             * @returns Observable<GrpcEvent<thisProto.TranscribeStreamResponse>>
-             */
-            transcribeStream: (requestData, requestMetadata = new GrpcMetadata()) => {
-                return this.handler.handle({
-                    type: GrpcCallType.bidiStream,
-                    client: this.client,
-                    path: '/ondewo.s2t.Speech2Text/TranscribeStream',
-                    requestData,
-                    requestMetadata,
-                    requestClass: TranscribeStreamRequest,
-                    responseClass: TranscribeStreamResponse
-                });
-            },
-            /**
              * Unary call: /ondewo.s2t.Speech2Text/GetS2tPipeline
              *
              * @param requestMessage Request message
@@ -152893,18 +152785,6 @@ class Speech2TextClient {
             .pipe(throwStatusErrors(), takeMessages());
     }
     /**
-     * Bidirectional streaming @/ondewo.s2t.Speech2Text/TranscribeStream
-     *
-     * @param requestMessage Request message
-     * @param requestMetadata Request metadata
-     * @returns Observable<thisProto.TranscribeStreamResponse>
-     */
-    transcribeStream(requestData, requestMetadata = new GrpcMetadata()) {
-        return this.$raw
-            .transcribeStream(requestData, requestMetadata)
-            .pipe(throwStatusErrors(), takeMessages());
-    }
-    /**
      * Unary call @/ondewo.s2t.Speech2Text/GetS2tPipeline
      *
      * @param requestMessage Request message
@@ -153152,24 +153032,6 @@ class Text2SpeechClient {
                     requestMetadata,
                     requestClass: BatchSynthesizeRequest,
                     responseClass: BatchSynthesizeResponse
-                });
-            },
-            /**
-             * Bidirectional streaming: /ondewo.t2s.Text2Speech/StreamingSynthesize
-             *
-             * @param requestMessage Request message
-             * @param requestMetadata Request metadata
-             * @returns Observable<GrpcEvent<thisProto.StreamingSynthesizeResponse>>
-             */
-            streamingSynthesize: (requestData, requestMetadata = new GrpcMetadata()) => {
-                return this.handler.handle({
-                    type: GrpcCallType.bidiStream,
-                    client: this.client,
-                    path: '/ondewo.t2s.Text2Speech/StreamingSynthesize',
-                    requestData,
-                    requestMetadata,
-                    requestClass: StreamingSynthesizeRequest,
-                    responseClass: StreamingSynthesizeResponse
                 });
             },
             /**
@@ -153485,18 +153347,6 @@ class Text2SpeechClient {
     batchSynthesize(requestData, requestMetadata = new GrpcMetadata()) {
         return this.$raw
             .batchSynthesize(requestData, requestMetadata)
-            .pipe(throwStatusErrors(), takeMessages());
-    }
-    /**
-     * Bidirectional streaming @/ondewo.t2s.Text2Speech/StreamingSynthesize
-     *
-     * @param requestMessage Request message
-     * @param requestMetadata Request metadata
-     * @returns Observable<thisProto.StreamingSynthesizeResponse>
-     */
-    streamingSynthesize(requestData, requestMetadata = new GrpcMetadata()) {
-        return this.$raw
-            .streamingSynthesize(requestData, requestMetadata)
             .pipe(throwStatusErrors(), takeMessages());
     }
     /**

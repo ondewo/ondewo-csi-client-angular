@@ -50567,17 +50567,6 @@ declare class ConversationsClient {
 			requestMetadata?: GrpcMetadata
 		) => Observable<GrpcEvent<ListS2sPipelinesResponse>>;
 		/**
-		 * Bidirectional streaming: /ondewo.csi.Conversations/S2sStream
-		 *
-		 * @param requestMessage Request message
-		 * @param requestMetadata Request metadata
-		 * @returns Observable<GrpcEvent<thisProto.S2sStreamResponse>>
-		 */
-		s2sStream: (
-			requestData: Observable<S2sStreamRequest>,
-			requestMetadata?: GrpcMetadata
-		) => Observable<GrpcEvent<S2sStreamResponse>>;
-		/**
 		 * Unary call: /ondewo.csi.Conversations/CheckUpstreamHealth
 		 *
 		 * @param requestMessage Request message
@@ -50666,14 +50655,6 @@ declare class ConversationsClient {
 		requestData: ListS2sPipelinesRequest,
 		requestMetadata?: GrpcMetadata
 	): Observable<ListS2sPipelinesResponse>;
-	/**
-	 * Bidirectional streaming @/ondewo.csi.Conversations/S2sStream
-	 *
-	 * @param requestMessage Request message
-	 * @param requestMetadata Request metadata
-	 * @returns Observable<thisProto.S2sStreamResponse>
-	 */
-	s2sStream(requestData: Observable<S2sStreamRequest>, requestMetadata?: GrpcMetadata): Observable<S2sStreamResponse>;
 	/**
 	 * Unary call @/ondewo.csi.Conversations/CheckUpstreamHealth
 	 *
@@ -77429,17 +77410,6 @@ declare class RagsClient {
 			requestMetadata?: GrpcMetadata
 		) => Observable<GrpcEvent<RagDatasetList>>;
 		/**
-		 * Client streaming: /ondewo.nlu.Rags/RagUploadDocument
-		 *
-		 * @param requestMessage Request message
-		 * @param requestMetadata Request metadata
-		 * @returns Observable<GrpcEvent<thisProto.RagDocument>>
-		 */
-		ragUploadDocument: (
-			requestData: Observable<RagUploadDocumentRequest>,
-			requestMetadata?: GrpcMetadata
-		) => Observable<GrpcEvent<RagDocument>>;
-		/**
 		 * Unary call: /ondewo.nlu.Rags/RagUpdateDocument
 		 *
 		 * @param requestMessage Request message
@@ -77737,17 +77707,6 @@ declare class RagsClient {
 	 * @returns Observable<thisProto.RagDatasetList>
 	 */
 	ragListDatasets(requestData: RagListDatasetsRequest, requestMetadata?: GrpcMetadata): Observable<RagDatasetList>;
-	/**
-	 * Client streaming @/ondewo.nlu.Rags/RagUploadDocument
-	 *
-	 * @param requestMessage Request message
-	 * @param requestMetadata Request metadata
-	 * @returns Observable<thisProto.RagDocument>
-	 */
-	ragUploadDocument(
-		requestData: Observable<RagUploadDocumentRequest>,
-		requestMetadata?: GrpcMetadata
-	): Observable<RagDocument>;
 	/**
 	 * Unary call @/ondewo.nlu.Rags/RagUpdateDocument
 	 *
@@ -78169,17 +78128,6 @@ declare class SessionsClient {
 			requestData: DetectIntentRequest,
 			requestMetadata?: GrpcMetadata
 		) => Observable<GrpcEvent<DetectIntentResponse>>;
-		/**
-		 * Bidirectional streaming: /ondewo.nlu.Sessions/StreamingDetectIntent
-		 *
-		 * @param requestMessage Request message
-		 * @param requestMetadata Request metadata
-		 * @returns Observable<GrpcEvent<thisProto.StreamingDetectIntentResponse>>
-		 */
-		streamingDetectIntent: (
-			requestData: Observable<StreamingDetectIntentRequest>,
-			requestMetadata?: GrpcMetadata
-		) => Observable<GrpcEvent<StreamingDetectIntentResponse>>;
 		/**
 		 * Unary call: /ondewo.nlu.Sessions/ListSessions
 		 *
@@ -78715,17 +78663,6 @@ declare class SessionsClient {
 	 * @returns Observable<thisProto.DetectIntentResponse>
 	 */
 	detectIntent(requestData: DetectIntentRequest, requestMetadata?: GrpcMetadata): Observable<DetectIntentResponse>;
-	/**
-	 * Bidirectional streaming @/ondewo.nlu.Sessions/StreamingDetectIntent
-	 *
-	 * @param requestMessage Request message
-	 * @param requestMetadata Request metadata
-	 * @returns Observable<thisProto.StreamingDetectIntentResponse>
-	 */
-	streamingDetectIntent(
-		requestData: Observable<StreamingDetectIntentRequest>,
-		requestMetadata?: GrpcMetadata
-	): Observable<StreamingDetectIntentResponse>;
 	/**
 	 * Unary call @/ondewo.nlu.Sessions/ListSessions
 	 *
@@ -82866,17 +82803,6 @@ declare class Speech2TextClient {
 			requestMetadata?: GrpcMetadata
 		) => Observable<GrpcEvent<TranscribeFileResponse>>;
 		/**
-		 * Bidirectional streaming: /ondewo.s2t.Speech2Text/TranscribeStream
-		 *
-		 * @param requestMessage Request message
-		 * @param requestMetadata Request metadata
-		 * @returns Observable<GrpcEvent<thisProto.TranscribeStreamResponse>>
-		 */
-		transcribeStream: (
-			requestData: Observable<TranscribeStreamRequest>,
-			requestMetadata?: GrpcMetadata
-		) => Observable<GrpcEvent<TranscribeStreamResponse>>;
-		/**
 		 * Unary call: /ondewo.s2t.Speech2Text/GetS2tPipeline
 		 *
 		 * @param requestMessage Request message
@@ -83043,17 +82969,6 @@ declare class Speech2TextClient {
 		requestData: TranscribeFileRequest,
 		requestMetadata?: GrpcMetadata
 	): Observable<TranscribeFileResponse>;
-	/**
-	 * Bidirectional streaming @/ondewo.s2t.Speech2Text/TranscribeStream
-	 *
-	 * @param requestMessage Request message
-	 * @param requestMetadata Request metadata
-	 * @returns Observable<thisProto.TranscribeStreamResponse>
-	 */
-	transcribeStream(
-		requestData: Observable<TranscribeStreamRequest>,
-		requestMetadata?: GrpcMetadata
-	): Observable<TranscribeStreamResponse>;
 	/**
 	 * Unary call @/ondewo.s2t.Speech2Text/GetS2tPipeline
 	 *
@@ -83243,17 +83158,6 @@ declare class Text2SpeechClient {
 			requestData: BatchSynthesizeRequest,
 			requestMetadata?: GrpcMetadata
 		) => Observable<GrpcEvent<BatchSynthesizeResponse>>;
-		/**
-		 * Bidirectional streaming: /ondewo.t2s.Text2Speech/StreamingSynthesize
-		 *
-		 * @param requestMessage Request message
-		 * @param requestMetadata Request metadata
-		 * @returns Observable<GrpcEvent<thisProto.StreamingSynthesizeResponse>>
-		 */
-		streamingSynthesize: (
-			requestData: Observable<StreamingSynthesizeRequest>,
-			requestMetadata?: GrpcMetadata
-		) => Observable<GrpcEvent<StreamingSynthesizeResponse>>;
 		/**
 		 * Unary call: /ondewo.t2s.Text2Speech/NormalizeText
 		 *
@@ -83451,17 +83355,6 @@ declare class Text2SpeechClient {
 		requestData: BatchSynthesizeRequest,
 		requestMetadata?: GrpcMetadata
 	): Observable<BatchSynthesizeResponse>;
-	/**
-	 * Bidirectional streaming @/ondewo.t2s.Text2Speech/StreamingSynthesize
-	 *
-	 * @param requestMessage Request message
-	 * @param requestMetadata Request metadata
-	 * @returns Observable<thisProto.StreamingSynthesizeResponse>
-	 */
-	streamingSynthesize(
-		requestData: Observable<StreamingSynthesizeRequest>,
-		requestMetadata?: GrpcMetadata
-	): Observable<StreamingSynthesizeResponse>;
 	/**
 	 * Unary call @/ondewo.t2s.Text2Speech/NormalizeText
 	 *
