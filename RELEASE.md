@@ -2,6 +2,20 @@
 
 *****************
 
+## Release ONDEWO CSI Angular Client 5.6.0
+
+### New Features
+
+* Tracking API Version [5.6.0](https://github.com/ondewo/ondewo-csi-api/releases/tag/5.6.0) ( [Documentation](https://ondewo.github.io/ondewo-csi-api/) ). The generated `ConversationsClient` gains `setCallMediaControl` (`CallMediaControlLevel` -> `SetCallMediaControlResponse`): per-call operator media control (bot muted, listening paused) pushed by ondewo-sip with a monotonic `generation`; the response reports the `applied` level, `changed`, `stale`, `botPlaybackInFlight` and a `refusalReason`.
+* `ControlStreamResponse.mediaControl`: set only on media-control messages of `getControlStream` (pushed on a level change and seeded on every connect). Handle such a message as media control and do not apply its echoed `controlStatus`.
+* The API is purely additive: no field, enum value or RPC was renumbered or removed, so code written against 5.5.x keeps compiling.
+
+### Build
+
+* Generated with ondewo-proto-compiler 5.15.5 (5.5.2 was generated with 5.15.2).
+
+*****************
+
 ## Release ONDEWO CSI Angular Client 5.5.2
 
 ### Improvements
