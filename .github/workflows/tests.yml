@@ -1,40 +1,43 @@
 name: tests
 
 on:
-  # Every branch, so the release/* branch a version actually ships from is covered too.
-  # The other four CSI clients already use this trigger; angular was the lone outlier and
-  # its release branches therefore had no CI at all.
+  # Every branch (master, release/**, feature/**, ticket branches), and every tag.
   push:
-    branches: ['**']
+    branches:
+      - '**'
+    tags:
+      - '*'
   pull_request:
+    branches:
+      - master
 
 jobs:
   auth-unit-tests:
     name: Keycloak auth surface unit tests
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-24.04
 
     steps:
+      # actions/checkout starts with a bare `git init`, and git then prints a multi-line
+      # "Using 'master' as the name for the initial branch" hint into every job log. Naming the
+      # default up front silences it; master is this repository's default branch anyway.
+      - name: Name git's default branch
+        run: git config --global init.defaultBranch master
+
       - name: Checkout
-        uses: actions/checkout@v5
+        uses: actions/checkout@v7
         with:
-          submodules: false
+          # The ng-packagr layout guard reads "dest" out of the proto compiler's own
+          # ng-package.json, and the API-surface specs read the rpc lines of the csi protos,
+          # so both submodules have to be on disk.
+          submodules: true
 
-      # The library-layout guard reads ng-packagr's `dest` from the proto-compiler's own
-      # ng-package.json and fails loudly, rather than passing, when it cannot resolve it.
-      # Only that submodule is needed; .gitmodules uses an ssh URL, so rewrite it to https
-      # because the repository is public and the runner has no deploy key.
-      - name: Check out the proto-compiler submodule
-        run: |
-          git config --global url."https://github.com/".insteadOf "git@github.com:"
-          git submodule update --init ondewo-proto-compiler
-
-      - name: Set up Node.js 20
-        uses: actions/setup-node@v5
+      - name: Set up Node.js 24
+        uses: actions/setup-node@v7
         with:
-          node-version: '20'
+          node-version: '24'
 
-      - name: Install dependencies
-        run: npm install --no-audit --no-fund --legacy-peer-deps
+      - name: Install dependencies (exactly the lockfile)
+        run: npm ci --no-audit --no-fund --legacy-peer-deps
 
       - name: Run auth unit tests with coverage (100% gate on auth surface)
         run: npx jest --config jest.config.js --coverage --ci
