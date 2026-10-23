@@ -11689,6 +11689,9 @@ export class RagCrawlerConfig implements GrpcMessage {
             RagCrawlerIncrementalConfig.deserializeBinaryFromReader
           );
           break;
+        case 6:
+          _instance.maxPages = _reader.readInt32();
+          break;
         default:
           _reader.skipField();
       }
@@ -11741,6 +11744,9 @@ export class RagCrawlerConfig implements GrpcMessage {
         RagCrawlerIncrementalConfig.serializeBinaryToWriter
       );
     }
+    if (_instance.maxPages !== undefined && _instance.maxPages !== null) {
+      _writer.writeInt32(6, _instance.maxPages);
+    }
   }
 
   private _concurrencyConfig?: RagCrawlerConcurrencyConfig;
@@ -11748,6 +11754,7 @@ export class RagCrawlerConfig implements GrpcMessage {
   private _outputConfig?: RagCrawlerResultsConfig;
   private _statusFilter?: RagCrawlerStatusFilter;
   private _incrementalConfig?: RagCrawlerIncrementalConfig;
+  private _maxPages: number;
 
   /**
    * Message constructor. Initializes the properties and applies default Protobuf values if necessary
@@ -11770,6 +11777,7 @@ export class RagCrawlerConfig implements GrpcMessage {
     this.incrementalConfig = _value.incrementalConfig
       ? new RagCrawlerIncrementalConfig(_value.incrementalConfig)
       : undefined;
+    this.maxPages = _value.maxPages;
     RagCrawlerConfig.refineValues(this);
   }
   get concurrencyConfig(): RagCrawlerConcurrencyConfig | undefined {
@@ -11802,6 +11810,12 @@ export class RagCrawlerConfig implements GrpcMessage {
   set incrementalConfig(value: RagCrawlerIncrementalConfig | undefined) {
     this._incrementalConfig = value;
   }
+  get maxPages(): number {
+    return this._maxPages;
+  }
+  set maxPages(value: number) {
+    this._maxPages = value;
+  }
 
   /**
    * Serialize message to binary data
@@ -11832,7 +11846,8 @@ export class RagCrawlerConfig implements GrpcMessage {
         : undefined,
       incrementalConfig: this.incrementalConfig
         ? this.incrementalConfig.toObject()
-        : undefined
+        : undefined,
+      maxPages: this.maxPages
     };
   }
 
@@ -11867,7 +11882,8 @@ export class RagCrawlerConfig implements GrpcMessage {
         : null,
       incrementalConfig: this.incrementalConfig
         ? this.incrementalConfig.toProtobufJSON(options)
-        : null
+        : null,
+      maxPages: this.maxPages
     };
   }
 }
@@ -11881,6 +11897,7 @@ export module RagCrawlerConfig {
     outputConfig?: RagCrawlerResultsConfig.AsObject;
     statusFilter?: RagCrawlerStatusFilter.AsObject;
     incrementalConfig?: RagCrawlerIncrementalConfig.AsObject;
+    maxPages: number;
   }
 
   /**
@@ -11892,6 +11909,7 @@ export module RagCrawlerConfig {
     outputConfig: RagCrawlerResultsConfig.AsProtobufJSON | null;
     statusFilter: RagCrawlerStatusFilter.AsProtobufJSON | null;
     incrementalConfig: RagCrawlerIncrementalConfig.AsProtobufJSON | null;
+    maxPages: number;
   }
 }
 

@@ -4682,6 +4682,7 @@ export class GetAgentStatisticsRequest implements GrpcMessage {
     _instance.fieldMask = _instance.fieldMask || undefined;
     _instance.llmCcaiServiceProviderFilter =
       _instance.llmCcaiServiceProviderFilter || [];
+    _instance.llmBaseUrlFilter = _instance.llmBaseUrlFilter || [];
   }
 
   /**
@@ -4740,6 +4741,11 @@ export class GetAgentStatisticsRequest implements GrpcMessage {
               _instance.llmCcaiServiceProviderFilter || [])
           );
           break;
+        case 11:
+          (_instance.llmBaseUrlFilter = _instance.llmBaseUrlFilter || []).push(
+            _reader.readString()
+          );
+          break;
         default:
           _reader.skipField();
       }
@@ -4794,6 +4800,9 @@ export class GetAgentStatisticsRequest implements GrpcMessage {
     ) {
       _writer.writePackedEnum(10, _instance.llmCcaiServiceProviderFilter);
     }
+    if (_instance.llmBaseUrlFilter && _instance.llmBaseUrlFilter.length) {
+      _writer.writeRepeatedString(11, _instance.llmBaseUrlFilter);
+    }
   }
 
   private _parent: string;
@@ -4806,6 +4815,7 @@ export class GetAgentStatisticsRequest implements GrpcMessage {
   private _llmGroupBys: string[];
   private _fieldMask?: googleProtobuf002.FieldMask;
   private _llmCcaiServiceProviderFilter: ondewoNlu015.CcaiServiceProvider[];
+  private _llmBaseUrlFilter: string[];
 
   /**
    * Message constructor. Initializes the properties and applies default Protobuf values if necessary
@@ -4827,6 +4837,7 @@ export class GetAgentStatisticsRequest implements GrpcMessage {
     this.llmCcaiServiceProviderFilter = (
       _value.llmCcaiServiceProviderFilter || []
     ).slice();
+    this.llmBaseUrlFilter = (_value.llmBaseUrlFilter || []).slice();
     GetAgentStatisticsRequest.refineValues(this);
   }
   get parent(): string {
@@ -4889,6 +4900,12 @@ export class GetAgentStatisticsRequest implements GrpcMessage {
   set llmCcaiServiceProviderFilter(value: ondewoNlu015.CcaiServiceProvider[]) {
     this._llmCcaiServiceProviderFilter = value;
   }
+  get llmBaseUrlFilter(): string[] {
+    return this._llmBaseUrlFilter;
+  }
+  set llmBaseUrlFilter(value: string[]) {
+    this._llmBaseUrlFilter = value;
+  }
 
   /**
    * Serialize message to binary data
@@ -4916,7 +4933,8 @@ export class GetAgentStatisticsRequest implements GrpcMessage {
       fieldMask: this.fieldMask ? this.fieldMask.toObject() : undefined,
       llmCcaiServiceProviderFilter: (
         this.llmCcaiServiceProviderFilter || []
-      ).slice()
+      ).slice(),
+      llmBaseUrlFilter: (this.llmBaseUrlFilter || []).slice()
     };
   }
 
@@ -4954,7 +4972,8 @@ export class GetAgentStatisticsRequest implements GrpcMessage {
       fieldMask: this.fieldMask ? this.fieldMask.toProtobufJSON(options) : null,
       llmCcaiServiceProviderFilter: (
         this.llmCcaiServiceProviderFilter || []
-      ).map(v => ondewoNlu015.CcaiServiceProvider[v])
+      ).map(v => ondewoNlu015.CcaiServiceProvider[v]),
+      llmBaseUrlFilter: (this.llmBaseUrlFilter || []).slice()
     };
   }
 }
@@ -4973,6 +4992,7 @@ export module GetAgentStatisticsRequest {
     llmGroupBys: string[];
     fieldMask?: googleProtobuf002.FieldMask.AsObject;
     llmCcaiServiceProviderFilter: ondewoNlu015.CcaiServiceProvider[];
+    llmBaseUrlFilter: string[];
   }
 
   /**
@@ -4989,6 +5009,7 @@ export module GetAgentStatisticsRequest {
     llmGroupBys: string[];
     fieldMask: googleProtobuf002.FieldMask.AsProtobufJSON | null;
     llmCcaiServiceProviderFilter: string[];
+    llmBaseUrlFilter: string[];
   }
 }
 
@@ -5248,6 +5269,7 @@ export class GetSessionsStatisticsRequest implements GrpcMessage {
     _instance.llmToolNameFilter = _instance.llmToolNameFilter || [];
     _instance.llmCcaiServiceProviderFilter =
       _instance.llmCcaiServiceProviderFilter || [];
+    _instance.llmBaseUrlFilter = _instance.llmBaseUrlFilter || [];
   }
 
   /**
@@ -5335,6 +5357,11 @@ export class GetSessionsStatisticsRequest implements GrpcMessage {
               _instance.llmCcaiServiceProviderFilter || [])
           );
           break;
+        case 16:
+          (_instance.llmBaseUrlFilter = _instance.llmBaseUrlFilter || []).push(
+            _reader.readString()
+          );
+          break;
         default:
           _reader.skipField();
       }
@@ -5412,6 +5439,9 @@ export class GetSessionsStatisticsRequest implements GrpcMessage {
     ) {
       _writer.writePackedEnum(15, _instance.llmCcaiServiceProviderFilter);
     }
+    if (_instance.llmBaseUrlFilter && _instance.llmBaseUrlFilter.length) {
+      _writer.writeRepeatedString(16, _instance.llmBaseUrlFilter);
+    }
   }
 
   private _parent: string;
@@ -5429,6 +5459,7 @@ export class GetSessionsStatisticsRequest implements GrpcMessage {
   private _llmAgentNameFilter: string[];
   private _llmToolNameFilter: string[];
   private _llmCcaiServiceProviderFilter: ondewoNlu015.CcaiServiceProvider[];
+  private _llmBaseUrlFilter: string[];
 
   /**
    * Message constructor. Initializes the properties and applies default Protobuf values if necessary
@@ -5461,6 +5492,7 @@ export class GetSessionsStatisticsRequest implements GrpcMessage {
     this.llmCcaiServiceProviderFilter = (
       _value.llmCcaiServiceProviderFilter || []
     ).slice();
+    this.llmBaseUrlFilter = (_value.llmBaseUrlFilter || []).slice();
     GetSessionsStatisticsRequest.refineValues(this);
   }
   get parent(): string {
@@ -5553,6 +5585,12 @@ export class GetSessionsStatisticsRequest implements GrpcMessage {
   set llmCcaiServiceProviderFilter(value: ondewoNlu015.CcaiServiceProvider[]) {
     this._llmCcaiServiceProviderFilter = value;
   }
+  get llmBaseUrlFilter(): string[] {
+    return this._llmBaseUrlFilter;
+  }
+  set llmBaseUrlFilter(value: string[]) {
+    this._llmBaseUrlFilter = value;
+  }
 
   /**
    * Serialize message to binary data
@@ -5587,7 +5625,8 @@ export class GetSessionsStatisticsRequest implements GrpcMessage {
       llmToolNameFilter: (this.llmToolNameFilter || []).slice(),
       llmCcaiServiceProviderFilter: (
         this.llmCcaiServiceProviderFilter || []
-      ).slice()
+      ).slice(),
+      llmBaseUrlFilter: (this.llmBaseUrlFilter || []).slice()
     };
   }
 
@@ -5634,7 +5673,8 @@ export class GetSessionsStatisticsRequest implements GrpcMessage {
       llmToolNameFilter: (this.llmToolNameFilter || []).slice(),
       llmCcaiServiceProviderFilter: (
         this.llmCcaiServiceProviderFilter || []
-      ).map(v => ondewoNlu015.CcaiServiceProvider[v])
+      ).map(v => ondewoNlu015.CcaiServiceProvider[v]),
+      llmBaseUrlFilter: (this.llmBaseUrlFilter || []).slice()
     };
   }
 }
@@ -5658,6 +5698,7 @@ export module GetSessionsStatisticsRequest {
     llmAgentNameFilter: string[];
     llmToolNameFilter: string[];
     llmCcaiServiceProviderFilter: ondewoNlu015.CcaiServiceProvider[];
+    llmBaseUrlFilter: string[];
   }
 
   /**
@@ -5679,6 +5720,7 @@ export module GetSessionsStatisticsRequest {
     llmAgentNameFilter: string[];
     llmToolNameFilter: string[];
     llmCcaiServiceProviderFilter: string[];
+    llmBaseUrlFilter: string[];
   }
 }
 
@@ -5936,6 +5978,7 @@ export class GetSessionsStatisticsTimeSeriesRequest implements GrpcMessage {
     _instance.llmCcaiServiceProviderFilter =
       _instance.llmCcaiServiceProviderFilter || [];
     _instance.fieldMask = _instance.fieldMask || undefined;
+    _instance.llmBaseUrlFilter = _instance.llmBaseUrlFilter || [];
   }
 
   /**
@@ -6000,6 +6043,11 @@ export class GetSessionsStatisticsTimeSeriesRequest implements GrpcMessage {
             googleProtobuf002.FieldMask.deserializeBinaryFromReader
           );
           break;
+        case 12:
+          (_instance.llmBaseUrlFilter = _instance.llmBaseUrlFilter || []).push(
+            _reader.readString()
+          );
+          break;
         default:
           _reader.skipField();
       }
@@ -6061,6 +6109,9 @@ export class GetSessionsStatisticsTimeSeriesRequest implements GrpcMessage {
         googleProtobuf002.FieldMask.serializeBinaryToWriter
       );
     }
+    if (_instance.llmBaseUrlFilter && _instance.llmBaseUrlFilter.length) {
+      _writer.writeRepeatedString(12, _instance.llmBaseUrlFilter);
+    }
   }
 
   private _parent: string;
@@ -6074,6 +6125,7 @@ export class GetSessionsStatisticsTimeSeriesRequest implements GrpcMessage {
   private _llmToolNameFilter: string[];
   private _llmCcaiServiceProviderFilter: ondewoNlu015.CcaiServiceProvider[];
   private _fieldMask?: googleProtobuf002.FieldMask;
+  private _llmBaseUrlFilter: string[];
 
   /**
    * Message constructor. Initializes the properties and applies default Protobuf values if necessary
@@ -6100,6 +6152,7 @@ export class GetSessionsStatisticsTimeSeriesRequest implements GrpcMessage {
     this.fieldMask = _value.fieldMask
       ? new googleProtobuf002.FieldMask(_value.fieldMask)
       : undefined;
+    this.llmBaseUrlFilter = (_value.llmBaseUrlFilter || []).slice();
     GetSessionsStatisticsTimeSeriesRequest.refineValues(this);
   }
   get parent(): string {
@@ -6168,6 +6221,12 @@ export class GetSessionsStatisticsTimeSeriesRequest implements GrpcMessage {
   set fieldMask(value: googleProtobuf002.FieldMask | undefined) {
     this._fieldMask = value;
   }
+  get llmBaseUrlFilter(): string[] {
+    return this._llmBaseUrlFilter;
+  }
+  set llmBaseUrlFilter(value: string[]) {
+    this._llmBaseUrlFilter = value;
+  }
 
   /**
    * Serialize message to binary data
@@ -6201,7 +6260,8 @@ export class GetSessionsStatisticsTimeSeriesRequest implements GrpcMessage {
       llmCcaiServiceProviderFilter: (
         this.llmCcaiServiceProviderFilter || []
       ).slice(),
-      fieldMask: this.fieldMask ? this.fieldMask.toObject() : undefined
+      fieldMask: this.fieldMask ? this.fieldMask.toObject() : undefined,
+      llmBaseUrlFilter: (this.llmBaseUrlFilter || []).slice()
     };
   }
 
@@ -6239,7 +6299,8 @@ export class GetSessionsStatisticsTimeSeriesRequest implements GrpcMessage {
       llmCcaiServiceProviderFilter: (
         this.llmCcaiServiceProviderFilter || []
       ).map(v => ondewoNlu015.CcaiServiceProvider[v]),
-      fieldMask: this.fieldMask ? this.fieldMask.toProtobufJSON(options) : null
+      fieldMask: this.fieldMask ? this.fieldMask.toProtobufJSON(options) : null,
+      llmBaseUrlFilter: (this.llmBaseUrlFilter || []).slice()
     };
   }
 }
@@ -6259,6 +6320,7 @@ export module GetSessionsStatisticsTimeSeriesRequest {
     llmToolNameFilter: string[];
     llmCcaiServiceProviderFilter: ondewoNlu015.CcaiServiceProvider[];
     fieldMask?: googleProtobuf002.FieldMask.AsObject;
+    llmBaseUrlFilter: string[];
   }
 
   /**
@@ -6276,6 +6338,7 @@ export module GetSessionsStatisticsTimeSeriesRequest {
     llmToolNameFilter: string[];
     llmCcaiServiceProviderFilter: string[];
     fieldMask: googleProtobuf002.FieldMask.AsProtobufJSON | null;
+    llmBaseUrlFilter: string[];
   }
 }
 

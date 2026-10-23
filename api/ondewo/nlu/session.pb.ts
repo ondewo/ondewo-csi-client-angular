@@ -45,6 +45,12 @@ export enum LlmSafetyLocation {
   LLM_SAFETY_LOCATION_INPUT = 1,
   LLM_SAFETY_LOCATION_OUTPUT = 2
 }
+export enum LlmAgentNodePhase {
+  LLM_AGENT_NODE_PHASE_UNSPECIFIED = 0,
+  LLM_AGENT_NODE_PHASE_STARTED = 1,
+  LLM_AGENT_NODE_PHASE_COMPLETED = 2,
+  LLM_AGENT_NODE_PHASE_FAILED = 3
+}
 export enum AudioEncoding {
   AUDIO_ENCODING_UNSPECIFIED = 0,
   AUDIO_ENCODING_LINEAR_16 = 1,
@@ -6210,6 +6216,218 @@ export module LlmCcaiServiceUsage {
 }
 
 /**
+ * Message implementation for ondewo.nlu.LlmBaseUrlUsage
+ */
+export class LlmBaseUrlUsage implements GrpcMessage {
+  static id = 'ondewo.nlu.LlmBaseUrlUsage';
+
+  /**
+   * Deserialize binary data to message
+   * @param instance message instance
+   */
+  static deserializeBinary(bytes: ByteSource) {
+    const instance = new LlmBaseUrlUsage();
+    LlmBaseUrlUsage.deserializeBinaryFromReader(
+      instance,
+      new BinaryReader(bytes)
+    );
+    return instance;
+  }
+
+  /**
+   * Check all the properties and set default protobuf values if necessary
+   * @param _instance message instance
+   */
+  static refineValues(_instance: LlmBaseUrlUsage) {
+    _instance.baseUrl = _instance.baseUrl || '';
+    _instance.callCount = _instance.callCount || '0';
+    _instance.llmTokenUsage = _instance.llmTokenUsage || undefined;
+    _instance.modelNames = _instance.modelNames || [];
+  }
+
+  /**
+   * Deserializes / reads binary message into message instance using provided binary reader
+   * @param _instance message instance
+   * @param _reader binary reader instance
+   */
+  static deserializeBinaryFromReader(
+    _instance: LlmBaseUrlUsage,
+    _reader: BinaryReader
+  ) {
+    while (_reader.nextField()) {
+      if (_reader.isEndGroup()) break;
+
+      switch (_reader.getFieldNumber()) {
+        case 1:
+          _instance.baseUrl = _reader.readString();
+          break;
+        case 2:
+          _instance.callCount = _reader.readInt64String();
+          break;
+        case 3:
+          _instance.llmTokenUsage = new LlmTokenUsage();
+          _reader.readMessage(
+            _instance.llmTokenUsage,
+            LlmTokenUsage.deserializeBinaryFromReader
+          );
+          break;
+        case 4:
+          (_instance.modelNames = _instance.modelNames || []).push(
+            _reader.readString()
+          );
+          break;
+        default:
+          _reader.skipField();
+      }
+    }
+
+    LlmBaseUrlUsage.refineValues(_instance);
+  }
+
+  /**
+   * Serializes a message to binary format using provided binary reader
+   * @param _instance message instance
+   * @param _writer binary writer instance
+   */
+  static serializeBinaryToWriter(
+    _instance: LlmBaseUrlUsage,
+    _writer: BinaryWriter
+  ) {
+    if (_instance.baseUrl) {
+      _writer.writeString(1, _instance.baseUrl);
+    }
+    if (_instance.callCount) {
+      _writer.writeInt64String(2, _instance.callCount);
+    }
+    if (_instance.llmTokenUsage) {
+      _writer.writeMessage(
+        3,
+        _instance.llmTokenUsage as any,
+        LlmTokenUsage.serializeBinaryToWriter
+      );
+    }
+    if (_instance.modelNames && _instance.modelNames.length) {
+      _writer.writeRepeatedString(4, _instance.modelNames);
+    }
+  }
+
+  private _baseUrl: string;
+  private _callCount: string;
+  private _llmTokenUsage?: LlmTokenUsage;
+  private _modelNames: string[];
+
+  /**
+   * Message constructor. Initializes the properties and applies default Protobuf values if necessary
+   * @param _value initial values object or instance of LlmBaseUrlUsage to deeply clone from
+   */
+  constructor(_value?: RecursivePartial<LlmBaseUrlUsage.AsObject>) {
+    _value = _value || {};
+    this.baseUrl = _value.baseUrl;
+    this.callCount = _value.callCount;
+    this.llmTokenUsage = _value.llmTokenUsage
+      ? new LlmTokenUsage(_value.llmTokenUsage)
+      : undefined;
+    this.modelNames = (_value.modelNames || []).slice();
+    LlmBaseUrlUsage.refineValues(this);
+  }
+  get baseUrl(): string {
+    return this._baseUrl;
+  }
+  set baseUrl(value: string) {
+    this._baseUrl = value;
+  }
+  get callCount(): string {
+    return this._callCount;
+  }
+  set callCount(value: string) {
+    this._callCount = value;
+  }
+  get llmTokenUsage(): LlmTokenUsage | undefined {
+    return this._llmTokenUsage;
+  }
+  set llmTokenUsage(value: LlmTokenUsage | undefined) {
+    this._llmTokenUsage = value;
+  }
+  get modelNames(): string[] {
+    return this._modelNames;
+  }
+  set modelNames(value: string[]) {
+    this._modelNames = value;
+  }
+
+  /**
+   * Serialize message to binary data
+   * @param instance message instance
+   */
+  serializeBinary() {
+    const writer = new BinaryWriter();
+    LlmBaseUrlUsage.serializeBinaryToWriter(this, writer);
+    return writer.getResultBuffer();
+  }
+
+  /**
+   * Cast message to standard JavaScript object (all non-primitive values are deeply cloned)
+   */
+  toObject(): LlmBaseUrlUsage.AsObject {
+    return {
+      baseUrl: this.baseUrl,
+      callCount: this.callCount,
+      llmTokenUsage: this.llmTokenUsage
+        ? this.llmTokenUsage.toObject()
+        : undefined,
+      modelNames: (this.modelNames || []).slice()
+    };
+  }
+
+  /**
+   * Convenience method to support JSON.stringify(message), replicates the structure of toObject()
+   */
+  toJSON() {
+    return this.toObject();
+  }
+
+  /**
+   * Cast message to JSON using protobuf JSON notation: https://developers.google.com/protocol-buffers/docs/proto3#json
+   * Attention: output differs from toObject() e.g. enums are represented as names and not as numbers, Timestamp is an ISO Date string format etc.
+   * If the message itself or some of descendant messages is google.protobuf.Any, you MUST provide a message pool as options. If not, the messagePool is not required
+   */
+  toProtobufJSON(
+    // @ts-ignore
+    options?: ToProtobufJSONOptions
+  ): LlmBaseUrlUsage.AsProtobufJSON {
+    return {
+      baseUrl: this.baseUrl,
+      callCount: this.callCount,
+      llmTokenUsage: this.llmTokenUsage
+        ? this.llmTokenUsage.toProtobufJSON(options)
+        : null,
+      modelNames: (this.modelNames || []).slice()
+    };
+  }
+}
+export module LlmBaseUrlUsage {
+  /**
+   * Standard JavaScript object representation for LlmBaseUrlUsage
+   */
+  export interface AsObject {
+    baseUrl: string;
+    callCount: string;
+    llmTokenUsage?: LlmTokenUsage.AsObject;
+    modelNames: string[];
+  }
+
+  /**
+   * Protobuf JSON representation for LlmBaseUrlUsage
+   */
+  export interface AsProtobufJSON {
+    baseUrl: string;
+    callCount: string;
+    llmTokenUsage: LlmTokenUsage.AsProtobufJSON | null;
+    modelNames: string[];
+  }
+}
+
+/**
  * Message implementation for ondewo.nlu.LlmAgentUsage
  */
 export class LlmAgentUsage implements GrpcMessage {
@@ -7651,6 +7869,7 @@ export class LlmTelemetryReport implements GrpcMessage {
     _instance.toolCallDurationSecondsTotal =
       _instance.toolCallDurationSecondsTotal || 0;
     _instance.safetyStats = _instance.safetyStats || undefined;
+    _instance.baseUrlsUsed = _instance.baseUrlsUsed || [];
   }
 
   /**
@@ -7804,6 +8023,16 @@ export class LlmTelemetryReport implements GrpcMessage {
             LlmSafetyStats.deserializeBinaryFromReader
           );
           break;
+        case 21:
+          const messageInitializer21 = new LlmBaseUrlUsage();
+          _reader.readMessage(
+            messageInitializer21,
+            LlmBaseUrlUsage.deserializeBinaryFromReader
+          );
+          (_instance.baseUrlsUsed = _instance.baseUrlsUsed || []).push(
+            messageInitializer21
+          );
+          break;
         default:
           _reader.skipField();
       }
@@ -7939,6 +8168,13 @@ export class LlmTelemetryReport implements GrpcMessage {
         LlmSafetyStats.serializeBinaryToWriter
       );
     }
+    if (_instance.baseUrlsUsed && _instance.baseUrlsUsed.length) {
+      _writer.writeRepeatedMessage(
+        21,
+        _instance.baseUrlsUsed as any,
+        LlmBaseUrlUsage.serializeBinaryToWriter
+      );
+    }
   }
 
   private _llmTokenUsage?: LlmTokenUsage;
@@ -7961,6 +8197,7 @@ export class LlmTelemetryReport implements GrpcMessage {
   private _toolCallTokensTotal: string;
   private _toolCallDurationSecondsTotal: number;
   private _safetyStats?: LlmSafetyStats;
+  private _baseUrlsUsed?: LlmBaseUrlUsage[];
 
   /**
    * Message constructor. Initializes the properties and applies default Protobuf values if necessary
@@ -8008,6 +8245,9 @@ export class LlmTelemetryReport implements GrpcMessage {
     this.safetyStats = _value.safetyStats
       ? new LlmSafetyStats(_value.safetyStats)
       : undefined;
+    this.baseUrlsUsed = (_value.baseUrlsUsed || []).map(
+      m => new LlmBaseUrlUsage(m)
+    );
     LlmTelemetryReport.refineValues(this);
   }
   get llmTokenUsage(): LlmTokenUsage | undefined {
@@ -8130,6 +8370,12 @@ export class LlmTelemetryReport implements GrpcMessage {
   set safetyStats(value: LlmSafetyStats | undefined) {
     this._safetyStats = value;
   }
+  get baseUrlsUsed(): LlmBaseUrlUsage[] | undefined {
+    return this._baseUrlsUsed;
+  }
+  set baseUrlsUsed(value: LlmBaseUrlUsage[] | undefined) {
+    this._baseUrlsUsed = value;
+  }
 
   /**
    * Serialize message to binary data
@@ -8173,7 +8419,8 @@ export class LlmTelemetryReport implements GrpcMessage {
       thinkingDurationSecondsTotal: this.thinkingDurationSecondsTotal,
       toolCallTokensTotal: this.toolCallTokensTotal,
       toolCallDurationSecondsTotal: this.toolCallDurationSecondsTotal,
-      safetyStats: this.safetyStats ? this.safetyStats.toObject() : undefined
+      safetyStats: this.safetyStats ? this.safetyStats.toObject() : undefined,
+      baseUrlsUsed: (this.baseUrlsUsed || []).map(m => m.toObject())
     };
   }
 
@@ -8233,7 +8480,10 @@ export class LlmTelemetryReport implements GrpcMessage {
       toolCallDurationSecondsTotal: this.toolCallDurationSecondsTotal,
       safetyStats: this.safetyStats
         ? this.safetyStats.toProtobufJSON(options)
-        : null
+        : null,
+      baseUrlsUsed: (this.baseUrlsUsed || []).map(m =>
+        m.toProtobufJSON(options)
+      )
     };
   }
 }
@@ -8262,6 +8512,7 @@ export module LlmTelemetryReport {
     toolCallTokensTotal: string;
     toolCallDurationSecondsTotal: number;
     safetyStats?: LlmSafetyStats.AsObject;
+    baseUrlsUsed?: LlmBaseUrlUsage.AsObject[];
   }
 
   /**
@@ -8288,6 +8539,7 @@ export module LlmTelemetryReport {
     toolCallTokensTotal: string;
     toolCallDurationSecondsTotal: number;
     safetyStats: LlmSafetyStats.AsProtobufJSON | null;
+    baseUrlsUsed: LlmBaseUrlUsage.AsProtobufJSON[] | null;
   }
 }
 
@@ -10006,6 +10258,310 @@ export module LlmTokenUsageUpdateEvent {
 }
 
 /**
+ * Message implementation for ondewo.nlu.LlmAgentNodeEvent
+ */
+export class LlmAgentNodeEvent implements GrpcMessage {
+  static id = 'ondewo.nlu.LlmAgentNodeEvent';
+
+  /**
+   * Deserialize binary data to message
+   * @param instance message instance
+   */
+  static deserializeBinary(bytes: ByteSource) {
+    const instance = new LlmAgentNodeEvent();
+    LlmAgentNodeEvent.deserializeBinaryFromReader(
+      instance,
+      new BinaryReader(bytes)
+    );
+    return instance;
+  }
+
+  /**
+   * Check all the properties and set default protobuf values if necessary
+   * @param _instance message instance
+   */
+  static refineValues(_instance: LlmAgentNodeEvent) {
+    _instance.llmAgentNodeEventNodeRunId =
+      _instance.llmAgentNodeEventNodeRunId || '';
+    _instance.llmAgentNodeEventParentNodeRunId =
+      _instance.llmAgentNodeEventParentNodeRunId || '';
+    _instance.llmAgentNodeEventNodeDisplayName =
+      _instance.llmAgentNodeEventNodeDisplayName || '';
+    _instance.llmAgentNodeEventNodePath =
+      _instance.llmAgentNodeEventNodePath || [];
+    _instance.llmAgentNodePhase = _instance.llmAgentNodePhase || 0;
+    _instance.timestamp = _instance.timestamp || undefined;
+    _instance.llmAgentNodeEventDurationInS =
+      _instance.llmAgentNodeEventDurationInS || 0;
+    _instance.llmAgentNodeEventErrorMessage =
+      _instance.llmAgentNodeEventErrorMessage || '';
+  }
+
+  /**
+   * Deserializes / reads binary message into message instance using provided binary reader
+   * @param _instance message instance
+   * @param _reader binary reader instance
+   */
+  static deserializeBinaryFromReader(
+    _instance: LlmAgentNodeEvent,
+    _reader: BinaryReader
+  ) {
+    while (_reader.nextField()) {
+      if (_reader.isEndGroup()) break;
+
+      switch (_reader.getFieldNumber()) {
+        case 1:
+          _instance.llmAgentNodeEventNodeRunId = _reader.readString();
+          break;
+        case 2:
+          _instance.llmAgentNodeEventParentNodeRunId = _reader.readString();
+          break;
+        case 3:
+          _instance.llmAgentNodeEventNodeDisplayName = _reader.readString();
+          break;
+        case 4:
+          (_instance.llmAgentNodeEventNodePath =
+            _instance.llmAgentNodeEventNodePath || []).push(
+            _reader.readString()
+          );
+          break;
+        case 5:
+          _instance.llmAgentNodePhase = _reader.readEnum();
+          break;
+        case 6:
+          _instance.timestamp = new googleProtobuf005.Timestamp();
+          _reader.readMessage(
+            _instance.timestamp,
+            googleProtobuf005.Timestamp.deserializeBinaryFromReader
+          );
+          break;
+        case 7:
+          _instance.llmAgentNodeEventDurationInS = _reader.readFloat();
+          break;
+        case 8:
+          _instance.llmAgentNodeEventErrorMessage = _reader.readString();
+          break;
+        default:
+          _reader.skipField();
+      }
+    }
+
+    LlmAgentNodeEvent.refineValues(_instance);
+  }
+
+  /**
+   * Serializes a message to binary format using provided binary reader
+   * @param _instance message instance
+   * @param _writer binary writer instance
+   */
+  static serializeBinaryToWriter(
+    _instance: LlmAgentNodeEvent,
+    _writer: BinaryWriter
+  ) {
+    if (_instance.llmAgentNodeEventNodeRunId) {
+      _writer.writeString(1, _instance.llmAgentNodeEventNodeRunId);
+    }
+    if (_instance.llmAgentNodeEventParentNodeRunId) {
+      _writer.writeString(2, _instance.llmAgentNodeEventParentNodeRunId);
+    }
+    if (_instance.llmAgentNodeEventNodeDisplayName) {
+      _writer.writeString(3, _instance.llmAgentNodeEventNodeDisplayName);
+    }
+    if (
+      _instance.llmAgentNodeEventNodePath &&
+      _instance.llmAgentNodeEventNodePath.length
+    ) {
+      _writer.writeRepeatedString(4, _instance.llmAgentNodeEventNodePath);
+    }
+    if (_instance.llmAgentNodePhase) {
+      _writer.writeEnum(5, _instance.llmAgentNodePhase);
+    }
+    if (_instance.timestamp) {
+      _writer.writeMessage(
+        6,
+        _instance.timestamp as any,
+        googleProtobuf005.Timestamp.serializeBinaryToWriter
+      );
+    }
+    if (_instance.llmAgentNodeEventDurationInS) {
+      _writer.writeFloat(7, _instance.llmAgentNodeEventDurationInS);
+    }
+    if (_instance.llmAgentNodeEventErrorMessage) {
+      _writer.writeString(8, _instance.llmAgentNodeEventErrorMessage);
+    }
+  }
+
+  private _llmAgentNodeEventNodeRunId: string;
+  private _llmAgentNodeEventParentNodeRunId: string;
+  private _llmAgentNodeEventNodeDisplayName: string;
+  private _llmAgentNodeEventNodePath: string[];
+  private _llmAgentNodePhase: LlmAgentNodePhase;
+  private _timestamp?: googleProtobuf005.Timestamp;
+  private _llmAgentNodeEventDurationInS: number;
+  private _llmAgentNodeEventErrorMessage: string;
+
+  /**
+   * Message constructor. Initializes the properties and applies default Protobuf values if necessary
+   * @param _value initial values object or instance of LlmAgentNodeEvent to deeply clone from
+   */
+  constructor(_value?: RecursivePartial<LlmAgentNodeEvent.AsObject>) {
+    _value = _value || {};
+    this.llmAgentNodeEventNodeRunId = _value.llmAgentNodeEventNodeRunId;
+    this.llmAgentNodeEventParentNodeRunId =
+      _value.llmAgentNodeEventParentNodeRunId;
+    this.llmAgentNodeEventNodeDisplayName =
+      _value.llmAgentNodeEventNodeDisplayName;
+    this.llmAgentNodeEventNodePath = (
+      _value.llmAgentNodeEventNodePath || []
+    ).slice();
+    this.llmAgentNodePhase = _value.llmAgentNodePhase;
+    this.timestamp = _value.timestamp
+      ? new googleProtobuf005.Timestamp(_value.timestamp)
+      : undefined;
+    this.llmAgentNodeEventDurationInS = _value.llmAgentNodeEventDurationInS;
+    this.llmAgentNodeEventErrorMessage = _value.llmAgentNodeEventErrorMessage;
+    LlmAgentNodeEvent.refineValues(this);
+  }
+  get llmAgentNodeEventNodeRunId(): string {
+    return this._llmAgentNodeEventNodeRunId;
+  }
+  set llmAgentNodeEventNodeRunId(value: string) {
+    this._llmAgentNodeEventNodeRunId = value;
+  }
+  get llmAgentNodeEventParentNodeRunId(): string {
+    return this._llmAgentNodeEventParentNodeRunId;
+  }
+  set llmAgentNodeEventParentNodeRunId(value: string) {
+    this._llmAgentNodeEventParentNodeRunId = value;
+  }
+  get llmAgentNodeEventNodeDisplayName(): string {
+    return this._llmAgentNodeEventNodeDisplayName;
+  }
+  set llmAgentNodeEventNodeDisplayName(value: string) {
+    this._llmAgentNodeEventNodeDisplayName = value;
+  }
+  get llmAgentNodeEventNodePath(): string[] {
+    return this._llmAgentNodeEventNodePath;
+  }
+  set llmAgentNodeEventNodePath(value: string[]) {
+    this._llmAgentNodeEventNodePath = value;
+  }
+  get llmAgentNodePhase(): LlmAgentNodePhase {
+    return this._llmAgentNodePhase;
+  }
+  set llmAgentNodePhase(value: LlmAgentNodePhase) {
+    this._llmAgentNodePhase = value;
+  }
+  get timestamp(): googleProtobuf005.Timestamp | undefined {
+    return this._timestamp;
+  }
+  set timestamp(value: googleProtobuf005.Timestamp | undefined) {
+    this._timestamp = value;
+  }
+  get llmAgentNodeEventDurationInS(): number {
+    return this._llmAgentNodeEventDurationInS;
+  }
+  set llmAgentNodeEventDurationInS(value: number) {
+    this._llmAgentNodeEventDurationInS = value;
+  }
+  get llmAgentNodeEventErrorMessage(): string {
+    return this._llmAgentNodeEventErrorMessage;
+  }
+  set llmAgentNodeEventErrorMessage(value: string) {
+    this._llmAgentNodeEventErrorMessage = value;
+  }
+
+  /**
+   * Serialize message to binary data
+   * @param instance message instance
+   */
+  serializeBinary() {
+    const writer = new BinaryWriter();
+    LlmAgentNodeEvent.serializeBinaryToWriter(this, writer);
+    return writer.getResultBuffer();
+  }
+
+  /**
+   * Cast message to standard JavaScript object (all non-primitive values are deeply cloned)
+   */
+  toObject(): LlmAgentNodeEvent.AsObject {
+    return {
+      llmAgentNodeEventNodeRunId: this.llmAgentNodeEventNodeRunId,
+      llmAgentNodeEventParentNodeRunId: this.llmAgentNodeEventParentNodeRunId,
+      llmAgentNodeEventNodeDisplayName: this.llmAgentNodeEventNodeDisplayName,
+      llmAgentNodeEventNodePath: (this.llmAgentNodeEventNodePath || []).slice(),
+      llmAgentNodePhase: this.llmAgentNodePhase,
+      timestamp: this.timestamp ? this.timestamp.toObject() : undefined,
+      llmAgentNodeEventDurationInS: this.llmAgentNodeEventDurationInS,
+      llmAgentNodeEventErrorMessage: this.llmAgentNodeEventErrorMessage
+    };
+  }
+
+  /**
+   * Convenience method to support JSON.stringify(message), replicates the structure of toObject()
+   */
+  toJSON() {
+    return this.toObject();
+  }
+
+  /**
+   * Cast message to JSON using protobuf JSON notation: https://developers.google.com/protocol-buffers/docs/proto3#json
+   * Attention: output differs from toObject() e.g. enums are represented as names and not as numbers, Timestamp is an ISO Date string format etc.
+   * If the message itself or some of descendant messages is google.protobuf.Any, you MUST provide a message pool as options. If not, the messagePool is not required
+   */
+  toProtobufJSON(
+    // @ts-ignore
+    options?: ToProtobufJSONOptions
+  ): LlmAgentNodeEvent.AsProtobufJSON {
+    return {
+      llmAgentNodeEventNodeRunId: this.llmAgentNodeEventNodeRunId,
+      llmAgentNodeEventParentNodeRunId: this.llmAgentNodeEventParentNodeRunId,
+      llmAgentNodeEventNodeDisplayName: this.llmAgentNodeEventNodeDisplayName,
+      llmAgentNodeEventNodePath: (this.llmAgentNodeEventNodePath || []).slice(),
+      llmAgentNodePhase:
+        LlmAgentNodePhase[
+          this.llmAgentNodePhase === null ||
+          this.llmAgentNodePhase === undefined
+            ? 0
+            : this.llmAgentNodePhase
+        ],
+      timestamp: this.timestamp ? this.timestamp.toProtobufJSON(options) : null,
+      llmAgentNodeEventDurationInS: this.llmAgentNodeEventDurationInS,
+      llmAgentNodeEventErrorMessage: this.llmAgentNodeEventErrorMessage
+    };
+  }
+}
+export module LlmAgentNodeEvent {
+  /**
+   * Standard JavaScript object representation for LlmAgentNodeEvent
+   */
+  export interface AsObject {
+    llmAgentNodeEventNodeRunId: string;
+    llmAgentNodeEventParentNodeRunId: string;
+    llmAgentNodeEventNodeDisplayName: string;
+    llmAgentNodeEventNodePath: string[];
+    llmAgentNodePhase: LlmAgentNodePhase;
+    timestamp?: googleProtobuf005.Timestamp.AsObject;
+    llmAgentNodeEventDurationInS: number;
+    llmAgentNodeEventErrorMessage: string;
+  }
+
+  /**
+   * Protobuf JSON representation for LlmAgentNodeEvent
+   */
+  export interface AsProtobufJSON {
+    llmAgentNodeEventNodeRunId: string;
+    llmAgentNodeEventParentNodeRunId: string;
+    llmAgentNodeEventNodeDisplayName: string;
+    llmAgentNodeEventNodePath: string[];
+    llmAgentNodePhase: string;
+    timestamp: googleProtobuf005.Timestamp.AsProtobufJSON | null;
+    llmAgentNodeEventDurationInS: number;
+    llmAgentNodeEventErrorMessage: string;
+  }
+}
+
+/**
  * Message implementation for ondewo.nlu.ReferencedChunk
  */
 export class ReferencedChunk implements GrpcMessage {
@@ -11235,6 +11791,13 @@ export class StreamingDetectIntentResponse implements GrpcMessage {
             LlmTokenUsageUpdateEvent.deserializeBinaryFromReader
           );
           break;
+        case 11:
+          _instance.llmAgentNodeEvent = new LlmAgentNodeEvent();
+          _reader.readMessage(
+            _instance.llmAgentNodeEvent,
+            LlmAgentNodeEvent.deserializeBinaryFromReader
+          );
+          break;
         default:
           _reader.skipField();
       }
@@ -11318,6 +11881,13 @@ export class StreamingDetectIntentResponse implements GrpcMessage {
         LlmTokenUsageUpdateEvent.serializeBinaryToWriter
       );
     }
+    if (_instance.llmAgentNodeEvent) {
+      _writer.writeMessage(
+        11,
+        _instance.llmAgentNodeEvent as any,
+        LlmAgentNodeEvent.serializeBinaryToWriter
+      );
+    }
   }
 
   private _responseId: string;
@@ -11330,6 +11900,7 @@ export class StreamingDetectIntentResponse implements GrpcMessage {
   private _llmToolCallFinished?: LlmToolCallFinishedEvent;
   private _llmThinkingDelta?: LlmThinkingDeltaEvent;
   private _llmTokenUsageUpdate?: LlmTokenUsageUpdateEvent;
+  private _llmAgentNodeEvent?: LlmAgentNodeEvent;
 
   private _telemetryEvent: StreamingDetectIntentResponse.TelemetryEventCase =
     StreamingDetectIntentResponse.TelemetryEventCase.none;
@@ -11370,6 +11941,9 @@ export class StreamingDetectIntentResponse implements GrpcMessage {
     this.llmTokenUsageUpdate = _value.llmTokenUsageUpdate
       ? new LlmTokenUsageUpdateEvent(_value.llmTokenUsageUpdate)
       : undefined;
+    this.llmAgentNodeEvent = _value.llmAgentNodeEvent
+      ? new LlmAgentNodeEvent(_value.llmAgentNodeEvent)
+      : undefined;
     StreamingDetectIntentResponse.refineValues(this);
   }
   get responseId(): string {
@@ -11401,7 +11975,7 @@ export class StreamingDetectIntentResponse implements GrpcMessage {
   }
   set llmCallStarted(value: LlmCallStartedEvent | undefined) {
     if (value !== undefined && value !== null) {
-      this._llmCallFinished = this._llmToolCallStarted = this._llmToolCallFinished = this._llmThinkingDelta = this._llmTokenUsageUpdate = undefined;
+      this._llmCallFinished = this._llmToolCallStarted = this._llmToolCallFinished = this._llmThinkingDelta = this._llmTokenUsageUpdate = this._llmAgentNodeEvent = undefined;
       this._telemetryEvent =
         StreamingDetectIntentResponse.TelemetryEventCase.llmCallStarted;
     }
@@ -11412,7 +11986,7 @@ export class StreamingDetectIntentResponse implements GrpcMessage {
   }
   set llmCallFinished(value: LlmCallFinishedEvent | undefined) {
     if (value !== undefined && value !== null) {
-      this._llmCallStarted = this._llmToolCallStarted = this._llmToolCallFinished = this._llmThinkingDelta = this._llmTokenUsageUpdate = undefined;
+      this._llmCallStarted = this._llmToolCallStarted = this._llmToolCallFinished = this._llmThinkingDelta = this._llmTokenUsageUpdate = this._llmAgentNodeEvent = undefined;
       this._telemetryEvent =
         StreamingDetectIntentResponse.TelemetryEventCase.llmCallFinished;
     }
@@ -11423,7 +11997,7 @@ export class StreamingDetectIntentResponse implements GrpcMessage {
   }
   set llmToolCallStarted(value: LlmToolCallStartedEvent | undefined) {
     if (value !== undefined && value !== null) {
-      this._llmCallStarted = this._llmCallFinished = this._llmToolCallFinished = this._llmThinkingDelta = this._llmTokenUsageUpdate = undefined;
+      this._llmCallStarted = this._llmCallFinished = this._llmToolCallFinished = this._llmThinkingDelta = this._llmTokenUsageUpdate = this._llmAgentNodeEvent = undefined;
       this._telemetryEvent =
         StreamingDetectIntentResponse.TelemetryEventCase.llmToolCallStarted;
     }
@@ -11434,7 +12008,7 @@ export class StreamingDetectIntentResponse implements GrpcMessage {
   }
   set llmToolCallFinished(value: LlmToolCallFinishedEvent | undefined) {
     if (value !== undefined && value !== null) {
-      this._llmCallStarted = this._llmCallFinished = this._llmToolCallStarted = this._llmThinkingDelta = this._llmTokenUsageUpdate = undefined;
+      this._llmCallStarted = this._llmCallFinished = this._llmToolCallStarted = this._llmThinkingDelta = this._llmTokenUsageUpdate = this._llmAgentNodeEvent = undefined;
       this._telemetryEvent =
         StreamingDetectIntentResponse.TelemetryEventCase.llmToolCallFinished;
     }
@@ -11445,7 +12019,7 @@ export class StreamingDetectIntentResponse implements GrpcMessage {
   }
   set llmThinkingDelta(value: LlmThinkingDeltaEvent | undefined) {
     if (value !== undefined && value !== null) {
-      this._llmCallStarted = this._llmCallFinished = this._llmToolCallStarted = this._llmToolCallFinished = this._llmTokenUsageUpdate = undefined;
+      this._llmCallStarted = this._llmCallFinished = this._llmToolCallStarted = this._llmToolCallFinished = this._llmTokenUsageUpdate = this._llmAgentNodeEvent = undefined;
       this._telemetryEvent =
         StreamingDetectIntentResponse.TelemetryEventCase.llmThinkingDelta;
     }
@@ -11456,11 +12030,22 @@ export class StreamingDetectIntentResponse implements GrpcMessage {
   }
   set llmTokenUsageUpdate(value: LlmTokenUsageUpdateEvent | undefined) {
     if (value !== undefined && value !== null) {
-      this._llmCallStarted = this._llmCallFinished = this._llmToolCallStarted = this._llmToolCallFinished = this._llmThinkingDelta = undefined;
+      this._llmCallStarted = this._llmCallFinished = this._llmToolCallStarted = this._llmToolCallFinished = this._llmThinkingDelta = this._llmAgentNodeEvent = undefined;
       this._telemetryEvent =
         StreamingDetectIntentResponse.TelemetryEventCase.llmTokenUsageUpdate;
     }
     this._llmTokenUsageUpdate = value;
+  }
+  get llmAgentNodeEvent(): LlmAgentNodeEvent | undefined {
+    return this._llmAgentNodeEvent;
+  }
+  set llmAgentNodeEvent(value: LlmAgentNodeEvent | undefined) {
+    if (value !== undefined && value !== null) {
+      this._llmCallStarted = this._llmCallFinished = this._llmToolCallStarted = this._llmToolCallFinished = this._llmThinkingDelta = this._llmTokenUsageUpdate = undefined;
+      this._telemetryEvent =
+        StreamingDetectIntentResponse.TelemetryEventCase.llmAgentNodeEvent;
+    }
+    this._llmAgentNodeEvent = value;
   }
   get telemetryEvent() {
     return this._telemetryEvent;
@@ -11506,6 +12091,9 @@ export class StreamingDetectIntentResponse implements GrpcMessage {
         : undefined,
       llmTokenUsageUpdate: this.llmTokenUsageUpdate
         ? this.llmTokenUsageUpdate.toObject()
+        : undefined,
+      llmAgentNodeEvent: this.llmAgentNodeEvent
+        ? this.llmAgentNodeEvent.toObject()
         : undefined
     };
   }
@@ -11554,6 +12142,9 @@ export class StreamingDetectIntentResponse implements GrpcMessage {
         : null,
       llmTokenUsageUpdate: this.llmTokenUsageUpdate
         ? this.llmTokenUsageUpdate.toProtobufJSON(options)
+        : null,
+      llmAgentNodeEvent: this.llmAgentNodeEvent
+        ? this.llmAgentNodeEvent.toProtobufJSON(options)
         : null
     };
   }
@@ -11573,6 +12164,7 @@ export module StreamingDetectIntentResponse {
     llmToolCallFinished?: LlmToolCallFinishedEvent.AsObject;
     llmThinkingDelta?: LlmThinkingDeltaEvent.AsObject;
     llmTokenUsageUpdate?: LlmTokenUsageUpdateEvent.AsObject;
+    llmAgentNodeEvent?: LlmAgentNodeEvent.AsObject;
   }
 
   /**
@@ -11589,6 +12181,7 @@ export module StreamingDetectIntentResponse {
     llmToolCallFinished: LlmToolCallFinishedEvent.AsProtobufJSON | null;
     llmThinkingDelta: LlmThinkingDeltaEvent.AsProtobufJSON | null;
     llmTokenUsageUpdate: LlmTokenUsageUpdateEvent.AsProtobufJSON | null;
+    llmAgentNodeEvent: LlmAgentNodeEvent.AsProtobufJSON | null;
   }
   export enum TelemetryEventCase {
     none = 0,
@@ -11597,7 +12190,8 @@ export module StreamingDetectIntentResponse {
     llmToolCallStarted = 3,
     llmToolCallFinished = 4,
     llmThinkingDelta = 5,
-    llmTokenUsageUpdate = 6
+    llmTokenUsageUpdate = 6,
+    llmAgentNodeEvent = 7
   }
 }
 
