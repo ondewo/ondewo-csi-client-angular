@@ -26,6 +26,7 @@ export default [
 			'**/ondewo-proto-compiler',
 			'**/*.mjs',
 			'**/index.d.ts',
+			'types/',
 			'src/examples/csi-conversations.example.spec.ts'
 		]
 	},
