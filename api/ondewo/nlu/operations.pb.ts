@@ -762,13 +762,13 @@ export class OperationFilter implements GrpcMessage {
           );
           break;
         case 2:
-          _reader.readPackableEnumInto(
-            (_instance.statuses = _instance.statuses || [])
+          (_instance.statuses = _instance.statuses || []).push(
+            ...(_reader.readPackedEnum() || [])
           );
           break;
         case 3:
-          _reader.readPackableEnumInto(
-            (_instance.types = _instance.types || [])
+          (_instance.types = _instance.types || []).push(
+            ...(_reader.readPackedEnum() || [])
           );
           break;
         case 4:

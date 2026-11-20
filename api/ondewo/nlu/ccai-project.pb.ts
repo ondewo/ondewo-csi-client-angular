@@ -2893,14 +2893,14 @@ export class CcaiServiceFilter implements GrpcMessage {
           );
           break;
         case 2:
-          _reader.readPackableEnumInto(
-            (_instance.ccaiServiceTypes = _instance.ccaiServiceTypes || [])
+          (_instance.ccaiServiceTypes = _instance.ccaiServiceTypes || []).push(
+            ...(_reader.readPackedEnum() || [])
           );
           break;
         case 3:
-          _reader.readPackableEnumInto(
-            (_instance.ccaiServiceProviders =
-              _instance.ccaiServiceProviders || [])
+          (_instance.ccaiServiceProviders =
+            _instance.ccaiServiceProviders || []).push(
+            ...(_reader.readPackedEnum() || [])
           );
           break;
         default:

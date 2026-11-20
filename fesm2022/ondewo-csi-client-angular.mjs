@@ -2161,16 +2161,16 @@ var NotificationFilter = class NotificationFilter {
 					(_instance.languageCodes = _instance.languageCodes || []).push(_reader.readString());
 					break;
 				case 2:
-					_reader.readPackableEnumInto(_instance.notificationOrigins = _instance.notificationOrigins || []);
+					(_instance.notificationOrigins = _instance.notificationOrigins || []).push(..._reader.readPackedEnum() || []);
 					break;
 				case 3:
-					_reader.readPackableEnumInto(_instance.notificationVisibilities = _instance.notificationVisibilities || []);
+					(_instance.notificationVisibilities = _instance.notificationVisibilities || []).push(..._reader.readPackedEnum() || []);
 					break;
 				case 4:
-					_reader.readPackableEnumInto(_instance.notificationFlaggedStatus = _instance.notificationFlaggedStatus || []);
+					(_instance.notificationFlaggedStatus = _instance.notificationFlaggedStatus || []).push(..._reader.readPackedEnum() || []);
 					break;
 				case 5:
-					_reader.readPackableEnumInto(_instance.notificationReadStatus = _instance.notificationReadStatus || []);
+					(_instance.notificationReadStatus = _instance.notificationReadStatus || []).push(..._reader.readPackedEnum() || []);
 					break;
 				case 6:
 					_instance.earliest = new googleProtobuf000.Timestamp();
@@ -2187,7 +2187,7 @@ var NotificationFilter = class NotificationFilter {
 					(_instance.originNames = _instance.originNames || []).push(_reader.readString());
 					break;
 				case 10:
-					_reader.readPackableEnumInto(_instance.notificationTypes = _instance.notificationTypes || []);
+					(_instance.notificationTypes = _instance.notificationTypes || []).push(..._reader.readPackedEnum() || []);
 					break;
 				default: _reader.skipField();
 			}
@@ -2481,7 +2481,7 @@ var SetNotificationsFlaggedStatusRequest = class SetNotificationsFlaggedStatusRe
 					(_instance.notificationNames = _instance.notificationNames || []).push(_reader.readString());
 					break;
 				case 2:
-					_reader.readPackableBoolInto(_instance.flagged = _instance.flagged || []);
+					(_instance.flagged = _instance.flagged || []).push(..._reader.readPackedBool() || []);
 					break;
 				case 3:
 					_instance.fieldMask = new googleProtobuf000.FieldMask();
@@ -2567,7 +2567,7 @@ var SetNotificationsReadStatusRequest = class SetNotificationsReadStatusRequest 
 					(_instance.notificationNames = _instance.notificationNames || []).push(_reader.readString());
 					break;
 				case 2:
-					_reader.readPackableBoolInto(_instance.flagged = _instance.flagged || []);
+					(_instance.flagged = _instance.flagged || []).push(..._reader.readPackedBool() || []);
 					break;
 				case 3:
 					_instance.fieldMask = new googleProtobuf000.FieldMask();
@@ -4726,10 +4726,10 @@ var CcaiServiceFilter = class CcaiServiceFilter {
 					(_instance.languageCodes = _instance.languageCodes || []).push(_reader.readString());
 					break;
 				case 2:
-					_reader.readPackableEnumInto(_instance.ccaiServiceTypes = _instance.ccaiServiceTypes || []);
+					(_instance.ccaiServiceTypes = _instance.ccaiServiceTypes || []).push(..._reader.readPackedEnum() || []);
 					break;
 				case 3:
-					_reader.readPackableEnumInto(_instance.ccaiServiceProviders = _instance.ccaiServiceProviders || []);
+					(_instance.ccaiServiceProviders = _instance.ccaiServiceProviders || []).push(..._reader.readPackedEnum() || []);
 					break;
 				default: _reader.skipField();
 			}
@@ -7660,7 +7660,7 @@ var Intent = class Intent {
 					(_instance.messages = _instance.messages || []).push(messageInitializer14);
 					break;
 				case 15:
-					_reader.readPackableEnumInto(_instance.defaultResponsePlatforms = _instance.defaultResponsePlatforms || []);
+					(_instance.defaultResponsePlatforms = _instance.defaultResponsePlatforms || []).push(..._reader.readPackedEnum() || []);
 					break;
 				case 16:
 					_instance.rootFollowupIntentName = _reader.readString();
@@ -31718,7 +31718,7 @@ var QueryParameters = class QueryParameters {
 					(_instance.labels = _instance.labels || []).push(_reader.readString());
 					break;
 				case 8:
-					_reader.readPackableEnumInto(_instance.platforms = _instance.platforms || []);
+					(_instance.platforms = _instance.platforms || []).push(..._reader.readPackedEnum() || []);
 					break;
 				case 9:
 					_instance.accountId = _reader.readString();
@@ -39152,7 +39152,7 @@ var SessionFilter = class SessionFilter {
 					_instance.durationInSRoundedMax = _reader.readFloat();
 					break;
 				case 42:
-					_reader.readPackableEnumInto(_instance.platforms = _instance.platforms || []);
+					(_instance.platforms = _instance.platforms || []).push(..._reader.readPackedEnum() || []);
 					break;
 				case 43:
 					(_instance.accountIds = _instance.accountIds || []).push(_reader.readString());
@@ -39825,7 +39825,7 @@ var SessionInfo = class SessionInfo {
 					_instance.durationInSRounded = _reader.readFloat();
 					break;
 				case 26:
-					_reader.readPackableEnumInto(_instance.platforms = _instance.platforms || []);
+					(_instance.platforms = _instance.platforms || []).push(..._reader.readPackedEnum() || []);
 					break;
 				case 27:
 					(_instance.accountIds = _instance.accountIds || []).push(_reader.readString());
@@ -40875,7 +40875,7 @@ var SessionReviewStep = class SessionReviewStep {
 					_instance.queryTextOriginal = _reader.readString();
 					break;
 				case 8:
-					_reader.readPackableEnumInto(_instance.platforms = _instance.platforms || []);
+					(_instance.platforms = _instance.platforms || []).push(..._reader.readPackedEnum() || []);
 					break;
 				case 9:
 					_instance.timestamp = new googleProtobuf000.Timestamp();
@@ -44805,10 +44805,10 @@ var FeedbackFilter = class FeedbackFilter {
 			if (_reader.isEndGroup()) break;
 			switch (_reader.getFieldNumber()) {
 				case 1:
-					_reader.readPackableEnumInto(_instance.ratings = _instance.ratings || []);
+					(_instance.ratings = _instance.ratings || []).push(..._reader.readPackedEnum() || []);
 					break;
 				case 2:
-					_reader.readPackableEnumInto(_instance.authorTypes = _instance.authorTypes || []);
+					(_instance.authorTypes = _instance.authorTypes || []).push(..._reader.readPackedEnum() || []);
 					break;
 				case 3:
 					_instance.hasComment = _reader.readBool();
@@ -54580,6 +54580,7 @@ var TranscriptionReturnOptions = class TranscriptionReturnOptions {
 		_instance.returnAlternativeWords = _instance.returnAlternativeWords || false;
 		_instance.returnAlternativeWordsNr = _instance.returnAlternativeWordsNr || 0;
 		_instance.returnWordTiming = _instance.returnWordTiming || false;
+		_instance.returnEndOfSpeechCandidate = _instance.returnEndOfSpeechCandidate || false;
 	}
 	static deserializeBinaryFromReader(_instance, _reader) {
 		while (_reader.nextField()) {
@@ -54609,6 +54610,9 @@ var TranscriptionReturnOptions = class TranscriptionReturnOptions {
 				case 8:
 					_instance.returnWordTiming = _reader.readBool();
 					break;
+				case 9:
+					_instance.returnEndOfSpeechCandidate = _reader.readBool();
+					break;
 				default: _reader.skipField();
 			}
 		}
@@ -54623,6 +54627,7 @@ var TranscriptionReturnOptions = class TranscriptionReturnOptions {
 		if (_instance.returnAlternativeWords) _writer.writeBool(6, _instance.returnAlternativeWords);
 		if (_instance.returnAlternativeWordsNr) _writer.writeInt32(7, _instance.returnAlternativeWordsNr);
 		if (_instance.returnWordTiming) _writer.writeBool(8, _instance.returnWordTiming);
+		if (_instance.returnEndOfSpeechCandidate) _writer.writeBool(9, _instance.returnEndOfSpeechCandidate);
 	}
 	constructor(_value) {
 		_value = _value || {};
@@ -54634,6 +54639,7 @@ var TranscriptionReturnOptions = class TranscriptionReturnOptions {
 		this.returnAlternativeWords = _value.returnAlternativeWords;
 		this.returnAlternativeWordsNr = _value.returnAlternativeWordsNr;
 		this.returnWordTiming = _value.returnWordTiming;
+		this.returnEndOfSpeechCandidate = _value.returnEndOfSpeechCandidate;
 		TranscriptionReturnOptions.refineValues(this);
 	}
 	get returnStartOfSpeech() {
@@ -54684,6 +54690,12 @@ var TranscriptionReturnOptions = class TranscriptionReturnOptions {
 	set returnWordTiming(value) {
 		this._returnWordTiming = value;
 	}
+	get returnEndOfSpeechCandidate() {
+		return this._returnEndOfSpeechCandidate;
+	}
+	set returnEndOfSpeechCandidate(value) {
+		this._returnEndOfSpeechCandidate = value;
+	}
 	serializeBinary() {
 		const writer = new BinaryWriter();
 		TranscriptionReturnOptions.serializeBinaryToWriter(this, writer);
@@ -54698,7 +54710,8 @@ var TranscriptionReturnOptions = class TranscriptionReturnOptions {
 			returnAlternativeTranscriptionsNr: this.returnAlternativeTranscriptionsNr,
 			returnAlternativeWords: this.returnAlternativeWords,
 			returnAlternativeWordsNr: this.returnAlternativeWordsNr,
-			returnWordTiming: this.returnWordTiming
+			returnWordTiming: this.returnWordTiming,
+			returnEndOfSpeechCandidate: this.returnEndOfSpeechCandidate
 		};
 	}
 	toJSON() {
@@ -54713,7 +54726,8 @@ var TranscriptionReturnOptions = class TranscriptionReturnOptions {
 			returnAlternativeTranscriptionsNr: this.returnAlternativeTranscriptionsNr,
 			returnAlternativeWords: this.returnAlternativeWords,
 			returnAlternativeWordsNr: this.returnAlternativeWordsNr,
-			returnWordTiming: this.returnWordTiming
+			returnWordTiming: this.returnWordTiming,
+			returnEndOfSpeechCandidate: this.returnEndOfSpeechCandidate
 		};
 	}
 };
@@ -54743,6 +54757,12 @@ var UtteranceDetectionOptions = class UtteranceDetectionOptions {
 					_instance.turnDetection = new TurnDetectionOptions();
 					_reader.readMessage(_instance.turnDetection, TurnDetectionOptions.deserializeBinaryFromReader);
 					break;
+				case 4:
+					_instance.minAudioChunkSize = _reader.readInt64String();
+					break;
+				case 5:
+					_instance.transcribeNotFinalPeriodSeconds = _reader.readFloat();
+					break;
 				default: _reader.skipField();
 			}
 		}
@@ -54752,6 +54772,8 @@ var UtteranceDetectionOptions = class UtteranceDetectionOptions {
 		if (_instance.transcribeNotFinal || _instance.transcribeNotFinal === false) _writer.writeBool(1, _instance.transcribeNotFinal);
 		if (_instance.nextChunkTimeout) _writer.writeFloat(2, _instance.nextChunkTimeout);
 		if (_instance.turnDetection) _writer.writeMessage(3, _instance.turnDetection, TurnDetectionOptions.serializeBinaryToWriter);
+		if (_instance.minAudioChunkSize !== void 0 && _instance.minAudioChunkSize !== null) _writer.writeInt64String(4, _instance.minAudioChunkSize);
+		if (_instance.transcribeNotFinalPeriodSeconds !== void 0 && _instance.transcribeNotFinalPeriodSeconds !== null) _writer.writeFloat(5, _instance.transcribeNotFinalPeriodSeconds);
 	}
 	constructor(_value) {
 		this._oneofTranscribeNotFinal = UtteranceDetectionOptions.OneofTranscribeNotFinalCase.none;
@@ -54760,6 +54782,8 @@ var UtteranceDetectionOptions = class UtteranceDetectionOptions {
 		this.transcribeNotFinal = _value.transcribeNotFinal;
 		this.nextChunkTimeout = _value.nextChunkTimeout;
 		this.turnDetection = _value.turnDetection ? new TurnDetectionOptions(_value.turnDetection) : void 0;
+		this.minAudioChunkSize = _value.minAudioChunkSize;
+		this.transcribeNotFinalPeriodSeconds = _value.transcribeNotFinalPeriodSeconds;
 		UtteranceDetectionOptions.refineValues(this);
 	}
 	get transcribeNotFinal() {
@@ -54782,6 +54806,18 @@ var UtteranceDetectionOptions = class UtteranceDetectionOptions {
 		if (value !== void 0 && value !== null) this._oneofTurnDetection = UtteranceDetectionOptions.OneofTurnDetectionCase.turnDetection;
 		this._turnDetection = value;
 	}
+	get minAudioChunkSize() {
+		return this._minAudioChunkSize;
+	}
+	set minAudioChunkSize(value) {
+		this._minAudioChunkSize = value;
+	}
+	get transcribeNotFinalPeriodSeconds() {
+		return this._transcribeNotFinalPeriodSeconds;
+	}
+	set transcribeNotFinalPeriodSeconds(value) {
+		this._transcribeNotFinalPeriodSeconds = value;
+	}
 	get oneofTranscribeNotFinal() {
 		return this._oneofTranscribeNotFinal;
 	}
@@ -54797,7 +54833,9 @@ var UtteranceDetectionOptions = class UtteranceDetectionOptions {
 		return {
 			transcribeNotFinal: this.transcribeNotFinal,
 			nextChunkTimeout: this.nextChunkTimeout,
-			turnDetection: this.turnDetection ? this.turnDetection.toObject() : void 0
+			turnDetection: this.turnDetection ? this.turnDetection.toObject() : void 0,
+			minAudioChunkSize: this.minAudioChunkSize,
+			transcribeNotFinalPeriodSeconds: this.transcribeNotFinalPeriodSeconds
 		};
 	}
 	toJSON() {
@@ -54807,7 +54845,9 @@ var UtteranceDetectionOptions = class UtteranceDetectionOptions {
 		return {
 			transcribeNotFinal: this.transcribeNotFinal,
 			nextChunkTimeout: this.nextChunkTimeout,
-			turnDetection: this.turnDetection ? this.turnDetection.toProtobufJSON(options) : null
+			turnDetection: this.turnDetection ? this.turnDetection.toProtobufJSON(options) : null,
+			minAudioChunkSize: this.minAudioChunkSize,
+			transcribeNotFinalPeriodSeconds: this.transcribeNotFinalPeriodSeconds
 		};
 	}
 };
@@ -55414,6 +55454,7 @@ var TranscribeStreamResponse = class TranscribeStreamResponse {
 		_instance.audio = _instance.audio || /* @__PURE__ */ new Uint8Array();
 		_instance.utteranceStart = _instance.utteranceStart || false;
 		_instance.audioUuid = _instance.audioUuid || "";
+		_instance.endOfSpeechCandidate = _instance.endOfSpeechCandidate || false;
 	}
 	static deserializeBinaryFromReader(_instance, _reader) {
 		while (_reader.nextField()) {
@@ -55442,6 +55483,9 @@ var TranscribeStreamResponse = class TranscribeStreamResponse {
 				case 7:
 					_instance.audioUuid = _reader.readString();
 					break;
+				case 9:
+					_instance.endOfSpeechCandidate = _reader.readBool();
+					break;
 				case 8:
 					_instance.config = new TranscribeRequestConfig();
 					_reader.readMessage(_instance.config, TranscribeRequestConfig.deserializeBinaryFromReader);
@@ -55459,6 +55503,7 @@ var TranscribeStreamResponse = class TranscribeStreamResponse {
 		if (_instance.audio && _instance.audio.length) _writer.writeBytes(5, _instance.audio);
 		if (_instance.utteranceStart) _writer.writeBool(6, _instance.utteranceStart);
 		if (_instance.audioUuid) _writer.writeString(7, _instance.audioUuid);
+		if (_instance.endOfSpeechCandidate) _writer.writeBool(9, _instance.endOfSpeechCandidate);
 		if (_instance.config) _writer.writeMessage(8, _instance.config, TranscribeRequestConfig.serializeBinaryToWriter);
 	}
 	constructor(_value) {
@@ -55471,6 +55516,7 @@ var TranscribeStreamResponse = class TranscribeStreamResponse {
 		this.audio = _value.audio;
 		this.utteranceStart = _value.utteranceStart;
 		this.audioUuid = _value.audioUuid;
+		this.endOfSpeechCandidate = _value.endOfSpeechCandidate;
 		this.config = _value.config ? new TranscribeRequestConfig(_value.config) : void 0;
 		TranscribeStreamResponse.refineValues(this);
 	}
@@ -55516,6 +55562,12 @@ var TranscribeStreamResponse = class TranscribeStreamResponse {
 	set audioUuid(value) {
 		this._audioUuid = value;
 	}
+	get endOfSpeechCandidate() {
+		return this._endOfSpeechCandidate;
+	}
+	set endOfSpeechCandidate(value) {
+		this._endOfSpeechCandidate = value;
+	}
 	get config() {
 		return this._config;
 	}
@@ -55540,6 +55592,7 @@ var TranscribeStreamResponse = class TranscribeStreamResponse {
 			audio: this.audio ? this.audio.subarray(0) : /* @__PURE__ */ new Uint8Array(),
 			utteranceStart: this.utteranceStart,
 			audioUuid: this.audioUuid,
+			endOfSpeechCandidate: this.endOfSpeechCandidate,
 			config: this.config ? this.config.toObject() : void 0
 		};
 	}
@@ -55555,6 +55608,7 @@ var TranscribeStreamResponse = class TranscribeStreamResponse {
 			audio: this.audio ? uint8ArrayToBase64(this.audio) : "",
 			utteranceStart: this.utteranceStart,
 			audioUuid: this.audioUuid,
+			endOfSpeechCandidate: this.endOfSpeechCandidate,
 			config: this.config ? this.config.toProtobufJSON(options) : null
 		};
 	}
@@ -58177,7 +58231,6 @@ var StreamingSpeechRecognition = class StreamingSpeechRecognition {
 		return instance;
 	}
 	static refineValues(_instance) {
-		_instance.transcribeNotFinal = _instance.transcribeNotFinal || false;
 		_instance.decodingMethod = _instance.decodingMethod || "";
 		_instance.samplingRate = _instance.samplingRate || "0";
 		_instance.minAudioChunkSize = _instance.minAudioChunkSize || "0";
@@ -58207,18 +58260,22 @@ var StreamingSpeechRecognition = class StreamingSpeechRecognition {
 					_instance.turnDetection = new TurnDetectionOptions();
 					_reader.readMessage(_instance.turnDetection, TurnDetectionOptions.deserializeBinaryFromReader);
 					break;
+				case 7:
+					_instance.transcribeNotFinalPeriodSeconds = _reader.readFloat();
+					break;
 				default: _reader.skipField();
 			}
 		}
 		StreamingSpeechRecognition.refineValues(_instance);
 	}
 	static serializeBinaryToWriter(_instance, _writer) {
-		if (_instance.transcribeNotFinal) _writer.writeBool(1, _instance.transcribeNotFinal);
+		if (_instance.transcribeNotFinal !== void 0 && _instance.transcribeNotFinal !== null) _writer.writeBool(1, _instance.transcribeNotFinal);
 		if (_instance.decodingMethod) _writer.writeString(2, _instance.decodingMethod);
 		if (_instance.samplingRate) _writer.writeInt64String(3, _instance.samplingRate);
 		if (_instance.minAudioChunkSize) _writer.writeInt64String(4, _instance.minAudioChunkSize);
 		if (_instance.nextChunkTimeout) _writer.writeFloat(5, _instance.nextChunkTimeout);
 		if (_instance.turnDetection) _writer.writeMessage(6, _instance.turnDetection, TurnDetectionOptions.serializeBinaryToWriter);
+		if (_instance.transcribeNotFinalPeriodSeconds !== void 0 && _instance.transcribeNotFinalPeriodSeconds !== null) _writer.writeFloat(7, _instance.transcribeNotFinalPeriodSeconds);
 	}
 	constructor(_value) {
 		_value = _value || {};
@@ -58228,6 +58285,7 @@ var StreamingSpeechRecognition = class StreamingSpeechRecognition {
 		this.minAudioChunkSize = _value.minAudioChunkSize;
 		this.nextChunkTimeout = _value.nextChunkTimeout;
 		this.turnDetection = _value.turnDetection ? new TurnDetectionOptions(_value.turnDetection) : void 0;
+		this.transcribeNotFinalPeriodSeconds = _value.transcribeNotFinalPeriodSeconds;
 		StreamingSpeechRecognition.refineValues(this);
 	}
 	get transcribeNotFinal() {
@@ -58266,6 +58324,12 @@ var StreamingSpeechRecognition = class StreamingSpeechRecognition {
 	set turnDetection(value) {
 		this._turnDetection = value;
 	}
+	get transcribeNotFinalPeriodSeconds() {
+		return this._transcribeNotFinalPeriodSeconds;
+	}
+	set transcribeNotFinalPeriodSeconds(value) {
+		this._transcribeNotFinalPeriodSeconds = value;
+	}
 	serializeBinary() {
 		const writer = new BinaryWriter();
 		StreamingSpeechRecognition.serializeBinaryToWriter(this, writer);
@@ -58278,7 +58342,8 @@ var StreamingSpeechRecognition = class StreamingSpeechRecognition {
 			samplingRate: this.samplingRate,
 			minAudioChunkSize: this.minAudioChunkSize,
 			nextChunkTimeout: this.nextChunkTimeout,
-			turnDetection: this.turnDetection ? this.turnDetection.toObject() : void 0
+			turnDetection: this.turnDetection ? this.turnDetection.toObject() : void 0,
+			transcribeNotFinalPeriodSeconds: this.transcribeNotFinalPeriodSeconds
 		};
 	}
 	toJSON() {
@@ -58291,7 +58356,8 @@ var StreamingSpeechRecognition = class StreamingSpeechRecognition {
 			samplingRate: this.samplingRate,
 			minAudioChunkSize: this.minAudioChunkSize,
 			nextChunkTimeout: this.nextChunkTimeout,
-			turnDetection: this.turnDetection ? this.turnDetection.toProtobufJSON(options) : null
+			turnDetection: this.turnDetection ? this.turnDetection.toProtobufJSON(options) : null,
+			transcribeNotFinalPeriodSeconds: this.transcribeNotFinalPeriodSeconds
 		};
 	}
 };
@@ -58306,6 +58372,7 @@ var TurnDetectionOptions = class TurnDetectionOptions {
 	}
 	static refineValues(_instance) {
 		_instance.turnDetectionLlmOpenaiOptions = _instance.turnDetectionLlmOpenaiOptions || void 0;
+		_instance.turnDetectionConversationContext = _instance.turnDetectionConversationContext || void 0;
 	}
 	static deserializeBinaryFromReader(_instance, _reader) {
 		while (_reader.nextField()) {
@@ -58327,6 +58394,33 @@ var TurnDetectionOptions = class TurnDetectionOptions {
 					_instance.turnDetectionLlmOpenaiOptions = new OpenaiLlmOptions();
 					_reader.readMessage(_instance.turnDetectionLlmOpenaiOptions, OpenaiLlmOptions.deserializeBinaryFromReader);
 					break;
+				case 6:
+					_instance.incompleteMaxSilenceSeconds = _reader.readFloat();
+					break;
+				case 7:
+					_instance.turnDetectionConversationContext = new TurnDetectionConversationContext();
+					_reader.readMessage(_instance.turnDetectionConversationContext, TurnDetectionConversationContext.deserializeBinaryFromReader);
+					break;
+				case 8:
+					_instance.turnDetectionChatLlmOptions = new TurnDetectionChatLlmOptions();
+					_reader.readMessage(_instance.turnDetectionChatLlmOptions, TurnDetectionChatLlmOptions.deserializeBinaryFromReader);
+					break;
+				case 9:
+					_instance.turnDetectionEndOfUtteranceLlmOptions = new TurnDetectionEndOfUtteranceLlmOptions();
+					_reader.readMessage(_instance.turnDetectionEndOfUtteranceLlmOptions, TurnDetectionEndOfUtteranceLlmOptions.deserializeBinaryFromReader);
+					break;
+				case 10:
+					_instance.turnDetectionOndewoDeOptions = new TurnDetectionOndewoDeOptions();
+					_reader.readMessage(_instance.turnDetectionOndewoDeOptions, TurnDetectionOndewoDeOptions.deserializeBinaryFromReader);
+					break;
+				case 11:
+					_instance.turnDetectionOndewoDeFusionOptions = new TurnDetectionOndewoDeFusionOptions();
+					_reader.readMessage(_instance.turnDetectionOndewoDeFusionOptions, TurnDetectionOndewoDeFusionOptions.deserializeBinaryFromReader);
+					break;
+				case 12:
+					_instance.turnDetectionPipecatSmartTurnOptions = new TurnDetectionPipecatSmartTurnOptions();
+					_reader.readMessage(_instance.turnDetectionPipecatSmartTurnOptions, TurnDetectionPipecatSmartTurnOptions.deserializeBinaryFromReader);
+					break;
 				default: _reader.skipField();
 			}
 		}
@@ -58338,14 +58432,29 @@ var TurnDetectionOptions = class TurnDetectionOptions {
 		if (_instance.turnDetectionSystemPrompt !== void 0 && _instance.turnDetectionSystemPrompt !== null) _writer.writeString(3, _instance.turnDetectionSystemPrompt);
 		if (_instance.turnDetectionUserPrompt !== void 0 && _instance.turnDetectionUserPrompt !== null) _writer.writeString(4, _instance.turnDetectionUserPrompt);
 		if (_instance.turnDetectionLlmOpenaiOptions) _writer.writeMessage(5, _instance.turnDetectionLlmOpenaiOptions, OpenaiLlmOptions.serializeBinaryToWriter);
+		if (_instance.incompleteMaxSilenceSeconds !== void 0 && _instance.incompleteMaxSilenceSeconds !== null) _writer.writeFloat(6, _instance.incompleteMaxSilenceSeconds);
+		if (_instance.turnDetectionConversationContext) _writer.writeMessage(7, _instance.turnDetectionConversationContext, TurnDetectionConversationContext.serializeBinaryToWriter);
+		if (_instance.turnDetectionChatLlmOptions) _writer.writeMessage(8, _instance.turnDetectionChatLlmOptions, TurnDetectionChatLlmOptions.serializeBinaryToWriter);
+		if (_instance.turnDetectionEndOfUtteranceLlmOptions) _writer.writeMessage(9, _instance.turnDetectionEndOfUtteranceLlmOptions, TurnDetectionEndOfUtteranceLlmOptions.serializeBinaryToWriter);
+		if (_instance.turnDetectionOndewoDeOptions) _writer.writeMessage(10, _instance.turnDetectionOndewoDeOptions, TurnDetectionOndewoDeOptions.serializeBinaryToWriter);
+		if (_instance.turnDetectionOndewoDeFusionOptions) _writer.writeMessage(11, _instance.turnDetectionOndewoDeFusionOptions, TurnDetectionOndewoDeFusionOptions.serializeBinaryToWriter);
+		if (_instance.turnDetectionPipecatSmartTurnOptions) _writer.writeMessage(12, _instance.turnDetectionPipecatSmartTurnOptions, TurnDetectionPipecatSmartTurnOptions.serializeBinaryToWriter);
 	}
 	constructor(_value) {
+		this._oneofTurnDetector = TurnDetectionOptions.OneofTurnDetectorCase.none;
 		_value = _value || {};
 		this.active = _value.active;
 		this.fullUtteranceDeployment = _value.fullUtteranceDeployment;
 		this.turnDetectionSystemPrompt = _value.turnDetectionSystemPrompt;
 		this.turnDetectionUserPrompt = _value.turnDetectionUserPrompt;
 		this.turnDetectionLlmOpenaiOptions = _value.turnDetectionLlmOpenaiOptions ? new OpenaiLlmOptions(_value.turnDetectionLlmOpenaiOptions) : void 0;
+		this.incompleteMaxSilenceSeconds = _value.incompleteMaxSilenceSeconds;
+		this.turnDetectionConversationContext = _value.turnDetectionConversationContext ? new TurnDetectionConversationContext(_value.turnDetectionConversationContext) : void 0;
+		this.turnDetectionChatLlmOptions = _value.turnDetectionChatLlmOptions ? new TurnDetectionChatLlmOptions(_value.turnDetectionChatLlmOptions) : void 0;
+		this.turnDetectionEndOfUtteranceLlmOptions = _value.turnDetectionEndOfUtteranceLlmOptions ? new TurnDetectionEndOfUtteranceLlmOptions(_value.turnDetectionEndOfUtteranceLlmOptions) : void 0;
+		this.turnDetectionOndewoDeOptions = _value.turnDetectionOndewoDeOptions ? new TurnDetectionOndewoDeOptions(_value.turnDetectionOndewoDeOptions) : void 0;
+		this.turnDetectionOndewoDeFusionOptions = _value.turnDetectionOndewoDeFusionOptions ? new TurnDetectionOndewoDeFusionOptions(_value.turnDetectionOndewoDeFusionOptions) : void 0;
+		this.turnDetectionPipecatSmartTurnOptions = _value.turnDetectionPipecatSmartTurnOptions ? new TurnDetectionPipecatSmartTurnOptions(_value.turnDetectionPipecatSmartTurnOptions) : void 0;
 		TurnDetectionOptions.refineValues(this);
 	}
 	get active() {
@@ -58378,6 +58487,71 @@ var TurnDetectionOptions = class TurnDetectionOptions {
 	set turnDetectionLlmOpenaiOptions(value) {
 		this._turnDetectionLlmOpenaiOptions = value;
 	}
+	get incompleteMaxSilenceSeconds() {
+		return this._incompleteMaxSilenceSeconds;
+	}
+	set incompleteMaxSilenceSeconds(value) {
+		this._incompleteMaxSilenceSeconds = value;
+	}
+	get turnDetectionConversationContext() {
+		return this._turnDetectionConversationContext;
+	}
+	set turnDetectionConversationContext(value) {
+		this._turnDetectionConversationContext = value;
+	}
+	get turnDetectionChatLlmOptions() {
+		return this._turnDetectionChatLlmOptions;
+	}
+	set turnDetectionChatLlmOptions(value) {
+		if (value !== void 0 && value !== null) {
+			this._turnDetectionEndOfUtteranceLlmOptions = this._turnDetectionOndewoDeOptions = this._turnDetectionOndewoDeFusionOptions = this._turnDetectionPipecatSmartTurnOptions = void 0;
+			this._oneofTurnDetector = TurnDetectionOptions.OneofTurnDetectorCase.turnDetectionChatLlmOptions;
+		}
+		this._turnDetectionChatLlmOptions = value;
+	}
+	get turnDetectionEndOfUtteranceLlmOptions() {
+		return this._turnDetectionEndOfUtteranceLlmOptions;
+	}
+	set turnDetectionEndOfUtteranceLlmOptions(value) {
+		if (value !== void 0 && value !== null) {
+			this._turnDetectionChatLlmOptions = this._turnDetectionOndewoDeOptions = this._turnDetectionOndewoDeFusionOptions = this._turnDetectionPipecatSmartTurnOptions = void 0;
+			this._oneofTurnDetector = TurnDetectionOptions.OneofTurnDetectorCase.turnDetectionEndOfUtteranceLlmOptions;
+		}
+		this._turnDetectionEndOfUtteranceLlmOptions = value;
+	}
+	get turnDetectionOndewoDeOptions() {
+		return this._turnDetectionOndewoDeOptions;
+	}
+	set turnDetectionOndewoDeOptions(value) {
+		if (value !== void 0 && value !== null) {
+			this._turnDetectionChatLlmOptions = this._turnDetectionEndOfUtteranceLlmOptions = this._turnDetectionOndewoDeFusionOptions = this._turnDetectionPipecatSmartTurnOptions = void 0;
+			this._oneofTurnDetector = TurnDetectionOptions.OneofTurnDetectorCase.turnDetectionOndewoDeOptions;
+		}
+		this._turnDetectionOndewoDeOptions = value;
+	}
+	get turnDetectionOndewoDeFusionOptions() {
+		return this._turnDetectionOndewoDeFusionOptions;
+	}
+	set turnDetectionOndewoDeFusionOptions(value) {
+		if (value !== void 0 && value !== null) {
+			this._turnDetectionChatLlmOptions = this._turnDetectionEndOfUtteranceLlmOptions = this._turnDetectionOndewoDeOptions = this._turnDetectionPipecatSmartTurnOptions = void 0;
+			this._oneofTurnDetector = TurnDetectionOptions.OneofTurnDetectorCase.turnDetectionOndewoDeFusionOptions;
+		}
+		this._turnDetectionOndewoDeFusionOptions = value;
+	}
+	get turnDetectionPipecatSmartTurnOptions() {
+		return this._turnDetectionPipecatSmartTurnOptions;
+	}
+	set turnDetectionPipecatSmartTurnOptions(value) {
+		if (value !== void 0 && value !== null) {
+			this._turnDetectionChatLlmOptions = this._turnDetectionEndOfUtteranceLlmOptions = this._turnDetectionOndewoDeOptions = this._turnDetectionOndewoDeFusionOptions = void 0;
+			this._oneofTurnDetector = TurnDetectionOptions.OneofTurnDetectorCase.turnDetectionPipecatSmartTurnOptions;
+		}
+		this._turnDetectionPipecatSmartTurnOptions = value;
+	}
+	get oneofTurnDetector() {
+		return this._oneofTurnDetector;
+	}
 	serializeBinary() {
 		const writer = new BinaryWriter();
 		TurnDetectionOptions.serializeBinaryToWriter(this, writer);
@@ -58389,7 +58563,14 @@ var TurnDetectionOptions = class TurnDetectionOptions {
 			fullUtteranceDeployment: this.fullUtteranceDeployment,
 			turnDetectionSystemPrompt: this.turnDetectionSystemPrompt,
 			turnDetectionUserPrompt: this.turnDetectionUserPrompt,
-			turnDetectionLlmOpenaiOptions: this.turnDetectionLlmOpenaiOptions ? this.turnDetectionLlmOpenaiOptions.toObject() : void 0
+			turnDetectionLlmOpenaiOptions: this.turnDetectionLlmOpenaiOptions ? this.turnDetectionLlmOpenaiOptions.toObject() : void 0,
+			incompleteMaxSilenceSeconds: this.incompleteMaxSilenceSeconds,
+			turnDetectionConversationContext: this.turnDetectionConversationContext ? this.turnDetectionConversationContext.toObject() : void 0,
+			turnDetectionChatLlmOptions: this.turnDetectionChatLlmOptions ? this.turnDetectionChatLlmOptions.toObject() : void 0,
+			turnDetectionEndOfUtteranceLlmOptions: this.turnDetectionEndOfUtteranceLlmOptions ? this.turnDetectionEndOfUtteranceLlmOptions.toObject() : void 0,
+			turnDetectionOndewoDeOptions: this.turnDetectionOndewoDeOptions ? this.turnDetectionOndewoDeOptions.toObject() : void 0,
+			turnDetectionOndewoDeFusionOptions: this.turnDetectionOndewoDeFusionOptions ? this.turnDetectionOndewoDeFusionOptions.toObject() : void 0,
+			turnDetectionPipecatSmartTurnOptions: this.turnDetectionPipecatSmartTurnOptions ? this.turnDetectionPipecatSmartTurnOptions.toObject() : void 0
 		};
 	}
 	toJSON() {
@@ -58401,7 +58582,741 @@ var TurnDetectionOptions = class TurnDetectionOptions {
 			fullUtteranceDeployment: this.fullUtteranceDeployment,
 			turnDetectionSystemPrompt: this.turnDetectionSystemPrompt,
 			turnDetectionUserPrompt: this.turnDetectionUserPrompt,
-			turnDetectionLlmOpenaiOptions: this.turnDetectionLlmOpenaiOptions ? this.turnDetectionLlmOpenaiOptions.toProtobufJSON(options) : null
+			turnDetectionLlmOpenaiOptions: this.turnDetectionLlmOpenaiOptions ? this.turnDetectionLlmOpenaiOptions.toProtobufJSON(options) : null,
+			incompleteMaxSilenceSeconds: this.incompleteMaxSilenceSeconds,
+			turnDetectionConversationContext: this.turnDetectionConversationContext ? this.turnDetectionConversationContext.toProtobufJSON(options) : null,
+			turnDetectionChatLlmOptions: this.turnDetectionChatLlmOptions ? this.turnDetectionChatLlmOptions.toProtobufJSON(options) : null,
+			turnDetectionEndOfUtteranceLlmOptions: this.turnDetectionEndOfUtteranceLlmOptions ? this.turnDetectionEndOfUtteranceLlmOptions.toProtobufJSON(options) : null,
+			turnDetectionOndewoDeOptions: this.turnDetectionOndewoDeOptions ? this.turnDetectionOndewoDeOptions.toProtobufJSON(options) : null,
+			turnDetectionOndewoDeFusionOptions: this.turnDetectionOndewoDeFusionOptions ? this.turnDetectionOndewoDeFusionOptions.toProtobufJSON(options) : null,
+			turnDetectionPipecatSmartTurnOptions: this.turnDetectionPipecatSmartTurnOptions ? this.turnDetectionPipecatSmartTurnOptions.toProtobufJSON(options) : null
+		};
+	}
+};
+(function(TurnDetectionOptions) {
+	(function(OneofTurnDetectorCase) {
+		OneofTurnDetectorCase[OneofTurnDetectorCase["none"] = 0] = "none";
+		OneofTurnDetectorCase[OneofTurnDetectorCase["turnDetectionChatLlmOptions"] = 1] = "turnDetectionChatLlmOptions";
+		OneofTurnDetectorCase[OneofTurnDetectorCase["turnDetectionEndOfUtteranceLlmOptions"] = 2] = "turnDetectionEndOfUtteranceLlmOptions";
+		OneofTurnDetectorCase[OneofTurnDetectorCase["turnDetectionOndewoDeOptions"] = 3] = "turnDetectionOndewoDeOptions";
+		OneofTurnDetectorCase[OneofTurnDetectorCase["turnDetectionOndewoDeFusionOptions"] = 4] = "turnDetectionOndewoDeFusionOptions";
+		OneofTurnDetectorCase[OneofTurnDetectorCase["turnDetectionPipecatSmartTurnOptions"] = 5] = "turnDetectionPipecatSmartTurnOptions";
+	})(TurnDetectionOptions.OneofTurnDetectorCase || (TurnDetectionOptions.OneofTurnDetectorCase = {}));
+})(TurnDetectionOptions || (TurnDetectionOptions = {}));
+var TurnDetectionChatLlmOptions = class TurnDetectionChatLlmOptions {
+	static {
+		this.id = "ondewo.s2t.TurnDetectionChatLlmOptions";
+	}
+	static deserializeBinary(bytes) {
+		const instance = new TurnDetectionChatLlmOptions();
+		TurnDetectionChatLlmOptions.deserializeBinaryFromReader(instance, new BinaryReader(bytes));
+		return instance;
+	}
+	static refineValues(_instance) {
+		_instance.openaiLlmOptions = _instance.openaiLlmOptions || void 0;
+	}
+	static deserializeBinaryFromReader(_instance, _reader) {
+		while (_reader.nextField()) {
+			if (_reader.isEndGroup()) break;
+			switch (_reader.getFieldNumber()) {
+				case 1:
+					_instance.openaiLlmOptions = new OpenaiLlmOptions();
+					_reader.readMessage(_instance.openaiLlmOptions, OpenaiLlmOptions.deserializeBinaryFromReader);
+					break;
+				case 2:
+					_instance.systemPrompt = _reader.readString();
+					break;
+				case 3:
+					_instance.userPrompt = _reader.readString();
+					break;
+				default: _reader.skipField();
+			}
+		}
+		TurnDetectionChatLlmOptions.refineValues(_instance);
+	}
+	static serializeBinaryToWriter(_instance, _writer) {
+		if (_instance.openaiLlmOptions) _writer.writeMessage(1, _instance.openaiLlmOptions, OpenaiLlmOptions.serializeBinaryToWriter);
+		if (_instance.systemPrompt !== void 0 && _instance.systemPrompt !== null) _writer.writeString(2, _instance.systemPrompt);
+		if (_instance.userPrompt !== void 0 && _instance.userPrompt !== null) _writer.writeString(3, _instance.userPrompt);
+	}
+	constructor(_value) {
+		_value = _value || {};
+		this.openaiLlmOptions = _value.openaiLlmOptions ? new OpenaiLlmOptions(_value.openaiLlmOptions) : void 0;
+		this.systemPrompt = _value.systemPrompt;
+		this.userPrompt = _value.userPrompt;
+		TurnDetectionChatLlmOptions.refineValues(this);
+	}
+	get openaiLlmOptions() {
+		return this._openaiLlmOptions;
+	}
+	set openaiLlmOptions(value) {
+		this._openaiLlmOptions = value;
+	}
+	get systemPrompt() {
+		return this._systemPrompt;
+	}
+	set systemPrompt(value) {
+		this._systemPrompt = value;
+	}
+	get userPrompt() {
+		return this._userPrompt;
+	}
+	set userPrompt(value) {
+		this._userPrompt = value;
+	}
+	serializeBinary() {
+		const writer = new BinaryWriter();
+		TurnDetectionChatLlmOptions.serializeBinaryToWriter(this, writer);
+		return writer.getResultBuffer();
+	}
+	toObject() {
+		return {
+			openaiLlmOptions: this.openaiLlmOptions ? this.openaiLlmOptions.toObject() : void 0,
+			systemPrompt: this.systemPrompt,
+			userPrompt: this.userPrompt
+		};
+	}
+	toJSON() {
+		return this.toObject();
+	}
+	toProtobufJSON(options) {
+		return {
+			openaiLlmOptions: this.openaiLlmOptions ? this.openaiLlmOptions.toProtobufJSON(options) : null,
+			systemPrompt: this.systemPrompt,
+			userPrompt: this.userPrompt
+		};
+	}
+};
+var TurnDetectionEndOfUtteranceLlmOptions = class TurnDetectionEndOfUtteranceLlmOptions {
+	static {
+		this.id = "ondewo.s2t.TurnDetectionEndOfUtteranceLlmOptions";
+	}
+	static deserializeBinary(bytes) {
+		const instance = new TurnDetectionEndOfUtteranceLlmOptions();
+		TurnDetectionEndOfUtteranceLlmOptions.deserializeBinaryFromReader(instance, new BinaryReader(bytes));
+		return instance;
+	}
+	static refineValues(_instance) {
+		_instance.openaiLlmOptions = _instance.openaiLlmOptions || void 0;
+		_instance.turnDetectionHoldBands = _instance.turnDetectionHoldBands || void 0;
+	}
+	static deserializeBinaryFromReader(_instance, _reader) {
+		while (_reader.nextField()) {
+			if (_reader.isEndGroup()) break;
+			switch (_reader.getFieldNumber()) {
+				case 1:
+					_instance.openaiLlmOptions = new OpenaiLlmOptions();
+					_reader.readMessage(_instance.openaiLlmOptions, OpenaiLlmOptions.deserializeBinaryFromReader);
+					break;
+				case 2:
+					_instance.endOfTurnProbabilityThreshold = _reader.readFloat();
+					break;
+				case 3:
+					_instance.turnDetectionHoldBands = new TurnDetectionHoldBands();
+					_reader.readMessage(_instance.turnDetectionHoldBands, TurnDetectionHoldBands.deserializeBinaryFromReader);
+					break;
+				case 4:
+					_instance.uncertainMinWords = _reader.readUint32();
+					break;
+				case 5:
+					_instance.exactProbability = _reader.readBool();
+					break;
+				default: _reader.skipField();
+			}
+		}
+		TurnDetectionEndOfUtteranceLlmOptions.refineValues(_instance);
+	}
+	static serializeBinaryToWriter(_instance, _writer) {
+		if (_instance.openaiLlmOptions) _writer.writeMessage(1, _instance.openaiLlmOptions, OpenaiLlmOptions.serializeBinaryToWriter);
+		if (_instance.endOfTurnProbabilityThreshold !== void 0 && _instance.endOfTurnProbabilityThreshold !== null) _writer.writeFloat(2, _instance.endOfTurnProbabilityThreshold);
+		if (_instance.turnDetectionHoldBands) _writer.writeMessage(3, _instance.turnDetectionHoldBands, TurnDetectionHoldBands.serializeBinaryToWriter);
+		if (_instance.uncertainMinWords !== void 0 && _instance.uncertainMinWords !== null) _writer.writeUint32(4, _instance.uncertainMinWords);
+		if (_instance.exactProbability !== void 0 && _instance.exactProbability !== null) _writer.writeBool(5, _instance.exactProbability);
+	}
+	constructor(_value) {
+		_value = _value || {};
+		this.openaiLlmOptions = _value.openaiLlmOptions ? new OpenaiLlmOptions(_value.openaiLlmOptions) : void 0;
+		this.endOfTurnProbabilityThreshold = _value.endOfTurnProbabilityThreshold;
+		this.turnDetectionHoldBands = _value.turnDetectionHoldBands ? new TurnDetectionHoldBands(_value.turnDetectionHoldBands) : void 0;
+		this.uncertainMinWords = _value.uncertainMinWords;
+		this.exactProbability = _value.exactProbability;
+		TurnDetectionEndOfUtteranceLlmOptions.refineValues(this);
+	}
+	get openaiLlmOptions() {
+		return this._openaiLlmOptions;
+	}
+	set openaiLlmOptions(value) {
+		this._openaiLlmOptions = value;
+	}
+	get endOfTurnProbabilityThreshold() {
+		return this._endOfTurnProbabilityThreshold;
+	}
+	set endOfTurnProbabilityThreshold(value) {
+		this._endOfTurnProbabilityThreshold = value;
+	}
+	get turnDetectionHoldBands() {
+		return this._turnDetectionHoldBands;
+	}
+	set turnDetectionHoldBands(value) {
+		this._turnDetectionHoldBands = value;
+	}
+	get uncertainMinWords() {
+		return this._uncertainMinWords;
+	}
+	set uncertainMinWords(value) {
+		this._uncertainMinWords = value;
+	}
+	get exactProbability() {
+		return this._exactProbability;
+	}
+	set exactProbability(value) {
+		this._exactProbability = value;
+	}
+	serializeBinary() {
+		const writer = new BinaryWriter();
+		TurnDetectionEndOfUtteranceLlmOptions.serializeBinaryToWriter(this, writer);
+		return writer.getResultBuffer();
+	}
+	toObject() {
+		return {
+			openaiLlmOptions: this.openaiLlmOptions ? this.openaiLlmOptions.toObject() : void 0,
+			endOfTurnProbabilityThreshold: this.endOfTurnProbabilityThreshold,
+			turnDetectionHoldBands: this.turnDetectionHoldBands ? this.turnDetectionHoldBands.toObject() : void 0,
+			uncertainMinWords: this.uncertainMinWords,
+			exactProbability: this.exactProbability
+		};
+	}
+	toJSON() {
+		return this.toObject();
+	}
+	toProtobufJSON(options) {
+		return {
+			openaiLlmOptions: this.openaiLlmOptions ? this.openaiLlmOptions.toProtobufJSON(options) : null,
+			endOfTurnProbabilityThreshold: this.endOfTurnProbabilityThreshold,
+			turnDetectionHoldBands: this.turnDetectionHoldBands ? this.turnDetectionHoldBands.toProtobufJSON(options) : null,
+			uncertainMinWords: this.uncertainMinWords,
+			exactProbability: this.exactProbability
+		};
+	}
+};
+var TurnDetectionOndewoDeOptions = class TurnDetectionOndewoDeOptions {
+	static {
+		this.id = "ondewo.s2t.TurnDetectionOndewoDeOptions";
+	}
+	static deserializeBinary(bytes) {
+		const instance = new TurnDetectionOndewoDeOptions();
+		TurnDetectionOndewoDeOptions.deserializeBinaryFromReader(instance, new BinaryReader(bytes));
+		return instance;
+	}
+	static refineValues(_instance) {
+		_instance.openaiLlmOptions = _instance.openaiLlmOptions || void 0;
+	}
+	static deserializeBinaryFromReader(_instance, _reader) {
+		while (_reader.nextField()) {
+			if (_reader.isEndGroup()) break;
+			switch (_reader.getFieldNumber()) {
+				case 1:
+					_instance.openaiLlmOptions = new OpenaiLlmOptions();
+					_reader.readMessage(_instance.openaiLlmOptions, OpenaiLlmOptions.deserializeBinaryFromReader);
+					break;
+				case 2:
+					_instance.endOfTurnProbabilityThreshold = _reader.readFloat();
+					break;
+				default: _reader.skipField();
+			}
+		}
+		TurnDetectionOndewoDeOptions.refineValues(_instance);
+	}
+	static serializeBinaryToWriter(_instance, _writer) {
+		if (_instance.openaiLlmOptions) _writer.writeMessage(1, _instance.openaiLlmOptions, OpenaiLlmOptions.serializeBinaryToWriter);
+		if (_instance.endOfTurnProbabilityThreshold !== void 0 && _instance.endOfTurnProbabilityThreshold !== null) _writer.writeFloat(2, _instance.endOfTurnProbabilityThreshold);
+	}
+	constructor(_value) {
+		_value = _value || {};
+		this.openaiLlmOptions = _value.openaiLlmOptions ? new OpenaiLlmOptions(_value.openaiLlmOptions) : void 0;
+		this.endOfTurnProbabilityThreshold = _value.endOfTurnProbabilityThreshold;
+		TurnDetectionOndewoDeOptions.refineValues(this);
+	}
+	get openaiLlmOptions() {
+		return this._openaiLlmOptions;
+	}
+	set openaiLlmOptions(value) {
+		this._openaiLlmOptions = value;
+	}
+	get endOfTurnProbabilityThreshold() {
+		return this._endOfTurnProbabilityThreshold;
+	}
+	set endOfTurnProbabilityThreshold(value) {
+		this._endOfTurnProbabilityThreshold = value;
+	}
+	serializeBinary() {
+		const writer = new BinaryWriter();
+		TurnDetectionOndewoDeOptions.serializeBinaryToWriter(this, writer);
+		return writer.getResultBuffer();
+	}
+	toObject() {
+		return {
+			openaiLlmOptions: this.openaiLlmOptions ? this.openaiLlmOptions.toObject() : void 0,
+			endOfTurnProbabilityThreshold: this.endOfTurnProbabilityThreshold
+		};
+	}
+	toJSON() {
+		return this.toObject();
+	}
+	toProtobufJSON(options) {
+		return {
+			openaiLlmOptions: this.openaiLlmOptions ? this.openaiLlmOptions.toProtobufJSON(options) : null,
+			endOfTurnProbabilityThreshold: this.endOfTurnProbabilityThreshold
+		};
+	}
+};
+var TurnDetectionOndewoDeFusionOptions = class TurnDetectionOndewoDeFusionOptions {
+	static {
+		this.id = "ondewo.s2t.TurnDetectionOndewoDeFusionOptions";
+	}
+	static deserializeBinary(bytes) {
+		const instance = new TurnDetectionOndewoDeFusionOptions();
+		TurnDetectionOndewoDeFusionOptions.deserializeBinaryFromReader(instance, new BinaryReader(bytes));
+		return instance;
+	}
+	static refineValues(_instance) {
+		_instance.openaiLlmOptions = _instance.openaiLlmOptions || void 0;
+	}
+	static deserializeBinaryFromReader(_instance, _reader) {
+		while (_reader.nextField()) {
+			if (_reader.isEndGroup()) break;
+			switch (_reader.getFieldNumber()) {
+				case 1:
+					_instance.openaiLlmOptions = new OpenaiLlmOptions();
+					_reader.readMessage(_instance.openaiLlmOptions, OpenaiLlmOptions.deserializeBinaryFromReader);
+					break;
+				case 2:
+					_instance.endOfTurnProbabilityThreshold = _reader.readFloat();
+					break;
+				default: _reader.skipField();
+			}
+		}
+		TurnDetectionOndewoDeFusionOptions.refineValues(_instance);
+	}
+	static serializeBinaryToWriter(_instance, _writer) {
+		if (_instance.openaiLlmOptions) _writer.writeMessage(1, _instance.openaiLlmOptions, OpenaiLlmOptions.serializeBinaryToWriter);
+		if (_instance.endOfTurnProbabilityThreshold !== void 0 && _instance.endOfTurnProbabilityThreshold !== null) _writer.writeFloat(2, _instance.endOfTurnProbabilityThreshold);
+	}
+	constructor(_value) {
+		_value = _value || {};
+		this.openaiLlmOptions = _value.openaiLlmOptions ? new OpenaiLlmOptions(_value.openaiLlmOptions) : void 0;
+		this.endOfTurnProbabilityThreshold = _value.endOfTurnProbabilityThreshold;
+		TurnDetectionOndewoDeFusionOptions.refineValues(this);
+	}
+	get openaiLlmOptions() {
+		return this._openaiLlmOptions;
+	}
+	set openaiLlmOptions(value) {
+		this._openaiLlmOptions = value;
+	}
+	get endOfTurnProbabilityThreshold() {
+		return this._endOfTurnProbabilityThreshold;
+	}
+	set endOfTurnProbabilityThreshold(value) {
+		this._endOfTurnProbabilityThreshold = value;
+	}
+	serializeBinary() {
+		const writer = new BinaryWriter();
+		TurnDetectionOndewoDeFusionOptions.serializeBinaryToWriter(this, writer);
+		return writer.getResultBuffer();
+	}
+	toObject() {
+		return {
+			openaiLlmOptions: this.openaiLlmOptions ? this.openaiLlmOptions.toObject() : void 0,
+			endOfTurnProbabilityThreshold: this.endOfTurnProbabilityThreshold
+		};
+	}
+	toJSON() {
+		return this.toObject();
+	}
+	toProtobufJSON(options) {
+		return {
+			openaiLlmOptions: this.openaiLlmOptions ? this.openaiLlmOptions.toProtobufJSON(options) : null,
+			endOfTurnProbabilityThreshold: this.endOfTurnProbabilityThreshold
+		};
+	}
+};
+var TurnDetectionPipecatSmartTurnOptions = class TurnDetectionPipecatSmartTurnOptions {
+	static {
+		this.id = "ondewo.s2t.TurnDetectionPipecatSmartTurnOptions";
+	}
+	static deserializeBinary(bytes) {
+		const instance = new TurnDetectionPipecatSmartTurnOptions();
+		TurnDetectionPipecatSmartTurnOptions.deserializeBinaryFromReader(instance, new BinaryReader(bytes));
+		return instance;
+	}
+	static refineValues(_instance) {}
+	static deserializeBinaryFromReader(_instance, _reader) {
+		while (_reader.nextField()) {
+			if (_reader.isEndGroup()) break;
+			switch (_reader.getFieldNumber()) {
+				case 1:
+					_instance.modelName = _reader.readString();
+					break;
+				case 2:
+					_instance.tritonServerHost = _reader.readString();
+					break;
+				case 3:
+					_instance.tritonServerPort = _reader.readInt64String();
+					break;
+				case 4:
+					_instance.maxAudioSeconds = _reader.readFloat();
+					break;
+				case 5:
+					_instance.timeoutSeconds = _reader.readFloat();
+					break;
+				case 6:
+					_instance.endOfTurnProbabilityThreshold = _reader.readFloat();
+					break;
+				default: _reader.skipField();
+			}
+		}
+		TurnDetectionPipecatSmartTurnOptions.refineValues(_instance);
+	}
+	static serializeBinaryToWriter(_instance, _writer) {
+		if (_instance.modelName !== void 0 && _instance.modelName !== null) _writer.writeString(1, _instance.modelName);
+		if (_instance.tritonServerHost !== void 0 && _instance.tritonServerHost !== null) _writer.writeString(2, _instance.tritonServerHost);
+		if (_instance.tritonServerPort !== void 0 && _instance.tritonServerPort !== null) _writer.writeInt64String(3, _instance.tritonServerPort);
+		if (_instance.maxAudioSeconds !== void 0 && _instance.maxAudioSeconds !== null) _writer.writeFloat(4, _instance.maxAudioSeconds);
+		if (_instance.timeoutSeconds !== void 0 && _instance.timeoutSeconds !== null) _writer.writeFloat(5, _instance.timeoutSeconds);
+		if (_instance.endOfTurnProbabilityThreshold !== void 0 && _instance.endOfTurnProbabilityThreshold !== null) _writer.writeFloat(6, _instance.endOfTurnProbabilityThreshold);
+	}
+	constructor(_value) {
+		_value = _value || {};
+		this.modelName = _value.modelName;
+		this.tritonServerHost = _value.tritonServerHost;
+		this.tritonServerPort = _value.tritonServerPort;
+		this.maxAudioSeconds = _value.maxAudioSeconds;
+		this.timeoutSeconds = _value.timeoutSeconds;
+		this.endOfTurnProbabilityThreshold = _value.endOfTurnProbabilityThreshold;
+		TurnDetectionPipecatSmartTurnOptions.refineValues(this);
+	}
+	get modelName() {
+		return this._modelName;
+	}
+	set modelName(value) {
+		this._modelName = value;
+	}
+	get tritonServerHost() {
+		return this._tritonServerHost;
+	}
+	set tritonServerHost(value) {
+		this._tritonServerHost = value;
+	}
+	get tritonServerPort() {
+		return this._tritonServerPort;
+	}
+	set tritonServerPort(value) {
+		this._tritonServerPort = value;
+	}
+	get maxAudioSeconds() {
+		return this._maxAudioSeconds;
+	}
+	set maxAudioSeconds(value) {
+		this._maxAudioSeconds = value;
+	}
+	get timeoutSeconds() {
+		return this._timeoutSeconds;
+	}
+	set timeoutSeconds(value) {
+		this._timeoutSeconds = value;
+	}
+	get endOfTurnProbabilityThreshold() {
+		return this._endOfTurnProbabilityThreshold;
+	}
+	set endOfTurnProbabilityThreshold(value) {
+		this._endOfTurnProbabilityThreshold = value;
+	}
+	serializeBinary() {
+		const writer = new BinaryWriter();
+		TurnDetectionPipecatSmartTurnOptions.serializeBinaryToWriter(this, writer);
+		return writer.getResultBuffer();
+	}
+	toObject() {
+		return {
+			modelName: this.modelName,
+			tritonServerHost: this.tritonServerHost,
+			tritonServerPort: this.tritonServerPort,
+			maxAudioSeconds: this.maxAudioSeconds,
+			timeoutSeconds: this.timeoutSeconds,
+			endOfTurnProbabilityThreshold: this.endOfTurnProbabilityThreshold
+		};
+	}
+	toJSON() {
+		return this.toObject();
+	}
+	toProtobufJSON(options) {
+		return {
+			modelName: this.modelName,
+			tritonServerHost: this.tritonServerHost,
+			tritonServerPort: this.tritonServerPort,
+			maxAudioSeconds: this.maxAudioSeconds,
+			timeoutSeconds: this.timeoutSeconds,
+			endOfTurnProbabilityThreshold: this.endOfTurnProbabilityThreshold
+		};
+	}
+};
+var TurnDetectionConversationContext = class TurnDetectionConversationContext {
+	static {
+		this.id = "ondewo.s2t.TurnDetectionConversationContext";
+	}
+	static deserializeBinary(bytes) {
+		const instance = new TurnDetectionConversationContext();
+		TurnDetectionConversationContext.deserializeBinaryFromReader(instance, new BinaryReader(bytes));
+		return instance;
+	}
+	static refineValues(_instance) {
+		_instance.turnDetectionContextTurns = _instance.turnDetectionContextTurns || [];
+	}
+	static deserializeBinaryFromReader(_instance, _reader) {
+		while (_reader.nextField()) {
+			if (_reader.isEndGroup()) break;
+			switch (_reader.getFieldNumber()) {
+				case 1:
+					const messageInitializer1 = new TurnDetectionContextTurn();
+					_reader.readMessage(messageInitializer1, TurnDetectionContextTurn.deserializeBinaryFromReader);
+					(_instance.turnDetectionContextTurns = _instance.turnDetectionContextTurns || []).push(messageInitializer1);
+					break;
+				default: _reader.skipField();
+			}
+		}
+		TurnDetectionConversationContext.refineValues(_instance);
+	}
+	static serializeBinaryToWriter(_instance, _writer) {
+		if (_instance.turnDetectionContextTurns && _instance.turnDetectionContextTurns.length) _writer.writeRepeatedMessage(1, _instance.turnDetectionContextTurns, TurnDetectionContextTurn.serializeBinaryToWriter);
+	}
+	constructor(_value) {
+		_value = _value || {};
+		this.turnDetectionContextTurns = (_value.turnDetectionContextTurns || []).map((m) => new TurnDetectionContextTurn(m));
+		TurnDetectionConversationContext.refineValues(this);
+	}
+	get turnDetectionContextTurns() {
+		return this._turnDetectionContextTurns;
+	}
+	set turnDetectionContextTurns(value) {
+		this._turnDetectionContextTurns = value;
+	}
+	serializeBinary() {
+		const writer = new BinaryWriter();
+		TurnDetectionConversationContext.serializeBinaryToWriter(this, writer);
+		return writer.getResultBuffer();
+	}
+	toObject() {
+		return { turnDetectionContextTurns: (this.turnDetectionContextTurns || []).map((m) => m.toObject()) };
+	}
+	toJSON() {
+		return this.toObject();
+	}
+	toProtobufJSON(options) {
+		return { turnDetectionContextTurns: (this.turnDetectionContextTurns || []).map((m) => m.toProtobufJSON(options)) };
+	}
+};
+var TurnDetectionContextTurn = class TurnDetectionContextTurn {
+	static {
+		this.id = "ondewo.s2t.TurnDetectionContextTurn";
+	}
+	static deserializeBinary(bytes) {
+		const instance = new TurnDetectionContextTurn();
+		TurnDetectionContextTurn.deserializeBinaryFromReader(instance, new BinaryReader(bytes));
+		return instance;
+	}
+	static refineValues(_instance) {
+		_instance.role = _instance.role || 0;
+		_instance.text = _instance.text || "";
+	}
+	static deserializeBinaryFromReader(_instance, _reader) {
+		while (_reader.nextField()) {
+			if (_reader.isEndGroup()) break;
+			switch (_reader.getFieldNumber()) {
+				case 1:
+					_instance.role = _reader.readEnum();
+					break;
+				case 2:
+					_instance.text = _reader.readString();
+					break;
+				default: _reader.skipField();
+			}
+		}
+		TurnDetectionContextTurn.refineValues(_instance);
+	}
+	static serializeBinaryToWriter(_instance, _writer) {
+		if (_instance.role) _writer.writeEnum(1, _instance.role);
+		if (_instance.text) _writer.writeString(2, _instance.text);
+	}
+	constructor(_value) {
+		_value = _value || {};
+		this.role = _value.role;
+		this.text = _value.text;
+		TurnDetectionContextTurn.refineValues(this);
+	}
+	get role() {
+		return this._role;
+	}
+	set role(value) {
+		this._role = value;
+	}
+	get text() {
+		return this._text;
+	}
+	set text(value) {
+		this._text = value;
+	}
+	serializeBinary() {
+		const writer = new BinaryWriter();
+		TurnDetectionContextTurn.serializeBinaryToWriter(this, writer);
+		return writer.getResultBuffer();
+	}
+	toObject() {
+		return {
+			role: this.role,
+			text: this.text
+		};
+	}
+	toJSON() {
+		return this.toObject();
+	}
+	toProtobufJSON(options) {
+		return {
+			role: TurnDetectionContextTurn.Role[this.role === null || this.role === void 0 ? 0 : this.role],
+			text: this.text
+		};
+	}
+};
+(function(TurnDetectionContextTurn) {
+	(function(Role) {
+		Role[Role["ROLE_UNSPECIFIED"] = 0] = "ROLE_UNSPECIFIED";
+		Role[Role["ROLE_USER"] = 1] = "ROLE_USER";
+		Role[Role["ROLE_ASSISTANT"] = 2] = "ROLE_ASSISTANT";
+	})(TurnDetectionContextTurn.Role || (TurnDetectionContextTurn.Role = {}));
+})(TurnDetectionContextTurn || (TurnDetectionContextTurn = {}));
+var TurnDetectionHoldBands = class TurnDetectionHoldBands {
+	static {
+		this.id = "ondewo.s2t.TurnDetectionHoldBands";
+	}
+	static deserializeBinary(bytes) {
+		const instance = new TurnDetectionHoldBands();
+		TurnDetectionHoldBands.deserializeBinaryFromReader(instance, new BinaryReader(bytes));
+		return instance;
+	}
+	static refineValues(_instance) {
+		_instance.turnDetectionHoldBands = _instance.turnDetectionHoldBands || [];
+	}
+	static deserializeBinaryFromReader(_instance, _reader) {
+		while (_reader.nextField()) {
+			if (_reader.isEndGroup()) break;
+			switch (_reader.getFieldNumber()) {
+				case 1:
+					const messageInitializer1 = new TurnDetectionHoldBand();
+					_reader.readMessage(messageInitializer1, TurnDetectionHoldBand.deserializeBinaryFromReader);
+					(_instance.turnDetectionHoldBands = _instance.turnDetectionHoldBands || []).push(messageInitializer1);
+					break;
+				default: _reader.skipField();
+			}
+		}
+		TurnDetectionHoldBands.refineValues(_instance);
+	}
+	static serializeBinaryToWriter(_instance, _writer) {
+		if (_instance.turnDetectionHoldBands && _instance.turnDetectionHoldBands.length) _writer.writeRepeatedMessage(1, _instance.turnDetectionHoldBands, TurnDetectionHoldBand.serializeBinaryToWriter);
+	}
+	constructor(_value) {
+		_value = _value || {};
+		this.turnDetectionHoldBands = (_value.turnDetectionHoldBands || []).map((m) => new TurnDetectionHoldBand(m));
+		TurnDetectionHoldBands.refineValues(this);
+	}
+	get turnDetectionHoldBands() {
+		return this._turnDetectionHoldBands;
+	}
+	set turnDetectionHoldBands(value) {
+		this._turnDetectionHoldBands = value;
+	}
+	serializeBinary() {
+		const writer = new BinaryWriter();
+		TurnDetectionHoldBands.serializeBinaryToWriter(this, writer);
+		return writer.getResultBuffer();
+	}
+	toObject() {
+		return { turnDetectionHoldBands: (this.turnDetectionHoldBands || []).map((m) => m.toObject()) };
+	}
+	toJSON() {
+		return this.toObject();
+	}
+	toProtobufJSON(options) {
+		return { turnDetectionHoldBands: (this.turnDetectionHoldBands || []).map((m) => m.toProtobufJSON(options)) };
+	}
+};
+var TurnDetectionHoldBand = class TurnDetectionHoldBand {
+	static {
+		this.id = "ondewo.s2t.TurnDetectionHoldBand";
+	}
+	static deserializeBinary(bytes) {
+		const instance = new TurnDetectionHoldBand();
+		TurnDetectionHoldBand.deserializeBinaryFromReader(instance, new BinaryReader(bytes));
+		return instance;
+	}
+	static refineValues(_instance) {
+		_instance.upperProbability = _instance.upperProbability || 0;
+		_instance.maxSilenceSeconds = _instance.maxSilenceSeconds || 0;
+	}
+	static deserializeBinaryFromReader(_instance, _reader) {
+		while (_reader.nextField()) {
+			if (_reader.isEndGroup()) break;
+			switch (_reader.getFieldNumber()) {
+				case 1:
+					_instance.upperProbability = _reader.readFloat();
+					break;
+				case 2:
+					_instance.maxSilenceSeconds = _reader.readFloat();
+					break;
+				default: _reader.skipField();
+			}
+		}
+		TurnDetectionHoldBand.refineValues(_instance);
+	}
+	static serializeBinaryToWriter(_instance, _writer) {
+		if (_instance.upperProbability) _writer.writeFloat(1, _instance.upperProbability);
+		if (_instance.maxSilenceSeconds) _writer.writeFloat(2, _instance.maxSilenceSeconds);
+	}
+	constructor(_value) {
+		_value = _value || {};
+		this.upperProbability = _value.upperProbability;
+		this.maxSilenceSeconds = _value.maxSilenceSeconds;
+		TurnDetectionHoldBand.refineValues(this);
+	}
+	get upperProbability() {
+		return this._upperProbability;
+	}
+	set upperProbability(value) {
+		this._upperProbability = value;
+	}
+	get maxSilenceSeconds() {
+		return this._maxSilenceSeconds;
+	}
+	set maxSilenceSeconds(value) {
+		this._maxSilenceSeconds = value;
+	}
+	serializeBinary() {
+		const writer = new BinaryWriter();
+		TurnDetectionHoldBand.serializeBinaryToWriter(this, writer);
+		return writer.getResultBuffer();
+	}
+	toObject() {
+		return {
+			upperProbability: this.upperProbability,
+			maxSilenceSeconds: this.maxSilenceSeconds
+		};
+	}
+	toJSON() {
+		return this.toObject();
+	}
+	toProtobufJSON(options) {
+		return {
+			upperProbability: this.upperProbability,
+			maxSilenceSeconds: this.maxSilenceSeconds
 		};
 	}
 };
@@ -61336,7 +62251,23 @@ var ControlStatus;
 	ControlStatus[ControlStatus["PLAYBACK_RESUMED"] = 6] = "PLAYBACK_RESUMED";
 	ControlStatus[ControlStatus["PLAYBACK_DONE"] = 7] = "PLAYBACK_DONE";
 	ControlStatus[ControlStatus["CALL_ENDED"] = 8] = "CALL_ENDED";
+	ControlStatus[ControlStatus["PLAYBACK_CUT"] = 9] = "PLAYBACK_CUT";
 })(ControlStatus || (ControlStatus = {}));
+var WarmTransferOutcome;
+(function(WarmTransferOutcome) {
+	WarmTransferOutcome[WarmTransferOutcome["WARM_TRANSFER_OUTCOME_UNSPECIFIED"] = 0] = "WARM_TRANSFER_OUTCOME_UNSPECIFIED";
+	WarmTransferOutcome[WarmTransferOutcome["WARM_TRANSFER_OUTCOME_DECLINED"] = 1] = "WARM_TRANSFER_OUTCOME_DECLINED";
+	WarmTransferOutcome[WarmTransferOutcome["WARM_TRANSFER_OUTCOME_UNREACHABLE"] = 2] = "WARM_TRANSFER_OUTCOME_UNREACHABLE";
+	WarmTransferOutcome[WarmTransferOutcome["WARM_TRANSFER_OUTCOME_DELEGATION_EXPIRED"] = 3] = "WARM_TRANSFER_OUTCOME_DELEGATION_EXPIRED";
+})(WarmTransferOutcome || (WarmTransferOutcome = {}));
+var WarmTransferOutcomeNoticeStatus;
+(function(WarmTransferOutcomeNoticeStatus) {
+	WarmTransferOutcomeNoticeStatus[WarmTransferOutcomeNoticeStatus["WARM_TRANSFER_OUTCOME_NOTICE_STATUS_UNSPECIFIED"] = 0] = "WARM_TRANSFER_OUTCOME_NOTICE_STATUS_UNSPECIFIED";
+	WarmTransferOutcomeNoticeStatus[WarmTransferOutcomeNoticeStatus["WARM_TRANSFER_OUTCOME_NOTICE_STATUS_QUEUED"] = 1] = "WARM_TRANSFER_OUTCOME_NOTICE_STATUS_QUEUED";
+	WarmTransferOutcomeNoticeStatus[WarmTransferOutcomeNoticeStatus["WARM_TRANSFER_OUTCOME_NOTICE_STATUS_DUPLICATE"] = 2] = "WARM_TRANSFER_OUTCOME_NOTICE_STATUS_DUPLICATE";
+	WarmTransferOutcomeNoticeStatus[WarmTransferOutcomeNoticeStatus["WARM_TRANSFER_OUTCOME_NOTICE_STATUS_DISABLED"] = 3] = "WARM_TRANSFER_OUTCOME_NOTICE_STATUS_DISABLED";
+	WarmTransferOutcomeNoticeStatus[WarmTransferOutcomeNoticeStatus["WARM_TRANSFER_OUTCOME_NOTICE_STATUS_INVALID"] = 4] = "WARM_TRANSFER_OUTCOME_NOTICE_STATUS_INVALID";
+})(WarmTransferOutcomeNoticeStatus || (WarmTransferOutcomeNoticeStatus = {}));
 var ControlMessageServiceName;
 (function(ControlMessageServiceName) {
 	ControlMessageServiceName[ControlMessageServiceName["UNKNOWNNAME"] = 0] = "UNKNOWNNAME";
@@ -61765,6 +62696,7 @@ var S2sStreamResponse = class S2sStreamResponse {
 		_instance.chunkIndex = _instance.chunkIndex || 0;
 		_instance.lastChunk = _instance.lastChunk || false;
 		_instance.turnEpoch = _instance.turnEpoch || "0";
+		_instance.responseSequence = _instance.responseSequence || "0";
 	}
 	static deserializeBinaryFromReader(_instance, _reader) {
 		while (_reader.nextField()) {
@@ -61794,6 +62726,9 @@ var S2sStreamResponse = class S2sStreamResponse {
 				case 7:
 					_instance.turnEpoch = _reader.readUint64String();
 					break;
+				case 8:
+					_instance.responseSequence = _reader.readUint64String();
+					break;
 				default: _reader.skipField();
 			}
 		}
@@ -61807,6 +62742,7 @@ var S2sStreamResponse = class S2sStreamResponse {
 		if (_instance.chunkIndex) _writer.writeInt32(5, _instance.chunkIndex);
 		if (_instance.lastChunk) _writer.writeBool(6, _instance.lastChunk);
 		if (_instance.turnEpoch) _writer.writeUint64String(7, _instance.turnEpoch);
+		if (_instance.responseSequence) _writer.writeUint64String(8, _instance.responseSequence);
 	}
 	constructor(_value) {
 		this._response = S2sStreamResponse.ResponseCase.none;
@@ -61818,6 +62754,7 @@ var S2sStreamResponse = class S2sStreamResponse {
 		this.chunkIndex = _value.chunkIndex;
 		this.lastChunk = _value.lastChunk;
 		this.turnEpoch = _value.turnEpoch;
+		this.responseSequence = _value.responseSequence;
 		S2sStreamResponse.refineValues(this);
 	}
 	get detectIntentResponse() {
@@ -61874,6 +62811,12 @@ var S2sStreamResponse = class S2sStreamResponse {
 	set turnEpoch(value) {
 		this._turnEpoch = value;
 	}
+	get responseSequence() {
+		return this._responseSequence;
+	}
+	set responseSequence(value) {
+		this._responseSequence = value;
+	}
 	get response() {
 		return this._response;
 	}
@@ -61890,7 +62833,8 @@ var S2sStreamResponse = class S2sStreamResponse {
 			utteranceId: this.utteranceId,
 			chunkIndex: this.chunkIndex,
 			lastChunk: this.lastChunk,
-			turnEpoch: this.turnEpoch
+			turnEpoch: this.turnEpoch,
+			responseSequence: this.responseSequence
 		};
 	}
 	toJSON() {
@@ -61904,7 +62848,8 @@ var S2sStreamResponse = class S2sStreamResponse {
 			utteranceId: this.utteranceId,
 			chunkIndex: this.chunkIndex,
 			lastChunk: this.lastChunk,
-			turnEpoch: this.turnEpoch
+			turnEpoch: this.turnEpoch,
+			responseSequence: this.responseSequence
 		};
 	}
 };
@@ -62140,6 +63085,7 @@ var ControlStreamResponse = class ControlStreamResponse {
 		_instance.controlStatus = _instance.controlStatus || 0;
 		_instance.epoch = _instance.epoch || "0";
 		_instance.mediaControl = _instance.mediaControl || void 0;
+		_instance.playbackCutRequestId = _instance.playbackCutRequestId || "0";
 	}
 	static deserializeBinaryFromReader(_instance, _reader) {
 		while (_reader.nextField()) {
@@ -62155,6 +63101,9 @@ var ControlStreamResponse = class ControlStreamResponse {
 					_instance.mediaControl = new CallMediaControlLevel();
 					_reader.readMessage(_instance.mediaControl, CallMediaControlLevel.deserializeBinaryFromReader);
 					break;
+				case 4:
+					_instance.playbackCutRequestId = _reader.readUint64String();
+					break;
 				default: _reader.skipField();
 			}
 		}
@@ -62164,12 +63113,14 @@ var ControlStreamResponse = class ControlStreamResponse {
 		if (_instance.controlStatus) _writer.writeEnum(1, _instance.controlStatus);
 		if (_instance.epoch) _writer.writeUint64String(2, _instance.epoch);
 		if (_instance.mediaControl) _writer.writeMessage(3, _instance.mediaControl, CallMediaControlLevel.serializeBinaryToWriter);
+		if (_instance.playbackCutRequestId) _writer.writeUint64String(4, _instance.playbackCutRequestId);
 	}
 	constructor(_value) {
 		_value = _value || {};
 		this.controlStatus = _value.controlStatus;
 		this.epoch = _value.epoch;
 		this.mediaControl = _value.mediaControl ? new CallMediaControlLevel(_value.mediaControl) : void 0;
+		this.playbackCutRequestId = _value.playbackCutRequestId;
 		ControlStreamResponse.refineValues(this);
 	}
 	get controlStatus() {
@@ -62190,6 +63141,12 @@ var ControlStreamResponse = class ControlStreamResponse {
 	set mediaControl(value) {
 		this._mediaControl = value;
 	}
+	get playbackCutRequestId() {
+		return this._playbackCutRequestId;
+	}
+	set playbackCutRequestId(value) {
+		this._playbackCutRequestId = value;
+	}
 	serializeBinary() {
 		const writer = new BinaryWriter();
 		ControlStreamResponse.serializeBinaryToWriter(this, writer);
@@ -62199,7 +63156,8 @@ var ControlStreamResponse = class ControlStreamResponse {
 		return {
 			controlStatus: this.controlStatus,
 			epoch: this.epoch,
-			mediaControl: this.mediaControl ? this.mediaControl.toObject() : void 0
+			mediaControl: this.mediaControl ? this.mediaControl.toObject() : void 0,
+			playbackCutRequestId: this.playbackCutRequestId
 		};
 	}
 	toJSON() {
@@ -62209,7 +63167,8 @@ var ControlStreamResponse = class ControlStreamResponse {
 		return {
 			controlStatus: ControlStatus[this.controlStatus === null || this.controlStatus === void 0 ? 0 : this.controlStatus],
 			epoch: this.epoch,
-			mediaControl: this.mediaControl ? this.mediaControl.toProtobufJSON(options) : null
+			mediaControl: this.mediaControl ? this.mediaControl.toProtobufJSON(options) : null,
+			playbackCutRequestId: this.playbackCutRequestId
 		};
 	}
 };
@@ -62224,6 +63183,9 @@ var SetControlStatusRequest = class SetControlStatusRequest {
 	}
 	static refineValues(_instance) {
 		_instance.controlStatus = _instance.controlStatus || 0;
+		_instance.playbackCut = _instance.playbackCut || void 0;
+		_instance.utteranceId = _instance.utteranceId || "";
+		_instance.responseSequence = _instance.responseSequence || "0";
 	}
 	static deserializeBinaryFromReader(_instance, _reader) {
 		while (_reader.nextField()) {
@@ -62232,6 +63194,16 @@ var SetControlStatusRequest = class SetControlStatusRequest {
 				case 1:
 					_instance.controlStatus = _reader.readEnum();
 					break;
+				case 2:
+					_instance.playbackCut = new PlaybackCut();
+					_reader.readMessage(_instance.playbackCut, PlaybackCut.deserializeBinaryFromReader);
+					break;
+				case 3:
+					_instance.utteranceId = _reader.readString();
+					break;
+				case 4:
+					_instance.responseSequence = _reader.readUint64String();
+					break;
 				default: _reader.skipField();
 			}
 		}
@@ -62239,10 +63211,16 @@ var SetControlStatusRequest = class SetControlStatusRequest {
 	}
 	static serializeBinaryToWriter(_instance, _writer) {
 		if (_instance.controlStatus) _writer.writeEnum(1, _instance.controlStatus);
+		if (_instance.playbackCut) _writer.writeMessage(2, _instance.playbackCut, PlaybackCut.serializeBinaryToWriter);
+		if (_instance.utteranceId) _writer.writeString(3, _instance.utteranceId);
+		if (_instance.responseSequence) _writer.writeUint64String(4, _instance.responseSequence);
 	}
 	constructor(_value) {
 		_value = _value || {};
 		this.controlStatus = _value.controlStatus;
+		this.playbackCut = _value.playbackCut ? new PlaybackCut(_value.playbackCut) : void 0;
+		this.utteranceId = _value.utteranceId;
+		this.responseSequence = _value.responseSequence;
 		SetControlStatusRequest.refineValues(this);
 	}
 	get controlStatus() {
@@ -62251,19 +63229,230 @@ var SetControlStatusRequest = class SetControlStatusRequest {
 	set controlStatus(value) {
 		this._controlStatus = value;
 	}
+	get playbackCut() {
+		return this._playbackCut;
+	}
+	set playbackCut(value) {
+		this._playbackCut = value;
+	}
+	get utteranceId() {
+		return this._utteranceId;
+	}
+	set utteranceId(value) {
+		this._utteranceId = value;
+	}
+	get responseSequence() {
+		return this._responseSequence;
+	}
+	set responseSequence(value) {
+		this._responseSequence = value;
+	}
 	serializeBinary() {
 		const writer = new BinaryWriter();
 		SetControlStatusRequest.serializeBinaryToWriter(this, writer);
 		return writer.getResultBuffer();
 	}
 	toObject() {
-		return { controlStatus: this.controlStatus };
+		return {
+			controlStatus: this.controlStatus,
+			playbackCut: this.playbackCut ? this.playbackCut.toObject() : void 0,
+			utteranceId: this.utteranceId,
+			responseSequence: this.responseSequence
+		};
 	}
 	toJSON() {
 		return this.toObject();
 	}
 	toProtobufJSON(options) {
-		return { controlStatus: ControlStatus[this.controlStatus === null || this.controlStatus === void 0 ? 0 : this.controlStatus] };
+		return {
+			controlStatus: ControlStatus[this.controlStatus === null || this.controlStatus === void 0 ? 0 : this.controlStatus],
+			playbackCut: this.playbackCut ? this.playbackCut.toProtobufJSON(options) : null,
+			utteranceId: this.utteranceId,
+			responseSequence: this.responseSequence
+		};
+	}
+};
+var PlaybackCut = class PlaybackCut {
+	static {
+		this.id = "ondewo.csi.PlaybackCut";
+	}
+	static deserializeBinary(bytes) {
+		const instance = new PlaybackCut();
+		PlaybackCut.deserializeBinaryFromReader(instance, new BinaryReader(bytes));
+		return instance;
+	}
+	static refineValues(_instance) {
+		_instance.playbackCutRequestId = _instance.playbackCutRequestId || "0";
+		_instance.bargeInEpoch = _instance.bargeInEpoch || "0";
+		_instance.utteranceId = _instance.utteranceId || "";
+		_instance.chunkIndex = _instance.chunkIndex || 0;
+		_instance.responseSequence = _instance.responseSequence || "0";
+		_instance.writtenAudioUs = _instance.writtenAudioUs || "0";
+		_instance.queuedAudioUs = _instance.queuedAudioUs || "0";
+		_instance.queuedAudioEstimated = _instance.queuedAudioEstimated || false;
+		_instance.cutMonotonicNs = _instance.cutMonotonicNs || "0";
+		_instance.remainderHeld = _instance.remainderHeld || false;
+	}
+	static deserializeBinaryFromReader(_instance, _reader) {
+		while (_reader.nextField()) {
+			if (_reader.isEndGroup()) break;
+			switch (_reader.getFieldNumber()) {
+				case 1:
+					_instance.playbackCutRequestId = _reader.readUint64String();
+					break;
+				case 2:
+					_instance.bargeInEpoch = _reader.readUint64String();
+					break;
+				case 3:
+					_instance.utteranceId = _reader.readString();
+					break;
+				case 4:
+					_instance.chunkIndex = _reader.readInt32();
+					break;
+				case 5:
+					_instance.responseSequence = _reader.readUint64String();
+					break;
+				case 6:
+					_instance.writtenAudioUs = _reader.readInt64String();
+					break;
+				case 7:
+					_instance.queuedAudioUs = _reader.readInt64String();
+					break;
+				case 8:
+					_instance.queuedAudioEstimated = _reader.readBool();
+					break;
+				case 9:
+					_instance.cutMonotonicNs = _reader.readInt64String();
+					break;
+				case 10:
+					_instance.remainderHeld = _reader.readBool();
+					break;
+				default: _reader.skipField();
+			}
+		}
+		PlaybackCut.refineValues(_instance);
+	}
+	static serializeBinaryToWriter(_instance, _writer) {
+		if (_instance.playbackCutRequestId) _writer.writeUint64String(1, _instance.playbackCutRequestId);
+		if (_instance.bargeInEpoch) _writer.writeUint64String(2, _instance.bargeInEpoch);
+		if (_instance.utteranceId) _writer.writeString(3, _instance.utteranceId);
+		if (_instance.chunkIndex) _writer.writeInt32(4, _instance.chunkIndex);
+		if (_instance.responseSequence) _writer.writeUint64String(5, _instance.responseSequence);
+		if (_instance.writtenAudioUs) _writer.writeInt64String(6, _instance.writtenAudioUs);
+		if (_instance.queuedAudioUs) _writer.writeInt64String(7, _instance.queuedAudioUs);
+		if (_instance.queuedAudioEstimated) _writer.writeBool(8, _instance.queuedAudioEstimated);
+		if (_instance.cutMonotonicNs) _writer.writeInt64String(9, _instance.cutMonotonicNs);
+		if (_instance.remainderHeld) _writer.writeBool(10, _instance.remainderHeld);
+	}
+	constructor(_value) {
+		_value = _value || {};
+		this.playbackCutRequestId = _value.playbackCutRequestId;
+		this.bargeInEpoch = _value.bargeInEpoch;
+		this.utteranceId = _value.utteranceId;
+		this.chunkIndex = _value.chunkIndex;
+		this.responseSequence = _value.responseSequence;
+		this.writtenAudioUs = _value.writtenAudioUs;
+		this.queuedAudioUs = _value.queuedAudioUs;
+		this.queuedAudioEstimated = _value.queuedAudioEstimated;
+		this.cutMonotonicNs = _value.cutMonotonicNs;
+		this.remainderHeld = _value.remainderHeld;
+		PlaybackCut.refineValues(this);
+	}
+	get playbackCutRequestId() {
+		return this._playbackCutRequestId;
+	}
+	set playbackCutRequestId(value) {
+		this._playbackCutRequestId = value;
+	}
+	get bargeInEpoch() {
+		return this._bargeInEpoch;
+	}
+	set bargeInEpoch(value) {
+		this._bargeInEpoch = value;
+	}
+	get utteranceId() {
+		return this._utteranceId;
+	}
+	set utteranceId(value) {
+		this._utteranceId = value;
+	}
+	get chunkIndex() {
+		return this._chunkIndex;
+	}
+	set chunkIndex(value) {
+		this._chunkIndex = value;
+	}
+	get responseSequence() {
+		return this._responseSequence;
+	}
+	set responseSequence(value) {
+		this._responseSequence = value;
+	}
+	get writtenAudioUs() {
+		return this._writtenAudioUs;
+	}
+	set writtenAudioUs(value) {
+		this._writtenAudioUs = value;
+	}
+	get queuedAudioUs() {
+		return this._queuedAudioUs;
+	}
+	set queuedAudioUs(value) {
+		this._queuedAudioUs = value;
+	}
+	get queuedAudioEstimated() {
+		return this._queuedAudioEstimated;
+	}
+	set queuedAudioEstimated(value) {
+		this._queuedAudioEstimated = value;
+	}
+	get cutMonotonicNs() {
+		return this._cutMonotonicNs;
+	}
+	set cutMonotonicNs(value) {
+		this._cutMonotonicNs = value;
+	}
+	get remainderHeld() {
+		return this._remainderHeld;
+	}
+	set remainderHeld(value) {
+		this._remainderHeld = value;
+	}
+	serializeBinary() {
+		const writer = new BinaryWriter();
+		PlaybackCut.serializeBinaryToWriter(this, writer);
+		return writer.getResultBuffer();
+	}
+	toObject() {
+		return {
+			playbackCutRequestId: this.playbackCutRequestId,
+			bargeInEpoch: this.bargeInEpoch,
+			utteranceId: this.utteranceId,
+			chunkIndex: this.chunkIndex,
+			responseSequence: this.responseSequence,
+			writtenAudioUs: this.writtenAudioUs,
+			queuedAudioUs: this.queuedAudioUs,
+			queuedAudioEstimated: this.queuedAudioEstimated,
+			cutMonotonicNs: this.cutMonotonicNs,
+			remainderHeld: this.remainderHeld
+		};
+	}
+	toJSON() {
+		return this.toObject();
+	}
+	toProtobufJSON(options) {
+		return {
+			playbackCutRequestId: this.playbackCutRequestId,
+			bargeInEpoch: this.bargeInEpoch,
+			utteranceId: this.utteranceId,
+			chunkIndex: this.chunkIndex,
+			responseSequence: this.responseSequence,
+			writtenAudioUs: this.writtenAudioUs,
+			queuedAudioUs: this.queuedAudioUs,
+			queuedAudioEstimated: this.queuedAudioEstimated,
+			cutMonotonicNs: this.cutMonotonicNs,
+			remainderHeld: this.remainderHeld
+		};
 	}
 };
 var SetControlStatusResponse = class SetControlStatusResponse {
@@ -62548,6 +63737,370 @@ var SetCallMediaControlResponse = class SetCallMediaControlResponse {
 			botPlaybackInFlight: this.botPlaybackInFlight,
 			refusalReason: this.refusalReason
 		};
+	}
+};
+var CallerDtmfRequest = class CallerDtmfRequest {
+	static {
+		this.id = "ondewo.csi.CallerDtmfRequest";
+	}
+	static deserializeBinary(bytes) {
+		const instance = new CallerDtmfRequest();
+		CallerDtmfRequest.deserializeBinaryFromReader(instance, new BinaryReader(bytes));
+		return instance;
+	}
+	static refineValues(_instance) {
+		_instance.callId = _instance.callId || "";
+		_instance.sequence = _instance.sequence || "0";
+		_instance.digit = _instance.digit || "";
+		_instance.durationMs = _instance.durationMs || 0;
+		_instance.receivedUnixNs = _instance.receivedUnixNs || "0";
+	}
+	static deserializeBinaryFromReader(_instance, _reader) {
+		while (_reader.nextField()) {
+			if (_reader.isEndGroup()) break;
+			switch (_reader.getFieldNumber()) {
+				case 1:
+					_instance.callId = _reader.readString();
+					break;
+				case 2:
+					_instance.sequence = _reader.readUint64String();
+					break;
+				case 3:
+					_instance.digit = _reader.readString();
+					break;
+				case 4:
+					_instance.durationMs = _reader.readUint32();
+					break;
+				case 5:
+					_instance.receivedUnixNs = _reader.readInt64String();
+					break;
+				default: _reader.skipField();
+			}
+		}
+		CallerDtmfRequest.refineValues(_instance);
+	}
+	static serializeBinaryToWriter(_instance, _writer) {
+		if (_instance.callId) _writer.writeString(1, _instance.callId);
+		if (_instance.sequence) _writer.writeUint64String(2, _instance.sequence);
+		if (_instance.digit) _writer.writeString(3, _instance.digit);
+		if (_instance.durationMs) _writer.writeUint32(4, _instance.durationMs);
+		if (_instance.receivedUnixNs) _writer.writeInt64String(5, _instance.receivedUnixNs);
+	}
+	constructor(_value) {
+		_value = _value || {};
+		this.callId = _value.callId;
+		this.sequence = _value.sequence;
+		this.digit = _value.digit;
+		this.durationMs = _value.durationMs;
+		this.receivedUnixNs = _value.receivedUnixNs;
+		CallerDtmfRequest.refineValues(this);
+	}
+	get callId() {
+		return this._callId;
+	}
+	set callId(value) {
+		this._callId = value;
+	}
+	get sequence() {
+		return this._sequence;
+	}
+	set sequence(value) {
+		this._sequence = value;
+	}
+	get digit() {
+		return this._digit;
+	}
+	set digit(value) {
+		this._digit = value;
+	}
+	get durationMs() {
+		return this._durationMs;
+	}
+	set durationMs(value) {
+		this._durationMs = value;
+	}
+	get receivedUnixNs() {
+		return this._receivedUnixNs;
+	}
+	set receivedUnixNs(value) {
+		this._receivedUnixNs = value;
+	}
+	serializeBinary() {
+		const writer = new BinaryWriter();
+		CallerDtmfRequest.serializeBinaryToWriter(this, writer);
+		return writer.getResultBuffer();
+	}
+	toObject() {
+		return {
+			callId: this.callId,
+			sequence: this.sequence,
+			digit: this.digit,
+			durationMs: this.durationMs,
+			receivedUnixNs: this.receivedUnixNs
+		};
+	}
+	toJSON() {
+		return this.toObject();
+	}
+	toProtobufJSON(options) {
+		return {
+			callId: this.callId,
+			sequence: this.sequence,
+			digit: this.digit,
+			durationMs: this.durationMs,
+			receivedUnixNs: this.receivedUnixNs
+		};
+	}
+};
+var CallerDtmfResponse = class CallerDtmfResponse {
+	static {
+		this.id = "ondewo.csi.CallerDtmfResponse";
+	}
+	static deserializeBinary(bytes) {
+		const instance = new CallerDtmfResponse();
+		CallerDtmfResponse.deserializeBinaryFromReader(instance, new BinaryReader(bytes));
+		return instance;
+	}
+	static refineValues(_instance) {
+		_instance.accepted = _instance.accepted || false;
+		_instance.reason = _instance.reason || "";
+	}
+	static deserializeBinaryFromReader(_instance, _reader) {
+		while (_reader.nextField()) {
+			if (_reader.isEndGroup()) break;
+			switch (_reader.getFieldNumber()) {
+				case 1:
+					_instance.accepted = _reader.readBool();
+					break;
+				case 2:
+					_instance.reason = _reader.readString();
+					break;
+				default: _reader.skipField();
+			}
+		}
+		CallerDtmfResponse.refineValues(_instance);
+	}
+	static serializeBinaryToWriter(_instance, _writer) {
+		if (_instance.accepted) _writer.writeBool(1, _instance.accepted);
+		if (_instance.reason) _writer.writeString(2, _instance.reason);
+	}
+	constructor(_value) {
+		_value = _value || {};
+		this.accepted = _value.accepted;
+		this.reason = _value.reason;
+		CallerDtmfResponse.refineValues(this);
+	}
+	get accepted() {
+		return this._accepted;
+	}
+	set accepted(value) {
+		this._accepted = value;
+	}
+	get reason() {
+		return this._reason;
+	}
+	set reason(value) {
+		this._reason = value;
+	}
+	serializeBinary() {
+		const writer = new BinaryWriter();
+		CallerDtmfResponse.serializeBinaryToWriter(this, writer);
+		return writer.getResultBuffer();
+	}
+	toObject() {
+		return {
+			accepted: this.accepted,
+			reason: this.reason
+		};
+	}
+	toJSON() {
+		return this.toObject();
+	}
+	toProtobufJSON(options) {
+		return {
+			accepted: this.accepted,
+			reason: this.reason
+		};
+	}
+};
+var WarmTransferOutcomeNotice = class WarmTransferOutcomeNotice {
+	static {
+		this.id = "ondewo.csi.WarmTransferOutcomeNotice";
+	}
+	static deserializeBinary(bytes) {
+		const instance = new WarmTransferOutcomeNotice();
+		WarmTransferOutcomeNotice.deserializeBinaryFromReader(instance, new BinaryReader(bytes));
+		return instance;
+	}
+	static refineValues(_instance) {
+		_instance.requestId = _instance.requestId || "";
+		_instance.outcome = _instance.outcome || 0;
+		_instance.introSession = _instance.introSession || "";
+		_instance.calleeDisplayName = _instance.calleeDisplayName || "";
+		_instance.cause = _instance.cause || "";
+		_instance.fallbackText = _instance.fallbackText || "";
+	}
+	static deserializeBinaryFromReader(_instance, _reader) {
+		while (_reader.nextField()) {
+			if (_reader.isEndGroup()) break;
+			switch (_reader.getFieldNumber()) {
+				case 1:
+					_instance.requestId = _reader.readString();
+					break;
+				case 2:
+					_instance.outcome = _reader.readEnum();
+					break;
+				case 3:
+					_instance.introSession = _reader.readString();
+					break;
+				case 4:
+					_instance.calleeDisplayName = _reader.readString();
+					break;
+				case 5:
+					_instance.cause = _reader.readString();
+					break;
+				case 6:
+					_instance.fallbackText = _reader.readString();
+					break;
+				default: _reader.skipField();
+			}
+		}
+		WarmTransferOutcomeNotice.refineValues(_instance);
+	}
+	static serializeBinaryToWriter(_instance, _writer) {
+		if (_instance.requestId) _writer.writeString(1, _instance.requestId);
+		if (_instance.outcome) _writer.writeEnum(2, _instance.outcome);
+		if (_instance.introSession) _writer.writeString(3, _instance.introSession);
+		if (_instance.calleeDisplayName) _writer.writeString(4, _instance.calleeDisplayName);
+		if (_instance.cause) _writer.writeString(5, _instance.cause);
+		if (_instance.fallbackText) _writer.writeString(6, _instance.fallbackText);
+	}
+	constructor(_value) {
+		_value = _value || {};
+		this.requestId = _value.requestId;
+		this.outcome = _value.outcome;
+		this.introSession = _value.introSession;
+		this.calleeDisplayName = _value.calleeDisplayName;
+		this.cause = _value.cause;
+		this.fallbackText = _value.fallbackText;
+		WarmTransferOutcomeNotice.refineValues(this);
+	}
+	get requestId() {
+		return this._requestId;
+	}
+	set requestId(value) {
+		this._requestId = value;
+	}
+	get outcome() {
+		return this._outcome;
+	}
+	set outcome(value) {
+		this._outcome = value;
+	}
+	get introSession() {
+		return this._introSession;
+	}
+	set introSession(value) {
+		this._introSession = value;
+	}
+	get calleeDisplayName() {
+		return this._calleeDisplayName;
+	}
+	set calleeDisplayName(value) {
+		this._calleeDisplayName = value;
+	}
+	get cause() {
+		return this._cause;
+	}
+	set cause(value) {
+		this._cause = value;
+	}
+	get fallbackText() {
+		return this._fallbackText;
+	}
+	set fallbackText(value) {
+		this._fallbackText = value;
+	}
+	serializeBinary() {
+		const writer = new BinaryWriter();
+		WarmTransferOutcomeNotice.serializeBinaryToWriter(this, writer);
+		return writer.getResultBuffer();
+	}
+	toObject() {
+		return {
+			requestId: this.requestId,
+			outcome: this.outcome,
+			introSession: this.introSession,
+			calleeDisplayName: this.calleeDisplayName,
+			cause: this.cause,
+			fallbackText: this.fallbackText
+		};
+	}
+	toJSON() {
+		return this.toObject();
+	}
+	toProtobufJSON(options) {
+		return {
+			requestId: this.requestId,
+			outcome: WarmTransferOutcome[this.outcome === null || this.outcome === void 0 ? 0 : this.outcome],
+			introSession: this.introSession,
+			calleeDisplayName: this.calleeDisplayName,
+			cause: this.cause,
+			fallbackText: this.fallbackText
+		};
+	}
+};
+var WarmTransferOutcomeNoticeResponse = class WarmTransferOutcomeNoticeResponse {
+	static {
+		this.id = "ondewo.csi.WarmTransferOutcomeNoticeResponse";
+	}
+	static deserializeBinary(bytes) {
+		const instance = new WarmTransferOutcomeNoticeResponse();
+		WarmTransferOutcomeNoticeResponse.deserializeBinaryFromReader(instance, new BinaryReader(bytes));
+		return instance;
+	}
+	static refineValues(_instance) {
+		_instance.status = _instance.status || 0;
+	}
+	static deserializeBinaryFromReader(_instance, _reader) {
+		while (_reader.nextField()) {
+			if (_reader.isEndGroup()) break;
+			switch (_reader.getFieldNumber()) {
+				case 1:
+					_instance.status = _reader.readEnum();
+					break;
+				default: _reader.skipField();
+			}
+		}
+		WarmTransferOutcomeNoticeResponse.refineValues(_instance);
+	}
+	static serializeBinaryToWriter(_instance, _writer) {
+		if (_instance.status) _writer.writeEnum(1, _instance.status);
+	}
+	constructor(_value) {
+		_value = _value || {};
+		this.status = _value.status;
+		WarmTransferOutcomeNoticeResponse.refineValues(this);
+	}
+	get status() {
+		return this._status;
+	}
+	set status(value) {
+		this._status = value;
+	}
+	serializeBinary() {
+		const writer = new BinaryWriter();
+		WarmTransferOutcomeNoticeResponse.serializeBinaryToWriter(this, writer);
+		return writer.getResultBuffer();
+	}
+	toObject() {
+		return { status: this.status };
+	}
+	toJSON() {
+		return this.toObject();
+	}
+	toProtobufJSON(options) {
+		return { status: WarmTransferOutcomeNoticeStatus[this.status === null || this.status === void 0 ? 0 : this.status] };
 	}
 };
 var Condition = class Condition {
@@ -63015,6 +64568,28 @@ var ConversationsClient = class ConversationsClient {
 					requestClass: CallMediaControlLevel,
 					responseClass: SetCallMediaControlResponse
 				});
+			},
+			setCallerDtmf: (requestData, requestMetadata = new GrpcMetadata()) => {
+				return this.handler.handle({
+					type: GrpcCallType.unary,
+					client: this.client,
+					path: "/ondewo.csi.Conversations/SetCallerDtmf",
+					requestData,
+					requestMetadata,
+					requestClass: CallerDtmfRequest,
+					responseClass: CallerDtmfResponse
+				});
+			},
+			deliverWarmTransferOutcomeNotice: (requestData, requestMetadata = new GrpcMetadata()) => {
+				return this.handler.handle({
+					type: GrpcCallType.unary,
+					client: this.client,
+					path: "/ondewo.csi.Conversations/DeliverWarmTransferOutcomeNotice",
+					requestData,
+					requestMetadata,
+					requestClass: WarmTransferOutcomeNotice,
+					responseClass: WarmTransferOutcomeNoticeResponse
+				});
 			}
 		};
 		this.client = clientFactory.createClient("ondewo.csi.Conversations", settings);
@@ -63046,10 +64621,16 @@ var ConversationsClient = class ConversationsClient {
 	setCallMediaControl(requestData, requestMetadata = new GrpcMetadata()) {
 		return this.$raw.setCallMediaControl(requestData, requestMetadata).pipe(throwStatusErrors(), takeMessages());
 	}
+	setCallerDtmf(requestData, requestMetadata = new GrpcMetadata()) {
+		return this.$raw.setCallerDtmf(requestData, requestMetadata).pipe(throwStatusErrors(), takeMessages());
+	}
+	deliverWarmTransferOutcomeNotice(requestData, requestMetadata = new GrpcMetadata()) {
+		return this.$raw.deliverWarmTransferOutcomeNotice(requestData, requestMetadata).pipe(throwStatusErrors(), takeMessages());
+	}
 	static {
 		this.ɵfac = i0.ɵɵngDeclareFactory({
 			minVersion: "12.0.0",
-			version: "22.2.6",
+			version: "22.3.0",
 			ngImport: i0,
 			type: ConversationsClient,
 			deps: [
@@ -63066,7 +64647,7 @@ var ConversationsClient = class ConversationsClient {
 	static {
 		this.ɵprov = i0.ɵɵngDeclareInjectable({
 			minVersion: "12.0.0",
-			version: "22.2.6",
+			version: "22.3.0",
 			ngImport: i0,
 			type: ConversationsClient,
 			providedIn: "any"
@@ -63075,7 +64656,7 @@ var ConversationsClient = class ConversationsClient {
 };
 i0.ɵɵngDeclareClassMetadata({
 	minVersion: "12.0.0",
-	version: "22.2.6",
+	version: "22.3.0",
 	ngImport: i0,
 	type: ConversationsClient,
 	decorators: [{
@@ -68396,7 +69977,7 @@ var GetAgentStatisticsRequest = class GetAgentStatisticsRequest {
 					_reader.readMessage(_instance.fieldMask, googleProtobuf000.FieldMask.deserializeBinaryFromReader);
 					break;
 				case 10:
-					_reader.readPackableEnumInto(_instance.llmCcaiServiceProviderFilter = _instance.llmCcaiServiceProviderFilter || []);
+					(_instance.llmCcaiServiceProviderFilter = _instance.llmCcaiServiceProviderFilter || []).push(..._reader.readPackedEnum() || []);
 					break;
 				case 11:
 					(_instance.llmBaseUrlFilter = _instance.llmBaseUrlFilter || []).push(_reader.readString());
@@ -68717,7 +70298,7 @@ var GetSessionsStatisticsRequest = class GetSessionsStatisticsRequest {
 					(_instance.llmToolNameFilter = _instance.llmToolNameFilter || []).push(_reader.readString());
 					break;
 				case 15:
-					_reader.readPackableEnumInto(_instance.llmCcaiServiceProviderFilter = _instance.llmCcaiServiceProviderFilter || []);
+					(_instance.llmCcaiServiceProviderFilter = _instance.llmCcaiServiceProviderFilter || []).push(..._reader.readPackedEnum() || []);
 					break;
 				case 16:
 					(_instance.llmBaseUrlFilter = _instance.llmBaseUrlFilter || []).push(_reader.readString());
@@ -69066,7 +70647,7 @@ var GetSessionsStatisticsTimeSeriesRequest = class GetSessionsStatisticsTimeSeri
 					(_instance.llmToolNameFilter = _instance.llmToolNameFilter || []).push(_reader.readString());
 					break;
 				case 10:
-					_reader.readPackableEnumInto(_instance.llmCcaiServiceProviderFilter = _instance.llmCcaiServiceProviderFilter || []);
+					(_instance.llmCcaiServiceProviderFilter = _instance.llmCcaiServiceProviderFilter || []).push(..._reader.readPackedEnum() || []);
 					break;
 				case 11:
 					_instance.fieldMask = new googleProtobuf000.FieldMask();
@@ -74571,7 +76152,7 @@ var ReindexAgentRequest = class ReindexAgentRequest {
 					_instance.branchName = _reader.readString();
 					break;
 				case 3:
-					_reader.readPackableEnumInto(_instance.indexTypes = _instance.indexTypes || []);
+					(_instance.indexTypes = _instance.indexTypes || []).push(..._reader.readPackedEnum() || []);
 					break;
 				default: _reader.skipField();
 			}
@@ -76010,10 +77591,10 @@ var OperationFilter = class OperationFilter {
 					(_instance.projectParents = _instance.projectParents || []).push(_reader.readString());
 					break;
 				case 2:
-					_reader.readPackableEnumInto(_instance.statuses = _instance.statuses || []);
+					(_instance.statuses = _instance.statuses || []).push(..._reader.readPackedEnum() || []);
 					break;
 				case 3:
-					_reader.readPackableEnumInto(_instance.types = _instance.types || []);
+					(_instance.types = _instance.types || []).push(..._reader.readPackedEnum() || []);
 					break;
 				case 4:
 					_instance.startTime = new googleProtobuf000.Timestamp();
@@ -78488,7 +80069,7 @@ var AgentsClient = class AgentsClient {
 	static {
 		this.ɵfac = i0.ɵɵngDeclareFactory({
 			minVersion: "12.0.0",
-			version: "22.2.6",
+			version: "22.3.0",
 			ngImport: i0,
 			type: AgentsClient,
 			deps: [
@@ -78505,7 +80086,7 @@ var AgentsClient = class AgentsClient {
 	static {
 		this.ɵprov = i0.ɵɵngDeclareInjectable({
 			minVersion: "12.0.0",
-			version: "22.2.6",
+			version: "22.3.0",
 			ngImport: i0,
 			type: AgentsClient,
 			providedIn: "any"
@@ -78514,7 +80095,7 @@ var AgentsClient = class AgentsClient {
 };
 i0.ɵɵngDeclareClassMetadata({
 	minVersion: "12.0.0",
-	version: "22.2.6",
+	version: "22.3.0",
 	ngImport: i0,
 	type: AgentsClient,
 	decorators: [{
@@ -81738,7 +83319,7 @@ var ClassifyIntentsRequest = class ClassifyIntentsRequest {
 					_instance.mode = _reader.readEnum();
 					break;
 				case 7:
-					_reader.readPackableEnumInto(_instance.algorithms = _instance.algorithms || []);
+					(_instance.algorithms = _instance.algorithms || []).push(..._reader.readPackedEnum() || []);
 					break;
 				case 8:
 					_instance.fieldMask = new googleProtobuf000.FieldMask();
@@ -82217,7 +83798,7 @@ var AiServicesClient = class AiServicesClient {
 	static {
 		this.ɵfac = i0.ɵɵngDeclareFactory({
 			minVersion: "12.0.0",
-			version: "22.2.6",
+			version: "22.3.0",
 			ngImport: i0,
 			type: AiServicesClient,
 			deps: [
@@ -82234,7 +83815,7 @@ var AiServicesClient = class AiServicesClient {
 	static {
 		this.ɵprov = i0.ɵɵngDeclareInjectable({
 			minVersion: "12.0.0",
-			version: "22.2.6",
+			version: "22.3.0",
 			ngImport: i0,
 			type: AiServicesClient,
 			providedIn: "any"
@@ -82243,7 +83824,7 @@ var AiServicesClient = class AiServicesClient {
 };
 i0.ɵɵngDeclareClassMetadata({
 	minVersion: "12.0.0",
-	version: "22.2.6",
+	version: "22.3.0",
 	ngImport: i0,
 	type: AiServicesClient,
 	decorators: [{
@@ -82363,7 +83944,7 @@ var CcaiProjectsClient = class CcaiProjectsClient {
 	static {
 		this.ɵfac = i0.ɵɵngDeclareFactory({
 			minVersion: "12.0.0",
-			version: "22.2.6",
+			version: "22.3.0",
 			ngImport: i0,
 			type: CcaiProjectsClient,
 			deps: [
@@ -82380,7 +83961,7 @@ var CcaiProjectsClient = class CcaiProjectsClient {
 	static {
 		this.ɵprov = i0.ɵɵngDeclareInjectable({
 			minVersion: "12.0.0",
-			version: "22.2.6",
+			version: "22.3.0",
 			ngImport: i0,
 			type: CcaiProjectsClient,
 			providedIn: "any"
@@ -82389,7 +83970,7 @@ var CcaiProjectsClient = class CcaiProjectsClient {
 };
 i0.ɵɵngDeclareClassMetadata({
 	minVersion: "12.0.0",
-	version: "22.2.6",
+	version: "22.3.0",
 	ngImport: i0,
 	type: CcaiProjectsClient,
 	decorators: [{
@@ -82509,7 +84090,7 @@ var ContextsClient = class ContextsClient {
 	static {
 		this.ɵfac = i0.ɵɵngDeclareFactory({
 			minVersion: "12.0.0",
-			version: "22.2.6",
+			version: "22.3.0",
 			ngImport: i0,
 			type: ContextsClient,
 			deps: [
@@ -82526,7 +84107,7 @@ var ContextsClient = class ContextsClient {
 	static {
 		this.ɵprov = i0.ɵɵngDeclareInjectable({
 			minVersion: "12.0.0",
-			version: "22.2.6",
+			version: "22.3.0",
 			ngImport: i0,
 			type: ContextsClient,
 			providedIn: "any"
@@ -82535,7 +84116,7 @@ var ContextsClient = class ContextsClient {
 };
 i0.ɵɵngDeclareClassMetadata({
 	minVersion: "12.0.0",
-	version: "22.2.6",
+	version: "22.3.0",
 	ngImport: i0,
 	type: ContextsClient,
 	decorators: [{
@@ -82795,7 +84376,7 @@ var EntityTypesClient = class EntityTypesClient {
 	static {
 		this.ɵfac = i0.ɵɵngDeclareFactory({
 			minVersion: "12.0.0",
-			version: "22.2.6",
+			version: "22.3.0",
 			ngImport: i0,
 			type: EntityTypesClient,
 			deps: [
@@ -82812,7 +84393,7 @@ var EntityTypesClient = class EntityTypesClient {
 	static {
 		this.ɵprov = i0.ɵɵngDeclareInjectable({
 			minVersion: "12.0.0",
-			version: "22.2.6",
+			version: "22.3.0",
 			ngImport: i0,
 			type: EntityTypesClient,
 			providedIn: "any"
@@ -82821,7 +84402,7 @@ var EntityTypesClient = class EntityTypesClient {
 };
 i0.ɵɵngDeclareClassMetadata({
 	minVersion: "12.0.0",
-	version: "22.2.6",
+	version: "22.3.0",
 	ngImport: i0,
 	type: EntityTypesClient,
 	decorators: [{
@@ -83235,7 +84816,7 @@ var IntentsClient = class IntentsClient {
 	static {
 		this.ɵfac = i0.ɵɵngDeclareFactory({
 			minVersion: "12.0.0",
-			version: "22.2.6",
+			version: "22.3.0",
 			ngImport: i0,
 			type: IntentsClient,
 			deps: [
@@ -83252,7 +84833,7 @@ var IntentsClient = class IntentsClient {
 	static {
 		this.ɵprov = i0.ɵɵngDeclareInjectable({
 			minVersion: "12.0.0",
-			version: "22.2.6",
+			version: "22.3.0",
 			ngImport: i0,
 			type: IntentsClient,
 			providedIn: "any"
@@ -83261,7 +84842,7 @@ var IntentsClient = class IntentsClient {
 };
 i0.ɵɵngDeclareClassMetadata({
 	minVersion: "12.0.0",
-	version: "22.2.6",
+	version: "22.3.0",
 	ngImport: i0,
 	type: IntentsClient,
 	decorators: [{
@@ -84305,7 +85886,7 @@ var LlmEvaluationsClient = class LlmEvaluationsClient {
 	static {
 		this.ɵfac = i0.ɵɵngDeclareFactory({
 			minVersion: "12.0.0",
-			version: "22.2.6",
+			version: "22.3.0",
 			ngImport: i0,
 			type: LlmEvaluationsClient,
 			deps: [
@@ -84322,7 +85903,7 @@ var LlmEvaluationsClient = class LlmEvaluationsClient {
 	static {
 		this.ɵprov = i0.ɵɵngDeclareInjectable({
 			minVersion: "12.0.0",
-			version: "22.2.6",
+			version: "22.3.0",
 			ngImport: i0,
 			type: LlmEvaluationsClient,
 			providedIn: "any"
@@ -84331,7 +85912,7 @@ var LlmEvaluationsClient = class LlmEvaluationsClient {
 };
 i0.ɵɵngDeclareClassMetadata({
 	minVersion: "12.0.0",
-	version: "22.2.6",
+	version: "22.3.0",
 	ngImport: i0,
 	type: LlmEvaluationsClient,
 	decorators: [{
@@ -84479,7 +86060,7 @@ var OperationsClient = class OperationsClient {
 	static {
 		this.ɵfac = i0.ɵɵngDeclareFactory({
 			minVersion: "12.0.0",
-			version: "22.2.6",
+			version: "22.3.0",
 			ngImport: i0,
 			type: OperationsClient,
 			deps: [
@@ -84496,7 +86077,7 @@ var OperationsClient = class OperationsClient {
 	static {
 		this.ɵprov = i0.ɵɵngDeclareInjectable({
 			minVersion: "12.0.0",
-			version: "22.2.6",
+			version: "22.3.0",
 			ngImport: i0,
 			type: OperationsClient,
 			providedIn: "any"
@@ -84505,7 +86086,7 @@ var OperationsClient = class OperationsClient {
 };
 i0.ɵɵngDeclareClassMetadata({
 	minVersion: "12.0.0",
-	version: "22.2.6",
+	version: "22.3.0",
 	ngImport: i0,
 	type: OperationsClient,
 	decorators: [{
@@ -84611,7 +86192,7 @@ var ProjectRolesClient = class ProjectRolesClient {
 	static {
 		this.ɵfac = i0.ɵɵngDeclareFactory({
 			minVersion: "12.0.0",
-			version: "22.2.6",
+			version: "22.3.0",
 			ngImport: i0,
 			type: ProjectRolesClient,
 			deps: [
@@ -84628,7 +86209,7 @@ var ProjectRolesClient = class ProjectRolesClient {
 	static {
 		this.ɵprov = i0.ɵɵngDeclareInjectable({
 			minVersion: "12.0.0",
-			version: "22.2.6",
+			version: "22.3.0",
 			ngImport: i0,
 			type: ProjectRolesClient,
 			providedIn: "any"
@@ -84637,7 +86218,7 @@ var ProjectRolesClient = class ProjectRolesClient {
 };
 i0.ɵɵngDeclareClassMetadata({
 	minVersion: "12.0.0",
-	version: "22.2.6",
+	version: "22.3.0",
 	ngImport: i0,
 	type: ProjectRolesClient,
 	decorators: [{
@@ -85051,7 +86632,7 @@ var ProjectStatisticsClient = class ProjectStatisticsClient {
 	static {
 		this.ɵfac = i0.ɵɵngDeclareFactory({
 			minVersion: "12.0.0",
-			version: "22.2.6",
+			version: "22.3.0",
 			ngImport: i0,
 			type: ProjectStatisticsClient,
 			deps: [
@@ -85068,7 +86649,7 @@ var ProjectStatisticsClient = class ProjectStatisticsClient {
 	static {
 		this.ɵprov = i0.ɵɵngDeclareInjectable({
 			minVersion: "12.0.0",
-			version: "22.2.6",
+			version: "22.3.0",
 			ngImport: i0,
 			type: ProjectStatisticsClient,
 			providedIn: "any"
@@ -85077,7 +86658,7 @@ var ProjectStatisticsClient = class ProjectStatisticsClient {
 };
 i0.ɵɵngDeclareClassMetadata({
 	minVersion: "12.0.0",
-	version: "22.2.6",
+	version: "22.3.0",
 	ngImport: i0,
 	type: ProjectStatisticsClient,
 	decorators: [{
@@ -87731,7 +89312,7 @@ var RagListDocumentsRequest = class RagListDocumentsRequest {
 					(_instance.suffix = _instance.suffix || []).push(_reader.readString());
 					break;
 				case 11:
-					_reader.readPackableEnumInto(_instance.runStatus = _instance.runStatus || []);
+					(_instance.runStatus = _instance.runStatus || []).push(..._reader.readPackedEnum() || []);
 					break;
 				case 12:
 					_instance.createTimeFrom = new googleProtobuf000.Timestamp();
@@ -91784,7 +93365,7 @@ var RagCrawlerStatusFilter = class RagCrawlerStatusFilter {
 					_instance.isActive = _reader.readBool();
 					break;
 				case 2:
-					_reader.readPackableInt32Into(_instance.acceptedStatusCodes = _instance.acceptedStatusCodes || []);
+					(_instance.acceptedStatusCodes = _instance.acceptedStatusCodes || []).push(..._reader.readPackedInt32() || []);
 					break;
 				default: _reader.skipField();
 			}
@@ -93781,7 +95362,7 @@ var RagGetCrawlerRunLogsRequest = class RagGetCrawlerRunLogsRequest {
 					_instance.pageSize = _reader.readInt32();
 					break;
 				case 6:
-					_reader.readPackableEnumInto(_instance.levelFilters = _instance.levelFilters || []);
+					(_instance.levelFilters = _instance.levelFilters || []).push(..._reader.readPackedEnum() || []);
 					break;
 				case 7:
 					_instance.phaseFilter = _reader.readString();
@@ -94510,7 +96091,7 @@ var RagsClient = class RagsClient {
 	static {
 		this.ɵfac = i0.ɵɵngDeclareFactory({
 			minVersion: "12.0.0",
-			version: "22.2.6",
+			version: "22.3.0",
 			ngImport: i0,
 			type: RagsClient,
 			deps: [
@@ -94527,7 +96108,7 @@ var RagsClient = class RagsClient {
 	static {
 		this.ɵprov = i0.ɵɵngDeclareInjectable({
 			minVersion: "12.0.0",
-			version: "22.2.6",
+			version: "22.3.0",
 			ngImport: i0,
 			type: RagsClient,
 			providedIn: "any"
@@ -94536,7 +96117,7 @@ var RagsClient = class RagsClient {
 };
 i0.ɵɵngDeclareClassMetadata({
 	minVersion: "12.0.0",
-	version: "22.2.6",
+	version: "22.3.0",
 	ngImport: i0,
 	type: RagsClient,
 	decorators: [{
@@ -94667,7 +96248,7 @@ var ServerStatisticsClient = class ServerStatisticsClient {
 	static {
 		this.ɵfac = i0.ɵɵngDeclareFactory({
 			minVersion: "12.0.0",
-			version: "22.2.6",
+			version: "22.3.0",
 			ngImport: i0,
 			type: ServerStatisticsClient,
 			deps: [
@@ -94684,7 +96265,7 @@ var ServerStatisticsClient = class ServerStatisticsClient {
 	static {
 		this.ɵprov = i0.ɵɵngDeclareInjectable({
 			minVersion: "12.0.0",
-			version: "22.2.6",
+			version: "22.3.0",
 			ngImport: i0,
 			type: ServerStatisticsClient,
 			providedIn: "any"
@@ -94693,7 +96274,7 @@ var ServerStatisticsClient = class ServerStatisticsClient {
 };
 i0.ɵɵngDeclareClassMetadata({
 	minVersion: "12.0.0",
-	version: "22.2.6",
+	version: "22.3.0",
 	ngImport: i0,
 	type: ServerStatisticsClient,
 	decorators: [{
@@ -95415,7 +96996,7 @@ var SessionsClient = class SessionsClient {
 	static {
 		this.ɵfac = i0.ɵɵngDeclareFactory({
 			minVersion: "12.0.0",
-			version: "22.2.6",
+			version: "22.3.0",
 			ngImport: i0,
 			type: SessionsClient,
 			deps: [
@@ -95432,7 +97013,7 @@ var SessionsClient = class SessionsClient {
 	static {
 		this.ɵprov = i0.ɵɵngDeclareInjectable({
 			minVersion: "12.0.0",
-			version: "22.2.6",
+			version: "22.3.0",
 			ngImport: i0,
 			type: SessionsClient,
 			providedIn: "any"
@@ -95441,7 +97022,7 @@ var SessionsClient = class SessionsClient {
 };
 i0.ɵɵngDeclareClassMetadata({
 	minVersion: "12.0.0",
-	version: "22.2.6",
+	version: "22.3.0",
 	ngImport: i0,
 	type: SessionsClient,
 	decorators: [{
@@ -95841,7 +97422,7 @@ var UsersClient = class UsersClient {
 	static {
 		this.ɵfac = i0.ɵɵngDeclareFactory({
 			minVersion: "12.0.0",
-			version: "22.2.6",
+			version: "22.3.0",
 			ngImport: i0,
 			type: UsersClient,
 			deps: [
@@ -95858,7 +97439,7 @@ var UsersClient = class UsersClient {
 	static {
 		this.ɵprov = i0.ɵɵngDeclareInjectable({
 			minVersion: "12.0.0",
-			version: "22.2.6",
+			version: "22.3.0",
 			ngImport: i0,
 			type: UsersClient,
 			providedIn: "any"
@@ -95867,7 +97448,7 @@ var UsersClient = class UsersClient {
 };
 i0.ɵɵngDeclareClassMetadata({
 	minVersion: "12.0.0",
-	version: "22.2.6",
+	version: "22.3.0",
 	ngImport: i0,
 	type: UsersClient,
 	decorators: [{
@@ -98099,7 +99680,7 @@ var UtilitiesClient = class UtilitiesClient {
 	static {
 		this.ɵfac = i0.ɵɵngDeclareFactory({
 			minVersion: "12.0.0",
-			version: "22.2.6",
+			version: "22.3.0",
 			ngImport: i0,
 			type: UtilitiesClient,
 			deps: [
@@ -98116,7 +99697,7 @@ var UtilitiesClient = class UtilitiesClient {
 	static {
 		this.ɵprov = i0.ɵɵngDeclareInjectable({
 			minVersion: "12.0.0",
-			version: "22.2.6",
+			version: "22.3.0",
 			ngImport: i0,
 			type: UtilitiesClient,
 			providedIn: "any"
@@ -98125,7 +99706,7 @@ var UtilitiesClient = class UtilitiesClient {
 };
 i0.ɵɵngDeclareClassMetadata({
 	minVersion: "12.0.0",
-	version: "22.2.6",
+	version: "22.3.0",
 	ngImport: i0,
 	type: UtilitiesClient,
 	decorators: [{
@@ -99205,7 +100786,7 @@ var WebhookClient = class WebhookClient {
 	static {
 		this.ɵfac = i0.ɵɵngDeclareFactory({
 			minVersion: "12.0.0",
-			version: "22.2.6",
+			version: "22.3.0",
 			ngImport: i0,
 			type: WebhookClient,
 			deps: [
@@ -99222,7 +100803,7 @@ var WebhookClient = class WebhookClient {
 	static {
 		this.ɵprov = i0.ɵɵngDeclareInjectable({
 			minVersion: "12.0.0",
-			version: "22.2.6",
+			version: "22.3.0",
 			ngImport: i0,
 			type: WebhookClient,
 			providedIn: "any"
@@ -99231,7 +100812,7 @@ var WebhookClient = class WebhookClient {
 };
 i0.ɵɵngDeclareClassMetadata({
 	minVersion: "12.0.0",
-	version: "22.2.6",
+	version: "22.3.0",
 	ngImport: i0,
 	type: WebhookClient,
 	decorators: [{
@@ -99477,7 +101058,7 @@ var Speech2TextClient = class Speech2TextClient {
 	static {
 		this.ɵfac = i0.ɵɵngDeclareFactory({
 			minVersion: "12.0.0",
-			version: "22.2.6",
+			version: "22.3.0",
 			ngImport: i0,
 			type: Speech2TextClient,
 			deps: [
@@ -99494,7 +101075,7 @@ var Speech2TextClient = class Speech2TextClient {
 	static {
 		this.ɵprov = i0.ɵɵngDeclareInjectable({
 			minVersion: "12.0.0",
-			version: "22.2.6",
+			version: "22.3.0",
 			ngImport: i0,
 			type: Speech2TextClient,
 			providedIn: "any"
@@ -99503,7 +101084,7 @@ var Speech2TextClient = class Speech2TextClient {
 };
 i0.ɵɵngDeclareClassMetadata({
 	minVersion: "12.0.0",
-	version: "22.2.6",
+	version: "22.3.0",
 	ngImport: i0,
 	type: Speech2TextClient,
 	decorators: [{
@@ -99791,7 +101372,7 @@ var Text2SpeechClient = class Text2SpeechClient {
 	static {
 		this.ɵfac = i0.ɵɵngDeclareFactory({
 			minVersion: "12.0.0",
-			version: "22.2.6",
+			version: "22.3.0",
 			ngImport: i0,
 			type: Text2SpeechClient,
 			deps: [
@@ -99808,7 +101389,7 @@ var Text2SpeechClient = class Text2SpeechClient {
 	static {
 		this.ɵprov = i0.ɵɵngDeclareInjectable({
 			minVersion: "12.0.0",
-			version: "22.2.6",
+			version: "22.3.0",
 			ngImport: i0,
 			type: Text2SpeechClient,
 			providedIn: "any"
@@ -99817,7 +101398,7 @@ var Text2SpeechClient = class Text2SpeechClient {
 };
 i0.ɵɵngDeclareClassMetadata({
 	minVersion: "12.0.0",
-	version: "22.2.6",
+	version: "22.3.0",
 	ngImport: i0,
 	type: Text2SpeechClient,
 	decorators: [{
@@ -99966,7 +101547,7 @@ var KeycloakTokenProvider = class KeycloakTokenProvider {
 	static {
 		this.ɵfac = i0.ɵɵngDeclareFactory({
 			minVersion: "12.0.0",
-			version: "22.2.6",
+			version: "22.3.0",
 			ngImport: i0,
 			type: KeycloakTokenProvider,
 			deps: [{ token: i1.HttpClient }, {
@@ -99979,7 +101560,7 @@ var KeycloakTokenProvider = class KeycloakTokenProvider {
 	static {
 		this.ɵprov = i0.ɵɵngDeclareInjectable({
 			minVersion: "12.0.0",
-			version: "22.2.6",
+			version: "22.3.0",
 			ngImport: i0,
 			type: KeycloakTokenProvider
 		});
@@ -99987,7 +101568,7 @@ var KeycloakTokenProvider = class KeycloakTokenProvider {
 };
 i0.ɵɵngDeclareClassMetadata({
 	minVersion: "12.0.0",
-	version: "22.2.6",
+	version: "22.3.0",
 	ngImport: i0,
 	type: KeycloakTokenProvider,
 	decorators: [{ type: Injectable }],
@@ -100051,7 +101632,7 @@ var AuthGrpcInterceptor = class AuthGrpcInterceptor {
 	static {
 		this.ɵfac = i0.ɵɵngDeclareFactory({
 			minVersion: "12.0.0",
-			version: "22.2.6",
+			version: "22.3.0",
 			ngImport: i0,
 			type: AuthGrpcInterceptor,
 			deps: [{ token: TOKEN_PROVIDER }],
@@ -100061,7 +101642,7 @@ var AuthGrpcInterceptor = class AuthGrpcInterceptor {
 	static {
 		this.ɵprov = i0.ɵɵngDeclareInjectable({
 			minVersion: "12.0.0",
-			version: "22.2.6",
+			version: "22.3.0",
 			ngImport: i0,
 			type: AuthGrpcInterceptor
 		});
@@ -100069,7 +101650,7 @@ var AuthGrpcInterceptor = class AuthGrpcInterceptor {
 };
 i0.ɵɵngDeclareClassMetadata({
 	minVersion: "12.0.0",
-	version: "22.2.6",
+	version: "22.3.0",
 	ngImport: i0,
 	type: AuthGrpcInterceptor,
 	decorators: [{ type: Injectable }],
@@ -100153,6 +101734,6 @@ function buildGrpcWebHost(config) {
 function warnInsecure(authority) {
 	console.warn(`ONDEWO gRPC-web: insecure http:// endpoint ${authority}; requests and bearer tokens are sent unencrypted. Use useSecureChannel: true (https://) outside local development.`);
 }
-export { AUTHORIZATION_HEADER, AcousticModels, AddAudioFilesRequest, AddAudioFilesResponse, AddDataToUserLanguageModelRequest, AddLlmEvaluationExampleRequest, AddLlmEvaluationExamplesRequest, AddLlmEvaluationExamplesResponse, AddNotificationsRequest, AddNotificationsResponse, AddSessionCommentRequest, AddSessionFeedbackRequest, AddSessionLabelsRequest, AddSessionStepFeedbackRequest, AddTrainingPhrasesFromCSVRequest, AddTrainingPhrasesRequest, AddTrainingPhrasesResponse, AddUserToProjectRequest, Agent, AgentOfUserWithOwner, AgentSorting, AgentStatus, AgentView, AgentWithOwner, AgentsClient, AiServicesClient, AltSentence, AltTrainingPhrase, Apodization, ApplyLlmEvaluationAbRolloutRequest, AudioEncoding, AudioFileResource, AudioFileResourceType, AudioFormat, AuthGrpcInterceptor, BEARER_PREFIX, BROWSER_UNSUPPORTED_TLS_FIELDS, BatchCreateEntitiesRequest, BatchCreateParametersRequest, BatchCreateResponseMessagesRequest, BatchCreateTrainingPhrasesRequest, BatchDeleteEntitiesRequest, BatchDeleteEntitiesResponse, BatchDeleteEntityTypesRequest, BatchDeleteIntentsRequest, BatchDeleteParametersRequest, BatchDeleteParametersResponse, BatchDeleteResponseMessagesRequest, BatchDeleteResponseMessagesResponse, BatchDeleteTrainingPhrasesRequest, BatchDeleteTrainingPhrasesResponse, BatchEntitiesResponse, BatchGetEntitiesRequest, BatchGetParametersRequest, BatchGetResponseMessagesRequest, BatchGetTrainingPhrasesRequest, BatchParametersStatusResponse, BatchResponseMessagesStatusResponse, BatchSynthesizeRequest, BatchSynthesizeResponse, BatchTrainingPhrasesStatusResponse, BatchUpdateEntitiesRequest, BatchUpdateEntityTypesRequest, BatchUpdateEntityTypesResponse, BatchUpdateIntentsRequest, BatchUpdateIntentsResponse, BatchUpdateParametersRequest, BatchUpdateResponseMessagesRequest, BatchUpdateTrainingPhrasesRequest, BertAugEnrichmentConfig, BuildCacheRequest, Caching, CallMediaControlLevel, CancelLlmEvaluationExperimentRequest, CancelOperationRequest, CcaiProject, CcaiProjectSorting, CcaiProjectStatus, CcaiProjectView, CcaiProjectsClient, CcaiService, CcaiServiceFilter, CcaiServiceList, CcaiServiceProvider, CcaiServiceType, CheckUpstreamHealthResponse, CkptFile, ClassifyIntentsRequest, ClassifyIntentsResponse, CleanAllEntityTypesRequest, CleanAllEntityTypesResponse, CleanAllIntentsRequest, CleanAllIntentsResponse, CleanEntityTypeRequest, CleanEntityTypeResponse, CleanIntentRequest, CleanIntentResponse, Comment, CompareLlmEvaluationExperimentsRequest, ComparisonOperator, CompositeInference, Condition, ConditionType, Context, ContextFilter, ContextsClient, ControlMessage, ControlMessageServiceMethod, ControlMessageServiceName, ControlMessageServiceParameters, ControlStatus, ControlStreamRequest, ControlStreamResponse, ConversationsClient, CreateAgentRequest, CreateCcaiProjectRequest, CreateCcaiProjectResponse, CreateContextRequest, CreateCustomPhonemizerRequest, CreateEntityRequest, CreateEntityTypeRequest, CreateIntentRequest, CreateLlmEvaluationAbExperimentRequest, CreateLlmEvaluationDatasetRequest, CreateLlmEvaluationExamplesFromSessionRequest, CreateLlmEvaluationExamplesFromSessionResponse, CreateLlmEvaluationOnlineConfigRequest, CreateLlmEvaluationReleaseGateRequest, CreateLlmEvaluationReportRequest, CreateLlmEvaluationScheduleRequest, CreateLlmEvaluationScorecardRequest, CreateProjectRoleRequest, CreateProjectTechnicalUserRequest, CreateProjectTechnicalUserResponse, CreateServerRoleRequest, CreateSessionEntityTypeRequest, CreateSessionRequest, CreateSessionReviewRequest, CreateSessionStepRequest, CreateUserLanguageModelRequest, CreateUserRequest, CustomHttpPattern, CustomPhonemizerProto, CustomPlatformInfo, DataEnrichmentConfig, Decoding, DefaultProjectRole, DefaultServerRole, DeleteAgentRequest, DeleteAllContextsRequest, DeleteAllUserPreferencesRequest, DeleteAudioFilesRequest, DeleteAudioFilesResponse, DeleteCcaiProjectRequest, DeleteCcaiProjectResponse, DeleteContextRequest, DeleteEntityRequest, DeleteEntityStatus, DeleteEntityTypeRequest, DeleteIntentRequest, DeleteLlmEvaluationAbExperimentRequest, DeleteLlmEvaluationDatasetRequest, DeleteLlmEvaluationExampleRequest, DeleteLlmEvaluationExperimentRequest, DeleteLlmEvaluationFeedbackRequest, DeleteLlmEvaluationOnlineConfigRequest, DeleteLlmEvaluationReleaseGateRequest, DeleteLlmEvaluationReportRequest, DeleteLlmEvaluationScheduleRequest, DeleteLlmEvaluationScorecardRequest, DeleteNotificationsRequest, DeleteOperationRequest, DeleteProjectRoleRequest, DeleteProjectTechnicalUserRequest, DeleteResourcesRequest, DeleteServerRoleRequest, DeleteSessionCommentsRequest, DeleteSessionEntityTypeRequest, DeleteSessionFeedbackRequest, DeleteSessionLabelsRequest, DeleteSessionRequest, DeleteSessionStepRequest, DeleteUserLanguageModelRequest, DeleteUserPreferencesRequest, DeleteUserPreferencesResponse, DeleteUserRequest, DetectIntentRequest, DetectIntentResponse, DetectedIntent, DocumentFileResource, EntityDetected, EntityEnrichmentConfig, EntityStatus, EntityType, EntityTypeBatch, EntityTypeCategory, EntityTypeFuzzyNerConfig, EntityTypeSorting, EntityTypeUpdate, EntityTypeView, EntityTypesClient, EntityValueSorting, EventInput, ExportAgentRequest, ExportAgentResponse, ExportBenchmarkAgentRequest, ExportBenchmarkAgentResponse, ExportResourcesRequest, ExportResourcesResponse, ExtractEntitiesFuzzyRequest, ExtractEntitiesRequest, ExtractEntitiesResponse, FeedbackAuthorType, FeedbackBreakdownBucket, FeedbackFilter, FeedbackRating, FeedbackScope, FeedbackStatistics, FeedbackTimeGranularity, FeedbackTimeSeriesBucket, FileResource, FullTextSearchRequest, FullTextSearchResponseEntity, FullTextSearchResponseEntitySynonym, FullTextSearchResponseEntityType, FullTextSearchResponseIntent, FullTextSearchResponseIntentContextIn, FullTextSearchResponseIntentContextOut, FullTextSearchResponseIntentParameters, FullTextSearchResponseIntentResponse, FullTextSearchResponseIntentTags, FullTextSearchResponseIntentUsersays, GPT2EnrichmentConfig, GRPC_AGENTS_CLIENT_SETTINGS, GRPC_AI_SERVICES_CLIENT_SETTINGS, GRPC_CCAI_PROJECTS_CLIENT_SETTINGS, GRPC_CONTEXTS_CLIENT_SETTINGS, GRPC_CONVERSATIONS_CLIENT_SETTINGS, GRPC_ENTITY_TYPES_CLIENT_SETTINGS, GRPC_INTENTS_CLIENT_SETTINGS, GRPC_LLM_EVALUATIONS_CLIENT_SETTINGS, GRPC_OPERATIONS_CLIENT_SETTINGS, GRPC_PROJECT_ROLES_CLIENT_SETTINGS, GRPC_PROJECT_STATISTICS_CLIENT_SETTINGS, GRPC_RAGS_CLIENT_SETTINGS, GRPC_SERVER_STATISTICS_CLIENT_SETTINGS, GRPC_SESSIONS_CLIENT_SETTINGS, GRPC_SPEECH2_TEXT_CLIENT_SETTINGS, GRPC_TEXT2_SPEECH_CLIENT_SETTINGS, GRPC_USERS_CLIENT_SETTINGS, GRPC_UTILITIES_CLIENT_SETTINGS, GRPC_WEBHOOK_CLIENT_SETTINGS, GenerateResponsesRequest, GenerateResponsesResponse, GenerateUserSaysRequest, GenerateUserSaysResponse, GetAgentRequest, GetAgentStatisticsRequest, GetAgentStatisticsResponse, GetAllIntentTagsRequest, GetAlternativeSentencesRequest, GetAlternativeSentencesResponse, GetAlternativeTrainingPhrasesRequest, GetAlternativeTrainingPhrasesResponse, GetAudioFileOfSessionRequest, GetAudioFilesRequest, GetAudioFilesResponse, GetCcaiProjectRequest, GetCcaiServiceRequest, GetContextRequest, GetEntityRequest, GetEntityTypeCountRequest, GetEntityTypeRequest, GetFeedbackStatisticsRequest, GetFeedbackStatisticsResponse, GetFeedbackStatisticsTimeSeriesRequest, GetFeedbackStatisticsTimeSeriesResponse, GetIntentCountRequest, GetIntentRequest, GetIntentTagsRequest, GetIntentTagsResponse, GetLatestSessionReviewRequest, GetLlmEvaluationAbExperimentRequest, GetLlmEvaluationAbExperimentResultsRequest, GetLlmEvaluationAbExperimentResultsResponse, GetLlmEvaluationAbRolloutDecisionRequest, GetLlmEvaluationAbRolloutRecommendationRequest, GetLlmEvaluationAnnotationQueueItemRequest, GetLlmEvaluationDatasetRequest, GetLlmEvaluationExampleRequest, GetLlmEvaluationExperimentRequest, GetLlmEvaluationOnlineConfigRequest, GetLlmEvaluationOnlineResultRequest, GetLlmEvaluationProjectSettingsRequest, GetLlmEvaluationReleaseGateRequest, GetLlmEvaluationReleaseGateRunRequest, GetLlmEvaluationReportRequest, GetLlmEvaluationScheduleRequest, GetLlmEvaluationScorecardRequest, GetModelStatusesRequest, GetModelStatusesResponse, GetNotificationRequest, GetOperationRequest, GetPlatformInfoResponse, GetPlatformMappingRequest, GetProjectElementStatRequest, GetProjectRoleRequest, GetProjectStatRequest, GetRemoteOperationContainerLogsRequest, GetRemoteOperationContainerLogsResponse, GetRemoteOperationContainerStatusRequest, GetServerRoleRequest, GetSessionEntityTypeRequest, GetSessionFeedbackRequest, GetSessionRequest, GetSessionReviewRequest, GetSessionStepRequest, GetSessionsStatisticsRequest, GetSessionsStatisticsResponse, GetSessionsStatisticsTimeSeriesRequest, GetSessionsStatisticsTimeSeriesResponse, GetSynonymsRequest, GetSynonymsResponse, GetUserPreferencesRequest, GetUserPreferencesResponse, GetUserProjectCountRequest, GetUserRequest, GloVeEnrichmentConfig, GlowTTS, GlowTTSTriton, GrpcWebEndpointError, HiFiGan, HiFiGanTriton, Http, HttpRule, ImageFileResource, ImportAgentRequest, InferenceBackend, InitiationProtocol, InputAudioConfig, Intent, IntentAlgorithms, IntentBatch, IntentCategory, IntentClassified, IntentSorting, IntentTagRequest, IntentUpdate, IntentView, IntentsClient, KEYCLOAK_TOKEN_PROVIDER_CONFIG, KeyValuePair, KeycloakAuthenticationError, KeycloakTokenProvider, LanguageModelPipelineId, LanguageModels, LatLng, ListAccountIdsOfAllSessionsRequest, ListAccountIdsResponse, ListAgentsOfUserResponse, ListAgentsRequest, ListAgentsResponse, ListAudioFilesRequest, ListAudioFilesResponse, ListCcaiProjectsRequest, ListCcaiProjectsResponse, ListContextsRequest, ListContextsResponse, ListCustomPhonemizerRequest, ListCustomPhonemizerResponse, ListDatastreamIdsOfAllSessionsRequest, ListDatastreamIdsResponse, ListEntitiesRequest, ListEntitiesResponse, ListEntityTypesRequest, ListEntityTypesResponse, ListIdentifiedUserIdsOfAllSessionsRequest, ListIdentifiedUserIdsResponse, ListInputContextsOfAllSessionsRequest, ListInputContextsResponse, ListIntentsRequest, ListIntentsResponse, ListLanguageCodesOfAllSessionsRequest, ListLanguageCodesResponse, ListLlmEvaluationAbExperimentsRequest, ListLlmEvaluationAbExperimentsResponse, ListLlmEvaluationAbRolloutDecisionsRequest, ListLlmEvaluationAbRolloutDecisionsResponse, ListLlmEvaluationAnnotationQueueItemsRequest, ListLlmEvaluationAnnotationQueueItemsResponse, ListLlmEvaluationDatasetsRequest, ListLlmEvaluationDatasetsResponse, ListLlmEvaluationEvaluatorsRequest, ListLlmEvaluationEvaluatorsResponse, ListLlmEvaluationExamplesRequest, ListLlmEvaluationExamplesResponse, ListLlmEvaluationExperimentsRequest, ListLlmEvaluationExperimentsResponse, ListLlmEvaluationFeedbackRequest, ListLlmEvaluationFeedbackResponse, ListLlmEvaluationOnlineConfigsRequest, ListLlmEvaluationOnlineConfigsResponse, ListLlmEvaluationOnlineResultsRequest, ListLlmEvaluationOnlineResultsResponse, ListLlmEvaluationReleaseGateRunsRequest, ListLlmEvaluationReleaseGateRunsResponse, ListLlmEvaluationReleaseGatesRequest, ListLlmEvaluationReleaseGatesResponse, ListLlmEvaluationReportsRequest, ListLlmEvaluationReportsResponse, ListLlmEvaluationSchedulesRequest, ListLlmEvaluationSchedulesResponse, ListLlmEvaluationScorecardsRequest, ListLlmEvaluationScorecardsResponse, ListLlmModelsRequest, ListLlmModelsResponse, ListMatchedEntityTypesOfAllSessionsRequest, ListMatchedEntityTypesResponse, ListMatchedIntentsOfAllSessionsRequest, ListMatchedIntentsResponse, ListNotificationsRequest, ListNotificationsResponse, ListOperationsRequest, ListOperationsResponse, ListOriginIdsOfAllSessionsRequest, ListOriginIdsResponse, ListOutputContextsOfAllSessionsRequest, ListOutputContextsResponse, ListParametersRequest, ListParametersResponse, ListPlatformsOfAllSessionsRequest, ListPlatformsResponse, ListProjectPermissionsRequest, ListProjectPermissionsResponse, ListProjectRolesRequest, ListProjectRolesResponse, ListProjectTechnicalUsersRequest, ListProjectTechnicalUsersResponse, ListPropertyIdsOfAllSessionsRequest, ListPropertyIdsResponse, ListRemoteOperationContainersRequest, ListRemoteOperationContainersResponse, ListResponseMessagesRequest, ListResponseMessagesResponse, ListS2sPipelinesRequest, ListS2sPipelinesResponse, ListS2tDomainsRequest, ListS2tDomainsResponse, ListS2tLanguageModelsRequest, ListS2tLanguageModelsResponse, ListS2tLanguagesRequest, ListS2tLanguagesResponse, ListS2tNormalizationPipelinesRequest, ListS2tNormalizationPipelinesResponse, ListS2tPipelinesRequest, ListS2tPipelinesResponse, ListServerPermissionsRequest, ListServerPermissionsResponse, ListServerRolesRequest, ListServerRolesResponse, ListSessionCommentsOfAllSessionsRequest, ListSessionCommentsRequest, ListSessionCommentsResponse, ListSessionEntityTypesRequest, ListSessionEntityTypesResponse, ListSessionFeedbackOfAllSessionsRequest, ListSessionFeedbackRequest, ListSessionFeedbackResponse, ListSessionLabelsOfAllSessionsRequest, ListSessionLabelsRequest, ListSessionLabelsResponse, ListSessionReviewsRequest, ListSessionReviewsResponse, ListSessionsRequest, ListSessionsResponse, ListT2sDomainsRequest, ListT2sDomainsResponse, ListT2sLanguagesRequest, ListT2sLanguagesResponse, ListT2sNormalizationPipelinesRequest, ListT2sNormalizationPipelinesResponse, ListT2sPipelinesRequest, ListT2sPipelinesResponse, ListTagsOfAllSessionsRequest, ListTagsResponse, ListTrainingPhrasesRequest, ListTrainingPhrasesResponse, ListTrainingPhrasesofIntentsWithEnrichmentRequest, ListTrainingPhrasesofIntentsWithEnrichmentResponse, ListUserIdsOfAllSessionsRequest, ListUserIdsResponse, ListUserInfosResponse, ListUserPreferencesRequest, ListUserPreferencesResponse, ListUsersInProjectRequest, ListUsersInProjectResponse, ListUsersRequest, ListUsersResponse, LlmAgentNodeEvent, LlmAgentNodePhase, LlmAgentUsage, LlmBaseUrlUsage, LlmCacheStats, LlmCallFinishedEvent, LlmCallStartedEvent, LlmCcaiServiceUsage, LlmEnrichmentConfig, LlmErrorStat, LlmErrorStats, LlmEvaluationAbExperiment, LlmEvaluationAbExperimentFilter, LlmEvaluationAbExperimentStatus, LlmEvaluationAbOptimizeMetric, LlmEvaluationAbRolloutDecision, LlmEvaluationAbRolloutDecisionFilter, LlmEvaluationAbRolloutRecommendation, LlmEvaluationAbTrafficConfig, LlmEvaluationAbVariant, LlmEvaluationAbVariantResult, LlmEvaluationAnnotationQueueItem, LlmEvaluationAnnotationQueueItemFilter, LlmEvaluationAnnotationStatus, LlmEvaluationComparison, LlmEvaluationDataset, LlmEvaluationDatasetFilter, LlmEvaluationDatasetType, LlmEvaluationEvaluatorCategory, LlmEvaluationEvaluatorParameterSpec, LlmEvaluationEvaluatorRun, LlmEvaluationEvaluatorSpec, LlmEvaluationEvaluatorType, LlmEvaluationExample, LlmEvaluationExampleExtractionMode, LlmEvaluationExampleFilter, LlmEvaluationExperiment, LlmEvaluationExperimentFilter, LlmEvaluationExperimentKind, LlmEvaluationExperimentStatus, LlmEvaluationFeedback, LlmEvaluationFeedbackFilter, LlmEvaluationJudgeConfig, LlmEvaluationOnlineConfig, LlmEvaluationOnlineConfigFilter, LlmEvaluationOnlineResult, LlmEvaluationOnlineResultFilter, LlmEvaluationOnlineSessionFilter, LlmEvaluationPairwiseResult, LlmEvaluationProjectSettings, LlmEvaluationReleaseGate, LlmEvaluationReleaseGateCheck, LlmEvaluationReleaseGateFilter, LlmEvaluationReleaseGateRun, LlmEvaluationReleaseGateRunFilter, LlmEvaluationReleaseGateSafetyConfig, LlmEvaluationReleaseGateThresholds, LlmEvaluationReleaseGateVerdict, LlmEvaluationReport, LlmEvaluationReportFilter, LlmEvaluationSchedule, LlmEvaluationScheduleAction, LlmEvaluationScheduleFilter, LlmEvaluationScorecard, LlmEvaluationScorecardComponent, LlmEvaluationScorecardFilter, LlmEvaluationSimulationKind, LlmEvaluationSimulationPersona, LlmEvaluationTurnResult, LlmEvaluationsClient, LlmFinishReasonStat, LlmGenerateRequest, LlmGenerateResponse, LlmLatencyStats, LlmModel, LlmModelUsage, LlmProviderUsage, LlmReasoningEffortStat, LlmRetrievalMetadata, LlmRetrievedChunk, LlmSafetyAssessment, LlmSafetyCategoryStat, LlmSafetyFinding, LlmSafetyLocation, LlmSafetyStats, LlmTelemetry, LlmTelemetryReport, LlmTelemetryTimeSeriesBucket, LlmThinkingDeltaEvent, LlmThinkingMetadata, LlmTokenUsage, LlmTokenUsageUpdateEvent, LlmToolCallFinishedEvent, LlmToolCallMetadata, LlmToolCallStartedEvent, LlmToolUsage, LogEntry, LogSeverity, Logging, Logmnse, MIN_REFRESH_DELAY_SECONDS, Map, MbMelganTriton, Mel2Audio, MigrateAgentRequest, Mode, ModelStatus, NormalizeTextRequest, NormalizeTextResponse, Notification, NotificationFilter, NotificationFlaggedStatus, NotificationOrigin, NotificationReadStatus, NotificationType, NotificationVisibility, OpenaiLlmOptions, Operation, OperationFilter, OperationMetadata, OperationsClient, OptimizeRankingMatchRequest, OptimizeRankingMatchResponse, OriginalDetectIntentRequest, Parakeet, Pcm, PhonemizerId, PingRequest, PingResponse, PlatformMapping, PostProcessing, PostProcessingOptions, PostProcessors, Postprocessing, ProjectRole, ProjectRoleView, ProjectRolesClient, ProjectStatisticsClient, ProjectTechnicalUser, PromoteLlmEvaluationAnnotationQueueItemRequest, PromoteLlmEvaluationAnnotationQueueItemResponse, PtFiles, Pyannote, QueryInput, QueryParameters, QueryResult, Qwen3TtsBase, Qwen3TtsCustomVoice, REFRESH_SKEW_SECONDS, RagAddCrawlerResultsToDatasetsRequest, RagChunk, RagChunkMethod, RagComparisonOperator, RagCrawler, RagCrawlerAuth, RagCrawlerAuthenticationExecutionType, RagCrawlerBrowserConfig, RagCrawlerConcurrencyConfig, RagCrawlerConfig, RagCrawlerContentResult, RagCrawlerContentScope, RagCrawlerCookie, RagCrawlerCrawlStrategy, RagCrawlerDeepCrawlerConfig, RagCrawlerDensityPruning, RagCrawlerExecutionInfo, RagCrawlerFilters, RagCrawlerHtmlAuth, RagCrawlerHttpAuth, RagCrawlerIncrementalConfig, RagCrawlerMetaDataExtractor, RagCrawlerMetaDataExtractorType, RagCrawlerPruningThresholdType, RagCrawlerResult, RagCrawlerResultsConfig, RagCrawlerRetryConfig, RagCrawlerSeedUrlFilters, RagCrawlerSelectorType, RagCrawlerSources, RagCrawlerStatusFilter, RagCreateCrawlerRequest, RagCreateDatasetRequest, RagDataset, RagDatasetList, RagDatasetParsingStatus, RagDeleteCrawlerRequest, RagDeleteCrawlerResponse, RagDeleteCrawlerRunsRequest, RagDeleteCrawlerRunsResponse, RagDeleteCrawlersRequest, RagDeleteCrawlersResponse, RagDeleteDocumentsRequest, RagDeleteRequest, RagDocAgg, RagDocument, RagDocumentIdsRequest, RagDocumentList, RagDocumentStatus, RagDocumentType, RagDownloadDocumentRequest, RagFileChunk, RagFileMetadata, RagGetCrawlerAttachedDatasetsRequest, RagGetCrawlerAttachedDatasetsResponse, RagGetCrawlerRequest, RagGetCrawlerResultRequest, RagGetCrawlerResultsRequest, RagGetCrawlerResultsResponse, RagGetCrawlerRunLogsRequest, RagGetCrawlerRunLogsResponse, RagGetCrawlerRunRequest, RagGraphRagConfig, RagGraphRagMethod, RagListCrawlerRunsRequest, RagListCrawlerRunsResponse, RagListCrawlersRequest, RagListCrawlersResponse, RagListDatasetsRequest, RagListDocumentsRequest, RagLogic, RagMetadataCondition, RagMetadataConditions, RagParserConfig, RagPartialSuccess, RagRaptorConfig, RagRemoveCrawlerResultsFromDatasetsRequest, RagRetrievalRequest, RagRetrievalResponse, RagStartCrawlerRequest, RagStopCrawlerRequest, RagStopCrawlerResponse, RagUpdateCrawlerRequest, RagUpdateDatasetRequest, RagUpdateDocumentRequest, RagUploadDocumentRequest, RagVariantConfig, RagsClient, RankingMatchOptimizationConfig, ReannotateEntitiesOptions, ReasoningEffort, ReferencedChunk, ReindexAgentRequest, RemoteOperationContainer, RemoteOperationContainerLifecycleState, RemoteOperationContainerLogLine, RemoteOperationContainerStatus, RemoveUserFromProjectRequest, ReportFormat, ReportType, RequestConfig, ResourceView, RestoreAgentRequest, RotateProjectTechnicalUserPasswordRequest, RotateProjectTechnicalUserPasswordResponse, RunLlmEvaluationExperimentRequest, RunLlmEvaluationReleaseGateRequest, S2sPipeline, S2sPipelineId, S2sStreamRequest, S2sStreamResponse, S2tCloudProviderConfig, S2tCloudProviderConfigAmazon, S2tCloudProviderConfigDeepgram, S2tCloudProviderConfigGoogle, S2tCloudProviderConfigMicrosoft, S2tCloudServiceAmazon, S2tCloudServiceDeepgram, S2tCloudServiceGoogle, S2tCloudServiceMicrosoft, S2tDescription, S2tGetServiceInfoResponse, S2tInference, S2tLlmPostProcessing, S2tLlmPostProcessingInverseNormalizationOptions, S2tLlmPostProcessingNormalizationOptions, S2tLlmPostProcessingSubTaskOptions, S2tLlmPostProcessingSummarizationOptions, S2tLlmPostProcessingTranslationOptions, S2tNormalization, S2tPipelineId, S2tTranscription, ServerRole, ServerStatisticsClient, ServiceTier, Session, SessionEntityType, SessionFeedback, SessionFilter, SessionInfo, SessionReview, SessionReviewStep, SessionStep, SessionsClient, SessionsReportType, SetAgentStatusRequest, SetCallMediaControlResponse, SetControlStatusRequest, SetControlStatusResponse, SetNotificationsFlaggedStatusRequest, SetNotificationsReadStatusRequest, SetResourcesRequest, SetUserPreferencesRequest, SetUserPreferencesResponse, Silero, SimulateLlmEvaluationConversationsRequest, SingleInference, SipTrigger, SortingMode, Speech2TextClient, Speech2TextConfig, StartLlmEvaluationAbExperimentRequest, StatResponse, Status, StopLlmEvaluationAbExperimentRequest, StreamNotificationsRequest, StreamRemoteOperationContainerLogsRequest, StreamingDetectIntentRequest, StreamingDetectIntentResponse, StreamingLlmGenerateResponse, StreamingRecognitionResult, StreamingServer, StreamingSpeechRecognition, StreamingSynthesizeRequest, StreamingSynthesizeResponse, StringUpdate, SubmitLlmEvaluationFeedbackRequest, SymSpell, Synonym, SynthesizeRequest, SynthesizeResponse, T2SCustomLengthScales, T2SDescription, T2SGetServiceInfoResponse, T2SInference, T2SNormalization, T2sCloudProviderConfig, T2sCloudProviderConfigElevenLabs, T2sCloudProviderConfigGoogle, T2sCloudProviderConfigMicrosoft, T2sCloudServiceAmazon, T2sCloudServiceElevenLabs, T2sCloudServiceGoogle, T2sCloudServiceMicrosoft, T2sPipelineId, TOKEN_PROVIDER, Text2Audio, Text2Mel, Text2SpeechClient, Text2SpeechConfig, TextInput, ThesaurusEnrichmentConfig, TrainAgentRequest, TrainUserLanguageModelRequest, TrainingPhraseCleanerOptions, TrainingPhraseStatus, TranscribeFileRequest, TranscribeFileResponse, TranscribeRequestConfig, TranscribeStreamRequest, TranscribeStreamResponse, Transcription, TranscriptionAlternative, TranscriptionReturnOptions, TranscriptionType, TsdMethod, TurnDetectionOptions, UpdateAgentRequest, UpdateCcaiProjectRequest, UpdateCcaiProjectResponse, UpdateContextRequest, UpdateCustomPhonemizerRequest, UpdateEntityRequest, UpdateEntityTypeRequest, UpdateIntentRequest, UpdateLlmEvaluationAbExperimentRequest, UpdateLlmEvaluationAnnotationQueueItemRequest, UpdateLlmEvaluationDatasetRequest, UpdateLlmEvaluationExampleRequest, UpdateLlmEvaluationExperimentRequest, UpdateLlmEvaluationFeedbackRequest, UpdateLlmEvaluationOnlineConfigRequest, UpdateLlmEvaluationProjectSettingsRequest, UpdateLlmEvaluationReleaseGateRequest, UpdateLlmEvaluationScheduleRequest, UpdateLlmEvaluationScorecardRequest, UpdateNotificationRequest, UpdateProjectRoleRequest, UpdateServerRoleRequest, UpdateSessionCommentsRequest, UpdateSessionEntityTypeRequest, UpdateSessionFeedbackRequest, UpdateSessionStepRequest, UpdateUserRequest, User, UserInProject, UserInfo, UsersClient, UtilitiesClient, UtteranceDetectionOptions, VadMethod, ValidateEmbeddedRegexRequest, ValidateEmbeddedRegexResponse, ValidateRegexRequest, ValidateRegexResponse, Verbosity, VideoFileResource, Vits, VitsTriton, VoiceActivityDetection, VoiceCloningRequest, VoiceSettings, Wav2Vec, Wav2VecTriton, WebhookClient, WebhookRequest, WebhookResponse, WespeakerTsd, Whisper, WhisperTriton, Wiener, Word2VecEnrichmentConfig, WordAlternative, WordDetail, WordNetAugEnrichmentConfig, XLNetAugEnrichmentConfig, authHttpInterceptor, buildBearerValue, buildGrpcWebHost, provideOndewoCsiAuth, resolveBearerValue, resolveToken };
+export { AUTHORIZATION_HEADER, AcousticModels, AddAudioFilesRequest, AddAudioFilesResponse, AddDataToUserLanguageModelRequest, AddLlmEvaluationExampleRequest, AddLlmEvaluationExamplesRequest, AddLlmEvaluationExamplesResponse, AddNotificationsRequest, AddNotificationsResponse, AddSessionCommentRequest, AddSessionFeedbackRequest, AddSessionLabelsRequest, AddSessionStepFeedbackRequest, AddTrainingPhrasesFromCSVRequest, AddTrainingPhrasesRequest, AddTrainingPhrasesResponse, AddUserToProjectRequest, Agent, AgentOfUserWithOwner, AgentSorting, AgentStatus, AgentView, AgentWithOwner, AgentsClient, AiServicesClient, AltSentence, AltTrainingPhrase, Apodization, ApplyLlmEvaluationAbRolloutRequest, AudioEncoding, AudioFileResource, AudioFileResourceType, AudioFormat, AuthGrpcInterceptor, BEARER_PREFIX, BROWSER_UNSUPPORTED_TLS_FIELDS, BatchCreateEntitiesRequest, BatchCreateParametersRequest, BatchCreateResponseMessagesRequest, BatchCreateTrainingPhrasesRequest, BatchDeleteEntitiesRequest, BatchDeleteEntitiesResponse, BatchDeleteEntityTypesRequest, BatchDeleteIntentsRequest, BatchDeleteParametersRequest, BatchDeleteParametersResponse, BatchDeleteResponseMessagesRequest, BatchDeleteResponseMessagesResponse, BatchDeleteTrainingPhrasesRequest, BatchDeleteTrainingPhrasesResponse, BatchEntitiesResponse, BatchGetEntitiesRequest, BatchGetParametersRequest, BatchGetResponseMessagesRequest, BatchGetTrainingPhrasesRequest, BatchParametersStatusResponse, BatchResponseMessagesStatusResponse, BatchSynthesizeRequest, BatchSynthesizeResponse, BatchTrainingPhrasesStatusResponse, BatchUpdateEntitiesRequest, BatchUpdateEntityTypesRequest, BatchUpdateEntityTypesResponse, BatchUpdateIntentsRequest, BatchUpdateIntentsResponse, BatchUpdateParametersRequest, BatchUpdateResponseMessagesRequest, BatchUpdateTrainingPhrasesRequest, BertAugEnrichmentConfig, BuildCacheRequest, Caching, CallMediaControlLevel, CallerDtmfRequest, CallerDtmfResponse, CancelLlmEvaluationExperimentRequest, CancelOperationRequest, CcaiProject, CcaiProjectSorting, CcaiProjectStatus, CcaiProjectView, CcaiProjectsClient, CcaiService, CcaiServiceFilter, CcaiServiceList, CcaiServiceProvider, CcaiServiceType, CheckUpstreamHealthResponse, CkptFile, ClassifyIntentsRequest, ClassifyIntentsResponse, CleanAllEntityTypesRequest, CleanAllEntityTypesResponse, CleanAllIntentsRequest, CleanAllIntentsResponse, CleanEntityTypeRequest, CleanEntityTypeResponse, CleanIntentRequest, CleanIntentResponse, Comment, CompareLlmEvaluationExperimentsRequest, ComparisonOperator, CompositeInference, Condition, ConditionType, Context, ContextFilter, ContextsClient, ControlMessage, ControlMessageServiceMethod, ControlMessageServiceName, ControlMessageServiceParameters, ControlStatus, ControlStreamRequest, ControlStreamResponse, ConversationsClient, CreateAgentRequest, CreateCcaiProjectRequest, CreateCcaiProjectResponse, CreateContextRequest, CreateCustomPhonemizerRequest, CreateEntityRequest, CreateEntityTypeRequest, CreateIntentRequest, CreateLlmEvaluationAbExperimentRequest, CreateLlmEvaluationDatasetRequest, CreateLlmEvaluationExamplesFromSessionRequest, CreateLlmEvaluationExamplesFromSessionResponse, CreateLlmEvaluationOnlineConfigRequest, CreateLlmEvaluationReleaseGateRequest, CreateLlmEvaluationReportRequest, CreateLlmEvaluationScheduleRequest, CreateLlmEvaluationScorecardRequest, CreateProjectRoleRequest, CreateProjectTechnicalUserRequest, CreateProjectTechnicalUserResponse, CreateServerRoleRequest, CreateSessionEntityTypeRequest, CreateSessionRequest, CreateSessionReviewRequest, CreateSessionStepRequest, CreateUserLanguageModelRequest, CreateUserRequest, CustomHttpPattern, CustomPhonemizerProto, CustomPlatformInfo, DataEnrichmentConfig, Decoding, DefaultProjectRole, DefaultServerRole, DeleteAgentRequest, DeleteAllContextsRequest, DeleteAllUserPreferencesRequest, DeleteAudioFilesRequest, DeleteAudioFilesResponse, DeleteCcaiProjectRequest, DeleteCcaiProjectResponse, DeleteContextRequest, DeleteEntityRequest, DeleteEntityStatus, DeleteEntityTypeRequest, DeleteIntentRequest, DeleteLlmEvaluationAbExperimentRequest, DeleteLlmEvaluationDatasetRequest, DeleteLlmEvaluationExampleRequest, DeleteLlmEvaluationExperimentRequest, DeleteLlmEvaluationFeedbackRequest, DeleteLlmEvaluationOnlineConfigRequest, DeleteLlmEvaluationReleaseGateRequest, DeleteLlmEvaluationReportRequest, DeleteLlmEvaluationScheduleRequest, DeleteLlmEvaluationScorecardRequest, DeleteNotificationsRequest, DeleteOperationRequest, DeleteProjectRoleRequest, DeleteProjectTechnicalUserRequest, DeleteResourcesRequest, DeleteServerRoleRequest, DeleteSessionCommentsRequest, DeleteSessionEntityTypeRequest, DeleteSessionFeedbackRequest, DeleteSessionLabelsRequest, DeleteSessionRequest, DeleteSessionStepRequest, DeleteUserLanguageModelRequest, DeleteUserPreferencesRequest, DeleteUserPreferencesResponse, DeleteUserRequest, DetectIntentRequest, DetectIntentResponse, DetectedIntent, DocumentFileResource, EntityDetected, EntityEnrichmentConfig, EntityStatus, EntityType, EntityTypeBatch, EntityTypeCategory, EntityTypeFuzzyNerConfig, EntityTypeSorting, EntityTypeUpdate, EntityTypeView, EntityTypesClient, EntityValueSorting, EventInput, ExportAgentRequest, ExportAgentResponse, ExportBenchmarkAgentRequest, ExportBenchmarkAgentResponse, ExportResourcesRequest, ExportResourcesResponse, ExtractEntitiesFuzzyRequest, ExtractEntitiesRequest, ExtractEntitiesResponse, FeedbackAuthorType, FeedbackBreakdownBucket, FeedbackFilter, FeedbackRating, FeedbackScope, FeedbackStatistics, FeedbackTimeGranularity, FeedbackTimeSeriesBucket, FileResource, FullTextSearchRequest, FullTextSearchResponseEntity, FullTextSearchResponseEntitySynonym, FullTextSearchResponseEntityType, FullTextSearchResponseIntent, FullTextSearchResponseIntentContextIn, FullTextSearchResponseIntentContextOut, FullTextSearchResponseIntentParameters, FullTextSearchResponseIntentResponse, FullTextSearchResponseIntentTags, FullTextSearchResponseIntentUsersays, GPT2EnrichmentConfig, GRPC_AGENTS_CLIENT_SETTINGS, GRPC_AI_SERVICES_CLIENT_SETTINGS, GRPC_CCAI_PROJECTS_CLIENT_SETTINGS, GRPC_CONTEXTS_CLIENT_SETTINGS, GRPC_CONVERSATIONS_CLIENT_SETTINGS, GRPC_ENTITY_TYPES_CLIENT_SETTINGS, GRPC_INTENTS_CLIENT_SETTINGS, GRPC_LLM_EVALUATIONS_CLIENT_SETTINGS, GRPC_OPERATIONS_CLIENT_SETTINGS, GRPC_PROJECT_ROLES_CLIENT_SETTINGS, GRPC_PROJECT_STATISTICS_CLIENT_SETTINGS, GRPC_RAGS_CLIENT_SETTINGS, GRPC_SERVER_STATISTICS_CLIENT_SETTINGS, GRPC_SESSIONS_CLIENT_SETTINGS, GRPC_SPEECH2_TEXT_CLIENT_SETTINGS, GRPC_TEXT2_SPEECH_CLIENT_SETTINGS, GRPC_USERS_CLIENT_SETTINGS, GRPC_UTILITIES_CLIENT_SETTINGS, GRPC_WEBHOOK_CLIENT_SETTINGS, GenerateResponsesRequest, GenerateResponsesResponse, GenerateUserSaysRequest, GenerateUserSaysResponse, GetAgentRequest, GetAgentStatisticsRequest, GetAgentStatisticsResponse, GetAllIntentTagsRequest, GetAlternativeSentencesRequest, GetAlternativeSentencesResponse, GetAlternativeTrainingPhrasesRequest, GetAlternativeTrainingPhrasesResponse, GetAudioFileOfSessionRequest, GetAudioFilesRequest, GetAudioFilesResponse, GetCcaiProjectRequest, GetCcaiServiceRequest, GetContextRequest, GetEntityRequest, GetEntityTypeCountRequest, GetEntityTypeRequest, GetFeedbackStatisticsRequest, GetFeedbackStatisticsResponse, GetFeedbackStatisticsTimeSeriesRequest, GetFeedbackStatisticsTimeSeriesResponse, GetIntentCountRequest, GetIntentRequest, GetIntentTagsRequest, GetIntentTagsResponse, GetLatestSessionReviewRequest, GetLlmEvaluationAbExperimentRequest, GetLlmEvaluationAbExperimentResultsRequest, GetLlmEvaluationAbExperimentResultsResponse, GetLlmEvaluationAbRolloutDecisionRequest, GetLlmEvaluationAbRolloutRecommendationRequest, GetLlmEvaluationAnnotationQueueItemRequest, GetLlmEvaluationDatasetRequest, GetLlmEvaluationExampleRequest, GetLlmEvaluationExperimentRequest, GetLlmEvaluationOnlineConfigRequest, GetLlmEvaluationOnlineResultRequest, GetLlmEvaluationProjectSettingsRequest, GetLlmEvaluationReleaseGateRequest, GetLlmEvaluationReleaseGateRunRequest, GetLlmEvaluationReportRequest, GetLlmEvaluationScheduleRequest, GetLlmEvaluationScorecardRequest, GetModelStatusesRequest, GetModelStatusesResponse, GetNotificationRequest, GetOperationRequest, GetPlatformInfoResponse, GetPlatformMappingRequest, GetProjectElementStatRequest, GetProjectRoleRequest, GetProjectStatRequest, GetRemoteOperationContainerLogsRequest, GetRemoteOperationContainerLogsResponse, GetRemoteOperationContainerStatusRequest, GetServerRoleRequest, GetSessionEntityTypeRequest, GetSessionFeedbackRequest, GetSessionRequest, GetSessionReviewRequest, GetSessionStepRequest, GetSessionsStatisticsRequest, GetSessionsStatisticsResponse, GetSessionsStatisticsTimeSeriesRequest, GetSessionsStatisticsTimeSeriesResponse, GetSynonymsRequest, GetSynonymsResponse, GetUserPreferencesRequest, GetUserPreferencesResponse, GetUserProjectCountRequest, GetUserRequest, GloVeEnrichmentConfig, GlowTTS, GlowTTSTriton, GrpcWebEndpointError, HiFiGan, HiFiGanTriton, Http, HttpRule, ImageFileResource, ImportAgentRequest, InferenceBackend, InitiationProtocol, InputAudioConfig, Intent, IntentAlgorithms, IntentBatch, IntentCategory, IntentClassified, IntentSorting, IntentTagRequest, IntentUpdate, IntentView, IntentsClient, KEYCLOAK_TOKEN_PROVIDER_CONFIG, KeyValuePair, KeycloakAuthenticationError, KeycloakTokenProvider, LanguageModelPipelineId, LanguageModels, LatLng, ListAccountIdsOfAllSessionsRequest, ListAccountIdsResponse, ListAgentsOfUserResponse, ListAgentsRequest, ListAgentsResponse, ListAudioFilesRequest, ListAudioFilesResponse, ListCcaiProjectsRequest, ListCcaiProjectsResponse, ListContextsRequest, ListContextsResponse, ListCustomPhonemizerRequest, ListCustomPhonemizerResponse, ListDatastreamIdsOfAllSessionsRequest, ListDatastreamIdsResponse, ListEntitiesRequest, ListEntitiesResponse, ListEntityTypesRequest, ListEntityTypesResponse, ListIdentifiedUserIdsOfAllSessionsRequest, ListIdentifiedUserIdsResponse, ListInputContextsOfAllSessionsRequest, ListInputContextsResponse, ListIntentsRequest, ListIntentsResponse, ListLanguageCodesOfAllSessionsRequest, ListLanguageCodesResponse, ListLlmEvaluationAbExperimentsRequest, ListLlmEvaluationAbExperimentsResponse, ListLlmEvaluationAbRolloutDecisionsRequest, ListLlmEvaluationAbRolloutDecisionsResponse, ListLlmEvaluationAnnotationQueueItemsRequest, ListLlmEvaluationAnnotationQueueItemsResponse, ListLlmEvaluationDatasetsRequest, ListLlmEvaluationDatasetsResponse, ListLlmEvaluationEvaluatorsRequest, ListLlmEvaluationEvaluatorsResponse, ListLlmEvaluationExamplesRequest, ListLlmEvaluationExamplesResponse, ListLlmEvaluationExperimentsRequest, ListLlmEvaluationExperimentsResponse, ListLlmEvaluationFeedbackRequest, ListLlmEvaluationFeedbackResponse, ListLlmEvaluationOnlineConfigsRequest, ListLlmEvaluationOnlineConfigsResponse, ListLlmEvaluationOnlineResultsRequest, ListLlmEvaluationOnlineResultsResponse, ListLlmEvaluationReleaseGateRunsRequest, ListLlmEvaluationReleaseGateRunsResponse, ListLlmEvaluationReleaseGatesRequest, ListLlmEvaluationReleaseGatesResponse, ListLlmEvaluationReportsRequest, ListLlmEvaluationReportsResponse, ListLlmEvaluationSchedulesRequest, ListLlmEvaluationSchedulesResponse, ListLlmEvaluationScorecardsRequest, ListLlmEvaluationScorecardsResponse, ListLlmModelsRequest, ListLlmModelsResponse, ListMatchedEntityTypesOfAllSessionsRequest, ListMatchedEntityTypesResponse, ListMatchedIntentsOfAllSessionsRequest, ListMatchedIntentsResponse, ListNotificationsRequest, ListNotificationsResponse, ListOperationsRequest, ListOperationsResponse, ListOriginIdsOfAllSessionsRequest, ListOriginIdsResponse, ListOutputContextsOfAllSessionsRequest, ListOutputContextsResponse, ListParametersRequest, ListParametersResponse, ListPlatformsOfAllSessionsRequest, ListPlatformsResponse, ListProjectPermissionsRequest, ListProjectPermissionsResponse, ListProjectRolesRequest, ListProjectRolesResponse, ListProjectTechnicalUsersRequest, ListProjectTechnicalUsersResponse, ListPropertyIdsOfAllSessionsRequest, ListPropertyIdsResponse, ListRemoteOperationContainersRequest, ListRemoteOperationContainersResponse, ListResponseMessagesRequest, ListResponseMessagesResponse, ListS2sPipelinesRequest, ListS2sPipelinesResponse, ListS2tDomainsRequest, ListS2tDomainsResponse, ListS2tLanguageModelsRequest, ListS2tLanguageModelsResponse, ListS2tLanguagesRequest, ListS2tLanguagesResponse, ListS2tNormalizationPipelinesRequest, ListS2tNormalizationPipelinesResponse, ListS2tPipelinesRequest, ListS2tPipelinesResponse, ListServerPermissionsRequest, ListServerPermissionsResponse, ListServerRolesRequest, ListServerRolesResponse, ListSessionCommentsOfAllSessionsRequest, ListSessionCommentsRequest, ListSessionCommentsResponse, ListSessionEntityTypesRequest, ListSessionEntityTypesResponse, ListSessionFeedbackOfAllSessionsRequest, ListSessionFeedbackRequest, ListSessionFeedbackResponse, ListSessionLabelsOfAllSessionsRequest, ListSessionLabelsRequest, ListSessionLabelsResponse, ListSessionReviewsRequest, ListSessionReviewsResponse, ListSessionsRequest, ListSessionsResponse, ListT2sDomainsRequest, ListT2sDomainsResponse, ListT2sLanguagesRequest, ListT2sLanguagesResponse, ListT2sNormalizationPipelinesRequest, ListT2sNormalizationPipelinesResponse, ListT2sPipelinesRequest, ListT2sPipelinesResponse, ListTagsOfAllSessionsRequest, ListTagsResponse, ListTrainingPhrasesRequest, ListTrainingPhrasesResponse, ListTrainingPhrasesofIntentsWithEnrichmentRequest, ListTrainingPhrasesofIntentsWithEnrichmentResponse, ListUserIdsOfAllSessionsRequest, ListUserIdsResponse, ListUserInfosResponse, ListUserPreferencesRequest, ListUserPreferencesResponse, ListUsersInProjectRequest, ListUsersInProjectResponse, ListUsersRequest, ListUsersResponse, LlmAgentNodeEvent, LlmAgentNodePhase, LlmAgentUsage, LlmBaseUrlUsage, LlmCacheStats, LlmCallFinishedEvent, LlmCallStartedEvent, LlmCcaiServiceUsage, LlmEnrichmentConfig, LlmErrorStat, LlmErrorStats, LlmEvaluationAbExperiment, LlmEvaluationAbExperimentFilter, LlmEvaluationAbExperimentStatus, LlmEvaluationAbOptimizeMetric, LlmEvaluationAbRolloutDecision, LlmEvaluationAbRolloutDecisionFilter, LlmEvaluationAbRolloutRecommendation, LlmEvaluationAbTrafficConfig, LlmEvaluationAbVariant, LlmEvaluationAbVariantResult, LlmEvaluationAnnotationQueueItem, LlmEvaluationAnnotationQueueItemFilter, LlmEvaluationAnnotationStatus, LlmEvaluationComparison, LlmEvaluationDataset, LlmEvaluationDatasetFilter, LlmEvaluationDatasetType, LlmEvaluationEvaluatorCategory, LlmEvaluationEvaluatorParameterSpec, LlmEvaluationEvaluatorRun, LlmEvaluationEvaluatorSpec, LlmEvaluationEvaluatorType, LlmEvaluationExample, LlmEvaluationExampleExtractionMode, LlmEvaluationExampleFilter, LlmEvaluationExperiment, LlmEvaluationExperimentFilter, LlmEvaluationExperimentKind, LlmEvaluationExperimentStatus, LlmEvaluationFeedback, LlmEvaluationFeedbackFilter, LlmEvaluationJudgeConfig, LlmEvaluationOnlineConfig, LlmEvaluationOnlineConfigFilter, LlmEvaluationOnlineResult, LlmEvaluationOnlineResultFilter, LlmEvaluationOnlineSessionFilter, LlmEvaluationPairwiseResult, LlmEvaluationProjectSettings, LlmEvaluationReleaseGate, LlmEvaluationReleaseGateCheck, LlmEvaluationReleaseGateFilter, LlmEvaluationReleaseGateRun, LlmEvaluationReleaseGateRunFilter, LlmEvaluationReleaseGateSafetyConfig, LlmEvaluationReleaseGateThresholds, LlmEvaluationReleaseGateVerdict, LlmEvaluationReport, LlmEvaluationReportFilter, LlmEvaluationSchedule, LlmEvaluationScheduleAction, LlmEvaluationScheduleFilter, LlmEvaluationScorecard, LlmEvaluationScorecardComponent, LlmEvaluationScorecardFilter, LlmEvaluationSimulationKind, LlmEvaluationSimulationPersona, LlmEvaluationTurnResult, LlmEvaluationsClient, LlmFinishReasonStat, LlmGenerateRequest, LlmGenerateResponse, LlmLatencyStats, LlmModel, LlmModelUsage, LlmProviderUsage, LlmReasoningEffortStat, LlmRetrievalMetadata, LlmRetrievedChunk, LlmSafetyAssessment, LlmSafetyCategoryStat, LlmSafetyFinding, LlmSafetyLocation, LlmSafetyStats, LlmTelemetry, LlmTelemetryReport, LlmTelemetryTimeSeriesBucket, LlmThinkingDeltaEvent, LlmThinkingMetadata, LlmTokenUsage, LlmTokenUsageUpdateEvent, LlmToolCallFinishedEvent, LlmToolCallMetadata, LlmToolCallStartedEvent, LlmToolUsage, LogEntry, LogSeverity, Logging, Logmnse, MIN_REFRESH_DELAY_SECONDS, Map, MbMelganTriton, Mel2Audio, MigrateAgentRequest, Mode, ModelStatus, NormalizeTextRequest, NormalizeTextResponse, Notification, NotificationFilter, NotificationFlaggedStatus, NotificationOrigin, NotificationReadStatus, NotificationType, NotificationVisibility, OpenaiLlmOptions, Operation, OperationFilter, OperationMetadata, OperationsClient, OptimizeRankingMatchRequest, OptimizeRankingMatchResponse, OriginalDetectIntentRequest, Parakeet, Pcm, PhonemizerId, PingRequest, PingResponse, PlatformMapping, PlaybackCut, PostProcessing, PostProcessingOptions, PostProcessors, Postprocessing, ProjectRole, ProjectRoleView, ProjectRolesClient, ProjectStatisticsClient, ProjectTechnicalUser, PromoteLlmEvaluationAnnotationQueueItemRequest, PromoteLlmEvaluationAnnotationQueueItemResponse, PtFiles, Pyannote, QueryInput, QueryParameters, QueryResult, Qwen3TtsBase, Qwen3TtsCustomVoice, REFRESH_SKEW_SECONDS, RagAddCrawlerResultsToDatasetsRequest, RagChunk, RagChunkMethod, RagComparisonOperator, RagCrawler, RagCrawlerAuth, RagCrawlerAuthenticationExecutionType, RagCrawlerBrowserConfig, RagCrawlerConcurrencyConfig, RagCrawlerConfig, RagCrawlerContentResult, RagCrawlerContentScope, RagCrawlerCookie, RagCrawlerCrawlStrategy, RagCrawlerDeepCrawlerConfig, RagCrawlerDensityPruning, RagCrawlerExecutionInfo, RagCrawlerFilters, RagCrawlerHtmlAuth, RagCrawlerHttpAuth, RagCrawlerIncrementalConfig, RagCrawlerMetaDataExtractor, RagCrawlerMetaDataExtractorType, RagCrawlerPruningThresholdType, RagCrawlerResult, RagCrawlerResultsConfig, RagCrawlerRetryConfig, RagCrawlerSeedUrlFilters, RagCrawlerSelectorType, RagCrawlerSources, RagCrawlerStatusFilter, RagCreateCrawlerRequest, RagCreateDatasetRequest, RagDataset, RagDatasetList, RagDatasetParsingStatus, RagDeleteCrawlerRequest, RagDeleteCrawlerResponse, RagDeleteCrawlerRunsRequest, RagDeleteCrawlerRunsResponse, RagDeleteCrawlersRequest, RagDeleteCrawlersResponse, RagDeleteDocumentsRequest, RagDeleteRequest, RagDocAgg, RagDocument, RagDocumentIdsRequest, RagDocumentList, RagDocumentStatus, RagDocumentType, RagDownloadDocumentRequest, RagFileChunk, RagFileMetadata, RagGetCrawlerAttachedDatasetsRequest, RagGetCrawlerAttachedDatasetsResponse, RagGetCrawlerRequest, RagGetCrawlerResultRequest, RagGetCrawlerResultsRequest, RagGetCrawlerResultsResponse, RagGetCrawlerRunLogsRequest, RagGetCrawlerRunLogsResponse, RagGetCrawlerRunRequest, RagGraphRagConfig, RagGraphRagMethod, RagListCrawlerRunsRequest, RagListCrawlerRunsResponse, RagListCrawlersRequest, RagListCrawlersResponse, RagListDatasetsRequest, RagListDocumentsRequest, RagLogic, RagMetadataCondition, RagMetadataConditions, RagParserConfig, RagPartialSuccess, RagRaptorConfig, RagRemoveCrawlerResultsFromDatasetsRequest, RagRetrievalRequest, RagRetrievalResponse, RagStartCrawlerRequest, RagStopCrawlerRequest, RagStopCrawlerResponse, RagUpdateCrawlerRequest, RagUpdateDatasetRequest, RagUpdateDocumentRequest, RagUploadDocumentRequest, RagVariantConfig, RagsClient, RankingMatchOptimizationConfig, ReannotateEntitiesOptions, ReasoningEffort, ReferencedChunk, ReindexAgentRequest, RemoteOperationContainer, RemoteOperationContainerLifecycleState, RemoteOperationContainerLogLine, RemoteOperationContainerStatus, RemoveUserFromProjectRequest, ReportFormat, ReportType, RequestConfig, ResourceView, RestoreAgentRequest, RotateProjectTechnicalUserPasswordRequest, RotateProjectTechnicalUserPasswordResponse, RunLlmEvaluationExperimentRequest, RunLlmEvaluationReleaseGateRequest, S2sPipeline, S2sPipelineId, S2sStreamRequest, S2sStreamResponse, S2tCloudProviderConfig, S2tCloudProviderConfigAmazon, S2tCloudProviderConfigDeepgram, S2tCloudProviderConfigGoogle, S2tCloudProviderConfigMicrosoft, S2tCloudServiceAmazon, S2tCloudServiceDeepgram, S2tCloudServiceGoogle, S2tCloudServiceMicrosoft, S2tDescription, S2tGetServiceInfoResponse, S2tInference, S2tLlmPostProcessing, S2tLlmPostProcessingInverseNormalizationOptions, S2tLlmPostProcessingNormalizationOptions, S2tLlmPostProcessingSubTaskOptions, S2tLlmPostProcessingSummarizationOptions, S2tLlmPostProcessingTranslationOptions, S2tNormalization, S2tPipelineId, S2tTranscription, ServerRole, ServerStatisticsClient, ServiceTier, Session, SessionEntityType, SessionFeedback, SessionFilter, SessionInfo, SessionReview, SessionReviewStep, SessionStep, SessionsClient, SessionsReportType, SetAgentStatusRequest, SetCallMediaControlResponse, SetControlStatusRequest, SetControlStatusResponse, SetNotificationsFlaggedStatusRequest, SetNotificationsReadStatusRequest, SetResourcesRequest, SetUserPreferencesRequest, SetUserPreferencesResponse, Silero, SimulateLlmEvaluationConversationsRequest, SingleInference, SipTrigger, SortingMode, Speech2TextClient, Speech2TextConfig, StartLlmEvaluationAbExperimentRequest, StatResponse, Status, StopLlmEvaluationAbExperimentRequest, StreamNotificationsRequest, StreamRemoteOperationContainerLogsRequest, StreamingDetectIntentRequest, StreamingDetectIntentResponse, StreamingLlmGenerateResponse, StreamingRecognitionResult, StreamingServer, StreamingSpeechRecognition, StreamingSynthesizeRequest, StreamingSynthesizeResponse, StringUpdate, SubmitLlmEvaluationFeedbackRequest, SymSpell, Synonym, SynthesizeRequest, SynthesizeResponse, T2SCustomLengthScales, T2SDescription, T2SGetServiceInfoResponse, T2SInference, T2SNormalization, T2sCloudProviderConfig, T2sCloudProviderConfigElevenLabs, T2sCloudProviderConfigGoogle, T2sCloudProviderConfigMicrosoft, T2sCloudServiceAmazon, T2sCloudServiceElevenLabs, T2sCloudServiceGoogle, T2sCloudServiceMicrosoft, T2sPipelineId, TOKEN_PROVIDER, Text2Audio, Text2Mel, Text2SpeechClient, Text2SpeechConfig, TextInput, ThesaurusEnrichmentConfig, TrainAgentRequest, TrainUserLanguageModelRequest, TrainingPhraseCleanerOptions, TrainingPhraseStatus, TranscribeFileRequest, TranscribeFileResponse, TranscribeRequestConfig, TranscribeStreamRequest, TranscribeStreamResponse, Transcription, TranscriptionAlternative, TranscriptionReturnOptions, TranscriptionType, TsdMethod, TurnDetectionChatLlmOptions, TurnDetectionContextTurn, TurnDetectionConversationContext, TurnDetectionEndOfUtteranceLlmOptions, TurnDetectionHoldBand, TurnDetectionHoldBands, TurnDetectionOndewoDeFusionOptions, TurnDetectionOndewoDeOptions, TurnDetectionOptions, TurnDetectionPipecatSmartTurnOptions, UpdateAgentRequest, UpdateCcaiProjectRequest, UpdateCcaiProjectResponse, UpdateContextRequest, UpdateCustomPhonemizerRequest, UpdateEntityRequest, UpdateEntityTypeRequest, UpdateIntentRequest, UpdateLlmEvaluationAbExperimentRequest, UpdateLlmEvaluationAnnotationQueueItemRequest, UpdateLlmEvaluationDatasetRequest, UpdateLlmEvaluationExampleRequest, UpdateLlmEvaluationExperimentRequest, UpdateLlmEvaluationFeedbackRequest, UpdateLlmEvaluationOnlineConfigRequest, UpdateLlmEvaluationProjectSettingsRequest, UpdateLlmEvaluationReleaseGateRequest, UpdateLlmEvaluationScheduleRequest, UpdateLlmEvaluationScorecardRequest, UpdateNotificationRequest, UpdateProjectRoleRequest, UpdateServerRoleRequest, UpdateSessionCommentsRequest, UpdateSessionEntityTypeRequest, UpdateSessionFeedbackRequest, UpdateSessionStepRequest, UpdateUserRequest, User, UserInProject, UserInfo, UsersClient, UtilitiesClient, UtteranceDetectionOptions, VadMethod, ValidateEmbeddedRegexRequest, ValidateEmbeddedRegexResponse, ValidateRegexRequest, ValidateRegexResponse, Verbosity, VideoFileResource, Vits, VitsTriton, VoiceActivityDetection, VoiceCloningRequest, VoiceSettings, WarmTransferOutcome, WarmTransferOutcomeNotice, WarmTransferOutcomeNoticeResponse, WarmTransferOutcomeNoticeStatus, Wav2Vec, Wav2VecTriton, WebhookClient, WebhookRequest, WebhookResponse, WespeakerTsd, Whisper, WhisperTriton, Wiener, Word2VecEnrichmentConfig, WordAlternative, WordDetail, WordNetAugEnrichmentConfig, XLNetAugEnrichmentConfig, authHttpInterceptor, buildBearerValue, buildGrpcWebHost, provideOndewoCsiAuth, resolveBearerValue, resolveToken };
 
 //# sourceMappingURL=ondewo-csi-client-angular.mjs.map

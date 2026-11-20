@@ -4736,9 +4736,9 @@ export class GetAgentStatisticsRequest implements GrpcMessage {
           );
           break;
         case 10:
-          _reader.readPackableEnumInto(
-            (_instance.llmCcaiServiceProviderFilter =
-              _instance.llmCcaiServiceProviderFilter || [])
+          (_instance.llmCcaiServiceProviderFilter =
+            _instance.llmCcaiServiceProviderFilter || []).push(
+            ...(_reader.readPackedEnum() || [])
           );
           break;
         case 11:
@@ -5352,9 +5352,9 @@ export class GetSessionsStatisticsRequest implements GrpcMessage {
             _instance.llmToolNameFilter || []).push(_reader.readString());
           break;
         case 15:
-          _reader.readPackableEnumInto(
-            (_instance.llmCcaiServiceProviderFilter =
-              _instance.llmCcaiServiceProviderFilter || [])
+          (_instance.llmCcaiServiceProviderFilter =
+            _instance.llmCcaiServiceProviderFilter || []).push(
+            ...(_reader.readPackedEnum() || [])
           );
           break;
         case 16:
@@ -6031,9 +6031,9 @@ export class GetSessionsStatisticsTimeSeriesRequest implements GrpcMessage {
             _instance.llmToolNameFilter || []).push(_reader.readString());
           break;
         case 10:
-          _reader.readPackableEnumInto(
-            (_instance.llmCcaiServiceProviderFilter =
-              _instance.llmCcaiServiceProviderFilter || [])
+          (_instance.llmCcaiServiceProviderFilter =
+            _instance.llmCcaiServiceProviderFilter || []).push(
+            ...(_reader.readPackedEnum() || [])
           );
           break;
         case 11:
@@ -16905,8 +16905,8 @@ export class ReindexAgentRequest implements GrpcMessage {
           _instance.branchName = _reader.readString();
           break;
         case 3:
-          _reader.readPackableEnumInto(
-            (_instance.indexTypes = _instance.indexTypes || [])
+          (_instance.indexTypes = _instance.indexTypes || []).push(
+            ...(_reader.readPackedEnum() || [])
           );
           break;
         default:

@@ -1492,27 +1492,27 @@ export class NotificationFilter implements GrpcMessage {
           );
           break;
         case 2:
-          _reader.readPackableEnumInto(
-            (_instance.notificationOrigins =
-              _instance.notificationOrigins || [])
+          (_instance.notificationOrigins =
+            _instance.notificationOrigins || []).push(
+            ...(_reader.readPackedEnum() || [])
           );
           break;
         case 3:
-          _reader.readPackableEnumInto(
-            (_instance.notificationVisibilities =
-              _instance.notificationVisibilities || [])
+          (_instance.notificationVisibilities =
+            _instance.notificationVisibilities || []).push(
+            ...(_reader.readPackedEnum() || [])
           );
           break;
         case 4:
-          _reader.readPackableEnumInto(
-            (_instance.notificationFlaggedStatus =
-              _instance.notificationFlaggedStatus || [])
+          (_instance.notificationFlaggedStatus =
+            _instance.notificationFlaggedStatus || []).push(
+            ...(_reader.readPackedEnum() || [])
           );
           break;
         case 5:
-          _reader.readPackableEnumInto(
-            (_instance.notificationReadStatus =
-              _instance.notificationReadStatus || [])
+          (_instance.notificationReadStatus =
+            _instance.notificationReadStatus || []).push(
+            ...(_reader.readPackedEnum() || [])
           );
           break;
         case 6:
@@ -1540,8 +1540,9 @@ export class NotificationFilter implements GrpcMessage {
           );
           break;
         case 10:
-          _reader.readPackableEnumInto(
-            (_instance.notificationTypes = _instance.notificationTypes || [])
+          (_instance.notificationTypes =
+            _instance.notificationTypes || []).push(
+            ...(_reader.readPackedEnum() || [])
           );
           break;
         default:
@@ -2212,8 +2213,8 @@ export class SetNotificationsFlaggedStatusRequest implements GrpcMessage {
             _instance.notificationNames || []).push(_reader.readString());
           break;
         case 2:
-          _reader.readPackableBoolInto(
-            (_instance.flagged = _instance.flagged || [])
+          (_instance.flagged = _instance.flagged || []).push(
+            ...(_reader.readPackedBool() || [])
           );
           break;
         case 3:
@@ -2404,8 +2405,8 @@ export class SetNotificationsReadStatusRequest implements GrpcMessage {
             _instance.notificationNames || []).push(_reader.readString());
           break;
         case 2:
-          _reader.readPackableBoolInto(
-            (_instance.flagged = _instance.flagged || [])
+          (_instance.flagged = _instance.flagged || []).push(
+            ...(_reader.readPackedBool() || [])
           );
           break;
         case 3:

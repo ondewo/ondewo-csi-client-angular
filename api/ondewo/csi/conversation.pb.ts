@@ -37,7 +37,21 @@ export enum ControlStatus {
   DISCARD_REMAINDER = 5,
   PLAYBACK_RESUMED = 6,
   PLAYBACK_DONE = 7,
-  CALL_ENDED = 8
+  CALL_ENDED = 8,
+  PLAYBACK_CUT = 9
+}
+export enum WarmTransferOutcome {
+  WARM_TRANSFER_OUTCOME_UNSPECIFIED = 0,
+  WARM_TRANSFER_OUTCOME_DECLINED = 1,
+  WARM_TRANSFER_OUTCOME_UNREACHABLE = 2,
+  WARM_TRANSFER_OUTCOME_DELEGATION_EXPIRED = 3
+}
+export enum WarmTransferOutcomeNoticeStatus {
+  WARM_TRANSFER_OUTCOME_NOTICE_STATUS_UNSPECIFIED = 0,
+  WARM_TRANSFER_OUTCOME_NOTICE_STATUS_QUEUED = 1,
+  WARM_TRANSFER_OUTCOME_NOTICE_STATUS_DUPLICATE = 2,
+  WARM_TRANSFER_OUTCOME_NOTICE_STATUS_DISABLED = 3,
+  WARM_TRANSFER_OUTCOME_NOTICE_STATUS_INVALID = 4
 }
 export enum ControlMessageServiceName {
   UNKNOWNNAME = 0,
@@ -935,6 +949,7 @@ export class S2sStreamResponse implements GrpcMessage {
     _instance.chunkIndex = _instance.chunkIndex || 0;
     _instance.lastChunk = _instance.lastChunk || false;
     _instance.turnEpoch = _instance.turnEpoch || '0';
+    _instance.responseSequence = _instance.responseSequence || '0';
   }
 
   /**
@@ -982,6 +997,9 @@ export class S2sStreamResponse implements GrpcMessage {
           break;
         case 7:
           _instance.turnEpoch = _reader.readUint64String();
+          break;
+        case 8:
+          _instance.responseSequence = _reader.readUint64String();
           break;
         default:
           _reader.skipField();
@@ -1033,6 +1051,9 @@ export class S2sStreamResponse implements GrpcMessage {
     if (_instance.turnEpoch) {
       _writer.writeUint64String(7, _instance.turnEpoch);
     }
+    if (_instance.responseSequence) {
+      _writer.writeUint64String(8, _instance.responseSequence);
+    }
   }
 
   private _detectIntentResponse?: ondewoNlu014.DetectIntentResponse;
@@ -1042,6 +1063,7 @@ export class S2sStreamResponse implements GrpcMessage {
   private _chunkIndex: number;
   private _lastChunk: boolean;
   private _turnEpoch: string;
+  private _responseSequence: string;
 
   private _response: S2sStreamResponse.ResponseCase =
     S2sStreamResponse.ResponseCase.none;
@@ -1065,6 +1087,7 @@ export class S2sStreamResponse implements GrpcMessage {
     this.chunkIndex = _value.chunkIndex;
     this.lastChunk = _value.lastChunk;
     this.turnEpoch = _value.turnEpoch;
+    this.responseSequence = _value.responseSequence;
     S2sStreamResponse.refineValues(this);
   }
   get detectIntentResponse(): ondewoNlu014.DetectIntentResponse | undefined {
@@ -1123,6 +1146,12 @@ export class S2sStreamResponse implements GrpcMessage {
   set turnEpoch(value: string) {
     this._turnEpoch = value;
   }
+  get responseSequence(): string {
+    return this._responseSequence;
+  }
+  set responseSequence(value: string) {
+    this._responseSequence = value;
+  }
   get response() {
     return this._response;
   }
@@ -1152,7 +1181,8 @@ export class S2sStreamResponse implements GrpcMessage {
       utteranceId: this.utteranceId,
       chunkIndex: this.chunkIndex,
       lastChunk: this.lastChunk,
-      turnEpoch: this.turnEpoch
+      turnEpoch: this.turnEpoch,
+      responseSequence: this.responseSequence
     };
   }
 
@@ -1185,7 +1215,8 @@ export class S2sStreamResponse implements GrpcMessage {
       utteranceId: this.utteranceId,
       chunkIndex: this.chunkIndex,
       lastChunk: this.lastChunk,
-      turnEpoch: this.turnEpoch
+      turnEpoch: this.turnEpoch,
+      responseSequence: this.responseSequence
     };
   }
 }
@@ -1201,6 +1232,7 @@ export module S2sStreamResponse {
     chunkIndex: number;
     lastChunk: boolean;
     turnEpoch: string;
+    responseSequence: string;
   }
 
   /**
@@ -1214,6 +1246,7 @@ export module S2sStreamResponse {
     chunkIndex: number;
     lastChunk: boolean;
     turnEpoch: string;
+    responseSequence: string;
   }
   export enum ResponseCase {
     none = 0,
@@ -1745,6 +1778,7 @@ export class ControlStreamResponse implements GrpcMessage {
     _instance.controlStatus = _instance.controlStatus || 0;
     _instance.epoch = _instance.epoch || '0';
     _instance.mediaControl = _instance.mediaControl || undefined;
+    _instance.playbackCutRequestId = _instance.playbackCutRequestId || '0';
   }
 
   /**
@@ -1772,6 +1806,9 @@ export class ControlStreamResponse implements GrpcMessage {
             _instance.mediaControl,
             CallMediaControlLevel.deserializeBinaryFromReader
           );
+          break;
+        case 4:
+          _instance.playbackCutRequestId = _reader.readUint64String();
           break;
         default:
           _reader.skipField();
@@ -1803,11 +1840,15 @@ export class ControlStreamResponse implements GrpcMessage {
         CallMediaControlLevel.serializeBinaryToWriter
       );
     }
+    if (_instance.playbackCutRequestId) {
+      _writer.writeUint64String(4, _instance.playbackCutRequestId);
+    }
   }
 
   private _controlStatus: ControlStatus;
   private _epoch: string;
   private _mediaControl?: CallMediaControlLevel;
+  private _playbackCutRequestId: string;
 
   /**
    * Message constructor. Initializes the properties and applies default Protobuf values if necessary
@@ -1820,6 +1861,7 @@ export class ControlStreamResponse implements GrpcMessage {
     this.mediaControl = _value.mediaControl
       ? new CallMediaControlLevel(_value.mediaControl)
       : undefined;
+    this.playbackCutRequestId = _value.playbackCutRequestId;
     ControlStreamResponse.refineValues(this);
   }
   get controlStatus(): ControlStatus {
@@ -1840,6 +1882,12 @@ export class ControlStreamResponse implements GrpcMessage {
   set mediaControl(value: CallMediaControlLevel | undefined) {
     this._mediaControl = value;
   }
+  get playbackCutRequestId(): string {
+    return this._playbackCutRequestId;
+  }
+  set playbackCutRequestId(value: string) {
+    this._playbackCutRequestId = value;
+  }
 
   /**
    * Serialize message to binary data
@@ -1858,7 +1906,10 @@ export class ControlStreamResponse implements GrpcMessage {
     return {
       controlStatus: this.controlStatus,
       epoch: this.epoch,
-      mediaControl: this.mediaControl ? this.mediaControl.toObject() : undefined
+      mediaControl: this.mediaControl
+        ? this.mediaControl.toObject()
+        : undefined,
+      playbackCutRequestId: this.playbackCutRequestId
     };
   }
 
@@ -1888,7 +1939,8 @@ export class ControlStreamResponse implements GrpcMessage {
       epoch: this.epoch,
       mediaControl: this.mediaControl
         ? this.mediaControl.toProtobufJSON(options)
-        : null
+        : null,
+      playbackCutRequestId: this.playbackCutRequestId
     };
   }
 }
@@ -1900,6 +1952,7 @@ export module ControlStreamResponse {
     controlStatus: ControlStatus;
     epoch: string;
     mediaControl?: CallMediaControlLevel.AsObject;
+    playbackCutRequestId: string;
   }
 
   /**
@@ -1909,6 +1962,7 @@ export module ControlStreamResponse {
     controlStatus: string;
     epoch: string;
     mediaControl: CallMediaControlLevel.AsProtobufJSON | null;
+    playbackCutRequestId: string;
   }
 }
 
@@ -1937,6 +1991,9 @@ export class SetControlStatusRequest implements GrpcMessage {
    */
   static refineValues(_instance: SetControlStatusRequest) {
     _instance.controlStatus = _instance.controlStatus || 0;
+    _instance.playbackCut = _instance.playbackCut || undefined;
+    _instance.utteranceId = _instance.utteranceId || '';
+    _instance.responseSequence = _instance.responseSequence || '0';
   }
 
   /**
@@ -1954,6 +2011,19 @@ export class SetControlStatusRequest implements GrpcMessage {
       switch (_reader.getFieldNumber()) {
         case 1:
           _instance.controlStatus = _reader.readEnum();
+          break;
+        case 2:
+          _instance.playbackCut = new PlaybackCut();
+          _reader.readMessage(
+            _instance.playbackCut,
+            PlaybackCut.deserializeBinaryFromReader
+          );
+          break;
+        case 3:
+          _instance.utteranceId = _reader.readString();
+          break;
+        case 4:
+          _instance.responseSequence = _reader.readUint64String();
           break;
         default:
           _reader.skipField();
@@ -1975,9 +2045,25 @@ export class SetControlStatusRequest implements GrpcMessage {
     if (_instance.controlStatus) {
       _writer.writeEnum(1, _instance.controlStatus);
     }
+    if (_instance.playbackCut) {
+      _writer.writeMessage(
+        2,
+        _instance.playbackCut as any,
+        PlaybackCut.serializeBinaryToWriter
+      );
+    }
+    if (_instance.utteranceId) {
+      _writer.writeString(3, _instance.utteranceId);
+    }
+    if (_instance.responseSequence) {
+      _writer.writeUint64String(4, _instance.responseSequence);
+    }
   }
 
   private _controlStatus: ControlStatus;
+  private _playbackCut?: PlaybackCut;
+  private _utteranceId: string;
+  private _responseSequence: string;
 
   /**
    * Message constructor. Initializes the properties and applies default Protobuf values if necessary
@@ -1986,6 +2072,11 @@ export class SetControlStatusRequest implements GrpcMessage {
   constructor(_value?: RecursivePartial<SetControlStatusRequest.AsObject>) {
     _value = _value || {};
     this.controlStatus = _value.controlStatus;
+    this.playbackCut = _value.playbackCut
+      ? new PlaybackCut(_value.playbackCut)
+      : undefined;
+    this.utteranceId = _value.utteranceId;
+    this.responseSequence = _value.responseSequence;
     SetControlStatusRequest.refineValues(this);
   }
   get controlStatus(): ControlStatus {
@@ -1993,6 +2084,24 @@ export class SetControlStatusRequest implements GrpcMessage {
   }
   set controlStatus(value: ControlStatus) {
     this._controlStatus = value;
+  }
+  get playbackCut(): PlaybackCut | undefined {
+    return this._playbackCut;
+  }
+  set playbackCut(value: PlaybackCut | undefined) {
+    this._playbackCut = value;
+  }
+  get utteranceId(): string {
+    return this._utteranceId;
+  }
+  set utteranceId(value: string) {
+    this._utteranceId = value;
+  }
+  get responseSequence(): string {
+    return this._responseSequence;
+  }
+  set responseSequence(value: string) {
+    this._responseSequence = value;
   }
 
   /**
@@ -2010,7 +2119,10 @@ export class SetControlStatusRequest implements GrpcMessage {
    */
   toObject(): SetControlStatusRequest.AsObject {
     return {
-      controlStatus: this.controlStatus
+      controlStatus: this.controlStatus,
+      playbackCut: this.playbackCut ? this.playbackCut.toObject() : undefined,
+      utteranceId: this.utteranceId,
+      responseSequence: this.responseSequence
     };
   }
 
@@ -2036,7 +2148,12 @@ export class SetControlStatusRequest implements GrpcMessage {
           this.controlStatus === null || this.controlStatus === undefined
             ? 0
             : this.controlStatus
-        ]
+        ],
+      playbackCut: this.playbackCut
+        ? this.playbackCut.toProtobufJSON(options)
+        : null,
+      utteranceId: this.utteranceId,
+      responseSequence: this.responseSequence
     };
   }
 }
@@ -2046,6 +2163,9 @@ export module SetControlStatusRequest {
    */
   export interface AsObject {
     controlStatus: ControlStatus;
+    playbackCut?: PlaybackCut.AsObject;
+    utteranceId: string;
+    responseSequence: string;
   }
 
   /**
@@ -2053,6 +2173,316 @@ export module SetControlStatusRequest {
    */
   export interface AsProtobufJSON {
     controlStatus: string;
+    playbackCut: PlaybackCut.AsProtobufJSON | null;
+    utteranceId: string;
+    responseSequence: string;
+  }
+}
+
+/**
+ * Message implementation for ondewo.csi.PlaybackCut
+ */
+export class PlaybackCut implements GrpcMessage {
+  static id = 'ondewo.csi.PlaybackCut';
+
+  /**
+   * Deserialize binary data to message
+   * @param instance message instance
+   */
+  static deserializeBinary(bytes: ByteSource) {
+    const instance = new PlaybackCut();
+    PlaybackCut.deserializeBinaryFromReader(instance, new BinaryReader(bytes));
+    return instance;
+  }
+
+  /**
+   * Check all the properties and set default protobuf values if necessary
+   * @param _instance message instance
+   */
+  static refineValues(_instance: PlaybackCut) {
+    _instance.playbackCutRequestId = _instance.playbackCutRequestId || '0';
+    _instance.bargeInEpoch = _instance.bargeInEpoch || '0';
+    _instance.utteranceId = _instance.utteranceId || '';
+    _instance.chunkIndex = _instance.chunkIndex || 0;
+    _instance.responseSequence = _instance.responseSequence || '0';
+    _instance.writtenAudioUs = _instance.writtenAudioUs || '0';
+    _instance.queuedAudioUs = _instance.queuedAudioUs || '0';
+    _instance.queuedAudioEstimated = _instance.queuedAudioEstimated || false;
+    _instance.cutMonotonicNs = _instance.cutMonotonicNs || '0';
+    _instance.remainderHeld = _instance.remainderHeld || false;
+  }
+
+  /**
+   * Deserializes / reads binary message into message instance using provided binary reader
+   * @param _instance message instance
+   * @param _reader binary reader instance
+   */
+  static deserializeBinaryFromReader(
+    _instance: PlaybackCut,
+    _reader: BinaryReader
+  ) {
+    while (_reader.nextField()) {
+      if (_reader.isEndGroup()) break;
+
+      switch (_reader.getFieldNumber()) {
+        case 1:
+          _instance.playbackCutRequestId = _reader.readUint64String();
+          break;
+        case 2:
+          _instance.bargeInEpoch = _reader.readUint64String();
+          break;
+        case 3:
+          _instance.utteranceId = _reader.readString();
+          break;
+        case 4:
+          _instance.chunkIndex = _reader.readInt32();
+          break;
+        case 5:
+          _instance.responseSequence = _reader.readUint64String();
+          break;
+        case 6:
+          _instance.writtenAudioUs = _reader.readInt64String();
+          break;
+        case 7:
+          _instance.queuedAudioUs = _reader.readInt64String();
+          break;
+        case 8:
+          _instance.queuedAudioEstimated = _reader.readBool();
+          break;
+        case 9:
+          _instance.cutMonotonicNs = _reader.readInt64String();
+          break;
+        case 10:
+          _instance.remainderHeld = _reader.readBool();
+          break;
+        default:
+          _reader.skipField();
+      }
+    }
+
+    PlaybackCut.refineValues(_instance);
+  }
+
+  /**
+   * Serializes a message to binary format using provided binary reader
+   * @param _instance message instance
+   * @param _writer binary writer instance
+   */
+  static serializeBinaryToWriter(
+    _instance: PlaybackCut,
+    _writer: BinaryWriter
+  ) {
+    if (_instance.playbackCutRequestId) {
+      _writer.writeUint64String(1, _instance.playbackCutRequestId);
+    }
+    if (_instance.bargeInEpoch) {
+      _writer.writeUint64String(2, _instance.bargeInEpoch);
+    }
+    if (_instance.utteranceId) {
+      _writer.writeString(3, _instance.utteranceId);
+    }
+    if (_instance.chunkIndex) {
+      _writer.writeInt32(4, _instance.chunkIndex);
+    }
+    if (_instance.responseSequence) {
+      _writer.writeUint64String(5, _instance.responseSequence);
+    }
+    if (_instance.writtenAudioUs) {
+      _writer.writeInt64String(6, _instance.writtenAudioUs);
+    }
+    if (_instance.queuedAudioUs) {
+      _writer.writeInt64String(7, _instance.queuedAudioUs);
+    }
+    if (_instance.queuedAudioEstimated) {
+      _writer.writeBool(8, _instance.queuedAudioEstimated);
+    }
+    if (_instance.cutMonotonicNs) {
+      _writer.writeInt64String(9, _instance.cutMonotonicNs);
+    }
+    if (_instance.remainderHeld) {
+      _writer.writeBool(10, _instance.remainderHeld);
+    }
+  }
+
+  private _playbackCutRequestId: string;
+  private _bargeInEpoch: string;
+  private _utteranceId: string;
+  private _chunkIndex: number;
+  private _responseSequence: string;
+  private _writtenAudioUs: string;
+  private _queuedAudioUs: string;
+  private _queuedAudioEstimated: boolean;
+  private _cutMonotonicNs: string;
+  private _remainderHeld: boolean;
+
+  /**
+   * Message constructor. Initializes the properties and applies default Protobuf values if necessary
+   * @param _value initial values object or instance of PlaybackCut to deeply clone from
+   */
+  constructor(_value?: RecursivePartial<PlaybackCut.AsObject>) {
+    _value = _value || {};
+    this.playbackCutRequestId = _value.playbackCutRequestId;
+    this.bargeInEpoch = _value.bargeInEpoch;
+    this.utteranceId = _value.utteranceId;
+    this.chunkIndex = _value.chunkIndex;
+    this.responseSequence = _value.responseSequence;
+    this.writtenAudioUs = _value.writtenAudioUs;
+    this.queuedAudioUs = _value.queuedAudioUs;
+    this.queuedAudioEstimated = _value.queuedAudioEstimated;
+    this.cutMonotonicNs = _value.cutMonotonicNs;
+    this.remainderHeld = _value.remainderHeld;
+    PlaybackCut.refineValues(this);
+  }
+  get playbackCutRequestId(): string {
+    return this._playbackCutRequestId;
+  }
+  set playbackCutRequestId(value: string) {
+    this._playbackCutRequestId = value;
+  }
+  get bargeInEpoch(): string {
+    return this._bargeInEpoch;
+  }
+  set bargeInEpoch(value: string) {
+    this._bargeInEpoch = value;
+  }
+  get utteranceId(): string {
+    return this._utteranceId;
+  }
+  set utteranceId(value: string) {
+    this._utteranceId = value;
+  }
+  get chunkIndex(): number {
+    return this._chunkIndex;
+  }
+  set chunkIndex(value: number) {
+    this._chunkIndex = value;
+  }
+  get responseSequence(): string {
+    return this._responseSequence;
+  }
+  set responseSequence(value: string) {
+    this._responseSequence = value;
+  }
+  get writtenAudioUs(): string {
+    return this._writtenAudioUs;
+  }
+  set writtenAudioUs(value: string) {
+    this._writtenAudioUs = value;
+  }
+  get queuedAudioUs(): string {
+    return this._queuedAudioUs;
+  }
+  set queuedAudioUs(value: string) {
+    this._queuedAudioUs = value;
+  }
+  get queuedAudioEstimated(): boolean {
+    return this._queuedAudioEstimated;
+  }
+  set queuedAudioEstimated(value: boolean) {
+    this._queuedAudioEstimated = value;
+  }
+  get cutMonotonicNs(): string {
+    return this._cutMonotonicNs;
+  }
+  set cutMonotonicNs(value: string) {
+    this._cutMonotonicNs = value;
+  }
+  get remainderHeld(): boolean {
+    return this._remainderHeld;
+  }
+  set remainderHeld(value: boolean) {
+    this._remainderHeld = value;
+  }
+
+  /**
+   * Serialize message to binary data
+   * @param instance message instance
+   */
+  serializeBinary() {
+    const writer = new BinaryWriter();
+    PlaybackCut.serializeBinaryToWriter(this, writer);
+    return writer.getResultBuffer();
+  }
+
+  /**
+   * Cast message to standard JavaScript object (all non-primitive values are deeply cloned)
+   */
+  toObject(): PlaybackCut.AsObject {
+    return {
+      playbackCutRequestId: this.playbackCutRequestId,
+      bargeInEpoch: this.bargeInEpoch,
+      utteranceId: this.utteranceId,
+      chunkIndex: this.chunkIndex,
+      responseSequence: this.responseSequence,
+      writtenAudioUs: this.writtenAudioUs,
+      queuedAudioUs: this.queuedAudioUs,
+      queuedAudioEstimated: this.queuedAudioEstimated,
+      cutMonotonicNs: this.cutMonotonicNs,
+      remainderHeld: this.remainderHeld
+    };
+  }
+
+  /**
+   * Convenience method to support JSON.stringify(message), replicates the structure of toObject()
+   */
+  toJSON() {
+    return this.toObject();
+  }
+
+  /**
+   * Cast message to JSON using protobuf JSON notation: https://developers.google.com/protocol-buffers/docs/proto3#json
+   * Attention: output differs from toObject() e.g. enums are represented as names and not as numbers, Timestamp is an ISO Date string format etc.
+   * If the message itself or some of descendant messages is google.protobuf.Any, you MUST provide a message pool as options. If not, the messagePool is not required
+   */
+  toProtobufJSON(
+    // @ts-ignore
+    options?: ToProtobufJSONOptions
+  ): PlaybackCut.AsProtobufJSON {
+    return {
+      playbackCutRequestId: this.playbackCutRequestId,
+      bargeInEpoch: this.bargeInEpoch,
+      utteranceId: this.utteranceId,
+      chunkIndex: this.chunkIndex,
+      responseSequence: this.responseSequence,
+      writtenAudioUs: this.writtenAudioUs,
+      queuedAudioUs: this.queuedAudioUs,
+      queuedAudioEstimated: this.queuedAudioEstimated,
+      cutMonotonicNs: this.cutMonotonicNs,
+      remainderHeld: this.remainderHeld
+    };
+  }
+}
+export module PlaybackCut {
+  /**
+   * Standard JavaScript object representation for PlaybackCut
+   */
+  export interface AsObject {
+    playbackCutRequestId: string;
+    bargeInEpoch: string;
+    utteranceId: string;
+    chunkIndex: number;
+    responseSequence: string;
+    writtenAudioUs: string;
+    queuedAudioUs: string;
+    queuedAudioEstimated: boolean;
+    cutMonotonicNs: string;
+    remainderHeld: boolean;
+  }
+
+  /**
+   * Protobuf JSON representation for PlaybackCut
+   */
+  export interface AsProtobufJSON {
+    playbackCutRequestId: string;
+    bargeInEpoch: string;
+    utteranceId: string;
+    chunkIndex: number;
+    responseSequence: string;
+    writtenAudioUs: string;
+    queuedAudioUs: string;
+    queuedAudioEstimated: boolean;
+    cutMonotonicNs: string;
+    remainderHeld: boolean;
   }
 }
 
@@ -2642,6 +3072,760 @@ export module SetCallMediaControlResponse {
     stale: boolean;
     botPlaybackInFlight: boolean;
     refusalReason: string;
+  }
+}
+
+/**
+ * Message implementation for ondewo.csi.CallerDtmfRequest
+ */
+export class CallerDtmfRequest implements GrpcMessage {
+  static id = 'ondewo.csi.CallerDtmfRequest';
+
+  /**
+   * Deserialize binary data to message
+   * @param instance message instance
+   */
+  static deserializeBinary(bytes: ByteSource) {
+    const instance = new CallerDtmfRequest();
+    CallerDtmfRequest.deserializeBinaryFromReader(
+      instance,
+      new BinaryReader(bytes)
+    );
+    return instance;
+  }
+
+  /**
+   * Check all the properties and set default protobuf values if necessary
+   * @param _instance message instance
+   */
+  static refineValues(_instance: CallerDtmfRequest) {
+    _instance.callId = _instance.callId || '';
+    _instance.sequence = _instance.sequence || '0';
+    _instance.digit = _instance.digit || '';
+    _instance.durationMs = _instance.durationMs || 0;
+    _instance.receivedUnixNs = _instance.receivedUnixNs || '0';
+  }
+
+  /**
+   * Deserializes / reads binary message into message instance using provided binary reader
+   * @param _instance message instance
+   * @param _reader binary reader instance
+   */
+  static deserializeBinaryFromReader(
+    _instance: CallerDtmfRequest,
+    _reader: BinaryReader
+  ) {
+    while (_reader.nextField()) {
+      if (_reader.isEndGroup()) break;
+
+      switch (_reader.getFieldNumber()) {
+        case 1:
+          _instance.callId = _reader.readString();
+          break;
+        case 2:
+          _instance.sequence = _reader.readUint64String();
+          break;
+        case 3:
+          _instance.digit = _reader.readString();
+          break;
+        case 4:
+          _instance.durationMs = _reader.readUint32();
+          break;
+        case 5:
+          _instance.receivedUnixNs = _reader.readInt64String();
+          break;
+        default:
+          _reader.skipField();
+      }
+    }
+
+    CallerDtmfRequest.refineValues(_instance);
+  }
+
+  /**
+   * Serializes a message to binary format using provided binary reader
+   * @param _instance message instance
+   * @param _writer binary writer instance
+   */
+  static serializeBinaryToWriter(
+    _instance: CallerDtmfRequest,
+    _writer: BinaryWriter
+  ) {
+    if (_instance.callId) {
+      _writer.writeString(1, _instance.callId);
+    }
+    if (_instance.sequence) {
+      _writer.writeUint64String(2, _instance.sequence);
+    }
+    if (_instance.digit) {
+      _writer.writeString(3, _instance.digit);
+    }
+    if (_instance.durationMs) {
+      _writer.writeUint32(4, _instance.durationMs);
+    }
+    if (_instance.receivedUnixNs) {
+      _writer.writeInt64String(5, _instance.receivedUnixNs);
+    }
+  }
+
+  private _callId: string;
+  private _sequence: string;
+  private _digit: string;
+  private _durationMs: number;
+  private _receivedUnixNs: string;
+
+  /**
+   * Message constructor. Initializes the properties and applies default Protobuf values if necessary
+   * @param _value initial values object or instance of CallerDtmfRequest to deeply clone from
+   */
+  constructor(_value?: RecursivePartial<CallerDtmfRequest.AsObject>) {
+    _value = _value || {};
+    this.callId = _value.callId;
+    this.sequence = _value.sequence;
+    this.digit = _value.digit;
+    this.durationMs = _value.durationMs;
+    this.receivedUnixNs = _value.receivedUnixNs;
+    CallerDtmfRequest.refineValues(this);
+  }
+  get callId(): string {
+    return this._callId;
+  }
+  set callId(value: string) {
+    this._callId = value;
+  }
+  get sequence(): string {
+    return this._sequence;
+  }
+  set sequence(value: string) {
+    this._sequence = value;
+  }
+  get digit(): string {
+    return this._digit;
+  }
+  set digit(value: string) {
+    this._digit = value;
+  }
+  get durationMs(): number {
+    return this._durationMs;
+  }
+  set durationMs(value: number) {
+    this._durationMs = value;
+  }
+  get receivedUnixNs(): string {
+    return this._receivedUnixNs;
+  }
+  set receivedUnixNs(value: string) {
+    this._receivedUnixNs = value;
+  }
+
+  /**
+   * Serialize message to binary data
+   * @param instance message instance
+   */
+  serializeBinary() {
+    const writer = new BinaryWriter();
+    CallerDtmfRequest.serializeBinaryToWriter(this, writer);
+    return writer.getResultBuffer();
+  }
+
+  /**
+   * Cast message to standard JavaScript object (all non-primitive values are deeply cloned)
+   */
+  toObject(): CallerDtmfRequest.AsObject {
+    return {
+      callId: this.callId,
+      sequence: this.sequence,
+      digit: this.digit,
+      durationMs: this.durationMs,
+      receivedUnixNs: this.receivedUnixNs
+    };
+  }
+
+  /**
+   * Convenience method to support JSON.stringify(message), replicates the structure of toObject()
+   */
+  toJSON() {
+    return this.toObject();
+  }
+
+  /**
+   * Cast message to JSON using protobuf JSON notation: https://developers.google.com/protocol-buffers/docs/proto3#json
+   * Attention: output differs from toObject() e.g. enums are represented as names and not as numbers, Timestamp is an ISO Date string format etc.
+   * If the message itself or some of descendant messages is google.protobuf.Any, you MUST provide a message pool as options. If not, the messagePool is not required
+   */
+  toProtobufJSON(
+    // @ts-ignore
+    options?: ToProtobufJSONOptions
+  ): CallerDtmfRequest.AsProtobufJSON {
+    return {
+      callId: this.callId,
+      sequence: this.sequence,
+      digit: this.digit,
+      durationMs: this.durationMs,
+      receivedUnixNs: this.receivedUnixNs
+    };
+  }
+}
+export module CallerDtmfRequest {
+  /**
+   * Standard JavaScript object representation for CallerDtmfRequest
+   */
+  export interface AsObject {
+    callId: string;
+    sequence: string;
+    digit: string;
+    durationMs: number;
+    receivedUnixNs: string;
+  }
+
+  /**
+   * Protobuf JSON representation for CallerDtmfRequest
+   */
+  export interface AsProtobufJSON {
+    callId: string;
+    sequence: string;
+    digit: string;
+    durationMs: number;
+    receivedUnixNs: string;
+  }
+}
+
+/**
+ * Message implementation for ondewo.csi.CallerDtmfResponse
+ */
+export class CallerDtmfResponse implements GrpcMessage {
+  static id = 'ondewo.csi.CallerDtmfResponse';
+
+  /**
+   * Deserialize binary data to message
+   * @param instance message instance
+   */
+  static deserializeBinary(bytes: ByteSource) {
+    const instance = new CallerDtmfResponse();
+    CallerDtmfResponse.deserializeBinaryFromReader(
+      instance,
+      new BinaryReader(bytes)
+    );
+    return instance;
+  }
+
+  /**
+   * Check all the properties and set default protobuf values if necessary
+   * @param _instance message instance
+   */
+  static refineValues(_instance: CallerDtmfResponse) {
+    _instance.accepted = _instance.accepted || false;
+    _instance.reason = _instance.reason || '';
+  }
+
+  /**
+   * Deserializes / reads binary message into message instance using provided binary reader
+   * @param _instance message instance
+   * @param _reader binary reader instance
+   */
+  static deserializeBinaryFromReader(
+    _instance: CallerDtmfResponse,
+    _reader: BinaryReader
+  ) {
+    while (_reader.nextField()) {
+      if (_reader.isEndGroup()) break;
+
+      switch (_reader.getFieldNumber()) {
+        case 1:
+          _instance.accepted = _reader.readBool();
+          break;
+        case 2:
+          _instance.reason = _reader.readString();
+          break;
+        default:
+          _reader.skipField();
+      }
+    }
+
+    CallerDtmfResponse.refineValues(_instance);
+  }
+
+  /**
+   * Serializes a message to binary format using provided binary reader
+   * @param _instance message instance
+   * @param _writer binary writer instance
+   */
+  static serializeBinaryToWriter(
+    _instance: CallerDtmfResponse,
+    _writer: BinaryWriter
+  ) {
+    if (_instance.accepted) {
+      _writer.writeBool(1, _instance.accepted);
+    }
+    if (_instance.reason) {
+      _writer.writeString(2, _instance.reason);
+    }
+  }
+
+  private _accepted: boolean;
+  private _reason: string;
+
+  /**
+   * Message constructor. Initializes the properties and applies default Protobuf values if necessary
+   * @param _value initial values object or instance of CallerDtmfResponse to deeply clone from
+   */
+  constructor(_value?: RecursivePartial<CallerDtmfResponse.AsObject>) {
+    _value = _value || {};
+    this.accepted = _value.accepted;
+    this.reason = _value.reason;
+    CallerDtmfResponse.refineValues(this);
+  }
+  get accepted(): boolean {
+    return this._accepted;
+  }
+  set accepted(value: boolean) {
+    this._accepted = value;
+  }
+  get reason(): string {
+    return this._reason;
+  }
+  set reason(value: string) {
+    this._reason = value;
+  }
+
+  /**
+   * Serialize message to binary data
+   * @param instance message instance
+   */
+  serializeBinary() {
+    const writer = new BinaryWriter();
+    CallerDtmfResponse.serializeBinaryToWriter(this, writer);
+    return writer.getResultBuffer();
+  }
+
+  /**
+   * Cast message to standard JavaScript object (all non-primitive values are deeply cloned)
+   */
+  toObject(): CallerDtmfResponse.AsObject {
+    return {
+      accepted: this.accepted,
+      reason: this.reason
+    };
+  }
+
+  /**
+   * Convenience method to support JSON.stringify(message), replicates the structure of toObject()
+   */
+  toJSON() {
+    return this.toObject();
+  }
+
+  /**
+   * Cast message to JSON using protobuf JSON notation: https://developers.google.com/protocol-buffers/docs/proto3#json
+   * Attention: output differs from toObject() e.g. enums are represented as names and not as numbers, Timestamp is an ISO Date string format etc.
+   * If the message itself or some of descendant messages is google.protobuf.Any, you MUST provide a message pool as options. If not, the messagePool is not required
+   */
+  toProtobufJSON(
+    // @ts-ignore
+    options?: ToProtobufJSONOptions
+  ): CallerDtmfResponse.AsProtobufJSON {
+    return {
+      accepted: this.accepted,
+      reason: this.reason
+    };
+  }
+}
+export module CallerDtmfResponse {
+  /**
+   * Standard JavaScript object representation for CallerDtmfResponse
+   */
+  export interface AsObject {
+    accepted: boolean;
+    reason: string;
+  }
+
+  /**
+   * Protobuf JSON representation for CallerDtmfResponse
+   */
+  export interface AsProtobufJSON {
+    accepted: boolean;
+    reason: string;
+  }
+}
+
+/**
+ * Message implementation for ondewo.csi.WarmTransferOutcomeNotice
+ */
+export class WarmTransferOutcomeNotice implements GrpcMessage {
+  static id = 'ondewo.csi.WarmTransferOutcomeNotice';
+
+  /**
+   * Deserialize binary data to message
+   * @param instance message instance
+   */
+  static deserializeBinary(bytes: ByteSource) {
+    const instance = new WarmTransferOutcomeNotice();
+    WarmTransferOutcomeNotice.deserializeBinaryFromReader(
+      instance,
+      new BinaryReader(bytes)
+    );
+    return instance;
+  }
+
+  /**
+   * Check all the properties and set default protobuf values if necessary
+   * @param _instance message instance
+   */
+  static refineValues(_instance: WarmTransferOutcomeNotice) {
+    _instance.requestId = _instance.requestId || '';
+    _instance.outcome = _instance.outcome || 0;
+    _instance.introSession = _instance.introSession || '';
+    _instance.calleeDisplayName = _instance.calleeDisplayName || '';
+    _instance.cause = _instance.cause || '';
+    _instance.fallbackText = _instance.fallbackText || '';
+  }
+
+  /**
+   * Deserializes / reads binary message into message instance using provided binary reader
+   * @param _instance message instance
+   * @param _reader binary reader instance
+   */
+  static deserializeBinaryFromReader(
+    _instance: WarmTransferOutcomeNotice,
+    _reader: BinaryReader
+  ) {
+    while (_reader.nextField()) {
+      if (_reader.isEndGroup()) break;
+
+      switch (_reader.getFieldNumber()) {
+        case 1:
+          _instance.requestId = _reader.readString();
+          break;
+        case 2:
+          _instance.outcome = _reader.readEnum();
+          break;
+        case 3:
+          _instance.introSession = _reader.readString();
+          break;
+        case 4:
+          _instance.calleeDisplayName = _reader.readString();
+          break;
+        case 5:
+          _instance.cause = _reader.readString();
+          break;
+        case 6:
+          _instance.fallbackText = _reader.readString();
+          break;
+        default:
+          _reader.skipField();
+      }
+    }
+
+    WarmTransferOutcomeNotice.refineValues(_instance);
+  }
+
+  /**
+   * Serializes a message to binary format using provided binary reader
+   * @param _instance message instance
+   * @param _writer binary writer instance
+   */
+  static serializeBinaryToWriter(
+    _instance: WarmTransferOutcomeNotice,
+    _writer: BinaryWriter
+  ) {
+    if (_instance.requestId) {
+      _writer.writeString(1, _instance.requestId);
+    }
+    if (_instance.outcome) {
+      _writer.writeEnum(2, _instance.outcome);
+    }
+    if (_instance.introSession) {
+      _writer.writeString(3, _instance.introSession);
+    }
+    if (_instance.calleeDisplayName) {
+      _writer.writeString(4, _instance.calleeDisplayName);
+    }
+    if (_instance.cause) {
+      _writer.writeString(5, _instance.cause);
+    }
+    if (_instance.fallbackText) {
+      _writer.writeString(6, _instance.fallbackText);
+    }
+  }
+
+  private _requestId: string;
+  private _outcome: WarmTransferOutcome;
+  private _introSession: string;
+  private _calleeDisplayName: string;
+  private _cause: string;
+  private _fallbackText: string;
+
+  /**
+   * Message constructor. Initializes the properties and applies default Protobuf values if necessary
+   * @param _value initial values object or instance of WarmTransferOutcomeNotice to deeply clone from
+   */
+  constructor(_value?: RecursivePartial<WarmTransferOutcomeNotice.AsObject>) {
+    _value = _value || {};
+    this.requestId = _value.requestId;
+    this.outcome = _value.outcome;
+    this.introSession = _value.introSession;
+    this.calleeDisplayName = _value.calleeDisplayName;
+    this.cause = _value.cause;
+    this.fallbackText = _value.fallbackText;
+    WarmTransferOutcomeNotice.refineValues(this);
+  }
+  get requestId(): string {
+    return this._requestId;
+  }
+  set requestId(value: string) {
+    this._requestId = value;
+  }
+  get outcome(): WarmTransferOutcome {
+    return this._outcome;
+  }
+  set outcome(value: WarmTransferOutcome) {
+    this._outcome = value;
+  }
+  get introSession(): string {
+    return this._introSession;
+  }
+  set introSession(value: string) {
+    this._introSession = value;
+  }
+  get calleeDisplayName(): string {
+    return this._calleeDisplayName;
+  }
+  set calleeDisplayName(value: string) {
+    this._calleeDisplayName = value;
+  }
+  get cause(): string {
+    return this._cause;
+  }
+  set cause(value: string) {
+    this._cause = value;
+  }
+  get fallbackText(): string {
+    return this._fallbackText;
+  }
+  set fallbackText(value: string) {
+    this._fallbackText = value;
+  }
+
+  /**
+   * Serialize message to binary data
+   * @param instance message instance
+   */
+  serializeBinary() {
+    const writer = new BinaryWriter();
+    WarmTransferOutcomeNotice.serializeBinaryToWriter(this, writer);
+    return writer.getResultBuffer();
+  }
+
+  /**
+   * Cast message to standard JavaScript object (all non-primitive values are deeply cloned)
+   */
+  toObject(): WarmTransferOutcomeNotice.AsObject {
+    return {
+      requestId: this.requestId,
+      outcome: this.outcome,
+      introSession: this.introSession,
+      calleeDisplayName: this.calleeDisplayName,
+      cause: this.cause,
+      fallbackText: this.fallbackText
+    };
+  }
+
+  /**
+   * Convenience method to support JSON.stringify(message), replicates the structure of toObject()
+   */
+  toJSON() {
+    return this.toObject();
+  }
+
+  /**
+   * Cast message to JSON using protobuf JSON notation: https://developers.google.com/protocol-buffers/docs/proto3#json
+   * Attention: output differs from toObject() e.g. enums are represented as names and not as numbers, Timestamp is an ISO Date string format etc.
+   * If the message itself or some of descendant messages is google.protobuf.Any, you MUST provide a message pool as options. If not, the messagePool is not required
+   */
+  toProtobufJSON(
+    // @ts-ignore
+    options?: ToProtobufJSONOptions
+  ): WarmTransferOutcomeNotice.AsProtobufJSON {
+    return {
+      requestId: this.requestId,
+      outcome:
+        WarmTransferOutcome[
+          this.outcome === null || this.outcome === undefined ? 0 : this.outcome
+        ],
+      introSession: this.introSession,
+      calleeDisplayName: this.calleeDisplayName,
+      cause: this.cause,
+      fallbackText: this.fallbackText
+    };
+  }
+}
+export module WarmTransferOutcomeNotice {
+  /**
+   * Standard JavaScript object representation for WarmTransferOutcomeNotice
+   */
+  export interface AsObject {
+    requestId: string;
+    outcome: WarmTransferOutcome;
+    introSession: string;
+    calleeDisplayName: string;
+    cause: string;
+    fallbackText: string;
+  }
+
+  /**
+   * Protobuf JSON representation for WarmTransferOutcomeNotice
+   */
+  export interface AsProtobufJSON {
+    requestId: string;
+    outcome: string;
+    introSession: string;
+    calleeDisplayName: string;
+    cause: string;
+    fallbackText: string;
+  }
+}
+
+/**
+ * Message implementation for ondewo.csi.WarmTransferOutcomeNoticeResponse
+ */
+export class WarmTransferOutcomeNoticeResponse implements GrpcMessage {
+  static id = 'ondewo.csi.WarmTransferOutcomeNoticeResponse';
+
+  /**
+   * Deserialize binary data to message
+   * @param instance message instance
+   */
+  static deserializeBinary(bytes: ByteSource) {
+    const instance = new WarmTransferOutcomeNoticeResponse();
+    WarmTransferOutcomeNoticeResponse.deserializeBinaryFromReader(
+      instance,
+      new BinaryReader(bytes)
+    );
+    return instance;
+  }
+
+  /**
+   * Check all the properties and set default protobuf values if necessary
+   * @param _instance message instance
+   */
+  static refineValues(_instance: WarmTransferOutcomeNoticeResponse) {
+    _instance.status = _instance.status || 0;
+  }
+
+  /**
+   * Deserializes / reads binary message into message instance using provided binary reader
+   * @param _instance message instance
+   * @param _reader binary reader instance
+   */
+  static deserializeBinaryFromReader(
+    _instance: WarmTransferOutcomeNoticeResponse,
+    _reader: BinaryReader
+  ) {
+    while (_reader.nextField()) {
+      if (_reader.isEndGroup()) break;
+
+      switch (_reader.getFieldNumber()) {
+        case 1:
+          _instance.status = _reader.readEnum();
+          break;
+        default:
+          _reader.skipField();
+      }
+    }
+
+    WarmTransferOutcomeNoticeResponse.refineValues(_instance);
+  }
+
+  /**
+   * Serializes a message to binary format using provided binary reader
+   * @param _instance message instance
+   * @param _writer binary writer instance
+   */
+  static serializeBinaryToWriter(
+    _instance: WarmTransferOutcomeNoticeResponse,
+    _writer: BinaryWriter
+  ) {
+    if (_instance.status) {
+      _writer.writeEnum(1, _instance.status);
+    }
+  }
+
+  private _status: WarmTransferOutcomeNoticeStatus;
+
+  /**
+   * Message constructor. Initializes the properties and applies default Protobuf values if necessary
+   * @param _value initial values object or instance of WarmTransferOutcomeNoticeResponse to deeply clone from
+   */
+  constructor(
+    _value?: RecursivePartial<WarmTransferOutcomeNoticeResponse.AsObject>
+  ) {
+    _value = _value || {};
+    this.status = _value.status;
+    WarmTransferOutcomeNoticeResponse.refineValues(this);
+  }
+  get status(): WarmTransferOutcomeNoticeStatus {
+    return this._status;
+  }
+  set status(value: WarmTransferOutcomeNoticeStatus) {
+    this._status = value;
+  }
+
+  /**
+   * Serialize message to binary data
+   * @param instance message instance
+   */
+  serializeBinary() {
+    const writer = new BinaryWriter();
+    WarmTransferOutcomeNoticeResponse.serializeBinaryToWriter(this, writer);
+    return writer.getResultBuffer();
+  }
+
+  /**
+   * Cast message to standard JavaScript object (all non-primitive values are deeply cloned)
+   */
+  toObject(): WarmTransferOutcomeNoticeResponse.AsObject {
+    return {
+      status: this.status
+    };
+  }
+
+  /**
+   * Convenience method to support JSON.stringify(message), replicates the structure of toObject()
+   */
+  toJSON() {
+    return this.toObject();
+  }
+
+  /**
+   * Cast message to JSON using protobuf JSON notation: https://developers.google.com/protocol-buffers/docs/proto3#json
+   * Attention: output differs from toObject() e.g. enums are represented as names and not as numbers, Timestamp is an ISO Date string format etc.
+   * If the message itself or some of descendant messages is google.protobuf.Any, you MUST provide a message pool as options. If not, the messagePool is not required
+   */
+  toProtobufJSON(
+    // @ts-ignore
+    options?: ToProtobufJSONOptions
+  ): WarmTransferOutcomeNoticeResponse.AsProtobufJSON {
+    return {
+      status:
+        WarmTransferOutcomeNoticeStatus[
+          this.status === null || this.status === undefined ? 0 : this.status
+        ]
+    };
+  }
+}
+export module WarmTransferOutcomeNoticeResponse {
+  /**
+   * Standard JavaScript object representation for WarmTransferOutcomeNoticeResponse
+   */
+  export interface AsObject {
+    status: WarmTransferOutcomeNoticeStatus;
+  }
+
+  /**
+   * Protobuf JSON representation for WarmTransferOutcomeNoticeResponse
+   */
+  export interface AsProtobufJSON {
+    status: string;
   }
 }
 

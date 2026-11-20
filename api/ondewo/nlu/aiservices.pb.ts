@@ -6924,8 +6924,8 @@ export class ClassifyIntentsRequest implements GrpcMessage {
           _instance.mode = _reader.readEnum();
           break;
         case 7:
-          _reader.readPackableEnumInto(
-            (_instance.algorithms = _instance.algorithms || [])
+          (_instance.algorithms = _instance.algorithms || []).push(
+            ...(_reader.readPackedEnum() || [])
           );
           break;
         case 8:

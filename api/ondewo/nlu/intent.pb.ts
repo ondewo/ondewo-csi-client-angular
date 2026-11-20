@@ -178,9 +178,9 @@ export class Intent implements GrpcMessage {
           );
           break;
         case 15:
-          _reader.readPackableEnumInto(
-            (_instance.defaultResponsePlatforms =
-              _instance.defaultResponsePlatforms || [])
+          (_instance.defaultResponsePlatforms =
+            _instance.defaultResponsePlatforms || []).push(
+            ...(_reader.readPackedEnum() || [])
           );
           break;
         case 16:

@@ -239,6 +239,48 @@ export class ConversationsClient {
         requestClass: thisProto.CallMediaControlLevel,
         responseClass: thisProto.SetCallMediaControlResponse
       });
+    },
+    /**
+     * Unary call: /ondewo.csi.Conversations/SetCallerDtmf
+     *
+     * @param requestMessage Request message
+     * @param requestMetadata Request metadata
+     * @returns Observable<GrpcEvent<thisProto.CallerDtmfResponse>>
+     */
+    setCallerDtmf: (
+      requestData: thisProto.CallerDtmfRequest,
+      requestMetadata = new GrpcMetadata()
+    ): Observable<GrpcEvent<thisProto.CallerDtmfResponse>> => {
+      return this.handler.handle({
+        type: GrpcCallType.unary,
+        client: this.client,
+        path: '/ondewo.csi.Conversations/SetCallerDtmf',
+        requestData,
+        requestMetadata,
+        requestClass: thisProto.CallerDtmfRequest,
+        responseClass: thisProto.CallerDtmfResponse
+      });
+    },
+    /**
+     * Unary call: /ondewo.csi.Conversations/DeliverWarmTransferOutcomeNotice
+     *
+     * @param requestMessage Request message
+     * @param requestMetadata Request metadata
+     * @returns Observable<GrpcEvent<thisProto.WarmTransferOutcomeNoticeResponse>>
+     */
+    deliverWarmTransferOutcomeNotice: (
+      requestData: thisProto.WarmTransferOutcomeNotice,
+      requestMetadata = new GrpcMetadata()
+    ): Observable<GrpcEvent<thisProto.WarmTransferOutcomeNoticeResponse>> => {
+      return this.handler.handle({
+        type: GrpcCallType.unary,
+        client: this.client,
+        path: '/ondewo.csi.Conversations/DeliverWarmTransferOutcomeNotice',
+        requestData,
+        requestMetadata,
+        requestClass: thisProto.WarmTransferOutcomeNotice,
+        responseClass: thisProto.WarmTransferOutcomeNoticeResponse
+      });
     }
   };
 
@@ -394,6 +436,38 @@ export class ConversationsClient {
   ): Observable<thisProto.SetCallMediaControlResponse> {
     return this.$raw
       .setCallMediaControl(requestData, requestMetadata)
+      .pipe(throwStatusErrors(), takeMessages());
+  }
+
+  /**
+   * Unary call @/ondewo.csi.Conversations/SetCallerDtmf
+   *
+   * @param requestMessage Request message
+   * @param requestMetadata Request metadata
+   * @returns Observable<thisProto.CallerDtmfResponse>
+   */
+  setCallerDtmf(
+    requestData: thisProto.CallerDtmfRequest,
+    requestMetadata = new GrpcMetadata()
+  ): Observable<thisProto.CallerDtmfResponse> {
+    return this.$raw
+      .setCallerDtmf(requestData, requestMetadata)
+      .pipe(throwStatusErrors(), takeMessages());
+  }
+
+  /**
+   * Unary call @/ondewo.csi.Conversations/DeliverWarmTransferOutcomeNotice
+   *
+   * @param requestMessage Request message
+   * @param requestMetadata Request metadata
+   * @returns Observable<thisProto.WarmTransferOutcomeNoticeResponse>
+   */
+  deliverWarmTransferOutcomeNotice(
+    requestData: thisProto.WarmTransferOutcomeNotice,
+    requestMetadata = new GrpcMetadata()
+  ): Observable<thisProto.WarmTransferOutcomeNoticeResponse> {
+    return this.$raw
+      .deliverWarmTransferOutcomeNotice(requestData, requestMetadata)
       .pipe(throwStatusErrors(), takeMessages());
   }
 }

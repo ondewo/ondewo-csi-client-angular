@@ -2,6 +2,15 @@
 
 *****************
 
+## Release ONDEWO CSI Angular Client 5.9.0
+
+### Improvements
+
+* Tracking API Version [5.9.0](https://github.com/ondewo/ondewo-csi-api/releases/tag/5.9.0) ( [Documentation](https://ondewo.github.io/ondewo-csi-api/) )
+* Generated with ondewo-proto-compiler 5.17.0 (protoc 35.1); new runtime floors: `grpc-web 2.1.1` (exact) and `google-protobuf ~3.21.4` as peers next to `@ngx-grpc/common` / `@ngx-grpc/core` `~3.1.2`. Because `@ngx-grpc/grpc-web-client` still declares the peer `grpc-web ^1.2.1`, an app installing this client needs `"grpc-web": "2.1.1"` as an exact direct dependency plus `"overrides": { "grpc-web": "$grpc-web" }`.
+
+*****************
+
 ## Release ONDEWO CSI Angular Client 5.7.0
 
 ### Improvements

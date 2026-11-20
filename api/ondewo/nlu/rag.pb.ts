@@ -4903,8 +4903,8 @@ export class RagListDocumentsRequest implements GrpcMessage {
           );
           break;
         case 11:
-          _reader.readPackableEnumInto(
-            (_instance.runStatus = _instance.runStatus || [])
+          (_instance.runStatus = _instance.runStatus || []).push(
+            ...(_reader.readPackedEnum() || [])
           );
           break;
         case 12:
@@ -13225,9 +13225,9 @@ export class RagCrawlerStatusFilter implements GrpcMessage {
           _instance.isActive = _reader.readBool();
           break;
         case 2:
-          _reader.readPackableInt32Into(
-            (_instance.acceptedStatusCodes =
-              _instance.acceptedStatusCodes || [])
+          (_instance.acceptedStatusCodes =
+            _instance.acceptedStatusCodes || []).push(
+            ...(_reader.readPackedInt32() || [])
           );
           break;
         default:
@@ -17346,8 +17346,8 @@ export class RagGetCrawlerRunLogsRequest implements GrpcMessage {
           _instance.pageSize = _reader.readInt32();
           break;
         case 6:
-          _reader.readPackableEnumInto(
-            (_instance.levelFilters = _instance.levelFilters || [])
+          (_instance.levelFilters = _instance.levelFilters || []).push(
+            ...(_reader.readPackedEnum() || [])
           );
           break;
         case 7:
