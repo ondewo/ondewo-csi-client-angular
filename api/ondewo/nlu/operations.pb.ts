@@ -1477,6 +1477,8 @@ export class StreamRemoteOperationContainerLogsRequest implements GrpcMessage {
     _instance.minLogLevel = _instance.minLogLevel || 0;
     _instance.tailLines = _instance.tailLines || 0;
     _instance.containerId = _instance.containerId || '';
+    _instance.regex = _instance.regex || '';
+    _instance.resumeToken = _instance.resumeToken || '';
   }
 
   /**
@@ -1503,6 +1505,12 @@ export class StreamRemoteOperationContainerLogsRequest implements GrpcMessage {
           break;
         case 4:
           _instance.containerId = _reader.readString();
+          break;
+        case 5:
+          _instance.regex = _reader.readString();
+          break;
+        case 6:
+          _instance.resumeToken = _reader.readString();
           break;
         default:
           _reader.skipField();
@@ -1533,12 +1541,20 @@ export class StreamRemoteOperationContainerLogsRequest implements GrpcMessage {
     if (_instance.containerId) {
       _writer.writeString(4, _instance.containerId);
     }
+    if (_instance.regex) {
+      _writer.writeString(5, _instance.regex);
+    }
+    if (_instance.resumeToken) {
+      _writer.writeString(6, _instance.resumeToken);
+    }
   }
 
   private _name: string;
   private _minLogLevel: ondewoNlu010.LogSeverity;
   private _tailLines: number;
   private _containerId: string;
+  private _regex: string;
+  private _resumeToken: string;
 
   /**
    * Message constructor. Initializes the properties and applies default Protobuf values if necessary
@@ -1554,6 +1570,8 @@ export class StreamRemoteOperationContainerLogsRequest implements GrpcMessage {
     this.minLogLevel = _value.minLogLevel;
     this.tailLines = _value.tailLines;
     this.containerId = _value.containerId;
+    this.regex = _value.regex;
+    this.resumeToken = _value.resumeToken;
     StreamRemoteOperationContainerLogsRequest.refineValues(this);
   }
   get name(): string {
@@ -1580,6 +1598,18 @@ export class StreamRemoteOperationContainerLogsRequest implements GrpcMessage {
   set containerId(value: string) {
     this._containerId = value;
   }
+  get regex(): string {
+    return this._regex;
+  }
+  set regex(value: string) {
+    this._regex = value;
+  }
+  get resumeToken(): string {
+    return this._resumeToken;
+  }
+  set resumeToken(value: string) {
+    this._resumeToken = value;
+  }
 
   /**
    * Serialize message to binary data
@@ -1602,7 +1632,9 @@ export class StreamRemoteOperationContainerLogsRequest implements GrpcMessage {
       name: this.name,
       minLogLevel: this.minLogLevel,
       tailLines: this.tailLines,
-      containerId: this.containerId
+      containerId: this.containerId,
+      regex: this.regex,
+      resumeToken: this.resumeToken
     };
   }
 
@@ -1631,7 +1663,9 @@ export class StreamRemoteOperationContainerLogsRequest implements GrpcMessage {
             : this.minLogLevel
         ],
       tailLines: this.tailLines,
-      containerId: this.containerId
+      containerId: this.containerId,
+      regex: this.regex,
+      resumeToken: this.resumeToken
     };
   }
 }
@@ -1644,6 +1678,8 @@ export module StreamRemoteOperationContainerLogsRequest {
     minLogLevel: ondewoNlu010.LogSeverity;
     tailLines: number;
     containerId: string;
+    regex: string;
+    resumeToken: string;
   }
 
   /**
@@ -1654,6 +1690,8 @@ export module StreamRemoteOperationContainerLogsRequest {
     minLogLevel: string;
     tailLines: number;
     containerId: string;
+    regex: string;
+    resumeToken: string;
   }
 }
 
@@ -1690,6 +1728,8 @@ export class GetRemoteOperationContainerLogsRequest implements GrpcMessage {
     _instance.containerId = _instance.containerId || '';
     _instance.beforeSeq = _instance.beforeSeq || '0';
     _instance.afterSeq = _instance.afterSeq || '0';
+    _instance.fieldMask = _instance.fieldMask || undefined;
+    _instance.resumeToken = _instance.resumeToken || '';
   }
 
   /**
@@ -1739,6 +1779,16 @@ export class GetRemoteOperationContainerLogsRequest implements GrpcMessage {
           break;
         case 9:
           _instance.afterSeq = _reader.readInt64String();
+          break;
+        case 10:
+          _instance.fieldMask = new googleProtobuf004.FieldMask();
+          _reader.readMessage(
+            _instance.fieldMask,
+            googleProtobuf004.FieldMask.deserializeBinaryFromReader
+          );
+          break;
+        case 11:
+          _instance.resumeToken = _reader.readString();
           break;
         default:
           _reader.skipField();
@@ -1792,6 +1842,16 @@ export class GetRemoteOperationContainerLogsRequest implements GrpcMessage {
     if (_instance.afterSeq) {
       _writer.writeInt64String(9, _instance.afterSeq);
     }
+    if (_instance.fieldMask) {
+      _writer.writeMessage(
+        10,
+        _instance.fieldMask as any,
+        googleProtobuf004.FieldMask.serializeBinaryToWriter
+      );
+    }
+    if (_instance.resumeToken) {
+      _writer.writeString(11, _instance.resumeToken);
+    }
   }
 
   private _name: string;
@@ -1803,6 +1863,8 @@ export class GetRemoteOperationContainerLogsRequest implements GrpcMessage {
   private _containerId: string;
   private _beforeSeq: string;
   private _afterSeq: string;
+  private _fieldMask?: googleProtobuf004.FieldMask;
+  private _resumeToken: string;
 
   /**
    * Message constructor. Initializes the properties and applies default Protobuf values if necessary
@@ -1825,6 +1887,10 @@ export class GetRemoteOperationContainerLogsRequest implements GrpcMessage {
     this.containerId = _value.containerId;
     this.beforeSeq = _value.beforeSeq;
     this.afterSeq = _value.afterSeq;
+    this.fieldMask = _value.fieldMask
+      ? new googleProtobuf004.FieldMask(_value.fieldMask)
+      : undefined;
+    this.resumeToken = _value.resumeToken;
     GetRemoteOperationContainerLogsRequest.refineValues(this);
   }
   get name(): string {
@@ -1881,6 +1947,18 @@ export class GetRemoteOperationContainerLogsRequest implements GrpcMessage {
   set afterSeq(value: string) {
     this._afterSeq = value;
   }
+  get fieldMask(): googleProtobuf004.FieldMask | undefined {
+    return this._fieldMask;
+  }
+  set fieldMask(value: googleProtobuf004.FieldMask | undefined) {
+    this._fieldMask = value;
+  }
+  get resumeToken(): string {
+    return this._resumeToken;
+  }
+  set resumeToken(value: string) {
+    this._resumeToken = value;
+  }
 
   /**
    * Serialize message to binary data
@@ -1908,7 +1986,9 @@ export class GetRemoteOperationContainerLogsRequest implements GrpcMessage {
       regex: this.regex,
       containerId: this.containerId,
       beforeSeq: this.beforeSeq,
-      afterSeq: this.afterSeq
+      afterSeq: this.afterSeq,
+      fieldMask: this.fieldMask ? this.fieldMask.toObject() : undefined,
+      resumeToken: this.resumeToken
     };
   }
 
@@ -1942,7 +2022,9 @@ export class GetRemoteOperationContainerLogsRequest implements GrpcMessage {
       regex: this.regex,
       containerId: this.containerId,
       beforeSeq: this.beforeSeq,
-      afterSeq: this.afterSeq
+      afterSeq: this.afterSeq,
+      fieldMask: this.fieldMask ? this.fieldMask.toProtobufJSON(options) : null,
+      resumeToken: this.resumeToken
     };
   }
 }
@@ -1960,6 +2042,8 @@ export module GetRemoteOperationContainerLogsRequest {
     containerId: string;
     beforeSeq: string;
     afterSeq: string;
+    fieldMask?: googleProtobuf004.FieldMask.AsObject;
+    resumeToken: string;
   }
 
   /**
@@ -1975,6 +2059,8 @@ export module GetRemoteOperationContainerLogsRequest {
     containerId: string;
     beforeSeq: string;
     afterSeq: string;
+    fieldMask: googleProtobuf004.FieldMask.AsProtobufJSON | null;
+    resumeToken: string;
   }
 }
 
@@ -2007,6 +2093,8 @@ export class GetRemoteOperationContainerLogsResponse implements GrpcMessage {
     _instance.minAvailableSeq = _instance.minAvailableSeq || '0';
     _instance.maxAvailableSeq = _instance.maxAvailableSeq || '0';
     _instance.hasMoreOlder = _instance.hasMoreOlder || false;
+    _instance.nextResumeToken = _instance.nextResumeToken || '';
+    _instance.hasMoreNewer = _instance.hasMoreNewer || false;
   }
 
   /**
@@ -2044,6 +2132,12 @@ export class GetRemoteOperationContainerLogsResponse implements GrpcMessage {
         case 5:
           _instance.hasMoreOlder = _reader.readBool();
           break;
+        case 6:
+          _instance.nextResumeToken = _reader.readString();
+          break;
+        case 7:
+          _instance.hasMoreNewer = _reader.readBool();
+          break;
         default:
           _reader.skipField();
       }
@@ -2080,6 +2174,12 @@ export class GetRemoteOperationContainerLogsResponse implements GrpcMessage {
     if (_instance.hasMoreOlder) {
       _writer.writeBool(5, _instance.hasMoreOlder);
     }
+    if (_instance.nextResumeToken) {
+      _writer.writeString(6, _instance.nextResumeToken);
+    }
+    if (_instance.hasMoreNewer) {
+      _writer.writeBool(7, _instance.hasMoreNewer);
+    }
   }
 
   private _logLines?: RemoteOperationContainerLogLine[];
@@ -2087,6 +2187,8 @@ export class GetRemoteOperationContainerLogsResponse implements GrpcMessage {
   private _minAvailableSeq: string;
   private _maxAvailableSeq: string;
   private _hasMoreOlder: boolean;
+  private _nextResumeToken: string;
+  private _hasMoreNewer: boolean;
 
   /**
    * Message constructor. Initializes the properties and applies default Protobuf values if necessary
@@ -2103,6 +2205,8 @@ export class GetRemoteOperationContainerLogsResponse implements GrpcMessage {
     this.minAvailableSeq = _value.minAvailableSeq;
     this.maxAvailableSeq = _value.maxAvailableSeq;
     this.hasMoreOlder = _value.hasMoreOlder;
+    this.nextResumeToken = _value.nextResumeToken;
+    this.hasMoreNewer = _value.hasMoreNewer;
     GetRemoteOperationContainerLogsResponse.refineValues(this);
   }
   get logLines(): RemoteOperationContainerLogLine[] | undefined {
@@ -2135,6 +2239,18 @@ export class GetRemoteOperationContainerLogsResponse implements GrpcMessage {
   set hasMoreOlder(value: boolean) {
     this._hasMoreOlder = value;
   }
+  get nextResumeToken(): string {
+    return this._nextResumeToken;
+  }
+  set nextResumeToken(value: string) {
+    this._nextResumeToken = value;
+  }
+  get hasMoreNewer(): boolean {
+    return this._hasMoreNewer;
+  }
+  set hasMoreNewer(value: boolean) {
+    this._hasMoreNewer = value;
+  }
 
   /**
    * Serialize message to binary data
@@ -2158,7 +2274,9 @@ export class GetRemoteOperationContainerLogsResponse implements GrpcMessage {
       truncated: this.truncated,
       minAvailableSeq: this.minAvailableSeq,
       maxAvailableSeq: this.maxAvailableSeq,
-      hasMoreOlder: this.hasMoreOlder
+      hasMoreOlder: this.hasMoreOlder,
+      nextResumeToken: this.nextResumeToken,
+      hasMoreNewer: this.hasMoreNewer
     };
   }
 
@@ -2183,7 +2301,9 @@ export class GetRemoteOperationContainerLogsResponse implements GrpcMessage {
       truncated: this.truncated,
       minAvailableSeq: this.minAvailableSeq,
       maxAvailableSeq: this.maxAvailableSeq,
-      hasMoreOlder: this.hasMoreOlder
+      hasMoreOlder: this.hasMoreOlder,
+      nextResumeToken: this.nextResumeToken,
+      hasMoreNewer: this.hasMoreNewer
     };
   }
 }
@@ -2197,6 +2317,8 @@ export module GetRemoteOperationContainerLogsResponse {
     minAvailableSeq: string;
     maxAvailableSeq: string;
     hasMoreOlder: boolean;
+    nextResumeToken: string;
+    hasMoreNewer: boolean;
   }
 
   /**
@@ -2208,6 +2330,8 @@ export module GetRemoteOperationContainerLogsResponse {
     minAvailableSeq: string;
     maxAvailableSeq: string;
     hasMoreOlder: boolean;
+    nextResumeToken: string;
+    hasMoreNewer: boolean;
   }
 }
 
@@ -2241,6 +2365,7 @@ export class RemoteOperationContainerLogLine implements GrpcMessage {
     _instance.containerId = _instance.containerId || '';
     _instance.containerName = _instance.containerName || '';
     _instance.seq = _instance.seq || '0';
+    _instance.logStream = _instance.logStream || '';
   }
 
   /**
@@ -2277,6 +2402,9 @@ export class RemoteOperationContainerLogLine implements GrpcMessage {
           break;
         case 6:
           _instance.seq = _reader.readInt64String();
+          break;
+        case 7:
+          _instance.logStream = _reader.readString();
           break;
         default:
           _reader.skipField();
@@ -2317,6 +2445,9 @@ export class RemoteOperationContainerLogLine implements GrpcMessage {
     if (_instance.seq) {
       _writer.writeInt64String(6, _instance.seq);
     }
+    if (_instance.logStream) {
+      _writer.writeString(7, _instance.logStream);
+    }
   }
 
   private _timestamp?: googleProtobuf003.Timestamp;
@@ -2325,6 +2456,7 @@ export class RemoteOperationContainerLogLine implements GrpcMessage {
   private _containerId: string;
   private _containerName: string;
   private _seq: string;
+  private _logStream: string;
 
   /**
    * Message constructor. Initializes the properties and applies default Protobuf values if necessary
@@ -2342,6 +2474,7 @@ export class RemoteOperationContainerLogLine implements GrpcMessage {
     this.containerId = _value.containerId;
     this.containerName = _value.containerName;
     this.seq = _value.seq;
+    this.logStream = _value.logStream;
     RemoteOperationContainerLogLine.refineValues(this);
   }
   get timestamp(): googleProtobuf003.Timestamp | undefined {
@@ -2380,6 +2513,12 @@ export class RemoteOperationContainerLogLine implements GrpcMessage {
   set seq(value: string) {
     this._seq = value;
   }
+  get logStream(): string {
+    return this._logStream;
+  }
+  set logStream(value: string) {
+    this._logStream = value;
+  }
 
   /**
    * Serialize message to binary data
@@ -2401,7 +2540,8 @@ export class RemoteOperationContainerLogLine implements GrpcMessage {
       message: this.message,
       containerId: this.containerId,
       containerName: this.containerName,
-      seq: this.seq
+      seq: this.seq,
+      logStream: this.logStream
     };
   }
 
@@ -2430,7 +2570,8 @@ export class RemoteOperationContainerLogLine implements GrpcMessage {
       message: this.message,
       containerId: this.containerId,
       containerName: this.containerName,
-      seq: this.seq
+      seq: this.seq,
+      logStream: this.logStream
     };
   }
 }
@@ -2445,6 +2586,7 @@ export module RemoteOperationContainerLogLine {
     containerId: string;
     containerName: string;
     seq: string;
+    logStream: string;
   }
 
   /**
@@ -2457,6 +2599,7 @@ export module RemoteOperationContainerLogLine {
     containerId: string;
     containerName: string;
     seq: string;
+    logStream: string;
   }
 }
 

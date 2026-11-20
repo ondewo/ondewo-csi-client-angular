@@ -51,6 +51,63 @@ export enum LlmAgentNodePhase {
   LLM_AGENT_NODE_PHASE_COMPLETED = 2,
   LLM_AGENT_NODE_PHASE_FAILED = 3
 }
+export enum TurnInterruptionReason {
+  TURN_INTERRUPTION_REASON_UNSPECIFIED = 0,
+  TURN_INTERRUPTION_REASON_BARGE_IN = 1,
+  TURN_INTERRUPTION_REASON_CALLER_SPOKE_WHILE_THINKING = 2,
+  TURN_INTERRUPTION_REASON_CALL_ENDED = 3,
+  TURN_INTERRUPTION_REASON_FILLER_CUT = 4,
+  TURN_INTERRUPTION_REASON_NO_FINAL_TIMEOUT = 5,
+  TURN_INTERRUPTION_REASON_OPERATOR_TAKEOVER = 6,
+  TURN_INTERRUPTION_REASON_BOT_MUTED = 7
+}
+export enum BackgroundWorkPolicy {
+  BACKGROUND_WORK_POLICY_KEEP = 0,
+  BACKGROUND_WORK_POLICY_CANCEL_PENDING = 1
+}
+export enum HeardTextPrecision {
+  HEARD_TEXT_PRECISION_UNSPECIFIED = 0,
+  HEARD_TEXT_PRECISION_NONE_HEARD = 1,
+  HEARD_TEXT_PRECISION_FULL = 2,
+  HEARD_TEXT_PRECISION_ESTIMATED_SERVER = 3,
+  HEARD_TEXT_PRECISION_PROPORTIONAL = 4
+}
+export enum TurnControlAckStatus {
+  TURN_CONTROL_ACK_STATUS_UNSPECIFIED = 0,
+  TURN_CONTROL_ACK_STATUS_CANCELLED = 1,
+  TURN_CONTROL_ACK_STATUS_CANCELLED_QUEUED = 2,
+  TURN_CONTROL_ACK_STATUS_ALREADY_FINISHED = 3,
+  TURN_CONTROL_ACK_STATUS_UNKNOWN_TURN = 4,
+  TURN_CONTROL_ACK_STATUS_HEARD_APPLIED = 5,
+  TURN_CONTROL_ACK_STATUS_HEARD_STALE = 6,
+  TURN_CONTROL_ACK_STATUS_DRAFT_DISCARDED = 7
+}
+export enum WarmTransferIntroTextSource {
+  WARM_TRANSFER_INTRO_TEXT_SOURCE_UNSPECIFIED = 0,
+  WARM_TRANSFER_INTRO_TEXT_SOURCE_TEMPLATE = 1,
+  WARM_TRANSFER_INTRO_TEXT_SOURCE_LLM_SUMMARY = 2
+}
+export enum WarmTransferIntroDecision {
+  WARM_TRANSFER_INTRO_DECISION_UNSPECIFIED = 0,
+  WARM_TRANSFER_INTRO_DECISION_PENDING = 1,
+  WARM_TRANSFER_INTRO_DECISION_ACCEPTED = 2,
+  WARM_TRANSFER_INTRO_DECISION_DECLINED = 3,
+  WARM_TRANSFER_INTRO_DECISION_NO_DECISION = 4
+}
+export enum WarmTransferIntroDecidedBy {
+  WARM_TRANSFER_INTRO_DECIDED_BY_UNSPECIFIED = 0,
+  WARM_TRANSFER_INTRO_DECIDED_BY_DTMF = 1,
+  WARM_TRANSFER_INTRO_DECIDED_BY_SPEECH = 2,
+  WARM_TRANSFER_INTRO_DECIDED_BY_TIMEOUT = 3
+}
+export enum WarmTransferIntroStage {
+  WARM_TRANSFER_INTRO_STAGE_UNSPECIFIED = 0,
+  WARM_TRANSFER_INTRO_STAGE_PREPARED = 1,
+  WARM_TRANSFER_INTRO_STAGE_READY_ASKED = 2,
+  WARM_TRANSFER_INTRO_STAGE_INTRO_SPOKEN = 3,
+  WARM_TRANSFER_INTRO_STAGE_REASON_ASKED = 4,
+  WARM_TRANSFER_INTRO_STAGE_CLOSED = 5
+}
 export enum AudioEncoding {
   AUDIO_ENCODING_UNSPECIFIED = 0,
   AUDIO_ENCODING_LINEAR_16 = 1,
@@ -601,6 +658,7 @@ export class QueryParameters implements GrpcMessage {
     _instance.originId = _instance.originId || '';
     _instance.identifiedUserId = _instance.identifiedUserId || '';
     _instance.transcriptions = _instance.transcriptions || [];
+    _instance.preemptiveDraft = _instance.preemptiveDraft || false;
   }
 
   /**
@@ -681,6 +739,9 @@ export class QueryParameters implements GrpcMessage {
             messageInitializer14
           );
           break;
+        case 15:
+          _instance.preemptiveDraft = _reader.readBool();
+          break;
         default:
           _reader.skipField();
       }
@@ -753,6 +814,9 @@ export class QueryParameters implements GrpcMessage {
         S2tTranscription.serializeBinaryToWriter
       );
     }
+    if (_instance.preemptiveDraft) {
+      _writer.writeBool(15, _instance.preemptiveDraft);
+    }
   }
 
   private _timeZone: string;
@@ -768,6 +832,7 @@ export class QueryParameters implements GrpcMessage {
   private _originId: string;
   private _identifiedUserId: string;
   private _transcriptions?: S2tTranscription[];
+  private _preemptiveDraft: boolean;
 
   /**
    * Message constructor. Initializes the properties and applies default Protobuf values if necessary
@@ -796,6 +861,7 @@ export class QueryParameters implements GrpcMessage {
     this.transcriptions = (_value.transcriptions || []).map(
       m => new S2tTranscription(m)
     );
+    this.preemptiveDraft = _value.preemptiveDraft;
     QueryParameters.refineValues(this);
   }
   get timeZone(): string {
@@ -876,6 +942,12 @@ export class QueryParameters implements GrpcMessage {
   set transcriptions(value: S2tTranscription[] | undefined) {
     this._transcriptions = value;
   }
+  get preemptiveDraft(): boolean {
+    return this._preemptiveDraft;
+  }
+  set preemptiveDraft(value: boolean) {
+    this._preemptiveDraft = value;
+  }
 
   /**
    * Serialize message to binary data
@@ -904,7 +976,8 @@ export class QueryParameters implements GrpcMessage {
       datastreamId: this.datastreamId,
       originId: this.originId,
       identifiedUserId: this.identifiedUserId,
-      transcriptions: (this.transcriptions || []).map(m => m.toObject())
+      transcriptions: (this.transcriptions || []).map(m => m.toObject()),
+      preemptiveDraft: this.preemptiveDraft
     };
   }
 
@@ -943,7 +1016,8 @@ export class QueryParameters implements GrpcMessage {
       identifiedUserId: this.identifiedUserId,
       transcriptions: (this.transcriptions || []).map(m =>
         m.toProtobufJSON(options)
-      )
+      ),
+      preemptiveDraft: this.preemptiveDraft
     };
   }
 }
@@ -965,6 +1039,7 @@ export module QueryParameters {
     originId: string;
     identifiedUserId: string;
     transcriptions?: S2tTranscription.AsObject[];
+    preemptiveDraft: boolean;
   }
 
   /**
@@ -984,6 +1059,7 @@ export module QueryParameters {
     originId: string;
     identifiedUserId: string;
     transcriptions: S2tTranscription.AsProtobufJSON[] | null;
+    preemptiveDraft: boolean;
   }
 }
 
@@ -10594,6 +10670,7 @@ export class ReferencedChunk implements GrpcMessage {
     _instance.similarity = _instance.similarity || 0;
     _instance.documentUrl = _instance.documentUrl || '';
     _instance.deepLinkUrl = _instance.deepLinkUrl || '';
+    _instance.documentTitle = _instance.documentTitle || '';
   }
 
   /**
@@ -10635,6 +10712,9 @@ export class ReferencedChunk implements GrpcMessage {
           break;
         case 9:
           _instance.deepLinkUrl = _reader.readString();
+          break;
+        case 10:
+          _instance.documentTitle = _reader.readString();
           break;
         default:
           _reader.skipField();
@@ -10680,6 +10760,9 @@ export class ReferencedChunk implements GrpcMessage {
     if (_instance.deepLinkUrl) {
       _writer.writeString(9, _instance.deepLinkUrl);
     }
+    if (_instance.documentTitle) {
+      _writer.writeString(10, _instance.documentTitle);
+    }
   }
 
   private _referenceIndex: number;
@@ -10691,6 +10774,7 @@ export class ReferencedChunk implements GrpcMessage {
   private _similarity: number;
   private _documentUrl: string;
   private _deepLinkUrl: string;
+  private _documentTitle: string;
 
   /**
    * Message constructor. Initializes the properties and applies default Protobuf values if necessary
@@ -10707,6 +10791,7 @@ export class ReferencedChunk implements GrpcMessage {
     this.similarity = _value.similarity;
     this.documentUrl = _value.documentUrl;
     this.deepLinkUrl = _value.deepLinkUrl;
+    this.documentTitle = _value.documentTitle;
     ReferencedChunk.refineValues(this);
   }
   get referenceIndex(): number {
@@ -10763,6 +10848,12 @@ export class ReferencedChunk implements GrpcMessage {
   set deepLinkUrl(value: string) {
     this._deepLinkUrl = value;
   }
+  get documentTitle(): string {
+    return this._documentTitle;
+  }
+  set documentTitle(value: string) {
+    this._documentTitle = value;
+  }
 
   /**
    * Serialize message to binary data
@@ -10787,7 +10878,8 @@ export class ReferencedChunk implements GrpcMessage {
       content: this.content,
       similarity: this.similarity,
       documentUrl: this.documentUrl,
-      deepLinkUrl: this.deepLinkUrl
+      deepLinkUrl: this.deepLinkUrl,
+      documentTitle: this.documentTitle
     };
   }
 
@@ -10816,7 +10908,8 @@ export class ReferencedChunk implements GrpcMessage {
       content: this.content,
       similarity: this.similarity,
       documentUrl: this.documentUrl,
-      deepLinkUrl: this.deepLinkUrl
+      deepLinkUrl: this.deepLinkUrl,
+      documentTitle: this.documentTitle
     };
   }
 }
@@ -10834,6 +10927,7 @@ export module ReferencedChunk {
     similarity: number;
     documentUrl: string;
     deepLinkUrl: string;
+    documentTitle: string;
   }
 
   /**
@@ -10849,6 +10943,7 @@ export module ReferencedChunk {
     similarity: number;
     documentUrl: string;
     deepLinkUrl: string;
+    documentTitle: string;
   }
 }
 
@@ -11468,6 +11563,8 @@ export class StreamingDetectIntentRequest implements GrpcMessage {
     _instance.queryInput = _instance.queryInput || undefined;
     _instance.singleUtterance = _instance.singleUtterance || false;
     _instance.inputAudio = _instance.inputAudio || new Uint8Array();
+    _instance.turnControl = _instance.turnControl || undefined;
+    _instance.clientTurnId = _instance.clientTurnId || '';
   }
 
   /**
@@ -11505,6 +11602,16 @@ export class StreamingDetectIntentRequest implements GrpcMessage {
           break;
         case 6:
           _instance.inputAudio = _reader.readBytes();
+          break;
+        case 7:
+          _instance.turnControl = new TurnControl();
+          _reader.readMessage(
+            _instance.turnControl,
+            TurnControl.deserializeBinaryFromReader
+          );
+          break;
+        case 8:
+          _instance.clientTurnId = _reader.readString();
           break;
         default:
           _reader.skipField();
@@ -11546,6 +11653,16 @@ export class StreamingDetectIntentRequest implements GrpcMessage {
     if (_instance.inputAudio && _instance.inputAudio.length) {
       _writer.writeBytes(6, _instance.inputAudio);
     }
+    if (_instance.turnControl) {
+      _writer.writeMessage(
+        7,
+        _instance.turnControl as any,
+        TurnControl.serializeBinaryToWriter
+      );
+    }
+    if (_instance.clientTurnId) {
+      _writer.writeString(8, _instance.clientTurnId);
+    }
   }
 
   private _session: string;
@@ -11553,6 +11670,8 @@ export class StreamingDetectIntentRequest implements GrpcMessage {
   private _queryInput?: QueryInput;
   private _singleUtterance: boolean;
   private _inputAudio: Uint8Array;
+  private _turnControl?: TurnControl;
+  private _clientTurnId: string;
 
   /**
    * Message constructor. Initializes the properties and applies default Protobuf values if necessary
@@ -11571,6 +11690,10 @@ export class StreamingDetectIntentRequest implements GrpcMessage {
       : undefined;
     this.singleUtterance = _value.singleUtterance;
     this.inputAudio = _value.inputAudio;
+    this.turnControl = _value.turnControl
+      ? new TurnControl(_value.turnControl)
+      : undefined;
+    this.clientTurnId = _value.clientTurnId;
     StreamingDetectIntentRequest.refineValues(this);
   }
   get session(): string {
@@ -11603,6 +11726,18 @@ export class StreamingDetectIntentRequest implements GrpcMessage {
   set inputAudio(value: Uint8Array) {
     this._inputAudio = value;
   }
+  get turnControl(): TurnControl | undefined {
+    return this._turnControl;
+  }
+  set turnControl(value: TurnControl | undefined) {
+    this._turnControl = value;
+  }
+  get clientTurnId(): string {
+    return this._clientTurnId;
+  }
+  set clientTurnId(value: string) {
+    this._clientTurnId = value;
+  }
 
   /**
    * Serialize message to binary data
@@ -11625,7 +11760,9 @@ export class StreamingDetectIntentRequest implements GrpcMessage {
       singleUtterance: this.singleUtterance,
       inputAudio: this.inputAudio
         ? this.inputAudio.subarray(0)
-        : new Uint8Array()
+        : new Uint8Array(),
+      turnControl: this.turnControl ? this.turnControl.toObject() : undefined,
+      clientTurnId: this.clientTurnId
     };
   }
 
@@ -11654,7 +11791,11 @@ export class StreamingDetectIntentRequest implements GrpcMessage {
         ? this.queryInput.toProtobufJSON(options)
         : null,
       singleUtterance: this.singleUtterance,
-      inputAudio: this.inputAudio ? uint8ArrayToBase64(this.inputAudio) : ''
+      inputAudio: this.inputAudio ? uint8ArrayToBase64(this.inputAudio) : '',
+      turnControl: this.turnControl
+        ? this.turnControl.toProtobufJSON(options)
+        : null,
+      clientTurnId: this.clientTurnId
     };
   }
 }
@@ -11668,6 +11809,8 @@ export module StreamingDetectIntentRequest {
     queryInput?: QueryInput.AsObject;
     singleUtterance: boolean;
     inputAudio: Uint8Array;
+    turnControl?: TurnControl.AsObject;
+    clientTurnId: string;
   }
 
   /**
@@ -11679,6 +11822,8 @@ export module StreamingDetectIntentRequest {
     queryInput: QueryInput.AsProtobufJSON | null;
     singleUtterance: boolean;
     inputAudio: string;
+    turnControl: TurnControl.AsProtobufJSON | null;
+    clientTurnId: string;
   }
 }
 
@@ -11710,6 +11855,9 @@ export class StreamingDetectIntentResponse implements GrpcMessage {
     _instance.recognitionResult = _instance.recognitionResult || undefined;
     _instance.queryResult = _instance.queryResult || undefined;
     _instance.webhookStatus = _instance.webhookStatus || undefined;
+
+    _instance.turnControlAck = _instance.turnControlAck || undefined;
+    _instance.clientTurnId = _instance.clientTurnId || '';
   }
 
   /**
@@ -11797,6 +11945,16 @@ export class StreamingDetectIntentResponse implements GrpcMessage {
             _instance.llmAgentNodeEvent,
             LlmAgentNodeEvent.deserializeBinaryFromReader
           );
+          break;
+        case 12:
+          _instance.turnControlAck = new TurnControlAck();
+          _reader.readMessage(
+            _instance.turnControlAck,
+            TurnControlAck.deserializeBinaryFromReader
+          );
+          break;
+        case 13:
+          _instance.clientTurnId = _reader.readString();
           break;
         default:
           _reader.skipField();
@@ -11888,6 +12046,16 @@ export class StreamingDetectIntentResponse implements GrpcMessage {
         LlmAgentNodeEvent.serializeBinaryToWriter
       );
     }
+    if (_instance.turnControlAck) {
+      _writer.writeMessage(
+        12,
+        _instance.turnControlAck as any,
+        TurnControlAck.serializeBinaryToWriter
+      );
+    }
+    if (_instance.clientTurnId) {
+      _writer.writeString(13, _instance.clientTurnId);
+    }
   }
 
   private _responseId: string;
@@ -11901,6 +12069,8 @@ export class StreamingDetectIntentResponse implements GrpcMessage {
   private _llmThinkingDelta?: LlmThinkingDeltaEvent;
   private _llmTokenUsageUpdate?: LlmTokenUsageUpdateEvent;
   private _llmAgentNodeEvent?: LlmAgentNodeEvent;
+  private _turnControlAck?: TurnControlAck;
+  private _clientTurnId: string;
 
   private _telemetryEvent: StreamingDetectIntentResponse.TelemetryEventCase =
     StreamingDetectIntentResponse.TelemetryEventCase.none;
@@ -11944,6 +12114,10 @@ export class StreamingDetectIntentResponse implements GrpcMessage {
     this.llmAgentNodeEvent = _value.llmAgentNodeEvent
       ? new LlmAgentNodeEvent(_value.llmAgentNodeEvent)
       : undefined;
+    this.turnControlAck = _value.turnControlAck
+      ? new TurnControlAck(_value.turnControlAck)
+      : undefined;
+    this.clientTurnId = _value.clientTurnId;
     StreamingDetectIntentResponse.refineValues(this);
   }
   get responseId(): string {
@@ -12047,6 +12221,18 @@ export class StreamingDetectIntentResponse implements GrpcMessage {
     }
     this._llmAgentNodeEvent = value;
   }
+  get turnControlAck(): TurnControlAck | undefined {
+    return this._turnControlAck;
+  }
+  set turnControlAck(value: TurnControlAck | undefined) {
+    this._turnControlAck = value;
+  }
+  get clientTurnId(): string {
+    return this._clientTurnId;
+  }
+  set clientTurnId(value: string) {
+    this._clientTurnId = value;
+  }
   get telemetryEvent() {
     return this._telemetryEvent;
   }
@@ -12094,7 +12280,11 @@ export class StreamingDetectIntentResponse implements GrpcMessage {
         : undefined,
       llmAgentNodeEvent: this.llmAgentNodeEvent
         ? this.llmAgentNodeEvent.toObject()
-        : undefined
+        : undefined,
+      turnControlAck: this.turnControlAck
+        ? this.turnControlAck.toObject()
+        : undefined,
+      clientTurnId: this.clientTurnId
     };
   }
 
@@ -12145,7 +12335,11 @@ export class StreamingDetectIntentResponse implements GrpcMessage {
         : null,
       llmAgentNodeEvent: this.llmAgentNodeEvent
         ? this.llmAgentNodeEvent.toProtobufJSON(options)
-        : null
+        : null,
+      turnControlAck: this.turnControlAck
+        ? this.turnControlAck.toProtobufJSON(options)
+        : null,
+      clientTurnId: this.clientTurnId
     };
   }
 }
@@ -12165,6 +12359,8 @@ export module StreamingDetectIntentResponse {
     llmThinkingDelta?: LlmThinkingDeltaEvent.AsObject;
     llmTokenUsageUpdate?: LlmTokenUsageUpdateEvent.AsObject;
     llmAgentNodeEvent?: LlmAgentNodeEvent.AsObject;
+    turnControlAck?: TurnControlAck.AsObject;
+    clientTurnId: string;
   }
 
   /**
@@ -12182,6 +12378,8 @@ export module StreamingDetectIntentResponse {
     llmThinkingDelta: LlmThinkingDeltaEvent.AsProtobufJSON | null;
     llmTokenUsageUpdate: LlmTokenUsageUpdateEvent.AsProtobufJSON | null;
     llmAgentNodeEvent: LlmAgentNodeEvent.AsProtobufJSON | null;
+    turnControlAck: TurnControlAck.AsProtobufJSON | null;
+    clientTurnId: string;
   }
   export enum TelemetryEventCase {
     none = 0,
@@ -12192,6 +12390,2970 @@ export module StreamingDetectIntentResponse {
     llmThinkingDelta = 5,
     llmTokenUsageUpdate = 6,
     llmAgentNodeEvent = 7
+  }
+}
+
+/**
+ * Message implementation for ondewo.nlu.TurnControl
+ */
+export class TurnControl implements GrpcMessage {
+  static id = 'ondewo.nlu.TurnControl';
+
+  /**
+   * Deserialize binary data to message
+   * @param instance message instance
+   */
+  static deserializeBinary(bytes: ByteSource) {
+    const instance = new TurnControl();
+    TurnControl.deserializeBinaryFromReader(instance, new BinaryReader(bytes));
+    return instance;
+  }
+
+  /**
+   * Check all the properties and set default protobuf values if necessary
+   * @param _instance message instance
+   */
+  static refineValues(_instance: TurnControl) {}
+
+  /**
+   * Deserializes / reads binary message into message instance using provided binary reader
+   * @param _instance message instance
+   * @param _reader binary reader instance
+   */
+  static deserializeBinaryFromReader(
+    _instance: TurnControl,
+    _reader: BinaryReader
+  ) {
+    while (_reader.nextField()) {
+      if (_reader.isEndGroup()) break;
+
+      switch (_reader.getFieldNumber()) {
+        case 1:
+          _instance.cancelTurn = new CancelTurn();
+          _reader.readMessage(
+            _instance.cancelTurn,
+            CancelTurn.deserializeBinaryFromReader
+          );
+          break;
+        case 2:
+          _instance.heardReport = new HeardReport();
+          _reader.readMessage(
+            _instance.heardReport,
+            HeardReport.deserializeBinaryFromReader
+          );
+          break;
+        case 3:
+          _instance.discardDraft = new DiscardDraft();
+          _reader.readMessage(
+            _instance.discardDraft,
+            DiscardDraft.deserializeBinaryFromReader
+          );
+          break;
+        default:
+          _reader.skipField();
+      }
+    }
+
+    TurnControl.refineValues(_instance);
+  }
+
+  /**
+   * Serializes a message to binary format using provided binary reader
+   * @param _instance message instance
+   * @param _writer binary writer instance
+   */
+  static serializeBinaryToWriter(
+    _instance: TurnControl,
+    _writer: BinaryWriter
+  ) {
+    if (_instance.cancelTurn) {
+      _writer.writeMessage(
+        1,
+        _instance.cancelTurn as any,
+        CancelTurn.serializeBinaryToWriter
+      );
+    }
+    if (_instance.heardReport) {
+      _writer.writeMessage(
+        2,
+        _instance.heardReport as any,
+        HeardReport.serializeBinaryToWriter
+      );
+    }
+    if (_instance.discardDraft) {
+      _writer.writeMessage(
+        3,
+        _instance.discardDraft as any,
+        DiscardDraft.serializeBinaryToWriter
+      );
+    }
+  }
+
+  private _cancelTurn?: CancelTurn;
+  private _heardReport?: HeardReport;
+  private _discardDraft?: DiscardDraft;
+
+  private _turnControl: TurnControl.TurnControlCase =
+    TurnControl.TurnControlCase.none;
+
+  /**
+   * Message constructor. Initializes the properties and applies default Protobuf values if necessary
+   * @param _value initial values object or instance of TurnControl to deeply clone from
+   */
+  constructor(_value?: RecursivePartial<TurnControl.AsObject>) {
+    _value = _value || {};
+    this.cancelTurn = _value.cancelTurn
+      ? new CancelTurn(_value.cancelTurn)
+      : undefined;
+    this.heardReport = _value.heardReport
+      ? new HeardReport(_value.heardReport)
+      : undefined;
+    this.discardDraft = _value.discardDraft
+      ? new DiscardDraft(_value.discardDraft)
+      : undefined;
+    TurnControl.refineValues(this);
+  }
+  get cancelTurn(): CancelTurn | undefined {
+    return this._cancelTurn;
+  }
+  set cancelTurn(value: CancelTurn | undefined) {
+    if (value !== undefined && value !== null) {
+      this._heardReport = this._discardDraft = undefined;
+      this._turnControl = TurnControl.TurnControlCase.cancelTurn;
+    }
+    this._cancelTurn = value;
+  }
+  get heardReport(): HeardReport | undefined {
+    return this._heardReport;
+  }
+  set heardReport(value: HeardReport | undefined) {
+    if (value !== undefined && value !== null) {
+      this._cancelTurn = this._discardDraft = undefined;
+      this._turnControl = TurnControl.TurnControlCase.heardReport;
+    }
+    this._heardReport = value;
+  }
+  get discardDraft(): DiscardDraft | undefined {
+    return this._discardDraft;
+  }
+  set discardDraft(value: DiscardDraft | undefined) {
+    if (value !== undefined && value !== null) {
+      this._cancelTurn = this._heardReport = undefined;
+      this._turnControl = TurnControl.TurnControlCase.discardDraft;
+    }
+    this._discardDraft = value;
+  }
+  get turnControl() {
+    return this._turnControl;
+  }
+
+  /**
+   * Serialize message to binary data
+   * @param instance message instance
+   */
+  serializeBinary() {
+    const writer = new BinaryWriter();
+    TurnControl.serializeBinaryToWriter(this, writer);
+    return writer.getResultBuffer();
+  }
+
+  /**
+   * Cast message to standard JavaScript object (all non-primitive values are deeply cloned)
+   */
+  toObject(): TurnControl.AsObject {
+    return {
+      cancelTurn: this.cancelTurn ? this.cancelTurn.toObject() : undefined,
+      heardReport: this.heardReport ? this.heardReport.toObject() : undefined,
+      discardDraft: this.discardDraft ? this.discardDraft.toObject() : undefined
+    };
+  }
+
+  /**
+   * Convenience method to support JSON.stringify(message), replicates the structure of toObject()
+   */
+  toJSON() {
+    return this.toObject();
+  }
+
+  /**
+   * Cast message to JSON using protobuf JSON notation: https://developers.google.com/protocol-buffers/docs/proto3#json
+   * Attention: output differs from toObject() e.g. enums are represented as names and not as numbers, Timestamp is an ISO Date string format etc.
+   * If the message itself or some of descendant messages is google.protobuf.Any, you MUST provide a message pool as options. If not, the messagePool is not required
+   */
+  toProtobufJSON(
+    // @ts-ignore
+    options?: ToProtobufJSONOptions
+  ): TurnControl.AsProtobufJSON {
+    return {
+      cancelTurn: this.cancelTurn
+        ? this.cancelTurn.toProtobufJSON(options)
+        : null,
+      heardReport: this.heardReport
+        ? this.heardReport.toProtobufJSON(options)
+        : null,
+      discardDraft: this.discardDraft
+        ? this.discardDraft.toProtobufJSON(options)
+        : null
+    };
+  }
+}
+export module TurnControl {
+  /**
+   * Standard JavaScript object representation for TurnControl
+   */
+  export interface AsObject {
+    cancelTurn?: CancelTurn.AsObject;
+    heardReport?: HeardReport.AsObject;
+    discardDraft?: DiscardDraft.AsObject;
+  }
+
+  /**
+   * Protobuf JSON representation for TurnControl
+   */
+  export interface AsProtobufJSON {
+    cancelTurn: CancelTurn.AsProtobufJSON | null;
+    heardReport: HeardReport.AsProtobufJSON | null;
+    discardDraft: DiscardDraft.AsProtobufJSON | null;
+  }
+  export enum TurnControlCase {
+    none = 0,
+    cancelTurn = 1,
+    heardReport = 2,
+    discardDraft = 3
+  }
+}
+
+/**
+ * Message implementation for ondewo.nlu.CancelTurn
+ */
+export class CancelTurn implements GrpcMessage {
+  static id = 'ondewo.nlu.CancelTurn';
+
+  /**
+   * Deserialize binary data to message
+   * @param instance message instance
+   */
+  static deserializeBinary(bytes: ByteSource) {
+    const instance = new CancelTurn();
+    CancelTurn.deserializeBinaryFromReader(instance, new BinaryReader(bytes));
+    return instance;
+  }
+
+  /**
+   * Check all the properties and set default protobuf values if necessary
+   * @param _instance message instance
+   */
+  static refineValues(_instance: CancelTurn) {
+    _instance.responseId = _instance.responseId || '';
+    _instance.clientTurnId = _instance.clientTurnId || '';
+    _instance.turnInterruptionReason = _instance.turnInterruptionReason || 0;
+    _instance.decidedAt = _instance.decidedAt || undefined;
+    _instance.backgroundWorkPolicy = _instance.backgroundWorkPolicy || 0;
+  }
+
+  /**
+   * Deserializes / reads binary message into message instance using provided binary reader
+   * @param _instance message instance
+   * @param _reader binary reader instance
+   */
+  static deserializeBinaryFromReader(
+    _instance: CancelTurn,
+    _reader: BinaryReader
+  ) {
+    while (_reader.nextField()) {
+      if (_reader.isEndGroup()) break;
+
+      switch (_reader.getFieldNumber()) {
+        case 1:
+          _instance.responseId = _reader.readString();
+          break;
+        case 2:
+          _instance.clientTurnId = _reader.readString();
+          break;
+        case 3:
+          _instance.turnInterruptionReason = _reader.readEnum();
+          break;
+        case 4:
+          _instance.decidedAt = new googleProtobuf005.Timestamp();
+          _reader.readMessage(
+            _instance.decidedAt,
+            googleProtobuf005.Timestamp.deserializeBinaryFromReader
+          );
+          break;
+        case 5:
+          _instance.backgroundWorkPolicy = _reader.readEnum();
+          break;
+        default:
+          _reader.skipField();
+      }
+    }
+
+    CancelTurn.refineValues(_instance);
+  }
+
+  /**
+   * Serializes a message to binary format using provided binary reader
+   * @param _instance message instance
+   * @param _writer binary writer instance
+   */
+  static serializeBinaryToWriter(_instance: CancelTurn, _writer: BinaryWriter) {
+    if (_instance.responseId) {
+      _writer.writeString(1, _instance.responseId);
+    }
+    if (_instance.clientTurnId) {
+      _writer.writeString(2, _instance.clientTurnId);
+    }
+    if (_instance.turnInterruptionReason) {
+      _writer.writeEnum(3, _instance.turnInterruptionReason);
+    }
+    if (_instance.decidedAt) {
+      _writer.writeMessage(
+        4,
+        _instance.decidedAt as any,
+        googleProtobuf005.Timestamp.serializeBinaryToWriter
+      );
+    }
+    if (_instance.backgroundWorkPolicy) {
+      _writer.writeEnum(5, _instance.backgroundWorkPolicy);
+    }
+  }
+
+  private _responseId: string;
+  private _clientTurnId: string;
+  private _turnInterruptionReason: TurnInterruptionReason;
+  private _decidedAt?: googleProtobuf005.Timestamp;
+  private _backgroundWorkPolicy: BackgroundWorkPolicy;
+
+  /**
+   * Message constructor. Initializes the properties and applies default Protobuf values if necessary
+   * @param _value initial values object or instance of CancelTurn to deeply clone from
+   */
+  constructor(_value?: RecursivePartial<CancelTurn.AsObject>) {
+    _value = _value || {};
+    this.responseId = _value.responseId;
+    this.clientTurnId = _value.clientTurnId;
+    this.turnInterruptionReason = _value.turnInterruptionReason;
+    this.decidedAt = _value.decidedAt
+      ? new googleProtobuf005.Timestamp(_value.decidedAt)
+      : undefined;
+    this.backgroundWorkPolicy = _value.backgroundWorkPolicy;
+    CancelTurn.refineValues(this);
+  }
+  get responseId(): string {
+    return this._responseId;
+  }
+  set responseId(value: string) {
+    this._responseId = value;
+  }
+  get clientTurnId(): string {
+    return this._clientTurnId;
+  }
+  set clientTurnId(value: string) {
+    this._clientTurnId = value;
+  }
+  get turnInterruptionReason(): TurnInterruptionReason {
+    return this._turnInterruptionReason;
+  }
+  set turnInterruptionReason(value: TurnInterruptionReason) {
+    this._turnInterruptionReason = value;
+  }
+  get decidedAt(): googleProtobuf005.Timestamp | undefined {
+    return this._decidedAt;
+  }
+  set decidedAt(value: googleProtobuf005.Timestamp | undefined) {
+    this._decidedAt = value;
+  }
+  get backgroundWorkPolicy(): BackgroundWorkPolicy {
+    return this._backgroundWorkPolicy;
+  }
+  set backgroundWorkPolicy(value: BackgroundWorkPolicy) {
+    this._backgroundWorkPolicy = value;
+  }
+
+  /**
+   * Serialize message to binary data
+   * @param instance message instance
+   */
+  serializeBinary() {
+    const writer = new BinaryWriter();
+    CancelTurn.serializeBinaryToWriter(this, writer);
+    return writer.getResultBuffer();
+  }
+
+  /**
+   * Cast message to standard JavaScript object (all non-primitive values are deeply cloned)
+   */
+  toObject(): CancelTurn.AsObject {
+    return {
+      responseId: this.responseId,
+      clientTurnId: this.clientTurnId,
+      turnInterruptionReason: this.turnInterruptionReason,
+      decidedAt: this.decidedAt ? this.decidedAt.toObject() : undefined,
+      backgroundWorkPolicy: this.backgroundWorkPolicy
+    };
+  }
+
+  /**
+   * Convenience method to support JSON.stringify(message), replicates the structure of toObject()
+   */
+  toJSON() {
+    return this.toObject();
+  }
+
+  /**
+   * Cast message to JSON using protobuf JSON notation: https://developers.google.com/protocol-buffers/docs/proto3#json
+   * Attention: output differs from toObject() e.g. enums are represented as names and not as numbers, Timestamp is an ISO Date string format etc.
+   * If the message itself or some of descendant messages is google.protobuf.Any, you MUST provide a message pool as options. If not, the messagePool is not required
+   */
+  toProtobufJSON(
+    // @ts-ignore
+    options?: ToProtobufJSONOptions
+  ): CancelTurn.AsProtobufJSON {
+    return {
+      responseId: this.responseId,
+      clientTurnId: this.clientTurnId,
+      turnInterruptionReason:
+        TurnInterruptionReason[
+          this.turnInterruptionReason === null ||
+          this.turnInterruptionReason === undefined
+            ? 0
+            : this.turnInterruptionReason
+        ],
+      decidedAt: this.decidedAt ? this.decidedAt.toProtobufJSON(options) : null,
+      backgroundWorkPolicy:
+        BackgroundWorkPolicy[
+          this.backgroundWorkPolicy === null ||
+          this.backgroundWorkPolicy === undefined
+            ? 0
+            : this.backgroundWorkPolicy
+        ]
+    };
+  }
+}
+export module CancelTurn {
+  /**
+   * Standard JavaScript object representation for CancelTurn
+   */
+  export interface AsObject {
+    responseId: string;
+    clientTurnId: string;
+    turnInterruptionReason: TurnInterruptionReason;
+    decidedAt?: googleProtobuf005.Timestamp.AsObject;
+    backgroundWorkPolicy: BackgroundWorkPolicy;
+  }
+
+  /**
+   * Protobuf JSON representation for CancelTurn
+   */
+  export interface AsProtobufJSON {
+    responseId: string;
+    clientTurnId: string;
+    turnInterruptionReason: string;
+    decidedAt: googleProtobuf005.Timestamp.AsProtobufJSON | null;
+    backgroundWorkPolicy: string;
+  }
+}
+
+/**
+ * Message implementation for ondewo.nlu.HeardMessage
+ */
+export class HeardMessage implements GrpcMessage {
+  static id = 'ondewo.nlu.HeardMessage';
+
+  /**
+   * Deserialize binary data to message
+   * @param instance message instance
+   */
+  static deserializeBinary(bytes: ByteSource) {
+    const instance = new HeardMessage();
+    HeardMessage.deserializeBinaryFromReader(instance, new BinaryReader(bytes));
+    return instance;
+  }
+
+  /**
+   * Check all the properties and set default protobuf values if necessary
+   * @param _instance message instance
+   */
+  static refineValues(_instance: HeardMessage) {
+    _instance.fulfillmentMessageIndex = _instance.fulfillmentMessageIndex || 0;
+    _instance.platform = _instance.platform || 0;
+    _instance.fullText = _instance.fullText || '';
+    _instance.heardText = _instance.heardText || '';
+    _instance.heardCharCount = _instance.heardCharCount || 0;
+    _instance.heardAudioDurationInS = _instance.heardAudioDurationInS || 0;
+    _instance.totalAudioDurationInS = _instance.totalAudioDurationInS || 0;
+    _instance.completed = _instance.completed || false;
+    _instance.neverStarted = _instance.neverStarted || false;
+    _instance.skippedSipTrigger = _instance.skippedSipTrigger || false;
+    _instance.fillerId = _instance.fillerId || '';
+  }
+
+  /**
+   * Deserializes / reads binary message into message instance using provided binary reader
+   * @param _instance message instance
+   * @param _reader binary reader instance
+   */
+  static deserializeBinaryFromReader(
+    _instance: HeardMessage,
+    _reader: BinaryReader
+  ) {
+    while (_reader.nextField()) {
+      if (_reader.isEndGroup()) break;
+
+      switch (_reader.getFieldNumber()) {
+        case 1:
+          _instance.fulfillmentMessageIndex = _reader.readInt32();
+          break;
+        case 2:
+          _instance.platform = _reader.readEnum();
+          break;
+        case 3:
+          _instance.fullText = _reader.readString();
+          break;
+        case 4:
+          _instance.heardText = _reader.readString();
+          break;
+        case 5:
+          _instance.heardCharCount = _reader.readInt32();
+          break;
+        case 6:
+          _instance.heardAudioDurationInS = _reader.readFloat();
+          break;
+        case 7:
+          _instance.totalAudioDurationInS = _reader.readFloat();
+          break;
+        case 8:
+          _instance.completed = _reader.readBool();
+          break;
+        case 9:
+          _instance.neverStarted = _reader.readBool();
+          break;
+        case 10:
+          _instance.skippedSipTrigger = _reader.readBool();
+          break;
+        case 11:
+          _instance.fillerId = _reader.readString();
+          break;
+        default:
+          _reader.skipField();
+      }
+    }
+
+    HeardMessage.refineValues(_instance);
+  }
+
+  /**
+   * Serializes a message to binary format using provided binary reader
+   * @param _instance message instance
+   * @param _writer binary writer instance
+   */
+  static serializeBinaryToWriter(
+    _instance: HeardMessage,
+    _writer: BinaryWriter
+  ) {
+    if (_instance.fulfillmentMessageIndex) {
+      _writer.writeInt32(1, _instance.fulfillmentMessageIndex);
+    }
+    if (_instance.platform) {
+      _writer.writeEnum(2, _instance.platform);
+    }
+    if (_instance.fullText) {
+      _writer.writeString(3, _instance.fullText);
+    }
+    if (_instance.heardText) {
+      _writer.writeString(4, _instance.heardText);
+    }
+    if (_instance.heardCharCount) {
+      _writer.writeInt32(5, _instance.heardCharCount);
+    }
+    if (_instance.heardAudioDurationInS) {
+      _writer.writeFloat(6, _instance.heardAudioDurationInS);
+    }
+    if (_instance.totalAudioDurationInS) {
+      _writer.writeFloat(7, _instance.totalAudioDurationInS);
+    }
+    if (_instance.completed) {
+      _writer.writeBool(8, _instance.completed);
+    }
+    if (_instance.neverStarted) {
+      _writer.writeBool(9, _instance.neverStarted);
+    }
+    if (_instance.skippedSipTrigger) {
+      _writer.writeBool(10, _instance.skippedSipTrigger);
+    }
+    if (_instance.fillerId) {
+      _writer.writeString(11, _instance.fillerId);
+    }
+  }
+
+  private _fulfillmentMessageIndex: number;
+  private _platform: ondewoNlu015.Intent.Message.Platform;
+  private _fullText: string;
+  private _heardText: string;
+  private _heardCharCount: number;
+  private _heardAudioDurationInS: number;
+  private _totalAudioDurationInS: number;
+  private _completed: boolean;
+  private _neverStarted: boolean;
+  private _skippedSipTrigger: boolean;
+  private _fillerId: string;
+
+  /**
+   * Message constructor. Initializes the properties and applies default Protobuf values if necessary
+   * @param _value initial values object or instance of HeardMessage to deeply clone from
+   */
+  constructor(_value?: RecursivePartial<HeardMessage.AsObject>) {
+    _value = _value || {};
+    this.fulfillmentMessageIndex = _value.fulfillmentMessageIndex;
+    this.platform = _value.platform;
+    this.fullText = _value.fullText;
+    this.heardText = _value.heardText;
+    this.heardCharCount = _value.heardCharCount;
+    this.heardAudioDurationInS = _value.heardAudioDurationInS;
+    this.totalAudioDurationInS = _value.totalAudioDurationInS;
+    this.completed = _value.completed;
+    this.neverStarted = _value.neverStarted;
+    this.skippedSipTrigger = _value.skippedSipTrigger;
+    this.fillerId = _value.fillerId;
+    HeardMessage.refineValues(this);
+  }
+  get fulfillmentMessageIndex(): number {
+    return this._fulfillmentMessageIndex;
+  }
+  set fulfillmentMessageIndex(value: number) {
+    this._fulfillmentMessageIndex = value;
+  }
+  get platform(): ondewoNlu015.Intent.Message.Platform {
+    return this._platform;
+  }
+  set platform(value: ondewoNlu015.Intent.Message.Platform) {
+    this._platform = value;
+  }
+  get fullText(): string {
+    return this._fullText;
+  }
+  set fullText(value: string) {
+    this._fullText = value;
+  }
+  get heardText(): string {
+    return this._heardText;
+  }
+  set heardText(value: string) {
+    this._heardText = value;
+  }
+  get heardCharCount(): number {
+    return this._heardCharCount;
+  }
+  set heardCharCount(value: number) {
+    this._heardCharCount = value;
+  }
+  get heardAudioDurationInS(): number {
+    return this._heardAudioDurationInS;
+  }
+  set heardAudioDurationInS(value: number) {
+    this._heardAudioDurationInS = value;
+  }
+  get totalAudioDurationInS(): number {
+    return this._totalAudioDurationInS;
+  }
+  set totalAudioDurationInS(value: number) {
+    this._totalAudioDurationInS = value;
+  }
+  get completed(): boolean {
+    return this._completed;
+  }
+  set completed(value: boolean) {
+    this._completed = value;
+  }
+  get neverStarted(): boolean {
+    return this._neverStarted;
+  }
+  set neverStarted(value: boolean) {
+    this._neverStarted = value;
+  }
+  get skippedSipTrigger(): boolean {
+    return this._skippedSipTrigger;
+  }
+  set skippedSipTrigger(value: boolean) {
+    this._skippedSipTrigger = value;
+  }
+  get fillerId(): string {
+    return this._fillerId;
+  }
+  set fillerId(value: string) {
+    this._fillerId = value;
+  }
+
+  /**
+   * Serialize message to binary data
+   * @param instance message instance
+   */
+  serializeBinary() {
+    const writer = new BinaryWriter();
+    HeardMessage.serializeBinaryToWriter(this, writer);
+    return writer.getResultBuffer();
+  }
+
+  /**
+   * Cast message to standard JavaScript object (all non-primitive values are deeply cloned)
+   */
+  toObject(): HeardMessage.AsObject {
+    return {
+      fulfillmentMessageIndex: this.fulfillmentMessageIndex,
+      platform: this.platform,
+      fullText: this.fullText,
+      heardText: this.heardText,
+      heardCharCount: this.heardCharCount,
+      heardAudioDurationInS: this.heardAudioDurationInS,
+      totalAudioDurationInS: this.totalAudioDurationInS,
+      completed: this.completed,
+      neverStarted: this.neverStarted,
+      skippedSipTrigger: this.skippedSipTrigger,
+      fillerId: this.fillerId
+    };
+  }
+
+  /**
+   * Convenience method to support JSON.stringify(message), replicates the structure of toObject()
+   */
+  toJSON() {
+    return this.toObject();
+  }
+
+  /**
+   * Cast message to JSON using protobuf JSON notation: https://developers.google.com/protocol-buffers/docs/proto3#json
+   * Attention: output differs from toObject() e.g. enums are represented as names and not as numbers, Timestamp is an ISO Date string format etc.
+   * If the message itself or some of descendant messages is google.protobuf.Any, you MUST provide a message pool as options. If not, the messagePool is not required
+   */
+  toProtobufJSON(
+    // @ts-ignore
+    options?: ToProtobufJSONOptions
+  ): HeardMessage.AsProtobufJSON {
+    return {
+      fulfillmentMessageIndex: this.fulfillmentMessageIndex,
+      platform:
+        ondewoNlu015.Intent.Message.Platform[
+          this.platform === null || this.platform === undefined
+            ? 0
+            : this.platform
+        ],
+      fullText: this.fullText,
+      heardText: this.heardText,
+      heardCharCount: this.heardCharCount,
+      heardAudioDurationInS: this.heardAudioDurationInS,
+      totalAudioDurationInS: this.totalAudioDurationInS,
+      completed: this.completed,
+      neverStarted: this.neverStarted,
+      skippedSipTrigger: this.skippedSipTrigger,
+      fillerId: this.fillerId
+    };
+  }
+}
+export module HeardMessage {
+  /**
+   * Standard JavaScript object representation for HeardMessage
+   */
+  export interface AsObject {
+    fulfillmentMessageIndex: number;
+    platform: ondewoNlu015.Intent.Message.Platform;
+    fullText: string;
+    heardText: string;
+    heardCharCount: number;
+    heardAudioDurationInS: number;
+    totalAudioDurationInS: number;
+    completed: boolean;
+    neverStarted: boolean;
+    skippedSipTrigger: boolean;
+    fillerId: string;
+  }
+
+  /**
+   * Protobuf JSON representation for HeardMessage
+   */
+  export interface AsProtobufJSON {
+    fulfillmentMessageIndex: number;
+    platform: string;
+    fullText: string;
+    heardText: string;
+    heardCharCount: number;
+    heardAudioDurationInS: number;
+    totalAudioDurationInS: number;
+    completed: boolean;
+    neverStarted: boolean;
+    skippedSipTrigger: boolean;
+    fillerId: string;
+  }
+}
+
+/**
+ * Message implementation for ondewo.nlu.HeardReport
+ */
+export class HeardReport implements GrpcMessage {
+  static id = 'ondewo.nlu.HeardReport';
+
+  /**
+   * Deserialize binary data to message
+   * @param instance message instance
+   */
+  static deserializeBinary(bytes: ByteSource) {
+    const instance = new HeardReport();
+    HeardReport.deserializeBinaryFromReader(instance, new BinaryReader(bytes));
+    return instance;
+  }
+
+  /**
+   * Check all the properties and set default protobuf values if necessary
+   * @param _instance message instance
+   */
+  static refineValues(_instance: HeardReport) {
+    _instance.responseId = _instance.responseId || '';
+    _instance.clientTurnId = _instance.clientTurnId || '';
+    _instance.revision = _instance.revision || 0;
+    _instance.turnInterruptionReason = _instance.turnInterruptionReason || 0;
+    _instance.heardMessages = _instance.heardMessages || [];
+    _instance.heardTextPrecision = _instance.heardTextPrecision || 0;
+    _instance.callerOverlapDurationInS =
+      _instance.callerOverlapDurationInS || 0;
+  }
+
+  /**
+   * Deserializes / reads binary message into message instance using provided binary reader
+   * @param _instance message instance
+   * @param _reader binary reader instance
+   */
+  static deserializeBinaryFromReader(
+    _instance: HeardReport,
+    _reader: BinaryReader
+  ) {
+    while (_reader.nextField()) {
+      if (_reader.isEndGroup()) break;
+
+      switch (_reader.getFieldNumber()) {
+        case 1:
+          _instance.responseId = _reader.readString();
+          break;
+        case 2:
+          _instance.clientTurnId = _reader.readString();
+          break;
+        case 3:
+          _instance.revision = _reader.readInt32();
+          break;
+        case 4:
+          _instance.turnInterruptionReason = _reader.readEnum();
+          break;
+        case 5:
+          const messageInitializer5 = new HeardMessage();
+          _reader.readMessage(
+            messageInitializer5,
+            HeardMessage.deserializeBinaryFromReader
+          );
+          (_instance.heardMessages = _instance.heardMessages || []).push(
+            messageInitializer5
+          );
+          break;
+        case 6:
+          _instance.heardTextPrecision = _reader.readEnum();
+          break;
+        case 7:
+          _instance.callerOverlapDurationInS = _reader.readFloat();
+          break;
+        default:
+          _reader.skipField();
+      }
+    }
+
+    HeardReport.refineValues(_instance);
+  }
+
+  /**
+   * Serializes a message to binary format using provided binary reader
+   * @param _instance message instance
+   * @param _writer binary writer instance
+   */
+  static serializeBinaryToWriter(
+    _instance: HeardReport,
+    _writer: BinaryWriter
+  ) {
+    if (_instance.responseId) {
+      _writer.writeString(1, _instance.responseId);
+    }
+    if (_instance.clientTurnId) {
+      _writer.writeString(2, _instance.clientTurnId);
+    }
+    if (_instance.revision) {
+      _writer.writeInt32(3, _instance.revision);
+    }
+    if (_instance.turnInterruptionReason) {
+      _writer.writeEnum(4, _instance.turnInterruptionReason);
+    }
+    if (_instance.heardMessages && _instance.heardMessages.length) {
+      _writer.writeRepeatedMessage(
+        5,
+        _instance.heardMessages as any,
+        HeardMessage.serializeBinaryToWriter
+      );
+    }
+    if (_instance.heardTextPrecision) {
+      _writer.writeEnum(6, _instance.heardTextPrecision);
+    }
+    if (_instance.callerOverlapDurationInS) {
+      _writer.writeFloat(7, _instance.callerOverlapDurationInS);
+    }
+  }
+
+  private _responseId: string;
+  private _clientTurnId: string;
+  private _revision: number;
+  private _turnInterruptionReason: TurnInterruptionReason;
+  private _heardMessages?: HeardMessage[];
+  private _heardTextPrecision: HeardTextPrecision;
+  private _callerOverlapDurationInS: number;
+
+  /**
+   * Message constructor. Initializes the properties and applies default Protobuf values if necessary
+   * @param _value initial values object or instance of HeardReport to deeply clone from
+   */
+  constructor(_value?: RecursivePartial<HeardReport.AsObject>) {
+    _value = _value || {};
+    this.responseId = _value.responseId;
+    this.clientTurnId = _value.clientTurnId;
+    this.revision = _value.revision;
+    this.turnInterruptionReason = _value.turnInterruptionReason;
+    this.heardMessages = (_value.heardMessages || []).map(
+      m => new HeardMessage(m)
+    );
+    this.heardTextPrecision = _value.heardTextPrecision;
+    this.callerOverlapDurationInS = _value.callerOverlapDurationInS;
+    HeardReport.refineValues(this);
+  }
+  get responseId(): string {
+    return this._responseId;
+  }
+  set responseId(value: string) {
+    this._responseId = value;
+  }
+  get clientTurnId(): string {
+    return this._clientTurnId;
+  }
+  set clientTurnId(value: string) {
+    this._clientTurnId = value;
+  }
+  get revision(): number {
+    return this._revision;
+  }
+  set revision(value: number) {
+    this._revision = value;
+  }
+  get turnInterruptionReason(): TurnInterruptionReason {
+    return this._turnInterruptionReason;
+  }
+  set turnInterruptionReason(value: TurnInterruptionReason) {
+    this._turnInterruptionReason = value;
+  }
+  get heardMessages(): HeardMessage[] | undefined {
+    return this._heardMessages;
+  }
+  set heardMessages(value: HeardMessage[] | undefined) {
+    this._heardMessages = value;
+  }
+  get heardTextPrecision(): HeardTextPrecision {
+    return this._heardTextPrecision;
+  }
+  set heardTextPrecision(value: HeardTextPrecision) {
+    this._heardTextPrecision = value;
+  }
+  get callerOverlapDurationInS(): number {
+    return this._callerOverlapDurationInS;
+  }
+  set callerOverlapDurationInS(value: number) {
+    this._callerOverlapDurationInS = value;
+  }
+
+  /**
+   * Serialize message to binary data
+   * @param instance message instance
+   */
+  serializeBinary() {
+    const writer = new BinaryWriter();
+    HeardReport.serializeBinaryToWriter(this, writer);
+    return writer.getResultBuffer();
+  }
+
+  /**
+   * Cast message to standard JavaScript object (all non-primitive values are deeply cloned)
+   */
+  toObject(): HeardReport.AsObject {
+    return {
+      responseId: this.responseId,
+      clientTurnId: this.clientTurnId,
+      revision: this.revision,
+      turnInterruptionReason: this.turnInterruptionReason,
+      heardMessages: (this.heardMessages || []).map(m => m.toObject()),
+      heardTextPrecision: this.heardTextPrecision,
+      callerOverlapDurationInS: this.callerOverlapDurationInS
+    };
+  }
+
+  /**
+   * Convenience method to support JSON.stringify(message), replicates the structure of toObject()
+   */
+  toJSON() {
+    return this.toObject();
+  }
+
+  /**
+   * Cast message to JSON using protobuf JSON notation: https://developers.google.com/protocol-buffers/docs/proto3#json
+   * Attention: output differs from toObject() e.g. enums are represented as names and not as numbers, Timestamp is an ISO Date string format etc.
+   * If the message itself or some of descendant messages is google.protobuf.Any, you MUST provide a message pool as options. If not, the messagePool is not required
+   */
+  toProtobufJSON(
+    // @ts-ignore
+    options?: ToProtobufJSONOptions
+  ): HeardReport.AsProtobufJSON {
+    return {
+      responseId: this.responseId,
+      clientTurnId: this.clientTurnId,
+      revision: this.revision,
+      turnInterruptionReason:
+        TurnInterruptionReason[
+          this.turnInterruptionReason === null ||
+          this.turnInterruptionReason === undefined
+            ? 0
+            : this.turnInterruptionReason
+        ],
+      heardMessages: (this.heardMessages || []).map(m =>
+        m.toProtobufJSON(options)
+      ),
+      heardTextPrecision:
+        HeardTextPrecision[
+          this.heardTextPrecision === null ||
+          this.heardTextPrecision === undefined
+            ? 0
+            : this.heardTextPrecision
+        ],
+      callerOverlapDurationInS: this.callerOverlapDurationInS
+    };
+  }
+}
+export module HeardReport {
+  /**
+   * Standard JavaScript object representation for HeardReport
+   */
+  export interface AsObject {
+    responseId: string;
+    clientTurnId: string;
+    revision: number;
+    turnInterruptionReason: TurnInterruptionReason;
+    heardMessages?: HeardMessage.AsObject[];
+    heardTextPrecision: HeardTextPrecision;
+    callerOverlapDurationInS: number;
+  }
+
+  /**
+   * Protobuf JSON representation for HeardReport
+   */
+  export interface AsProtobufJSON {
+    responseId: string;
+    clientTurnId: string;
+    revision: number;
+    turnInterruptionReason: string;
+    heardMessages: HeardMessage.AsProtobufJSON[] | null;
+    heardTextPrecision: string;
+    callerOverlapDurationInS: number;
+  }
+}
+
+/**
+ * Message implementation for ondewo.nlu.DiscardDraft
+ */
+export class DiscardDraft implements GrpcMessage {
+  static id = 'ondewo.nlu.DiscardDraft';
+
+  /**
+   * Deserialize binary data to message
+   * @param instance message instance
+   */
+  static deserializeBinary(bytes: ByteSource) {
+    const instance = new DiscardDraft();
+    DiscardDraft.deserializeBinaryFromReader(instance, new BinaryReader(bytes));
+    return instance;
+  }
+
+  /**
+   * Check all the properties and set default protobuf values if necessary
+   * @param _instance message instance
+   */
+  static refineValues(_instance: DiscardDraft) {
+    _instance.responseId = _instance.responseId || '';
+  }
+
+  /**
+   * Deserializes / reads binary message into message instance using provided binary reader
+   * @param _instance message instance
+   * @param _reader binary reader instance
+   */
+  static deserializeBinaryFromReader(
+    _instance: DiscardDraft,
+    _reader: BinaryReader
+  ) {
+    while (_reader.nextField()) {
+      if (_reader.isEndGroup()) break;
+
+      switch (_reader.getFieldNumber()) {
+        case 1:
+          _instance.responseId = _reader.readString();
+          break;
+        default:
+          _reader.skipField();
+      }
+    }
+
+    DiscardDraft.refineValues(_instance);
+  }
+
+  /**
+   * Serializes a message to binary format using provided binary reader
+   * @param _instance message instance
+   * @param _writer binary writer instance
+   */
+  static serializeBinaryToWriter(
+    _instance: DiscardDraft,
+    _writer: BinaryWriter
+  ) {
+    if (_instance.responseId) {
+      _writer.writeString(1, _instance.responseId);
+    }
+  }
+
+  private _responseId: string;
+
+  /**
+   * Message constructor. Initializes the properties and applies default Protobuf values if necessary
+   * @param _value initial values object or instance of DiscardDraft to deeply clone from
+   */
+  constructor(_value?: RecursivePartial<DiscardDraft.AsObject>) {
+    _value = _value || {};
+    this.responseId = _value.responseId;
+    DiscardDraft.refineValues(this);
+  }
+  get responseId(): string {
+    return this._responseId;
+  }
+  set responseId(value: string) {
+    this._responseId = value;
+  }
+
+  /**
+   * Serialize message to binary data
+   * @param instance message instance
+   */
+  serializeBinary() {
+    const writer = new BinaryWriter();
+    DiscardDraft.serializeBinaryToWriter(this, writer);
+    return writer.getResultBuffer();
+  }
+
+  /**
+   * Cast message to standard JavaScript object (all non-primitive values are deeply cloned)
+   */
+  toObject(): DiscardDraft.AsObject {
+    return {
+      responseId: this.responseId
+    };
+  }
+
+  /**
+   * Convenience method to support JSON.stringify(message), replicates the structure of toObject()
+   */
+  toJSON() {
+    return this.toObject();
+  }
+
+  /**
+   * Cast message to JSON using protobuf JSON notation: https://developers.google.com/protocol-buffers/docs/proto3#json
+   * Attention: output differs from toObject() e.g. enums are represented as names and not as numbers, Timestamp is an ISO Date string format etc.
+   * If the message itself or some of descendant messages is google.protobuf.Any, you MUST provide a message pool as options. If not, the messagePool is not required
+   */
+  toProtobufJSON(
+    // @ts-ignore
+    options?: ToProtobufJSONOptions
+  ): DiscardDraft.AsProtobufJSON {
+    return {
+      responseId: this.responseId
+    };
+  }
+}
+export module DiscardDraft {
+  /**
+   * Standard JavaScript object representation for DiscardDraft
+   */
+  export interface AsObject {
+    responseId: string;
+  }
+
+  /**
+   * Protobuf JSON representation for DiscardDraft
+   */
+  export interface AsProtobufJSON {
+    responseId: string;
+  }
+}
+
+/**
+ * Message implementation for ondewo.nlu.TurnControlAck
+ */
+export class TurnControlAck implements GrpcMessage {
+  static id = 'ondewo.nlu.TurnControlAck';
+
+  /**
+   * Deserialize binary data to message
+   * @param instance message instance
+   */
+  static deserializeBinary(bytes: ByteSource) {
+    const instance = new TurnControlAck();
+    TurnControlAck.deserializeBinaryFromReader(
+      instance,
+      new BinaryReader(bytes)
+    );
+    return instance;
+  }
+
+  /**
+   * Check all the properties and set default protobuf values if necessary
+   * @param _instance message instance
+   */
+  static refineValues(_instance: TurnControlAck) {
+    _instance.responseId = _instance.responseId || '';
+    _instance.clientTurnId = _instance.clientTurnId || '';
+    _instance.turnControlAckStatus = _instance.turnControlAckStatus || 0;
+    _instance.serverCancelDurationInS = _instance.serverCancelDurationInS || 0;
+  }
+
+  /**
+   * Deserializes / reads binary message into message instance using provided binary reader
+   * @param _instance message instance
+   * @param _reader binary reader instance
+   */
+  static deserializeBinaryFromReader(
+    _instance: TurnControlAck,
+    _reader: BinaryReader
+  ) {
+    while (_reader.nextField()) {
+      if (_reader.isEndGroup()) break;
+
+      switch (_reader.getFieldNumber()) {
+        case 1:
+          _instance.responseId = _reader.readString();
+          break;
+        case 2:
+          _instance.clientTurnId = _reader.readString();
+          break;
+        case 3:
+          _instance.turnControlAckStatus = _reader.readEnum();
+          break;
+        case 4:
+          _instance.serverCancelDurationInS = _reader.readFloat();
+          break;
+        default:
+          _reader.skipField();
+      }
+    }
+
+    TurnControlAck.refineValues(_instance);
+  }
+
+  /**
+   * Serializes a message to binary format using provided binary reader
+   * @param _instance message instance
+   * @param _writer binary writer instance
+   */
+  static serializeBinaryToWriter(
+    _instance: TurnControlAck,
+    _writer: BinaryWriter
+  ) {
+    if (_instance.responseId) {
+      _writer.writeString(1, _instance.responseId);
+    }
+    if (_instance.clientTurnId) {
+      _writer.writeString(2, _instance.clientTurnId);
+    }
+    if (_instance.turnControlAckStatus) {
+      _writer.writeEnum(3, _instance.turnControlAckStatus);
+    }
+    if (_instance.serverCancelDurationInS) {
+      _writer.writeFloat(4, _instance.serverCancelDurationInS);
+    }
+  }
+
+  private _responseId: string;
+  private _clientTurnId: string;
+  private _turnControlAckStatus: TurnControlAckStatus;
+  private _serverCancelDurationInS: number;
+
+  /**
+   * Message constructor. Initializes the properties and applies default Protobuf values if necessary
+   * @param _value initial values object or instance of TurnControlAck to deeply clone from
+   */
+  constructor(_value?: RecursivePartial<TurnControlAck.AsObject>) {
+    _value = _value || {};
+    this.responseId = _value.responseId;
+    this.clientTurnId = _value.clientTurnId;
+    this.turnControlAckStatus = _value.turnControlAckStatus;
+    this.serverCancelDurationInS = _value.serverCancelDurationInS;
+    TurnControlAck.refineValues(this);
+  }
+  get responseId(): string {
+    return this._responseId;
+  }
+  set responseId(value: string) {
+    this._responseId = value;
+  }
+  get clientTurnId(): string {
+    return this._clientTurnId;
+  }
+  set clientTurnId(value: string) {
+    this._clientTurnId = value;
+  }
+  get turnControlAckStatus(): TurnControlAckStatus {
+    return this._turnControlAckStatus;
+  }
+  set turnControlAckStatus(value: TurnControlAckStatus) {
+    this._turnControlAckStatus = value;
+  }
+  get serverCancelDurationInS(): number {
+    return this._serverCancelDurationInS;
+  }
+  set serverCancelDurationInS(value: number) {
+    this._serverCancelDurationInS = value;
+  }
+
+  /**
+   * Serialize message to binary data
+   * @param instance message instance
+   */
+  serializeBinary() {
+    const writer = new BinaryWriter();
+    TurnControlAck.serializeBinaryToWriter(this, writer);
+    return writer.getResultBuffer();
+  }
+
+  /**
+   * Cast message to standard JavaScript object (all non-primitive values are deeply cloned)
+   */
+  toObject(): TurnControlAck.AsObject {
+    return {
+      responseId: this.responseId,
+      clientTurnId: this.clientTurnId,
+      turnControlAckStatus: this.turnControlAckStatus,
+      serverCancelDurationInS: this.serverCancelDurationInS
+    };
+  }
+
+  /**
+   * Convenience method to support JSON.stringify(message), replicates the structure of toObject()
+   */
+  toJSON() {
+    return this.toObject();
+  }
+
+  /**
+   * Cast message to JSON using protobuf JSON notation: https://developers.google.com/protocol-buffers/docs/proto3#json
+   * Attention: output differs from toObject() e.g. enums are represented as names and not as numbers, Timestamp is an ISO Date string format etc.
+   * If the message itself or some of descendant messages is google.protobuf.Any, you MUST provide a message pool as options. If not, the messagePool is not required
+   */
+  toProtobufJSON(
+    // @ts-ignore
+    options?: ToProtobufJSONOptions
+  ): TurnControlAck.AsProtobufJSON {
+    return {
+      responseId: this.responseId,
+      clientTurnId: this.clientTurnId,
+      turnControlAckStatus:
+        TurnControlAckStatus[
+          this.turnControlAckStatus === null ||
+          this.turnControlAckStatus === undefined
+            ? 0
+            : this.turnControlAckStatus
+        ],
+      serverCancelDurationInS: this.serverCancelDurationInS
+    };
+  }
+}
+export module TurnControlAck {
+  /**
+   * Standard JavaScript object representation for TurnControlAck
+   */
+  export interface AsObject {
+    responseId: string;
+    clientTurnId: string;
+    turnControlAckStatus: TurnControlAckStatus;
+    serverCancelDurationInS: number;
+  }
+
+  /**
+   * Protobuf JSON representation for TurnControlAck
+   */
+  export interface AsProtobufJSON {
+    responseId: string;
+    clientTurnId: string;
+    turnControlAckStatus: string;
+    serverCancelDurationInS: number;
+  }
+}
+
+/**
+ * Message implementation for ondewo.nlu.InterruptTurnRequest
+ */
+export class InterruptTurnRequest implements GrpcMessage {
+  static id = 'ondewo.nlu.InterruptTurnRequest';
+
+  /**
+   * Deserialize binary data to message
+   * @param instance message instance
+   */
+  static deserializeBinary(bytes: ByteSource) {
+    const instance = new InterruptTurnRequest();
+    InterruptTurnRequest.deserializeBinaryFromReader(
+      instance,
+      new BinaryReader(bytes)
+    );
+    return instance;
+  }
+
+  /**
+   * Check all the properties and set default protobuf values if necessary
+   * @param _instance message instance
+   */
+  static refineValues(_instance: InterruptTurnRequest) {
+    _instance.session = _instance.session || '';
+    _instance.turnControl = _instance.turnControl || undefined;
+  }
+
+  /**
+   * Deserializes / reads binary message into message instance using provided binary reader
+   * @param _instance message instance
+   * @param _reader binary reader instance
+   */
+  static deserializeBinaryFromReader(
+    _instance: InterruptTurnRequest,
+    _reader: BinaryReader
+  ) {
+    while (_reader.nextField()) {
+      if (_reader.isEndGroup()) break;
+
+      switch (_reader.getFieldNumber()) {
+        case 1:
+          _instance.session = _reader.readString();
+          break;
+        case 2:
+          _instance.turnControl = new TurnControl();
+          _reader.readMessage(
+            _instance.turnControl,
+            TurnControl.deserializeBinaryFromReader
+          );
+          break;
+        default:
+          _reader.skipField();
+      }
+    }
+
+    InterruptTurnRequest.refineValues(_instance);
+  }
+
+  /**
+   * Serializes a message to binary format using provided binary reader
+   * @param _instance message instance
+   * @param _writer binary writer instance
+   */
+  static serializeBinaryToWriter(
+    _instance: InterruptTurnRequest,
+    _writer: BinaryWriter
+  ) {
+    if (_instance.session) {
+      _writer.writeString(1, _instance.session);
+    }
+    if (_instance.turnControl) {
+      _writer.writeMessage(
+        2,
+        _instance.turnControl as any,
+        TurnControl.serializeBinaryToWriter
+      );
+    }
+  }
+
+  private _session: string;
+  private _turnControl?: TurnControl;
+
+  /**
+   * Message constructor. Initializes the properties and applies default Protobuf values if necessary
+   * @param _value initial values object or instance of InterruptTurnRequest to deeply clone from
+   */
+  constructor(_value?: RecursivePartial<InterruptTurnRequest.AsObject>) {
+    _value = _value || {};
+    this.session = _value.session;
+    this.turnControl = _value.turnControl
+      ? new TurnControl(_value.turnControl)
+      : undefined;
+    InterruptTurnRequest.refineValues(this);
+  }
+  get session(): string {
+    return this._session;
+  }
+  set session(value: string) {
+    this._session = value;
+  }
+  get turnControl(): TurnControl | undefined {
+    return this._turnControl;
+  }
+  set turnControl(value: TurnControl | undefined) {
+    this._turnControl = value;
+  }
+
+  /**
+   * Serialize message to binary data
+   * @param instance message instance
+   */
+  serializeBinary() {
+    const writer = new BinaryWriter();
+    InterruptTurnRequest.serializeBinaryToWriter(this, writer);
+    return writer.getResultBuffer();
+  }
+
+  /**
+   * Cast message to standard JavaScript object (all non-primitive values are deeply cloned)
+   */
+  toObject(): InterruptTurnRequest.AsObject {
+    return {
+      session: this.session,
+      turnControl: this.turnControl ? this.turnControl.toObject() : undefined
+    };
+  }
+
+  /**
+   * Convenience method to support JSON.stringify(message), replicates the structure of toObject()
+   */
+  toJSON() {
+    return this.toObject();
+  }
+
+  /**
+   * Cast message to JSON using protobuf JSON notation: https://developers.google.com/protocol-buffers/docs/proto3#json
+   * Attention: output differs from toObject() e.g. enums are represented as names and not as numbers, Timestamp is an ISO Date string format etc.
+   * If the message itself or some of descendant messages is google.protobuf.Any, you MUST provide a message pool as options. If not, the messagePool is not required
+   */
+  toProtobufJSON(
+    // @ts-ignore
+    options?: ToProtobufJSONOptions
+  ): InterruptTurnRequest.AsProtobufJSON {
+    return {
+      session: this.session,
+      turnControl: this.turnControl
+        ? this.turnControl.toProtobufJSON(options)
+        : null
+    };
+  }
+}
+export module InterruptTurnRequest {
+  /**
+   * Standard JavaScript object representation for InterruptTurnRequest
+   */
+  export interface AsObject {
+    session: string;
+    turnControl?: TurnControl.AsObject;
+  }
+
+  /**
+   * Protobuf JSON representation for InterruptTurnRequest
+   */
+  export interface AsProtobufJSON {
+    session: string;
+    turnControl: TurnControl.AsProtobufJSON | null;
+  }
+}
+
+/**
+ * Message implementation for ondewo.nlu.InterruptTurnResponse
+ */
+export class InterruptTurnResponse implements GrpcMessage {
+  static id = 'ondewo.nlu.InterruptTurnResponse';
+
+  /**
+   * Deserialize binary data to message
+   * @param instance message instance
+   */
+  static deserializeBinary(bytes: ByteSource) {
+    const instance = new InterruptTurnResponse();
+    InterruptTurnResponse.deserializeBinaryFromReader(
+      instance,
+      new BinaryReader(bytes)
+    );
+    return instance;
+  }
+
+  /**
+   * Check all the properties and set default protobuf values if necessary
+   * @param _instance message instance
+   */
+  static refineValues(_instance: InterruptTurnResponse) {
+    _instance.turnControlAck = _instance.turnControlAck || undefined;
+  }
+
+  /**
+   * Deserializes / reads binary message into message instance using provided binary reader
+   * @param _instance message instance
+   * @param _reader binary reader instance
+   */
+  static deserializeBinaryFromReader(
+    _instance: InterruptTurnResponse,
+    _reader: BinaryReader
+  ) {
+    while (_reader.nextField()) {
+      if (_reader.isEndGroup()) break;
+
+      switch (_reader.getFieldNumber()) {
+        case 1:
+          _instance.turnControlAck = new TurnControlAck();
+          _reader.readMessage(
+            _instance.turnControlAck,
+            TurnControlAck.deserializeBinaryFromReader
+          );
+          break;
+        default:
+          _reader.skipField();
+      }
+    }
+
+    InterruptTurnResponse.refineValues(_instance);
+  }
+
+  /**
+   * Serializes a message to binary format using provided binary reader
+   * @param _instance message instance
+   * @param _writer binary writer instance
+   */
+  static serializeBinaryToWriter(
+    _instance: InterruptTurnResponse,
+    _writer: BinaryWriter
+  ) {
+    if (_instance.turnControlAck) {
+      _writer.writeMessage(
+        1,
+        _instance.turnControlAck as any,
+        TurnControlAck.serializeBinaryToWriter
+      );
+    }
+  }
+
+  private _turnControlAck?: TurnControlAck;
+
+  /**
+   * Message constructor. Initializes the properties and applies default Protobuf values if necessary
+   * @param _value initial values object or instance of InterruptTurnResponse to deeply clone from
+   */
+  constructor(_value?: RecursivePartial<InterruptTurnResponse.AsObject>) {
+    _value = _value || {};
+    this.turnControlAck = _value.turnControlAck
+      ? new TurnControlAck(_value.turnControlAck)
+      : undefined;
+    InterruptTurnResponse.refineValues(this);
+  }
+  get turnControlAck(): TurnControlAck | undefined {
+    return this._turnControlAck;
+  }
+  set turnControlAck(value: TurnControlAck | undefined) {
+    this._turnControlAck = value;
+  }
+
+  /**
+   * Serialize message to binary data
+   * @param instance message instance
+   */
+  serializeBinary() {
+    const writer = new BinaryWriter();
+    InterruptTurnResponse.serializeBinaryToWriter(this, writer);
+    return writer.getResultBuffer();
+  }
+
+  /**
+   * Cast message to standard JavaScript object (all non-primitive values are deeply cloned)
+   */
+  toObject(): InterruptTurnResponse.AsObject {
+    return {
+      turnControlAck: this.turnControlAck
+        ? this.turnControlAck.toObject()
+        : undefined
+    };
+  }
+
+  /**
+   * Convenience method to support JSON.stringify(message), replicates the structure of toObject()
+   */
+  toJSON() {
+    return this.toObject();
+  }
+
+  /**
+   * Cast message to JSON using protobuf JSON notation: https://developers.google.com/protocol-buffers/docs/proto3#json
+   * Attention: output differs from toObject() e.g. enums are represented as names and not as numbers, Timestamp is an ISO Date string format etc.
+   * If the message itself or some of descendant messages is google.protobuf.Any, you MUST provide a message pool as options. If not, the messagePool is not required
+   */
+  toProtobufJSON(
+    // @ts-ignore
+    options?: ToProtobufJSONOptions
+  ): InterruptTurnResponse.AsProtobufJSON {
+    return {
+      turnControlAck: this.turnControlAck
+        ? this.turnControlAck.toProtobufJSON(options)
+        : null
+    };
+  }
+}
+export module InterruptTurnResponse {
+  /**
+   * Standard JavaScript object representation for InterruptTurnResponse
+   */
+  export interface AsObject {
+    turnControlAck?: TurnControlAck.AsObject;
+  }
+
+  /**
+   * Protobuf JSON representation for InterruptTurnResponse
+   */
+  export interface AsProtobufJSON {
+    turnControlAck: TurnControlAck.AsProtobufJSON | null;
+  }
+}
+
+/**
+ * Message implementation for ondewo.nlu.WarmTransferIntroConfig
+ */
+export class WarmTransferIntroConfig implements GrpcMessage {
+  static id = 'ondewo.nlu.WarmTransferIntroConfig';
+
+  /**
+   * Deserialize binary data to message
+   * @param instance message instance
+   */
+  static deserializeBinary(bytes: ByteSource) {
+    const instance = new WarmTransferIntroConfig();
+    WarmTransferIntroConfig.deserializeBinaryFromReader(
+      instance,
+      new BinaryReader(bytes)
+    );
+    return instance;
+  }
+
+  /**
+   * Check all the properties and set default protobuf values if necessary
+   * @param _instance message instance
+   */
+  static refineValues(_instance: WarmTransferIntroConfig) {
+    _instance.introPrompt = _instance.introPrompt || '';
+    _instance.textSource = _instance.textSource || 0;
+    _instance.readyQuestion = _instance.readyQuestion || '';
+    _instance.acceptQuestion = _instance.acceptQuestion || '';
+    _instance.callerDeclinedMessage = _instance.callerDeclinedMessage || '';
+    _instance.callerUnreachableMessage =
+      _instance.callerUnreachableMessage || '';
+    _instance.acceptDtmf = _instance.acceptDtmf || '';
+    _instance.declineDtmf = _instance.declineDtmf || '';
+    _instance.calleeDisplayName = _instance.calleeDisplayName || '';
+    _instance.calleeDescription = _instance.calleeDescription || '';
+    _instance.llmCcaiServiceName = _instance.llmCcaiServiceName || '';
+    _instance.maxHistorySteps = _instance.maxHistorySteps || 0;
+    _instance.decisionTimeoutS = _instance.decisionTimeoutS || 0;
+    _instance.projectDisplayName = _instance.projectDisplayName || '';
+  }
+
+  /**
+   * Deserializes / reads binary message into message instance using provided binary reader
+   * @param _instance message instance
+   * @param _reader binary reader instance
+   */
+  static deserializeBinaryFromReader(
+    _instance: WarmTransferIntroConfig,
+    _reader: BinaryReader
+  ) {
+    while (_reader.nextField()) {
+      if (_reader.isEndGroup()) break;
+
+      switch (_reader.getFieldNumber()) {
+        case 1:
+          _instance.introPrompt = _reader.readString();
+          break;
+        case 2:
+          _instance.textSource = _reader.readEnum();
+          break;
+        case 3:
+          _instance.readyQuestion = _reader.readString();
+          break;
+        case 4:
+          _instance.confirmHumanBeforeIntro = _reader.readBool();
+          break;
+        case 5:
+          _instance.acceptQuestion = _reader.readString();
+          break;
+        case 6:
+          _instance.declineReasonQuestion = _reader.readString();
+          break;
+        case 7:
+          _instance.callerDeclinedMessage = _reader.readString();
+          break;
+        case 8:
+          _instance.callerUnreachableMessage = _reader.readString();
+          break;
+        case 9:
+          _instance.acceptDtmf = _reader.readString();
+          break;
+        case 10:
+          _instance.declineDtmf = _reader.readString();
+          break;
+        case 11:
+          _instance.calleeDisplayName = _reader.readString();
+          break;
+        case 12:
+          _instance.calleeDescription = _reader.readString();
+          break;
+        case 13:
+          _instance.llmCcaiServiceName = _reader.readString();
+          break;
+        case 14:
+          _instance.maxHistorySteps = _reader.readInt32();
+          break;
+        case 15:
+          _instance.decisionTimeoutS = _reader.readInt32();
+          break;
+        case 16:
+          _instance.projectDisplayName = _reader.readString();
+          break;
+        default:
+          _reader.skipField();
+      }
+    }
+
+    WarmTransferIntroConfig.refineValues(_instance);
+  }
+
+  /**
+   * Serializes a message to binary format using provided binary reader
+   * @param _instance message instance
+   * @param _writer binary writer instance
+   */
+  static serializeBinaryToWriter(
+    _instance: WarmTransferIntroConfig,
+    _writer: BinaryWriter
+  ) {
+    if (_instance.introPrompt) {
+      _writer.writeString(1, _instance.introPrompt);
+    }
+    if (_instance.textSource) {
+      _writer.writeEnum(2, _instance.textSource);
+    }
+    if (_instance.readyQuestion) {
+      _writer.writeString(3, _instance.readyQuestion);
+    }
+    if (
+      _instance.confirmHumanBeforeIntro !== undefined &&
+      _instance.confirmHumanBeforeIntro !== null
+    ) {
+      _writer.writeBool(4, _instance.confirmHumanBeforeIntro);
+    }
+    if (_instance.acceptQuestion) {
+      _writer.writeString(5, _instance.acceptQuestion);
+    }
+    if (
+      _instance.declineReasonQuestion !== undefined &&
+      _instance.declineReasonQuestion !== null
+    ) {
+      _writer.writeString(6, _instance.declineReasonQuestion);
+    }
+    if (_instance.callerDeclinedMessage) {
+      _writer.writeString(7, _instance.callerDeclinedMessage);
+    }
+    if (_instance.callerUnreachableMessage) {
+      _writer.writeString(8, _instance.callerUnreachableMessage);
+    }
+    if (_instance.acceptDtmf) {
+      _writer.writeString(9, _instance.acceptDtmf);
+    }
+    if (_instance.declineDtmf) {
+      _writer.writeString(10, _instance.declineDtmf);
+    }
+    if (_instance.calleeDisplayName) {
+      _writer.writeString(11, _instance.calleeDisplayName);
+    }
+    if (_instance.calleeDescription) {
+      _writer.writeString(12, _instance.calleeDescription);
+    }
+    if (_instance.llmCcaiServiceName) {
+      _writer.writeString(13, _instance.llmCcaiServiceName);
+    }
+    if (_instance.maxHistorySteps) {
+      _writer.writeInt32(14, _instance.maxHistorySteps);
+    }
+    if (_instance.decisionTimeoutS) {
+      _writer.writeInt32(15, _instance.decisionTimeoutS);
+    }
+    if (_instance.projectDisplayName) {
+      _writer.writeString(16, _instance.projectDisplayName);
+    }
+  }
+
+  private _introPrompt: string;
+  private _textSource: WarmTransferIntroTextSource;
+  private _readyQuestion: string;
+  private _confirmHumanBeforeIntro: boolean;
+  private _acceptQuestion: string;
+  private _declineReasonQuestion: string;
+  private _callerDeclinedMessage: string;
+  private _callerUnreachableMessage: string;
+  private _acceptDtmf: string;
+  private _declineDtmf: string;
+  private _calleeDisplayName: string;
+  private _calleeDescription: string;
+  private _llmCcaiServiceName: string;
+  private _maxHistorySteps: number;
+  private _decisionTimeoutS: number;
+  private _projectDisplayName: string;
+
+  /**
+   * Message constructor. Initializes the properties and applies default Protobuf values if necessary
+   * @param _value initial values object or instance of WarmTransferIntroConfig to deeply clone from
+   */
+  constructor(_value?: RecursivePartial<WarmTransferIntroConfig.AsObject>) {
+    _value = _value || {};
+    this.introPrompt = _value.introPrompt;
+    this.textSource = _value.textSource;
+    this.readyQuestion = _value.readyQuestion;
+    this.confirmHumanBeforeIntro = _value.confirmHumanBeforeIntro;
+    this.acceptQuestion = _value.acceptQuestion;
+    this.declineReasonQuestion = _value.declineReasonQuestion;
+    this.callerDeclinedMessage = _value.callerDeclinedMessage;
+    this.callerUnreachableMessage = _value.callerUnreachableMessage;
+    this.acceptDtmf = _value.acceptDtmf;
+    this.declineDtmf = _value.declineDtmf;
+    this.calleeDisplayName = _value.calleeDisplayName;
+    this.calleeDescription = _value.calleeDescription;
+    this.llmCcaiServiceName = _value.llmCcaiServiceName;
+    this.maxHistorySteps = _value.maxHistorySteps;
+    this.decisionTimeoutS = _value.decisionTimeoutS;
+    this.projectDisplayName = _value.projectDisplayName;
+    WarmTransferIntroConfig.refineValues(this);
+  }
+  get introPrompt(): string {
+    return this._introPrompt;
+  }
+  set introPrompt(value: string) {
+    this._introPrompt = value;
+  }
+  get textSource(): WarmTransferIntroTextSource {
+    return this._textSource;
+  }
+  set textSource(value: WarmTransferIntroTextSource) {
+    this._textSource = value;
+  }
+  get readyQuestion(): string {
+    return this._readyQuestion;
+  }
+  set readyQuestion(value: string) {
+    this._readyQuestion = value;
+  }
+  get confirmHumanBeforeIntro(): boolean {
+    return this._confirmHumanBeforeIntro;
+  }
+  set confirmHumanBeforeIntro(value: boolean) {
+    this._confirmHumanBeforeIntro = value;
+  }
+  get acceptQuestion(): string {
+    return this._acceptQuestion;
+  }
+  set acceptQuestion(value: string) {
+    this._acceptQuestion = value;
+  }
+  get declineReasonQuestion(): string {
+    return this._declineReasonQuestion;
+  }
+  set declineReasonQuestion(value: string) {
+    this._declineReasonQuestion = value;
+  }
+  get callerDeclinedMessage(): string {
+    return this._callerDeclinedMessage;
+  }
+  set callerDeclinedMessage(value: string) {
+    this._callerDeclinedMessage = value;
+  }
+  get callerUnreachableMessage(): string {
+    return this._callerUnreachableMessage;
+  }
+  set callerUnreachableMessage(value: string) {
+    this._callerUnreachableMessage = value;
+  }
+  get acceptDtmf(): string {
+    return this._acceptDtmf;
+  }
+  set acceptDtmf(value: string) {
+    this._acceptDtmf = value;
+  }
+  get declineDtmf(): string {
+    return this._declineDtmf;
+  }
+  set declineDtmf(value: string) {
+    this._declineDtmf = value;
+  }
+  get calleeDisplayName(): string {
+    return this._calleeDisplayName;
+  }
+  set calleeDisplayName(value: string) {
+    this._calleeDisplayName = value;
+  }
+  get calleeDescription(): string {
+    return this._calleeDescription;
+  }
+  set calleeDescription(value: string) {
+    this._calleeDescription = value;
+  }
+  get llmCcaiServiceName(): string {
+    return this._llmCcaiServiceName;
+  }
+  set llmCcaiServiceName(value: string) {
+    this._llmCcaiServiceName = value;
+  }
+  get maxHistorySteps(): number {
+    return this._maxHistorySteps;
+  }
+  set maxHistorySteps(value: number) {
+    this._maxHistorySteps = value;
+  }
+  get decisionTimeoutS(): number {
+    return this._decisionTimeoutS;
+  }
+  set decisionTimeoutS(value: number) {
+    this._decisionTimeoutS = value;
+  }
+  get projectDisplayName(): string {
+    return this._projectDisplayName;
+  }
+  set projectDisplayName(value: string) {
+    this._projectDisplayName = value;
+  }
+
+  /**
+   * Serialize message to binary data
+   * @param instance message instance
+   */
+  serializeBinary() {
+    const writer = new BinaryWriter();
+    WarmTransferIntroConfig.serializeBinaryToWriter(this, writer);
+    return writer.getResultBuffer();
+  }
+
+  /**
+   * Cast message to standard JavaScript object (all non-primitive values are deeply cloned)
+   */
+  toObject(): WarmTransferIntroConfig.AsObject {
+    return {
+      introPrompt: this.introPrompt,
+      textSource: this.textSource,
+      readyQuestion: this.readyQuestion,
+      confirmHumanBeforeIntro: this.confirmHumanBeforeIntro,
+      acceptQuestion: this.acceptQuestion,
+      declineReasonQuestion: this.declineReasonQuestion,
+      callerDeclinedMessage: this.callerDeclinedMessage,
+      callerUnreachableMessage: this.callerUnreachableMessage,
+      acceptDtmf: this.acceptDtmf,
+      declineDtmf: this.declineDtmf,
+      calleeDisplayName: this.calleeDisplayName,
+      calleeDescription: this.calleeDescription,
+      llmCcaiServiceName: this.llmCcaiServiceName,
+      maxHistorySteps: this.maxHistorySteps,
+      decisionTimeoutS: this.decisionTimeoutS,
+      projectDisplayName: this.projectDisplayName
+    };
+  }
+
+  /**
+   * Convenience method to support JSON.stringify(message), replicates the structure of toObject()
+   */
+  toJSON() {
+    return this.toObject();
+  }
+
+  /**
+   * Cast message to JSON using protobuf JSON notation: https://developers.google.com/protocol-buffers/docs/proto3#json
+   * Attention: output differs from toObject() e.g. enums are represented as names and not as numbers, Timestamp is an ISO Date string format etc.
+   * If the message itself or some of descendant messages is google.protobuf.Any, you MUST provide a message pool as options. If not, the messagePool is not required
+   */
+  toProtobufJSON(
+    // @ts-ignore
+    options?: ToProtobufJSONOptions
+  ): WarmTransferIntroConfig.AsProtobufJSON {
+    return {
+      introPrompt: this.introPrompt,
+      textSource:
+        WarmTransferIntroTextSource[
+          this.textSource === null || this.textSource === undefined
+            ? 0
+            : this.textSource
+        ],
+      readyQuestion: this.readyQuestion,
+      confirmHumanBeforeIntro: this.confirmHumanBeforeIntro,
+      acceptQuestion: this.acceptQuestion,
+      declineReasonQuestion: this.declineReasonQuestion,
+      callerDeclinedMessage: this.callerDeclinedMessage,
+      callerUnreachableMessage: this.callerUnreachableMessage,
+      acceptDtmf: this.acceptDtmf,
+      declineDtmf: this.declineDtmf,
+      calleeDisplayName: this.calleeDisplayName,
+      calleeDescription: this.calleeDescription,
+      llmCcaiServiceName: this.llmCcaiServiceName,
+      maxHistorySteps: this.maxHistorySteps,
+      decisionTimeoutS: this.decisionTimeoutS,
+      projectDisplayName: this.projectDisplayName
+    };
+  }
+}
+export module WarmTransferIntroConfig {
+  /**
+   * Standard JavaScript object representation for WarmTransferIntroConfig
+   */
+  export interface AsObject {
+    introPrompt: string;
+    textSource: WarmTransferIntroTextSource;
+    readyQuestion: string;
+    confirmHumanBeforeIntro: boolean;
+    acceptQuestion: string;
+    declineReasonQuestion: string;
+    callerDeclinedMessage: string;
+    callerUnreachableMessage: string;
+    acceptDtmf: string;
+    declineDtmf: string;
+    calleeDisplayName: string;
+    calleeDescription: string;
+    llmCcaiServiceName: string;
+    maxHistorySteps: number;
+    decisionTimeoutS: number;
+    projectDisplayName: string;
+  }
+
+  /**
+   * Protobuf JSON representation for WarmTransferIntroConfig
+   */
+  export interface AsProtobufJSON {
+    introPrompt: string;
+    textSource: string;
+    readyQuestion: string;
+    confirmHumanBeforeIntro: boolean;
+    acceptQuestion: string;
+    declineReasonQuestion: string;
+    callerDeclinedMessage: string;
+    callerUnreachableMessage: string;
+    acceptDtmf: string;
+    declineDtmf: string;
+    calleeDisplayName: string;
+    calleeDescription: string;
+    llmCcaiServiceName: string;
+    maxHistorySteps: number;
+    decisionTimeoutS: number;
+    projectDisplayName: string;
+  }
+}
+
+/**
+ * Message implementation for ondewo.nlu.PrepareWarmTransferIntroRequest
+ */
+export class PrepareWarmTransferIntroRequest implements GrpcMessage {
+  static id = 'ondewo.nlu.PrepareWarmTransferIntroRequest';
+
+  /**
+   * Deserialize binary data to message
+   * @param instance message instance
+   */
+  static deserializeBinary(bytes: ByteSource) {
+    const instance = new PrepareWarmTransferIntroRequest();
+    PrepareWarmTransferIntroRequest.deserializeBinaryFromReader(
+      instance,
+      new BinaryReader(bytes)
+    );
+    return instance;
+  }
+
+  /**
+   * Check all the properties and set default protobuf values if necessary
+   * @param _instance message instance
+   */
+  static refineValues(_instance: PrepareWarmTransferIntroRequest) {
+    _instance.introSession = _instance.introSession || '';
+    _instance.sourceSession = _instance.sourceSession || '';
+    _instance.config = _instance.config || undefined;
+    _instance.languageCode = _instance.languageCode || '';
+    _instance.transferRequestId = _instance.transferRequestId || '';
+  }
+
+  /**
+   * Deserializes / reads binary message into message instance using provided binary reader
+   * @param _instance message instance
+   * @param _reader binary reader instance
+   */
+  static deserializeBinaryFromReader(
+    _instance: PrepareWarmTransferIntroRequest,
+    _reader: BinaryReader
+  ) {
+    while (_reader.nextField()) {
+      if (_reader.isEndGroup()) break;
+
+      switch (_reader.getFieldNumber()) {
+        case 1:
+          _instance.introSession = _reader.readString();
+          break;
+        case 2:
+          _instance.sourceSession = _reader.readString();
+          break;
+        case 3:
+          _instance.config = new WarmTransferIntroConfig();
+          _reader.readMessage(
+            _instance.config,
+            WarmTransferIntroConfig.deserializeBinaryFromReader
+          );
+          break;
+        case 4:
+          _instance.languageCode = _reader.readString();
+          break;
+        case 5:
+          _instance.transferRequestId = _reader.readString();
+          break;
+        default:
+          _reader.skipField();
+      }
+    }
+
+    PrepareWarmTransferIntroRequest.refineValues(_instance);
+  }
+
+  /**
+   * Serializes a message to binary format using provided binary reader
+   * @param _instance message instance
+   * @param _writer binary writer instance
+   */
+  static serializeBinaryToWriter(
+    _instance: PrepareWarmTransferIntroRequest,
+    _writer: BinaryWriter
+  ) {
+    if (_instance.introSession) {
+      _writer.writeString(1, _instance.introSession);
+    }
+    if (_instance.sourceSession) {
+      _writer.writeString(2, _instance.sourceSession);
+    }
+    if (_instance.config) {
+      _writer.writeMessage(
+        3,
+        _instance.config as any,
+        WarmTransferIntroConfig.serializeBinaryToWriter
+      );
+    }
+    if (_instance.languageCode) {
+      _writer.writeString(4, _instance.languageCode);
+    }
+    if (_instance.transferRequestId) {
+      _writer.writeString(5, _instance.transferRequestId);
+    }
+  }
+
+  private _introSession: string;
+  private _sourceSession: string;
+  private _config?: WarmTransferIntroConfig;
+  private _languageCode: string;
+  private _transferRequestId: string;
+
+  /**
+   * Message constructor. Initializes the properties and applies default Protobuf values if necessary
+   * @param _value initial values object or instance of PrepareWarmTransferIntroRequest to deeply clone from
+   */
+  constructor(
+    _value?: RecursivePartial<PrepareWarmTransferIntroRequest.AsObject>
+  ) {
+    _value = _value || {};
+    this.introSession = _value.introSession;
+    this.sourceSession = _value.sourceSession;
+    this.config = _value.config
+      ? new WarmTransferIntroConfig(_value.config)
+      : undefined;
+    this.languageCode = _value.languageCode;
+    this.transferRequestId = _value.transferRequestId;
+    PrepareWarmTransferIntroRequest.refineValues(this);
+  }
+  get introSession(): string {
+    return this._introSession;
+  }
+  set introSession(value: string) {
+    this._introSession = value;
+  }
+  get sourceSession(): string {
+    return this._sourceSession;
+  }
+  set sourceSession(value: string) {
+    this._sourceSession = value;
+  }
+  get config(): WarmTransferIntroConfig | undefined {
+    return this._config;
+  }
+  set config(value: WarmTransferIntroConfig | undefined) {
+    this._config = value;
+  }
+  get languageCode(): string {
+    return this._languageCode;
+  }
+  set languageCode(value: string) {
+    this._languageCode = value;
+  }
+  get transferRequestId(): string {
+    return this._transferRequestId;
+  }
+  set transferRequestId(value: string) {
+    this._transferRequestId = value;
+  }
+
+  /**
+   * Serialize message to binary data
+   * @param instance message instance
+   */
+  serializeBinary() {
+    const writer = new BinaryWriter();
+    PrepareWarmTransferIntroRequest.serializeBinaryToWriter(this, writer);
+    return writer.getResultBuffer();
+  }
+
+  /**
+   * Cast message to standard JavaScript object (all non-primitive values are deeply cloned)
+   */
+  toObject(): PrepareWarmTransferIntroRequest.AsObject {
+    return {
+      introSession: this.introSession,
+      sourceSession: this.sourceSession,
+      config: this.config ? this.config.toObject() : undefined,
+      languageCode: this.languageCode,
+      transferRequestId: this.transferRequestId
+    };
+  }
+
+  /**
+   * Convenience method to support JSON.stringify(message), replicates the structure of toObject()
+   */
+  toJSON() {
+    return this.toObject();
+  }
+
+  /**
+   * Cast message to JSON using protobuf JSON notation: https://developers.google.com/protocol-buffers/docs/proto3#json
+   * Attention: output differs from toObject() e.g. enums are represented as names and not as numbers, Timestamp is an ISO Date string format etc.
+   * If the message itself or some of descendant messages is google.protobuf.Any, you MUST provide a message pool as options. If not, the messagePool is not required
+   */
+  toProtobufJSON(
+    // @ts-ignore
+    options?: ToProtobufJSONOptions
+  ): PrepareWarmTransferIntroRequest.AsProtobufJSON {
+    return {
+      introSession: this.introSession,
+      sourceSession: this.sourceSession,
+      config: this.config ? this.config.toProtobufJSON(options) : null,
+      languageCode: this.languageCode,
+      transferRequestId: this.transferRequestId
+    };
+  }
+}
+export module PrepareWarmTransferIntroRequest {
+  /**
+   * Standard JavaScript object representation for PrepareWarmTransferIntroRequest
+   */
+  export interface AsObject {
+    introSession: string;
+    sourceSession: string;
+    config?: WarmTransferIntroConfig.AsObject;
+    languageCode: string;
+    transferRequestId: string;
+  }
+
+  /**
+   * Protobuf JSON representation for PrepareWarmTransferIntroRequest
+   */
+  export interface AsProtobufJSON {
+    introSession: string;
+    sourceSession: string;
+    config: WarmTransferIntroConfig.AsProtobufJSON | null;
+    languageCode: string;
+    transferRequestId: string;
+  }
+}
+
+/**
+ * Message implementation for ondewo.nlu.PrepareWarmTransferIntroResponse
+ */
+export class PrepareWarmTransferIntroResponse implements GrpcMessage {
+  static id = 'ondewo.nlu.PrepareWarmTransferIntroResponse';
+
+  /**
+   * Deserialize binary data to message
+   * @param instance message instance
+   */
+  static deserializeBinary(bytes: ByteSource) {
+    const instance = new PrepareWarmTransferIntroResponse();
+    PrepareWarmTransferIntroResponse.deserializeBinaryFromReader(
+      instance,
+      new BinaryReader(bytes)
+    );
+    return instance;
+  }
+
+  /**
+   * Check all the properties and set default protobuf values if necessary
+   * @param _instance message instance
+   */
+  static refineValues(_instance: PrepareWarmTransferIntroResponse) {
+    _instance.textSourceUsed = _instance.textSourceUsed || 0;
+    _instance.textFellBack = _instance.textFellBack || false;
+    _instance.introTextChars = _instance.introTextChars || 0;
+    _instance.promptDigest = _instance.promptDigest || '';
+  }
+
+  /**
+   * Deserializes / reads binary message into message instance using provided binary reader
+   * @param _instance message instance
+   * @param _reader binary reader instance
+   */
+  static deserializeBinaryFromReader(
+    _instance: PrepareWarmTransferIntroResponse,
+    _reader: BinaryReader
+  ) {
+    while (_reader.nextField()) {
+      if (_reader.isEndGroup()) break;
+
+      switch (_reader.getFieldNumber()) {
+        case 1:
+          _instance.textSourceUsed = _reader.readEnum();
+          break;
+        case 2:
+          _instance.textFellBack = _reader.readBool();
+          break;
+        case 3:
+          _instance.introTextChars = _reader.readInt32();
+          break;
+        case 4:
+          _instance.promptDigest = _reader.readString();
+          break;
+        default:
+          _reader.skipField();
+      }
+    }
+
+    PrepareWarmTransferIntroResponse.refineValues(_instance);
+  }
+
+  /**
+   * Serializes a message to binary format using provided binary reader
+   * @param _instance message instance
+   * @param _writer binary writer instance
+   */
+  static serializeBinaryToWriter(
+    _instance: PrepareWarmTransferIntroResponse,
+    _writer: BinaryWriter
+  ) {
+    if (_instance.textSourceUsed) {
+      _writer.writeEnum(1, _instance.textSourceUsed);
+    }
+    if (_instance.textFellBack) {
+      _writer.writeBool(2, _instance.textFellBack);
+    }
+    if (_instance.introTextChars) {
+      _writer.writeInt32(3, _instance.introTextChars);
+    }
+    if (_instance.promptDigest) {
+      _writer.writeString(4, _instance.promptDigest);
+    }
+  }
+
+  private _textSourceUsed: WarmTransferIntroTextSource;
+  private _textFellBack: boolean;
+  private _introTextChars: number;
+  private _promptDigest: string;
+
+  /**
+   * Message constructor. Initializes the properties and applies default Protobuf values if necessary
+   * @param _value initial values object or instance of PrepareWarmTransferIntroResponse to deeply clone from
+   */
+  constructor(
+    _value?: RecursivePartial<PrepareWarmTransferIntroResponse.AsObject>
+  ) {
+    _value = _value || {};
+    this.textSourceUsed = _value.textSourceUsed;
+    this.textFellBack = _value.textFellBack;
+    this.introTextChars = _value.introTextChars;
+    this.promptDigest = _value.promptDigest;
+    PrepareWarmTransferIntroResponse.refineValues(this);
+  }
+  get textSourceUsed(): WarmTransferIntroTextSource {
+    return this._textSourceUsed;
+  }
+  set textSourceUsed(value: WarmTransferIntroTextSource) {
+    this._textSourceUsed = value;
+  }
+  get textFellBack(): boolean {
+    return this._textFellBack;
+  }
+  set textFellBack(value: boolean) {
+    this._textFellBack = value;
+  }
+  get introTextChars(): number {
+    return this._introTextChars;
+  }
+  set introTextChars(value: number) {
+    this._introTextChars = value;
+  }
+  get promptDigest(): string {
+    return this._promptDigest;
+  }
+  set promptDigest(value: string) {
+    this._promptDigest = value;
+  }
+
+  /**
+   * Serialize message to binary data
+   * @param instance message instance
+   */
+  serializeBinary() {
+    const writer = new BinaryWriter();
+    PrepareWarmTransferIntroResponse.serializeBinaryToWriter(this, writer);
+    return writer.getResultBuffer();
+  }
+
+  /**
+   * Cast message to standard JavaScript object (all non-primitive values are deeply cloned)
+   */
+  toObject(): PrepareWarmTransferIntroResponse.AsObject {
+    return {
+      textSourceUsed: this.textSourceUsed,
+      textFellBack: this.textFellBack,
+      introTextChars: this.introTextChars,
+      promptDigest: this.promptDigest
+    };
+  }
+
+  /**
+   * Convenience method to support JSON.stringify(message), replicates the structure of toObject()
+   */
+  toJSON() {
+    return this.toObject();
+  }
+
+  /**
+   * Cast message to JSON using protobuf JSON notation: https://developers.google.com/protocol-buffers/docs/proto3#json
+   * Attention: output differs from toObject() e.g. enums are represented as names and not as numbers, Timestamp is an ISO Date string format etc.
+   * If the message itself or some of descendant messages is google.protobuf.Any, you MUST provide a message pool as options. If not, the messagePool is not required
+   */
+  toProtobufJSON(
+    // @ts-ignore
+    options?: ToProtobufJSONOptions
+  ): PrepareWarmTransferIntroResponse.AsProtobufJSON {
+    return {
+      textSourceUsed:
+        WarmTransferIntroTextSource[
+          this.textSourceUsed === null || this.textSourceUsed === undefined
+            ? 0
+            : this.textSourceUsed
+        ],
+      textFellBack: this.textFellBack,
+      introTextChars: this.introTextChars,
+      promptDigest: this.promptDigest
+    };
+  }
+}
+export module PrepareWarmTransferIntroResponse {
+  /**
+   * Standard JavaScript object representation for PrepareWarmTransferIntroResponse
+   */
+  export interface AsObject {
+    textSourceUsed: WarmTransferIntroTextSource;
+    textFellBack: boolean;
+    introTextChars: number;
+    promptDigest: string;
+  }
+
+  /**
+   * Protobuf JSON representation for PrepareWarmTransferIntroResponse
+   */
+  export interface AsProtobufJSON {
+    textSourceUsed: string;
+    textFellBack: boolean;
+    introTextChars: number;
+    promptDigest: string;
+  }
+}
+
+/**
+ * Message implementation for ondewo.nlu.GetWarmTransferIntroOutcomeRequest
+ */
+export class GetWarmTransferIntroOutcomeRequest implements GrpcMessage {
+  static id = 'ondewo.nlu.GetWarmTransferIntroOutcomeRequest';
+
+  /**
+   * Deserialize binary data to message
+   * @param instance message instance
+   */
+  static deserializeBinary(bytes: ByteSource) {
+    const instance = new GetWarmTransferIntroOutcomeRequest();
+    GetWarmTransferIntroOutcomeRequest.deserializeBinaryFromReader(
+      instance,
+      new BinaryReader(bytes)
+    );
+    return instance;
+  }
+
+  /**
+   * Check all the properties and set default protobuf values if necessary
+   * @param _instance message instance
+   */
+  static refineValues(_instance: GetWarmTransferIntroOutcomeRequest) {
+    _instance.introSession = _instance.introSession || '';
+  }
+
+  /**
+   * Deserializes / reads binary message into message instance using provided binary reader
+   * @param _instance message instance
+   * @param _reader binary reader instance
+   */
+  static deserializeBinaryFromReader(
+    _instance: GetWarmTransferIntroOutcomeRequest,
+    _reader: BinaryReader
+  ) {
+    while (_reader.nextField()) {
+      if (_reader.isEndGroup()) break;
+
+      switch (_reader.getFieldNumber()) {
+        case 1:
+          _instance.introSession = _reader.readString();
+          break;
+        default:
+          _reader.skipField();
+      }
+    }
+
+    GetWarmTransferIntroOutcomeRequest.refineValues(_instance);
+  }
+
+  /**
+   * Serializes a message to binary format using provided binary reader
+   * @param _instance message instance
+   * @param _writer binary writer instance
+   */
+  static serializeBinaryToWriter(
+    _instance: GetWarmTransferIntroOutcomeRequest,
+    _writer: BinaryWriter
+  ) {
+    if (_instance.introSession) {
+      _writer.writeString(1, _instance.introSession);
+    }
+  }
+
+  private _introSession: string;
+
+  /**
+   * Message constructor. Initializes the properties and applies default Protobuf values if necessary
+   * @param _value initial values object or instance of GetWarmTransferIntroOutcomeRequest to deeply clone from
+   */
+  constructor(
+    _value?: RecursivePartial<GetWarmTransferIntroOutcomeRequest.AsObject>
+  ) {
+    _value = _value || {};
+    this.introSession = _value.introSession;
+    GetWarmTransferIntroOutcomeRequest.refineValues(this);
+  }
+  get introSession(): string {
+    return this._introSession;
+  }
+  set introSession(value: string) {
+    this._introSession = value;
+  }
+
+  /**
+   * Serialize message to binary data
+   * @param instance message instance
+   */
+  serializeBinary() {
+    const writer = new BinaryWriter();
+    GetWarmTransferIntroOutcomeRequest.serializeBinaryToWriter(this, writer);
+    return writer.getResultBuffer();
+  }
+
+  /**
+   * Cast message to standard JavaScript object (all non-primitive values are deeply cloned)
+   */
+  toObject(): GetWarmTransferIntroOutcomeRequest.AsObject {
+    return {
+      introSession: this.introSession
+    };
+  }
+
+  /**
+   * Convenience method to support JSON.stringify(message), replicates the structure of toObject()
+   */
+  toJSON() {
+    return this.toObject();
+  }
+
+  /**
+   * Cast message to JSON using protobuf JSON notation: https://developers.google.com/protocol-buffers/docs/proto3#json
+   * Attention: output differs from toObject() e.g. enums are represented as names and not as numbers, Timestamp is an ISO Date string format etc.
+   * If the message itself or some of descendant messages is google.protobuf.Any, you MUST provide a message pool as options. If not, the messagePool is not required
+   */
+  toProtobufJSON(
+    // @ts-ignore
+    options?: ToProtobufJSONOptions
+  ): GetWarmTransferIntroOutcomeRequest.AsProtobufJSON {
+    return {
+      introSession: this.introSession
+    };
+  }
+}
+export module GetWarmTransferIntroOutcomeRequest {
+  /**
+   * Standard JavaScript object representation for GetWarmTransferIntroOutcomeRequest
+   */
+  export interface AsObject {
+    introSession: string;
+  }
+
+  /**
+   * Protobuf JSON representation for GetWarmTransferIntroOutcomeRequest
+   */
+  export interface AsProtobufJSON {
+    introSession: string;
+  }
+}
+
+/**
+ * Message implementation for ondewo.nlu.WarmTransferIntroOutcome
+ */
+export class WarmTransferIntroOutcome implements GrpcMessage {
+  static id = 'ondewo.nlu.WarmTransferIntroOutcome';
+
+  /**
+   * Deserialize binary data to message
+   * @param instance message instance
+   */
+  static deserializeBinary(bytes: ByteSource) {
+    const instance = new WarmTransferIntroOutcome();
+    WarmTransferIntroOutcome.deserializeBinaryFromReader(
+      instance,
+      new BinaryReader(bytes)
+    );
+    return instance;
+  }
+
+  /**
+   * Check all the properties and set default protobuf values if necessary
+   * @param _instance message instance
+   */
+  static refineValues(_instance: WarmTransferIntroOutcome) {
+    _instance.decision = _instance.decision || 0;
+    _instance.decidedBy = _instance.decidedBy || 0;
+    _instance.declineReasonPresent = _instance.declineReasonPresent || false;
+    _instance.stage = _instance.stage || 0;
+    _instance.cause = _instance.cause || '';
+  }
+
+  /**
+   * Deserializes / reads binary message into message instance using provided binary reader
+   * @param _instance message instance
+   * @param _reader binary reader instance
+   */
+  static deserializeBinaryFromReader(
+    _instance: WarmTransferIntroOutcome,
+    _reader: BinaryReader
+  ) {
+    while (_reader.nextField()) {
+      if (_reader.isEndGroup()) break;
+
+      switch (_reader.getFieldNumber()) {
+        case 1:
+          _instance.decision = _reader.readEnum();
+          break;
+        case 2:
+          _instance.decidedBy = _reader.readEnum();
+          break;
+        case 3:
+          _instance.declineReasonPresent = _reader.readBool();
+          break;
+        case 4:
+          _instance.stage = _reader.readEnum();
+          break;
+        case 5:
+          _instance.cause = _reader.readString();
+          break;
+        default:
+          _reader.skipField();
+      }
+    }
+
+    WarmTransferIntroOutcome.refineValues(_instance);
+  }
+
+  /**
+   * Serializes a message to binary format using provided binary reader
+   * @param _instance message instance
+   * @param _writer binary writer instance
+   */
+  static serializeBinaryToWriter(
+    _instance: WarmTransferIntroOutcome,
+    _writer: BinaryWriter
+  ) {
+    if (_instance.decision) {
+      _writer.writeEnum(1, _instance.decision);
+    }
+    if (_instance.decidedBy) {
+      _writer.writeEnum(2, _instance.decidedBy);
+    }
+    if (_instance.declineReasonPresent) {
+      _writer.writeBool(3, _instance.declineReasonPresent);
+    }
+    if (_instance.stage) {
+      _writer.writeEnum(4, _instance.stage);
+    }
+    if (_instance.cause) {
+      _writer.writeString(5, _instance.cause);
+    }
+  }
+
+  private _decision: WarmTransferIntroDecision;
+  private _decidedBy: WarmTransferIntroDecidedBy;
+  private _declineReasonPresent: boolean;
+  private _stage: WarmTransferIntroStage;
+  private _cause: string;
+
+  /**
+   * Message constructor. Initializes the properties and applies default Protobuf values if necessary
+   * @param _value initial values object or instance of WarmTransferIntroOutcome to deeply clone from
+   */
+  constructor(_value?: RecursivePartial<WarmTransferIntroOutcome.AsObject>) {
+    _value = _value || {};
+    this.decision = _value.decision;
+    this.decidedBy = _value.decidedBy;
+    this.declineReasonPresent = _value.declineReasonPresent;
+    this.stage = _value.stage;
+    this.cause = _value.cause;
+    WarmTransferIntroOutcome.refineValues(this);
+  }
+  get decision(): WarmTransferIntroDecision {
+    return this._decision;
+  }
+  set decision(value: WarmTransferIntroDecision) {
+    this._decision = value;
+  }
+  get decidedBy(): WarmTransferIntroDecidedBy {
+    return this._decidedBy;
+  }
+  set decidedBy(value: WarmTransferIntroDecidedBy) {
+    this._decidedBy = value;
+  }
+  get declineReasonPresent(): boolean {
+    return this._declineReasonPresent;
+  }
+  set declineReasonPresent(value: boolean) {
+    this._declineReasonPresent = value;
+  }
+  get stage(): WarmTransferIntroStage {
+    return this._stage;
+  }
+  set stage(value: WarmTransferIntroStage) {
+    this._stage = value;
+  }
+  get cause(): string {
+    return this._cause;
+  }
+  set cause(value: string) {
+    this._cause = value;
+  }
+
+  /**
+   * Serialize message to binary data
+   * @param instance message instance
+   */
+  serializeBinary() {
+    const writer = new BinaryWriter();
+    WarmTransferIntroOutcome.serializeBinaryToWriter(this, writer);
+    return writer.getResultBuffer();
+  }
+
+  /**
+   * Cast message to standard JavaScript object (all non-primitive values are deeply cloned)
+   */
+  toObject(): WarmTransferIntroOutcome.AsObject {
+    return {
+      decision: this.decision,
+      decidedBy: this.decidedBy,
+      declineReasonPresent: this.declineReasonPresent,
+      stage: this.stage,
+      cause: this.cause
+    };
+  }
+
+  /**
+   * Convenience method to support JSON.stringify(message), replicates the structure of toObject()
+   */
+  toJSON() {
+    return this.toObject();
+  }
+
+  /**
+   * Cast message to JSON using protobuf JSON notation: https://developers.google.com/protocol-buffers/docs/proto3#json
+   * Attention: output differs from toObject() e.g. enums are represented as names and not as numbers, Timestamp is an ISO Date string format etc.
+   * If the message itself or some of descendant messages is google.protobuf.Any, you MUST provide a message pool as options. If not, the messagePool is not required
+   */
+  toProtobufJSON(
+    // @ts-ignore
+    options?: ToProtobufJSONOptions
+  ): WarmTransferIntroOutcome.AsProtobufJSON {
+    return {
+      decision:
+        WarmTransferIntroDecision[
+          this.decision === null || this.decision === undefined
+            ? 0
+            : this.decision
+        ],
+      decidedBy:
+        WarmTransferIntroDecidedBy[
+          this.decidedBy === null || this.decidedBy === undefined
+            ? 0
+            : this.decidedBy
+        ],
+      declineReasonPresent: this.declineReasonPresent,
+      stage:
+        WarmTransferIntroStage[
+          this.stage === null || this.stage === undefined ? 0 : this.stage
+        ],
+      cause: this.cause
+    };
+  }
+}
+export module WarmTransferIntroOutcome {
+  /**
+   * Standard JavaScript object representation for WarmTransferIntroOutcome
+   */
+  export interface AsObject {
+    decision: WarmTransferIntroDecision;
+    decidedBy: WarmTransferIntroDecidedBy;
+    declineReasonPresent: boolean;
+    stage: WarmTransferIntroStage;
+    cause: string;
+  }
+
+  /**
+   * Protobuf JSON representation for WarmTransferIntroOutcome
+   */
+  export interface AsProtobufJSON {
+    decision: string;
+    decidedBy: string;
+    declineReasonPresent: boolean;
+    stage: string;
+    cause: string;
   }
 }
 

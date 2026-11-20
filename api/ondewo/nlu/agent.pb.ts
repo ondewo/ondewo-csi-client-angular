@@ -159,6 +159,8 @@ export class Agent implements GrpcMessage {
     _instance.modifiedAt = _instance.modifiedAt || undefined;
     _instance.createdBy = _instance.createdBy || '';
     _instance.modifiedBy = _instance.modifiedBy || '';
+    _instance.warmTransferSettings =
+      _instance.warmTransferSettings || undefined;
   }
 
   /**
@@ -225,6 +227,13 @@ export class Agent implements GrpcMessage {
           break;
         case 14:
           _instance.modifiedBy = _reader.readString();
+          break;
+        case 15:
+          _instance.warmTransferSettings = new WarmTransferAgentSettings();
+          _reader.readMessage(
+            _instance.warmTransferSettings,
+            WarmTransferAgentSettings.deserializeBinaryFromReader
+          );
           break;
         default:
           _reader.skipField();
@@ -297,6 +306,13 @@ export class Agent implements GrpcMessage {
     if (_instance.modifiedBy) {
       _writer.writeString(14, _instance.modifiedBy);
     }
+    if (_instance.warmTransferSettings) {
+      _writer.writeMessage(
+        15,
+        _instance.warmTransferSettings as any,
+        WarmTransferAgentSettings.serializeBinaryToWriter
+      );
+    }
   }
 
   private _parent: string;
@@ -313,6 +329,7 @@ export class Agent implements GrpcMessage {
   private _modifiedAt?: googleProtobuf004.Timestamp;
   private _createdBy: string;
   private _modifiedBy: string;
+  private _warmTransferSettings?: WarmTransferAgentSettings;
 
   /**
    * Message constructor. Initializes the properties and applies default Protobuf values if necessary
@@ -340,6 +357,9 @@ export class Agent implements GrpcMessage {
       : undefined;
     this.createdBy = _value.createdBy;
     this.modifiedBy = _value.modifiedBy;
+    this.warmTransferSettings = _value.warmTransferSettings
+      ? new WarmTransferAgentSettings(_value.warmTransferSettings)
+      : undefined;
     Agent.refineValues(this);
   }
   get parent(): string {
@@ -426,6 +446,12 @@ export class Agent implements GrpcMessage {
   set modifiedBy(value: string) {
     this._modifiedBy = value;
   }
+  get warmTransferSettings(): WarmTransferAgentSettings | undefined {
+    return this._warmTransferSettings;
+  }
+  set warmTransferSettings(value: WarmTransferAgentSettings | undefined) {
+    this._warmTransferSettings = value;
+  }
 
   /**
    * Serialize message to binary data
@@ -455,7 +481,10 @@ export class Agent implements GrpcMessage {
       createdAt: this.createdAt ? this.createdAt.toObject() : undefined,
       modifiedAt: this.modifiedAt ? this.modifiedAt.toObject() : undefined,
       createdBy: this.createdBy,
-      modifiedBy: this.modifiedBy
+      modifiedBy: this.modifiedBy,
+      warmTransferSettings: this.warmTransferSettings
+        ? this.warmTransferSettings.toObject()
+        : undefined
     };
   }
 
@@ -494,7 +523,10 @@ export class Agent implements GrpcMessage {
         ? this.modifiedAt.toProtobufJSON(options)
         : null,
       createdBy: this.createdBy,
-      modifiedBy: this.modifiedBy
+      modifiedBy: this.modifiedBy,
+      warmTransferSettings: this.warmTransferSettings
+        ? this.warmTransferSettings.toProtobufJSON(options)
+        : null
     };
   }
 }
@@ -517,6 +549,7 @@ export module Agent {
     modifiedAt?: googleProtobuf004.Timestamp.AsObject;
     createdBy: string;
     modifiedBy: string;
+    warmTransferSettings?: WarmTransferAgentSettings.AsObject;
   }
 
   /**
@@ -537,6 +570,1018 @@ export module Agent {
     modifiedAt: googleProtobuf004.Timestamp.AsProtobufJSON | null;
     createdBy: string;
     modifiedBy: string;
+    warmTransferSettings: WarmTransferAgentSettings.AsProtobufJSON | null;
+  }
+}
+
+/**
+ * Message implementation for ondewo.nlu.WarmTransferAgentSettings
+ */
+export class WarmTransferAgentSettings implements GrpcMessage {
+  static id = 'ondewo.nlu.WarmTransferAgentSettings';
+
+  /**
+   * Deserialize binary data to message
+   * @param instance message instance
+   */
+  static deserializeBinary(bytes: ByteSource) {
+    const instance = new WarmTransferAgentSettings();
+    WarmTransferAgentSettings.deserializeBinaryFromReader(
+      instance,
+      new BinaryReader(bytes)
+    );
+    return instance;
+  }
+
+  /**
+   * Check all the properties and set default protobuf values if necessary
+   * @param _instance message instance
+   */
+  static refineValues(_instance: WarmTransferAgentSettings) {
+    _instance.llmCcaiServiceName = _instance.llmCcaiServiceName || '';
+    _instance.defaultTexts = _instance.defaultTexts || {};
+    _instance.extraLexicon = _instance.extraLexicon || {};
+  }
+
+  /**
+   * Deserializes / reads binary message into message instance using provided binary reader
+   * @param _instance message instance
+   * @param _reader binary reader instance
+   */
+  static deserializeBinaryFromReader(
+    _instance: WarmTransferAgentSettings,
+    _reader: BinaryReader
+  ) {
+    while (_reader.nextField()) {
+      if (_reader.isEndGroup()) break;
+
+      switch (_reader.getFieldNumber()) {
+        case 1:
+          _instance.enabled = _reader.readBool();
+          break;
+        case 2:
+          _instance.llmCcaiServiceName = _reader.readString();
+          break;
+        case 3:
+          const msg_3 = {} as any;
+          _reader.readMessage(
+            msg_3,
+            WarmTransferAgentSettings.DefaultTextsEntry
+              .deserializeBinaryFromReader
+          );
+          _instance.defaultTexts = _instance.defaultTexts || {};
+          _instance.defaultTexts[msg_3.key] = msg_3.value;
+          break;
+        case 4:
+          const msg_4 = {} as any;
+          _reader.readMessage(
+            msg_4,
+            WarmTransferAgentSettings.ExtraLexiconEntry
+              .deserializeBinaryFromReader
+          );
+          _instance.extraLexicon = _instance.extraLexicon || {};
+          _instance.extraLexicon[msg_4.key] = msg_4.value;
+          break;
+        default:
+          _reader.skipField();
+      }
+    }
+
+    WarmTransferAgentSettings.refineValues(_instance);
+  }
+
+  /**
+   * Serializes a message to binary format using provided binary reader
+   * @param _instance message instance
+   * @param _writer binary writer instance
+   */
+  static serializeBinaryToWriter(
+    _instance: WarmTransferAgentSettings,
+    _writer: BinaryWriter
+  ) {
+    if (_instance.enabled !== undefined && _instance.enabled !== null) {
+      _writer.writeBool(1, _instance.enabled);
+    }
+    if (_instance.llmCcaiServiceName) {
+      _writer.writeString(2, _instance.llmCcaiServiceName);
+    }
+    if (!!_instance.defaultTexts) {
+      const keys_3 = Object.keys(_instance.defaultTexts as any);
+
+      if (keys_3.length) {
+        const repeated_3 = keys_3
+          .map(key => ({
+            key: key,
+            value: (_instance.defaultTexts as any)[key]
+          }))
+          .reduce((r, v) => [...r, v], [] as any[]);
+
+        _writer.writeRepeatedMessage(
+          3,
+          repeated_3,
+          WarmTransferAgentSettings.DefaultTextsEntry.serializeBinaryToWriter
+        );
+      }
+    }
+    if (!!_instance.extraLexicon) {
+      const keys_4 = Object.keys(_instance.extraLexicon as any);
+
+      if (keys_4.length) {
+        const repeated_4 = keys_4
+          .map(key => ({
+            key: key,
+            value: (_instance.extraLexicon as any)[key]
+          }))
+          .reduce((r, v) => [...r, v], [] as any[]);
+
+        _writer.writeRepeatedMessage(
+          4,
+          repeated_4,
+          WarmTransferAgentSettings.ExtraLexiconEntry.serializeBinaryToWriter
+        );
+      }
+    }
+  }
+
+  private _enabled: boolean;
+  private _llmCcaiServiceName: string;
+  private _defaultTexts: { [prop: string]: WarmTransferAgentTexts };
+  private _extraLexicon: { [prop: string]: WarmTransferAgentLexicon };
+
+  /**
+   * Message constructor. Initializes the properties and applies default Protobuf values if necessary
+   * @param _value initial values object or instance of WarmTransferAgentSettings to deeply clone from
+   */
+  constructor(_value?: RecursivePartial<WarmTransferAgentSettings.AsObject>) {
+    _value = _value || {};
+    this.enabled = _value.enabled;
+    this.llmCcaiServiceName = _value.llmCcaiServiceName;
+    (this.defaultTexts = _value!.defaultTexts
+      ? Object.keys(_value!.defaultTexts).reduce(
+          (r, k) => ({
+            ...r,
+            [k]: _value!.defaultTexts![k]
+              ? new WarmTransferAgentTexts(_value!.defaultTexts![k])
+              : undefined
+          }),
+          {}
+        )
+      : {}),
+      (this.extraLexicon = _value!.extraLexicon
+        ? Object.keys(_value!.extraLexicon).reduce(
+            (r, k) => ({
+              ...r,
+              [k]: _value!.extraLexicon![k]
+                ? new WarmTransferAgentLexicon(_value!.extraLexicon![k])
+                : undefined
+            }),
+            {}
+          )
+        : {}),
+      WarmTransferAgentSettings.refineValues(this);
+  }
+  get enabled(): boolean {
+    return this._enabled;
+  }
+  set enabled(value: boolean) {
+    this._enabled = value;
+  }
+  get llmCcaiServiceName(): string {
+    return this._llmCcaiServiceName;
+  }
+  set llmCcaiServiceName(value: string) {
+    this._llmCcaiServiceName = value;
+  }
+  get defaultTexts(): { [prop: string]: WarmTransferAgentTexts } {
+    return this._defaultTexts;
+  }
+  set defaultTexts(value: { [prop: string]: WarmTransferAgentTexts }) {
+    this._defaultTexts = value;
+  }
+  get extraLexicon(): { [prop: string]: WarmTransferAgentLexicon } {
+    return this._extraLexicon;
+  }
+  set extraLexicon(value: { [prop: string]: WarmTransferAgentLexicon }) {
+    this._extraLexicon = value;
+  }
+
+  /**
+   * Serialize message to binary data
+   * @param instance message instance
+   */
+  serializeBinary() {
+    const writer = new BinaryWriter();
+    WarmTransferAgentSettings.serializeBinaryToWriter(this, writer);
+    return writer.getResultBuffer();
+  }
+
+  /**
+   * Cast message to standard JavaScript object (all non-primitive values are deeply cloned)
+   */
+  toObject(): WarmTransferAgentSettings.AsObject {
+    return {
+      enabled: this.enabled,
+      llmCcaiServiceName: this.llmCcaiServiceName,
+      defaultTexts: this.defaultTexts
+        ? Object.keys(this.defaultTexts).reduce(
+            (r, k) => ({
+              ...r,
+              [k]: this.defaultTexts![k]
+                ? this.defaultTexts![k].toObject()
+                : undefined
+            }),
+            {}
+          )
+        : {},
+      extraLexicon: this.extraLexicon
+        ? Object.keys(this.extraLexicon).reduce(
+            (r, k) => ({
+              ...r,
+              [k]: this.extraLexicon![k]
+                ? this.extraLexicon![k].toObject()
+                : undefined
+            }),
+            {}
+          )
+        : {}
+    };
+  }
+
+  /**
+   * Convenience method to support JSON.stringify(message), replicates the structure of toObject()
+   */
+  toJSON() {
+    return this.toObject();
+  }
+
+  /**
+   * Cast message to JSON using protobuf JSON notation: https://developers.google.com/protocol-buffers/docs/proto3#json
+   * Attention: output differs from toObject() e.g. enums are represented as names and not as numbers, Timestamp is an ISO Date string format etc.
+   * If the message itself or some of descendant messages is google.protobuf.Any, you MUST provide a message pool as options. If not, the messagePool is not required
+   */
+  toProtobufJSON(
+    // @ts-ignore
+    options?: ToProtobufJSONOptions
+  ): WarmTransferAgentSettings.AsProtobufJSON {
+    return {
+      enabled: this.enabled,
+      llmCcaiServiceName: this.llmCcaiServiceName,
+      defaultTexts: this.defaultTexts
+        ? Object.keys(this.defaultTexts).reduce(
+            (r, k) => ({
+              ...r,
+              [k]: this.defaultTexts![k] ? this.defaultTexts![k].toJSON() : null
+            }),
+            {}
+          )
+        : {},
+      extraLexicon: this.extraLexicon
+        ? Object.keys(this.extraLexicon).reduce(
+            (r, k) => ({
+              ...r,
+              [k]: this.extraLexicon![k] ? this.extraLexicon![k].toJSON() : null
+            }),
+            {}
+          )
+        : {}
+    };
+  }
+}
+export module WarmTransferAgentSettings {
+  /**
+   * Standard JavaScript object representation for WarmTransferAgentSettings
+   */
+  export interface AsObject {
+    enabled: boolean;
+    llmCcaiServiceName: string;
+    defaultTexts: { [prop: string]: WarmTransferAgentTexts };
+    extraLexicon: { [prop: string]: WarmTransferAgentLexicon };
+  }
+
+  /**
+   * Protobuf JSON representation for WarmTransferAgentSettings
+   */
+  export interface AsProtobufJSON {
+    enabled: boolean;
+    llmCcaiServiceName: string;
+    defaultTexts: { [prop: string]: WarmTransferAgentTexts };
+    extraLexicon: { [prop: string]: WarmTransferAgentLexicon };
+  }
+
+  /**
+   * Message implementation for ondewo.nlu.WarmTransferAgentSettings.DefaultTextsEntry
+   */
+  export class DefaultTextsEntry implements GrpcMessage {
+    static id = 'ondewo.nlu.WarmTransferAgentSettings.DefaultTextsEntry';
+
+    /**
+     * Deserialize binary data to message
+     * @param instance message instance
+     */
+    static deserializeBinary(bytes: ByteSource) {
+      const instance = new DefaultTextsEntry();
+      DefaultTextsEntry.deserializeBinaryFromReader(
+        instance,
+        new BinaryReader(bytes)
+      );
+      return instance;
+    }
+
+    /**
+     * Check all the properties and set default protobuf values if necessary
+     * @param _instance message instance
+     */
+    static refineValues(_instance: DefaultTextsEntry) {
+      _instance.key = _instance.key || '';
+      _instance.value = _instance.value || undefined;
+    }
+
+    /**
+     * Deserializes / reads binary message into message instance using provided binary reader
+     * @param _instance message instance
+     * @param _reader binary reader instance
+     */
+    static deserializeBinaryFromReader(
+      _instance: DefaultTextsEntry,
+      _reader: BinaryReader
+    ) {
+      while (_reader.nextField()) {
+        if (_reader.isEndGroup()) break;
+
+        switch (_reader.getFieldNumber()) {
+          case 1:
+            _instance.key = _reader.readString();
+            break;
+          case 2:
+            _instance.value = new WarmTransferAgentTexts();
+            _reader.readMessage(
+              _instance.value,
+              WarmTransferAgentTexts.deserializeBinaryFromReader
+            );
+            break;
+          default:
+            _reader.skipField();
+        }
+      }
+
+      DefaultTextsEntry.refineValues(_instance);
+    }
+
+    /**
+     * Serializes a message to binary format using provided binary reader
+     * @param _instance message instance
+     * @param _writer binary writer instance
+     */
+    static serializeBinaryToWriter(
+      _instance: DefaultTextsEntry,
+      _writer: BinaryWriter
+    ) {
+      if (_instance.key) {
+        _writer.writeString(1, _instance.key);
+      }
+      if (_instance.value) {
+        _writer.writeMessage(
+          2,
+          _instance.value as any,
+          WarmTransferAgentTexts.serializeBinaryToWriter
+        );
+      }
+    }
+
+    private _key: string;
+    private _value?: WarmTransferAgentTexts;
+
+    /**
+     * Message constructor. Initializes the properties and applies default Protobuf values if necessary
+     * @param _value initial values object or instance of DefaultTextsEntry to deeply clone from
+     */
+    constructor(_value?: RecursivePartial<DefaultTextsEntry.AsObject>) {
+      _value = _value || {};
+      this.key = _value.key;
+      this.value = _value.value
+        ? new WarmTransferAgentTexts(_value.value)
+        : undefined;
+      DefaultTextsEntry.refineValues(this);
+    }
+    get key(): string {
+      return this._key;
+    }
+    set key(value: string) {
+      this._key = value;
+    }
+    get value(): WarmTransferAgentTexts | undefined {
+      return this._value;
+    }
+    set value(value: WarmTransferAgentTexts | undefined) {
+      this._value = value;
+    }
+
+    /**
+     * Serialize message to binary data
+     * @param instance message instance
+     */
+    serializeBinary() {
+      const writer = new BinaryWriter();
+      DefaultTextsEntry.serializeBinaryToWriter(this, writer);
+      return writer.getResultBuffer();
+    }
+
+    /**
+     * Cast message to standard JavaScript object (all non-primitive values are deeply cloned)
+     */
+    toObject(): DefaultTextsEntry.AsObject {
+      return {
+        key: this.key,
+        value: this.value ? this.value.toObject() : undefined
+      };
+    }
+
+    /**
+     * Convenience method to support JSON.stringify(message), replicates the structure of toObject()
+     */
+    toJSON() {
+      return this.toObject();
+    }
+
+    /**
+     * Cast message to JSON using protobuf JSON notation: https://developers.google.com/protocol-buffers/docs/proto3#json
+     * Attention: output differs from toObject() e.g. enums are represented as names and not as numbers, Timestamp is an ISO Date string format etc.
+     * If the message itself or some of descendant messages is google.protobuf.Any, you MUST provide a message pool as options. If not, the messagePool is not required
+     */
+    toProtobufJSON(
+      // @ts-ignore
+      options?: ToProtobufJSONOptions
+    ): DefaultTextsEntry.AsProtobufJSON {
+      return {
+        key: this.key,
+        value: this.value ? this.value.toProtobufJSON(options) : null
+      };
+    }
+  }
+  export module DefaultTextsEntry {
+    /**
+     * Standard JavaScript object representation for DefaultTextsEntry
+     */
+    export interface AsObject {
+      key: string;
+      value?: WarmTransferAgentTexts.AsObject;
+    }
+
+    /**
+     * Protobuf JSON representation for DefaultTextsEntry
+     */
+    export interface AsProtobufJSON {
+      key: string;
+      value: WarmTransferAgentTexts.AsProtobufJSON | null;
+    }
+  }
+
+  /**
+   * Message implementation for ondewo.nlu.WarmTransferAgentSettings.ExtraLexiconEntry
+   */
+  export class ExtraLexiconEntry implements GrpcMessage {
+    static id = 'ondewo.nlu.WarmTransferAgentSettings.ExtraLexiconEntry';
+
+    /**
+     * Deserialize binary data to message
+     * @param instance message instance
+     */
+    static deserializeBinary(bytes: ByteSource) {
+      const instance = new ExtraLexiconEntry();
+      ExtraLexiconEntry.deserializeBinaryFromReader(
+        instance,
+        new BinaryReader(bytes)
+      );
+      return instance;
+    }
+
+    /**
+     * Check all the properties and set default protobuf values if necessary
+     * @param _instance message instance
+     */
+    static refineValues(_instance: ExtraLexiconEntry) {
+      _instance.key = _instance.key || '';
+      _instance.value = _instance.value || undefined;
+    }
+
+    /**
+     * Deserializes / reads binary message into message instance using provided binary reader
+     * @param _instance message instance
+     * @param _reader binary reader instance
+     */
+    static deserializeBinaryFromReader(
+      _instance: ExtraLexiconEntry,
+      _reader: BinaryReader
+    ) {
+      while (_reader.nextField()) {
+        if (_reader.isEndGroup()) break;
+
+        switch (_reader.getFieldNumber()) {
+          case 1:
+            _instance.key = _reader.readString();
+            break;
+          case 2:
+            _instance.value = new WarmTransferAgentLexicon();
+            _reader.readMessage(
+              _instance.value,
+              WarmTransferAgentLexicon.deserializeBinaryFromReader
+            );
+            break;
+          default:
+            _reader.skipField();
+        }
+      }
+
+      ExtraLexiconEntry.refineValues(_instance);
+    }
+
+    /**
+     * Serializes a message to binary format using provided binary reader
+     * @param _instance message instance
+     * @param _writer binary writer instance
+     */
+    static serializeBinaryToWriter(
+      _instance: ExtraLexiconEntry,
+      _writer: BinaryWriter
+    ) {
+      if (_instance.key) {
+        _writer.writeString(1, _instance.key);
+      }
+      if (_instance.value) {
+        _writer.writeMessage(
+          2,
+          _instance.value as any,
+          WarmTransferAgentLexicon.serializeBinaryToWriter
+        );
+      }
+    }
+
+    private _key: string;
+    private _value?: WarmTransferAgentLexicon;
+
+    /**
+     * Message constructor. Initializes the properties and applies default Protobuf values if necessary
+     * @param _value initial values object or instance of ExtraLexiconEntry to deeply clone from
+     */
+    constructor(_value?: RecursivePartial<ExtraLexiconEntry.AsObject>) {
+      _value = _value || {};
+      this.key = _value.key;
+      this.value = _value.value
+        ? new WarmTransferAgentLexicon(_value.value)
+        : undefined;
+      ExtraLexiconEntry.refineValues(this);
+    }
+    get key(): string {
+      return this._key;
+    }
+    set key(value: string) {
+      this._key = value;
+    }
+    get value(): WarmTransferAgentLexicon | undefined {
+      return this._value;
+    }
+    set value(value: WarmTransferAgentLexicon | undefined) {
+      this._value = value;
+    }
+
+    /**
+     * Serialize message to binary data
+     * @param instance message instance
+     */
+    serializeBinary() {
+      const writer = new BinaryWriter();
+      ExtraLexiconEntry.serializeBinaryToWriter(this, writer);
+      return writer.getResultBuffer();
+    }
+
+    /**
+     * Cast message to standard JavaScript object (all non-primitive values are deeply cloned)
+     */
+    toObject(): ExtraLexiconEntry.AsObject {
+      return {
+        key: this.key,
+        value: this.value ? this.value.toObject() : undefined
+      };
+    }
+
+    /**
+     * Convenience method to support JSON.stringify(message), replicates the structure of toObject()
+     */
+    toJSON() {
+      return this.toObject();
+    }
+
+    /**
+     * Cast message to JSON using protobuf JSON notation: https://developers.google.com/protocol-buffers/docs/proto3#json
+     * Attention: output differs from toObject() e.g. enums are represented as names and not as numbers, Timestamp is an ISO Date string format etc.
+     * If the message itself or some of descendant messages is google.protobuf.Any, you MUST provide a message pool as options. If not, the messagePool is not required
+     */
+    toProtobufJSON(
+      // @ts-ignore
+      options?: ToProtobufJSONOptions
+    ): ExtraLexiconEntry.AsProtobufJSON {
+      return {
+        key: this.key,
+        value: this.value ? this.value.toProtobufJSON(options) : null
+      };
+    }
+  }
+  export module ExtraLexiconEntry {
+    /**
+     * Standard JavaScript object representation for ExtraLexiconEntry
+     */
+    export interface AsObject {
+      key: string;
+      value?: WarmTransferAgentLexicon.AsObject;
+    }
+
+    /**
+     * Protobuf JSON representation for ExtraLexiconEntry
+     */
+    export interface AsProtobufJSON {
+      key: string;
+      value: WarmTransferAgentLexicon.AsProtobufJSON | null;
+    }
+  }
+}
+
+/**
+ * Message implementation for ondewo.nlu.WarmTransferAgentTexts
+ */
+export class WarmTransferAgentTexts implements GrpcMessage {
+  static id = 'ondewo.nlu.WarmTransferAgentTexts';
+
+  /**
+   * Deserialize binary data to message
+   * @param instance message instance
+   */
+  static deserializeBinary(bytes: ByteSource) {
+    const instance = new WarmTransferAgentTexts();
+    WarmTransferAgentTexts.deserializeBinaryFromReader(
+      instance,
+      new BinaryReader(bytes)
+    );
+    return instance;
+  }
+
+  /**
+   * Check all the properties and set default protobuf values if necessary
+   * @param _instance message instance
+   */
+  static refineValues(_instance: WarmTransferAgentTexts) {
+    _instance.readyQuestion = _instance.readyQuestion || '';
+    _instance.acceptQuestion = _instance.acceptQuestion || '';
+    _instance.callerDeclinedMessage = _instance.callerDeclinedMessage || '';
+    _instance.callerUnreachableMessage =
+      _instance.callerUnreachableMessage || '';
+  }
+
+  /**
+   * Deserializes / reads binary message into message instance using provided binary reader
+   * @param _instance message instance
+   * @param _reader binary reader instance
+   */
+  static deserializeBinaryFromReader(
+    _instance: WarmTransferAgentTexts,
+    _reader: BinaryReader
+  ) {
+    while (_reader.nextField()) {
+      if (_reader.isEndGroup()) break;
+
+      switch (_reader.getFieldNumber()) {
+        case 1:
+          _instance.readyQuestion = _reader.readString();
+          break;
+        case 2:
+          _instance.acceptQuestion = _reader.readString();
+          break;
+        case 3:
+          _instance.declineReasonQuestion = _reader.readString();
+          break;
+        case 4:
+          _instance.callerDeclinedMessage = _reader.readString();
+          break;
+        case 5:
+          _instance.callerUnreachableMessage = _reader.readString();
+          break;
+        default:
+          _reader.skipField();
+      }
+    }
+
+    WarmTransferAgentTexts.refineValues(_instance);
+  }
+
+  /**
+   * Serializes a message to binary format using provided binary reader
+   * @param _instance message instance
+   * @param _writer binary writer instance
+   */
+  static serializeBinaryToWriter(
+    _instance: WarmTransferAgentTexts,
+    _writer: BinaryWriter
+  ) {
+    if (_instance.readyQuestion) {
+      _writer.writeString(1, _instance.readyQuestion);
+    }
+    if (_instance.acceptQuestion) {
+      _writer.writeString(2, _instance.acceptQuestion);
+    }
+    if (
+      _instance.declineReasonQuestion !== undefined &&
+      _instance.declineReasonQuestion !== null
+    ) {
+      _writer.writeString(3, _instance.declineReasonQuestion);
+    }
+    if (_instance.callerDeclinedMessage) {
+      _writer.writeString(4, _instance.callerDeclinedMessage);
+    }
+    if (_instance.callerUnreachableMessage) {
+      _writer.writeString(5, _instance.callerUnreachableMessage);
+    }
+  }
+
+  private _readyQuestion: string;
+  private _acceptQuestion: string;
+  private _declineReasonQuestion: string;
+  private _callerDeclinedMessage: string;
+  private _callerUnreachableMessage: string;
+
+  /**
+   * Message constructor. Initializes the properties and applies default Protobuf values if necessary
+   * @param _value initial values object or instance of WarmTransferAgentTexts to deeply clone from
+   */
+  constructor(_value?: RecursivePartial<WarmTransferAgentTexts.AsObject>) {
+    _value = _value || {};
+    this.readyQuestion = _value.readyQuestion;
+    this.acceptQuestion = _value.acceptQuestion;
+    this.declineReasonQuestion = _value.declineReasonQuestion;
+    this.callerDeclinedMessage = _value.callerDeclinedMessage;
+    this.callerUnreachableMessage = _value.callerUnreachableMessage;
+    WarmTransferAgentTexts.refineValues(this);
+  }
+  get readyQuestion(): string {
+    return this._readyQuestion;
+  }
+  set readyQuestion(value: string) {
+    this._readyQuestion = value;
+  }
+  get acceptQuestion(): string {
+    return this._acceptQuestion;
+  }
+  set acceptQuestion(value: string) {
+    this._acceptQuestion = value;
+  }
+  get declineReasonQuestion(): string {
+    return this._declineReasonQuestion;
+  }
+  set declineReasonQuestion(value: string) {
+    this._declineReasonQuestion = value;
+  }
+  get callerDeclinedMessage(): string {
+    return this._callerDeclinedMessage;
+  }
+  set callerDeclinedMessage(value: string) {
+    this._callerDeclinedMessage = value;
+  }
+  get callerUnreachableMessage(): string {
+    return this._callerUnreachableMessage;
+  }
+  set callerUnreachableMessage(value: string) {
+    this._callerUnreachableMessage = value;
+  }
+
+  /**
+   * Serialize message to binary data
+   * @param instance message instance
+   */
+  serializeBinary() {
+    const writer = new BinaryWriter();
+    WarmTransferAgentTexts.serializeBinaryToWriter(this, writer);
+    return writer.getResultBuffer();
+  }
+
+  /**
+   * Cast message to standard JavaScript object (all non-primitive values are deeply cloned)
+   */
+  toObject(): WarmTransferAgentTexts.AsObject {
+    return {
+      readyQuestion: this.readyQuestion,
+      acceptQuestion: this.acceptQuestion,
+      declineReasonQuestion: this.declineReasonQuestion,
+      callerDeclinedMessage: this.callerDeclinedMessage,
+      callerUnreachableMessage: this.callerUnreachableMessage
+    };
+  }
+
+  /**
+   * Convenience method to support JSON.stringify(message), replicates the structure of toObject()
+   */
+  toJSON() {
+    return this.toObject();
+  }
+
+  /**
+   * Cast message to JSON using protobuf JSON notation: https://developers.google.com/protocol-buffers/docs/proto3#json
+   * Attention: output differs from toObject() e.g. enums are represented as names and not as numbers, Timestamp is an ISO Date string format etc.
+   * If the message itself or some of descendant messages is google.protobuf.Any, you MUST provide a message pool as options. If not, the messagePool is not required
+   */
+  toProtobufJSON(
+    // @ts-ignore
+    options?: ToProtobufJSONOptions
+  ): WarmTransferAgentTexts.AsProtobufJSON {
+    return {
+      readyQuestion: this.readyQuestion,
+      acceptQuestion: this.acceptQuestion,
+      declineReasonQuestion: this.declineReasonQuestion,
+      callerDeclinedMessage: this.callerDeclinedMessage,
+      callerUnreachableMessage: this.callerUnreachableMessage
+    };
+  }
+}
+export module WarmTransferAgentTexts {
+  /**
+   * Standard JavaScript object representation for WarmTransferAgentTexts
+   */
+  export interface AsObject {
+    readyQuestion: string;
+    acceptQuestion: string;
+    declineReasonQuestion: string;
+    callerDeclinedMessage: string;
+    callerUnreachableMessage: string;
+  }
+
+  /**
+   * Protobuf JSON representation for WarmTransferAgentTexts
+   */
+  export interface AsProtobufJSON {
+    readyQuestion: string;
+    acceptQuestion: string;
+    declineReasonQuestion: string;
+    callerDeclinedMessage: string;
+    callerUnreachableMessage: string;
+  }
+}
+
+/**
+ * Message implementation for ondewo.nlu.WarmTransferAgentLexicon
+ */
+export class WarmTransferAgentLexicon implements GrpcMessage {
+  static id = 'ondewo.nlu.WarmTransferAgentLexicon';
+
+  /**
+   * Deserialize binary data to message
+   * @param instance message instance
+   */
+  static deserializeBinary(bytes: ByteSource) {
+    const instance = new WarmTransferAgentLexicon();
+    WarmTransferAgentLexicon.deserializeBinaryFromReader(
+      instance,
+      new BinaryReader(bytes)
+    );
+    return instance;
+  }
+
+  /**
+   * Check all the properties and set default protobuf values if necessary
+   * @param _instance message instance
+   */
+  static refineValues(_instance: WarmTransferAgentLexicon) {
+    _instance.acceptPhrases = _instance.acceptPhrases || [];
+    _instance.declinePhrases = _instance.declinePhrases || [];
+  }
+
+  /**
+   * Deserializes / reads binary message into message instance using provided binary reader
+   * @param _instance message instance
+   * @param _reader binary reader instance
+   */
+  static deserializeBinaryFromReader(
+    _instance: WarmTransferAgentLexicon,
+    _reader: BinaryReader
+  ) {
+    while (_reader.nextField()) {
+      if (_reader.isEndGroup()) break;
+
+      switch (_reader.getFieldNumber()) {
+        case 1:
+          (_instance.acceptPhrases = _instance.acceptPhrases || []).push(
+            _reader.readString()
+          );
+          break;
+        case 2:
+          (_instance.declinePhrases = _instance.declinePhrases || []).push(
+            _reader.readString()
+          );
+          break;
+        default:
+          _reader.skipField();
+      }
+    }
+
+    WarmTransferAgentLexicon.refineValues(_instance);
+  }
+
+  /**
+   * Serializes a message to binary format using provided binary reader
+   * @param _instance message instance
+   * @param _writer binary writer instance
+   */
+  static serializeBinaryToWriter(
+    _instance: WarmTransferAgentLexicon,
+    _writer: BinaryWriter
+  ) {
+    if (_instance.acceptPhrases && _instance.acceptPhrases.length) {
+      _writer.writeRepeatedString(1, _instance.acceptPhrases);
+    }
+    if (_instance.declinePhrases && _instance.declinePhrases.length) {
+      _writer.writeRepeatedString(2, _instance.declinePhrases);
+    }
+  }
+
+  private _acceptPhrases: string[];
+  private _declinePhrases: string[];
+
+  /**
+   * Message constructor. Initializes the properties and applies default Protobuf values if necessary
+   * @param _value initial values object or instance of WarmTransferAgentLexicon to deeply clone from
+   */
+  constructor(_value?: RecursivePartial<WarmTransferAgentLexicon.AsObject>) {
+    _value = _value || {};
+    this.acceptPhrases = (_value.acceptPhrases || []).slice();
+    this.declinePhrases = (_value.declinePhrases || []).slice();
+    WarmTransferAgentLexicon.refineValues(this);
+  }
+  get acceptPhrases(): string[] {
+    return this._acceptPhrases;
+  }
+  set acceptPhrases(value: string[]) {
+    this._acceptPhrases = value;
+  }
+  get declinePhrases(): string[] {
+    return this._declinePhrases;
+  }
+  set declinePhrases(value: string[]) {
+    this._declinePhrases = value;
+  }
+
+  /**
+   * Serialize message to binary data
+   * @param instance message instance
+   */
+  serializeBinary() {
+    const writer = new BinaryWriter();
+    WarmTransferAgentLexicon.serializeBinaryToWriter(this, writer);
+    return writer.getResultBuffer();
+  }
+
+  /**
+   * Cast message to standard JavaScript object (all non-primitive values are deeply cloned)
+   */
+  toObject(): WarmTransferAgentLexicon.AsObject {
+    return {
+      acceptPhrases: (this.acceptPhrases || []).slice(),
+      declinePhrases: (this.declinePhrases || []).slice()
+    };
+  }
+
+  /**
+   * Convenience method to support JSON.stringify(message), replicates the structure of toObject()
+   */
+  toJSON() {
+    return this.toObject();
+  }
+
+  /**
+   * Cast message to JSON using protobuf JSON notation: https://developers.google.com/protocol-buffers/docs/proto3#json
+   * Attention: output differs from toObject() e.g. enums are represented as names and not as numbers, Timestamp is an ISO Date string format etc.
+   * If the message itself or some of descendant messages is google.protobuf.Any, you MUST provide a message pool as options. If not, the messagePool is not required
+   */
+  toProtobufJSON(
+    // @ts-ignore
+    options?: ToProtobufJSONOptions
+  ): WarmTransferAgentLexicon.AsProtobufJSON {
+    return {
+      acceptPhrases: (this.acceptPhrases || []).slice(),
+      declinePhrases: (this.declinePhrases || []).slice()
+    };
+  }
+}
+export module WarmTransferAgentLexicon {
+  /**
+   * Standard JavaScript object representation for WarmTransferAgentLexicon
+   */
+  export interface AsObject {
+    acceptPhrases: string[];
+    declinePhrases: string[];
+  }
+
+  /**
+   * Protobuf JSON representation for WarmTransferAgentLexicon
+   */
+  export interface AsProtobufJSON {
+    acceptPhrases: string[];
+    declinePhrases: string[];
   }
 }
 
