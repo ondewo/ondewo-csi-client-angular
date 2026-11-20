@@ -27,7 +27,9 @@ export default [
 			'**/*.mjs',
 			'**/index.d.ts',
 			'types/',
-			'src/examples/csi-conversations.example.spec.ts'
+			'src/examples/csi-conversations.example.spec.ts',
+			// ng-packagr 22 build output: its typings moved from npm/index.d.ts to npm/types/
+			'npm/'
 		]
 	},
 	...compat.extends(
